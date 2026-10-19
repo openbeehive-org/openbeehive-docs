@@ -10,7 +10,7 @@ Security fixes are provided for the latest released version only.
 
 Instead, use one of these private channels:
 
-- GitHub's [private vulnerability reporting](https://github.com/johnnycube/openbeehive-app/security/advisories/new)
+- GitHub's [private vulnerability reporting](https://github.com/openbeehive-org/openbeehive-app/security/advisories/new)
   (preferred), or
 - email **security@openbeehive.org**.
 

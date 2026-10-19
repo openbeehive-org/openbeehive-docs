@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Domande frequenti
 
-Risposte rapide alle domande che sentiamo più spesso. Se manca qualcosa, consulta la [guida alla risoluzione dei problemi](/knowledge-base/troubleshooting) o chiedi alla community su [GitHub](https://github.com/johnnycube/openbeehive-app).
+Risposte rapide alle domande che sentiamo più spesso. Se manca qualcosa, consulta la [guida alla risoluzione dei problemi](/knowledge-base/troubleshooting) o chiedi alla community su [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Openbeehive è gratuito?
 
@@ -109,7 +109,7 @@ Il servizio ospitato usa account con e-mail e password. Chi ospita autonomamente
 
 ## Come segnalo un bug o richiedo una funzionalità?
 
-Apri una issue nel [repository GitHub](https://github.com/johnnycube/openbeehive-app). Passaggi chiari per riprodurre il problema, la tua piattaforma e il tuo browser, e uno screenshot aiutano.
+Apri una issue nel [repository GitHub](https://github.com/openbeehive-org/openbeehive-app). Passaggi chiari per riprodurre il problema, la tua piattaforma e il tuo browser, e uno screenshot aiutano.
 
 La [pagina di risoluzione dei problemi](/knowledge-base/troubleshooting) potrebbe già coprire i problemi comuni.
 
@@ -119,4 +119,4 @@ Sono benvenuti contributi di ogni tipo: codice, documentazione, traduzioni, segn
 
 ## Quale versione è questa?
 
-Le versioni sono taggate su [GitHub](https://github.com/johnnycube/openbeehive-app/releases). Chi ospita autonomamente esegue il tag che ha compilato o il tag dell'immagine che ha scaricato; consulta la [guida all'aggiornamento](/self-hosting/upgrading) quando arrivano nuove versioni.
+Le versioni sono taggate su [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Chi ospita autonomamente esegue il tag che ha compilato o il tag dell'immagine che ha scaricato; consulta la [guida all'aggiornamento](/self-hosting/upgrading) quando arrivano nuove versioni.

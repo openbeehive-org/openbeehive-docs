@@ -13,7 +13,7 @@ TLS funktioniert; in Produktion terminiert ein Reverse-Proxy TLS.
 ## Einen Client generieren
 
 Der Vertrag liegt in
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto/openbeehive/v1)
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1)
 und wird mit [buf](https://buf.build) gebaut. Die `buf.gen.yaml` des Repos
 generiert Go (`protocolbuffers/go` + `connectrpc/go`) nach
 `server/internal/gen` und TypeScript (`bufbuild/es` v2) nach
@@ -27,8 +27,8 @@ aus, die du brauchst.
 ```go
 import (
     "connectrpc.com/connect"
-    obv1 "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1"
-    "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
+    obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
+    "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
 
 client := openbeehivev1connect.NewApiaryServiceClient(http.DefaultClient, "https://bees.example.com")

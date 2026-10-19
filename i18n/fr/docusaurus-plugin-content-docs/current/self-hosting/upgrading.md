@@ -13,7 +13,7 @@ Faites une sauvegarde avant de mettre à niveau. Voir [Sauvegardes](/self-hostin
 
 ## Avant de commencer
 
-1. **Lisez les notes de version.** Consultez le [CHANGELOG](https://github.com/johnnycube/openbeehive-app/blob/main/CHANGELOG.md) et la [version GitHub](https://github.com/johnnycube/openbeehive-app/releases) vers laquelle vous passez. Notez toute nouvelle configuration requise ou toute étape manuelle.
+1. **Lisez les notes de version.** Consultez le [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app/blob/main/CHANGELOG.md) et la [version GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) vers laquelle vous passez. Notez toute nouvelle configuration requise ou toute étape manuelle.
 2. **Sauvegardez** la base de données et le stockage de blobs.
 3. **Notez votre version actuelle** (le tag que vous avez compilé ou le tag d'image que vous exécutez) afin de savoir vers quoi revenir.
 4. **Choisissez un moment calme.** Le redémarrage est court ; les appareils continuent de fonctionner localement et se synchronisent une fois le serveur de retour.
@@ -65,7 +65,7 @@ docker compose -f docker-compose.demo.yml up -d
 docker compose -f docker-compose.demo.yml logs -f server
 ```
 
-Pour un simple conteneur `docker run` : `docker pull ghcr.io/johnnycube/openbeehive-app:latest`, puis `docker rm -f openbeehive` et relancez la même commande `docker run`. Le volume nommé conserve vos données.
+Pour un simple conteneur `docker run` : `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, puis `docker rm -f openbeehive` et relancez la même commande `docker run`. Le volume nommé conserve vos données.
 
 **Compilée depuis les sources** (le `docker-compose.yml` du dépôt a une section `build:`, donc `pull` ne fait rien pour lui) :
 
@@ -78,7 +78,7 @@ docker compose logs -f server
 Les tags d'image sont `latest`, `X.Y` (dernier correctif d'une version mineure) et `X.Y.Z`. Pour des déploiements reproductibles, épinglez une version spécifique plutôt que `latest` :
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:X.Y.Z
+image: ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z
 ```
 
 ## Versionnage

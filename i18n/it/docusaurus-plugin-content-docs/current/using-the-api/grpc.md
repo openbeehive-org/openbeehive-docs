@@ -13,7 +13,7 @@ Ascolta con h2c, quindi gRPC funziona anche senza TLS davanti; in produzione
 ## Generare un client
 
 Il contratto si trova in
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto/openbeehive/v1)
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1)
 e viene compilato con [buf](https://buf.build). Il file `buf.gen.yaml` del
 repository genera Go (`protocolbuffers/go` + `connectrpc/go`) in
 `server/internal/gen` e TypeScript (`bufbuild/es` v2) in `app/src/lib/proto`.
@@ -26,8 +26,8 @@ tuo `buf.gen.yaml` ai plugin di cui hai bisogno.
 ```go
 import (
     "connectrpc.com/connect"
-    obv1 "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1"
-    "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
+    obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
+    "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
 
 client := openbeehivev1connect.NewApiaryServiceClient(http.DefaultClient, "https://bees.example.com")

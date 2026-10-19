@@ -13,7 +13,7 @@ Esegui un backup prima di aggiornare. Vedi [Backup](/self-hosting/backups).
 
 ## Prima di iniziare
 
-1. **Leggi le note di rilascio.** Controlla il [CHANGELOG](https://github.com/johnnycube/openbeehive-app/blob/main/CHANGELOG.md) e la [release su GitHub](https://github.com/johnnycube/openbeehive-app/releases) per la versione a cui stai passando. Annota nuova configurazione richiesta o passaggi manuali.
+1. **Leggi le note di rilascio.** Controlla il [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app/blob/main/CHANGELOG.md) e la [release su GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) per la versione a cui stai passando. Annota nuova configurazione richiesta o passaggi manuali.
 2. **Esegui il backup** del database e dell'archiviazione blob.
 3. **Annota la tua versione attuale** (il tag che hai compilato o il tag dell'immagine che esegui) così sai a cosa tornare in caso di rollback.
 4. **Scegli un momento tranquillo.** Il riavvio è breve; i dispositivi continuano a lavorare localmente e si sincronizzano una volta che il server è di nuovo attivo.
@@ -65,7 +65,7 @@ docker compose -f docker-compose.demo.yml up -d
 docker compose -f docker-compose.demo.yml logs -f server
 ```
 
-Per un container avviato con un semplice `docker run`: `docker pull ghcr.io/johnnycube/openbeehive-app:latest`, poi `docker rm -f openbeehive` ed esegui di nuovo lo stesso comando `docker run`. Il volume con nome conserva i tuoi dati.
+Per un container avviato con un semplice `docker run`: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, poi `docker rm -f openbeehive` ed esegui di nuovo lo stesso comando `docker run`. Il volume con nome conserva i tuoi dati.
 
 **Compilata dai sorgenti** (il `docker-compose.yml` del repository ha una sezione `build:`, quindi `pull` non fa nulla per esso):
 
@@ -78,7 +78,7 @@ docker compose logs -f server
 I tag dell'immagine sono `latest`, `X.Y` (patch più recente di una release minor) e `X.Y.Z`. Per deployment riproducibili fissa una versione specifica anziché `latest`:
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:X.Y.Z
+image: ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z
 ```
 
 ## Versioning

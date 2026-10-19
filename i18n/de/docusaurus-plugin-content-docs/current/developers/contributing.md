@@ -8,16 +8,16 @@ title: "Mitwirken & Dev-Setup"
 Openbeehive ist unter **AGPL-3.0** lizenziert. Mit deinem Beitrag erklärst du
 dich einverstanden, dass deine Arbeit unter derselben Lizenz veröffentlicht wird.
 Lies
-[`CONTRIBUTING.md`](https://github.com/johnnycube/openbeehive-app/blob/main/CONTRIBUTING.md)
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md)
 im App-Repository, bevor du einen Pull Request öffnest.
 
 ## Die Repositories
 
 | Repository | Inhalt |
 | --- | --- |
-| [`openbeehive-app`](https://github.com/johnnycube/openbeehive-app) | Die Anwendung: Proto-Vertrag, Go-Backend, SvelteKit-PWA |
-| [`openbeehive-site`](https://github.com/johnnycube/openbeehive-site) | Die Marketing-Website unter openbeehive.org |
-| [`openbeehive-docs`](https://github.com/johnnycube/openbeehive-docs) | Diese Dokumentations-Website (Docusaurus) |
+| [`openbeehive-app`](https://github.com/openbeehive-org/openbeehive-app) | Die Anwendung: Proto-Vertrag, Go-Backend, SvelteKit-PWA |
+| [`openbeehive-site`](https://github.com/openbeehive-org/openbeehive-site) | Die Marketing-Website unter openbeehive.org |
+| [`openbeehive-docs`](https://github.com/openbeehive-org/openbeehive-docs) | Diese Dokumentations-Website (Docusaurus) |
 
 ## Voraussetzungen
 
@@ -29,7 +29,7 @@ im App-Repository, bevor du einen Pull Request öffnest.
 ## Einrichten
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
 make proto        # generate Go + TypeScript stubs from proto/

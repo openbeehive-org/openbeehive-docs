@@ -28,7 +28,7 @@ Una vez compilado, el propio binario no tiene dependencias en tiempo de ejecucio
 ## Obtener el codigo
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 ```
 
