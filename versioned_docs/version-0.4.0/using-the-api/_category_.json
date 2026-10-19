@@ -1,0 +1,5 @@
+{
+  "label": "Using the API",
+  "position": 3,
+  "link": { "type": "generated-index", "description": "The Connect-RPC API the app talks to: which services are served, how to authenticate, and how to call them over HTTP/JSON or gRPC." }
+}

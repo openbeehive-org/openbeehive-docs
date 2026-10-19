@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "0.4.0",
+    "description": "The label for version 0.4.0"
+  },
+  "sidebar.tutorialSidebar.category.Using the app": {
+    "message": "Usare l'app",
+    "description": "The label for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the app.link.generated-index.description": {
+    "message": "Scopri come tenere i tuoi registri di apicoltura in Openbeehive — apiari, arnie, regine, ispezioni, raccolti e altro ancora.",
+    "description": "The generated-index page description for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting": {
+    "message": "Self-hosting",
+    "description": "The label for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting.link.generated-index.description": {
+    "message": "Esegui la tua istanza di Openbeehive — da un singolo binario a un deployment con Postgres + MinIO tramite Docker.",
+    "description": "The generated-index page description for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics": {
+    "message": "Nozioni di base sull'apicoltura",
+    "description": "The label for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics.link.generated-index.description": {
+    "message": "Un'introduzione pratica all'apicoltura — la colonia, l'anno apistico, le ispezioni, la sciamatura, la varroa e il raccolto del miele.",
+    "description": "The generated-index page description for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base": {
+    "message": "Base di conoscenza",
+    "description": "The label for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base.link.generated-index.description": {
+    "message": "Materiale di riferimento: glossario, tipi di arnie, colori di marcatura delle regine, malattie e parassiti, FAQ e risoluzione dei problemi.",
+    "description": "The generated-index page description for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers": {
+    "message": "Sviluppatori",
+    "description": "The label for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers.link.generated-index.description": {
+    "message": "Architettura e funzionamento interno: il modello di sincronizzazione offline-first, la progettazione di eventi/cronologia e i deep link QR.",
+    "description": "The generated-index page description for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API": {
+    "message": "Utilizzo dell'API",
+    "description": "The label for category 'Using the API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API.link.generated-index.description": {
+    "message": "L'API Connect-RPC con cui dialoga l'app: quali servizi sono esposti, come autenticarsi e come chiamarli tramite HTTP/JSON o gRPC.",
+    "description": "The generated-index page description for category 'Using the API' in sidebar 'tutorialSidebar'"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "0.4.0",
+    "description": "The label for version 0.4.0"
+  },
+  "sidebar.tutorialSidebar.category.Using the app": {
+    "message": "Uso de la aplicación",
+    "description": "The label for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the app.link.generated-index.description": {
+    "message": "Aprende a llevar tus registros de apicultura en Openbeehive: colmenares, colmenas, reinas, inspecciones, cosechas y mucho más.",
+    "description": "The generated-index page description for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting": {
+    "message": "Autoalojamiento",
+    "description": "The label for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting.link.generated-index.description": {
+    "message": "Ejecuta tu propia instancia de Openbeehive: desde un único binario hasta un despliegue con Postgres + MinIO mediante Docker.",
+    "description": "The generated-index page description for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics": {
+    "message": "Conceptos básicos de apicultura",
+    "description": "The label for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics.link.generated-index.description": {
+    "message": "Una introducción práctica a la cría de abejas: la colonia, el año apícola, las inspecciones, la enjambrazón, la varroa y la cosecha de miel.",
+    "description": "The generated-index page description for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base": {
+    "message": "Base de conocimientos",
+    "description": "The label for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base.link.generated-index.description": {
+    "message": "Material de referencia: glosario, tipos de colmena, colores de marcado de reinas, enfermedades y plagas, preguntas frecuentes y resolución de problemas.",
+    "description": "The generated-index page description for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers": {
+    "message": "Desarrolladores",
+    "description": "The label for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers.link.generated-index.description": {
+    "message": "Arquitectura e interioridades: el modelo de sincronización offline-first, el diseño de eventos/historial y los enlaces profundos por QR.",
+    "description": "The generated-index page description for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API": {
+    "message": "Uso de la API",
+    "description": "The label for category 'Using the API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API.link.generated-index.description": {
+    "message": "La API Connect-RPC con la que habla la aplicación: qué servicios se sirven, cómo autenticarse y cómo llamarlos mediante HTTP/JSON o gRPC.",
+    "description": "The generated-index page description for category 'Using the API' in sidebar 'tutorialSidebar'"
+  }
+}

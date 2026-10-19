@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "0.4.0",
+    "description": "The label for version 0.4.0"
+  },
+  "sidebar.tutorialSidebar.category.Using the app": {
+    "message": "App verwenden",
+    "description": "The label for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the app.link.generated-index.description": {
+    "message": "Erfahren Sie, wie Sie Ihre Imkerei-Aufzeichnungen in Openbeehive führen — Bienenstände, Bienenstöcke, Königinnen, Durchsichten, Ernten und mehr.",
+    "description": "The generated-index page description for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting": {
+    "message": "Selbst hosten",
+    "description": "The label for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting.link.generated-index.description": {
+    "message": "Betreiben Sie Ihre eigene Openbeehive-Instanz — von einer einzelnen Binärdatei bis hin zu einem Postgres- + MinIO-Deployment mit Docker.",
+    "description": "The generated-index page description for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics": {
+    "message": "Imkerei-Grundlagen",
+    "description": "The label for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics.link.generated-index.description": {
+    "message": "Eine praktische Einführung in die Bienenhaltung — das Volk, das Imkerjahr, Durchsichten, Schwärmen, Varroa und die Honigernte.",
+    "description": "The generated-index page description for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base": {
+    "message": "Wissensdatenbank",
+    "description": "The label for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base.link.generated-index.description": {
+    "message": "Referenzmaterial: Glossar, Beutentypen, Königinnen-Markierungsfarben, Krankheiten und Schädlinge, FAQs und Fehlerbehebung.",
+    "description": "The generated-index page description for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers": {
+    "message": "Entwickler",
+    "description": "The label for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers.link.generated-index.description": {
+    "message": "Architektur und Interna: das Offline-First-Synchronisationsmodell, das Event-/Verlaufsdesign und QR-Deeplinks.",
+    "description": "The generated-index page description for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API": {
+    "message": "Die API verwenden",
+    "description": "The label for category 'Using the API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API.link.generated-index.description": {
+    "message": "Die Connect-RPC API, mit der die App spricht: welche Dienste bereitgestellt werden, wie du dich authentifizierst und wie du sie über HTTP/JSON oder gRPC aufrufst.",
+    "description": "The generated-index page description for category 'Using the API' in sidebar 'tutorialSidebar'"
+  }
+}
