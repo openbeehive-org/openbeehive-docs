@@ -26,7 +26,7 @@ function VersionRows({versions}: {versions: Version[]}) {
           </td>
           <td>
             {version.name === 'current' ? (
-              <span>—</span>
+              <span>-</span>
             ) : (
               <Link href={changelogUrl(version)}>
                 <Translate id="versions.link.notes">Release notes</Translate>
