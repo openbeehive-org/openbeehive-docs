@@ -75,7 +75,7 @@ Auf iPhone und iPad kann der App-interne Scanner eingeschränkt sein. Wenn das S
 
 ## Einen guten Fehlerbericht einreichen
 
-Wenn nichts davon hilft, eröffne bitte ein Issue unter [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app). Ein klarer Bericht führt zu einer schnelleren Behebung. Versuche, Folgendes anzugeben:
+Wenn nichts davon hilft, eröffne bitte ein Issue unter [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). Ein klarer Bericht führt zu einer schnelleren Behebung. Versuche, Folgendes anzugeben:
 
 | Detail | Beispiel |
 | --- | --- |

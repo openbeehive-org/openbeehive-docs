@@ -28,7 +28,7 @@ Una volta compilato, il binario in sé non ha dipendenze a runtime - puoi copiar
 ## Ottieni il codice
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 ```
 

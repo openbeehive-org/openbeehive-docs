@@ -12,7 +12,7 @@ avviare lo stack cloud completo (Postgres e MinIO) con Docker Compose.
 L'immagine ufficiale è pubblicata nel GitHub Container Registry:
 
 ```text
-ghcr.io/johnnycube/openbeehive-app:latest
+ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 La stessa immagine funziona per entrambi i profili di deployment. Quale dei due
@@ -42,7 +42,7 @@ docker run -d \
   -e BEEHIVE_BLOB_BACKEND=fs \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -e BEEHIVE_SESSION_SECRET="$(openssl rand -base64 32)" \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Alcune note sui flag:
@@ -77,7 +77,7 @@ docker run -d \
   -p 8080:8080 \
   -v openbeehive-data:/data \
   --env-file openbeehive.env \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## Il profilo cloud con Compose
@@ -90,7 +90,7 @@ Il repository include un `docker-compose.yml` che collega i tre servizi
 insieme. Clona il repo, copia l'ambiente di esempio e avvialo:
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 cp .env.example .env   # poi modifica .env (vedi sotto)
 docker compose up -d
@@ -100,7 +100,7 @@ docker compose up -d
 
 | Servizio | Immagine | Ruolo |
 | --- | --- | --- |
-| `server` | `ghcr.io/johnnycube/openbeehive-app:latest` | Il backend e la PWA di Openbeehive, in ascolto su `:8080`. |
+| `server` | `ghcr.io/openbeehive-org/openbeehive-app:latest` | Il backend e la PWA di Openbeehive, in ascolto su `:8080`. |
 | `postgres` | `postgres` | Il database relazionale per tutti i registri sincronizzati. |
 | `minio` | `minio/minio` | Object storage compatibile con S3 per foto e altri blob. |
 
@@ -160,7 +160,7 @@ healthcheck e valori predefiniti sensati che questo frammento omette.
 ```docker
 services:
   server:
-    image: ghcr.io/johnnycube/openbeehive-app:latest
+    image: ghcr.io/openbeehive-org/openbeehive-app:latest
     ports:
       - "8080:8080"
     env_file: .env

@@ -14,7 +14,7 @@ il server, così funziona in apiario con o senza segnale.
 - 🐝 **Usa l'app:** [app.openbeehive.org](https://app.openbeehive.org)
 - 🍯 **Prova la demo:** [demo.openbeehive.org](https://demo.openbeehive.org)
 - 🌐 **Home del progetto:** [openbeehive.org](https://openbeehive.org)
-- 💻 **Codice sorgente:** [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app)
+- 💻 **Codice sorgente:** [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 
 ## Da dove iniziare
 
@@ -29,5 +29,5 @@ il server, così funziona in apiario con o senza segnale.
 :::note Versione iniziale
 Questa documentazione riguarda Openbeehive **v0.1.0**, la prima versione pubblica.
 Sta crescendo rapidamente — se manca qualcosa o non è chiaro, per favore
-[apri una issue](https://github.com/johnnycube/openbeehive-docs/issues).
+[apri una issue](https://github.com/openbeehive-org/openbeehive-docs/issues).
 :::

@@ -7,7 +7,7 @@ title: "Panoramica delle API"
 
 Il server espone un'API [Connect-RPC](https://connectrpc.com/) definita in
 Protocol Buffers sotto
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto/openbeehive/v1).
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1).
 Ogni RPC è raggiungibile tramite HTTP/JSON semplice, gRPC e gRPC-Web dallo stesso
 URL. L'app stessa usa solo `SyncService`; gli altri servizi esistono per
 script, sensori e integrazioni.

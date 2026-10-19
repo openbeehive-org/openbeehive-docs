@@ -40,7 +40,7 @@ Todo lo demas tiene valores por defecto sensatos para el alojamiento propio. La 
 ### Compilar y ejecutar
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Generate the Connect-RPC code, then build the server
@@ -63,7 +63,7 @@ En modo selfhost, tus registros van a un archivo SQLite local y las fotos subida
 
 ## Opcion B — Docker
 
-Si tienes Docker instalado, esta es la ruta mas rapida de todas. La imagen publicada es `ghcr.io/johnnycube/openbeehive-app:latest`.
+Si tienes Docker instalado, esta es la ruta mas rapida de todas. La imagen publicada es `ghcr.io/openbeehive-org/openbeehive-app:latest`.
 
 ```bash
 docker run -d \
@@ -72,7 +72,7 @@ docker run -d \
   -e BEEHIVE_DEPLOYMENT_PROFILE=selfhost \
   -e BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080 \
   -v openbeehive-data:/data \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 El volumen `-v openbeehive-data:/data` mantiene tu base de datos SQLite y tus blobs fuera del contenedor, de modo que sobreviven a las actualizaciones y reinicios. Una vez en marcha, abre `http://localhost:8080`.

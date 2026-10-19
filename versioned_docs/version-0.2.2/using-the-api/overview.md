@@ -64,9 +64,9 @@ already know from the app:
 :::note Implementation status (v0.1.0)
 `ApiaryService` and `SyncService` are fully wired server-side today. The other
 services are defined in the contract and follow the same shape; they are being
-filled in. Check the [contract](https://github.com/johnnycube/openbeehive-app/tree/main/proto)
+filled in. Check the [contract](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto)
 for the current source of truth, and the
-[release notes](https://github.com/johnnycube/openbeehive-app/releases) for what's
+[release notes](https://github.com/openbeehive-org/openbeehive-app/releases) for what's
 live.
 :::
 

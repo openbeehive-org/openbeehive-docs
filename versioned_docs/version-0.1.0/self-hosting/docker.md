@@ -12,7 +12,7 @@ cloud stack (Postgres and MinIO) with Docker Compose.
 The official image is published to the GitHub Container Registry:
 
 ```text
-ghcr.io/johnnycube/openbeehive-app:latest
+ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 The same image works for both deployment profiles. Which one you get is decided
@@ -42,7 +42,7 @@ docker run -d \
   -e BEEHIVE_BLOB_BACKEND=fs \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -e BEEHIVE_SESSION_SECRET="$(openssl rand -base64 32)" \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 A few notes on the flags:
@@ -78,7 +78,7 @@ docker run -d \
   -p 8080:8080 \
   -v openbeehive-data:/data \
   --env-file openbeehive.env \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## The cloud profile with Compose
@@ -91,7 +91,7 @@ The repository ships a `docker-compose.yml` that wires the three services
 together. Clone the repo, copy the example environment, and bring it up:
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 cp .env.example .env   # then edit .env (see below)
 docker compose up -d
@@ -101,7 +101,7 @@ docker compose up -d
 
 | Service | Image | Role |
 | --- | --- | --- |
-| `server` | `ghcr.io/johnnycube/openbeehive-app:latest` | The Openbeehive backend and PWA, listening on `:8080`. |
+| `server` | `ghcr.io/openbeehive-org/openbeehive-app:latest` | The Openbeehive backend and PWA, listening on `:8080`. |
 | `postgres` | `postgres` | The relational database for all synced records. |
 | `minio` | `minio/minio` | S3-compatible object storage for photos and other blobs. |
 
@@ -161,7 +161,7 @@ healthchecks and sensible defaults this snippet omits.
 ```docker
 services:
   server:
-    image: ghcr.io/johnnycube/openbeehive-app:latest
+    image: ghcr.io/openbeehive-org/openbeehive-app:latest
     ports:
       - "8080:8080"
     env_file: .env

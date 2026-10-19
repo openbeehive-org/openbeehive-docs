@@ -14,7 +14,7 @@ the bee yard with or without a signal.
 - 🐝 **Use the app:** [app.openbeehive.org](https://app.openbeehive.org)
 - 🍯 **Try the demo:** [demo.openbeehive.org](https://demo.openbeehive.org)
 - 🌐 **Project home:** [openbeehive.org](https://openbeehive.org)
-- 💻 **Source code:** [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app)
+- 💻 **Source code:** [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 
 ## Where to start
 
@@ -29,5 +29,5 @@ the bee yard with or without a signal.
 :::note Early release
 These docs cover Openbeehive **v0.1.0**, the first public release. They're
 growing fast — if something is missing or unclear, please
-[open an issue](https://github.com/johnnycube/openbeehive-docs/issues).
+[open an issue](https://github.com/openbeehive-org/openbeehive-docs/issues).
 :::

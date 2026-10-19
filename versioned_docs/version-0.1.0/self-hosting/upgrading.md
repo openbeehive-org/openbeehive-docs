@@ -17,7 +17,7 @@ Always take a backup before upgrading. It only takes a moment and it is the one 
 
 A good upgrade takes five minutes and a little reading:
 
-1. **Read the release notes.** Check the [CHANGELOG](https://github.com/johnnycube/openbeehive-app) and the GitHub release for the version you are moving to. Note any breaking changes, new required configuration, or manual steps.
+1. **Read the release notes.** Check the [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app) and the GitHub release for the version you are moving to. Note any breaking changes, new required configuration, or manual steps.
 2. **Back up** your database and blob storage.
 3. **Note your current version** so you know what to roll back to if needed.
 4. **Pick a quiet moment.** Upgrades involve a short restart. Because the app is offline-first, anyone using it keeps working locally and syncs once the server is back.
@@ -76,10 +76,10 @@ docker compose up -d
 docker compose logs -f openbeehive
 ```
 
-The published image is `ghcr.io/johnnycube/openbeehive-app:latest`. For reproducible deployments, pin a specific version tag rather than `latest`, so you always know exactly what is running.
+The published image is `ghcr.io/openbeehive-org/openbeehive-app:latest`. For reproducible deployments, pin a specific version tag rather than `latest`, so you always know exactly what is running.
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:v0.1.0
+image: ghcr.io/openbeehive-org/openbeehive-app:v0.1.0
 ```
 
 See [Docker](/self-hosting/docker) for the full Compose setup.

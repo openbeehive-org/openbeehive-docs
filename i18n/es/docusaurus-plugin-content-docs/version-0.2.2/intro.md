@@ -14,7 +14,7 @@ sincroniza con el servidor, de modo que funciona en el colmenar con o sin señal
 - 🐝 **Usa la aplicación:** [app.openbeehive.org](https://app.openbeehive.org)
 - 🍯 **Prueba la demo:** [demo.openbeehive.org](https://demo.openbeehive.org)
 - 🌐 **Sitio del proyecto:** [openbeehive.org](https://openbeehive.org)
-- 💻 **Código fuente:** [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app)
+- 💻 **Código fuente:** [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 
 ## Por dónde empezar
 
@@ -29,5 +29,5 @@ sincroniza con el servidor, de modo que funciona en el colmenar con o sin señal
 :::note Lanzamiento temprano
 Esta documentación cubre Openbeehive **v0.1.0**, la primera versión pública. Está
 creciendo rápidamente: si falta algo o no queda claro, por favor
-[abre una incidencia](https://github.com/johnnycube/openbeehive-docs/issues).
+[abre una incidencia](https://github.com/openbeehive-org/openbeehive-docs/issues).
 :::

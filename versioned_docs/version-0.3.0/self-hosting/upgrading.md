@@ -13,7 +13,7 @@ Take a backup before upgrading. See [Backups](/self-hosting/backups).
 
 ## Before you start
 
-1. **Read the release notes.** Check the [CHANGELOG](https://github.com/johnnycube/openbeehive-app/blob/main/CHANGELOG.md) and the [GitHub release](https://github.com/johnnycube/openbeehive-app/releases) for the version you are moving to. Note new required configuration or manual steps.
+1. **Read the release notes.** Check the [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app/blob/main/CHANGELOG.md) and the [GitHub release](https://github.com/openbeehive-org/openbeehive-app/releases) for the version you are moving to. Note new required configuration or manual steps.
 2. **Back up** the database and blob storage.
 3. **Note your current version** (the tag you built or the image tag you run) so you know what to roll back to.
 4. **Pick a quiet moment.** The restart is short; devices keep working locally and sync once the server is back.
@@ -65,7 +65,7 @@ docker compose -f docker-compose.demo.yml up -d
 docker compose -f docker-compose.demo.yml logs -f server
 ```
 
-For a plain `docker run` container: `docker pull ghcr.io/johnnycube/openbeehive-app:latest`, then `docker rm -f openbeehive` and run the same `docker run` command again. The named volume keeps your data.
+For a plain `docker run` container: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, then `docker rm -f openbeehive` and run the same `docker run` command again. The named volume keeps your data.
 
 **Built from source** (the repository's `docker-compose.yml` has a `build:` section, so `pull` does nothing for it):
 
@@ -78,7 +78,7 @@ docker compose logs -f server
 Image tags are `latest`, `X.Y` (newest patch of a minor release) and `X.Y.Z`. For reproducible deployments pin a specific version rather than `latest`:
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:X.Y.Z
+image: ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z
 ```
 
 ## Versioning
