@@ -9,13 +9,25 @@ application and marketing site live in
 
 ## Development setup
 
-You'll need **Node 24+**.
+- Node.js at the version in `.nvmrc` (`nvm use`), then `npm ci`. `.npmrc` sets
+  `ignore-scripts=true`; the build needs no install scripts.
+- `npm run tools` installs the pinned `fleetlint` and `gitleaks` (needs Go).
+- `prek install` sets up the git hooks in `.pre-commit-config.yaml`: hygiene,
+  secret scan, Prettier, ESLint, tsc and fleetlint on commit, conventional
+  commit messages, `npm run check` before push.
 
 ```bash
-npm install
 npm start          # local dev server with live reload
 npm run build      # static output in ./build (any static host / CDN)
+npm run check      # lint, site build, audit, fleetlint; CI runs the same
 ```
+
+`npm run check` must pass: Prettier, ESLint and tsc, the site build (every
+page of every version and locale compiles), npm advisories via audit-ci, the
+license allowlist, unused dependencies (knip), gitleaks and fleetlint.
+Prettier formats code and config only; MDX prose and the generated i18n files
+are not reformatted. Commit messages follow Conventional Commits
+(`docs:`, `fix:`, `chore:` ...).
 
 ## Writing docs
 
@@ -54,7 +66,7 @@ npm run docusaurus docs:version <app version>
 ## Pull requests
 
 1. Fork and branch from `main`.
-2. Make sure it builds with no broken links (`npm run build`).
+2. Make sure `npm run check` passes (it builds with no broken links).
 3. Reference any related issue (`Closes #123`).
 
 ## License

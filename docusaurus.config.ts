@@ -131,15 +131,27 @@ const config: Config = {
           items: [
             {label: 'App', href: 'https://app.openbeehive.org'},
             {label: 'Website', href: 'https://openbeehive.org'},
-            {label: 'GitHub', href: 'https://github.com/openbeehive-org/openbeehive-app'},
+            {
+              label: 'GitHub',
+              href: 'https://github.com/openbeehive-org/openbeehive-app',
+            },
           ],
         },
         {
           title: 'Community',
           items: [
-            {label: 'Discussions', href: 'https://github.com/openbeehive-org/openbeehive-app/discussions'},
-            {label: 'Issues', href: 'https://github.com/openbeehive-org/openbeehive-docs/issues'},
-            {label: 'License (AGPL-3.0)', href: 'https://github.com/openbeehive-org/openbeehive-docs/blob/main/LICENSE'},
+            {
+              label: 'Discussions',
+              href: 'https://github.com/openbeehive-org/openbeehive-app/discussions',
+            },
+            {
+              label: 'Issues',
+              href: 'https://github.com/openbeehive-org/openbeehive-docs/issues',
+            },
+            {
+              label: 'License (AGPL-3.0)',
+              href: 'https://github.com/openbeehive-org/openbeehive-docs/blob/main/LICENSE',
+            },
           ],
         },
       ],

@@ -40,17 +40,21 @@ function VersionRows({versions}: {versions: Version[]}) {
 }
 
 export default function Versions(): React.JSX.Element {
-  const versions = useVersions();
-  const latest = useLatestVersion();
+  const versions = useVersions(undefined);
+  const latest = useLatestVersion(undefined);
   const next = versions.find((v) => v.name === 'current');
   const past = versions.filter((v) => v !== latest && v.name !== 'current');
 
   return (
     <Layout
-      title={translate({id: 'versions.title', message: 'Documentation versions'})}
+      title={translate({
+        id: 'versions.title',
+        message: 'Documentation versions',
+      })}
       description={translate({
         id: 'versions.description',
-        message: 'Every Openbeehive release keeps its own copy of the documentation.',
+        message:
+          'Every Openbeehive release keeps its own copy of the documentation.',
       })}>
       <main className="container margin-vert--lg">
         <Heading as="h1">

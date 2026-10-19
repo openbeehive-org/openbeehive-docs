@@ -1,0 +1,75 @@
+// Renovate configuration for github.com/openbeehive-org/openbeehive-docs
+// Validate locally: npx --yes --package renovate -- renovate-config-validator renovate.json5
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+
+  extends: [
+    // config:recommended plus Actions digest pinning and config migration PRs
+    'config:best-practices',
+    ':semanticCommits',
+    ':semanticCommitTypeAll(chore)',
+    'schedule:earlyMondays',
+  ],
+
+  // Hook revisions in .pre-commit-config.yaml
+  'pre-commit': {
+    enabled: true,
+  },
+
+  timezone: 'Europe/Berlin',
+  labels: ['dependencies'],
+
+  prConcurrentLimit: 10,
+  prHourlyLimit: 2,
+
+  // Never propose a release younger than 3 days; security fixes bypass this
+  minimumReleaseAge: '3 days',
+  internalChecksFilter: 'strict',
+
+  // Tool pins in the package.json "tools" script
+  customManagers: [
+    {
+      customType: 'regex',
+      managerFilePatterns: ['/^package\\.json$/'],
+      matchStrings: [
+        'go install (?<depName>github\\.com/fleetlint/fleetlint)/cmd/fleetlint@(?<currentValue>v[0-9][^\\s"&]*)',
+      ],
+      datasourceTemplate: 'go',
+    },
+    {
+      customType: 'regex',
+      managerFilePatterns: ['/^package\\.json$/'],
+      matchStrings: [
+        'go install github\\.com/zricethezav/gitleaks/v8@(?<currentValue>v[0-9][^\\s"&]*)',
+      ],
+      depNameTemplate: 'gitleaks/gitleaks',
+      datasourceTemplate: 'github-releases',
+    },
+  ],
+
+  packageRules: [
+    {
+      description: 'Group non-major npm updates into one weekly PR.',
+      matchManagers: ['npm'],
+      matchUpdateTypes: ['minor', 'patch'],
+      groupName: 'npm dependencies (non-major)',
+    },
+    {
+      description: 'Actions digest/non-major bumps are low risk behind the check workflow.',
+      matchManagers: ['github-actions'],
+      matchUpdateTypes: ['minor', 'patch', 'pin', 'digest'],
+      automerge: true,
+      platformAutomerge: true,
+    },
+  ],
+
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ['before 6am on the first day of the month'],
+  },
+
+  osvVulnerabilityAlerts: true,
+  vulnerabilityAlerts: {
+    labels: ['security'],
+  },
+}
