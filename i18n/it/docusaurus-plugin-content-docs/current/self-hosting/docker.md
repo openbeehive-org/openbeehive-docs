@@ -15,7 +15,21 @@ ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z     # a specific release
 ghcr.io/openbeehive-org/openbeehive-app:X.Y       # newest patch of a minor release
 ```
 
-La stessa immagine serve entrambi i profili di deployment; l'ambiente che passi decide quale ottieni.
+La stessa immagine serve entrambi i profili di deployment; l'ambiente che passi decide quale ottieni. Dalla 0.4.0 il container viene eseguito come utente non privilegiato `65532` con `/data` come directory di lavoro.
+
+### Verificare un'immagine di release
+
+Ogni immagine di release è firmata con [cosign](https://docs.sigstore.dev/cosign/verifying/verify/) (keyless, legata all'identità del workflow di release), porta con sé un'attestazione di build provenance di GitHub e include un SBOM nella [release su GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Per verificare che l'immagine che scarichi sia quella compilata dal workflow di release:
+
+```bash
+cosign verify ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp '^https://github.com/openbeehive-org/openbeehive-app/\.github/workflows/release\.yml@.*'
+
+gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owner openbeehive-org
+```
+
+Entrambi i comandi stampano l'identità di firma e il commit da cui è stata compilata l'immagine. Le immagini pubblicate prima della 0.4.0 non sono firmate.
 
 :::tip
 Per un'istanza a utente singolo su una macchina, il [binario singolo](/self-hosting/single-binary) è ancora più semplice di Docker. Ricorri a Compose quando vuoi Postgres e archiviazione in stile S3.
@@ -38,7 +52,8 @@ docker run -d \
 ```
 
 - `-p 8080:8080` mappa la porta di ascolto del container (`BEEHIVE_ADDR=:8080`) sull'host.
-- `-v openbeehive-data:/data` mantiene i tuoi dati su un volume con nome. Fa il suo lavoro solo insieme alle righe `BEEHIVE_DATABASE_DSN` e `BEEHIVE_BLOB_DIR`: l'immagine non ha una directory di lavoro, quindi i valori predefiniti (`openbeehive.db`, `./data/blobs`) si risolvono nella root del container e vanno persi quando il container viene rimosso.
+- `-v openbeehive-data:/data` mantiene i tuoi dati su un volume con nome. Docker crea il volume con la proprietà di `/data` nell'immagine, così l'utente non privilegiato del server può scrivervi. Se invece monti una directory dell'host con un bind mount (`-v /srv/openbeehive:/data`), deve appartenere all'uid `65532`: `sudo chown -R 65532:65532 /srv/openbeehive`.
+- Le righe `BEEHIVE_DATABASE_DSN` e `BEEHIVE_BLOB_DIR` puntano esplicitamente il database e le foto caricate al volume. I valori predefiniti (`openbeehive.db`, `./data/blobs`) sono relativi alla directory di lavoro, che dalla 0.4.0 è `/data`, ma scrivere i percorsi per esteso rende il comando inequivocabile e coerente con le istruzioni di backup.
 - `BEEHIVE_PUBLIC_BASE_URL` deve essere l'indirizzo che gli utenti raggiungono, schema incluso. Il server lo usa per gli URL di redirect OIDC e per i link di invito e di verifica.
 
 Senza alcun metodo di accesso abilitato (il valore predefinito di selfhost) l'istanza viene eseguita in modalità utente singolo. Per aggiungere l'autenticazione, imposta `BEEHIVE_SESSION_SECRET` (generalo una volta con `openssl rand -base64 32` e mantienilo stabile; cambiarlo disconnette tutti) più le variabili del metodo che vuoi. L'accesso con email/password richiede anche `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD`, altrimenti il server rifiuta di avviarsi. Vedi [Autenticazione](/self-hosting/authentication).

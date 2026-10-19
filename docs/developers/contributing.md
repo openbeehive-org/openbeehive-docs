@@ -20,10 +20,10 @@ in the app repository before opening a pull request.
 
 ## Prerequisites
 
-- **Go 1.25+** for the backend
-- **Node 24+** for the SvelteKit app (the Dockerfile builds with `node:24-alpine`)
-- **buf** for generating code from the `.proto` files
-- GNU Make; on Windows use WSL2
+- **Go 1.27+** for the backend (the exact version is the `go` line in `server/go.mod`)
+- **Node 24+** for the SvelteKit app (`app/.nvmrc` names the version the image builds with)
+- **buf** and the other gate tools: `make tools` installs the pinned versions into `$(go env GOPATH)/bin`
+- [prek](https://github.com/j178/prek) for the git hooks, GNU Make; on Windows use WSL2
 
 ## Getting set up
 
@@ -31,10 +31,18 @@ in the app repository before opening a pull request.
 git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
+make tools        # pinned golangci-lint, govulncheck, go-licenses, fleetlint, buf
+prek install      # git hooks: formatters and linters on commit, make check on push
 make proto        # generate Go + TypeScript stubs from proto/
 make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
 make dev-app      # terminal 2: Vite dev server on :5173
 ```
+
+`make check` is the definition of green and exactly what CI runs: proto lint
+and breaking-change check, lint (golangci-lint, go vet, prettier, eslint,
+svelte-check), tests, coverage gates, audit (govulncheck, licenses, npm
+audit, gitleaks), build and fleetlint. `make check-fast` is the quick subset
+the pre-commit hook runs; `make help` lists every target.
 
 `make run-server` reads its configuration from the environment or a `.env`
 file in the repo root (copy `.env.example`). The defaults give you SQLite
@@ -88,6 +96,6 @@ the list.
 
 1. Fork and branch.
 2. Run `make proto` if you touched a `.proto`.
-3. Run the Go tests (`cd server && go test ./...`) and the app checks.
+3. Run `make check`; it is what CI runs.
 4. Keep the PR focused and describe what changes and why.
 5. Call out merge-logic, sync or schema changes explicitly.

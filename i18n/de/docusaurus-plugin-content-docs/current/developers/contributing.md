@@ -21,10 +21,10 @@ im App-Repository, bevor du einen Pull Request öffnest.
 
 ## Voraussetzungen
 
-- **Go 1.25+** für das Backend
-- **Node 24+** für die SvelteKit-App (das Dockerfile baut mit `node:24-alpine`)
-- **buf** zum Generieren von Code aus den `.proto`-Dateien
-- GNU Make; unter Windows nutze WSL2
+- **Go 1.27+** für das Backend (die genaue Version ist die `go`-Zeile in `server/go.mod`)
+- **Node 24+** für die SvelteKit-App (`app/.nvmrc` nennt die Version, mit der das Image baut)
+- **buf** und die anderen Gate-Tools: `make tools` installiert die gepinnten Versionen nach `$(go env GOPATH)/bin`
+- [prek](https://github.com/j178/prek) für die Git-Hooks, GNU Make; unter Windows nutze WSL2
 
 ## Einrichten
 
@@ -32,10 +32,18 @@ im App-Repository, bevor du einen Pull Request öffnest.
 git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
+make tools        # pinned golangci-lint, govulncheck, go-licenses, fleetlint, buf
+prek install      # git hooks: formatters and linters on commit, make check on push
 make proto        # generate Go + TypeScript stubs from proto/
 make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
 make dev-app      # terminal 2: Vite dev server on :5173
 ```
+
+`make check` ist die Definition von grün und genau das, was CI ausführt: Proto-Lint
+und Breaking-Change-Prüfung, Lint (golangci-lint, go vet, prettier, eslint,
+svelte-check), Tests, Coverage-Gates, Audit (govulncheck, Lizenzen, npm
+audit, gitleaks), Build und fleetlint. `make check-fast` ist die schnelle Teilmenge,
+die der Pre-Commit-Hook ausführt; `make help` listet jedes Target auf.
 
 `make run-server` liest seine Konfiguration aus der Umgebung oder einer
 `.env`-Datei im Repo-Root (kopiere `.env.example`). Die Vorgaben geben dir
@@ -91,6 +99,6 @@ Dienst aus den Protos ist auf dem Server registriert; die Liste steht unter
 
 1. Forken und einen Branch anlegen.
 2. `make proto` ausführen, falls du eine `.proto` berührt hast.
-3. Die Go-Tests (`cd server && go test ./...`) und die App-Checks ausführen.
+3. `make check` ausführen; es ist das, was CI ausführt.
 4. Den PR fokussiert halten und beschreiben, was sich ändert und warum.
 5. Änderungen an Merge-Logik, Sync oder Schema ausdrücklich benennen.

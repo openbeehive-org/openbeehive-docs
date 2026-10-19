@@ -20,10 +20,10 @@ en el repositorio de la aplicación antes de abrir un pull request.
 
 ## Requisitos previos
 
-- **Go 1.25+** para el backend
-- **Node 24+** para la aplicación SvelteKit (el Dockerfile compila con `node:24-alpine`)
-- **buf** para generar código a partir de los archivos `.proto`
-- GNU Make; en Windows usa WSL2
+- **Go 1.27+** para el backend (la versión exacta es la línea `go` de `server/go.mod`)
+- **Node 24+** para la aplicación SvelteKit (`app/.nvmrc` indica la versión con la que se compila la imagen)
+- **buf** y las demás herramientas de verificación: `make tools` instala las versiones fijadas en `$(go env GOPATH)/bin`
+- [prek](https://github.com/j178/prek) para los hooks de git, GNU Make; en Windows usa WSL2
 
 ## Cómo configurarlo
 
@@ -31,10 +31,19 @@ en el repositorio de la aplicación antes de abrir un pull request.
 git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
+make tools        # pinned golangci-lint, govulncheck, go-licenses, fleetlint, buf
+prek install      # git hooks: formatters and linters on commit, make check on push
 make proto        # generate Go + TypeScript stubs from proto/
 make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
 make dev-app      # terminal 2: Vite dev server on :5173
 ```
+
+`make check` es la definición de «en verde» y exactamente lo que ejecuta la CI:
+lint de protos y comprobación de cambios incompatibles, lint (golangci-lint,
+go vet, prettier, eslint, svelte-check), pruebas, umbrales de cobertura,
+auditoría (govulncheck, licencias, npm audit, gitleaks), compilación y
+fleetlint. `make check-fast` es el subconjunto rápido que ejecuta el hook de
+pre-commit; `make help` lista todos los objetivos.
 
 `make run-server` lee su configuración del entorno o de un archivo `.env` en la
 raíz del repositorio (copia `.env.example`). Los valores por defecto te dan
@@ -90,6 +99,6 @@ servicios de los protos están registrados en el servidor; consulta
 
 1. Haz un fork y crea una rama.
 2. Ejecuta `make proto` si tocaste un `.proto`.
-3. Ejecuta las pruebas de Go (`cd server && go test ./...`) y las comprobaciones de la aplicación.
+3. Ejecuta `make check`; es lo que ejecuta la CI.
 4. Mantén el PR enfocado y describe qué cambia y por qué.
 5. Indica explícitamente los cambios de lógica de fusión, sincronización o esquema.

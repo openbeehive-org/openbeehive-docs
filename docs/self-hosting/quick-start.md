@@ -33,8 +33,8 @@ Everything else has defaults for self-hosting. The full list is in [Configuratio
 
 ### Prerequisites
 
-- Go 1.25 or newer
-- Node 24 or newer
+- Go 1.27 or newer
+- Node 24 or newer (the published image builds with Node 26)
 - [buf](https://buf.build/docs/installation)
 
 ### Build and run

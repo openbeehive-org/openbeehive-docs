@@ -65,7 +65,9 @@ non salverà le tue foto. Includi `BEEHIVE_BLOB_DIR` nella tua routine di backup
 ### Nota su Docker
 
 Se esegui l'[immagine Docker](/self-hosting/docker), monta un volume così i blob
-sopravvivono ai riavvii e agli aggiornamenti del container:
+sopravvivono ai riavvii e agli aggiornamenti del container. Il container viene
+eseguito come uid `65532`; una directory dell'host montata con bind mount deve
+appartenere a quell'utente:
 
 ```bash
 docker run -d \

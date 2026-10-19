@@ -33,8 +33,8 @@ Alles andere hat Standardwerte für das Self-Hosting. Die vollständige Liste fi
 
 ### Voraussetzungen
 
-- Go 1.25 oder neuer
-- Node 24 oder neuer
+- Go 1.27 oder neuer
+- Node 24 oder neuer (das veröffentlichte Image baut mit Node 26)
 - [buf](https://buf.build/docs/installation)
 
 ### Bauen und ausführen

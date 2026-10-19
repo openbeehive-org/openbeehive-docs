@@ -33,8 +33,8 @@ Tutto il resto ha valori predefiniti per il self-hosting. L'elenco completo si t
 
 ### Prerequisiti
 
-- Go 1.25 o più recente
-- Node 24 o più recente
+- Go 1.27 o più recente
+- Node 24 o più recente (l'immagine pubblicata viene compilata con Node 26)
 - [buf](https://buf.build/docs/installation)
 
 ### Compila ed esegui

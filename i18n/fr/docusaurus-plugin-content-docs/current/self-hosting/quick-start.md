@@ -33,8 +33,8 @@ Tout le reste possède des valeurs par défaut pour l'auto-hébergement. La list
 
 ### Prérequis
 
-- Go 1.25 ou plus récent
-- Node 24 ou plus récent
+- Go 1.27 ou plus récent
+- Node 24 ou plus récent (l'image publiée compile avec Node 26)
 - [buf](https://buf.build/docs/installation)
 
 ### Compiler et lancer

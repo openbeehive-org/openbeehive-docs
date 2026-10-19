@@ -65,7 +65,8 @@ will not save your photos. Include `BEEHIVE_BLOB_DIR` in your backup routine. Se
 ### Docker note
 
 If you run the [Docker image](/self-hosting/docker), mount a volume so blobs
-survive container restarts and upgrades:
+survive container restarts and upgrades. The container runs as uid `65532`;
+a bind-mounted host directory must be owned by that user:
 
 ```bash
 docker run -d \

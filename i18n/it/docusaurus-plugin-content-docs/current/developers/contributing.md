@@ -20,10 +20,10 @@ nel repository dell'app prima di aprire una pull request.
 
 ## Prerequisiti
 
-- **Go 1.25+** per il backend
-- **Node 24+** per l'app SvelteKit (il Dockerfile compila con `node:24-alpine`)
-- **buf** per generare codice dai file `.proto`
-- GNU Make; su Windows usa WSL2
+- **Go 1.27+** per il backend (la versione esatta è la riga `go` in `server/go.mod`)
+- **Node 24+** per l'app SvelteKit (`app/.nvmrc` indica la versione con cui viene compilata l'immagine)
+- **buf** e gli altri strumenti di gate: `make tools` installa le versioni pinnate in `$(go env GOPATH)/bin`
+- [prek](https://github.com/j178/prek) per gli hook git, GNU Make; su Windows usa WSL2
 
 ## Configurazione
 
@@ -31,10 +31,19 @@ nel repository dell'app prima di aprire una pull request.
 git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
+make tools        # pinned golangci-lint, govulncheck, go-licenses, fleetlint, buf
+prek install      # git hooks: formatters and linters on commit, make check on push
 make proto        # generate Go + TypeScript stubs from proto/
 make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
 make dev-app      # terminal 2: Vite dev server on :5173
 ```
+
+`make check` è la definizione di "verde" ed esattamente ciò che esegue la CI:
+lint dei proto e controllo delle modifiche incompatibili, lint (golangci-lint,
+go vet, prettier, eslint, svelte-check), test, soglie di copertura, audit
+(govulncheck, licenze, npm audit, gitleaks), build e fleetlint. `make check-fast`
+è il sottoinsieme rapido eseguito dall'hook di pre-commit; `make help` elenca
+tutti i target.
 
 `make run-server` legge la sua configurazione dall'ambiente o da un file
 `.env` nella radice del repository (copia `.env.example`). I valori predefiniti
@@ -91,7 +100,7 @@ proto è registrato sul server; vedi
 
 1. Fai il fork e crea un branch.
 2. Esegui `make proto` se hai toccato un `.proto`.
-3. Esegui i test Go (`cd server && go test ./...`) e i controlli dell'app.
+3. Esegui `make check`; è ciò che esegue la CI.
 4. Mantieni la PR mirata e descrivi cosa cambia e perché.
 5. Segnala esplicitamente le modifiche alla logica di unione, alla
    sincronizzazione o allo schema.

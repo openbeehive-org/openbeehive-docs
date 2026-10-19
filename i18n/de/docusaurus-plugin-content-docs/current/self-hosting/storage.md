@@ -65,7 +65,8 @@ wird deine Fotos nicht retten. Beziehe `BEEHIVE_BLOB_DIR` in deine Backup-Routin
 ### Docker-Hinweis
 
 Wenn du das [Docker-Image](/self-hosting/docker) betreibst, hänge ein Volume ein, damit Blobs
-Container-Neustarts und Upgrades überstehen:
+Container-Neustarts und Upgrades überstehen. Der Container läuft als uid `65532`;
+ein per Bind-Mount eingehängtes Host-Verzeichnis muss diesem Benutzer gehören:
 
 ```bash
 docker run -d \
