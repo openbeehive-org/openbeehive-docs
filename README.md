@@ -7,7 +7,7 @@ separately from the app at **docs.openbeehive.org**.
 ## Develop
 
 ```bash
-npm install
+npm ci
 npm start          # local dev server with live reload
 ```
 
@@ -17,6 +17,15 @@ npm start          # local dev server with live reload
 npm run build      # static output in ./build
 npm run serve      # serve the production build locally
 ```
+
+## Check
+
+```bash
+npm run check      # lint, site build, dependency and secret audit, fleetlint
+```
+
+CI runs the same. See [CONTRIBUTING.md](CONTRIBUTING.md) for the tools and git
+hooks and [ARCHITECTURE.md](ARCHITECTURE.md) for how the site is put together.
 
 The `build/` directory is static HTML; host it on any static host or CDN.
 

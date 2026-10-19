@@ -1,0 +1,55 @@
+# .fleetlint.yaml: https://github.com/fleetlint/fleetlint
+version: 1
+extends:
+  - fleetlint:recommended
+facts:
+  visibility: public # as the forge reported it at init; update it if the repository changes hands
+# discovered: stacks=[node] forge=github visibility=public tier=1 (default) layout=single release=yes taskrunner=npm-scripts container=none
+# Facts are re-detected on every run; pin one under `facts:` only when detection is wrong.
+
+# A "release" here is a v* tag that deploys the static site; no artifacts are published
+overrides:
+  release/checksums:
+    enabled: false
+    reason: Tags deploy a static site to our own host; there are no downloadable artifacts to checksum.
+  release/sbom:
+    enabled: false
+    reason: No release artifacts; audit-ci and the license allowlist cover the build dependencies.
+  release/provenance:
+    enabled: false
+    reason: No release artifacts to attest; the site is rsynced to our own host.
+  release/signing:
+    enabled: false
+    reason: No release artifacts to sign.
+  release/reproducible-build:
+    enabled: false
+    reason: The site build is not distributed; nobody rebuilds it to compare.
+  release/changelog-in-release:
+    enabled: false
+    reason: No forge release objects; CHANGELOG.md is hand-written per documented app release.
+  changelog/generator-configured:
+    enabled: false
+    reason: CHANGELOG.md describes doc content per app release, not commits.
+  quality/coverage-threshold:
+    enabled: false
+    reason: No unit-testable code; `npm run test` builds every page of every version and locale.
+  quality/mutation-gate:
+    enabled: false
+    reason: No unit-testable code to mutate.
+  quality/duplication-gate:
+    enabled: false
+    reason: Site code is one page and two config files; versioned_docs and i18n duplicate docs by design.
+  docs/adr-directory:
+    enabled: false
+    reason: A docs site with three decisions, recorded in ARCHITECTURE.md.
+  ci/sast:
+    enabled: false
+    reason: The only code is one React page and config; ESLint and tsc cover it and nothing handles untrusted input.
+
+exceptions:
+  - rule: release/semver-tags
+    match: 're:\(v0\.(3\.0\.1|2\.3\.[12])\)$'
+    reason: Published site-only revisions of the 0.3.0 and 0.2.3 docs; kept so the deploy history stays intact. New tags are vX.Y.Z.
+  - rule: ci/actions-pinned
+    match: 're:johnny/build/'
+    reason: Own reusable deploy workflow on the Gitea instance, outside Renovate's reach; tag v11 is controlled by us.

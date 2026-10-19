@@ -1,6 +1,6 @@
 name: 🐛 Docs issue
 description: Report an error, gap, or confusing section in the documentation.
-labels: ["documentation", "triage"]
+labels: ['documentation', 'triage']
 body:
   - type: textarea
     id: problem
@@ -13,12 +13,12 @@ body:
     id: page
     attributes:
       label: Affected page
-      placeholder: "e.g. https://docs.openbeehive.org/self-hosting/docker"
+      placeholder: 'e.g. https://docs.openbeehive.org/self-hosting/docker'
   - type: input
     id: version
     attributes:
       label: Docs version
-      placeholder: "e.g. 0.1.0 or Next"
+      placeholder: 'e.g. 0.1.0 or Next'
   - type: textarea
     id: suggestion
     attributes:

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  "high": true,
+  "report-type": "summary",
+  "allowlist": [
+    // braces <=3.0.3 ReDoS: no patched release; only expands globs from this repo's own build config
+    "GHSA-vfj7-8cjw-p6xm",
+  ],
+}
