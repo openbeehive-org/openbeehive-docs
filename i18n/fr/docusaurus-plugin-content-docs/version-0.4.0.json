@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "0.4.0",
+    "description": "The label for version 0.4.0"
+  },
+  "sidebar.tutorialSidebar.category.Using the app": {
+    "message": "Utiliser l'application",
+    "description": "The label for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the app.link.generated-index.description": {
+    "message": "Découvrez comment tenir vos registres apicoles dans Openbeehive — ruchers, ruches, reines, visites, récoltes et bien plus.",
+    "description": "The generated-index page description for category 'Using the app' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting": {
+    "message": "Auto-hébergement",
+    "description": "The label for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Self-hosting.link.generated-index.description": {
+    "message": "Hébergez votre propre instance Openbeehive — d'un simple binaire à un déploiement Postgres + MinIO avec Docker.",
+    "description": "The generated-index page description for category 'Self-hosting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics": {
+    "message": "Les bases de l'apiculture",
+    "description": "The label for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Beekeeping basics.link.generated-index.description": {
+    "message": "Une introduction pratique à l'élevage des abeilles — la colonie, l'année apicole, les visites, l'essaimage, le varroa et la récolte du miel.",
+    "description": "The generated-index page description for category 'Beekeeping basics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base": {
+    "message": "Base de connaissances",
+    "description": "The label for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Knowledge base.link.generated-index.description": {
+    "message": "Documentation de référence : glossaire, types de ruches, couleurs de marquage des reines, maladies et parasites, FAQ et dépannage.",
+    "description": "The generated-index page description for category 'Knowledge base' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers": {
+    "message": "Développeurs",
+    "description": "The label for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Developers.link.generated-index.description": {
+    "message": "Architecture et fonctionnement interne : le modèle de synchronisation hors ligne d'abord, la conception événements/historique et les liens profonds QR.",
+    "description": "The generated-index page description for category 'Developers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API": {
+    "message": "Utiliser l'API",
+    "description": "The label for category 'Using the API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Using the API.link.generated-index.description": {
+    "message": "L'API Connect-RPC à laquelle l'application parle : quels services sont exposés, comment s'authentifier et comment les appeler en HTTP/JSON ou en gRPC.",
+    "description": "The generated-index page description for category 'Using the API' in sidebar 'tutorialSidebar'"
+  }
+}

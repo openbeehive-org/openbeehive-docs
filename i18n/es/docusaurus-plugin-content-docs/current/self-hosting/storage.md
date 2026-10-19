@@ -65,7 +65,8 @@ no salvara tus fotos. Incluye `BEEHIVE_BLOB_DIR` en tu rutina de copia de seguri
 ### Nota sobre Docker
 
 Si ejecutas la [imagen de Docker](/self-hosting/docker), monta un volumen para que los blobs
-sobrevivan a los reinicios y actualizaciones del contenedor:
+sobrevivan a los reinicios y actualizaciones del contenedor. El contenedor se ejecuta como el uid `65532`;
+un directorio del host montado con bind mount debe pertenecer a ese usuario:
 
 ```bash
 docker run -d \

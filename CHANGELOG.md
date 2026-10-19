@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Documentation content is also versioned in-site via Docusaurus (see
 `versions.json`).
 
+## [0.4.0] - 2026-10-19
+
+Documents app release 0.4.0 (unprivileged container, signed images, Go 1.27
+and SvelteKit 3 toolchain). Snapshot 0.4.0 in all five languages.
+
+### Added
+
+- **Self-hosting -> Docker:** "Verifying a release image" with the `cosign
+  verify` and `gh attestation verify` commands that match the release
+  workflow, and a note that images before 0.4.0 are unsigned.
+- **Self-hosting -> Upgrading:** "Release-specific steps" with the one-time
+  `chown` to uid 65532 for volumes and bind mounts created by 0.3.x or
+  earlier, the symptom of skipping it and the Kubernetes `fsGroup` hint.
+
+### Changed
+
+- **Self-hosting -> Docker / Storage:** the container runs as uid 65532 with
+  `/data` as its working directory; named volumes inherit the ownership, bind
+  mounts must be chowned. The old "the image has no working directory"
+  explanation is gone.
+- **Self-hosting -> Quick start / Upgrading, Developers -> Contributing:**
+  prerequisites are Go 1.27+ and Node 24+ (the image builds with Node 26);
+  the dev setup lists `make tools`, `prek install` and `make check` as the
+  definition of green.
+
+### Fixed
+
+- The German, French, Spanish and Italian version dropdowns labelled the
+  0.3.0 docs "Next"; the label is now the version number.
+
 ## [0.3.0.1] - 2026-09-15
 
 ### Fixed

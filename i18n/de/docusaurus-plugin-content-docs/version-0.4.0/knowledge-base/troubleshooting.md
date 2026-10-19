@@ -1,0 +1,124 @@
+---
+sidebar_position: 6
+title: "Fehlerbehebung"
+---
+
+# Fehlerbehebung
+
+Die meisten Probleme mit Openbeehive fallen in eine Handvoll Kategorien: Synchronisierung, lokaler Speicher, die Kamera/der QR-Scanner oder die Anmeldung. Diese Seite geht jede davon durch, mit praktischen Prüfungen, die du selbst durchführen kannst, bevor du Hilfe suchst.
+
+Deine Aufzeichnungen liegen in einer lokalen Datenbank auf deinem Gerät, sodass fast nichts hier Daten verlieren kann, die bereits zum Server synchronisiert wurden.
+
+## Daten synchronisieren nicht
+
+Deine Änderungen werden sofort auf dem Gerät gespeichert. Die Synchronisierung mit dem Server geschieht still im Hintergrund, sodass eine Verzögerung normal und selten ein Grund zur Sorge ist. Wenn Änderungen, die du auf einem Gerät vorgenommen hast, auf einem anderen nicht erscheinen, arbeite diese Liste durch.
+
+**1. Prüfe, ob du online bist.** Die Seitenleiste zeigt neben deinem Konto **Online** oder **Offline** an. Wenn du im Feld ohne Empfang gearbeitet hast, sind deine Bearbeitungen in der Warteschlange und werden gesendet, sobald du wieder verbunden bist.
+
+**2. Prüfe, ob du angemeldet bist.** Die Synchronisierung erfordert eine Sitzung. Wenn sie abgelaufen ist, kannst du weiterhin lokal lesen und bearbeiten, aber nichts wird synchronisiert, bis du dich erneut anmeldest. **Einstellungen → Konto** zeigt, als wer du angemeldet bist.
+
+**3. Prüfe den aktiven Mandanten.** Aufzeichnungen gehören zu einem Mandanten. Wenn ein Bienenstock auf einem anderen Gerät fehlt, öffne dort **Einstellungen → Mandanten** und stelle sicher, dass derselbe Mandant aktiv ist. Fehlt er bei einer anderen Person, ist sie kein Mitglied dieses Mandanten; ein Mandanten-Admin kann sie einladen.
+
+**4. Gib ihm einen Moment, dann öffne es erneut.** Die Hintergrundsynchronisierung läuft periodisch. Das Schließen und erneute Öffnen der App oder das Wechseln zu ihr aus dem Hintergrund stößt einen neuen Synchronisierungsversuch an.
+
+:::note
+Die Synchronisierung ist konzeptbedingt konfliktfrei. Die jüngste Bearbeitung eines Feldes gewinnt, Hinzufügungen (Fotos, Durchsichten, Ernten, Behandlungen) bleiben erhalten, und du verlierst keine Arbeit, weil zwei Geräte gleichzeitig bearbeitet haben.
+:::
+
+Wenn du selbst hostest und die Synchronisierung für alle fehlschlägt, liegt das Problem eher serverseitig. Siehe [Selbst-Hosting-Konfiguration](/self-hosting/configuration) und prüfe die Serverprotokolle.
+
+## Wie der lokale Speicher funktioniert
+
+Openbeehive ist eine Progressive Web App (PWA). Sie hält deinen gesamten Datenbestand in einer SQLite-Datenbank vor, die innerhalb deines Browsers läuft und in **OPFS** (dem Origin Private File System) gespeichert wird. Jeder Lese- und Schreibvorgang erfolgt gegen diese lokale Datenbank, weshalb sich die App sofort anfühlt und ganz ohne Empfang funktioniert.
+
+Ein paar praktische Folgen:
+
+- Deine Daten sind an den Browser und das Gerät gebunden, auf dem du Openbeehive verwendest. Jedes Gerät behält seine eigene lokale Kopie und synchronisiert mit dem Server.
+- Der OPFS-Speicher ist privat für den Origin der App. Andere Websites können ihn nicht lesen.
+- Das Installieren der App auf deinem Startbildschirm (siehe [Installation](/using-the-app/install)) verwendet auf den meisten Plattformen denselben Speicher wie der Browser-Tab.
+
+:::caution
+Browser-Werkzeuge, die „Websitedaten löschen“, „Cookies und Speicher löschen“ oder privates/Inkognito-Surfen können die lokale OPFS-Datenbank löschen. Das ist **nur dann sicher, wenn deine Daten bereits** zum Server synchronisiert wurden, da sie bei der nächsten Anmeldung erneut heruntergeladen werden. Wenn du nicht synchronisierte Offline-Änderungen hast, stelle sicher, dass du online bist, und lass die Synchronisierung zuerst abschließen.
+:::
+
+### „unable to open database file" oder ein Knopf, der nichts tut
+
+App-Versionen vor 0.2.2 konnten die reservierten lokalen Speicher-Slots aufbrauchen; danach schlug jedes Speichern mit `SQLITE_CANTOPEN: unable to open database file` fehl — sichtbar als Knopf, der scheinbar nichts tat. Seit 0.2.2 reserviert die App von vornherein genug Slots und repariert den Speicherpool automatisch, wenn er knapp wird. Siehst du den Fehler weiterhin, lade die App zweimal neu (damit die neue Version übernimmt) und versuche es erneut; früher gespeicherte Einträge sind nicht betroffen.
+
+### „Speicher nicht verfügbar — Änderungen bleiben auf diesem Gerät nicht erhalten“ \{#storage-is-unavailable}
+
+Die App hält ihre Datenbank im privaten Speicher des Browsers. Kann sie diesen Speicher
+nicht öffnen, weicht sie auf eine Datenbank im Arbeitsspeicher aus und zeigt diesen Hinweis,
+damit du Bescheid weißt. Änderungen funktionieren weiterhin und werden weiterhin mit dem
+Server synchronisiert, solange du angemeldet bist, aber die lokale Kopie verschwindet, wenn
+der Tab geschlossen wird.
+
+Die zwei häufigen Ursachen:
+
+- **Privates oder Inkognito-Browsen.** Browser geben solchen Fenstern keinen dauerhaften
+  Speicher. Nutze ein normales Fenster oder installiere die App.
+- **Ein zweiter Tab der App ist offen.** Den Speicher kann nur eine Seite gleichzeitig
+  halten. Seit App-Version 0.2.3 versucht es die App kurz erneut, was meist reicht, wenn ein
+  Neuladen mit seinem eigenen Vorgänger konkurriert; bleibt der Hinweis, schließe den anderen
+  Tab und lade neu.
+
+### Die App zeigt „Daten werden synchronisiert…“ statt meiner Bienenstände
+
+Das ist die erste Synchronisation auf diesem Gerät, die noch lädt. Seit App-Version 0.2.3
+zeigen das Dashboard und die Listen Platzhalter und diesen Hinweis, bis die Daten
+vollständig sind, und füllen sich schrittweise, sobald Pakete eintreffen. Bleib online und
+gib ihr einen Moment; bei großen Datenbeständen wachsen die Listen, während du zusiehst.
+Verschwindet der Hinweis nie, geh [Daten synchronisieren nicht](#daten-synchronisieren-nicht) durch.
+
+## Die App leeren oder neu installieren
+
+Manchmal behebt ein Neustart seltsames Verhalten nach einer Aktualisierung. Solange du in einem Konto angemeldet bist, das synchronisiert, ist dies nicht destruktiv: Deine synchronisierten Aufzeichnungen kommen vom Server zurück.
+
+1. Bestätige, dass du **online und angemeldet** bist und dass die Synchronisierungsanzeige zeigt, dass alles auf dem neuesten Stand ist.
+2. Deinstalliere oder entferne die PWA von deinem Startbildschirm oder leere den Speicher der Website in deinen Browsereinstellungen.
+3. Öffne Openbeehive erneut und melde dich an.
+4. Warte, bis die erste Synchronisierung deine Bienenstände, Bienenstöcke und die Historie heruntergeladen hat.
+
+:::danger
+Leere den Speicher nicht, wenn du ausschließlich offline vorhandene Änderungen hast, die den Server noch nicht erreicht haben (zum Beispiel im Feld ohne Empfang erfasste Durchsichten). Diese Bearbeitungen existieren nur auf jenem Gerät, bis die Synchronisierung abgeschlossen ist. Gehe online und lass die Synchronisierung zuerst abschließen.
+:::
+
+## Kamera und QR-Scanner funktionieren nicht
+
+Jeder Bienenstock kann ein druckbares QR-Etikett tragen, das per Deep Link zu diesem Bienenstock führt (siehe [QR-Etiketten](/using-the-app/qr-labels)). Das Scannen benötigt Kamerazugriff.
+
+- **Erteile die Kameraberechtigung.** Erlaube den Kamerazugriff, wenn du dazu aufgefordert wirst. Falls du ihn zuvor verweigert hast, aktiviere ihn in deinen Browser- oder Betriebssystemeinstellungen für die Website erneut und lade dann neu.
+- **Verwende HTTPS.** Browser erlauben Kamerazugriff nur auf sicheren Origins. Die gehostete App wird über HTTPS ausgeliefert; Selbst-Hoster müssen ebenfalls über HTTPS ausliefern (oder `localhost` zum Testen). Siehe [Reverse Proxy](/self-hosting/reverse-proxy).
+- **Prüfe, ob sie nicht in Verwendung ist.** Schließe andere Apps oder Tabs, die die Kamera möglicherweise belegen.
+
+:::tip iOS Safari
+Auf iPhone und iPad kann der App-interne Scanner eingeschränkt sein. Wenn das Scannen nicht funktioniert, öffne die integrierte **Kamera-App** und richte sie auf den QR-Code. iOS erkennt den codierten Link und bietet an, ihn zu öffnen; ein Tippen auf den Link startet Openbeehive beim richtigen Bienenstock. Das Etikett codiert einen einfachen Weblink, sodass jeder QR-Leser als Ausweichlösung funktioniert.
+:::
+
+## Anmeldeprobleme
+
+- **Beim Anmeldebildschirm hängengeblieben.** Bestätige, dass du die richtige Adresse erreichst (die gehostete App ist unter app.openbeehive.org). Nach der Anmeldung bei deinem Anbieter solltest du automatisch zurückgeleitet werden; falls nicht, lade die Seite neu.
+- **Weiterleitung schlägt fehl oder „ungültige Weiterleitung“-Fehler (Selbst-Hosting).** Das bedeutet fast immer, dass die OIDC-Weiterleitungs-URL oder `BEEHIVE_PUBLIC_BASE_URL` falsch konfiguriert ist. Siehe [Authentifizierung und Konfiguration](/self-hosting/authentication).
+- **Passkey nicht angeboten.** Passkeys müssen auf dem Server aktiviert sein, und du musst unter Einstellungen → Passkeys einen hinzugefügt haben. Andernfalls melde dich mit einer anderen Methode an.
+- **Einzelnutzer-Selbst-Hosting ohne Anmeldung.** Mit ausgeschalteter Passwort-Anmeldung, ohne OIDC-Anbieter und mit deaktiviertem WebAuthn gibt es überhaupt keinen Anmeldeschritt. Wenn du unerwartet einen Anmeldebildschirm siehst, prüfe deine Serverkonfiguration.
+
+## Einen guten Fehlerbericht einreichen
+
+Wenn nichts davon hilft, eröffne bitte ein Issue unter [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). Ein klarer Bericht führt zu einer schnelleren Behebung. Versuche, Folgendes anzugeben:
+
+| Detail | Beispiel |
+| --- | --- |
+| Was du getan hast | „Auf Speichern bei einer neuen Durchsicht getippt“ |
+| Was du erwartet hast | „Durchsicht erscheint in der Zeitleiste des Bienenstocks“ |
+| Was stattdessen geschah | „Ladekreis, dann verschwand der Eintrag“ |
+| App-Version | Die Version, die du betreibst: bei einer selbst gehosteten Instanz der Image-Tag oder Git-Tag |
+| Plattform & Browser | iPhone 14, iOS 17, Safari |
+| Gehostet oder selbst gehostet | Selbst gehostet, `selfhost`-Profil, SQLite |
+| Online oder offline | „War im Feld offline, synchronisiere gerade“ |
+| Reproduzierbar? | „Passiert jedes Mal“ / „Nur einmal“ |
+
+:::caution
+Bitte füge keine Geheimnisse ein. Schwärze Sitzungsgeheimnisse, OIDC-Client-Geheimnisse, Datenbankpasswörter und personenbezogene Daten, bevor du Protokolle oder Konfiguration teilst.
+:::
+
+Für Fragen zum Selbst-Hosting beginne mit der [Konfigurationsreferenz](/self-hosting/configuration).

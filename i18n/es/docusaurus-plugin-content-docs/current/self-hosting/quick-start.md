@@ -33,8 +33,8 @@ Todo lo demás tiene valores por defecto para el autoalojamiento. La lista compl
 
 ### Requisitos previos
 
-- Go 1.25 o más reciente
-- Node 24 o más reciente
+- Go 1.27 o más reciente
+- Node 24 o más reciente (la imagen publicada se compila con Node 26)
 - [buf](https://buf.build/docs/installation)
 
 ### Compilar y ejecutar

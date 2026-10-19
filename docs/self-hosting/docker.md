@@ -15,7 +15,21 @@ ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z     # a specific release
 ghcr.io/openbeehive-org/openbeehive-app:X.Y       # newest patch of a minor release
 ```
 
-The same image serves both deployment profiles; the environment you pass in decides which one you get.
+The same image serves both deployment profiles; the environment you pass in decides which one you get. Since 0.4.0 the container runs as the unprivileged user `65532` with `/data` as its working directory.
+
+### Verifying a release image
+
+Every release image is signed with [cosign](https://docs.sigstore.dev/cosign/verifying/verify/) (keyless, bound to the release workflow's identity), carries a GitHub build-provenance attestation and ships an SBOM on the [GitHub release](https://github.com/openbeehive-org/openbeehive-app/releases). To check that the image you pull is the one the release workflow built:
+
+```bash
+cosign verify ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp '^https://github.com/openbeehive-org/openbeehive-app/\.github/workflows/release\.yml@.*'
+
+gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owner openbeehive-org
+```
+
+Both commands print the signing identity and the commit the image was built from. Images published before 0.4.0 are not signed.
 
 :::tip
 For a single-user instance on one machine the [single binary](/self-hosting/single-binary) is even simpler than Docker. Reach for Compose when you want Postgres and S3-style storage.
@@ -38,7 +52,8 @@ docker run -d \
 ```
 
 - `-p 8080:8080` maps the container's listen port (`BEEHIVE_ADDR=:8080`) to the host.
-- `-v openbeehive-data:/data` keeps your data on a named volume. It only does its job together with the `BEEHIVE_DATABASE_DSN` and `BEEHIVE_BLOB_DIR` lines: the image has no working directory, so the defaults (`openbeehive.db`, `./data/blobs`) resolve to the container's root and are lost when the container is removed.
+- `-v openbeehive-data:/data` keeps your data on a named volume. Docker creates the volume with the ownership of `/data` in the image, so the unprivileged server user can write to it. If you bind-mount a host directory instead (`-v /srv/openbeehive:/data`), it must be owned by uid `65532`: `sudo chown -R 65532:65532 /srv/openbeehive`.
+- The `BEEHIVE_DATABASE_DSN` and `BEEHIVE_BLOB_DIR` lines point the database and the uploaded photos at the volume explicitly. The defaults (`openbeehive.db`, `./data/blobs`) are relative to the working directory, which is `/data` since 0.4.0, but spelling the paths out keeps the command unambiguous and matches the backup instructions.
 - `BEEHIVE_PUBLIC_BASE_URL` must be the address users reach, including scheme. The server uses it for OIDC redirect URLs and for invite and verification links.
 
 With no login method enabled (the selfhost default) the instance runs in single-user mode. To add authentication, set `BEEHIVE_SESSION_SECRET` (generate it once with `openssl rand -base64 32` and keep it stable; changing it signs everyone out) plus the variables for the method you want. Email/password login also needs `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD`, or the server refuses to start. See [Authentication](/self-hosting/authentication).

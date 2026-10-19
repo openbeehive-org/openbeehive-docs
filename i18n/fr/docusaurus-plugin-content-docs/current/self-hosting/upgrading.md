@@ -18,6 +18,24 @@ Faites une sauvegarde avant de mettre à niveau. Voir [Sauvegardes](/self-hostin
 3. **Notez votre version actuelle** (le tag que vous avez compilé ou le tag d'image que vous exécutez) afin de savoir vers quoi revenir.
 4. **Choisissez un moment calme.** Le redémarrage est court ; les appareils continuent de fonctionner localement et se synchronisent une fois le serveur de retour.
 
+## Étapes propres à une version
+
+### 0.4.0 : le conteneur s'exécute sous un utilisateur non privilégié
+
+Jusqu'à la 0.3.1, l'image s'exécutait en root : un volume créé par un conteneur plus ancien appartient donc à root, et le serveur 0.4.0 (uid `65532`) ne peut pas y ouvrir la base de données. Corrigez le propriétaire une fois pour toutes, avant de démarrer la nouvelle image :
+
+```bash
+# named volume from the quick start or docker-compose.demo.yml
+docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
+
+# bind-mounted host directory
+sudo chown -R 65532:65532 /srv/openbeehive
+```
+
+Le symptôme d'un chown oublié est `unable to open database file` ou `permission denied` dans le log du serveur juste après le démarrage. Les déploiements Kubernetes avec `securityContext.fsGroup: 65532` ne nécessitent aucune étape manuelle. Les volumes créés par la 0.4.0 ou une version ultérieure ont le bon propriétaire dès le départ.
+
+Le profil cloud (Postgres et MinIO) n'est pas concerné : le conteneur serveur ne contient aucune donnée.
+
 ## Comment fonctionnent les migrations
 
 Les migrations de schéma s'exécutent automatiquement au démarrage du serveur. Au démarrage, le serveur applique dans l'ordre toutes les migrations en attente, et ce n'est qu'ensuite qu'il commence à servir les requêtes. Cela fonctionne de la même manière pour PostgreSQL, MySQL et SQLite.
@@ -51,7 +69,7 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Cela produit un nouveau `./server/bin/openbeehive`. Les prérequis sont dans [Binaire unique](/self-hosting/single-binary) (Go 1.25+, Node 24+, buf).
+Cela produit un nouveau `./server/bin/openbeehive`. Les prérequis sont dans [Binaire unique](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
 
 ## Mettre à niveau avec Docker
 

@@ -18,6 +18,24 @@ Take a backup before upgrading. See [Backups](/self-hosting/backups).
 3. **Note your current version** (the tag you built or the image tag you run) so you know what to roll back to.
 4. **Pick a quiet moment.** The restart is short; devices keep working locally and sync once the server is back.
 
+## Release-specific steps
+
+### 0.4.0: the container runs as an unprivileged user
+
+Up to 0.3.1 the image ran as root, so a volume created by an older container is owned by root and the 0.4.0 server (uid `65532`) cannot open the database in it. Fix the ownership once, before you start the new image:
+
+```bash
+# named volume from the quick start or docker-compose.demo.yml
+docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
+
+# bind-mounted host directory
+sudo chown -R 65532:65532 /srv/openbeehive
+```
+
+The symptom of a skipped chown is `unable to open database file` or `permission denied` in the server log right after start. Kubernetes deployments with `securityContext.fsGroup: 65532` need no manual step. Volumes created by 0.4.0 or later have the right owner from the start.
+
+The cloud profile (Postgres and MinIO) is unaffected: the server container holds no data.
+
 ## How migrations work
 
 Schema migrations run automatically when the server starts. On boot the server applies any pending migrations in order and only then begins serving requests. This works the same for PostgreSQL, MySQL and SQLite.
@@ -51,7 +69,7 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-This produces a fresh `./server/bin/openbeehive`. Prerequisites are in [Single binary](/self-hosting/single-binary) (Go 1.25+, Node 24+, buf).
+This produces a fresh `./server/bin/openbeehive`. Prerequisites are in [Single binary](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
 
 ## Upgrading with Docker
 

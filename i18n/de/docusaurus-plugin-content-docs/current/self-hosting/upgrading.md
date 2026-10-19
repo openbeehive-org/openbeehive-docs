@@ -18,6 +18,24 @@ Erstelle vor dem Upgrade ein Backup. Siehe [Backups](/self-hosting/backups).
 3. **Notiere deine aktuelle Version** (das Tag, das du gebaut hast, oder das Image-Tag, das du betreibst), damit du weißt, worauf du zurückrollen kannst.
 4. **Wähle einen ruhigen Moment.** Der Neustart ist kurz; Geräte arbeiten lokal weiter und synchronisieren, sobald der Server wieder da ist.
 
+## Release-spezifische Schritte
+
+### 0.4.0: Der Container läuft als unprivilegierter Benutzer
+
+Bis 0.3.1 lief das Image als root, daher gehört ein von einem älteren Container angelegtes Volume root, und der 0.4.0-Server (uid `65532`) kann die Datenbank darin nicht öffnen. Korrigiere die Besitzrechte einmalig, bevor du das neue Image startest:
+
+```bash
+# named volume from the quick start or docker-compose.demo.yml
+docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
+
+# bind-mounted host directory
+sudo chown -R 65532:65532 /srv/openbeehive
+```
+
+Das Symptom eines ausgelassenen chown ist `unable to open database file` oder `permission denied` im Server-Log direkt nach dem Start. Kubernetes-Bereitstellungen mit `securityContext.fsGroup: 65532` brauchen keinen manuellen Schritt. Volumes, die von 0.4.0 oder neuer angelegt wurden, haben von Anfang an den richtigen Besitzer.
+
+Das Cloud-Profil (Postgres und MinIO) ist nicht betroffen: Der Server-Container hält keine Daten.
+
 ## Wie Migrationen funktionieren
 
 Schema-Migrationen laufen automatisch, wenn der Server startet. Beim Booten wendet der Server ausstehende Migrationen der Reihe nach an und beginnt erst dann, Anfragen zu bedienen. Das funktioniert für PostgreSQL, MySQL und SQLite gleich.
@@ -51,7 +69,7 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Das erzeugt eine frische `./server/bin/openbeehive`. Die Voraussetzungen stehen unter [Einzelne Binärdatei](/self-hosting/single-binary) (Go 1.25+, Node 24+, buf).
+Das erzeugt eine frische `./server/bin/openbeehive`. Die Voraussetzungen stehen unter [Einzelne Binärdatei](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
 
 ## Mit Docker aktualisieren
 
