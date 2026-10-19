@@ -13,7 +13,7 @@ Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](/
 
 ## Antes de empezar
 
-1. **Lee las notas de la versión.** Revisa el [CHANGELOG](https://github.com/johnnycube/openbeehive-app/blob/main/CHANGELOG.md) y la [versión en GitHub](https://github.com/johnnycube/openbeehive-app/releases) a la que vas a pasar. Anota la nueva configuración requerida o los pasos manuales.
+1. **Lee las notas de la versión.** Revisa el [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app/blob/main/CHANGELOG.md) y la [versión en GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) a la que vas a pasar. Anota la nueva configuración requerida o los pasos manuales.
 2. **Haz copia de seguridad** de la base de datos y del almacenamiento de blobs.
 3. **Anota tu versión actual** (la etiqueta que compilaste o la etiqueta de imagen que ejecutas) para saber a qué revertir.
 4. **Elige un momento tranquilo.** El reinicio es breve; los dispositivos siguen funcionando localmente y se sincronizan una vez que el servidor vuelve.
@@ -65,7 +65,7 @@ docker compose -f docker-compose.demo.yml up -d
 docker compose -f docker-compose.demo.yml logs -f server
 ```
 
-Para un contenedor de `docker run` simple: `docker pull ghcr.io/johnnycube/openbeehive-app:latest`, luego `docker rm -f openbeehive` y vuelve a ejecutar el mismo comando `docker run`. El volumen con nombre conserva tus datos.
+Para un contenedor de `docker run` simple: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, luego `docker rm -f openbeehive` y vuelve a ejecutar el mismo comando `docker run`. El volumen con nombre conserva tus datos.
 
 **Compilado desde el código fuente** (el `docker-compose.yml` del repositorio tiene una sección `build:`, así que `pull` no hace nada para él):
 
@@ -78,7 +78,7 @@ docker compose logs -f server
 Las etiquetas de imagen son `latest`, `X.Y` (el parche más reciente de una versión menor) y `X.Y.Z`. Para despliegues reproducibles, fija una versión concreta en lugar de `latest`:
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:X.Y.Z
+image: ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z
 ```
 
 ## Versionado

@@ -21,7 +21,7 @@ fonctionne avec ou sans HTTPS en frontal.
 ## Le contrat est la source de vérité
 
 L'API est définie en Protocol Buffers sous
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto).
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto).
 Générez un client pour votre langage à partir de ce contrat avec
 [buf](https://buf.build) :
 

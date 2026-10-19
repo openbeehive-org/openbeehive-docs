@@ -40,7 +40,7 @@ Todo lo demás tiene valores por defecto para el autoalojamiento. La lista compl
 ### Compilar y ejecutar
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 
 # Generate the Connect-RPC code, then build the server
@@ -63,7 +63,7 @@ En modo selfhost, tus registros van a un archivo SQLite (`openbeehive.db` en el 
 
 ## Opción B: Docker
 
-La imagen publicada es `ghcr.io/johnnycube/openbeehive-app:latest`.
+La imagen publicada es `ghcr.io/openbeehive-org/openbeehive-app:latest`.
 
 ```bash
 docker run -d \
@@ -74,7 +74,7 @@ docker run -d \
   -e 'BEEHIVE_DATABASE_DSN=file:/data/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)' \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -v openbeehive-data:/data \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Las líneas `BEEHIVE_DATABASE_DSN` y `BEEHIVE_BLOB_DIR` son las que ponen tus datos en el volumen. Sin ellas, el contenedor usa sus valores por defecto, `openbeehive.db` y `./data/blobs` relativos al directorio raíz del contenedor, que quedan fuera del volumen y desaparecen tras `docker rm`. Con ellas, el volumen `openbeehive-data` contiene la base de datos y los blobs, y sobreviven a reinicios y actualizaciones. Una vez en marcha, abre `http://localhost:8080`.

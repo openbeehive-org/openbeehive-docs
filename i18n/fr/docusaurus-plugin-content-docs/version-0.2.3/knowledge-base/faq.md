@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Foire aux questions
 
-Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](/knowledge-base/troubleshooting) ou demandez à la communauté sur [GitHub](https://github.com/johnnycube/openbeehive-app).
+Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](/knowledge-base/troubleshooting) ou demandez à la communauté sur [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Openbeehive est-il gratuit ?
 
@@ -114,7 +114,7 @@ Le service hébergé utilise la connexion OIDC (connexion via un fournisseur pri
 
 ## Comment signaler un bug ou demander une fonctionnalité ?
 
-Veuillez ouvrir un ticket sur notre [organisation GitHub](https://github.com/johnnycube/openbeehive-app). Des étapes de reproduction claires, votre plateforme et votre navigateur, ainsi qu'une capture d'écran aident énormément.
+Veuillez ouvrir un ticket sur notre [organisation GitHub](https://github.com/openbeehive-org/openbeehive-app). Des étapes de reproduction claires, votre plateforme et votre navigateur, ainsi qu'une capture d'écran aident énormément.
 
 La [page de dépannage](/knowledge-base/troubleshooting) couvre peut-être déjà les problèmes courants.
 

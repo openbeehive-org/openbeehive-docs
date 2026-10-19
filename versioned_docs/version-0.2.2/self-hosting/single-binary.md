@@ -28,7 +28,7 @@ Once built, the binary itself has no runtime dependencies - you can copy it to a
 ## Get the code
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 ```
 

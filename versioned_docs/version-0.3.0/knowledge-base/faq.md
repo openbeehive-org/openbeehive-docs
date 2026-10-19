@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Frequently Asked Questions
 
-Quick answers to the questions we hear most often. If something is missing, check the [troubleshooting guide](/knowledge-base/troubleshooting) or ask the community on [GitHub](https://github.com/johnnycube/openbeehive-app).
+Quick answers to the questions we hear most often. If something is missing, check the [troubleshooting guide](/knowledge-base/troubleshooting) or ask the community on [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Is Openbeehive free?
 
@@ -109,7 +109,7 @@ The hosted service uses email and password accounts. Self-hosters can enable ema
 
 ## How do I report a bug or request a feature?
 
-Please open an issue in the [GitHub repository](https://github.com/johnnycube/openbeehive-app). Clear steps to reproduce, your platform and browser, and a screenshot all help.
+Please open an issue in the [GitHub repository](https://github.com/openbeehive-org/openbeehive-app). Clear steps to reproduce, your platform and browser, and a screenshot all help.
 
 The [troubleshooting page](/knowledge-base/troubleshooting) may already cover common issues.
 
@@ -119,4 +119,4 @@ Contributions of all kinds are welcome: code, documentation, translations, bug r
 
 ## What version is this?
 
-Releases are tagged on [GitHub](https://github.com/johnnycube/openbeehive-app/releases). Self-hosters run the tag they built or the image tag they pulled; see the [upgrading guide](/self-hosting/upgrading) when new versions land.
+Releases are tagged on [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Self-hosters run the tag they built or the image tag they pulled; see the [upgrading guide](/self-hosting/upgrading) when new versions land.

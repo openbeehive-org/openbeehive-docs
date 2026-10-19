@@ -13,7 +13,7 @@ Compose hochfahren.
 Das offizielle Image wird in der GitHub Container Registry veröffentlicht:
 
 ```text
-ghcr.io/johnnycube/openbeehive-app:latest
+ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Dasselbe Image funktioniert für beide Bereitstellungsprofile. Welches du erhältst,
@@ -43,7 +43,7 @@ docker run -d \
   -e BEEHIVE_BLOB_BACKEND=fs \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -e BEEHIVE_SESSION_SECRET="$(openssl rand -base64 32)" \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Ein paar Hinweise zu den Flags:
@@ -82,7 +82,7 @@ docker run -d \
   -p 8080:8080 \
   -v openbeehive-data:/data \
   --env-file openbeehive.env \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## Das Cloud-Profil mit Compose
@@ -96,7 +96,7 @@ miteinander verdrahtet. Klone das Repo, kopiere die Beispiel-Umgebung und fahre 
 hoch:
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 cp .env.example .env   # then edit .env (see below)
 docker compose up -d
@@ -106,7 +106,7 @@ docker compose up -d
 
 | Dienst | Image | Rolle |
 | --- | --- | --- |
-| `server` | `ghcr.io/johnnycube/openbeehive-app:latest` | Das Openbeehive-Backend und die PWA, lauschen auf `:8080`. |
+| `server` | `ghcr.io/openbeehive-org/openbeehive-app:latest` | Das Openbeehive-Backend und die PWA, lauschen auf `:8080`. |
 | `postgres` | `postgres` | Die relationale Datenbank für alle synchronisierten Aufzeichnungen. |
 | `minio` | `minio/minio` | S3-kompatibler Objektspeicher für Fotos und andere Blobs. |
 
@@ -167,7 +167,7 @@ Healthchecks und sinnvolle Standardwerte, die dieses Snippet weglässt.
 ```docker
 services:
   server:
-    image: ghcr.io/johnnycube/openbeehive-app:latest
+    image: ghcr.io/openbeehive-org/openbeehive-app:latest
     ports:
       - "8080:8080"
     env_file: .env

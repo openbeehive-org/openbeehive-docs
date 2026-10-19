@@ -17,7 +17,7 @@ const config: Config = {
   url: 'https://docs.openbeehive.org',
   baseUrl: '/',
 
-  organizationName: 'johnnycube',
+  organizationName: 'openbeehive-org',
   projectName: 'openbeehive-docs',
 
   onBrokenLinks: 'throw',
@@ -48,7 +48,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/', // docs-only site: docs served at the root
           editUrl:
-            'https://github.com/johnnycube/openbeehive-docs/edit/main/',
+            'https://github.com/openbeehive-org/openbeehive-docs/edit/main/',
           // Versioned docs: every app release gets a frozen snapshot under
           // versioned_docs/ and i18n/<locale>/.../version-X.Y.Z
           // (npx docusaurus docs:version X.Y.Z). The newest entry in
@@ -106,7 +106,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://github.com/johnnycube/openbeehive-app',
+          href: 'https://github.com/openbeehive-org/openbeehive-app',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub',
@@ -131,15 +131,15 @@ const config: Config = {
           items: [
             {label: 'App', href: 'https://app.openbeehive.org'},
             {label: 'Website', href: 'https://openbeehive.org'},
-            {label: 'GitHub', href: 'https://github.com/johnnycube/openbeehive-app'},
+            {label: 'GitHub', href: 'https://github.com/openbeehive-org/openbeehive-app'},
           ],
         },
         {
           title: 'Community',
           items: [
-            {label: 'Discussions', href: 'https://github.com/johnnycube/openbeehive-app/discussions'},
-            {label: 'Issues', href: 'https://github.com/johnnycube/openbeehive-docs/issues'},
-            {label: 'License (AGPL-3.0)', href: 'https://github.com/johnnycube/openbeehive-docs/blob/main/LICENSE'},
+            {label: 'Discussions', href: 'https://github.com/openbeehive-org/openbeehive-app/discussions'},
+            {label: 'Issues', href: 'https://github.com/openbeehive-org/openbeehive-docs/issues'},
+            {label: 'License (AGPL-3.0)', href: 'https://github.com/openbeehive-org/openbeehive-docs/blob/main/LICENSE'},
           ],
         },
       ],

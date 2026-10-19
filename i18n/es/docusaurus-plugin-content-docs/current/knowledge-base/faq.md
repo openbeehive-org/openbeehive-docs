@@ -5,7 +5,7 @@ title: "Preguntas frecuentes"
 
 # Preguntas frecuentes
 
-Respuestas rápidas a las preguntas que oímos con más frecuencia. Si falta algo, consulta la [guía de resolución de problemas](/knowledge-base/troubleshooting) o pregunta a la comunidad en [GitHub](https://github.com/johnnycube/openbeehive-app).
+Respuestas rápidas a las preguntas que oímos con más frecuencia. Si falta algo, consulta la [guía de resolución de problemas](/knowledge-base/troubleshooting) o pregunta a la comunidad en [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## ¿Es Openbeehive gratuito?
 
@@ -109,7 +109,7 @@ El servicio alojado usa cuentas con correo electrónico y contraseña. Quienes s
 
 ## ¿Cómo informo de un error o solicito una funcionalidad?
 
-Por favor, abre una incidencia en nuestra [organización de GitHub](https://github.com/johnnycube/openbeehive-app). Unos pasos claros para reproducirlo, tu plataforma y navegador, y una captura de pantalla ayudan enormemente.
+Por favor, abre una incidencia en nuestra [organización de GitHub](https://github.com/openbeehive-org/openbeehive-app). Unos pasos claros para reproducirlo, tu plataforma y navegador, y una captura de pantalla ayudan enormemente.
 
 La [página de resolución de problemas](/knowledge-base/troubleshooting) puede que ya cubra problemas comunes.
 
@@ -119,4 +119,4 @@ Las contribuciones de todo tipo son bienvenidas: código, documentación, traduc
 
 ## ¿Qué versión es esta?
 
-Las versiones se etiquetan en [GitHub](https://github.com/johnnycube/openbeehive-app/releases). Quienes se autoalojan ejecutan la etiqueta que compilaron o la etiqueta de imagen que descargaron; consulta la [guía de actualización](/self-hosting/upgrading) cuando lleguen nuevas versiones.
+Las versiones se etiquetan en [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Quienes se autoalojan ejecutan la etiqueta que compilaron o la etiqueta de imagen que descargaron; consulta la [guía de actualización](/self-hosting/upgrading) cuando lleguen nuevas versiones.

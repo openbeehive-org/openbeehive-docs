@@ -15,7 +15,7 @@ funktioniert.
 - App nutzen: [app.openbeehive.org](https://app.openbeehive.org)
 - Demo ausprobieren: [demo.openbeehive.org](https://demo.openbeehive.org)
 - Projekt-Website: [openbeehive.org](https://openbeehive.org)
-- Quellcode: [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app)
+- Quellcode: [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 
 ## Wo anfangen
 
@@ -31,5 +31,5 @@ funktioniert.
 :::note
 Diese Dokumentation folgt der aktuellen App-Version; ältere Stände findest du
 über den Versionswechsler in der Navigationsleiste. Falls etwas fehlt oder unklar ist, erstelle bitte
-[ein Issue](https://github.com/johnnycube/openbeehive-docs/issues).
+[ein Issue](https://github.com/openbeehive-org/openbeehive-docs/issues).
 :::

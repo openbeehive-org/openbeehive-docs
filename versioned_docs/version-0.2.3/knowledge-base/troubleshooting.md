@@ -103,7 +103,7 @@ On iPhone and iPad the in-app scanner can be restricted. If scanning does not wo
 
 ## Filing a good bug report
 
-If none of the above helps, please open an issue at [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app). A clear report gets a faster fix. Try to include:
+If none of the above helps, please open an issue at [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). A clear report gets a faster fix. Try to include:
 
 | Detail | Example |
 | --- | --- |

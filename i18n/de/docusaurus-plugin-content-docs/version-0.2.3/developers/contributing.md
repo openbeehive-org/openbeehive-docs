@@ -23,7 +23,7 @@ sind viel leichter zu prüfen und zu mergen.
 ## Die Repositories
 
 Openbeehive ist auf einige Repositories unter
-[github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app) aufgeteilt:
+[github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app) aufgeteilt:
 
 | Repository | Was es enthält |
 | --- | --- |
@@ -51,7 +51,7 @@ Klone das Repository und generiere zuerst den Protobuf-Code, starte dann den
 Server und die App in zwei separaten Terminals.
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Generate Go + TypeScript code from the .proto files
@@ -166,7 +166,7 @@ und markiere ihn in deinem PR, damit ein Muttersprachler helfen kann.
    darauf hin, damit Reviewer wissen, dass sie genau hinschauen müssen.
 
 Lies die vollständigen Richtlinien in
-[`CONTRIBUTING.md`](https://github.com/johnnycube/openbeehive-app/blob/main/CONTRIBUTING.md).
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md).
 
 Danke, dass du hilfst, Imkereiaufzeichnungen für alle besser zu machen. Wenn du
 nicht weiterkommst, eröffne eine Diskussion oder ein Issue auf GitHub - wir

@@ -79,7 +79,7 @@ Su iPhone e iPad lo scanner integrato nell'app può essere limitato. Se la scans
 
 ## Inviare una buona segnalazione di bug
 
-Se nulla di quanto sopra aiuta, apri una issue su [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app). Una segnalazione chiara ottiene una correzione più rapida. Cerca di includere:
+Se nulla di quanto sopra aiuta, apri una issue su [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). Una segnalazione chiara ottiene una correzione più rapida. Cerca di includere:
 
 | Dettaglio | Esempio |
 | --- | --- |

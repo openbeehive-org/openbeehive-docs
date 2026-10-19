@@ -67,7 +67,7 @@ docker run -d \
   -e BEEHIVE_BLOB_BACKEND=fs \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -v openbeehive-blobs:/data/blobs \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## Almacenamiento MinIO / S3

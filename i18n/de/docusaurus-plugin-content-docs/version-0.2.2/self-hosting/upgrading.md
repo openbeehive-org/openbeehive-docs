@@ -17,7 +17,7 @@ Erstelle vor jedem Upgrade immer ein Backup. Es dauert nur einen Moment und ist 
 
 Ein gutes Upgrade dauert fünf Minuten und etwas Lesen:
 
-1. **Lies die Release Notes.** Prüfe das [CHANGELOG](https://github.com/johnnycube/openbeehive-app) und das GitHub-Release für die Version, auf die du umsteigst. Notiere alle Breaking Changes, neue erforderliche Konfiguration oder manuelle Schritte.
+1. **Lies die Release Notes.** Prüfe das [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app) und das GitHub-Release für die Version, auf die du umsteigst. Notiere alle Breaking Changes, neue erforderliche Konfiguration oder manuelle Schritte.
 2. **Sichere** deine Datenbank und deinen Blob-Speicher.
 3. **Notiere deine aktuelle Version**, damit du weißt, worauf du bei Bedarf zurückrollen kannst.
 4. **Wähle einen ruhigen Moment.** Upgrades beinhalten einen kurzen Neustart. Da die App offline-first ist, arbeitet jeder, der sie nutzt, lokal weiter und synchronisiert, sobald der Server wieder da ist.
@@ -76,10 +76,10 @@ docker compose up -d
 docker compose logs -f openbeehive
 ```
 
-Das veröffentlichte Image ist `ghcr.io/johnnycube/openbeehive-app:latest`. Für reproduzierbare Bereitstellungen pinne ein bestimmtes Versions-Tag statt `latest`, damit du immer genau weißt, was läuft.
+Das veröffentlichte Image ist `ghcr.io/openbeehive-org/openbeehive-app:latest`. Für reproduzierbare Bereitstellungen pinne ein bestimmtes Versions-Tag statt `latest`, damit du immer genau weißt, was läuft.
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:v0.1.0
+image: ghcr.io/openbeehive-org/openbeehive-app:v0.1.0
 ```
 
 Siehe [Docker](/self-hosting/docker) für das vollständige Compose-Setup.

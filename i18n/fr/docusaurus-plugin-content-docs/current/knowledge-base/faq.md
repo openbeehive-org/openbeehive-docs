@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Foire aux questions
 
-Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](/knowledge-base/troubleshooting) ou demandez à la communauté sur [GitHub](https://github.com/johnnycube/openbeehive-app).
+Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](/knowledge-base/troubleshooting) ou demandez à la communauté sur [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Openbeehive est-il gratuit ?
 
@@ -109,7 +109,7 @@ Le service hébergé utilise des comptes avec e-mail et mot de passe. Les auto-h
 
 ## Comment signaler un bug ou demander une fonctionnalité ?
 
-Veuillez ouvrir un ticket dans le [dépôt GitHub](https://github.com/johnnycube/openbeehive-app). Des étapes de reproduction claires, votre plateforme et votre navigateur, ainsi qu'une capture d'écran aident.
+Veuillez ouvrir un ticket dans le [dépôt GitHub](https://github.com/openbeehive-org/openbeehive-app). Des étapes de reproduction claires, votre plateforme et votre navigateur, ainsi qu'une capture d'écran aident.
 
 La [page de dépannage](/knowledge-base/troubleshooting) couvre peut-être déjà les problèmes courants.
 
@@ -119,4 +119,4 @@ Les contributions de toutes sortes sont les bienvenues : code, documentation, tr
 
 ## Quelle est cette version ?
 
-Les versions sont étiquetées sur [GitHub](https://github.com/johnnycube/openbeehive-app/releases). Les auto-hébergeurs exécutent le tag qu'ils ont compilé ou le tag d'image qu'ils ont téléchargé ; consultez le [guide de mise à niveau](/self-hosting/upgrading) à la sortie de nouvelles versions.
+Les versions sont étiquetées sur [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Les auto-hébergeurs exécutent le tag qu'ils ont compilé ou le tag d'image qu'ils ont téléchargé ; consultez le [guide de mise à niveau](/self-hosting/upgrading) à la sortie de nouvelles versions.

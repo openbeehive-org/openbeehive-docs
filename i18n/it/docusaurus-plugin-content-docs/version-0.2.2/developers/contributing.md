@@ -23,7 +23,7 @@ facili da revisionare e fondere.
 ## I repository
 
 Openbeehive è suddiviso in alcuni repository sotto
-[github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app):
+[github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app):
 
 | Repository | Cosa contiene |
 | --- | --- |
@@ -51,7 +51,7 @@ Clona il repository e genera prima il codice protobuf, poi avvia il server e
 l'app in due terminali separati.
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Generate Go + TypeScript code from the .proto files
@@ -167,7 +167,7 @@ PR così un madrelingua può aiutare.
    segnalalo esplicitamente così i revisori sanno di guardare con attenzione.
 
 Leggi le linee guida complete in
-[`CONTRIBUTING.md`](https://github.com/johnnycube/openbeehive-app/blob/main/CONTRIBUTING.md).
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md).
 
 Grazie per aiutare a rendere migliori i registri apistici per tutti. Se ti
 blocchi, apri una discussione o un issue su GitHub - siamo felici di aiutare.

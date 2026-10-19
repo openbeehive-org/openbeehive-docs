@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Häufig gestellte Fragen
 
-Schnelle Antworten auf die Fragen, die wir am häufigsten hören. Wenn etwas fehlt, sieh in den [Leitfaden zur Fehlerbehebung](/knowledge-base/troubleshooting) oder frage die Community auf [GitHub](https://github.com/johnnycube/openbeehive-app).
+Schnelle Antworten auf die Fragen, die wir am häufigsten hören. Wenn etwas fehlt, sieh in den [Leitfaden zur Fehlerbehebung](/knowledge-base/troubleshooting) oder frage die Community auf [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Ist Openbeehive kostenlos?
 
@@ -109,7 +109,7 @@ Der gehostete Dienst verwendet Konten mit E-Mail und Passwort. Selbst-Hoster kö
 
 ## Wie melde ich einen Fehler oder schlage eine Funktion vor?
 
-Bitte eröffne ein Issue im [GitHub-Repository](https://github.com/johnnycube/openbeehive-app). Klare Schritte zur Reproduktion, deine Plattform und dein Browser sowie ein Screenshot helfen.
+Bitte eröffne ein Issue im [GitHub-Repository](https://github.com/openbeehive-org/openbeehive-app). Klare Schritte zur Reproduktion, deine Plattform und dein Browser sowie ein Screenshot helfen.
 
 Die [Seite zur Fehlerbehebung](/knowledge-base/troubleshooting) deckt häufige Probleme möglicherweise bereits ab.
 
@@ -119,4 +119,4 @@ Beiträge aller Art sind willkommen: Code, Dokumentation, Übersetzungen, Fehler
 
 ## Welche Version ist das?
 
-Veröffentlichungen werden auf [GitHub](https://github.com/johnnycube/openbeehive-app/releases) getaggt. Selbst-Hoster betreiben den Tag, den sie gebaut haben, oder den Image-Tag, den sie gezogen haben; sieh in den [Leitfaden zum Aktualisieren](/self-hosting/upgrading), wenn neue Versionen erscheinen.
+Veröffentlichungen werden auf [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) getaggt. Selbst-Hoster betreiben den Tag, den sie gebaut haben, oder den Image-Tag, den sie gezogen haben; sieh in den [Leitfaden zum Aktualisieren](/self-hosting/upgrading), wenn neue Versionen erscheinen.

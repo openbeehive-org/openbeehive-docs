@@ -17,7 +17,7 @@ Faites toujours une sauvegarde avant de mettre à niveau. Cela ne prend qu'un in
 
 Une bonne mise à niveau prend cinq minutes et un peu de lecture :
 
-1. **Lisez les notes de version.** Consultez le [CHANGELOG](https://github.com/johnnycube/openbeehive-app) et la version GitHub vers laquelle vous passez. Notez tout changement incompatible, toute nouvelle configuration requise, ou toute étape manuelle.
+1. **Lisez les notes de version.** Consultez le [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app) et la version GitHub vers laquelle vous passez. Notez tout changement incompatible, toute nouvelle configuration requise, ou toute étape manuelle.
 2. **Sauvegardez** votre base de données et votre stockage de blobs.
 3. **Notez votre version actuelle** afin de savoir vers quoi revenir si nécessaire.
 4. **Choisissez un moment calme.** Les mises à niveau impliquent un court redémarrage. Comme l'application est hors-ligne d'abord, quiconque l'utilise continue de travailler localement et se synchronise une fois le serveur de retour.
@@ -76,10 +76,10 @@ docker compose up -d
 docker compose logs -f openbeehive
 ```
 
-L'image publiée est `ghcr.io/johnnycube/openbeehive-app:latest`. Pour des déploiements reproductibles, épinglez un tag de version spécifique plutôt que `latest`, afin de toujours savoir exactement ce qui tourne.
+L'image publiée est `ghcr.io/openbeehive-org/openbeehive-app:latest`. Pour des déploiements reproductibles, épinglez un tag de version spécifique plutôt que `latest`, afin de toujours savoir exactement ce qui tourne.
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:v0.1.0
+image: ghcr.io/openbeehive-org/openbeehive-app:v0.1.0
 ```
 
 Voir [Docker](/self-hosting/docker) pour la configuration Compose complète.

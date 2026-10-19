@@ -13,7 +13,7 @@ producción un proxy inverso termina el TLS.
 ## Generar un cliente
 
 El contrato vive en
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto/openbeehive/v1)
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1)
 y se compila con [buf](https://buf.build). El `buf.gen.yaml` del repositorio
 genera Go (`protocolbuffers/go` + `connectrpc/go`) en `server/internal/gen` y
 TypeScript (`bufbuild/es` v2) en `app/src/lib/proto`. Ambos directorios de
@@ -26,8 +26,8 @@ plugins que necesites.
 ```go
 import (
     "connectrpc.com/connect"
-    obv1 "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1"
-    "github.com/johnnycube/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
+    obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
+    "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
 
 client := openbeehivev1connect.NewApiaryServiceClient(http.DefaultClient, "https://bees.example.com")

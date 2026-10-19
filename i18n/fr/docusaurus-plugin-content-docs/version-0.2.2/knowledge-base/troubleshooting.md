@@ -79,7 +79,7 @@ Sur iPhone et iPad, le scanner intégré à l'application peut être restreint. 
 
 ## Rédiger un bon rapport de bug
 
-Si rien de ce qui précède n'aide, veuillez ouvrir un ticket sur [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app). Un rapport clair obtient une correction plus rapide. Essayez d'inclure :
+Si rien de ce qui précède n'aide, veuillez ouvrir un ticket sur [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). Un rapport clair obtient une correction plus rapide. Essayez d'inclure :
 
 | Détail | Exemple |
 | --- | --- |

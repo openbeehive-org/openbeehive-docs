@@ -28,7 +28,7 @@ Une fois compilé, le binaire lui-même n'a aucune dépendance d'exécution : vo
 ## Récupérer le code
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 ```
 

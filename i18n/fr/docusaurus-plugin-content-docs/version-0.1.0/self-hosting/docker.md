@@ -12,7 +12,7 @@ cloud complète (Postgres et MinIO) avec Docker Compose.
 L'image officielle est publiée sur le GitHub Container Registry :
 
 ```text
-ghcr.io/johnnycube/openbeehive-app:latest
+ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 La même image fonctionne pour les deux profils de déploiement. Celui que vous obtenez est décidé
@@ -42,7 +42,7 @@ docker run -d \
   -e BEEHIVE_BLOB_BACKEND=fs \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
   -e BEEHIVE_SESSION_SECRET="$(openssl rand -base64 32)" \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Quelques remarques sur les options :
@@ -78,7 +78,7 @@ docker run -d \
   -p 8080:8080 \
   -v openbeehive-data:/data \
   --env-file openbeehive.env \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## Le profil cloud avec Compose
@@ -91,7 +91,7 @@ Le dépôt fournit un `docker-compose.yml` qui relie les trois services
 entre eux. Clonez le dépôt, copiez l'environnement d'exemple et lancez-le :
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 cp .env.example .env   # puis modifiez .env (voir ci-dessous)
 docker compose up -d
@@ -101,7 +101,7 @@ docker compose up -d
 
 | Service | Image | Rôle |
 | --- | --- | --- |
-| `server` | `ghcr.io/johnnycube/openbeehive-app:latest` | Le backend Openbeehive et la PWA, à l'écoute sur `:8080`. |
+| `server` | `ghcr.io/openbeehive-org/openbeehive-app:latest` | Le backend Openbeehive et la PWA, à l'écoute sur `:8080`. |
 | `postgres` | `postgres` | La base de données relationnelle pour tous les enregistrements synchronisés. |
 | `minio` | `minio/minio` | Le stockage objet compatible S3 pour les photos et autres blobs. |
 
@@ -161,7 +161,7 @@ healthchecks et des valeurs par défaut raisonnables que cet extrait omet.
 ```docker
 services:
   server:
-    image: ghcr.io/johnnycube/openbeehive-app:latest
+    image: ghcr.io/openbeehive-org/openbeehive-app:latest
     ports:
       - "8080:8080"
     env_file: .env

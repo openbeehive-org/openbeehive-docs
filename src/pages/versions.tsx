@@ -11,7 +11,7 @@ import {
 type Version = ReturnType<typeof useVersions>[number];
 
 const changelogUrl = (version: Version) =>
-  `https://github.com/johnnycube/openbeehive-app/blob/v${version.name}/CHANGELOG.md`;
+  `https://github.com/openbeehive-org/openbeehive-app/blob/v${version.name}/CHANGELOG.md`;
 
 function VersionRows({versions}: {versions: Version[]}) {
   return (

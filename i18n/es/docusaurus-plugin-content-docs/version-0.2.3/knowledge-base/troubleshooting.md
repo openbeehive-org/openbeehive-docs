@@ -105,7 +105,7 @@ En iPhone y iPad el escáner integrado en la aplicación puede estar restringido
 
 ## Presentar un buen informe de error
 
-Si nada de lo anterior ayuda, por favor abre una incidencia en [github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app). Un informe claro consigue un arreglo más rápido. Intenta incluir:
+Si nada de lo anterior ayuda, por favor abre una incidencia en [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app). Un informe claro consigue un arreglo más rápido. Intenta incluir:
 
 | Detalle | Ejemplo |
 | --- | --- |

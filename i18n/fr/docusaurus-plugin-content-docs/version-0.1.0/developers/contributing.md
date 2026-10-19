@@ -23,7 +23,7 @@ beaucoup plus faciles à relire et à fusionner.
 ## Les dépôts
 
 Openbeehive est réparti sur quelques dépôts sous
-[github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app) :
+[github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app) :
 
 | Dépôt | Ce qu'il contient |
 | --- | --- |
@@ -51,7 +51,7 @@ Clonez le dépôt et générez d'abord le code protobuf, puis démarrez le serve
 l'application dans deux terminaux séparés.
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Generate Go + TypeScript code from the .proto files
@@ -169,7 +169,7 @@ votre PR afin qu'un locuteur natif puisse vous aider.
    de près.
 
 Lisez les directives complètes dans
-[`CONTRIBUTING.md`](https://github.com/johnnycube/openbeehive-app/blob/main/CONTRIBUTING.md).
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md).
 
 Merci de nous aider à améliorer les enregistrements apicoles pour tout le monde.
 Si vous êtes bloqué, ouvrez une discussion ou un ticket sur GitHub - nous sommes

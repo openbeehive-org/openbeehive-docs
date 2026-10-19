@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Frequently Asked Questions
 
-Quick answers to the questions we hear most often. If something is missing, check the [troubleshooting guide](/knowledge-base/troubleshooting) or ask the community on [GitHub](https://github.com/johnnycube/openbeehive-app).
+Quick answers to the questions we hear most often. If something is missing, check the [troubleshooting guide](/knowledge-base/troubleshooting) or ask the community on [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Is Openbeehive free?
 
@@ -114,7 +114,7 @@ The hosted service uses OIDC login (sign in with a supported provider), with opt
 
 ## How do I report a bug or request a feature?
 
-Please open an issue on our [GitHub organisation](https://github.com/johnnycube/openbeehive-app). Clear steps to reproduce, your platform and browser, and a screenshot all help enormously.
+Please open an issue on our [GitHub organisation](https://github.com/openbeehive-org/openbeehive-app). Clear steps to reproduce, your platform and browser, and a screenshot all help enormously.
 
 The [troubleshooting page](/knowledge-base/troubleshooting) may already cover common issues.
 

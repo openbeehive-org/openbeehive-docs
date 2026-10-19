@@ -20,7 +20,7 @@ mit oder ohne vorgeschaltetes HTTPS funktioniert.
 ## Der Vertrag ist die Quelle der Wahrheit
 
 Die API ist in Protocol Buffers unter
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto)
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto)
 definiert. Generieren Sie mit [buf](https://buf.build) einen Client für Ihre
 Sprache aus diesem Vertrag:
 

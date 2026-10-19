@@ -17,7 +17,7 @@ Haz siempre una copia de seguridad antes de actualizar. Solo lleva un momento y 
 
 Una buena actualizacion lleva cinco minutos y un poco de lectura:
 
-1. **Lee las notas de la version.** Revisa el [CHANGELOG](https://github.com/johnnycube/openbeehive-app) y la version de GitHub a la que vas a pasar. Anota cualquier cambio incompatible, nueva configuracion requerida o paso manual.
+1. **Lee las notas de la version.** Revisa el [CHANGELOG](https://github.com/openbeehive-org/openbeehive-app) y la version de GitHub a la que vas a pasar. Anota cualquier cambio incompatible, nueva configuracion requerida o paso manual.
 2. **Haz copia de seguridad** de tu base de datos y tu almacenamiento de blobs.
 3. **Anota tu version actual** para saber a que revertir si fuera necesario.
 4. **Elige un momento tranquilo.** Las actualizaciones implican un breve reinicio. Como la aplicacion es offline-first, cualquiera que la este usando sigue trabajando localmente y se sincroniza una vez que el servidor vuelve.
@@ -76,10 +76,10 @@ docker compose up -d
 docker compose logs -f openbeehive
 ```
 
-La imagen publicada es `ghcr.io/johnnycube/openbeehive-app:latest`. Para despliegues reproducibles, fija una etiqueta de version especifica en lugar de `latest`, para que siempre sepas exactamente que se esta ejecutando.
+La imagen publicada es `ghcr.io/openbeehive-org/openbeehive-app:latest`. Para despliegues reproducibles, fija una etiqueta de version especifica en lugar de `latest`, para que siempre sepas exactamente que se esta ejecutando.
 
 ```docker
-image: ghcr.io/johnnycube/openbeehive-app:v0.1.0
+image: ghcr.io/openbeehive-org/openbeehive-app:v0.1.0
 ```
 
 Consulta [Docker](/self-hosting/docker) para la configuracion completa de Compose.

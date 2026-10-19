@@ -40,7 +40,7 @@ Tutto il resto ha valori predefiniti sensati per il self-hosting. L'elenco compl
 ### Compila ed esegui
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Genera il codice Connect-RPC, poi compila il server
@@ -63,7 +63,7 @@ In modalità selfhost i tuoi registri finiscono in un file SQLite locale e le fo
 
 ## Opzione B — Docker
 
-Se hai Docker installato, questo è il percorso più rapido in assoluto. L'immagine pubblicata è `ghcr.io/johnnycube/openbeehive-app:latest`.
+Se hai Docker installato, questo è il percorso più rapido in assoluto. L'immagine pubblicata è `ghcr.io/openbeehive-org/openbeehive-app:latest`.
 
 ```bash
 docker run -d \
@@ -72,7 +72,7 @@ docker run -d \
   -e BEEHIVE_DEPLOYMENT_PROFILE=selfhost \
   -e BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080 \
   -v openbeehive-data:/data \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 Il volume `-v openbeehive-data:/data` mantiene il database SQLite e i blob al di fuori del container, così sopravvivono ad aggiornamenti e riavvii. Una volta in esecuzione, apri `http://localhost:8080`.

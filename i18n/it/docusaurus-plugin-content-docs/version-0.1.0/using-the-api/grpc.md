@@ -20,7 +20,7 @@ senza HTTPS davanti.
 ## Il contratto è la fonte di verità
 
 L'API è definita in Protocol Buffers sotto
-[`proto/openbeehive/v1`](https://github.com/johnnycube/openbeehive-app/tree/main/proto).
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto).
 Genera un client per il tuo linguaggio a partire da quel contratto con
 [buf](https://buf.build):
 

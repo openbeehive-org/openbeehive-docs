@@ -4,8 +4,8 @@ Thanks for helping improve the docs at
 [docs.openbeehive.org](https://docs.openbeehive.org)! This repository is the
 **documentation site** (built with [Docusaurus](https://docusaurus.io/)). The
 application and marketing site live in
-[`openbeehive-app`](https://github.com/johnnycube/openbeehive-app) and
-[`openbeehive-site`](https://github.com/johnnycube/openbeehive-site).
+[`openbeehive-app`](https://github.com/openbeehive-org/openbeehive-app) and
+[`openbeehive-site`](https://github.com/openbeehive-org/openbeehive-site).
 
 ## Development setup
 

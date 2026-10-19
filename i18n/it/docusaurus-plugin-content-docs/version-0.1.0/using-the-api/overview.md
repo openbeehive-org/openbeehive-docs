@@ -64,9 +64,9 @@ già conosci dall'app:
 :::note Stato dell'implementazione (v0.1.0)
 `ApiaryService` e `SyncService` sono oggi completamente integrati lato server. Gli altri
 servizi sono definiti nel contratto e seguono la stessa struttura; sono in fase di
-completamento. Consulta il [contratto](https://github.com/johnnycube/openbeehive-app/tree/main/proto)
+completamento. Consulta il [contratto](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto)
 per la fonte di verità attuale e le
-[note di rilascio](https://github.com/johnnycube/openbeehive-app/releases) per ciò che è
+[note di rilascio](https://github.com/openbeehive-org/openbeehive-app/releases) per ciò che è
 già attivo.
 :::
 

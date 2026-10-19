@@ -10,9 +10,9 @@ Run Openbeehive as a single container for a self-host setup, or bring up the ful
 The image is published to the GitHub Container Registry on every release tag:
 
 ```text
-ghcr.io/johnnycube/openbeehive-app:latest    # newest release
-ghcr.io/johnnycube/openbeehive-app:X.Y.Z     # a specific release
-ghcr.io/johnnycube/openbeehive-app:X.Y       # newest patch of a minor release
+ghcr.io/openbeehive-org/openbeehive-app:latest    # newest release
+ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z     # a specific release
+ghcr.io/openbeehive-org/openbeehive-app:X.Y       # newest patch of a minor release
 ```
 
 The same image serves both deployment profiles; the environment you pass in decides which one you get.
@@ -34,7 +34,7 @@ docker run -d \
   -e BEEHIVE_PUBLIC_BASE_URL=https://bees.example.com \
   -e 'BEEHIVE_DATABASE_DSN=file:/data/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)' \
   -e BEEHIVE_BLOB_DIR=/data/blobs \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 - `-p 8080:8080` maps the container's listen port (`BEEHIVE_ADDR=:8080`) to the host.
@@ -51,7 +51,7 @@ docker run -d \
   -p 8080:8080 \
   -v openbeehive-data:/data \
   --env-file openbeehive.env \
-  ghcr.io/johnnycube/openbeehive-app:latest
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
 ## The cloud profile with Compose
@@ -59,7 +59,7 @@ docker run -d \
 The `cloud` profile pairs the server with PostgreSQL and MinIO. The repository's `docker-compose.yml` is a development stack: it builds the server from source and publishes the database and MinIO ports on the host.
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 cp .env.example .env   # then edit .env (see below)
 docker compose up -d --build

@@ -28,7 +28,7 @@ Einmal gebaut, hat die Binärdatei selbst keine Laufzeitabhängigkeiten - du kan
 ## Den Code beziehen
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive-app
 ```
 

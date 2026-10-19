@@ -22,7 +22,7 @@ review and merge.
 ## The repositories
 
 Openbeehive is split across a few repositories under
-[github.com/johnnycube/openbeehive-app](https://github.com/johnnycube/openbeehive-app):
+[github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app):
 
 | Repository | What it contains |
 | --- | --- |
@@ -49,7 +49,7 @@ Clone the repository and generate the protobuf code first, then start the server
 and the app in two separate terminals.
 
 ```bash
-git clone https://github.com/johnnycube/openbeehive-app.git
+git clone https://github.com/openbeehive-org/openbeehive-app.git
 cd openbeehive
 
 # Generate Go + TypeScript code from the .proto files
@@ -156,7 +156,7 @@ PR so a native speaker can help.
    reviewers know to look closely.
 
 Read the full guidelines in
-[`CONTRIBUTING.md`](https://github.com/johnnycube/openbeehive-app/blob/main/CONTRIBUTING.md).
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md).
 
 Thank you for helping make beekeeping records better for everyone. If you get
 stuck, open a discussion or an issue on GitHub - we are happy to help.
