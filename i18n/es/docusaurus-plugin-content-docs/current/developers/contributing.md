@@ -38,15 +38,39 @@ make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
 make dev-app      # terminal 2: Vite dev server on :5173
 ```
 
-`make check` es la definición de «en verde» y exactamente lo que ejecuta la CI:
+`make check` es la definición de «en verde»:
 lint de protos y comprobación de cambios incompatibles, lint (golangci-lint,
 go vet, prettier, eslint, svelte-check), pruebas, umbrales de cobertura,
 auditoría (govulncheck, licencias, npm audit, gitleaks), compilación y
 fleetlint. `make check-fast` es el subconjunto rápido que ejecuta el hook de
-pre-commit; `make help` lista todos los objetivos.
+pre-commit; `make help` lista todos los objetivos. `make check` prueba con
+SQLite; la CI ejecuta las pruebas de Go una segunda vez con PostgreSQL y MariaDB.
 
-`make run-server` lee su configuración del entorno o de un archivo `.env` en la
-raíz del repositorio (copia `.env.example`). Los valores por defecto te dan
+### Probar con todas las bases de datos
+
+El servidor funciona con SQLite, PostgreSQL y MariaDB, y todo lo que toque
+SQL, una migración o la ruta de escritura de la sincronización debería estar en
+verde en las tres:
+
+```bash
+export PG_DSN='postgres://beehive:beehive@127.0.0.1:5433/beehive?sslmode=disable'
+export MARIADB_DSN='root:beehive@tcp(127.0.0.1:3307)/beehive'
+make test-db          # SQLite, then every backend whose DSN is set
+make test-postgres    # one backend only
+make test-mariadb
+```
+
+Las pruebas que necesitan una base de datos la obtienen del fixture `sqltest.New(t)`
+(`server/internal/storage/sql/sqltest`), que lee
+`BEEHIVE_TEST_DATABASE_DRIVER` y `BEEHIVE_TEST_DATABASE_DSN`, da a cada
+prueba una base de datos propia y la elimina después. `CONTRIBUTING.md`, en el
+repositorio de la aplicación, tiene los comandos de contenedor y las reglas para escribir SQL portable.
+
+El servidor lee su configuración del entorno y de un archivo `.env`
+en su directorio de trabajo (copia `.env.example`); `make run-server` lo inicia
+en la raíz del repositorio. Con `make dev-app` la aplicación viene de otro origen
+(`:5173`), así que establece `BEEHIVE_CORS_ALLOWED_ORIGINS=http://localhost:5173` en
+`.env`. Los valores por defecto te dan
 SQLite y blobs en el sistema de archivos; deja `BEEHIVE_PASSWORD_AUTH`
 desactivado, `BEEHIVE_OIDC_PROVIDERS` vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`
 para ejecutar sin inicio de sesión. Consulta [Configuración](../self-hosting/configuration.md).
@@ -83,13 +107,21 @@ servicios de los protos están registrados en el servidor; consulta
    así que el cambio no sería visible sin conexión.
 3. **Mantén `merge.go` y `merge.ts` idénticos.** El last-writer-wins por campo
    y el OR-Set add-wins están implementados en `server/internal/sync/merge.go`
-   y `app/src/lib/local/merge.ts`. Cambia ambos, con pruebas. Consulta el
+   y `app/src/lib/local/merge.ts`. Cambia ambos, con pruebas. Los vectores de
+   prueba compartidos de `server/internal/sync/testdata/merge_vectors.json` los ejecutan
+   ambas suites de pruebas; añade un vector por cada regla que cambies. Consulta el
    [protocolo de sincronización](./sync-protocol.md).
-4. **Escribe SQL portable.** El servidor funciona con PostgreSQL, MySQL y
+4. **Escribe SQL portable.** El servidor funciona con PostgreSQL, MariaDB y
    SQLite. Las migraciones usan el subconjunto portable descrito al inicio de
    `0001_init.sql`; el store traduce las diferencias de dialecto restantes.
+   Las columnas indexadas son `VARCHAR(n)`, nunca `TEXT`; una sentencia que solo necesita
+   un dialecto va en un archivo llamado `NNNN_name.<driver>.sql`.
    Consulta [Bases de datos](../self-hosting/databases.md).
-5. **Inglés en el código, traducciones para los usuarios.** El código, los
+5. **Colores semánticos.** El CSS nuevo o modificado usa los tokens de color definidos en
+   `app/src/routes/+layout.svelte` (`--bg`, `--surface`, `--text`, `--accent`,
+   etc.), nunca valores de color en bruto; el tema oscuro redefine solo esos
+   tokens.
+6. **Inglés en el código, traducciones para los usuarios.** El código, los
    comentarios, los identificadores y los mensajes de commit van en inglés.
    Toda cadena visible para el usuario pasa por `svelte-i18n` con entradas en
    `app/src/lib/i18n/locales/{en,de,fr,es,it}.json`. Si no puedes traducir,
@@ -99,6 +131,6 @@ servicios de los protos están registrados en el servidor; consulta
 
 1. Haz un fork y crea una rama.
 2. Ejecuta `make proto` si tocaste un `.proto`.
-3. Ejecuta `make check`; es lo que ejecuta la CI.
+3. Ejecuta `make check`. La CI ejecuta lo mismo y repite las pruebas de Go en PostgreSQL y MariaDB.
 4. Mantén el PR enfocado y describe qué cambia y por qué.
 5. Indica explícitamente los cambios de lógica de fusión, sincronización o esquema.

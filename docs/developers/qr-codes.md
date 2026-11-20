@@ -30,19 +30,23 @@ hive only resolves if its apiary has synced to the device.
 The route is a resolver, not a page:
 
 1. Look up the id in the local database (`hives.get`).
-2. If missing and the browser is online, run `syncOnce()` and look again.
-3. If found, `goto('/hives/<id>')` with `replaceState`.
-4. Otherwise show "not found" (online) or "offline" (no connection).
+2. If found, `goto('/hives/<id>')` with `replaceState`.
+3. If missing, wait for the device's first download to finish and look again.
+4. If it is still missing, find out why and say so: the device is offline,
+   this browser is not signed in (typical when the phone's camera app opens
+   the link in the browser while the user works in the installed app), the
+   server cannot be reached, or the hive is not part of the active workspace.
 
 ```text
 scan QR -> /h/<id> -> local lookup
                           |
               found ------+------ not found
                 |                    |
-          /hives/<id>          online? sync, re-check
+          /hives/<id>          sync, re-check
                                      |
                           found -> /hives/<id>
-                          still missing -> "not found" / "offline"
+                          still missing -> offline / signed out /
+                                           server unreachable / not in your data
 ```
 
 A hive that is already on the device resolves without a network round-trip.
@@ -55,12 +59,15 @@ in the centre and the brand name below. No network call is involved.
 
 `shortCode(hiveId)` is the first six characters of the id without dashes,
 upper-cased. It is printed under the QR as a human-readable caption and used
-in the SVG file name. It is display only; nothing routes on it and it is not
-a database column.
+in the SVG file name. It is not a database column and no URL routes on it;
+the scanner's code field and the search of the hives list match it against
+the start of the hive ids on the device.
 
 `QrLabel` shows the QR with the hive name and short code, opens a clean print
 window (`Print`) and downloads the SVG (`SVG`). It appears on the hive detail
-page `/hives/[id]`.
+page `/hives/[id]`. `QrSheet` is the A4 sheet for all hives of an apiary; it
+is printed from the apiary page itself. Hive and apiary names are escaped
+wherever they are written into label or print markup.
 
 ## Parsing scanned payloads
 
@@ -78,13 +85,14 @@ is not installed.
 
 ## In-app scanner
 
-`/scan` uses the browser's `BarcodeDetector` API (`formats: ['qr_code']`) on
-a rear-camera video stream and calls `parseHiveId` on every detected code,
-then navigates to `/hives/<id>`. Where `BarcodeDetector` is unavailable (iOS
-Safari) the page shows an "unsupported" message and the phone's camera app
-is the way to scan; the QR is a plain URL and opens the same route. A
-decoder library such as `@zxing/browser` could be dropped in for those
-platforms; none is bundled.
+`/scan` reads a rear-camera video stream and calls `parseHiveId` on every
+detected code, then navigates to `/hives/<id>`. It uses the browser's
+`BarcodeDetector` API (`formats: ['qr_code']`) where that exists and falls
+back to the bundled `@zxing/browser` decoder elsewhere (Safari on iOS,
+Firefox), loaded on demand. A code that is not a hive label is reported as
+such. Below the camera picture a form takes the six-character short code and
+opens the hive whose id starts with it, looked up in the local database; that
+also covers devices without a camera and blocked camera access.
 
 The scanner needs camera permission and a secure context (HTTPS or
 `localhost`).

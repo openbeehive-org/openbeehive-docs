@@ -12,7 +12,7 @@ are the keys used in sync payloads. Enum columns store the proto number; the
 display label is what the app shows (`app/src/lib/i18n/locales/en.json`).
 
 Every synced table carries three bookkeeping columns not repeated below:
-`organization_id` (tenant), `field_hlc` (JSON field clock, see the
+`organization_id` (the workspace, called tenant in the code), `field_hlc` (JSON field clock, see the
 [sync protocol](./sync-protocol.md)) and `deleted` (soft-delete flag).
 Ids are UUIDs, minted on the device or by the server for rows created
 through the [API](../using-the-api/overview.md). Timestamps are stored as ISO
@@ -31,9 +31,12 @@ apiary
        └── event       (append-only history with frozen apiary/hive/queen)
 ```
 
-Sharing and sync partitioning use `scope_id`: an apiary's own id for the
-apiary and everything under it. Only `event` stores `scope_id` as a column;
-for the other tables it is carried on the `Change` message.
+The workspace (`organization_id`) is the sharing unit: every member of a
+workspace reads and writes all of its rows. Within it, changes carry a
+`scope_id`: an apiary's own id for the apiary and everything under it, or
+`user:<id>` for personal rows such as a task without an apiary. Only `event`
+stores `scope_id` as a column; for the other tables it is carried on the
+`Change` message.
 
 ## apiary
 
@@ -85,7 +88,8 @@ for the other tables it is carried on the `Change` message.
 | `created_at`, `updated_at` | timestamp | |
 
 A queen change sets `active = 0` and `replaced_at` on the old row and inserts
-a new one; old queens are never deleted.
+a new one; the old queen stays in the table. A queen row is deleted only
+when she was recorded by mistake.
 
 ## inspection
 
@@ -97,6 +101,7 @@ a new one; old queens are never deleted.
 | `queen_seen`, `eggs_seen` | bool | |
 | `temperament` | int | 1 Very gentle, 2 Gentle, 3 Normal, 4 Nervous, 5 Aggressive |
 | `calmness` | int | 1 Runs off comb, 2 Restless, 3 Calm, 4 Very calm |
+| `source` | int | `InspectionSource`: 0 unspecified (treated as manual), 1 manual (a visit by a person), 2 sensor (an automated reading). Not null, default 0 |
 | `frames` | int | occupied frames |
 | `brood_frames` | int | |
 | `stores` | int | 1 Good, 2 Medium, 3 Low, 4 None |
@@ -104,14 +109,20 @@ a new one; old queens are never deleted.
 | `youngest_larva` | int | age in days of the youngest larva seen |
 | `covered_larva` | bool | capped brood seen |
 | `varroa` | text | |
-| `honey_kg`, `fed_kg`, `weight_kg` | real | |
+| `honey_kg`, `fed_kg`, `weight_kg` | real | `honey_kg` is kept for old records; the visit form no longer writes it (see `harvest`) |
 | `frames_added`, `frames_removed` | int | |
 | `drone_frame_cut`, `super_added` | bool | |
-| `temp_hive`, `temp_outside` | real | °C, null when not measured in the app; `CreateInspection` stores `0` for fields left out |
-| `humidity_hive`, `humidity_outside` | real | %, same rule as the temperatures |
+| `temp_hive`, `temp_outside` | real | °C |
+| `humidity_hive`, `humidity_outside` | real | % |
 | `note` | text | |
 | `photo_keys` | text | OR-Set JSON, the only set column |
 | `created_at` | timestamp | |
+
+The counts, amounts and climate readings (`frames`, `brood_frames`,
+`queen_cells`, `youngest_larva`, `frames_added`, `frames_removed`,
+`honey_kg`, `fed_kg`, `weight_kg` and the four climate columns) are nullable
+on the server and on the client: `NULL` means "not recorded", `0` means an
+observed zero. The API mirrors this with optional fields.
 
 ## task
 
@@ -153,6 +164,7 @@ A task without `apiary_id` syncs under the personal scope
 | `batch_number` | text | |
 | `best_before` | timestamp | |
 | `note` | text | |
+| `amended_at` | timestamp | null until the harvest is edited after creation, then the time of the last edit |
 
 ## treatment
 
@@ -167,6 +179,7 @@ A task without `apiary_id` syncs under the personal scope
 | `withdrawal_until` | timestamp | |
 | `reason` | text | defaults to `varroa` |
 | `note` | text | |
+| `amended_at` | timestamp | null until the treatment is edited after creation, then the time of the last edit; shown as "Amended on" and printed in the treatment register |
 
 ## event
 
@@ -191,10 +204,12 @@ types 1 to 7 (`app/src/lib/local/history.ts`). See
 ## Server-only tables
 
 `organization`, `users`, `member`, `invite`, `user_passkey`, `api_key`,
-`apiary_share`, `change_log` and `seq_counter` exist only on the server.
+`change_log` and `seq_counter` exist only on the server.
 `member.role` is `owner` or `member`; `users.role` is `admin` or `user`.
-`apiary_share` is read by the sync scope check but nothing in the app writes
-it. The client adds `outbox` and `sync_meta` for the sync engine.
+`users.sessions_valid_after` is the mark that ends all earlier sessions of an
+account; `invite.expires_at` is when an invite stops working (7 days after
+creation). The former `apiary_share` table is gone: there is no per-apiary
+sharing. The client adds `outbox` and `sync_meta` for the sync engine.
 
 ### api_key
 
@@ -205,7 +220,7 @@ Long-lived keys for scripts and integrations (migration `0014_api_keys.sql`,
 | --- | --- | --- |
 | `id` | text | |
 | `user_id` | varchar(64) | owner; indexed |
-| `organization_id` | varchar(64) | the tenant the key acts in, fixed at creation |
+| `organization_id` | varchar(64) | the workspace the key acts in, fixed at creation |
 | `name` | text | label shown in Settings |
 | `key_prefix` | text | first 12 characters of the plaintext, for display |
 | `key_hash` | varchar(64) | hex SHA-256 of the plaintext `obhk_...` token, unique; the plaintext is never stored |

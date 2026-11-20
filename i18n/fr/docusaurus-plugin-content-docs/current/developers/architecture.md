@@ -44,10 +44,10 @@ Le schéma ci-dessous montre comment un changement voyage d'une pression dans l'
            |<----- Pull changes ------------|                              |
                                             |------> Push changes <---------+
                                             |------- Pull changes --------->|
-   scope: only apiaries the user can see (partial replication)
+   scope: the workspace the user is signed in to (partial replication)
 ```
 
-Le moteur de synchronisation n'échange que les enregistrements qui appartiennent aux scopes auxquels un utilisateur a accès, de sorte qu'un appareil ne télécharge jamais le monde entier : seulement les ruchers auxquels il a droit.
+Le moteur de synchronisation n'échange que les enregistrements de l'espace auquel l'utilisateur est connecté, de sorte qu'un appareil ne télécharge jamais le monde entier.
 
 Les scripts et les capteurs entrent dans le même schéma via les services CRUD du serveur ([Utiliser l'API](../using-the-api/overview.md)). Leurs écritures ne contournent pas ce flux : le serveur applique chacune d'elles avec la même fusion champ par champ et l'ajoute au même journal des changements qu'un changement poussé, de sorte qu'un relevé envoyé par une balance de ruche n'est qu'un changement de plus que les appareils récupèrent à leur prochaine synchronisation.
 
@@ -69,7 +69,7 @@ Les champs de type liste (actuellement uniquement les clés de photos d'une insp
 
 ### Événements en ajout seul
 
-La table `event` est en ajout seul par convention : chaque écriture dans l'historique insère une nouvelle ligne avec un nouvel identifiant, et rien ne modifie ni ne supprime une ligne existante, de sorte que deux appareils ajoutant des événements hors ligne ne touchent jamais la même ligne. Voir [historique et événements](./history-and-events.md) pour les détails.
+La table `event` est en ajout seul en usage normal : chaque écriture dans l'historique insère une nouvelle ligne avec un nouvel identifiant, de sorte que deux appareils ajoutant des événements hors ligne ne touchent jamais la même ligne. Un événement ne change qu'avec son enregistrement : corriger une visite, un traitement ou une récolte met à jour son événement, et supprimer l'enregistrement supprime l'événement avec lui. Voir [historique et événements](./history-and-events.md) pour les détails.
 
 :::tip
 Parce que les fusions sont déterministes, deux appareils ayant vu le même ensemble de changements calculeront toujours exactement le même résultat, quel que soit l'ordre dans lequel ces changements sont arrivés.
@@ -77,18 +77,18 @@ Parce que les fusions sont déterministes, deux appareils ayant vu le même ense
 
 ## Partage et réplication partielle
 
-Le partage dans Openbeehive se fait au niveau du rucher via des **scopes**. Un scope accorde à un utilisateur l'accès à un rucher particulier et à tout ce qui se trouve en dessous : ses ruches, reines, inspections, tâches, événements, récoltes et traitements.
+L'unité de partage est l'**espace** (`tenant` et `organization` dans le code). Chaque membre d'un espace lit et écrit tous ses ruchers, ruches et enregistrements ; il n'y a pas de partage par rucher. Les lignes personnelles, comme une tâche sans rucher, font exception : elles n'atteignent que les appareils de leur propriétaire.
 
-La synchronisation est cadrée en conséquence. Un appareil ne réplique que les données comprises dans les scopes que son utilisateur peut voir, un modèle connu sous le nom de réplication partielle. Cela maintient les bases de données locales petites et ciblées, limite ce qui transite par le réseau, et signifie qu'un membre du rucher d'une association ne reçoit jamais de données provenant de ruchers auxquels il ne participe pas.
+La synchronisation est cadrée en conséquence. Un appareil ne réplique que l'espace auquel son utilisateur est connecté, un modèle connu sous le nom de réplication partielle, et conserve une base de données locale par espace. Cela maintient les bases de données locales petites et signifie qu'un membre de l'espace d'une association ne reçoit jamais de données provenant d'espaces auxquels il ne participe pas.
 
-Lorsqu'un nouveau scope est accordé, la prochaine récupération télécharge l'historique de ce rucher ; lorsque l'accès est retiré, ces enregistrements cessent de se synchroniser.
+Le serveur vérifie l'appartenance à chaque requête. Lorsqu'une personne rejoint un espace, la première récupération télécharge son historique ; lorsque l'appartenance prend fin, la synchronisation s'arrête.
 
 ## PWA mobile-first
 
 L'application est une Progressive Web App, conçue d'abord pour le téléphone dans votre poche au rucher.
 
-- Un **service worker** met en cache la coque de l'application et les ressources, de sorte que l'application se charge instantanément et fonctionne entièrement hors ligne après la première visite.
-- **SQLite-WASM sur OPFS** fournit une véritable base de données relationnelle dans le navigateur, avec un stockage durable et privé à l'origine qui survit aux rechargements.
+- Un **service worker** met en cache la coque de l'application et les ressources, de sorte que l'application se charge instantanément et fonctionne entièrement hors ligne après la première visite, y compris à froid. Une nouvelle version est installée en arrière-plan et prend le relais lorsque l'utilisateur accepte l'invite de rechargement ou que tous les onglets sont fermés.
+- **SQLite-WASM sur OPFS** fournit une véritable base de données relationnelle dans le navigateur, avec un stockage durable et privé à l'origine qui survit aux rechargements. Un seul onglet à la fois détient la base de données (un Web Lock) ; un second onglet affiche un avis et peut prendre le relais.
 - L'application est installable sur l'écran d'accueil et se comporte comme une application native, y compris le flux de scan QR qui ouvre l'application sur une ruche précise.
 
 ## Comment tout s'assemble
@@ -98,7 +98,7 @@ L'application est une Progressive Web App, conçue d'abord pour le téléphone d
 | Interface | PWA SvelteKit | Lit et écrit la base de données locale ; ne bloque jamais sur le réseau |
 | Stockage local | SQLite-WASM sur OPFS | Source de vérité durable, sur l'appareil |
 | Moteur de synchronisation | Push / Pull en arrière-plan | Réconcilie les changements locaux et distants via HLC, LWW, OR-Sets |
-| Backend | Go, Connect-RPC | Stocke et ordonne les changements ; applique les scopes ; sert les récupérations |
+| Backend | Go, Connect-RPC | Stocke et ordonne les changements ; applique l'appartenance à l'espace et les scopes ; sert les récupérations |
 | Stockage | Backends de base de données et de blobs enfichables | Persiste les données et les médias sur le serveur |
 
 Cette séparation est ce qui donne à Openbeehive sa promesse fondamentale : les enregistrements sont toujours avec vous, toujours rapides et toujours cohérents une fois que tout le monde est de nouveau à portée.

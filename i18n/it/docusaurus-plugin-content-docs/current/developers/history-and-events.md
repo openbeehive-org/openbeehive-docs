@@ -12,7 +12,7 @@ era vero in quel momento. Il codice è in `app/src/lib/local/history.ts`.
 
 ## Gli eventi congelano il loro contesto
 
-La tabella `event` è append-only. Ogni riga memorizza, come colonne normali,
+La tabella `event` è append-only nell'uso normale. Ogni riga memorizza, come colonne normali,
 l'`apiary_id`, l'`hive_id` e il `queen_id` validi alla `date` dell'evento.
 Sposta l'arnia il mese prossimo e l'ispezione della scorsa settimana appartiene
 ancora al vecchio apiario; cambia regina e un vecchio raccolto resta attribuito
@@ -70,14 +70,21 @@ ORDER BY introduced_at DESC LIMIT 1;
 | `recordHarvest` | riga `harvest` con `apiary_id` / `queen_id` congelati, evento `HARVEST` con `amount_kg` e `ref_id` |
 | `recordTreatment` | riga `treatment` con contesto congelato, evento `TREATMENT` |
 | `recordInspection` | riga `inspection`, evento `INSPECTION` |
+| `editInspection`, `editHarvest`, `editTreatment` | correggono la riga di dettaglio e il suo evento; quando cambia la data, `apiary_id` / `queen_id` congelati vengono risolti di nuovo. Raccolti e trattamenti ricevono `amended_at` |
+| `editQueen` | corregge i dati della regina senza toccare la cronologia dei regni |
+| `deleteInspection`, `deleteHarvest`, `deleteTreatment`, `deleteQueen` | marcano come eliminati (tombstone) la riga e i suoi eventi; eliminare la regina attuale fa tornare attuale la regina precedente. Ciascuna restituisce una funzione di annullamento |
 
 `recordHarvest`, `recordTreatment` e `recordInspection` chiamano prima
 `resolveContext`. Tutte le scritture passano da `patch()` in
 `app/src/lib/local/repo.ts`, quindi finiscono nella tabella locale e
-nell'outbox di sincronizzazione come qualsiasi altra modifica. Le righe di
-dettaglio (`harvest`, `treatment`, `inspection`) sono normali righe
-sincronizzate; solo `event` è trattata come append-only per convenzione. Nulla
-nell'app modifica o elimina un evento.
+nell'outbox di sincronizzazione come qualsiasi altra modifica, e ogni flusso
+è un'unica transazione locale: la riga di dettaglio, i suoi eventi e le
+relative voci dell'outbox vengono scritti insieme oppure per niente. Le righe
+di dettaglio (`harvest`, `treatment`, `inspection`) sono normali righe
+sincronizzate. Un evento non viene mai modificato o eliminato da solo; cambia
+soltanto insieme al record a cui appartiene, quindi la cronologia e le
+statistiche corrispondono sempre ai record. L'API del server fa lo stesso
+(`server/internal/service/writer.go`).
 
 I numeri dei tipi di evento sono elencati nel [modello dei dati](./data-model.md#event).
 
@@ -115,6 +122,7 @@ serve alcun join allo stato attuale.
 
 Le righe di `event` portano `scope_id` (l'id dell'apiario) come colonna e si
 sincronizzano come ogni altra tabella, con last-writer-wins per campo. Poiché
-ogni evento ha un UUID nuovo e non viene mai modificato, due dispositivi che
-aggiungono eventi offline non toccano mai la stessa riga ed entrambi gli insiemi
-sopravvivono. Vedi il [protocollo di sincronizzazione](./sync-protocol.md).
+ogni evento ha un UUID nuovo, due dispositivi che aggiungono eventi offline non
+toccano mai la stessa riga ed entrambi gli insiemi sopravvivono. Una correzione
+o un'eliminazione di un record viaggia come normali modifiche al record e ai
+suoi eventi. Vedi il [protocollo di sincronizzazione](./sync-protocol.md).

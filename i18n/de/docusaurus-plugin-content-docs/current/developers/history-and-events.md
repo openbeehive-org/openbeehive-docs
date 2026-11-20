@@ -13,7 +13,7 @@ den Kontext ein, der zu diesem Zeitpunkt galt. Der Code liegt in
 
 ## Ereignisse frieren ihren Kontext ein
 
-Die Tabelle `event` ist append-only. Jede Zeile speichert als einfache Spalten
+Die Tabelle `event` ist im Normalbetrieb append-only. Jede Zeile speichert als einfache Spalten
 die `apiary_id`, `hive_id` und `queen_id`, die am `date` des Ereignisses
 galten. Wanderst du die Beute nächsten Monat, gehört die Durchsicht von letzter
 Woche weiterhin zum alten Standort; weiselst du um, bleibt eine alte Ernte der
@@ -72,14 +72,21 @@ ORDER BY introduced_at DESC LIMIT 1;
 | `recordHarvest` | `harvest`-Zeile mit eingefrorener `apiary_id` / `queen_id`, Ereignis `HARVEST` mit `amount_kg` und `ref_id` |
 | `recordTreatment` | `treatment`-Zeile mit eingefrorenem Kontext, Ereignis `TREATMENT` |
 | `recordInspection` | `inspection`-Zeile, Ereignis `INSPECTION` |
+| `editInspection`, `editHarvest`, `editTreatment` | korrigieren die Detailzeile und ihr Ereignis; ändert sich das Datum, werden die eingefrorenen `apiary_id` / `queen_id` neu aufgelöst. Ernten und Behandlungen erhalten `amended_at` |
+| `editQueen` | korrigiert die Angaben der Königin, ohne die Historie der Regentschaften anzutasten |
+| `deleteInspection`, `deleteHarvest`, `deleteTreatment`, `deleteQueen` | setzen einen Tombstone auf die Zeile und ihre Ereignisse; das Löschen der aktuellen Königin macht ihre Vorgängerin wieder zur aktuellen. Jede gibt eine Undo-Funktion zurück |
 
 `recordHarvest`, `recordTreatment` und `recordInspection` rufen zuerst
 `resolveContext` auf. Alle Schreibvorgänge gehen durch `patch()` in
 `app/src/lib/local/repo.ts` und landen so wie jede andere Änderung in der
-lokalen Tabelle und der Sync-Outbox. Die Detailzeilen (`harvest`, `treatment`,
-`inspection`) sind normale synchronisierte Zeilen; nur `event` wird per
-Konvention als append-only behandelt. Nichts in der App bearbeitet oder löscht
-ein Ereignis.
+lokalen Tabelle und der Sync-Outbox, und jeder Ablauf ist eine lokale
+Transaktion: Die Detailzeile, ihre Ereignisse und deren Outbox-Einträge werden
+zusammen geschrieben oder gar nicht. Die Detailzeilen (`harvest`, `treatment`,
+`inspection`) sind normale synchronisierte Zeilen. Ein Ereignis wird nie für
+sich allein bearbeitet oder gelöscht; es ändert sich nur mit dem Datensatz, zu
+dem es gehört, sodass Zeitleiste und Statistiken immer zu den Datensätzen
+passen. Die API des Servers verhält sich genauso
+(`server/internal/service/writer.go`).
 
 Die Nummern der Ereignistypen stehen im [Datenmodell](./data-model.md#event).
 
@@ -117,6 +124,8 @@ ist kein Join auf den aktuellen Zustand nötig.
 
 `event`-Zeilen tragen `scope_id` (die Standort-Id) als Spalte und
 synchronisieren wie jede andere Tabelle, mit feldweisem Last-Writer-Wins. Da
-jedes Ereignis eine frische UUID hat und nie bearbeitet wird, berühren zwei
+jedes Ereignis eine frische UUID hat, berühren zwei
 Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile, und beide Mengen
-bleiben erhalten. Siehe [Sync-Protokoll](./sync-protocol.md).
+bleiben erhalten. Eine Korrektur oder Löschung eines Datensatzes wandert als
+gewöhnliche Änderungen am Datensatz und an seinen Ereignissen. Siehe
+[Sync-Protokoll](./sync-protocol.md).

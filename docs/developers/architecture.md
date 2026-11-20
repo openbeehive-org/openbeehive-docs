@@ -44,10 +44,10 @@ The diagram below shows how a change travels from a tap in the interface out to 
            |<----- Pull changes ------------|                              |
                                             |------> Push changes <---------+
                                             |------- Pull changes --------->|
-   scope: only apiaries the user can see (partial replication)
+   scope: the workspace the user is signed in to (partial replication)
 ```
 
-The sync engine exchanges only the records that belong to the scopes a user can access, so a device never downloads the whole world: just the apiaries it is entitled to.
+The sync engine exchanges only the records of the workspace the user is signed in to, so a device never downloads the whole world.
 
 Scripts and sensors enter the same picture through the server's CRUD services ([Using the API](../using-the-api/overview.md)). Their writes do not bypass this flow: the server applies each one with the same per-field merge and appends it to the same change log as a pushed change, so a reading posted by a hive scale is just another change that devices pull on their next sync.
 
@@ -69,7 +69,7 @@ List-like fields (currently only the photo keys on an inspection) use an observe
 
 ### Append-only events
 
-The `event` table is append-only by convention: every history write inserts a new row with a fresh id and nothing edits or deletes one, so two devices adding events offline never touch the same row. See [history and events](./history-and-events.md) for detail.
+The `event` table is append-only in normal use: every history write inserts a new row with a fresh id, so two devices adding events offline never touch the same row. An event changes only together with its record: correcting a visit, treatment or harvest updates its event, and deleting the record deletes the event with it. See [history and events](./history-and-events.md) for detail.
 
 :::tip
 Because merges are deterministic, any two devices that have seen the same set of changes will always compute exactly the same result, regardless of the order in which those changes arrived.
@@ -77,18 +77,18 @@ Because merges are deterministic, any two devices that have seen the same set of
 
 ## Sharing and partial replication
 
-Sharing in Openbeehive happens at the apiary level through **scopes**. A scope grants a user access to a particular apiary and everything beneath it: its hives, queens, inspections, tasks, events, harvests, and treatments.
+The sharing unit is the **workspace** (`tenant` and `organization` in the code). Every member of a workspace reads and writes all of its apiaries, hives and records; there is no per-apiary sharing. Personal rows, such as a task without an apiary, are the exception: they reach only their owner's devices.
 
-Sync is scoped to match. A device replicates only the data within the scopes its user can see, a model known as partial replication. This keeps local databases small and focused, limits what travels over the network, and means a member of one association's apiary never receives data from apiaries they have no part in.
+Sync is scoped to match. A device replicates only the workspace its user is signed in to, a model known as partial replication, and keeps one local database per workspace. This keeps local databases small and means a member of one association's workspace never receives data from workspaces they have no part in.
 
-When a new scope is granted, the next pull brings down that apiary's history; when access is removed, those records stop syncing.
+The server checks the membership on every request. When someone joins a workspace, the first pull brings down its history; when the membership ends, sync stops.
 
 ## Mobile-first PWA
 
 The app is a Progressive Web App, designed first for the phone in your pocket at the hive stand.
 
-- A **service worker** caches the application shell and assets so the app loads instantly and runs fully offline after the first visit.
-- **SQLite-WASM on OPFS** provides a real relational database in the browser, with durable, origin-private storage that survives reloads.
+- A **service worker** caches the application shell and assets so the app loads instantly and runs fully offline after the first visit, also from a cold start. A new version is installed in the background and takes over when the user accepts the reload prompt or all tabs are closed.
+- **SQLite-WASM on OPFS** provides a real relational database in the browser, with durable, origin-private storage that survives reloads. One tab at a time owns the database (a Web Lock); a second tab shows a notice and can take over.
 - The app is installable to the home screen and behaves like a native app, including the QR scanning flow that opens the app at a specific hive.
 
 ## How it fits together
@@ -98,7 +98,7 @@ The app is a Progressive Web App, designed first for the phone in your pocket at
 | Interface | SvelteKit PWA | Reads and writes the local database; never blocks on the network |
 | Local store | SQLite-WASM on OPFS | Durable, on-device source of truth |
 | Sync engine | Background Push / Pull | Reconciles local and remote changes via HLC, LWW, OR-Sets |
-| Backend | Go, Connect-RPC | Stores and orders changes; enforces scopes; serves pulls |
+| Backend | Go, Connect-RPC | Stores and orders changes; enforces workspace membership and scopes; serves pulls |
 | Storage | Pluggable database and blob backends | Persists data and media on the server |
 
 This separation is what gives Openbeehive its core promise: the records are always with you, always fast, and always consistent once everyone is back in range.

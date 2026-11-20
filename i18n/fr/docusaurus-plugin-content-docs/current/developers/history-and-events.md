@@ -12,7 +12,7 @@ vrai à ce moment-là. Le code se trouve dans `app/src/lib/local/history.ts`.
 
 ## Les événements figent leur contexte
 
-La table `event` est en ajout seul. Chaque ligne stocke, sous forme de colonnes
+La table `event` est en ajout seul en usage normal. Chaque ligne stocke, sous forme de colonnes
 ordinaires, les `apiary_id`, `hive_id` et `queen_id` qui s'appliquaient à la
 `date` de l'événement. Déplacez la ruche le mois prochain et l'inspection de la
 semaine dernière appartient toujours à l'ancien rucher ; remérez et une ancienne
@@ -70,14 +70,21 @@ ORDER BY introduced_at DESC LIMIT 1;
 | `recordHarvest` | ligne `harvest` avec `apiary_id` / `queen_id` figés, événement `HARVEST` avec `amount_kg` et `ref_id` |
 | `recordTreatment` | ligne `treatment` avec contexte figé, événement `TREATMENT` |
 | `recordInspection` | ligne `inspection`, événement `INSPECTION` |
+| `editInspection`, `editHarvest`, `editTreatment` | corrigent la ligne de détail et son événement ; lorsque la date change, les `apiary_id` / `queen_id` figés sont résolus de nouveau. Les récoltes et les traitements reçoivent `amended_at` |
+| `editQueen` | corrige les informations de la reine sans toucher à l'historique des règnes |
+| `deleteInspection`, `deleteHarvest`, `deleteTreatment`, `deleteQueen` | marquent la ligne et ses événements comme supprimés (tombstone) ; supprimer la reine actuelle fait de la précédente la reine actuelle. Chacune renvoie une fonction d'annulation |
 
 `recordHarvest`, `recordTreatment` et `recordInspection` appellent d'abord
 `resolveContext`. Toutes les écritures passent par `patch()` dans
 `app/src/lib/local/repo.ts`, elles atterrissent donc dans la table locale et
-dans l'outbox de synchronisation comme tout autre changement. Les lignes de
-détail (`harvest`, `treatment`, `inspection`) sont des lignes synchronisées
-normales ; seule `event` est traitée en ajout seul, par convention. Rien dans
-l'application ne modifie ni ne supprime un événement.
+dans l'outbox de synchronisation comme tout autre changement, et chaque flux est
+une seule transaction locale : la ligne de détail, ses événements et leurs
+entrées d'outbox sont écrits ensemble ou pas du tout. Les lignes de détail
+(`harvest`, `treatment`, `inspection`) sont des lignes synchronisées normales.
+Un événement n'est jamais modifié ni supprimé isolément ; il ne change qu'avec
+l'enregistrement auquel il appartient, de sorte que la chronologie et les
+statistiques correspondent toujours aux enregistrements. L'API du serveur fait
+de même (`server/internal/service/writer.go`).
 
 Les numéros de type d'événement sont listés dans le
 [modèle de données](./data-model.md#event).
@@ -116,7 +123,9 @@ jointure vers l'état courant n'est nécessaire.
 
 Les lignes `event` portent `scope_id` (l'id du rucher) comme colonne et se
 synchronisent comme toute autre table, avec le « dernier écrivain gagne » par
-champ. Comme chaque événement a un UUID neuf et n'est jamais modifié, deux
+champ. Comme chaque événement a un UUID neuf, deux
 appareils qui ajoutent des événements hors ligne ne touchent jamais la même
-ligne et les deux ensembles sont conservés. Voir le
+ligne et les deux ensembles sont conservés. La correction ou la suppression
+d'un enregistrement voyage sous forme de changements ordinaires de
+l'enregistrement et de ses événements. Voir le
 [protocole de synchronisation](./sync-protocol.md).

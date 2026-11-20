@@ -32,21 +32,25 @@ ruche ne se résout que si son rucher a été synchronisé sur l'appareil.
 La route est un résolveur, pas une page :
 
 1. Rechercher l'id dans la base de données locale (`hives.get`).
-2. S'il est absent et que le navigateur est en ligne, exécuter `syncOnce()` et
+2. S'il est trouvé, `goto('/hives/<id>')` avec `replaceState`.
+3. S'il est absent, attendre la fin du premier téléchargement de l'appareil et
    chercher à nouveau.
-3. S'il est trouvé, `goto('/hives/<id>')` avec `replaceState`.
-4. Sinon, afficher « introuvable » (en ligne) ou « hors ligne » (pas de
-   connexion).
+4. S'il est toujours absent, en déterminer la raison et l'indiquer : l'appareil
+   est hors ligne, ce navigateur n'est pas connecté (typique lorsque
+   l'application appareil photo du téléphone ouvre le lien dans le navigateur
+   alors que l'utilisateur travaille dans l'application installée), le serveur
+   est injoignable, ou la ruche ne fait pas partie de l'espace actif.
 
 ```text
 scan QR -> /h/<id> -> local lookup
                           |
               found ------+------ not found
                 |                    |
-          /hives/<id>          online? sync, re-check
+          /hives/<id>          sync, re-check
                                      |
                           found -> /hives/<id>
-                          still missing -> "not found" / "offline"
+                          still missing -> offline / signed out /
+                                           server unreachable / not in your data
 ```
 
 Une ruche déjà présente sur l'appareil se résout sans aller-retour réseau.
@@ -60,12 +64,17 @@ n'est impliqué.
 
 `shortCode(hiveId)` correspond aux six premiers caractères de l'id sans tirets,
 en majuscules. Il est imprimé sous le QR comme légende lisible par un humain et
-utilisé dans le nom du fichier SVG. Il sert uniquement à l'affichage ; rien ne
-route dessus et ce n'est pas une colonne de base de données.
+utilisé dans le nom du fichier SVG. Ce n'est pas une colonne de base de données
+et aucune URL ne route dessus ; le champ de code du scanner et la recherche de
+la liste des ruches le comparent au début des ids des ruches présentes sur
+l'appareil.
 
 `QrLabel` affiche le QR avec le nom de la ruche et le code court, ouvre une
 fenêtre d'impression épurée (`Print`) et télécharge le SVG (`SVG`). Il apparaît
-sur la page de détail de la ruche `/hives/[id]`.
+sur la page de détail de la ruche `/hives/[id]`. `QrSheet` est la feuille A4
+pour toutes les ruches d'un rucher ; elle s'imprime depuis la page du rucher
+elle-même. Les noms de ruche et de rucher sont échappés partout où ils sont
+écrits dans le balisage des étiquettes ou de l'impression.
 
 ## Analyser les charges utiles scannées
 
@@ -83,14 +92,15 @@ dans un navigateur lorsque l'application n'est pas installée.
 
 ## Scanner intégré à l'application
 
-`/scan` utilise l'API `BarcodeDetector` du navigateur (`formats: ['qr_code']`)
-sur un flux vidéo de la caméra arrière et appelle `parseHiveId` sur chaque code
-détecté, puis navigue vers `/hives/<id>`. Là où `BarcodeDetector` n'est pas
-disponible (iOS Safari), la page affiche un message « non pris en charge » et
-l'application appareil photo du téléphone est le moyen de scanner ; le QR est
-une simple URL et ouvre la même route. Une bibliothèque de décodage telle que
-`@zxing/browser` pourrait être ajoutée pour ces plateformes ; aucune n'est
-embarquée.
+`/scan` lit un flux vidéo de la caméra arrière et appelle `parseHiveId` sur
+chaque code détecté, puis navigue vers `/hives/<id>`. Il utilise l'API
+`BarcodeDetector` du navigateur (`formats: ['qr_code']`) là où elle existe et se
+replie ailleurs (Safari sur iOS, Firefox) sur le décodeur `@zxing/browser`
+embarqué, chargé à la demande. Un code qui n'est pas une étiquette de ruche est
+signalé comme tel. Sous l'image de la caméra, un formulaire accepte le code
+court de six caractères et ouvre la ruche dont l'id commence par celui-ci,
+recherchée dans la base de données locale ; cela couvre aussi les appareils sans
+caméra et les accès à la caméra bloqués.
 
 Le scanner a besoin de la permission de la caméra et d'un contexte sécurisé
 (HTTPS ou `localhost`).

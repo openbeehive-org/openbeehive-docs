@@ -32,20 +32,25 @@ synchronisiert wurde.
 Die Route ist ein Resolver, keine Seite:
 
 1. Die Id in der lokalen Datenbank nachschlagen (`hives.get`).
-2. Fehlt sie und der Browser ist online, `syncOnce()` ausführen und erneut
-   nachschlagen.
-3. Wenn gefunden, `goto('/hives/<id>')` mit `replaceState`.
-4. Sonst "nicht gefunden" (online) oder "offline" (keine Verbindung) anzeigen.
+2. Wenn gefunden, `goto('/hives/<id>')` mit `replaceState`.
+3. Fehlt sie, warten, bis der erste Download des Geräts abgeschlossen ist, und
+   erneut nachschlagen.
+4. Fehlt sie dann immer noch, den Grund ermitteln und nennen: Das Gerät ist
+   offline, dieser Browser ist nicht angemeldet (typisch, wenn die Kamera-App
+   des Telefons den Link im Browser öffnet, während der Nutzer in der
+   installierten App arbeitet), der Server ist nicht erreichbar oder die Beute
+   gehört nicht zum aktiven Arbeitsbereich.
 
 ```text
 scan QR -> /h/<id> -> local lookup
                           |
               found ------+------ not found
                 |                    |
-          /hives/<id>          online? sync, re-check
+          /hives/<id>          sync, re-check
                                      |
                           found -> /hives/<id>
-                          still missing -> "not found" / "offline"
+                          still missing -> offline / signed out /
+                                           server unreachable / not in your data
 ```
 
 Eine Beute, die bereits auf dem Gerät ist, wird ohne Netzwerk-Roundtrip
@@ -59,12 +64,16 @@ Mitte und den Markennamen darunter. Es ist kein Netzwerkaufruf beteiligt.
 
 `shortCode(hiveId)` sind die ersten sechs Zeichen der Id ohne Bindestriche, in
 Großbuchstaben. Er wird als menschenlesbare Beschriftung unter den QR gedruckt
-und im SVG-Dateinamen verwendet. Er dient nur der Anzeige; nichts routet
-darüber, und er ist keine Datenbankspalte.
+und im SVG-Dateinamen verwendet. Er ist keine Datenbankspalte, und keine URL
+routet darüber; das Codefeld des Scanners und die Suche der Beutenliste
+gleichen ihn mit dem Anfang der Beuten-Ids auf dem Gerät ab.
 
 `QrLabel` zeigt den QR mit Beutenname und Kurzcode, öffnet ein sauberes
 Druckfenster (**Drucken**) und lädt das SVG herunter (`SVG`). Es erscheint auf
-der Beuten-Detailseite `/hives/[id]`.
+der Beuten-Detailseite `/hives/[id]`. `QrSheet` ist der A4-Bogen für alle
+Beuten eines Standorts; er wird direkt von der Standortseite aus gedruckt.
+Beuten- und Standortnamen werden überall escaped, wo sie in Etiketten- oder
+Druck-Markup geschrieben werden.
 
 ## Gescannte Payloads parsen
 
@@ -83,14 +92,15 @@ wenn die App nicht installiert ist.
 
 ## In-App-Scanner
 
-`/scan` nutzt die `BarcodeDetector`-API des Browsers
-(`formats: ['qr_code']`) auf einem Videostream der Rückkamera, ruft für jeden
-erkannten Code `parseHiveId` auf und navigiert dann zu `/hives/<id>`. Wo
-`BarcodeDetector` nicht verfügbar ist (iOS Safari), zeigt die Seite einen
-Hinweis, dass es nicht unterstützt wird, und die Kamera-App des Telefons ist
-der Weg zum Scannen; der QR ist eine gewöhnliche URL und öffnet dieselbe
-Route. Eine Decoder-Bibliothek wie `@zxing/browser` könnte für diese
-Plattformen eingebunden werden; keine ist gebündelt.
+`/scan` liest einen Videostream der Rückkamera, ruft für jeden erkannten Code
+`parseHiveId` auf und navigiert dann zu `/hives/<id>`. Es nutzt die
+`BarcodeDetector`-API des Browsers (`formats: ['qr_code']`), wo es sie gibt,
+und weicht sonst (Safari unter iOS, Firefox) auf den gebündelten Decoder
+`@zxing/browser` aus, der bei Bedarf nachgeladen wird. Ein Code, der kein
+Beuten-Etikett ist, wird als solcher gemeldet. Unter dem Kamerabild nimmt ein
+Formular den sechsstelligen Kurzcode entgegen und öffnet die Beute, deren Id
+damit beginnt, nachgeschlagen in der lokalen Datenbank; das deckt auch Geräte
+ohne Kamera und gesperrten Kamerazugriff ab.
 
 Der Scanner braucht Kameraberechtigung und einen sicheren Kontext (HTTPS oder
 `localhost`).

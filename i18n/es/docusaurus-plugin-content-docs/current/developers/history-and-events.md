@@ -12,7 +12,7 @@ que era cierto en ese momento. El código está en `app/src/lib/local/history.ts
 
 ## Los eventos congelan su contexto
 
-La tabla `event` es append-only. Cada fila almacena, como columnas normales, el
+La tabla `event` es append-only en el uso normal. Cada fila almacena, como columnas normales, el
 `apiary_id`, `hive_id` y `queen_id` que aplicaban en la `date` del evento.
 Mueve la colmena el mes que viene y la inspección de la semana pasada sigue
 perteneciendo al colmenar antiguo; cambia la reina y una cosecha anterior sigue
@@ -71,14 +71,20 @@ ORDER BY introduced_at DESC LIMIT 1;
 | `recordHarvest` | fila `harvest` con `apiary_id` / `queen_id` congelados, evento `HARVEST` con `amount_kg` y `ref_id` |
 | `recordTreatment` | fila `treatment` con contexto congelado, evento `TREATMENT` |
 | `recordInspection` | fila `inspection`, evento `INSPECTION` |
+| `editInspection`, `editHarvest`, `editTreatment` | corrigen la fila de detalle y su evento; cuando cambia la fecha, los `apiary_id` / `queen_id` congelados se resuelven de nuevo. Las cosechas y los tratamientos reciben `amended_at` |
+| `editQueen` | corrige los datos de la reina sin tocar el historial de reinados |
+| `deleteInspection`, `deleteHarvest`, `deleteTreatment`, `deleteQueen` | marcan con una lápida la fila y sus eventos; eliminar la reina actual hace que su predecesora vuelva a ser la actual. Cada una devuelve una función para deshacer |
 
 `recordHarvest`, `recordTreatment` y `recordInspection` llaman primero a
 `resolveContext`. Todas las escrituras pasan por `patch()` en
 `app/src/lib/local/repo.ts`, así que aterrizan en la tabla local y en el outbox
-de sincronización como cualquier otro cambio. Las filas de detalle (`harvest`,
-`treatment`, `inspection`) son filas sincronizadas normales; solo `event` se
-trata como append-only por convención. Nada en la aplicación edita ni elimina un
-evento.
+de sincronización como cualquier otro cambio, y cada flujo es una única transacción
+local: la fila de detalle, sus eventos y sus entradas en el outbox se escriben juntos o
+no se escriben. Las filas de detalle (`harvest`, `treatment`, `inspection`) son filas
+sincronizadas normales. Un evento nunca se edita ni se elimina por sí solo; cambia solo
+con el registro al que pertenece, de modo que la línea de tiempo y las estadísticas siempre
+coinciden con los registros. La API del servidor hace lo mismo
+(`server/internal/service/writer.go`).
 
 Los números de tipo de evento se listan en el [modelo de datos](./data-model.md#event).
 
@@ -116,6 +122,7 @@ hace falta ningún join con el estado actual.
 
 Las filas de `event` llevan `scope_id` (el id del colmenar) como columna y se
 sincronizan como cualquier otra tabla, con last-writer-wins por campo. Como
-cada evento tiene un UUID nuevo y nunca se edita, dos dispositivos que añaden
+cada evento tiene un UUID nuevo, dos dispositivos que añaden
 eventos sin conexión nunca tocan la misma fila y ambos conjuntos sobreviven.
-Consulta el [protocolo de sincronización](./sync-protocol.md).
+Una corrección o eliminación de un registro viaja como cambios normales
+del registro y de sus eventos. Consulta el [protocolo de sincronización](./sync-protocol.md).

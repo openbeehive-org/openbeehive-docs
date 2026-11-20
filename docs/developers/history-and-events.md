@@ -12,7 +12,7 @@ is in `app/src/lib/local/history.ts`.
 
 ## Events freeze their context
 
-The `event` table is append-only. Each row stores, as plain columns, the
+The `event` table is append-only in normal use. Each row stores, as plain columns, the
 `apiary_id`, `hive_id` and `queen_id` that applied on the event's `date`.
 Move the hive next month and last week's inspection still belongs to the old
 apiary; requeen and an old harvest stays attributed to the queen who produced
@@ -70,13 +70,20 @@ ORDER BY introduced_at DESC LIMIT 1;
 | `recordHarvest` | `harvest` row with frozen `apiary_id` / `queen_id`, event `HARVEST` with `amount_kg` and `ref_id` |
 | `recordTreatment` | `treatment` row with frozen context, event `TREATMENT` |
 | `recordInspection` | `inspection` row, event `INSPECTION` |
+| `editInspection`, `editHarvest`, `editTreatment` | correct the detail row and its event; when the date changes, the frozen `apiary_id` / `queen_id` are resolved again. Harvests and treatments get `amended_at` |
+| `editQueen` | corrects the queen's details without touching the reign history |
+| `deleteInspection`, `deleteHarvest`, `deleteTreatment`, `deleteQueen` | tombstone the row and its events; deleting the current queen makes her predecessor current again. Each returns an undo function |
 
 `recordHarvest`, `recordTreatment` and `recordInspection` call
 `resolveContext` first. All writes go through `patch()` in
 `app/src/lib/local/repo.ts`, so they land in the local table and the sync
-outbox like any other change. The detail rows (`harvest`, `treatment`,
-`inspection`) are normal synced rows; only `event` is treated as append-only
-by convention. Nothing in the app edits or deletes an event.
+outbox like any other change, and each flow is one local transaction: the
+detail row, its events and their outbox entries are written together or not
+at all. The detail rows (`harvest`, `treatment`, `inspection`) are normal
+synced rows. An event is never edited or deleted on its own; it changes only
+with the record it belongs to, so the timeline and the statistics always
+match the records. The server's API does the same
+(`server/internal/service/writer.go`).
 
 Event type numbers are listed in the [data model](./data-model.md#event).
 
@@ -114,5 +121,6 @@ to current state is needed.
 
 `event` rows carry `scope_id` (the apiary id) as a column and sync like every
 other table, with per-field last-writer-wins. Since each event has a fresh
-UUID and is never edited, two devices adding events offline never touch the
-same row and both sets survive. See the [sync protocol](./sync-protocol.md).
+UUID, two devices adding events offline never touch the same row and both
+sets survive. A correction or delete of a record travels as ordinary changes
+to the record and to its events. See the [sync protocol](./sync-protocol.md).

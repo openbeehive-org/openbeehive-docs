@@ -44,10 +44,10 @@ Il diagramma seguente mostra come una modifica viaggia da un tocco nell'interfac
            |<----- Pull changes ------------|                              |
                                             |------> Push changes <---------+
                                             |------- Pull changes --------->|
-   scope: only apiaries the user can see (partial replication)
+   scope: the workspace the user is signed in to (partial replication)
 ```
 
-Il motore di sincronizzazione scambia solo i record che appartengono agli ambiti a cui un utente può accedere, quindi un dispositivo non scarica mai il mondo intero: solo gli apiari a cui ha diritto.
+Il motore di sincronizzazione scambia solo i record dello spazio in cui l'utente ha effettuato l'accesso, quindi un dispositivo non scarica mai il mondo intero.
 
 Script e sensori entrano nello stesso quadro tramite i servizi CRUD del server ([Utilizzo dell'API](../using-the-api/overview.md)). Le loro scritture non aggirano questo flusso: il server applica ciascuna con la stessa unione per campo e la aggiunge allo stesso registro delle modifiche di una modifica inviata con push, quindi una lettura inviata da una bilancia per arnie è solo un'altra modifica che i dispositivi scaricano alla sincronizzazione successiva.
 
@@ -69,7 +69,7 @@ I campi simili a elenchi (attualmente solo le chiavi delle foto di un'ispezione)
 
 ### Eventi append-only
 
-La tabella `event` è append-only per convenzione: ogni scrittura nella storia inserisce una nuova riga con un id nuovo e nulla la modifica o la elimina, quindi due dispositivi che aggiungono eventi offline non toccano mai la stessa riga. Vedi [storia ed eventi](./history-and-events.md) per i dettagli.
+La tabella `event` è append-only nell'uso normale: ogni scrittura nella storia inserisce una nuova riga con un id nuovo, quindi due dispositivi che aggiungono eventi offline non toccano mai la stessa riga. Un evento cambia solo insieme al suo record: correggere una visita, un trattamento o un raccolto aggiorna il relativo evento, ed eliminare il record elimina l'evento con esso. Vedi [storia ed eventi](./history-and-events.md) per i dettagli.
 
 :::tip
 Poiché le unioni sono deterministiche, due dispositivi qualsiasi che hanno visto lo stesso insieme di modifiche calcoleranno sempre esattamente lo stesso risultato, indipendentemente dall'ordine in cui tali modifiche sono arrivate.
@@ -77,18 +77,18 @@ Poiché le unioni sono deterministiche, due dispositivi qualsiasi che hanno vist
 
 ## Condivisione e replica parziale
 
-In Openbeehive la condivisione avviene a livello di apiario tramite gli **ambiti** (scope). Un ambito concede a un utente l'accesso a un determinato apiario e a tutto ciò che vi è contenuto: le sue arnie, regine, ispezioni, attività, eventi, raccolti e trattamenti.
+L'unità di condivisione è lo **spazio** (`tenant` e `organization` nel codice). Ogni membro di uno spazio legge e scrive tutti i suoi apiari, arnie e record; non esiste una condivisione per apiario. Fanno eccezione le righe personali, come un'attività senza apiario: raggiungono solo i dispositivi del loro proprietario.
 
-La sincronizzazione è limitata di conseguenza. Un dispositivo replica solo i dati all'interno degli ambiti che il suo utente può vedere, un modello noto come replica parziale. Questo mantiene i database locali piccoli e mirati, limita ciò che viaggia sulla rete e fa sì che un membro dell'apiario di un'associazione non riceva mai dati da apiari di cui non fa parte.
+La sincronizzazione è limitata di conseguenza. Un dispositivo replica solo lo spazio in cui il suo utente ha effettuato l'accesso, un modello noto come replica parziale, e mantiene un database locale per spazio. Questo mantiene i database locali piccoli e fa sì che un membro dello spazio di un'associazione non riceva mai dati da spazi di cui non fa parte.
 
-Quando viene concesso un nuovo ambito, la sincronizzazione successiva scarica la storia di quell'apiario; quando l'accesso viene revocato, quei record smettono di sincronizzarsi.
+Il server verifica l'appartenenza a ogni richiesta. Quando qualcuno entra in uno spazio, il primo pull ne scarica la storia; quando l'appartenenza termina, la sincronizzazione si ferma.
 
 ## PWA mobile-first
 
 L'app è una Progressive Web App, progettata innanzitutto per il telefono che hai in tasca davanti alle arnie.
 
-- Un **service worker** memorizza nella cache lo scheletro dell'applicazione e le risorse, in modo che l'app si carichi all'istante e funzioni completamente offline dopo la prima visita.
-- **SQLite-WASM su OPFS** fornisce un vero database relazionale nel browser, con un archiviazione durevole e privata per l'origine che sopravvive ai ricaricamenti.
+- Un **service worker** memorizza nella cache lo scheletro dell'applicazione e le risorse, in modo che l'app si carichi all'istante e funzioni completamente offline dopo la prima visita, anche con un avvio a freddo. Una nuova versione viene installata in background e subentra quando l'utente accetta la richiesta di ricaricamento o quando tutte le schede sono chiuse.
+- **SQLite-WASM su OPFS** fornisce un vero database relazionale nel browser, con un archiviazione durevole e privata per l'origine che sopravvive ai ricaricamenti. Una sola scheda alla volta possiede il database (un Web Lock); una seconda scheda mostra un avviso e può subentrare.
 - L'app è installabile sulla schermata principale e si comporta come un'app nativa, incluso il flusso di scansione QR che apre l'app su una specifica arnia.
 
 ## Come tutto si incastra
@@ -98,7 +98,7 @@ L'app è una Progressive Web App, progettata innanzitutto per il telefono che ha
 | Interfaccia | PWA SvelteKit | Legge e scrive il database locale; non si blocca mai sulla rete |
 | Archivio locale | SQLite-WASM su OPFS | Fonte di verità durevole, sul dispositivo |
 | Motore di sincronizzazione | Push / Pull in background | Riconcilia le modifiche locali e remote tramite HLC, LWW, OR-Set |
-| Backend | Go, Connect-RPC | Memorizza e ordina le modifiche; applica gli ambiti; serve i pull |
+| Backend | Go, Connect-RPC | Memorizza e ordina le modifiche; applica l'appartenenza agli spazi e gli scope; serve i pull |
 | Archiviazione | Backend di database e blob intercambiabili | Persiste dati e contenuti multimediali sul server |
 
 Questa separazione è ciò che dà a Openbeehive la sua promessa fondamentale: i record sono sempre con te, sempre veloci e sempre coerenti una volta che tutti tornano a portata.

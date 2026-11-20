@@ -13,7 +13,7 @@ memorizzano il numero proto; l'etichetta visualizzata è quella che mostra l'app
 (`app/src/lib/i18n/locales/en.json`).
 
 Ogni tabella sincronizzata porta tre colonne di gestione non ripetute sotto:
-`organization_id` (tenant), `field_hlc` (orologio dei campi in JSON, vedi il
+`organization_id` (lo spazio, chiamato tenant nel codice), `field_hlc` (orologio dei campi in JSON, vedi il
 [protocollo di sincronizzazione](./sync-protocol.md)) e `deleted` (flag di
 cancellazione logica). Gli id sono UUID, generati sul dispositivo oppure dal
 server per le righe create tramite l'[API](../using-the-api/overview.md). I
@@ -33,10 +33,12 @@ apiary
        └── event       (append-only history with frozen apiary/hive/queen)
 ```
 
-La condivisione e il partizionamento della sincronizzazione usano `scope_id`:
-l'id dell'apiario stesso per l'apiario e per tutto ciò che vi è contenuto. Solo
-`event` memorizza `scope_id` come colonna; per le altre tabelle viene trasportato
-nel messaggio `Change`.
+Lo spazio (`organization_id`) è l'unità di condivisione: ogni membro di uno
+spazio legge e scrive tutte le sue righe. Al suo interno, le modifiche portano
+uno `scope_id`: l'id dell'apiario stesso per l'apiario e per tutto ciò che vi è
+contenuto, oppure `user:<id>` per le righe personali come un'attività senza
+apiario. Solo `event` memorizza `scope_id` come colonna; per le altre tabelle
+viene trasportato nel messaggio `Change`.
 
 ## apiary
 
@@ -88,7 +90,8 @@ nel messaggio `Change`.
 | `created_at`, `updated_at` | timestamp | |
 
 Un cambio di regina imposta `active = 0` e `replaced_at` sulla vecchia riga e ne
-inserisce una nuova; le vecchie regine non vengono mai eliminate.
+inserisce una nuova; la vecchia regina resta nella tabella. Una riga
+di regina viene eliminata solo se è stata registrata per errore.
 
 ## inspection
 
@@ -100,6 +103,7 @@ inserisce una nuova; le vecchie regine non vengono mai eliminate.
 | `queen_seen`, `eggs_seen` | bool | |
 | `temperament` | int | 1 Molto docile, 2 Docile, 3 Normale, 4 Nervosa, 5 Aggressiva |
 | `calmness` | int | 1 Fugge dal favo, 2 Irrequieta, 3 Calma, 4 Molto calma |
+| `source` | int | `InspectionSource`: 0 non specificato (trattato come manuale), 1 manuale (una visita fatta da una persona), 2 sensore (una lettura automatica). Non null, predefinito 0 |
 | `frames` | int | telaini occupati |
 | `brood_frames` | int | |
 | `stores` | int | 1 Buone, 2 Medie, 3 Scarse, 4 Assenti |
@@ -107,14 +111,20 @@ inserisce una nuova; le vecchie regine non vengono mai eliminate.
 | `youngest_larva` | int | età in giorni della larva più giovane vista |
 | `covered_larva` | bool | covata opercolata vista |
 | `varroa` | text | |
-| `honey_kg`, `fed_kg`, `weight_kg` | real | |
+| `honey_kg`, `fed_kg`, `weight_kg` | real | `honey_kg` è mantenuto per i vecchi record; il modulo della visita non lo scrive più (vedi `harvest`) |
 | `frames_added`, `frames_removed` | int | |
 | `drone_frame_cut`, `super_added` | bool | |
-| `temp_hive`, `temp_outside` | real | °C, null quando non misurata nell'app; `CreateInspection` memorizza `0` per i campi omessi |
-| `humidity_hive`, `humidity_outside` | real | %, stessa regola delle temperature |
+| `temp_hive`, `temp_outside` | real | °C |
+| `humidity_hive`, `humidity_outside` | real | % |
 | `note` | text | |
 | `photo_keys` | text | JSON OR-Set, l'unica colonna insieme |
 | `created_at` | timestamp | |
+
+I conteggi, le quantità e le letture climatiche (`frames`, `brood_frames`,
+`queen_cells`, `youngest_larva`, `frames_added`, `frames_removed`,
+`honey_kg`, `fed_kg`, `weight_kg` e le quattro colonne climatiche) sono
+nullable sul server e sul client: `NULL` significa "non registrato", `0`
+significa uno zero osservato. L'API rispecchia questo con campi opzionali.
 
 ## task
 
@@ -156,6 +166,7 @@ Un'attività senza `apiary_id` si sincronizza sotto lo scope personale
 | `batch_number` | text | |
 | `best_before` | timestamp | |
 | `note` | text | |
+| `amended_at` | timestamp | null finché il raccolto non viene modificato dopo la creazione, poi l'ora dell'ultima modifica |
 
 ## treatment
 
@@ -170,6 +181,7 @@ Un'attività senza `apiary_id` si sincronizza sotto lo scope personale
 | `withdrawal_until` | timestamp | |
 | `reason` | text | predefinito `varroa` |
 | `note` | text | |
+| `amended_at` | timestamp | null finché il trattamento non viene modificato dopo la creazione, poi l'ora dell'ultima modifica; mostrato come "Modificato il" e stampato nel registro dei trattamenti |
 
 ## event
 
@@ -194,10 +206,13 @@ tipi da 1 a 7 (`app/src/lib/local/history.ts`). Vedi
 ## Tabelle solo server
 
 `organization`, `users`, `member`, `invite`, `user_passkey`, `api_key`,
-`apiary_share`, `change_log` e `seq_counter` esistono solo sul server.
+`change_log` e `seq_counter` esistono solo sul server.
 `member.role` è `owner` o `member`; `users.role` è `admin` o `user`.
-`apiary_share` viene letta dal controllo degli scope di sincronizzazione ma
-nulla nell'app la scrive. Il client aggiunge `outbox` e `sync_meta` per il
+`users.sessions_valid_after` è il contrassegno che termina tutte le sessioni
+precedenti di un account; `invite.expires_at` indica quando un invito smette
+di funzionare (7 giorni dopo la creazione). La precedente tabella
+`apiary_share` non esiste più: non c'è condivisione per apiario. Il client
+aggiunge `outbox` e `sync_meta` per il
 motore di sincronizzazione.
 
 ### api_key
@@ -209,7 +224,7 @@ Chiavi a lunga durata per script e integrazioni (migrazione `0014_api_keys.sql`,
 | --- | --- | --- |
 | `id` | text | |
 | `user_id` | varchar(64) | proprietario; indicizzata |
-| `organization_id` | varchar(64) | il tenant in cui la chiave agisce, fissato alla creazione |
+| `organization_id` | varchar(64) | lo spazio in cui la chiave agisce, fissato alla creazione |
 | `name` | text | etichetta mostrata nelle Impostazioni |
 | `key_prefix` | text | i primi 12 caratteri del testo in chiaro, per la visualizzazione |
 | `key_hash` | varchar(64) | SHA-256 in esadecimale del token `obhk_...` in chiaro, univoco; il testo in chiaro non viene mai memorizzato |

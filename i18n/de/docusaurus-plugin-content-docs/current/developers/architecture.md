@@ -44,10 +44,10 @@ Das folgende Diagramm zeigt, wie eine Änderung von einer Berührung in der Ober
            |<----- Pull changes ------------|                              |
                                             |------> Push changes <---------+
                                             |------- Pull changes --------->|
-   scope: only apiaries the user can see (partial replication)
+   scope: the workspace the user is signed in to (partial replication)
 ```
 
-Das Sync-Modul tauscht nur die Datensätze aus, die zu den Bereichen (Scopes) gehören, auf die ein Nutzer Zugriff hat, sodass ein Gerät niemals die ganze Welt herunterlädt: nur die Bienenstände, zu denen es berechtigt ist.
+Das Sync-Modul tauscht nur die Datensätze des Arbeitsbereichs aus, in dem der Nutzer angemeldet ist, sodass ein Gerät niemals die ganze Welt herunterlädt.
 
 Skripte und Sensoren treten über die CRUD-Dienste des Servers in dasselbe Bild ein ([Die API verwenden](../using-the-api/overview.md)). Deren Schreibvorgänge umgehen diesen Fluss nicht: Der Server wendet jeden mit demselben feldweisen Merge an und hängt ihn an dasselbe Änderungsprotokoll an wie eine gepushte Änderung, sodass ein von einer Stockwaage gesendeter Messwert einfach eine weitere Änderung ist, die die Geräte bei ihrem nächsten Sync abholen.
 
@@ -69,7 +69,7 @@ Listenartige Felder (derzeit nur die Foto-Schlüssel einer Durchsicht) verwenden
 
 ### Append-only-Ereignisse
 
-Die Tabelle `event` ist per Konvention append-only: Jeder Historien-Schreibvorgang fügt eine neue Zeile mit frischer ID ein, und nichts bearbeitet oder löscht eine, sodass zwei Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile berühren. Einzelheiten dazu findest du unter [Historie und Ereignisse](./history-and-events.md).
+Die Tabelle `event` ist im Normalbetrieb append-only: Jeder Historien-Schreibvorgang fügt eine neue Zeile mit frischer ID ein, sodass zwei Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile berühren. Ein Ereignis ändert sich nur zusammen mit seinem Datensatz: Das Korrigieren einer Durchsicht, Behandlung oder Ernte aktualisiert ihr Ereignis, und das Löschen des Datensatzes löscht das Ereignis mit. Einzelheiten dazu findest du unter [Historie und Ereignisse](./history-and-events.md).
 
 :::tip
 Da Zusammenführungen deterministisch sind, berechnen zwei beliebige Geräte, die denselben Satz von Änderungen gesehen haben, stets genau dasselbe Ergebnis, unabhängig von der Reihenfolge, in der diese Änderungen eingetroffen sind.
@@ -77,18 +77,18 @@ Da Zusammenführungen deterministisch sind, berechnen zwei beliebige Geräte, di
 
 ## Teilen und partielle Replikation
 
-Das Teilen in Openbeehive geschieht auf der Ebene des Bienenstands über **Scopes**. Ein Scope gewährt einem Nutzer Zugriff auf einen bestimmten Bienenstand und alles darunter: seine Bienenstöcke, Königinnen, Durchsichten, Aufgaben, Ereignisse, Ernten und Behandlungen.
+Die Einheit des Teilens ist der **Arbeitsbereich** (im Code `tenant` und `organization`). Jedes Mitglied eines Arbeitsbereichs liest und schreibt alle seine Bienenstände, Bienenstöcke und Aufzeichnungen; ein Teilen einzelner Bienenstände gibt es nicht. Persönliche Zeilen, etwa eine Aufgabe ohne Bienenstand, sind die Ausnahme: Sie erreichen nur die Geräte ihres Besitzers.
 
-Die Synchronisierung ist passend dazu eingegrenzt. Ein Gerät repliziert nur die Daten innerhalb der Scopes, die sein Nutzer sehen darf, ein Modell, das als partielle Replikation bekannt ist. Das hält lokale Datenbanken klein und fokussiert, begrenzt, was über das Netzwerk geht, und bedeutet, dass ein Mitglied am Bienenstand eines Vereins niemals Daten von Bienenständen erhält, an denen es keinen Anteil hat.
+Die Synchronisierung ist passend dazu eingegrenzt. Ein Gerät repliziert nur den Arbeitsbereich, in dem sein Nutzer angemeldet ist, ein Modell, das als partielle Replikation bekannt ist, und hält pro Arbeitsbereich eine eigene lokale Datenbank. Das hält lokale Datenbanken klein und bedeutet, dass ein Mitglied im Arbeitsbereich eines Vereins niemals Daten aus Arbeitsbereichen erhält, an denen es keinen Anteil hat.
 
-Wenn ein neuer Scope gewährt wird, bringt der nächste Pull die Historie dieses Bienenstands herunter; wird der Zugriff entzogen, hören diese Datensätze auf zu synchronisieren.
+Der Server prüft die Mitgliedschaft bei jeder Anfrage. Wenn jemand einem Arbeitsbereich beitritt, bringt der erste Pull dessen Historie herunter; endet die Mitgliedschaft, hört die Synchronisierung auf.
 
 ## Mobile-first-PWA
 
 Die App ist eine Progressive Web App, in erster Linie für das Telefon in deiner Tasche am Bienenstand entworfen.
 
-- Ein **Service Worker** speichert die Anwendungshülle und Assets zwischen, sodass die App sofort lädt und nach dem ersten Besuch vollständig offline läuft.
-- **SQLite-WASM auf OPFS** stellt eine echte relationale Datenbank im Browser bereit, mit dauerhaftem, origin-privatem Speicher, der Neuladevorgänge übersteht.
+- Ein **Service Worker** speichert die Anwendungshülle und Assets zwischen, sodass die App sofort lädt und nach dem ersten Besuch vollständig offline läuft, auch bei einem Kaltstart. Eine neue Version wird im Hintergrund installiert und übernimmt, wenn der Nutzer die Aufforderung zum Neuladen annimmt oder alle Tabs geschlossen sind.
+- **SQLite-WASM auf OPFS** stellt eine echte relationale Datenbank im Browser bereit, mit dauerhaftem, origin-privatem Speicher, der Neuladevorgänge übersteht. Immer nur ein Tab besitzt die Datenbank (ein Web Lock); ein zweiter Tab zeigt einen Hinweis und kann übernehmen.
 - Die App ist auf dem Startbildschirm installierbar und verhält sich wie eine native App, einschließlich des QR-Scan-Ablaufs, der die App bei einem bestimmten Bienenstock öffnet.
 
 ## Wie es zusammenpasst
@@ -98,7 +98,7 @@ Die App ist eine Progressive Web App, in erster Linie für das Telefon in deiner
 | Oberfläche | SvelteKit-PWA | Liest und schreibt die lokale Datenbank; blockiert nie auf das Netzwerk |
 | Lokaler Speicher | SQLite-WASM auf OPFS | Dauerhafte Quelle der Wahrheit auf dem Gerät |
 | Sync-Modul | Hintergrund-Push / -Pull | Gleicht lokale und entfernte Änderungen über HLC, LWW, OR-Sets ab |
-| Backend | Go, Connect-RPC | Speichert und ordnet Änderungen; erzwingt Scopes; bedient Pulls |
+| Backend | Go, Connect-RPC | Speichert und ordnet Änderungen; erzwingt die Mitgliedschaft im Arbeitsbereich und Scopes; bedient Pulls |
 | Speicher | Austauschbare Datenbank- und Blob-Backends | Persistiert Daten und Medien auf dem Server |
 
 Diese Trennung verleiht Openbeehive sein Kernversprechen: Die Aufzeichnungen sind immer bei dir, immer schnell und immer konsistent, sobald alle wieder in Reichweite sind.

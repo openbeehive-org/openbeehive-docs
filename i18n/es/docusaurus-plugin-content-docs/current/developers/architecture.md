@@ -44,10 +44,10 @@ El diagrama siguiente muestra cómo un cambio viaja desde una pulsación en la i
            |<----- Pull changes ------------|                              |
                                             |------> Push changes <---------+
                                             |------- Pull changes --------->|
-   scope: only apiaries the user can see (partial replication)
+   scope: the workspace the user is signed in to (partial replication)
 ```
 
-El motor de sincronización intercambia únicamente los registros que pertenecen a los ámbitos a los que un usuario puede acceder, de modo que un dispositivo nunca descarga todo el mundo: solo los colmenares a los que tiene derecho.
+El motor de sincronización intercambia únicamente los registros del espacio en el que el usuario ha iniciado sesión, de modo que un dispositivo nunca descarga todo el mundo.
 
 Los scripts y los sensores entran en este mismo esquema a través de los servicios CRUD del servidor ([Uso de la API](../using-the-api/overview.md)). Sus escrituras no se saltan este flujo: el servidor aplica cada una con la misma fusión por campo y la añade al mismo registro de cambios que un cambio enviado por push, así que una lectura publicada por una báscula de colmena es simplemente otro cambio que los dispositivos descargan en su siguiente sincronización.
 
@@ -69,7 +69,7 @@ Los campos de tipo lista (actualmente solo las claves de foto de una inspección
 
 ### Eventos append-only
 
-La tabla `event` es append-only por convención: cada escritura de historial inserta una fila nueva con un id nuevo y nada edita ni elimina ninguna, así que dos dispositivos que añaden eventos sin conexión nunca tocan la misma fila. Consulta [historial y eventos](./history-and-events.md) para más detalle.
+La tabla `event` es append-only en el uso normal: cada escritura de historial inserta una fila nueva con un id nuevo, así que dos dispositivos que añaden eventos sin conexión nunca tocan la misma fila. Un evento cambia solo junto con su registro: corregir una visita, un tratamiento o una cosecha actualiza su evento, y eliminar el registro elimina el evento con él. Consulta [historial y eventos](./history-and-events.md) para más detalle.
 
 :::tip
 Como las fusiones son deterministas, dos dispositivos cualesquiera que hayan visto el mismo conjunto de cambios calcularán siempre exactamente el mismo resultado, sin importar el orden en que esos cambios llegaron.
@@ -77,18 +77,18 @@ Como las fusiones son deterministas, dos dispositivos cualesquiera que hayan vis
 
 ## Compartición y replicación parcial
 
-La compartición en Openbeehive ocurre a nivel de colmenar mediante **ámbitos** (scopes). Un ámbito concede a un usuario acceso a un colmenar concreto y a todo lo que hay debajo: sus colmenas, reinas, inspecciones, tareas, eventos, cosechas y tratamientos.
+La unidad de compartición es el **espacio** (`tenant` y `organization` en el código). Todos los miembros de un espacio leen y escriben todos sus colmenares, colmenas y registros; no hay compartición por colmenar. Las filas personales, como una tarea sin colmenar, son la excepción: llegan solo a los dispositivos de su propietario.
 
-La sincronización se acota en consonancia. Un dispositivo replica únicamente los datos que están dentro de los ámbitos que su usuario puede ver, un modelo conocido como replicación parcial. Esto mantiene las bases de datos locales pequeñas y centradas, limita lo que viaja por la red, y significa que un miembro del colmenar de una asociación nunca recibe datos de colmenares en los que no participa.
+La sincronización se acota en consonancia. Un dispositivo replica únicamente el espacio en el que su usuario ha iniciado sesión, un modelo conocido como replicación parcial, y mantiene una base de datos local por espacio. Esto mantiene las bases de datos locales pequeñas y significa que un miembro del espacio de una asociación nunca recibe datos de espacios en los que no participa.
 
-Cuando se concede un nuevo ámbito, la siguiente descarga trae el historial de ese colmenar; cuando se elimina el acceso, esos registros dejan de sincronizarse.
+El servidor comprueba la pertenencia en cada solicitud. Cuando alguien se une a un espacio, la primera descarga trae su historial; cuando la pertenencia termina, la sincronización se detiene.
 
 ## PWA mobile-first
 
 La aplicación es una Progressive Web App, diseñada primero para el teléfono que llevas en el bolsillo junto al soporte de las colmenas.
 
-- Un **service worker** almacena en caché la estructura de la aplicación y sus recursos para que la app cargue al instante y funcione totalmente sin conexión tras la primera visita.
-- **SQLite-WASM sobre OPFS** proporciona una base de datos relacional real en el navegador, con almacenamiento duradero y privado del origen que sobrevive a las recargas.
+- Un **service worker** almacena en caché la estructura de la aplicación y sus recursos para que la app cargue al instante y funcione totalmente sin conexión tras la primera visita, también en un arranque en frío. Una nueva versión se instala en segundo plano y toma el relevo cuando el usuario acepta el aviso de recarga o se cierran todas las pestañas.
+- **SQLite-WASM sobre OPFS** proporciona una base de datos relacional real en el navegador, con almacenamiento duradero y privado del origen que sobrevive a las recargas. Solo una pestaña a la vez es dueña de la base de datos (un Web Lock); una segunda pestaña muestra un aviso y puede tomar el relevo.
 - La aplicación es instalable en la pantalla de inicio y se comporta como una app nativa, incluido el flujo de escaneo de QR que abre la app en una colmena concreta.
 
 ## Cómo encaja todo
@@ -98,7 +98,7 @@ La aplicación es una Progressive Web App, diseñada primero para el teléfono q
 | Interfaz | PWA de SvelteKit | Lee y escribe la base de datos local; nunca se bloquea por la red |
 | Almacén local | SQLite-WASM sobre OPFS | Fuente de verdad duradera, en el dispositivo |
 | Motor de sincronización | Push / Pull en segundo plano | Reconcilia cambios locales y remotos mediante HLC, LWW, OR-Sets |
-| Backend | Go, Connect-RPC | Almacena y ordena los cambios; aplica los ámbitos; sirve las descargas |
+| Backend | Go, Connect-RPC | Almacena y ordena los cambios; hace cumplir la pertenencia al espacio y los ámbitos; sirve las descargas |
 | Almacenamiento | Backends de base de datos y blobs intercambiables | Persiste datos y medios en el servidor |
 
 Esta separación es lo que da a Openbeehive su promesa fundamental: los registros están siempre contigo, siempre son rápidos y siempre consistentes una vez que todos vuelven a tener cobertura.

@@ -29,19 +29,25 @@ l'arnia si risolve solo se il suo apiario è stato sincronizzato sul dispositivo
 La rotta è un risolutore, non una pagina:
 
 1. Cerca l'id nel database locale (`hives.get`).
-2. Se manca e il browser è online, esegue `syncOnce()` e cerca di nuovo.
-3. Se trovata, `goto('/hives/<id>')` con `replaceState`.
-4. Altrimenti mostra "non trovata" (online) oppure "offline" (nessuna connessione).
+2. Se trovata, `goto('/hives/<id>')` con `replaceState`.
+3. Se manca, attende che il primo download del dispositivo sia terminato e
+   cerca di nuovo.
+4. Se manca ancora, ne individua il motivo e lo dice: il dispositivo è
+   offline, questo browser non ha effettuato l'accesso (tipico quando l'app
+   fotocamera del telefono apre il link nel browser mentre l'utente lavora
+   nell'app installata), il server non è raggiungibile, oppure l'arnia non fa
+   parte dello spazio attivo.
 
 ```text
 scan QR -> /h/<id> -> local lookup
                           |
               found ------+------ not found
                 |                    |
-          /hives/<id>          online? sync, re-check
+          /hives/<id>          sync, re-check
                                      |
                           found -> /hives/<id>
-                          still missing -> "not found" / "offline"
+                          still missing -> offline / signed out /
+                                           server unreachable / not in your data
 ```
 
 Un'arnia già presente sul dispositivo si risolve senza alcuna richiesta di rete.
@@ -54,12 +60,16 @@ Openbeehive al centro e il nome del brand sotto. Non c'è alcuna chiamata di ret
 
 `shortCode(hiveId)` è composto dai primi sei caratteri dell'id senza trattini, in
 maiuscolo. Viene stampato sotto il QR come didascalia leggibile e usato nel nome
-del file SVG. Serve solo per la visualizzazione; nulla instrada su di esso e non
-è una colonna del database.
+del file SVG. Non è una colonna del database e nessun URL instrada su di esso;
+il campo del codice dello scanner e la ricerca dell'elenco delle arnie lo
+confrontano con l'inizio degli id delle arnie presenti sul dispositivo.
 
 `QrLabel` mostra il QR con il nome dell'arnia e il codice breve, apre una
 finestra di stampa pulita (`Print`) e scarica l'SVG (`SVG`). Compare nella
-pagina di dettaglio dell'arnia `/hives/[id]`.
+pagina di dettaglio dell'arnia `/hives/[id]`. `QrSheet` è il foglio A4 per
+tutte le arnie di un apiario; viene stampato dalla pagina stessa dell'apiario.
+I nomi di arnie e apiari vengono sottoposti a escape ovunque vengano scritti
+nel markup delle etichette o di stampa.
 
 ## Analisi dei payload scansionati
 
@@ -77,13 +87,15 @@ browser quando l'app non è installata.
 
 ## Scanner integrato nell'app
 
-`/scan` usa l'API `BarcodeDetector` del browser (`formats: ['qr_code']`) su un
-flusso video della fotocamera posteriore e chiama `parseHiveId` su ogni codice
-rilevato, poi naviga a `/hives/<id>`. Dove `BarcodeDetector` non è disponibile
-(iOS Safari) la pagina mostra un messaggio "non supportato" e il modo per
-scansionare è l'app fotocamera del telefono; il QR è un semplice URL e apre la
-stessa rotta. Su quelle piattaforme si potrebbe inserire una libreria di
-decodifica come `@zxing/browser`; nessuna è inclusa nel bundle.
+`/scan` legge un flusso video della fotocamera posteriore e chiama
+`parseHiveId` su ogni codice rilevato, poi naviga a `/hives/<id>`. Usa l'API
+`BarcodeDetector` del browser (`formats: ['qr_code']`) dove esiste e ripiega
+altrove (Safari su iOS, Firefox) sul decoder `@zxing/browser` incluso nel
+bundle, caricato su richiesta. Un codice che non è un'etichetta di arnia viene
+segnalato come tale. Sotto l'immagine della fotocamera un modulo accetta il
+codice breve di sei caratteri e apre l'arnia il cui id inizia con esso,
+cercata nel database locale; questo copre anche i dispositivi senza fotocamera
+e l'accesso alla fotocamera bloccato.
 
 Lo scanner ha bisogno del permesso della fotocamera e di un contesto sicuro
 (HTTPS o `localhost`).
