@@ -10,8 +10,8 @@ Documentation content is also versioned in-site via Docusaurus (see
 
 Documents the upcoming app release 0.5.0 in all five languages. Every page
 of the app, API, self-hosting and developer sections was checked against the
-app's code. Photo storage, account management, change-log snapshots and the
-export/import changes are not covered yet.
+app's code, including photo storage, account management, units, change-log
+snapshots and the export/import changes.
 
 ### Added
 
@@ -42,6 +42,33 @@ export/import changes are not covered yet.
   payload normalisation, the `removed_tags` rule, limits of Push and
   Subscribe.
 - The colour switch is labelled in German, French, Spanish and Italian.
+- **Self-hosting -> Upgrading:** photos moving to blob storage, restoring a
+  backup, change-log retention, `BEEHIVE_SYNC_MIN_PROTOCOL`, the ignored
+  `BEEHIVE_BLOB_PUBLIC_URL`, accounts whose addresses differ only in case,
+  `/photos/` replacing `/files/`, the redirecting browser links and the
+  protocol header for scripts.
+- **Self-hosting -> Configuration:** `BEEHIVE_CHANGELOG_RETENTION_DAYS` and
+  `BEEHIVE_SYNC_MIN_PROTOCOL`; mail now also carries password resets.
+- **Self-hosting -> Storage:** what a photo is (synced record with thumbnail,
+  image in blob storage under a workspace prefix), the server's upkeep of
+  blobs and the conversion of 0.4.x inline photos.
+- **Self-hosting -> Authentication:** changing and resetting passwords with
+  and without mail, account deletion, email addresses that differ only in
+  case, browser links that redirect to the sign-in page.
+- **Using the app:** password change and reset, signing out with unsent
+  changes and removing data from a device, log out everywhere, members and
+  roles, leaving a workspace, deleting an account, Settings -> Units and the
+  language saved with the account, photos with preview, background upload
+  and viewer, re-sync after a server restore, the "App out of date" chip,
+  the server copy, the import preview with its options and undo; new FAQ
+  entries on units, a forgotten password and account deletion.
+- **Using the API:** `Inspection.photos`, `Hive.picture`, `/photos/<id>`,
+  `GET /export`, the account, password and member endpoints, the current
+  error codes of the plain-HTTP endpoints.
+- **Developers:** protocol versions and headers, cursors with epoch and
+  start marks, `Snapshot`, the pull status, compaction, account settings,
+  photos in sync; the `photo` and `user_settings` tables and the new
+  server-only tables.
 
 ### Changed
 
@@ -61,6 +88,9 @@ export/import changes are not covered yet.
   identifier.
 - **Using the app -> Tasks:** tasks created in the app are personal, not
   shared with the workspace.
+- **Self-hosting -> Backups:** a restore is stop, restore database and blobs
+  together, start; what updated and 0.4.x apps do afterwards; back up the
+  database before the blobs; app exports are not instance backups.
 - **Using the API -> Automated trackers:** readings are posted with
   `source` set to sensor and no longer count as inspections.
 - **Developers:** sharing is the workspace on the architecture, data model
@@ -78,12 +108,18 @@ export/import changes are not covered yet.
 
 - The demo Compose file as a production template, `demo.openbeehive.org`,
   per-apiary sharing and the `apiary_share` table, "Honey harvested" on the
-  visit form, the statement that harvests cannot be edited through the API.
+  visit form, the statement that harvests cannot be edited through the API,
+  `/files/` and `BEEHIVE_BLOB_PUBLIC_URL`.
 
 ### Fixed
 
 - Links between pages of the unreleased docs opened the newest release
   instead of staying in the version being read; they are file links now.
+- The import was described as restoring records by id; it only adds unless
+  told to overwrite. The demo was described as keeping refused changes on
+  the device; the app undoes them. A device updating to 0.5.0 loads the
+  current data, not the whole history. The plain-HTTP error table named
+  `account_exists` for sign-up, which is `email_taken`.
 - Small mistranslations on the German, French, Spanish and Italian "Diseases
   & pests" pages; missing accents on four Spanish self-hosting pages.
 
