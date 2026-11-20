@@ -143,6 +143,17 @@
   --ifm-footer-link-hover-color: #edb45e;
 }
 
+/* Links in running text are underlined, so they do not rely on colour alone
+   to stand out from the text around them. Cards and heading anchors keep
+   their own look. */
+.markdown a:not(.card):not(.hash-link),
+.admonition a,
+main table a,
+.theme-announcement-bar a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* Previous / next page cards and the cards of a section index are links:
    give their outline 3:1. */
 .pagination-nav__link,
