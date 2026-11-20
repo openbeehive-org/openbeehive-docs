@@ -21,6 +21,7 @@ const config: Config = {
   projectName: 'openbeehive-docs',
 
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
 
   markdown: {
     hooks: {

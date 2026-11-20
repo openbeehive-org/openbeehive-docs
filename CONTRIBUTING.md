@@ -37,8 +37,13 @@ are not reformatted. Commit messages follow Conventional Commits
   **Self-hosting**, **Beekeeping basics**, the **Knowledge base** and
   **Developers**. Put new pages in the matching folder.
 - Use a `sidebar_position` in the front matter to order pages.
-- Keep links relative so the broken-link checker (`onBrokenLinks: 'throw'`)
-  passes during `npm run build`.
+- Link to other pages by file, `[Docker](./docker.md#several-users)`, so a
+  link stays inside the version and language being read. The build fails on
+  a broken link or anchor (`onBrokenLinks` and `onBrokenAnchors` are
+  `'throw'`).
+- A heading that is linked to by anchor carries an explicit id,
+  `## Several users \{#several-users}`, and its translations carry the same
+  id; without it a translated heading gets a different anchor.
 
 ### Translations
 
