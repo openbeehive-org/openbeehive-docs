@@ -9,8 +9,9 @@ The server exposes a [Connect-RPC](https://connectrpc.com/) API defined in
 Protocol Buffers under
 [`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1).
 Every RPC is reachable over plain HTTP/JSON, gRPC and gRPC-Web from the same
-URL. The app itself uses only `SyncService`; the other services exist for
-scripts, sensors and integrations.
+URL. The app itself uses only `SyncService` and the plain HTTP endpoints for
+photos, export and accounts; the other services exist for scripts, sensors
+and integrations.
 
 ## Base URL and path form
 
@@ -38,7 +39,7 @@ Ten services are registered on the server (`server/cmd/server/main.go`):
 | `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
-| `SyncService` | `Pull`, `Push`, `Subscribe` (server stream) |
+| `SyncService` | `Pull`, `Snapshot`, `Push`, `Subscribe` (server stream); scripts send the `Openbeehive-Sync-Protocol: 1` header, see [Sync protocol](../developers/sync-protocol.md#versions) |
 
 Every RPC is scoped to the caller's active workspace (called `tenant` or
 `organization` in paths and field names). Ids from another workspace behave
@@ -121,6 +122,18 @@ Reads (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`) query
 the server tables directly. They show API writes at once and device writes
 as soon as the device has pushed them.
 
+### Photos \{#photos}
+
+`Inspection.photos` lists the photos of an inspection and `Hive.picture` the
+hive's picture, each as a `Photo` with `id`, `thumbnail` (a data URL of about
+200 px), `contentType`, `sizeBytes`, `createdAt` and `path`. The full-size
+image is a plain `GET` of `path` (`/photos/<id>`) on the same host, with the
+same credentials as the RPCs; `path` is empty while the device that took the
+photo has not uploaded the image yet. `AddInspectionPhoto` adds a JPEG, PNG
+or WebP image of at most 5 MiB, `RemoveInspectionPhoto` deletes a photo for
+good, on every device. `photoKeys` holds only the inline photos of 0.4.x
+apps. See [REST](./rest.md#photos).
+
 ### Not in the API yet
 
 - **No placement RPC.** Placements are written by `CreateHive` and
@@ -138,18 +151,23 @@ A few plain HTTP endpoints sit next to the RPC services:
 | Path | Purpose |
 | --- | --- |
 | `GET /healthz` | Returns `ok` |
-| `GET /files/<key>` | Stored files, only with the filesystem blob backend (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /photos/<id>`, `POST /photos/<id>` | Full-size photo images: read, or upload the image of a photo record that has already been synced; session or API key, members of the workspace only. See [REST](./rest.md#photos) |
+| `GET /export`, `GET /export?photos=1` | The active workspace as JSON, or as a ZIP with photos; session or write API key. See [REST](./rest.md#export) |
 | `GET /auth/instance` | What the instance offers (login methods, demo, registration, map settings); always present, no credentials needed |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | Email/password accounts (`BEEHIVE_PASSWORD_AUTH=true`) |
+| `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Change a password; ask for, and complete, a reset; a reset link created by the instance admin (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` set) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Session and workspace helpers, present whenever any login method is enabled |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Session and workspace helpers, present whenever any login method is enabled |
+| `GET /auth/account`, `POST /auth/account/delete` | What deleting the account would do, and deleting it |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | API key management (list, create, remove), present whenever any login method is enabled; session only, a key cannot call them |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Workspace administration, present whenever any login method is enabled |
+| `GET /tenants/members`, `POST /tenants/members/remove`, `POST /tenants/members/role`, `POST /tenants/leave` | Members of a workspace: list, remove, change role, leave |
 | `POST /auth/demo-login` | Only with `BEEHIVE_DEMO=true` |
 
 These are used by the app's login and settings screens. They are not part of
-the proto contract. All of them follow the same rules:
+the proto contract. The `/auth/*` and `/tenants/*` endpoints follow the same
+rules:
 
 - Each endpoint accepts only the method shown; anything else answers `405`
   with an `Allow` header.
@@ -158,7 +176,11 @@ the proto contract. All of them follow the same rules:
 - `POST` requests from a browser page on another site are refused with `403`
   (`cross_site_request`). Scripts, which send no `Origin` header, are not
   affected.
-- `/tenants/delete` needs `{"org_id": "..."}`; there is no default.
+- `/tenants/delete` and `/tenants/leave` need `{"org_id": "..."}`; there is
+  no default.
+- Pages a browser opens directly (`/auth/verify`, `/auth/login`,
+  `/auth/callback`) answer an error with a redirect to `/login?error=<code>`
+  instead of JSON.
 - Errors are JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
   The codes are listed on the [REST page](./rest.md#http-error-codes).
 
@@ -200,14 +222,15 @@ What a key can and cannot do:
 - It acts as its owner, with the owner's role, inside the workspace that was
   active when the key was created. It cannot switch workspaces; create one key
   per workspace if a script needs several.
-- It works on RPCs only. The `/auth/*` and `/tenants/*` endpoints, including
-  key management itself, need a real session: a key cannot list, create or
-  remove keys.
+- It works on RPCs, `/photos/` and `/export`. The `/auth/*` and `/tenants/*`
+  endpoints, including key management itself, need a real session: a key
+  cannot list, create or remove keys.
 - It has one of two scopes, fixed at creation. A `write` key (the default)
   may call every RPC its owner may call. A `read` key may call only RPCs
-  whose name starts with `Get`, `List`, `Pull` or `Subscribe`; every other
-  RPC returns Connect code `permission_denied` (HTTP 403) with the message
-  `this API key is read-only`.
+  whose name starts with `Get` or `List`, and `Pull`, `Snapshot` and
+  `Subscribe`. Every other RPC returns Connect code `permission_denied`
+  (HTTP 403) with the message `this API key is read-only`. A `read` key may
+  fetch photos but not upload them, and it cannot use `/export`.
 - It expires only if you set an expiry: `expires_in_days` from `0` (never,
   the default) to `3650`. Past `expires_at` every RPC returns
   `unauthenticated` (HTTP 401) with the message `API key expired`. Expired
@@ -270,7 +293,8 @@ the account is still a member of the workspace; a revoked session or a lost
 membership is refused within about 10 seconds.
 
 With `BEEHIVE_DEMO=true`, demo sessions are read-only: the demo account can
-call only RPCs whose names start with `Get`, `List`, `Pull` or `Subscribe`.
+call only RPCs whose names start with `Get` or `List`, and `Pull`,
+`Snapshot` and `Subscribe`.
 Every other RPC returns `permission_denied`.
 
 See [Authentication](../self-hosting/authentication.md) for how to configure the

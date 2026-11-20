@@ -9,8 +9,9 @@ Der Server stellt eine [Connect-RPC](https://connectrpc.com/)-API bereit, die
 in Protocol Buffers unter
 [`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1)
 definiert ist. Jeder RPC ist über einfaches HTTP/JSON, gRPC und gRPC-Web unter
-derselben URL erreichbar. Die App selbst nutzt nur den `SyncService`; die
-anderen Dienste gibt es für Skripte, Sensoren und Integrationen.
+derselben URL erreichbar. Die App selbst nutzt nur den `SyncService` und die
+einfachen HTTP-Endpunkte für Fotos, Export und Konten; die anderen Dienste gibt
+es für Skripte, Sensoren und Integrationen.
 
 ## Basis-URL und Pfadform
 
@@ -39,7 +40,7 @@ Auf dem Server sind zehn Dienste registriert (`server/cmd/server/main.go`):
 | `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
-| `SyncService` | `Pull`, `Push`, `Subscribe` (Server-Stream) |
+| `SyncService` | `Pull`, `Snapshot`, `Push`, `Subscribe` (Server-Stream); Skripte senden den Header `Openbeehive-Sync-Protocol: 1`, siehe [Sync-Protokoll](../developers/sync-protocol.md#versions) |
 
 Jeder RPC ist auf den aktiven Arbeitsbereich des Aufrufers beschränkt (in
 Pfaden und Feldnamen `tenant` oder `organization` genannt). Ids aus einem
@@ -130,6 +131,19 @@ Lesezugriffe (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`)
 fragen die Server-Tabellen direkt ab und zeigen API-Schreibvorgänge sofort,
 Geräte-Schreibvorgänge sobald das Gerät sie gepusht hat.
 
+### Fotos \{#photos}
+
+`Inspection.photos` listet die Fotos einer Durchsicht und `Hive.picture` das
+Bild der Beute, jeweils als `Photo` mit `id`, `thumbnail` (eine Data-URL von
+etwa 200 px), `contentType`, `sizeBytes`, `createdAt` und `path`. Das Bild in
+voller Größe ist ein einfaches `GET` auf `path` (`/photos/<id>`) auf demselben
+Host, mit denselben Anmeldedaten wie die RPCs; `path` ist leer, solange das
+Gerät, das das Foto aufgenommen hat, das Bild noch nicht hochgeladen hat.
+`AddInspectionPhoto` fügt ein JPEG-, PNG- oder WebP-Bild von höchstens 5 MiB
+hinzu, `RemoveInspectionPhoto` löscht ein Foto endgültig, auf jedem Gerät.
+`photoKeys` enthält nur die eingebetteten Fotos von 0.4.x-Apps. Siehe
+[REST](./rest.md#photos).
+
 ### Noch nicht in der API
 
 - **Kein Placement-RPC.** Placements werden von `CreateHive` und
@@ -148,18 +162,23 @@ Neben den RPC-Diensten gibt es ein paar einfache HTTP-Endpunkte:
 | Pfad | Zweck |
 | --- | --- |
 | `GET /healthz` | Liefert `ok` |
-| `GET /files/<key>` | Gespeicherte Dateien, nur mit dem Dateisystem-Blob-Backend (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /photos/<id>`, `POST /photos/<id>` | Fotos in voller Größe: lesen oder das Bild eines bereits synchronisierten Foto-Eintrags hochladen; Sitzung oder API-Schlüssel, nur für Mitglieder des Arbeitsbereichs. Siehe [REST](./rest.md#photos) |
+| `GET /export`, `GET /export?photos=1` | Der aktive Arbeitsbereich als JSON oder als ZIP mit Fotos; Sitzung oder API-Schlüssel mit Schreibrecht. Siehe [REST](./rest.md#export) |
 | `GET /auth/instance` | Was die Instanz anbietet (Anmeldemethoden, Demo, Registrierung, Karteneinstellungen); immer vorhanden, keine Anmeldedaten nötig |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | E-Mail/Passwort-Konten (`BEEHIVE_PASSWORD_AUTH=true`) |
+| `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Passwort ändern; einen Reset anfordern und abschließen; ein vom Instanz-Admin erstellter Reset-Link (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` gesetzt) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `GET /auth/account`, `POST /auth/account/delete` | Was das Löschen des Kontos bewirken würde, und das Löschen selbst |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Verwaltung der API-Schlüssel (auflisten, erstellen, entfernen), vorhanden sobald irgendeine Anmeldemethode aktiviert ist; nur per Sitzung, ein Schlüssel kann sie nicht aufrufen |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Verwaltung der Arbeitsbereiche, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `GET /tenants/members`, `POST /tenants/members/remove`, `POST /tenants/members/role`, `POST /tenants/leave` | Mitglieder eines Arbeitsbereichs: auflisten, entfernen, Rolle ändern, austreten |
 | `POST /auth/demo-login` | Nur mit `BEEHIVE_DEMO=true` |
 
 Diese Endpunkte nutzen die Anmelde- und Einstellungsseiten der App; sie sind
-nicht Teil des Proto-Vertrags. Für alle gelten dieselben Regeln:
+nicht Teil des Proto-Vertrags. Für die Endpunkte unter `/auth/*` und
+`/tenants/*` gelten dieselben Regeln:
 
 - Jeder Endpunkt akzeptiert nur die angegebene Methode; alles andere antwortet
   mit `405` und einem `Allow`-Header.
@@ -169,7 +188,11 @@ nicht Teil des Proto-Vertrags. Für alle gelten dieselben Regeln:
 - `POST`-Anfragen von einer Browserseite auf einer anderen Website werden mit
   `403` (`cross_site_request`) abgelehnt. Skripte, die keinen `Origin`-Header
   senden, sind nicht betroffen.
-- `/tenants/delete` braucht `{"org_id": "..."}`; eine Vorgabe gibt es nicht.
+- `/tenants/delete` und `/tenants/leave` brauchen `{"org_id": "..."}`; eine
+  Vorgabe gibt es nicht.
+- Seiten, die ein Browser direkt öffnet (`/auth/verify`, `/auth/login`,
+  `/auth/callback`), beantworten einen Fehler mit einer Weiterleitung auf
+  `/login?error=<code>` statt mit JSON.
 - Fehler sind JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
   Die Codes stehen auf der [REST-Seite](./rest.md#http-error-codes).
 
@@ -215,16 +238,17 @@ Was ein Schlüssel kann und was nicht:
   der beim Erstellen des Schlüssels aktiv war. Er kann den Arbeitsbereich nicht
   wechseln; lege pro Arbeitsbereich einen Schlüssel an, wenn ein Skript mehrere
   braucht.
-- Er funktioniert nur bei RPCs. Die Endpunkte unter `/auth/*` und
+- Er funktioniert bei RPCs, `/photos/` und `/export`. Die Endpunkte unter `/auth/*` und
   `/tenants/*`, einschließlich der Schlüsselverwaltung selbst, brauchen eine
   echte Sitzung: Ein Schlüssel kann keine Schlüssel auflisten, erstellen
   oder entfernen.
 - Er hat einen von zwei Scopes, beim Erstellen festgelegt. Ein
   `write`-Schlüssel (die Vorgabe) darf jeden RPC aufrufen, den sein Besitzer
   aufrufen darf. Ein `read`-Schlüssel darf nur RPCs aufrufen, deren Name mit
-  `Get`, `List`, `Pull` oder `Subscribe` beginnt; jeder andere RPC liefert
-  den Connect-Code `permission_denied` (HTTP 403) mit der Meldung
-  `this API key is read-only`.
+  `Get` oder `List` beginnt, sowie `Pull`, `Snapshot` und `Subscribe`. Jeder
+  andere RPC liefert den Connect-Code `permission_denied` (HTTP 403) mit der
+  Meldung `this API key is read-only`. Ein `read`-Schlüssel darf Fotos
+  abrufen, aber nicht hochladen, und kann `/export` nicht nutzen.
 - Er läuft nur ab, wenn du ein Ablaufdatum setzt: `expires_in_days` von `0`
   (nie, die Vorgabe) bis `3650`. Nach `expires_at` liefert jeder RPC
   `unauthenticated` (HTTP 401) mit der Meldung `API key expired`.
@@ -293,8 +317,8 @@ Sitzung oder eine verlorene Mitgliedschaft wird innerhalb von etwa 10 Sekunden
 abgelehnt.
 
 Mit `BEEHIVE_DEMO=true` sind Demo-Sitzungen schreibgeschützt: Das Demo-Konto
-kann nur RPCs aufrufen, deren Namen mit `Get`, `List`, `Pull` oder `Subscribe`
-beginnen. Jeder andere RPC liefert `permission_denied`.
+kann nur RPCs aufrufen, deren Namen mit `Get` oder `List` beginnen, sowie
+`Pull`, `Snapshot` und `Subscribe`. Jeder andere RPC liefert `permission_denied`.
 
 Wie du die Anmeldemethoden konfigurierst, steht unter
 [Authentifizierung](../self-hosting/authentication.md).

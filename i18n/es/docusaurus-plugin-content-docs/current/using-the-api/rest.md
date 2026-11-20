@@ -177,6 +177,8 @@ una lectura automática. Las lecturas de sensor aparecen en los gráficos, pero 
 como "última inspección" y quedan fuera de la lista de pendientes y de las inspecciones
 recientes del panel; consulta [Rastreadores automáticos](./automated-trackers.md).
 
+### Fotos \{#photos}
+
 Las fotos se añaden después con `AddInspectionPhoto`:
 
 ```bash
@@ -186,12 +188,30 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/AddInspectionPhoto" \
   -d '{"inspectionId":"7f0e...","photo":"data:image/jpeg;base64,/9j/4AAQ..."}'
 ```
 
-`photo` debe ser una data URL que empiece por `data:image/` y de como máximo
-512 KiB incluido el prefijo. Se replica a todos los dispositivos, así que
-envía una miniatura (la aplicación almacena unos 480 px).
-`RemoveInspectionPhoto` recibe el mismo `inspectionId` y el valor `photo`
-exacto almacenado; `inspection.photoKeys` en la respuesta lista lo que hay
-almacenado.
+`photo` es una data URL en base64 de una imagen JPEG, PNG o WebP de como máximo
+5 MiB una vez decodificada. El servidor guarda la imagen en el almacenamiento de
+blobs, crea una miniatura de unos 200 px y devuelve la inspección con sus
+`photos`; añadir la misma imagen dos veces no tiene más efecto. Cada entrada de
+`photos` tiene `id`, `thumbnail`, `contentType`, `sizeBytes`, `createdAt` y
+`path`. `RemoveInspectionPhoto` recibe `inspectionId` y, como `photo`, el `id`
+de la foto (o la data URL con la que se añadió); la foto se elimina de forma
+definitiva, en todos los dispositivos. `photoKeys` lista solo las fotos en línea
+escritas por las aplicaciones 0.4.x.
+
+La imagen a tamaño completo es un simple GET de `path` con las mismas
+credenciales:
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" "$OB/photos/3c9d..." -o photo.jpg
+```
+
+Responde `404` con `not_uploaded` mientras el dispositivo que tomó la foto aún
+no ha subido la imagen, y `410` (`deleted`) para una foto eliminada. La imagen
+detrás de un id nunca cambia, así que se puede almacenar en caché.
+`POST /photos/<id>` con la imagen como cuerpo es como la aplicación sube la
+imagen de un registro de foto que ya ha sincronizado; se acepta una sola vez por
+foto. Las claves de solo lectura y la cuenta de demostración no pueden subir
+imágenes.
 
 ## Listar inspecciones con paginación
 
@@ -462,12 +482,31 @@ los eventos `HARVEST`; `honeyKgSeason` es el año natural en curso.
 `GetHoneyStats` recibe `year` (0 = todos los años) y devuelve las sumas
 `perQueen`, `perApiary` y `perYear`.
 
+## Exportar un espacio \{#export}
+
+`GET /export` descarga el espacio activo en el formato de la copia completa de
+la aplicación, que la aplicación puede volver a importar; `GET /export?photos=1`
+devuelve un ZIP que añade las imágenes a tamaño completo. Acepta una sesión o
+una clave API de escritura y contiene todos los registros vigentes del espacio
+con tus propias tareas personales, pero no las tareas personales de otros
+miembros.
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" "$OB/export?photos=1" -o openbeehive.zip
+```
+
+La respuesta es un adjunto llamado `openbeehive-server-<date>.json` o `.zip`.
+Las claves de solo lectura y la cuenta de demostración reciben `403`; más de 5
+exportaciones por usuario y hora reciben `429` con `Retry-After`. Los pesos y
+las temperaturas están en kg y °C.
+
 ## Descargar el feed de cambios
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
+  -H "Openbeehive-Sync-Protocol: 1" \
   -d '{"cursor":"","limit":100}'
 ```
 
@@ -484,14 +523,19 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
       "authorId": "u-…"
     }
   ],
-  "nextCursor": "48213",
+  "nextCursor": "731942061385:48213:5512",
   "hasMore": false,
   "serverTimeMs": "1781234569120"
 }
 ```
 
 `payloadJson` es una cadena JSON cuyas claves son los nombres de columna de
-la tabla en `snake_case`. Devuelve `nextCursor` como `cursor` para continuar. `limit` es por defecto
+la tabla en `snake_case`. Devuelve `nextCursor` como `cursor` para continuar; es opaco. Sin la cabecera
+`Openbeehive-Sync-Protocol`, el servidor responde como lo hacía para las
+aplicaciones 0.4.1: solo las columnas de esa versión, sin registros de fotos y
+con números de secuencia simples como cursores. Un `status` distinto de
+unspecified significa que el cursor no se puede atender; carga entonces un
+`Snapshot`. `limit` es por defecto
 200 y tiene un tope de 500. El feed abarca el espacio del llamante; las filas
 personales (ámbito `user:<id>`) se devuelven solo a su propietario. El feed contiene todos los cambios, tanto si los envió un dispositivo como si
 los escribió un RPC de servicio; las ubicaciones aparecen solo aquí, ya que
@@ -525,12 +569,13 @@ Los errores vuelven como un cuerpo JSON con un código Connect:
 
 | Código | HTTP | Cuándo |
 | --- | --- | --- |
-| `invalid_argument` | 400 | `name` vacío; falta `hiveId` (inspección, reina, tratamiento, cosecha), `year` (reina), `title` (tarea), `product` (tratamiento); `amountKg` no mayor que `0` (cosecha); un `apiaryId` que no existe en `CreateTask`; una foto que no es una URL `data:image/` o supera 512 KiB; falta `hive` / `queen` en las llamadas de actualización |
+| `invalid_argument` | 400 | `name` vacío; falta `hiveId` (inspección, reina, tratamiento, cosecha), `year` (reina), `title` (tarea), `product` (tratamiento); `amountKg` no mayor que `0` (cosecha); un `apiaryId` que no existe en `CreateTask`; una foto que no es una data URL de una imagen JPEG, PNG o WebP de como máximo 5 MiB; falta `hive` / `queen` en las llamadas de actualización |
 | `unauthenticated` | 401 | Token ausente, caducado o eliminado: una clave API desconocida o revocada, o un token de sesión que ha superado `BEEHIVE_SESSION_TTL` |
 | `permission_denied` | 403 | Sesión de demostración o clave API de solo lectura llamando a un RPC de escritura |
-| `failed_precondition` | 400 | `DeleteApiary` mientras el colmenar aún tiene colmenas |
+| `failed_precondition` | 400 | `DeleteApiary` mientras el colmenar aún tiene colmenas; una llamada a `SyncService` por debajo de `BEEHIVE_SYNC_MIN_PROTOCOL`, o `Snapshot` sin la cabecera del protocolo (con un detalle `UpgradeRequired`) |
 | `resource_exhausted` | 429 | Más de 4 streams `Subscribe` abiertos para un usuario |
 | `not_found` | 404 | Id desconocido, o un id que pertenece a otro espacio, en cualquier `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, las llamadas de foto y cada `Create*` que referencia una colmena o un colmenar |
+| `unavailable` | 503 | Una llamada de foto mientras el servidor no tiene almacenamiento de blobs |
 | `internal` | 500 | Fallos del lado del servidor. El mensaje es siempre `internal error`; los detalles están solo en el registro del servidor |
 
 Una actualización que no cambiaría nada, y un `Push` con más de 2000
@@ -546,17 +591,30 @@ acorde. Los clientes deben actuar según `code`; el texto puede cambiar.
 
 | HTTP | Códigos |
 | --- | --- |
-| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `id_required`, `name_required`, `org_id_required`, `invite_invalid`, `invite_expired`, `verification_invalid`, `unknown_provider`, `oidc_state_missing`, `oidc_state_invalid`, `oidc_no_email`, `passkey_no_ceremony`, `passkey_failed` |
-| 401 | `not_signed_in`, `invalid_credentials`, `oidc_failed`, `passkey_failed` |
-| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `passkey_session_mismatch` |
-| 404 | `not_found`, `invite_not_found`, `key_not_found`, `passkey_not_found` |
+| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `invalid_role`, `invalid_password`, `password_too_long`, `id_required`, `name_required`, `org_id_required`, `cannot_remove_self`, `invite_invalid`, `invite_expired`, `reset_invalid`, `passkey_no_ceremony`, `passkey_failed` |
+| 401 | `not_signed_in`, `invalid_credentials`, `passkey_failed` |
+| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
+| 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `account_exists` |
+| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (con `Retry-After`) |
 | 500 | `internal` |
 | 503 | `demo_unavailable`, `unavailable` |
+
+Las páginas que un navegador abre directamente (`/auth/verify`, `/auth/login`,
+`/auth/callback`) no responden con JSON: redirigen a `/login?error=<code>`,
+donde la aplicación muestra un mensaje traducido. Sus códigos son
+`verification_invalid`, `unknown_provider`, `oidc_state_missing`,
+`oidc_state_invalid`, `oidc_failed`, `oidc_no_email`, `account_exists`,
+`invite_only` e `internal`.
+
+`/photos/` y `/export` usan la misma forma de error JSON con `not_signed_in`
+(401), `cross_site_request`, `demo_read_only`, `read_only` (403),
+`not_found`, `unknown_photo`, `not_uploaded` (404), `deleted` (410),
+`too_large` (413), `unsupported_type` (415), `rate_limited` (429) y
+`unavailable` (503).
 
 ## Notas
 

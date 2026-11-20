@@ -175,6 +175,8 @@ an automated reading. Sensor readings appear in the charts but do not count
 as "last inspected" and are left out of the due list and of the dashboard's
 recent inspections; see [Automated trackers](./automated-trackers.md).
 
+### Photos \{#photos}
+
 Photos are added afterwards with `AddInspectionPhoto`:
 
 ```bash
@@ -184,11 +186,27 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/AddInspectionPhoto" \
   -d '{"inspectionId":"7f0e...","photo":"data:image/jpeg;base64,/9j/4AAQ..."}'
 ```
 
-`photo` must be a data URL starting with `data:image/` and at most 512 KiB
-including the prefix. It is replicated to every device, so send a thumbnail
-(the app stores about 480 px). `RemoveInspectionPhoto` takes the same
-`inspectionId` and the exact stored `photo` value; the response's
-`inspection.photoKeys` lists what is stored.
+`photo` is a base64 data URL of a JPEG, PNG or WebP image of at most 5 MiB
+decoded. The server stores the image in blob storage, makes a thumbnail of
+about 200 px and returns the inspection with its `photos`; adding the same
+image twice has no further effect. Each entry of `photos` has `id`,
+`thumbnail`, `contentType`, `sizeBytes`, `createdAt` and `path`.
+`RemoveInspectionPhoto` takes `inspectionId` and, as `photo`, the photo's
+`id` (or the data URL it was added with); the photo is deleted for good, on
+every device. `photoKeys` lists only inline photos written by 0.4.x apps.
+
+The full-size image is a plain GET of `path` with the same credentials:
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" "$OB/photos/3c9d..." -o photo.jpg
+```
+
+It answers `404` with `not_uploaded` while the device that took the photo has
+not uploaded the image yet, and `410` (`deleted`) for a deleted photo. The
+image behind an id never changes, so it may be cached. `POST /photos/<id>`
+with the image as body is how the app uploads the image of a photo record
+it has already synced; it is accepted once per photo. Read-only keys and the
+demo account cannot upload.
 
 ## List inspections with pagination
 
@@ -458,12 +476,30 @@ tasks, `recentInspections` the last ten visits. Honey figures come from the
 `GetHoneyStats` takes `year` (0 = all years) and returns `perQueen`,
 `perApiary` and `perYear` sums.
 
+## Export a workspace \{#export}
+
+`GET /export` downloads the active workspace in the format of the app's full
+backup, which the app can import again; `GET /export?photos=1` returns a ZIP
+that adds the full-size images. It accepts a session or a write API key and
+holds every live record of the workspace with your own personal tasks, but
+not other members' personal tasks.
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" "$OB/export?photos=1" -o openbeehive.zip
+```
+
+The answer is an attachment named `openbeehive-server-<date>.json` or
+`.zip`. Read-only keys and the demo account get `403`; more than 5 exports
+per user and hour get `429` with `Retry-After`. Weights and temperatures are
+in kg and °C.
+
 ## Pull the change feed
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
+  -H "Openbeehive-Sync-Protocol: 1" \
   -d '{"cursor":"","limit":100}'
 ```
 
@@ -480,14 +516,18 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
       "authorId": "u-…"
     }
   ],
-  "nextCursor": "48213",
+  "nextCursor": "731942061385:48213:5512",
   "hasMore": false,
   "serverTimeMs": "1781234569120"
 }
 ```
 
 `payloadJson` is a JSON string whose keys are the table's `snake_case` column
-names. Pass `nextCursor` back as `cursor` to continue. `limit` defaults to
+names. Pass `nextCursor` back as `cursor` to continue; it is opaque. Without
+the `Openbeehive-Sync-Protocol` header the server answers as it did for
+0.4.1 apps: only the columns of that release, no photo records and bare
+sequence numbers as cursors. `status` other than unspecified means the
+cursor cannot be served; load a `Snapshot` instead. `limit` defaults to
 200 and is capped at 500. The feed covers the caller's workspace; personal
 rows (scope `user:<id>`) are returned only to their owner. The feed contains
 every change, whether a device pushed it or a service RPC wrote it;
@@ -521,12 +561,13 @@ Errors come back as a JSON body with a Connect code:
 
 | Code | HTTP | When |
 | --- | --- | --- |
-| `invalid_argument` | 400 | Empty `name`; missing `hiveId` (inspection, queen, treatment, harvest), `year` (queen), `title` (task), `product` (treatment); `amountKg` not above `0` (harvest); `apiaryId` that does not exist on `CreateTask`; a photo that is not a `data:image/` URL or exceeds 512 KiB; missing `hive` / `queen` on the update calls |
+| `invalid_argument` | 400 | Empty `name`; missing `hiveId` (inspection, queen, treatment, harvest), `year` (queen), `title` (task), `product` (treatment); `amountKg` not above `0` (harvest); `apiaryId` that does not exist on `CreateTask`; a photo that is not a data URL of a JPEG, PNG or WebP image of at most 5 MiB; missing `hive` / `queen` on the update calls |
 | `unauthenticated` | 401 | Missing, expired or removed token: an unknown or revoked API key, or a session token past `BEEHIVE_SESSION_TTL` |
 | `permission_denied` | 403 | Demo session or read-only API key calling a write RPC |
-| `failed_precondition` | 400 | `DeleteApiary` while the apiary still has hives |
+| `failed_precondition` | 400 | `DeleteApiary` while the apiary still has hives; a `SyncService` call below `BEEHIVE_SYNC_MIN_PROTOCOL`, or `Snapshot` without the protocol header (with an `UpgradeRequired` detail) |
 | `resource_exhausted` | 429 | More than 4 open `Subscribe` streams for one user |
 | `not_found` | 404 | Unknown id, or an id that belongs to another workspace, on any `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, the photo calls and every `Create*` that references a hive or apiary |
+| `unavailable` | 503 | A photo call while the server has no blob storage |
 | `internal` | 500 | Server-side failures. The message is always `internal error`; details are in the server log only |
 
 An update that would change nothing, and a `Push` with more than 2000
@@ -542,17 +583,30 @@ status. Clients should act on `code`; the text may change.
 
 | HTTP | Codes |
 | --- | --- |
-| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `id_required`, `name_required`, `org_id_required`, `invite_invalid`, `invite_expired`, `verification_invalid`, `unknown_provider`, `oidc_state_missing`, `oidc_state_invalid`, `oidc_no_email`, `passkey_no_ceremony`, `passkey_failed` |
-| 401 | `not_signed_in`, `invalid_credentials`, `oidc_failed`, `passkey_failed` |
-| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `passkey_session_mismatch` |
-| 404 | `not_found`, `invite_not_found`, `key_not_found`, `passkey_not_found` |
+| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `invalid_role`, `invalid_password`, `password_too_long`, `id_required`, `name_required`, `org_id_required`, `cannot_remove_self`, `invite_invalid`, `invite_expired`, `reset_invalid`, `passkey_no_ceremony`, `passkey_failed` |
+| 401 | `not_signed_in`, `invalid_credentials`, `passkey_failed` |
+| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
+| 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `account_exists` |
+| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (with `Retry-After`) |
 | 500 | `internal` |
 | 503 | `demo_unavailable`, `unavailable` |
+
+Pages a browser opens directly (`/auth/verify`, `/auth/login`,
+`/auth/callback`) do not answer with JSON: they redirect to
+`/login?error=<code>`, where the app shows a translated message. Their codes
+are `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
+`oidc_state_invalid`, `oidc_failed`, `oidc_no_email`, `account_exists`,
+`invite_only` and `internal`.
+
+`/photos/` and `/export` use the same JSON error shape with `not_signed_in`
+(401), `cross_site_request`, `demo_read_only`, `read_only` (403),
+`not_found`, `unknown_photo`, `not_uploaded` (404), `deleted` (410),
+`too_large` (413), `unsupported_type` (415), `rate_limited` (429) and
+`unavailable` (503).
 
 ## Notes
 
