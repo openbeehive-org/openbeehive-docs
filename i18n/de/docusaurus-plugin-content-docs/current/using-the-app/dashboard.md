@@ -29,7 +29,7 @@ Ein konfigurierbares Intervall gibt es nicht: Die Liste ist nach der Zeit seit d
 
 ## Anstehende Aufgaben
 
-Zeigt bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum. Aufgaben, deren Fälligkeit verstrichen ist, sind mit **!** markiert. Abhaken kannst du Aufgaben in der Ansicht **Aufgaben**; siehe [Aufgaben](/using-the-app/tasks).
+Zeigt bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum. Aufgaben, deren Fälligkeit verstrichen ist, sind mit **!** markiert. Abhaken kannst du Aufgaben in der Ansicht **Aufgaben**; siehe [Aufgaben](./tasks.md).
 
 ## Orientierung in der App
 
@@ -43,14 +43,14 @@ Dieselben Ziele sind überall erreichbar: **Übersicht, Standorte, Scannen, Beut
 **Einstellungen** enthält:
 
 - **Sprache**: Englisch, Deutsch, Französisch, Spanisch, Italienisch. Die Wahl wird auf dem Gerät gespeichert.
-- **Mandanten**: wechseln, erstellen, einladen und verwalten (auf Instanzen mit Anmeldung). Siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+- **Mandanten**: wechseln, erstellen, einladen und verwalten (auf Instanzen mit Anmeldung). Siehe [Konten & Mandanten](./accounts-tenants.md).
 - **Passkeys**: Passkeys hinzufügen oder entfernen (wenn der Server sie aktiviert hat).
 - **API-Schlüssel**: Schlüssel für Skripte und Geräte erstellen und entfernen (auf Instanzen mit Anmeldung). Siehe [Konten & Mandanten](./accounts-tenants.md#api-keys).
-- **Daten & Backup**: Export und Import; siehe [Import & Export](/using-the-app/import-export).
+- **Daten & Backup**: Export und Import; siehe [Import & Export](./import-export.md).
 - **Konto**: als wer du angemeldet bist, und **Abmelden**.
 
 Auf einer selbst gehosteten Einzelnutzer-Instanz ohne Anmeldung gibt es nichts, wovon man sich abmelden könnte; der Konto-Block zeigt die lokale Identität.
 
 ## Die Online-/Offline-Anzeige
 
-Die Seitenleiste zeigt neben deinem Konto **Online** oder **Offline**, und solange du offline bist, steht in einer Leiste am oberen Rand, dass Änderungen gespeichert und später synchronisiert werden. Erfasse einfach weiter wie gewohnt; die Synchronisation setzt fort, sobald die Verbindung zurück ist. Siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+Die Seitenleiste zeigt neben deinem Konto **Online** oder **Offline**, und solange du offline bist, steht in einer Leiste am oberen Rand, dass Änderungen gespeichert und später synchronisiert werden. Erfasse einfach weiter wie gewohnt; die Synchronisation setzt fort, sobald die Verbindung zurück ist. Siehe [Offline und Synchronisation](./offline-and-sync.md).

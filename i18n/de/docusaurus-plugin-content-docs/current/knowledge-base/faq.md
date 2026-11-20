@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Häufig gestellte Fragen
 
-Schnelle Antworten auf die Fragen, die wir am häufigsten hören. Wenn etwas fehlt, sieh in den [Leitfaden zur Fehlerbehebung](/knowledge-base/troubleshooting) oder frage die Community auf [GitHub](https://github.com/openbeehive-org/openbeehive-app).
+Schnelle Antworten auf die Fragen, die wir am häufigsten hören. Wenn etwas fehlt, sieh in den [Leitfaden zur Fehlerbehebung](./troubleshooting.md) oder frage die Community auf [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Ist Openbeehive kostenlos?
 
@@ -27,11 +27,11 @@ Möchtest du die volle Kontrolle? Siehe [Selbst-Hosting](/category/self-hosting)
 
 Ja, vollständig. Openbeehive ist eine Progressive Web App (PWA), die eine vollständige Kopie deiner Daten auf dem Gerät vorhält. Das Lesen und Schreiben von Aufzeichnungen erfolgt lokal und sofort, sodass es in einem Bienenstand ohne Empfang perfekt funktioniert.
 
-Sobald du wieder Verbindung hast, synchronisieren sich deine Änderungen automatisch. Mehr dazu unter [Offline und Synchronisierung](/using-the-app/offline-and-sync).
+Sobald du wieder Verbindung hast, synchronisieren sich deine Änderungen automatisch. Mehr dazu unter [Offline und Synchronisierung](../using-the-app/offline-and-sync.md).
 
 ## Funktioniert es auf meinem Smartphone?
 
-Ja. Openbeehive läuft in jedem modernen Browser und kann auf deinem Startbildschirm installiert werden, sodass es sich wie eine App verhält. Es funktioniert auf Smartphones, Tablets und Desktops. Siehe [Die App installieren](/using-the-app/install) für die Schritte auf jeder Plattform.
+Ja. Openbeehive läuft in jedem modernen Browser und kann auf deinem Startbildschirm installiert werden, sodass es sich wie eine App verhält. Es funktioniert auf Smartphones, Tablets und Desktops. Siehe [Die App installieren](../using-the-app/install.md) für die Schritte auf jeder Plattform.
 
 ## Gibt es eine native App?
 
@@ -39,7 +39,7 @@ Es gibt heute keine separate native App im App Store oder Play Store, und du bra
 
 ## Kann ich meine Daten exportieren?
 
-Ja. **Einstellungen → Daten & Backup** exportiert alles auf deinem Gerät als vollständiges JSON-Backup, als Tabelle (XLSX), als CSV-Dateien in einem ZIP, als BeeXML oder als druckbaren PDF-Bericht und importiert JSON, BeeXML und CSV aus anderen Apps. Siehe [Import & Export](/using-the-app/import-export). Selbst-Hoster können außerdem die Server-Datenbank direkt sichern; siehe [Backups](/self-hosting/backups).
+Ja. **Einstellungen → Daten & Backup** exportiert alles auf deinem Gerät als vollständiges JSON-Backup, als Tabelle (XLSX), als CSV-Dateien in einem ZIP, als BeeXML oder als druckbaren PDF-Bericht und importiert JSON, BeeXML und CSV aus anderen Apps. Siehe [Import & Export](../using-the-app/import-export.md). Selbst-Hoster können außerdem die Server-Datenbank direkt sichern; siehe [Backups](../self-hosting/backups.md).
 
 ## Kann ich es selbst hosten?
 
@@ -50,15 +50,15 @@ Absolut, und es ist auf einfache Bedienung ausgelegt. Es gibt zwei Bereitstellun
 | `selfhost` | Hobbyisten, Einzelnutzer | Eine einzige Binärdatei, SQLite + lokale Dateien, kein Docker nötig |
 | `cloud` | Mehrbenutzer, größere Installationen | Docker, PostgreSQL + S3/MinIO-Speicher |
 
-Beginne mit dem [Schnellstart](/self-hosting/quick-start) oder springe direkt zum [Leitfaden für die einzelne Binärdatei](/self-hosting/single-binary).
+Beginne mit dem [Schnellstart](../self-hosting/quick-start.md) oder springe direkt zum [Leitfaden für die einzelne Binärdatei](../self-hosting/single-binary.md).
 
 :::note
-Für eine private Einzelnutzer-Instanz kannst du die Anmeldung vollständig deaktivieren. Siehe [Authentifizierung](/self-hosting/authentication).
+Für eine private Einzelnutzer-Instanz kannst du die Anmeldung vollständig deaktivieren. Siehe [Authentifizierung](../self-hosting/authentication.md).
 :::
 
 ## Wie funktioniert das Teilen?
 
-Aufzeichnungen werden über **Mandanten** geteilt. Jedes Konto hat einen persönlichen Mandanten und kann in weitere eingeladen werden, zum Beispiel den eines Vereins. Alle in einem Mandanten sehen und bearbeiten sämtliche seiner Bienenstände, Bienenstöcke und Aufzeichnungen; ein Teilen einzelner Bienenstände gibt es nicht. Die Synchronisierung ist konfliktfrei, sodass zwei Personen, die im selben Mandanten auf verschiedenen Geräten arbeiten, sich nicht gegenseitig überschreiben. Siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+Aufzeichnungen werden über **Mandanten** geteilt. Jedes Konto hat einen persönlichen Mandanten und kann in weitere eingeladen werden, zum Beispiel den eines Vereins. Alle in einem Mandanten sehen und bearbeiten sämtliche seiner Bienenstände, Bienenstöcke und Aufzeichnungen; ein Teilen einzelner Bienenstände gibt es nicht. Die Synchronisierung ist konfliktfrei, sodass zwei Personen, die im selben Mandanten auf verschiedenen Geräten arbeiten, sich nicht gegenseitig überschreiben. Siehe [Konten & Mandanten](../using-the-app/accounts-tenants.md).
 
 ## Welche Beutentypen werden unterstützt?
 
@@ -72,7 +72,7 @@ Openbeehive unterstützt die gängigsten Rähmchen- und Top-bar-Systeme:
 - Top-bar
 - Sonstige
 
-Siehe [Beutentypen](/knowledge-base/hive-types) für Hinweise zur Auswahl.
+Siehe [Beutentypen](./hive-types.md) für Hinweise zur Auswahl.
 
 ## Wie werden Königinnen markiert?
 
@@ -86,11 +86,11 @@ Openbeehive folgt dem internationalen Schema der Königinnen-Markierungsfarben, 
 | 4 oder 9 | Grün |
 | 5 oder 0 | Blau |
 
-Die App wählt die richtige Farbe automatisch für dich aus. Alle Einzelheiten findest du auf der Seite [Königinnen-Markierungsfarben](/knowledge-base/queen-marking-colours).
+Die App wählt die richtige Farbe automatisch für dich aus. Alle Einzelheiten findest du auf der Seite [Königinnen-Markierungsfarben](./queen-marking-colours.md).
 
 ## Wozu dienen die QR-Etiketten?
 
-Jeder Bienenstock kann ein druckbares QR-Etikett haben. Durch das Scannen öffnet sich Openbeehive direkt bei diesem Bienenstock, sodass du im Bienenstand seine Aufzeichnungen aufrufen kannst, ohne zu tippen oder zu suchen. Siehe [QR-Etiketten](/using-the-app/qr-labels).
+Jeder Bienenstock kann ein druckbares QR-Etikett haben. Durch das Scannen öffnet sich Openbeehive direkt bei diesem Bienenstock, sodass du im Bienenstand seine Aufzeichnungen aufrufen kannst, ohne zu tippen oder zu suchen. Siehe [QR-Etiketten](../using-the-app/qr-labels.md).
 
 ## In welchen Sprachen ist es verfügbar?
 
@@ -100,18 +100,18 @@ Die App wird in fünf Sprachen ausgeliefert: Englisch, Deutsch, Französisch, Sp
 
 Beim Selbst-Hosting ist das Backend austauschbar:
 
-- **Datenbanken:** PostgreSQL, MySQL oder SQLite. Siehe [Datenbanken](/self-hosting/databases).
-- **Blob-Speicher:** MinIO/S3-kompatibler Objektspeicher oder das lokale Dateisystem. Siehe [Speicher](/self-hosting/storage).
+- **Datenbanken:** PostgreSQL, MySQL oder SQLite. Siehe [Datenbanken](../self-hosting/databases.md).
+- **Blob-Speicher:** MinIO/S3-kompatibler Objektspeicher oder das lokale Dateisystem. Siehe [Speicher](../self-hosting/storage.md).
 
 ## Wie melde ich mich an?
 
-Der gehostete Dienst verwendet Konten mit E-Mail und Passwort. Selbst-Hoster können E-Mail/Passwort-Konten aktivieren, OIDC-Anbieter hinzufügen (Google, Keycloak, Authentik und ähnliche), Passkeys aktivieren oder die Anmeldung für eine Einzelnutzer-Installation vollständig abschalten. Siehe [Authentifizierung](/self-hosting/authentication).
+Der gehostete Dienst verwendet Konten mit E-Mail und Passwort. Selbst-Hoster können E-Mail/Passwort-Konten aktivieren, OIDC-Anbieter hinzufügen (Google, Keycloak, Authentik und ähnliche), Passkeys aktivieren oder die Anmeldung für eine Einzelnutzer-Installation vollständig abschalten. Siehe [Authentifizierung](../self-hosting/authentication.md).
 
 ## Wie melde ich einen Fehler oder schlage eine Funktion vor?
 
 Bitte eröffne ein Issue im [GitHub-Repository](https://github.com/openbeehive-org/openbeehive-app). Klare Schritte zur Reproduktion, deine Plattform und dein Browser sowie ein Screenshot helfen.
 
-Die [Seite zur Fehlerbehebung](/knowledge-base/troubleshooting) deckt häufige Probleme möglicherweise bereits ab.
+Die [Seite zur Fehlerbehebung](./troubleshooting.md) deckt häufige Probleme möglicherweise bereits ab.
 
 ## Wie kann ich beitragen?
 
@@ -119,4 +119,4 @@ Beiträge aller Art sind willkommen: Code, Dokumentation, Übersetzungen, Fehler
 
 ## Welche Version ist das?
 
-Veröffentlichungen werden auf [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) getaggt. Selbst-Hoster betreiben den Tag, den sie gebaut haben, oder den Image-Tag, den sie gezogen haben; sieh in den [Leitfaden zum Aktualisieren](/self-hosting/upgrading), wenn neue Versionen erscheinen.
+Veröffentlichungen werden auf [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases) getaggt. Selbst-Hoster betreiben den Tag, den sie gebaut haben, oder den Image-Tag, den sie gezogen haben; sieh in den [Leitfaden zum Aktualisieren](../self-hosting/upgrading.md), wenn neue Versionen erscheinen.

@@ -8,7 +8,7 @@ title: "Actualización"
 Las actualizaciones son sencillas: reemplaza el binario o descarga una nueva imagen, reinicia, y el servidor pone al día el esquema de la base de datos por su cuenta.
 
 :::caution Haz copia de seguridad primero, siempre
-Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](/self-hosting/backups).
+Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](./backups.md).
 :::
 
 ## Antes de empezar
@@ -69,13 +69,13 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Esto produce un nuevo `./server/bin/openbeehive`. Los requisitos previos están en [Binario único](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
+Esto produce un nuevo `./server/bin/openbeehive`. Los requisitos previos están en [Binario único](./single-binary.md) (Go 1.27+, Node 24+, buf).
 
 ## Actualizar con Docker
 
 El comando que necesitas depende de dónde proviene la imagen.
 
-**Imagen publicada** (el `docker run` de un solo contenedor del [inicio rápido](/self-hosting/quick-start), o un archivo Compose con una línea `image:` como `docker-compose.demo.yml`):
+**Imagen publicada** (el `docker run` de un solo contenedor del [inicio rápido](./quick-start.md), o un archivo Compose con una línea `image:` como `docker-compose.demo.yml`):
 
 ```bash
 docker compose -f docker-compose.demo.yml pull
@@ -139,4 +139,4 @@ No restaures una base de datos antigua bajo un binario más nuevo, ni ejecutes u
 - Abre la aplicación y confirma que aparecen tus colmenares, colmenas y visitas recientes.
 - Registra algo en un dispositivo y confirma que se sincroniza.
 
-Si algo parece estar mal, consulta [Resolución de problemas](/knowledge-base/troubleshooting) y revierte a tu copia de seguridad mientras investigas.
+Si algo parece estar mal, consulta [Resolución de problemas](../knowledge-base/troubleshooting.md) y revierte a tu copia de seguridad mientras investigas.

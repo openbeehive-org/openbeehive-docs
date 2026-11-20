@@ -10,7 +10,7 @@ Openbeehive se configura por completo a través de variables de entorno. Esta p�
 Puedes definir estas variables en tu shell, en un archivo `.env` junto al binario, en tu archivo `docker compose` o mediante el gestor de secretos de tu plataforma de alojamiento. El servidor las lee una sola vez al arrancar, por lo que los cambios surten efecto tras un reinicio.
 
 :::tip Empieza poco a poco
-Solo necesitas un puñado de estas para empezar. Para un servidor doméstico de un solo usuario, define `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET` y deja el resto con sus valores predeterminados. Consulta la [Guía rápida](/self-hosting/quick-start) para ponerlo en marcha en minutos.
+Solo necesitas un puñado de estas para empezar. Para un servidor doméstico de un solo usuario, define `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET` y deja el resto con sus valores predeterminados. Consulta la [Guía rápida](./quick-start.md) para ponerlo en marcha en minutos.
 :::
 
 ## Cómo funciona el perfil de despliegue
@@ -25,7 +25,7 @@ El ajuste más importante de todos es `BEEHIVE_DEPLOYMENT_PROFILE`. Elige valore
 El perfil solo establece *valores predeterminados*. Cualquier variable que definas explícitamente siempre prevalece. Por ejemplo, puedes ejecutar el perfil `selfhost` pero apuntarlo a PostgreSQL definiendo `BEEHIVE_DATABASE_DRIVER` y `BEEHIVE_DATABASE_DSN` por tu cuenta.
 
 :::note
-Los dos perfiles se documentan en profundidad en sus propias páginas: [Binario único](/self-hosting/single-binary) y [Docker](/self-hosting/docker). Esta página se centra en las variables en sí.
+Los dos perfiles se documentan en profundidad en sus propias páginas: [Binario único](./single-binary.md) y [Docker](./docker.md). Esta página se centra en las variables en sí.
 :::
 
 ## Perfil de despliegue
@@ -103,7 +103,7 @@ BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
 
-Para la elección de controlador, el ajuste fino y las notas de migración, consulta [Bases de datos](/self-hosting/databases).
+Para la elección de controlador, el ajuste fino y las notas de migración, consulta [Bases de datos](./databases.md).
 
 ## Almacenamiento de blobs
 
@@ -120,7 +120,7 @@ Las fotos y otros archivos adjuntos se guardan como blobs, ya sea en el sistema 
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nombre del bucket donde se guardan los blobs.                           |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Establécelo en `true` para conectarte al endpoint mediante HTTPS.       |
 
-Las variables `MINIO_*` solo se usan cuando `BEEHIVE_BLOB_BACKEND=minio`. Para una guía completa, consulta [Almacenamiento](/self-hosting/storage).
+Las variables `MINIO_*` solo se usan cuando `BEEHIVE_BLOB_BACKEND=minio`. Para una guía completa, consulta [Almacenamiento](./storage.md).
 
 ## Sesión y autenticación
 
@@ -137,7 +137,7 @@ Establece siempre un `BEEHIVE_SESSION_SECRET` fuerte y único, y mantenlo en pri
 
 Cuentas integradas para instancias multiusuario sin un proveedor de identidad externo.
 El administrador de la instancia es una cuenta dedicada que tú configuras, no la primera
-persona que se registra. Consulta [Autenticación](/self-hosting/authentication).
+persona que se registra. Consulta [Autenticación](./authentication.md).
 
 | Variable | Predeterminado | Descripción |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ persona que se registra. Consulta [Autenticación](/self-hosting/authentication)
 ## Espacio de demostración
 
 Instala una cuenta y un espacio (tenant) de demostración a modo de muestra. Desactivado de forma predeterminada; consulta
-[Modo demostración](/self-hosting/demo).
+[Modo demostración](./demo.md).
 
 | Variable | Predeterminado | Descripción |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 Para una instancia personal autoalojada puedes omitir el inicio de sesión por completo: deja `BEEHIVE_PASSWORD_AUTH` desactivado (el valor predeterminado de selfhost), `BEEHIVE_OIDC_PROVIDERS` vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. La aplicación se ejecuta entonces en modo de un solo usuario, sin paso de inicio de sesión.
 :::
 
-Para los tutoriales de configuración de proveedores, las URL de redirección y los consejos de seguridad, consulta [Autenticación](/self-hosting/authentication).
+Para los tutoriales de configuración de proveedores, las URL de redirección y los consejos de seguridad, consulta [Autenticación](./authentication.md).
 
 ## Un ejemplo mínimo de selfhost
 

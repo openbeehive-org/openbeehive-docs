@@ -7,7 +7,7 @@ title: "Référence des types de ruches"
 
 Lorsque vous créez une ruche dans Openbeehive, vous choisissez un **type**. Cette unique valeur enregistre le système de ruche que vous utilisez, ce qui vous aide à garder cadres, hausses et pièces de rechange compatibles à travers votre rucher.
 
-Le type est purement une étiquette pour vos propres archives. Il ne change rien au fonctionnement des inspections, des traitements ou des récoltes, alors ne craignez pas de vous « tromper » : vous pouvez le modifier à tout moment en modifiant la ruche. Voir [Ruches](/using-the-app/hives) pour savoir comment ajouter et modifier une ruche.
+Le type est purement une étiquette pour vos propres archives. Il ne change rien au fonctionnement des inspections, des traitements ou des récoltes, alors ne craignez pas de vous « tromper » : vous pouvez le modifier à tout moment en modifiant la ruche. Voir [Ruches](../using-the-app/hives.md) pour savoir comment ajouter et modifier une ruche.
 
 Openbeehive propose sept options : **Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar** et **Autre**.
 
@@ -65,4 +65,4 @@ Choisissez **Autre** et notez les particularités (taille des cadres, nombre de 
 **Le type influe-t-il sur les traitements ou les récoltes ?**
 Non. C'est une étiquette descriptive. Toutes les inspections, traitements, tâches et récoltes fonctionnent de la même manière quel que soit le type.
 
-Pour en savoir plus sur le matériel et sur la façon dont les parties d'une ruche s'assemblent, voir [Matériel](/beekeeping/equipment) et le [Glossaire](/knowledge-base/glossary).
+Pour en savoir plus sur le matériel et sur la façon dont les parties d'une ruche s'assemblent, voir [Matériel](../beekeeping/equipment.md) et le [Glossaire](./glossary.md).

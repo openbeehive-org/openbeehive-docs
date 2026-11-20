@@ -10,7 +10,7 @@ The simplest way to run Openbeehive on your own machine is the **single binary**
 This page walks you through building that binary from source and running it as a long-lived service.
 
 :::tip In a hurry?
-If you would rather pull a prebuilt container image, see [Docker](/self-hosting/docker). To compare both approaches first, start at the [self-hosting overview](/category/self-hosting).
+If you would rather pull a prebuilt container image, see [Docker](./docker.md). To compare both approaches first, start at the [self-hosting overview](/category/self-hosting).
 :::
 
 ## Prerequisites
@@ -63,10 +63,10 @@ openssl rand -base64 32
 Paste the result into `BEEHIVE_SESSION_SECRET=`.
 
 :::note No login by default
-The selfhost profile enables no login method: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. Leave them that way to run as a single user with no sign-in step. When you want accounts, passkeys or a provider, see [Authentication](/self-hosting/authentication).
+The selfhost profile enables no login method: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. Leave them that way to run as a single user with no sign-in step. When you want accounts, passkeys or a provider, see [Authentication](./authentication.md).
 :::
 
-If you intend to reach the instance from another device on your network, set `BEEHIVE_PUBLIC_BASE_URL` to an address that device can actually resolve (for example `http://192.168.1.20:8080` or your domain behind a [reverse proxy](/self-hosting/reverse-proxy)). QR labels encode the address you open the app at, so use that same address consistently.
+If you intend to reach the instance from another device on your network, set `BEEHIVE_PUBLIC_BASE_URL` to an address that device can actually resolve (for example `http://192.168.1.20:8080` or your domain behind a [reverse proxy](./reverse-proxy.md)). QR labels encode the address you open the app at, so use that same address consistently.
 
 ## Build
 
@@ -162,7 +162,7 @@ journalctl -u openbeehive -f
 ```
 
 :::caution Binding to port 80 or 443
-The example binds to `:8080`, which an unprivileged user can use. Do not run the service as root to reach ports 80/443 - instead keep Openbeehive on `:8080` and put a [reverse proxy](/self-hosting/reverse-proxy) (such as Caddy or nginx) in front of it to handle TLS and the public port.
+The example binds to `:8080`, which an unprivileged user can use. Do not run the service as root to reach ports 80/443 - instead keep Openbeehive on `:8080` and put a [reverse proxy](./reverse-proxy.md) (such as Caddy or nginx) in front of it to handle TLS and the public port.
 :::
 
 ## Where your data lives
@@ -188,8 +188,8 @@ Because all state is files in one directory, relocating an instance is mostly a 
 Copying `openbeehive.db` while the server is running can capture a torn, inconsistent snapshot. Stop the service (or use a proper backup procedure) before copying database files.
 :::
 
-For scheduled backups, retention, and safe live-backup techniques for SQLite, see [Backups](/self-hosting/backups).
+For scheduled backups, retention, and safe live-backup techniques for SQLite, see [Backups](./backups.md).
 
 ## Upgrading
 
-To move to a newer release, pull the latest code, rebuild, and replace the binary - your database and `data/` directory stay where they are and migrations run on the next start. The full procedure, including how to roll back, is covered in [Upgrading](/self-hosting/upgrading).
+To move to a newer release, pull the latest code, rebuild, and replace the binary - your database and `data/` directory stay where they are and migrations run on the next start. The full procedure, including how to roll back, is covered in [Upgrading](./upgrading.md).

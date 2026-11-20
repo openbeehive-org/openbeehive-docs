@@ -21,12 +21,12 @@ rucher avec ou sans signal.
 
 | Si vous voulez… | Rendez-vous sur |
 | --- | --- |
-| Apprendre à consigner votre activité apicole | [Utiliser l'application](/using-the-app/dashboard) |
-| Exécuter votre propre instance | [Auto-hébergement](/self-hosting/quick-start) |
-| Appeler l'API depuis des scripts | [Utiliser l'API](/using-the-api/overview) |
-| En savoir plus sur l'apiculture elle-même | [Bases de l'apiculture](/beekeeping/getting-started) |
-| Rechercher une information | [Base de connaissances](/knowledge-base/glossary) |
-| Comprendre les rouages internes | [Développeurs](/developers/architecture) |
+| Apprendre à consigner votre activité apicole | [Utiliser l'application](./using-the-app/dashboard.md) |
+| Exécuter votre propre instance | [Auto-hébergement](./self-hosting/quick-start.md) |
+| Appeler l'API depuis des scripts | [Utiliser l'API](./using-the-api/overview.md) |
+| En savoir plus sur l'apiculture elle-même | [Bases de l'apiculture](./beekeeping/getting-started.md) |
+| Rechercher une information | [Base de connaissances](./knowledge-base/glossary.md) |
+| Comprendre les rouages internes | [Développeurs](./developers/architecture.md) |
 
 :::note
 Cette documentation suit la version actuelle de l'application ; utilisez le sélecteur

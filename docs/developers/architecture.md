@@ -7,7 +7,7 @@ title: "Offline-first architecture"
 
 Openbeehive is built so that beekeeping happens out at the apiary, often far from any signal. Every device carries a full copy of the data it needs, the interface reads and writes that local copy instantly, and a background engine quietly keeps everything in step with the server when a connection is available.
 
-This page explains how the pieces fit together. For the exact rules that keep replicas consistent, see [the sync protocol](/developers/sync-protocol) and [history and events](/developers/history-and-events).
+This page explains how the pieces fit together. For the exact rules that keep replicas consistent, see [the sync protocol](./sync-protocol.md) and [history and events](./history-and-events.md).
 
 ## Local-first by design
 
@@ -49,7 +49,7 @@ The diagram below shows how a change travels from a tap in the interface out to 
 
 The sync engine exchanges only the records that belong to the scopes a user can access, so a device never downloads the whole world: just the apiaries it is entitled to.
 
-Scripts and sensors enter the same picture through the server's CRUD services ([Using the API](/using-the-api/overview)). Their writes do not bypass this flow: the server applies each one with the same per-field merge and appends it to the same change log as a pushed change, so a reading posted by a hive scale is just another change that devices pull on their next sync.
+Scripts and sensors enter the same picture through the server's CRUD services ([Using the API](../using-the-api/overview.md)). Their writes do not bypass this flow: the server applies each one with the same per-field merge and appends it to the same change log as a pushed change, so a reading posted by a hive scale is just another change that devices pull on their next sync.
 
 ## Conflict resolution
 
@@ -69,7 +69,7 @@ List-like fields (currently only the photo keys on an inspection) use an observe
 
 ### Append-only events
 
-The `event` table is append-only by convention: every history write inserts a new row with a fresh id and nothing edits or deletes one, so two devices adding events offline never touch the same row. See [history and events](/developers/history-and-events) for detail.
+The `event` table is append-only by convention: every history write inserts a new row with a fresh id and nothing edits or deletes one, so two devices adding events offline never touch the same row. See [history and events](./history-and-events.md) for detail.
 
 :::tip
 Because merges are deterministic, any two devices that have seen the same set of changes will always compute exactly the same result, regardless of the order in which those changes arrived.
@@ -103,4 +103,4 @@ The app is a Progressive Web App, designed first for the phone in your pocket at
 
 This separation is what gives Openbeehive its core promise: the records are always with you, always fast, and always consistent once everyone is back in range.
 
-To go deeper, read [the sync protocol](/developers/sync-protocol) and [history and events](/developers/history-and-events), or browse the rest of the [developer documentation](/category/developers).
+To go deeper, read [the sync protocol](./sync-protocol.md) and [history and events](./history-and-events.md), or browse the rest of the [developer documentation](/category/developers).

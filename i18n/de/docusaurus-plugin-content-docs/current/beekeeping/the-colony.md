@@ -25,10 +25,10 @@ Es gibt in der Regel eine Königin pro Volk. Sie ist das einzige vollständig en
 
 Die Königin ist keine Herrscherin. Sie lenkt das Volk nicht; vielmehr bindet sie es chemisch zusammen. Ihr **Königinnen-Mandibularpheromon** signalisiert den Arbeiterinnen, dass das Volk „weiselrichtig" ist, und unterdrückt das Heranziehen neuer Königinnen sowie die Entwicklung legender Arbeiterinnen. Wenn dieses Signal nachlässt — weil sie gestorben ist, schwächelt oder das Volk zu groß geworden ist, als dass ihr Duft alle erreichen könnte — reagieren die Arbeiterinnen damit, einen Ersatz heranzuziehen.
 
-Eine Königin paart sich nur einmal in ihrem Leben, über wenige Tage zu Beginn, und speichert Samen für den Rest ihrer Jahre. In Openbeehive kannst du jede Königin, ihre Markierungsfarbe und ihr Jahr sowie ihre Herkunft erfassen. Siehe [Königinnen](/using-the-app/queens).
+Eine Königin paart sich nur einmal in ihrem Leben, über wenige Tage zu Beginn, und speichert Samen für den Rest ihrer Jahre. In Openbeehive kannst du jede Königin, ihre Markierungsfarbe und ihr Jahr sowie ihre Herkunft erfassen. Siehe [Königinnen](../using-the-app/queens.md).
 
 :::tip Königinnenmarkierung
-Königinnen werden oft mit einem farbigen Punkt nach dem internationalen Farbschema markiert, das ihr Geburtsjahr festhält. Siehe [Königinnen-Markierungsfarben](/knowledge-base/queen-marking-colours).
+Königinnen werden oft mit einem farbigen Punkt nach dem internationalen Farbschema markiert, das ihr Geburtsjahr festhält. Siehe [Königinnen-Markierungsfarben](../knowledge-base/queen-marking-colours.md).
 :::
 
 ### Arbeiterinnen
@@ -59,7 +59,7 @@ Waben werden aus Wachs gebaut, das von Drüsen an den Hinterleibern der Arbeiter
 - Ein Band aus **Pollen** („Bienenbrot") um die Brut herum.
 - **Honig** oben und an den äußeren Rändern eingelagert, mit Wachs verdeckelt, sobald er reif ist.
 
-Brut entwickelt sich über drei Stadien: **Ei** (3 Tage), **Larve** (von Ammen gefüttert, dann verdeckelt) und **Puppe** (in ihrer Zelle verschlossen, bis sie schlüpft). Das Brutmuster lesen zu lernen — geschlossen und gleichmäßig versus lückenhaft — ist eine der nützlichsten Durchsichtsfertigkeiten. Halte fest, was du findest, in den [Durchsichten](/using-the-app/inspections).
+Brut entwickelt sich über drei Stadien: **Ei** (3 Tage), **Larve** (von Ammen gefüttert, dann verdeckelt) und **Puppe** (in ihrer Zelle verschlossen, bis sie schlüpft). Das Brutmuster lesen zu lernen — geschlossen und gleichmäßig versus lückenhaft — ist eine der nützlichsten Durchsichtsfertigkeiten. Halte fest, was du findest, in den [Durchsichten](../using-the-app/inspections.md).
 
 ## Der jährliche Populationszyklus
 
@@ -71,7 +71,7 @@ Die Größe eines Volkes steigt und fällt mit den Jahreszeiten und folgt der Ve
 - **Herbst** — das Legen verlangsamt sich, Drohnen werden vertrieben, und das Volk zieht besondere, langlebige „Winterbienen" auf.
 - **Winter** — kein Flug, keine Brut (oder sehr wenig); die Traube lebt vom eingelagerten Honig.
 
-Eine Anleitung Monat für Monat findest du im [Imkerjahr](/beekeeping/beekeeping-year), und zur Mechanik der natürlichen Vermehrung siehe [Schwärmen](/beekeeping/swarming).
+Eine Anleitung Monat für Monat findest du im [Imkerjahr](./beekeeping-year.md), und zur Mechanik der natürlichen Vermehrung siehe [Schwärmen](./swarming.md).
 
 ## Wie ein Volk kommuniziert
 
@@ -85,7 +85,7 @@ Der **Schwänzeltanz** ist die Art, wie eine Sammlerin ihren Schwestern mitteilt
 
 Honig ist der eingelagerte Treibstoff des Volkes. Sammlerinnen tragen **Nektar** — zuckriges Wasser aus Blüten — in einer besonderen Honigblase ein. Zurück im Stock geben sie ihn von Mund zu Mund an Stockbienen weiter und fügen Enzyme hinzu, die beginnen, die komplexen Zucker des Nektars in einfachere umzuwandeln.
 
-Die Stockbienen verteilen den Nektar dann in Zellen und fächeln ihn mit ihren Flügeln, treiben Wasser aus, bis der Feuchtigkeitsgehalt auf etwa 18–20 % sinkt. An diesem Punkt ist er stabil und gärt nicht mehr, und die Bienen **verdeckeln** die Zelle mit einem Wachsdeckel. Dieser verdeckelte, reife Honig ist es, dessen Überschuss Imker ernten. Siehe [Honigernte](/beekeeping/honey-harvest) und erfasse Erträge in den [Ernten](/using-the-app/harvests).
+Die Stockbienen verteilen den Nektar dann in Zellen und fächeln ihn mit ihren Flügeln, treiben Wasser aus, bis der Feuchtigkeitsgehalt auf etwa 18–20 % sinkt. An diesem Punkt ist er stabil und gärt nicht mehr, und die Bienen **verdeckeln** die Zelle mit einem Wachsdeckel. Dieser verdeckelte, reife Honig ist es, dessen Überschuss Imker ernten. Siehe [Honigernte](./honey-harvest.md) und erfasse Erträge in den [Ernten](../using-the-app/harvests.md).
 
 ## Wie ein Volk überwintert
 
@@ -94,7 +94,7 @@ In kalten Klimazonen hält das Volk keinen Winterschlaf und heizt nicht den ganz
 Die Traube läuft vollständig mit eingelagertem Honig und frisst sich über die Monate langsam nach oben durch die Waben. Zwei Dinge entscheiden, ob sie überlebt: **genug Vorräte** an der richtigen Stelle und eine Population gesunder Winterbienen. Deshalb sind die Herbstfütterung und die Varroakontrolle so wichtig.
 
 :::caution Winterverluste sind real
-Selbst gesund aussehende Völker können über den Winter durch Verhungern, Krankheit oder eine hohe Milbenlast beim Eintritt in den Herbst sterben. Stark und gesund in den Winter zu gehen ist weit wichtiger als jeder Eingriff mitten im Winter. Siehe [Varroa](/beekeeping/varroa) und [Füttern](/beekeeping/feeding).
+Selbst gesund aussehende Völker können über den Winter durch Verhungern, Krankheit oder eine hohe Milbenlast beim Eintritt in den Herbst sterben. Stark und gesund in den Winter zu gehen ist weit wichtiger als jeder Eingriff mitten im Winter. Siehe [Varroa](./varroa.md) und [Füttern](./feeding.md).
 :::
 
 :::note Regionale Unterschiede

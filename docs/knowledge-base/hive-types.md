@@ -7,7 +7,7 @@ title: "Hive types reference"
 
 When you create a hive in Openbeehive, you choose a **type**. This single value records the hive system you are running, which helps you keep frames, supers and spare parts compatible across your apiary.
 
-The type is purely a label for your own records. It does not change how inspections, treatments or harvests work, so do not worry about getting it "wrong": you can change it at any time by editing the hive. See [Hives](/using-the-app/hives) for how to add and edit a hive.
+The type is purely a label for your own records. It does not change how inspections, treatments or harvests work, so do not worry about getting it "wrong": you can change it at any time by editing the hive. See [Hives](../using-the-app/hives.md) for how to add and edit a hive.
 
 Openbeehive offers seven options: **Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar** and **Other**.
 
@@ -65,4 +65,4 @@ Choose **Other** and record the specifics (frame size, box count, supplier) in a
 **Does the type affect treatments or harvests?**
 No. It is a descriptive label. All inspections, treatments, tasks and harvests work the same regardless of type.
 
-For more background on equipment and how the parts of a hive fit together, see [Equipment](/beekeeping/equipment) and the [Glossary](/knowledge-base/glossary).
+For more background on equipment and how the parts of a hive fit together, see [Equipment](../beekeeping/equipment.md) and the [Glossary](./glossary.md).

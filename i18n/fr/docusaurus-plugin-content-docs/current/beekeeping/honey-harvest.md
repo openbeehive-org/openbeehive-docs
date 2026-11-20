@@ -147,6 +147,6 @@ en eau, votre numéro de lot et la date de durabilité minimale (à consommer de
 avant), ainsi qu'une note pour le goût ou la prise. Le numéro de lot que vous enregistrez
 ici est celui à imprimer sur le pot, bouclant la boucle du rayon à l'étagère.
 
-Consultez [Récoltes dans l'application](/using-the-app/harvests) pour savoir comment saisir
+Consultez [Récoltes dans l'application](../using-the-app/harvests.md) pour savoir comment saisir
 et gérer vos enregistrements de récolte, et le [guide apicole](/category/beekeeping-basics)
 plus large pour la saison autour de la récolte.

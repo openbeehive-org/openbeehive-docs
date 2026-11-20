@@ -5,7 +5,7 @@ title: "Arnie"
 
 # Arnie
 
-Un'arnia in Openbeehive è una singola colonia in una cassetta fisica. Quasi tutto ciò che annoti giorno per giorno (visite, raccolti, trattamenti) è collegato a un'arnia. Ogni arnia appartiene a un solo apiario alla volta e può avere una regina. Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Un'arnia in Openbeehive è una singola colonia in una cassetta fisica. Quasi tutto ciò che annoti giorno per giorno (visite, raccolti, trattamenti) è collegato a un'arnia. Ogni arnia appartiene a un solo apiario alla volta e può avere una regina. Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
 ## Creare un'arnia
 
@@ -35,7 +35,7 @@ Mantieni i nomi brevi e coerenti all'interno di un apiario, ad esempio "1", "2",
 | Top-bar | Barre orizzontali senza telaino. |
 | Altro | Qualsiasi cosa non elencata sopra. |
 
-Per una descrizione più completa di ciascuno standard, vedi [Tipi di arnia](/knowledge-base/hive-types).
+Per una descrizione più completa di ciascuno standard, vedi [Tipi di arnia](../knowledge-base/hive-types.md).
 
 ### Stato
 
@@ -58,7 +58,7 @@ Per ricollocare un'arnia, aprila, tocca l'azione **Sposta** e scegli l'apiario d
 Ogni spostamento viene registrato come voce datata sotto **Cronologia posizioni** in fondo alla pagina dell'arnia, così sai dove si trovava una colonia in qualsiasi momento. Utile per tracciare l'esposizione alle malattie e per i registri dell'apicoltura nomade.
 
 :::caution
-In molte regioni, lo spostamento delle arnie tra posizioni è soggetto a norme sanitarie e di movimentazione delle api, specialmente all'interno di zone di controllo delle malattie. Verifica i requisiti nazionali o locali prima di ricollocare le colonie. Vedi [Malattie e parassiti](/knowledge-base/diseases-and-pests).
+In molte regioni, lo spostamento delle arnie tra posizioni è soggetto a norme sanitarie e di movimentazione delle api, specialmente all'interno di zone di controllo delle malattie. Verifica i requisiti nazionali o locali prima di ricollocare le colonie. Vedi [Malattie e parassiti](../knowledge-base/diseases-and-pests.md).
 :::
 
 ## La pagina dell'arnia
@@ -71,7 +71,7 @@ L'intestazione mostra la foto, il nome, lo stato e il tipo. Le icone delle azion
 
 - **Scheda dell'arnia**: una tabella stampabile di tutte le visite (con un pulsante **Stampa**).
 - **Andamento**: grafici delle rilevazioni registrate nelle visite (telaini occupati, telaini di covata, scorte di cibo, celle reali di sciamatura, docilità, calma, varroa, peso dell'arnia, nutrizione, larva più giovane, temperatura e umidità) più le smielature nel tempo.
-- **Modifica arnia**, **Sposta**, **QR** (mostra l'etichetta dell'arnia con i pulsanti **Stampa** e **SVG**; vedi [Etichette QR](/using-the-app/qr-labels)) ed **Elimina**.
+- **Modifica arnia**, **Sposta**, **QR** (mostra l'etichetta dell'arnia con i pulsanti **Stampa** e **SVG**; vedi [Etichette QR](./qr-labels.md)) ed **Elimina**.
 
 ### Ultime rilevazioni
 
@@ -79,15 +79,15 @@ Sotto l'intestazione, delle pillole mostrano i valori diversi da zero della visi
 
 ### Regina
 
-La scheda **Regina attuale** mostra anno, numero, colore di marcatura, origine e commento, con **Sostituisci regina** (o **Imposta regina** se non ce n'è nessuna registrata). **Cronologia regine** elenca le regine precedenti con le date di introduzione e sostituzione. Vedi [Regine](/using-the-app/queens).
+La scheda **Regina attuale** mostra anno, numero, colore di marcatura, origine e commento, con **Sostituisci regina** (o **Imposta regina** se non ce n'è nessuna registrata). **Cronologia regine** elenca le regine precedenti con le date di introduzione e sostituzione. Vedi [Regine](./queens.md).
 
 ### Diario delle visite
 
-**Registra visita** apre il modulo della visita. Sotto sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](/using-the-app/inspections).
+**Registra visita** apre il modulo della visita. Sotto sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
 
 ### Miele e Trattamenti
 
-**Miele** mostra il totale delle smielature dell'arnia nell'intestazione ed elenca ogni smielatura (**Registra raccolto**). **Trattamenti** elenca ogni trattamento (**Registra trattamento**). Vedi [Smielature](/using-the-app/harvests) e [Trattamenti](/using-the-app/treatments).
+**Miele** mostra il totale delle smielature dell'arnia nell'intestazione ed elenca ogni smielatura (**Registra raccolto**). **Trattamenti** elenca ogni trattamento (**Registra trattamento**). Vedi [Smielature](./harvests.md) e [Trattamenti](./treatments.md).
 
 ## Eliminare contro ritirare un'arnia
 

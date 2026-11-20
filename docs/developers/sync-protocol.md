@@ -51,7 +51,7 @@ message Change {
 
 `payload_json` is a partial delta, not the whole row: the client's `patch()`
 writes only the columns it changed. Keys are the `snake_case` column names
-from the [data model](/developers/data-model). A row created on the device is
+from the [data model](./data-model.md). A row created on the device is
 a delta containing every column. A delete is `op = CHANGE_OP_DELETE`; the
 receiver sets `deleted = true` and ignores the payload.
 

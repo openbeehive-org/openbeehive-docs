@@ -432,7 +432,7 @@ tabella in `snake_case`. Restituisci `nextCursor` come `cursor` per continuare.
 Il feed contiene ogni modifica, sia che l'abbia inviata un dispositivo sia che
 l'abbia scritta un RPC di servizio; le collocazioni compaiono solo qui,
 perché non hanno un servizio proprio. Vedi il
-[protocollo di sincronizzazione](/developers/sync-protocol) per come scrivere
+[protocollo di sincronizzazione](../developers/sync-protocol.md) per come scrivere
 modifiche con `Push`.
 
 ## Paginazione
@@ -476,4 +476,4 @@ per l'elenco completo dei codici.
 - `Content-Type: application/json` seleziona il protocollo Connect JSON.
   `application/proto` invia protobuf binario sullo stesso URL.
 - `SyncService.Subscribe` è uno stream lato server e richiede un client di
-  streaming; vedi [gRPC](/using-the-api/grpc).
+  streaming; vedi [gRPC](./grpc.md).

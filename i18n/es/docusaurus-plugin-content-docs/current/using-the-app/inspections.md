@@ -5,15 +5,15 @@ title: "Inspecciones (visitas)"
 
 # Inspecciones (visitas)
 
-Una inspección es el registro de una sola visita a una colmena: lo que viste, lo que hiciste y todo lo que merezca la pena recordar. A lo largo de una temporada, las visitas conforman una imagen de cómo se desarrolla cada colonia. Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+Una inspección es el registro de una sola visita a una colmena: lo que viste, lo que hiciste y todo lo que merezca la pena recordar. A lo largo de una temporada, las visitas conforman una imagen de cómo se desarrolla cada colonia. Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md).
 
 :::tip
-Para saber qué buscar durante una visita y con qué frecuencia inspeccionar, lee [Inspeccionar una colonia](/beekeeping/inspecting). Esta página trata sobre cómo registrarlo.
+Para saber qué buscar durante una visita y con qué frecuencia inspeccionar, lee [Inspeccionar una colonia](../beekeeping/inspecting.md). Esta página trata sobre cómo registrarlo.
 :::
 
 ## Iniciar una visita
 
-Abre una colmena (o escanea su [etiqueta QR](/using-the-app/qr-labels)) y toca **Registrar visita** encima del registro de visitas. El formulario se abre con la fecha de hoy.
+Abre una colmena (o escanea su [etiqueta QR](./qr-labels.md)) y toca **Registrar visita** encima del registro de visitas. El formulario se abre con la fecha de hoy.
 
 Todos los campos son opcionales. Un rápido "todo bien" sin nada más rellenado es una entrada válida.
 
@@ -55,7 +55,7 @@ El trío "huevos vistos / larva más joven / cría operculada" suele confirmar u
 | Cuadro de zánganos cortado | Si recortaste un cuadro de cría de zánganos (una medida de control de varroa). |
 | Alza añadida | Si añadiste un alza. |
 
-Para una visión más amplia sobre el manejo de ácaros y la cosecha, consulta [Varroa](/beekeeping/varroa) y [Cosecha de miel](/beekeeping/honey-harvest). La miel que retiras para envasar se registra aparte como una [cosecha](/using-the-app/harvests), con variedad, contenido de agua y número de lote.
+Para una visión más amplia sobre el manejo de ácaros y la cosecha, consulta [Varroa](../beekeeping/varroa.md) y [Cosecha de miel](../beekeeping/honey-harvest.md). La miel que retiras para envasar se registra aparte como una [cosecha](./harvests.md), con variedad, contenido de agua y número de lote.
 
 ## Clima
 
@@ -69,14 +69,14 @@ Para una visión más amplia sobre el manejo de ácaros y la cosecha, consulta [
 Los cuatro son opcionales. Con el tiempo aparecen en los gráficos de **Evolución** de la colmena junto al peso y la fuerza de la colonia.
 
 :::tip
-Una báscula de colmena o un sensor de clima pueden publicar estos campos a través de la API; cada lectura se convierte en una visita de la colmena y se sincroniza con tus dispositivos. Consulta [Rastreadores automáticos](/using-the-api/automated-trackers).
+Una báscula de colmena o un sensor de clima pueden publicar estos campos a través de la API; cada lectura se convierte en una visita de la colmena y se sincroniza con tus dispositivos. Consulta [Rastreadores automáticos](../using-the-api/automated-trackers.md).
 :::
 
 ## Nota y fotos
 
 Añade una **nota** de texto libre para todo lo que los campos estructurados no cubran: una realera de reemplazo marcada, un carácter que conviene vigilar, un recordatorio para cambiar la reina.
 
-**Añadir foto** adjunta una o más imágenes (patrón de cría, sospecha de enfermedad, realeras). Se almacenan con la visita y se sincronizan con el resto de tus registros. Si algo necesita seguimiento, añade una [tarea](/using-the-app/tasks) con fecha de vencimiento.
+**Añadir foto** adjunta una o más imágenes (patrón de cría, sospecha de enfermedad, realeras). Se almacenan con la visita y se sincronizan con el resto de tus registros. Si algo necesita seguimiento, añade una [tarea](./tasks.md) con fecha de vencimiento.
 
 ## El registro de visitas
 
@@ -94,5 +94,5 @@ El registro te permite detectar tendencias: la cría aumentando en primavera, la
 - **Fotografía lo dudoso.** Una foto de un patrón de cría extraño vale más que una descripción escrita.
 
 :::caution
-Si sospechas de una enfermedad de declaración obligatoria como la loque americana o europea, fotografíala, cierra la colmena y sigue las normas de notificación locales. Consulta [Enfermedades y plagas](/knowledge-base/diseases-and-pests).
+Si sospechas de una enfermedad de declaración obligatoria como la loque americana o europea, fotografíala, cierra la colmena y sigue las normas de notificación locales. Consulta [Enfermedades y plagas](../knowledge-base/diseases-and-pests.md).
 :::

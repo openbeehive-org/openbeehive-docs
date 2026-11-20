@@ -99,8 +99,8 @@ las ha enviado.
 - `EventService` es de solo lectura. Los eventos los escriben los flujos
   anteriores y la aplicación.
 
-Consulta el [protocolo de sincronización](/developers/sync-protocol) para el
-formato de los cambios y el [modelo de datos](/developers/data-model) para las
+Consulta el [protocolo de sincronización](../developers/sync-protocol.md) para el
+formato de los cambios y el [modelo de datos](../developers/data-model.md) para las
 columnas detrás de cada mensaje.
 
 ## Endpoints que no son RPC
@@ -233,14 +233,14 @@ cuenta de demostración solo puede llamar a los RPC cuyo nombre empiece por
 `Get`, `List`, `Pull` o `Subscribe`. Cualquier otro RPC devuelve
 `permission_denied`.
 
-Consulta [Autenticación](/self-hosting/authentication) para saber cómo configurar
+Consulta [Autenticación](../self-hosting/authentication.md) para saber cómo configurar
 los métodos de inicio de sesión.
 
 ## Páginas de protocolo
 
-- [REST / HTTP + JSON](/using-the-api/rest): ejemplos con curl, la forma del
+- [REST / HTTP + JSON](./rest.md): ejemplos con curl, la forma del
   JSON y el contrato de paginación.
-- [gRPC](/using-the-api/grpc): clientes generados y la llamada de streaming
+- [gRPC](./grpc.md): clientes generados y la llamada de streaming
   `Subscribe`.
-- [Rastreadores automáticos](/using-the-api/automated-trackers): publicar
+- [Rastreadores automáticos](./automated-trackers.md): publicar
   lecturas de básculas de colmena y de clima desde un script o dispositivo.

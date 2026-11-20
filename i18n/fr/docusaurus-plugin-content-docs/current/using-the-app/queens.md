@@ -35,7 +35,7 @@ Openbeehive suit le code international de couleur des reines, qui tourne tous le
 | 4 ou 9 | Vert |
 | 5 ou 0 | Bleu |
 
-Lorsque vous définissez l'année, la couleur correspondante est sélectionnée. Décochez **auto** pour enregistrer une autre couleur si la reine que vous avez achetée en porte une, afin que le point dans vos enregistrements corresponde au point sur l'abeille. Pour le code complet et le moyen mnémotechnique, consultez [Couleurs de marquage des reines](/knowledge-base/queen-marking-colours).
+Lorsque vous définissez l'année, la couleur correspondante est sélectionnée. Décochez **auto** pour enregistrer une autre couleur si la reine que vous avez achetée en porte une, afin que le point dans vos enregistrements corresponde au point sur l'abeille. Pour le code complet et le moyen mnémotechnique, consultez [Couleurs de marquage des reines](../knowledge-base/queen-marking-colours.md).
 
 ## Remplacer une reine
 
@@ -53,4 +53,4 @@ Notez *pourquoi* vous avez remété dans le commentaire de la nouvelle reine : p
 
 Les visites, récoltes et traitements portent leur propre date et sont attribués à la reine dont le règne couvrait cette date, pas nécessairement à celle qui est à la tête de la ruche aujourd'hui. Si un remérage et une visite antidatée tombent à des dates proches, vérifiez les dates pour que chaque enregistrement atterrisse sous le bon règne.
 
-Les fiches de reines se synchronisent comme tout le reste ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Les fiches de reines se synchronisent comme tout le reste ; voir [Hors ligne et synchronisation](./offline-and-sync.md).

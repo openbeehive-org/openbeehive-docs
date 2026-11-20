@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Foire aux questions
 
-Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](/knowledge-base/troubleshooting) ou demandez à la communauté sur [GitHub](https://github.com/openbeehive-org/openbeehive-app).
+Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il manque quelque chose, consultez le [guide de dépannage](./troubleshooting.md) ou demandez à la communauté sur [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Openbeehive est-il gratuit ?
 
@@ -27,11 +27,11 @@ Vous voulez un contrôle total ? Voir [Auto-hébergement](/category/self-hosting
 
 Oui, totalement. Openbeehive est une Progressive Web App (PWA) qui conserve une copie complète de vos données sur l'appareil. La lecture et l'écriture des archives sont locales et instantanées, si bien qu'il fonctionne parfaitement dans un rucher sans réseau.
 
-Lorsque vous retrouvez une connexion, vos modifications se synchronisent automatiquement. En savoir plus dans [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Lorsque vous retrouvez une connexion, vos modifications se synchronisent automatiquement. En savoir plus dans [Hors ligne et synchronisation](../using-the-app/offline-and-sync.md).
 
 ## Fonctionne-t-il sur mon téléphone ?
 
-Oui. Openbeehive fonctionne dans tout navigateur moderne et peut être installé sur votre écran d'accueil pour se comporter comme une application. Il fonctionne sur téléphones, tablettes et ordinateurs de bureau. Voir [Installer l'application](/using-the-app/install) pour les étapes sur chaque plateforme.
+Oui. Openbeehive fonctionne dans tout navigateur moderne et peut être installé sur votre écran d'accueil pour se comporter comme une application. Il fonctionne sur téléphones, tablettes et ordinateurs de bureau. Voir [Installer l'application](../using-the-app/install.md) pour les étapes sur chaque plateforme.
 
 ## Existe-t-il une application native ?
 
@@ -39,7 +39,7 @@ Il n'y a pas aujourd'hui d'application native distincte sur l'App Store ou le Pl
 
 ## Puis-je exporter mes données ?
 
-Oui. **Paramètres → Données & sauvegarde** exporte tout ce qui se trouve sur votre appareil sous forme de sauvegarde JSON complète, de feuille de calcul (XLSX), de fichiers CSV dans un ZIP, de BeeXML ou de rapport PDF imprimable, et importe du JSON, du BeeXML et du CSV depuis d'autres applications. Voir [Import et export](/using-the-app/import-export). Les auto-hébergeurs peuvent aussi sauvegarder directement la base de données du serveur ; voir [Sauvegardes](/self-hosting/backups).
+Oui. **Paramètres → Données & sauvegarde** exporte tout ce qui se trouve sur votre appareil sous forme de sauvegarde JSON complète, de feuille de calcul (XLSX), de fichiers CSV dans un ZIP, de BeeXML ou de rapport PDF imprimable, et importe du JSON, du BeeXML et du CSV depuis d'autres applications. Voir [Import et export](../using-the-app/import-export.md). Les auto-hébergeurs peuvent aussi sauvegarder directement la base de données du serveur ; voir [Sauvegardes](../self-hosting/backups.md).
 
 ## Puis-je l'héberger moi-même ?
 
@@ -50,15 +50,15 @@ Absolument, et il est conçu pour être facile à héberger. Il existe deux prof
 | `selfhost` | Amateurs, utilisateur unique | Un binaire unique, SQLite + fichiers locaux, sans Docker |
 | `cloud` | Multi-utilisateurs, installations plus grandes | Docker, PostgreSQL + stockage S3/MinIO |
 
-Commencez par le [Démarrage rapide](/self-hosting/quick-start), ou passez directement au [guide du binaire unique](/self-hosting/single-binary).
+Commencez par le [Démarrage rapide](../self-hosting/quick-start.md), ou passez directement au [guide du binaire unique](../self-hosting/single-binary.md).
 
 :::note
-Pour une instance privée à utilisateur unique, vous pouvez désactiver entièrement la connexion. Voir [Authentification](/self-hosting/authentication).
+Pour une instance privée à utilisateur unique, vous pouvez désactiver entièrement la connexion. Voir [Authentification](../self-hosting/authentication.md).
 :::
 
 ## Comment fonctionne le partage ?
 
-Les archives sont partagées par l'intermédiaire des **espaces** (tenants). Chaque compte possède un espace personnel et peut être invité dans d'autres, par exemple celui d'un club. Tous les membres d'un espace voient et modifient l'ensemble de ses ruchers, ruches et archives ; il n'y a pas de partage par rucher. La synchronisation est sans conflit, si bien que deux personnes modifiant le même espace sur des appareils différents n'écrasent pas le travail l'une de l'autre. Voir [Comptes et espaces](/using-the-app/accounts-tenants).
+Les archives sont partagées par l'intermédiaire des **espaces** (tenants). Chaque compte possède un espace personnel et peut être invité dans d'autres, par exemple celui d'un club. Tous les membres d'un espace voient et modifient l'ensemble de ses ruchers, ruches et archives ; il n'y a pas de partage par rucher. La synchronisation est sans conflit, si bien que deux personnes modifiant le même espace sur des appareils différents n'écrasent pas le travail l'une de l'autre. Voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
 
 ## Quels types de ruches sont pris en charge ?
 
@@ -72,7 +72,7 @@ Openbeehive prend en charge les systèmes à cadres et à barrettes les plus cou
 - Top-bar
 - Autre
 
-Voir [Types de ruches](/knowledge-base/hive-types) pour des conseils sur le choix.
+Voir [Types de ruches](./hive-types.md) pour des conseils sur le choix.
 
 ## Comment les reines sont-elles marquées ?
 
@@ -86,11 +86,11 @@ Openbeehive suit le code international de couleurs de marquage des reines, basé
 | 4 ou 9 | Vert |
 | 5 ou 0 | Bleu |
 
-L'application choisit automatiquement la bonne couleur pour vous. Tous les détails sont sur la page [couleurs de marquage des reines](/knowledge-base/queen-marking-colours).
+L'application choisit automatiquement la bonne couleur pour vous. Tous les détails sont sur la page [couleurs de marquage des reines](./queen-marking-colours.md).
 
 ## À quoi servent les étiquettes QR ?
 
-Chaque ruche peut avoir une étiquette QR imprimable. La scanner ouvre Openbeehive directement sur cette ruche, vous permettant d'afficher ses archives au rucher sans saisie ni recherche. Voir [Étiquettes QR](/using-the-app/qr-labels).
+Chaque ruche peut avoir une étiquette QR imprimable. La scanner ouvre Openbeehive directement sur cette ruche, vous permettant d'afficher ses archives au rucher sans saisie ni recherche. Voir [Étiquettes QR](../using-the-app/qr-labels.md).
 
 ## En quelles langues est-il disponible ?
 
@@ -100,18 +100,18 @@ Cinq langues sont livrées dans l'application : anglais, allemand, français, es
 
 En auto-hébergement, le backend est modulaire :
 
-- **Bases de données :** PostgreSQL, MySQL ou SQLite. Voir [Bases de données](/self-hosting/databases).
-- **Stockage d'objets :** stockage d'objets compatible MinIO/S3, ou le système de fichiers local. Voir [Stockage](/self-hosting/storage).
+- **Bases de données :** PostgreSQL, MySQL ou SQLite. Voir [Bases de données](../self-hosting/databases.md).
+- **Stockage d'objets :** stockage d'objets compatible MinIO/S3, ou le système de fichiers local. Voir [Stockage](../self-hosting/storage.md).
 
 ## Comment me connecter ?
 
-Le service hébergé utilise des comptes avec e-mail et mot de passe. Les auto-hébergeurs peuvent activer les comptes e-mail/mot de passe, ajouter des fournisseurs OIDC (Google, Keycloak, Authentik et similaires), activer les passkeys, ou désactiver entièrement la connexion pour une installation à utilisateur unique. Voir [Authentification](/self-hosting/authentication).
+Le service hébergé utilise des comptes avec e-mail et mot de passe. Les auto-hébergeurs peuvent activer les comptes e-mail/mot de passe, ajouter des fournisseurs OIDC (Google, Keycloak, Authentik et similaires), activer les passkeys, ou désactiver entièrement la connexion pour une installation à utilisateur unique. Voir [Authentification](../self-hosting/authentication.md).
 
 ## Comment signaler un bug ou demander une fonctionnalité ?
 
 Veuillez ouvrir un ticket dans le [dépôt GitHub](https://github.com/openbeehive-org/openbeehive-app). Des étapes de reproduction claires, votre plateforme et votre navigateur, ainsi qu'une capture d'écran aident.
 
-La [page de dépannage](/knowledge-base/troubleshooting) couvre peut-être déjà les problèmes courants.
+La [page de dépannage](./troubleshooting.md) couvre peut-être déjà les problèmes courants.
 
 ## Comment puis-je contribuer ?
 
@@ -119,4 +119,4 @@ Les contributions de toutes sortes sont les bienvenues : code, documentation, tr
 
 ## Quelle est cette version ?
 
-Les versions sont étiquetées sur [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Les auto-hébergeurs exécutent le tag qu'ils ont compilé ou le tag d'image qu'ils ont téléchargé ; consultez le [guide de mise à niveau](/self-hosting/upgrading) à la sortie de nouvelles versions.
+Les versions sont étiquetées sur [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Les auto-hébergeurs exécutent le tag qu'ils ont compilé ou le tag d'image qu'ils ont téléchargé ; consultez le [guide de mise à niveau](../self-hosting/upgrading.md) à la sortie de nouvelles versions.

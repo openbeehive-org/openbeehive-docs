@@ -8,7 +8,7 @@ title: "Attrezzatura e tipi di arnia"
 L'apicoltura non richiede una grande quantità di attrezzatura, ma pochi buoni attrezzi rendono ogni visita più tranquilla, più sicura e più rapida. Questa pagina copre l'essenziale, poi offre una panoramica dei principali sistemi di arnia così che tu possa scegliere quello più adatto a te e registrarlo correttamente in Openbeehive.
 
 :::tip
-Quando crei un'arnia in Openbeehive, ne scegli il tipo (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar o Altro). Scegliere quello giusto mantiene coerenti il conteggio dei telaini e le note sull'attrezzatura in tutto il tuo apiario. Vedi [Arnie](/using-the-app/hives).
+Quando crei un'arnia in Openbeehive, ne scegli il tipo (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar o Altro). Scegliere quello giusto mantiene coerenti il conteggio dei telaini e le note sull'attrezzatura in tutto il tuo apiario. Vedi [Arnie](../using-the-app/hives.md).
 :::
 
 ## L'essenziale
@@ -52,13 +52,13 @@ Una **leva da apicoltore** piatta in acciaio viene usata di continuo — per sep
 
 Un **nutritore** ti permette di dare alla colonia sciroppo di zucchero (in primavera o in autunno) o candito (in inverno). Tipi comuni includono i nutritori a contatto (a secchio), i nutritori a telaino che pendono dentro la cassetta e i nutritori a vassoio che stanno sopra il coprifavo.
 
-Registra la nutrizione in Openbeehive così da sapere cosa ha ricevuto ciascuna colonia e quando. Vedi [Nutrizione](/beekeeping/feeding).
+Registra la nutrizione in Openbeehive così da sapere cosa ha ricevuto ciascuna colonia e quando. Vedi [Nutrizione](./feeding.md).
 
 ### Nozioni di base sulla smielatura
 
 Per togliere il miele ti servirà un modo per disopercolare le celle sigillate (una forchetta disopercolatrice o un coltello riscaldato) e un mezzo per rimuovere il miele dal favo. La maggior parte degli apicoltori usa uno **smielatore centrifugo**, che estrae il miele dai telaini facendoli girare così che il favo costruito possa essere riutilizzato. Vorrai anche un filtro e secchi puliti per alimenti per la decantazione e l'invasettamento.
 
-Per una guida completa, vedi [Raccolta del miele](/beekeeping/honey-harvest) e registra le rese sotto [Raccolte](/using-the-app/harvests).
+Per una guida completa, vedi [Raccolta del miele](./honey-harvest.md) e registra le rese sotto [Raccolte](../using-the-app/harvests.md).
 
 ## Sistemi di arnia
 
@@ -78,7 +78,7 @@ I sistemi a telaino mobile (Langstroth, Dadant, Zander, Deutsch Normal) funziona
 Se la tua arnia non corrisponde a nessuna di queste, scegli **Altro** in Openbeehive e annota i dettagli in una nota di visita.
 
 :::note
-Non esiste un'unica arnia "migliore". La scelta più pratica è di solito quella usata dalla tua **associazione locale e dagli apicoltori vicini**, così puoi prendere in prestito attrezzatura, scambiare telaini e ottenere aiuto pratico. Per un confronto più approfondito e le dimensioni dei telaini, vedi [Tipi di arnia](/knowledge-base/hive-types).
+Non esiste un'unica arnia "migliore". La scelta più pratica è di solito quella usata dalla tua **associazione locale e dagli apicoltori vicini**, così puoi prendere in prestito attrezzatura, scambiare telaini e ottenere aiuto pratico. Per un confronto più approfondito e le dimensioni dei telaini, vedi [Tipi di arnia](../knowledge-base/hive-types.md).
 :::
 
 ## Comprare nuovo o usato
@@ -97,4 +97,4 @@ Indicazioni sensate per l'attrezzatura usata:
 - **Telaini e favo** — evita a meno che provengano da una fonte affidabile con un certificato di buona salute. Il vecchio favo è economico da sostituire e comunque va rinnovato regolarmente.
 - **Colonie intere** — compra solo da un apicoltore affidabile, idealmente dopo un'ispezione sanitaria telaino per telaino. Controlla lo schema della covata e cerca segni di malattia.
 
-La denuncia delle malattie e le regole variano da Paese a Paese e da regione a regione; **l'AFB è soggetta a denuncia obbligatoria in molti luoghi**. Verifica con la tua autorità sanitaria apistica nazionale e consulta la tua associazione locale prima di introdurre attrezzatura usata o nuove colonie. Vedi [Malattie e parassiti](/knowledge-base/diseases-and-pests).
+La denuncia delle malattie e le regole variano da Paese a Paese e da regione a regione; **l'AFB è soggetta a denuncia obbligatoria in molti luoghi**. Verifica con la tua autorità sanitaria apistica nazionale e consulta la tua associazione locale prima di introdurre attrezzatura usata o nuove colonie. Vedi [Malattie e parassiti](../knowledge-base/diseases-and-pests.md).

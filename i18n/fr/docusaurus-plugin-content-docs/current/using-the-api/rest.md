@@ -434,7 +434,7 @@ table en `snake_case`. Renvoyez `nextCursor` dans `cursor` pour continuer. Le
 flux contient chaque changement, qu'un appareil l'ait poussé ou qu'un RPC de
 service l'ait écrit ; les placements n'apparaissent qu'ici, puisqu'ils n'ont
 pas de service propre. Voir le
-[protocole de synchronisation](/developers/sync-protocol) pour savoir comment
+[protocole de synchronisation](../developers/sync-protocol.md) pour savoir comment
 écrire des changements avec `Push`.
 
 ## Pagination
@@ -478,4 +478,4 @@ pour la liste complète des codes.
 - `Content-Type: application/json` sélectionne le protocole JSON de Connect.
   `application/proto` envoie du protobuf binaire sur la même URL.
 - `SyncService.Subscribe` est un flux serveur et nécessite un client de
-  streaming ; voir [gRPC](/using-the-api/grpc).
+  streaming ; voir [gRPC](./grpc.md).

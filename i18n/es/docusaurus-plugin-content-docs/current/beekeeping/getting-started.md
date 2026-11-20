@@ -22,7 +22,7 @@ En la práctica eso significa:
 - **Llevar registros**, para que recuerdes qué está haciendo cada colonia y puedas detectar tendencias con el tiempo.
 
 :::tip
-Unos buenos registros son uno de los mayores favores que puedes hacerle a tu yo del futuro. Anota lo que viste en cada visita, lo que hiciste y lo que piensas hacer a continuación. La función de [Inspecciones](/using-the-app/inspections) de Openbeehive está construida justamente en torno a este ritmo.
+Unos buenos registros son uno de los mayores favores que puedes hacerle a tu yo del futuro. Anota lo que viste en cada visita, lo que hiciste y lo que piensas hacer a continuación. La función de [Inspecciones](../using-the-app/inspections.md) de Openbeehive está construida justamente en torno a este ritmo.
 :::
 
 ## Expectativas de tiempo y coste
@@ -35,7 +35,7 @@ Sé honesto contigo mismo sobre ambos antes de comprometerte.
 
 | Artículo | Notas |
 | --- | --- |
-| Una colmena | Nueva, de segunda mano o autoconstruida. Elige un [tipo de colmena](/knowledge-base/hive-types) habitual en tu zona. |
+| Una colmena | Nueva, de segunda mano o autoconstruida. Elige un [tipo de colmena](../knowledge-base/hive-types.md) habitual en tu zona. |
 | Ropa de protección | Un traje o chaqueta más guantes. |
 | Herramientas básicas | Palanca, ahumador, cepillo para abejas. |
 | Abejas | Un núcleo o un enjambre. |
@@ -79,11 +79,11 @@ No necesitas mucho espacio, pero un buen emplazamiento facilita todo. Busca:
 - **Agua cerca.** Las abejas necesitan agua; proporciona una fuente segura si no la hay, para que no visiten el estanque o la piscina del vecino.
 - **Un acceso razonable.** Tendrás que cargar alzas pesadas de miel, así que piensa en el trayecto desde el coche hasta la colmena.
 
-Cuando estés listo, puedes registrar la ubicación, las colmenas y las colonias en la app. Consulta [Colmenares](/using-the-app/apiaries) y [Colmenas](/using-the-app/hives) para empezar.
+Cuando estés listo, puedes registrar la ubicación, las colmenas y las colonias en la app. Consulta [Colmenares](../using-the-app/apiaries.md) y [Colmenas](../using-the-app/hives.md) para empezar.
 
 ## Un plan realista para el primer año
 
-El calendario de cada región difiere, así que trata esto como una forma orientativa más que como fechas fijas. Consulta el [Año apícola](/beekeeping/beekeeping-year) para una guía mes a mes más completa.
+El calendario de cada región difiere, así que trata esto como una forma orientativa más que como fechas fijas. Consulta el [Año apícola](./beekeeping-year.md) para una guía mes a mes más completa.
 
 1. **El invierno antes de empezar.** Únete a tu asociación, haz un curso para principiantes, lee y encarga el equipo para que esté listo en primavera.
 2. **Primavera.** Adquiere tu primera colonia, idealmente un núcleo local de un proveedor de confianza. Instálala, aliméntala si es necesario y comienza inspecciones semanales suaves.

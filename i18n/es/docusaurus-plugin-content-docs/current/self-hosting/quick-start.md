@@ -10,10 +10,10 @@ Dos rutas para tener una instancia de Openbeehive en funcionamiento que puedas a
 - **Opción A, binario único.** Compila un único ejecutable autocontenido que usa SQLite y el sistema de archivos local. Sin Docker, sin servidor de base de datos, sin almacenamiento de objetos. Adecuado para un servidor doméstico, una Raspberry Pi o un pequeño VPS.
 - **Opción B, Docker.** Ejecuta la imagen publicada con un solo comando.
 
-Ambas usan el perfil de despliegue **selfhost**, que utiliza por defecto una base de datos SQLite embebida y almacenamiento de blobs en el sistema de archivos. Más adelante puedes cambiar a PostgreSQL y MinIO/S3; consulta [Configuración](/self-hosting/configuration).
+Ambas usan el perfil de despliegue **selfhost**, que utiliza por defecto una base de datos SQLite embebida y almacenamiento de blobs en el sistema de archivos. Más adelante puedes cambiar a PostgreSQL y MinIO/S3; consulta [Configuración](./configuration.md).
 
 :::tip ¿Un solo usuario? No hace falta inicio de sesión
-En el perfil selfhost no hay ningún método de inicio de sesión habilitado por defecto: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. La aplicación se abre directamente en tus registros. Para añadir el inicio de sesión más tarde, consulta [Autenticación](/self-hosting/authentication).
+En el perfil selfhost no hay ningún método de inicio de sesión habilitado por defecto: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. La aplicación se abre directamente en tus registros. Para añadir el inicio de sesión más tarde, consulta [Autenticación](./authentication.md).
 :::
 
 ## La configuración mínima funcional
@@ -27,7 +27,7 @@ BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 
 `BEEHIVE_PUBLIC_BASE_URL` es la dirección que el servidor pone en los enlaces que genera (redirecciones OIDC, enlaces de invitación y verificación). Para pruebas locales, `http://localhost:8080` está bien. Para un despliegue real, configúrala con tu URL pública, por ejemplo `https://bees.example.com`.
 
-Todo lo demás tiene valores por defecto para el autoalojamiento. La lista completa está en [Configuración](/self-hosting/configuration).
+Todo lo demás tiene valores por defecto para el autoalojamiento. La lista completa está en [Configuración](./configuration.md).
 
 ## Opción A: binario único (sin Docker)
 
@@ -58,7 +58,7 @@ cp .env.example .env
 Por defecto, el binario escucha en `:8080` y sirve la propia aplicación web (`BEEHIVE_SERVE_WEB=true`), de modo que la API y la PWA provienen del mismo origen. Abre la dirección indicada en `BEEHIVE_PUBLIC_BASE_URL`.
 
 :::note Dónde residen tus datos
-En modo selfhost, tus registros van a un archivo SQLite (`openbeehive.db` en el directorio de trabajo por defecto) y las fotos subidas a un directorio de blobs (`./data/blobs` por defecto). Haz copia de seguridad de ambos y habrás respaldado todo; consulta [Copias de seguridad](/self-hosting/backups).
+En modo selfhost, tus registros van a un archivo SQLite (`openbeehive.db` en el directorio de trabajo por defecto) y las fotos subidas a un directorio de blobs (`./data/blobs` por defecto). Haz copia de seguridad de ambos y habrás respaldado todo; consulta [Copias de seguridad](./backups.md).
 :::
 
 ## Opción B: Docker
@@ -86,10 +86,10 @@ docker stop openbeehive
 docker rm openbeehive
 ```
 
-Si activas el inicio de sesión con correo y contraseña (`BEEHIVE_PASSWORD_AUTH=true`), el servidor se niega a arrancar hasta que también estén definidos `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`. Consulta [Autenticación](/self-hosting/authentication).
+Si activas el inicio de sesión con correo y contraseña (`BEEHIVE_PASSWORD_AUTH=true`), el servidor se niega a arrancar hasta que también estén definidos `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`. Consulta [Autenticación](./authentication.md).
 
 :::tip ¿Prefieres la pila cloud?
-El comando anterior ejecuta el perfil ligero selfhost. Para el perfil **cloud** (PostgreSQL + MinIO) el repositorio incluye archivos Compose; consulta [Docker](/self-hosting/docker).
+El comando anterior ejecuta el perfil ligero selfhost. Para el perfil **cloud** (PostgreSQL + MinIO) el repositorio incluye archivos Compose; consulta [Docker](./docker.md).
 :::
 
 ## Primeros pasos después de la instalación
@@ -98,4 +98,4 @@ El comando anterior ejecuta el perfil ligero selfhost. Para el perfil **cloud** 
 2. Añade una colmena, edítala para definir su tipo y registra una visita.
 3. Imprime una etiqueta QR para la colmena para poder escanearla directamente sobre el terreno.
 
-Antes de exponer la instancia a internet, pon delante un [proxy inverso](/self-hosting/reverse-proxy) que termine el TLS y configura `BEEHIVE_PUBLIC_BASE_URL` con la dirección `https://`. Después configura las [copias de seguridad](/self-hosting/backups).
+Antes de exponer la instancia a internet, pon delante un [proxy inverso](./reverse-proxy.md) que termine el TLS y configura `BEEHIVE_PUBLIC_BASE_URL` con la dirección `https://`. Después configura las [copias de seguridad](./backups.md).

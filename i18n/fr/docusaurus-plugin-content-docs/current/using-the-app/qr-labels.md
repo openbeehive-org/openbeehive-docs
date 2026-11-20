@@ -63,7 +63,7 @@ Sur les appareils dont le navigateur ne prend pas en charge le scanner intégré
 | Vous demande de vous connecter | Vous n'êtes pas connecté sur cet appareil, ou la ruche est dans un espace dont vous n'êtes pas membre | Connectez-vous ; demandez à l'admin de l'espace de vous inviter |
 | Rien ne se passe au toucher | Le téléphone n'a pas reconnu le code comme un lien | Utilisez le scanner intégré ou un autre lecteur de QR |
 
-L'accès suit l'appartenance à l'espace ; voir [Comptes et espaces](/using-the-app/accounts-tenants).
+L'accès suit l'appartenance à l'espace ; voir [Comptes et espaces](./accounts-tenants.md).
 
 ## Réimprimer et changer les étiquettes
 
@@ -75,4 +75,4 @@ Les étiquettes encodent l'adresse depuis laquelle vous les avez imprimées. Si 
 Ne déplacez pas une étiquette imprimée d'une caisse à une autre en espérant qu'elle pointe vers la nouvelle colonie ; elle ouvre toujours la ruche d'origine. Imprimez plutôt une nouvelle étiquette.
 :::
 
-Détails techniques du format du lien : [Codes QR pour les développeurs](/developers/qr-codes).
+Détails techniques du format du lien : [Codes QR pour les développeurs](../developers/qr-codes.md).

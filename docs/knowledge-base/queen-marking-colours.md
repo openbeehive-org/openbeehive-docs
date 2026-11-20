@@ -69,7 +69,7 @@ When you record a queen in Openbeehive, you set her **year**, and the app shows 
 
 You can also note the actual mark you applied, her origin, and her status, then track her across inspections and re-queening events.
 
-See [Queens](/using-the-app/queens) for how to add and manage queens, and the wider [knowledge base](/category/knowledge-base) for more reference material.
+See [Queens](../using-the-app/queens.md) for how to add and manage queens, and the wider [knowledge base](/category/knowledge-base) for more reference material.
 
 :::tip Regional note
 The five-colour, five-year scheme is the international standard used across most of the world. Conventions for clipping, supplier colour shades, and any record-keeping requirements can vary by country and association — when in doubt, follow your local beekeeping body's guidance.

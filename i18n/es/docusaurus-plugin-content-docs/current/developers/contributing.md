@@ -49,11 +49,11 @@ pre-commit; `make help` lista todos los objetivos.
 raíz del repositorio (copia `.env.example`). Los valores por defecto te dan
 SQLite y blobs en el sistema de archivos; deja `BEEHIVE_PASSWORD_AUTH`
 desactivado, `BEEHIVE_OIDC_PROVIDERS` vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`
-para ejecutar sin inicio de sesión. Consulta [Configuración](/self-hosting/configuration).
+para ejecutar sin inicio de sesión. Consulta [Configuración](../self-hosting/configuration.md).
 
 Para compilar un binario de versión: `make proto && make build` escribe
 `server/bin/openbeehive` con la SPA embebida. Consulta
-[Binario único](/self-hosting/single-binary).
+[Binario único](../self-hosting/single-binary.md).
 
 ## Código generado
 
@@ -68,7 +68,7 @@ Ambos directorios están en el gitignore. Ejecuta `make proto` después de clona
 y tras cada cambio en un `.proto`; nunca edites la salida a mano. La compilación
 de Docker ejecuta `buf generate` por sí misma en su primera etapa. Todos los
 servicios de los protos están registrados en el servidor; consulta
-[Uso de la API](/using-the-api/overview) para la lista.
+[Uso de la API](../using-the-api/overview.md) para la lista.
 
 ## Convenciones
 
@@ -84,11 +84,11 @@ servicios de los protos están registrados en el servidor; consulta
 3. **Mantén `merge.go` y `merge.ts` idénticos.** El last-writer-wins por campo
    y el OR-Set add-wins están implementados en `server/internal/sync/merge.go`
    y `app/src/lib/local/merge.ts`. Cambia ambos, con pruebas. Consulta el
-   [protocolo de sincronización](/developers/sync-protocol).
+   [protocolo de sincronización](./sync-protocol.md).
 4. **Escribe SQL portable.** El servidor funciona con PostgreSQL, MySQL y
    SQLite. Las migraciones usan el subconjunto portable descrito al inicio de
    `0001_init.sql`; el store traduce las diferencias de dialecto restantes.
-   Consulta [Bases de datos](/self-hosting/databases).
+   Consulta [Bases de datos](../self-hosting/databases.md).
 5. **Inglés en el código, traducciones para los usuarios.** El código, los
    comentarios, los identificadores y los mensajes de commit van en inglés.
    Toda cadena visible para el usuario pasa por `svelte-i18n` con entradas en

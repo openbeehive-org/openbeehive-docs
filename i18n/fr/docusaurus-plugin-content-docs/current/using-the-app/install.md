@@ -23,8 +23,8 @@ enregistrements disponibles même lorsque vous êtes au rucher sans réseau.
   de place pour vos ruches et vos inspections.
 - **Un accès hors ligne.** Vos enregistrements vivent dans une base de données locale
   sur l'appareil et se synchronisent en arrière-plan. Consultez
-  [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
-- **Un scan QR rapide.** Scanner l'[étiquette QR](/using-the-app/qr-labels) d'une ruche
+  [Hors ligne et synchronisation](./offline-and-sync.md).
+- **Un scan QR rapide.** Scanner l'[étiquette QR](./qr-labels.md) d'une ruche
   ouvre cette ruche.
 
 :::tip
@@ -98,7 +98,7 @@ serveur, et vos enregistrements restent sur votre propre infrastructure.
 Pour que l'installation se déroule sans accroc, une instance auto-hébergée doit être
 servie via **HTTPS** avec un certificat valide. La plupart des navigateurs ne
 proposent l'installation PWA que sur des origines sécurisées. Consultez
-[Proxy inverse](/self-hosting/reverse-proxy) pour savoir comment placer du TLS devant
+[Proxy inverse](../self-hosting/reverse-proxy.md) pour savoir comment placer du TLS devant
 votre serveur.
 :::
 
@@ -127,5 +127,5 @@ serveur. Pour désinstaller :
 Si vous avez des enregistrements qui ne sont pas encore synchronisés au moment où vous
 désinstallez, ils ne vivent que dans la base de données locale de l'appareil et
 peuvent être perdus. Assurez-vous que l'application s'est synchronisée avant de la
-supprimer. Consultez [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+supprimer. Consultez [Hors ligne et synchronisation](./offline-and-sync.md).
 :::

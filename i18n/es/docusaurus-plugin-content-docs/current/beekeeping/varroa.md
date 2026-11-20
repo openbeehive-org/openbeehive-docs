@@ -139,10 +139,10 @@ la miel. Lee la etiqueta para conocer el intervalo requerido y respétalo.
 La varroa es la amenaza principal, pero una buena salud general ayuda a la colonia a
 sobrellevarla:
 
-- Mantén las colonias fuertes y bien alimentadas; consulta [Alimentación](/beekeeping/feeding).
+- Mantén las colonias fuertes y bien alimentadas; consulta [Alimentación](./feeding.md).
 - Reemplaza periódicamente el panal viejo y oscuro para reducir la carga de enfermedades.
 - Vigila las enfermedades de la cría y otras plagas; consulta
-  [Enfermedades y plagas](/knowledge-base/diseases-and-pests) en la base de conocimientos.
+  [Enfermedades y plagas](../knowledge-base/diseases-and-pests.md) en la base de conocimientos.
 - Algunas enfermedades de la cría son de **declaración obligatoria** en muchas regiones y
   deben notificarse a las autoridades. Conoce tus normas locales.
 
@@ -155,7 +155,7 @@ en muchos países.
 En Openbeehive anotas cada aplicación como un **Tratamiento** asociado a una colmena: la
 fecha, el producto, el principio activo, el método, la dosis, el número de lote, el motivo y
 la fecha de fin del tiempo de espera. Con el tiempo esto construye un historial claro de qué
-usaste y cuándo. Consulta [Tratamientos](/using-the-app/treatments).
+usaste y cuándo. Consulta [Tratamientos](../using-the-app/treatments.md).
 
 :::note
 Mantener registros de tratamiento precisos suele ser un requisito legal, especialmente

@@ -63,7 +63,7 @@ En dispositivos cuyo navegador no admite el escáner integrado, la pantalla lo i
 | Te pide iniciar sesión | No has iniciado sesión en este dispositivo, o la colmena está en un espacio del que no eres miembro | Inicia sesión; pide al admin del espacio que te invite |
 | No pasa nada al tocar | El teléfono no reconoció el código como un enlace | Usa el escáner integrado u otro lector de QR |
 
-El acceso sigue la pertenencia al espacio; consulta [Cuentas y espacios](/using-the-app/accounts-tenants).
+El acceso sigue la pertenencia al espacio; consulta [Cuentas y espacios](./accounts-tenants.md).
 
 ## Reimprimir y cambiar etiquetas
 
@@ -75,4 +75,4 @@ Las etiquetas codifican la dirección desde la que las imprimiste. Si tu instanc
 No traslades una etiqueta impresa de una caja a otra esperando que apunte a la nueva colonia; seguirá abriendo la colmena original. Imprime una etiqueta nueva.
 :::
 
-Detalles técnicos del formato del enlace: [Códigos QR para desarrolladores](/developers/qr-codes).
+Detalles técnicos del formato del enlace: [Códigos QR para desarrolladores](../developers/qr-codes.md).

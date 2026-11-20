@@ -7,7 +7,7 @@ title: "Referencia de tipos de colmena"
 
 Cuando creas una colmena en Openbeehive, eliges un **tipo**. Este único valor registra el sistema de colmena que estás utilizando, lo que te ayuda a mantener cuadros, alzas y piezas de repuesto compatibles en todo tu colmenar.
 
-El tipo es puramente una etiqueta para tus propios registros. No cambia el funcionamiento de las inspecciones, los tratamientos ni las cosechas, así que no te preocupes por equivocarte: puedes cambiarlo en cualquier momento editando la colmena. Consulta [Colmenas](/using-the-app/hives) para saber cómo añadir y editar una colmena.
+El tipo es puramente una etiqueta para tus propios registros. No cambia el funcionamiento de las inspecciones, los tratamientos ni las cosechas, así que no te preocupes por equivocarte: puedes cambiarlo en cualquier momento editando la colmena. Consulta [Colmenas](../using-the-app/hives.md) para saber cómo añadir y editar una colmena.
 
 Openbeehive ofrece siete opciones: **Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar** y **Otro**.
 
@@ -65,4 +65,4 @@ Elige **Otro** y registra los detalles (tamaño del cuadro, número de cajas, pr
 **¿Afecta el tipo a los tratamientos o las cosechas?**
 No. Es una etiqueta descriptiva. Todas las inspecciones, tratamientos, tareas y cosechas funcionan igual independientemente del tipo.
 
-Para más información sobre el equipo y cómo encajan las piezas de una colmena, consulta [Equipo](/beekeeping/equipment) y el [Glosario](/knowledge-base/glossary).
+Para más información sobre el equipo y cómo encajan las piezas de una colmena, consulta [Equipo](../beekeeping/equipment.md) y el [Glosario](./glossary.md).

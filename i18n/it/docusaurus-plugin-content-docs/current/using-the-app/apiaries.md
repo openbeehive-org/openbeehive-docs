@@ -34,7 +34,7 @@ Dall'elenco **Apiari** (o dal pulsante **+ Nuovo** nella Panoramica) scegli **Nu
 | **Nota** | No | Codici dei cancelli, note di accesso, il nome del proprietario del terreno, il parcheggio. |
 | **Latitudine / Longitudine** | No | Coordinate in gradi decimali. |
 
-Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
 ### Impostare le coordinate GPS
 
@@ -64,11 +64,11 @@ Apri un apiario per vedere le sue arnie con la data dell'ultima visita di ciascu
 - **Aggiungi arnia**: digita un nome e aggiungila. Imposta tipo e stato in seguito modificando l'arnia.
 - **Aprire un'arnia** per vederne regina, diario delle visite, raccolti e trattamenti.
 
-Vedi [Arnie](/using-the-app/hives) e [Regine](/using-the-app/queens).
+Vedi [Arnie](./hives.md) e [Regine](./queens.md).
 
 ## Stampare le etichette QR per l'apiario
 
-Il pulsante **Etichette QR** nella pagina dell'apiario stampa un foglio A4 con un'etichetta per ogni arnia dell'apiario. Ogni etichetta codifica un deep link a quell'arnia; scansionandola si apre Openbeehive direttamente sull'arnia. Vedi [Etichette QR](/using-the-app/qr-labels).
+Il pulsante **Etichette QR** nella pagina dell'apiario stampa un foglio A4 con un'etichetta per ogni arnia dell'apiario. Ogni etichetta codifica un deep link a quell'arnia; scansionandola si apre Openbeehive direttamente sull'arnia. Vedi [Etichette QR](./qr-labels.md).
 
 ## Modificare e riorganizzare
 
@@ -78,4 +78,4 @@ Se un'arnia si sposta in un'altra posizione, usa **Sposta** sull'arnia per riass
 
 ## Condivisione
 
-Gli apiari non si condividono singolarmente. Tutto ciò che sta in un tenant è visibile a ogni membro di quel tenant, quindi per lavorare su un apiario con qualcuno invitalo nel tenant che lo contiene (Impostazioni → Spazi → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea un tenant separato per il club. Vedi [Account e tenant](/using-the-app/accounts-tenants).
+Gli apiari non si condividono singolarmente. Tutto ciò che sta in un tenant è visibile a ogni membro di quel tenant, quindi per lavorare su un apiario con qualcuno invitalo nel tenant che lo contiene (Impostazioni → Spazi → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea un tenant separato per il club. Vedi [Account e tenant](./accounts-tenants.md).

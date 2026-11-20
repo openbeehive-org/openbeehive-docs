@@ -79,7 +79,7 @@ Jede Fütterung ist wert, erfasst zu werden. Zu wissen, wie viel Sirup oder Futt
 
 In Openbeehive protokollierst du das Füttern als Teil der Durchsicht: Trage die Menge im Feld **Gefüttert (kg)** ein und schreibe die Futterart (dünner Sirup, dicker Sirup oder Futterteig) in die Notiz, sodass es neben allem anderen steht, was du an dem Tag gesehen hast.
 
-Siehe [Durchsichten](/using-the-app/inspections), wie du einen Besuch erfasst und Fütterungsmengen festhältst.
+Siehe [Durchsichten](../using-the-app/inspections.md), wie du einen Besuch erfasst und Fütterungsmengen festhältst.
 
 :::tip
 Über eine Saison hinweg werden deine Fütterungsaufzeichnungen zu einem nützlichen Bild der Gesundheit jedes Volkes. Eine Beute, die immer Zusatzfutter braucht, könnte ein Tracht-, Populations- oder Königinnenproblem haben, das eine Untersuchung wert ist.

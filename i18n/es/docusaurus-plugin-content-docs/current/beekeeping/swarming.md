@@ -51,7 +51,7 @@ en la puesta de la reina mientras la colonia la prepara para el vuelo, muchas ab
 :::tip
 Registra lo que veas en cada visita. En Openbeehive, anota las realeras, la congestión
 y tus decisiones en la inspección para que la imagen se vaya construyendo a lo largo de
-las visitas. Consulta [Inspecciones](/using-the-app/inspections).
+las visitas. Consulta [Inspecciones](../using-the-app/inspections.md).
 :::
 
 ## Prevención: dales espacio
@@ -94,7 +94,7 @@ suele llamar enjambre artificial de Pagden; existen varias variantes con nombre 
 :::note
 Un enjambre artificial es también una forma ordenada de ampliar tu colmenar o de
 reemplazar la reina. Si quieres criar reinas de forma deliberada, consulta
-[Cría de reinas](/beekeeping/queen-rearing).
+[Cría de reinas](./queen-rearing.md).
 :::
 
 ### Eliminar realeras — con precaución

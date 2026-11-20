@@ -8,7 +8,7 @@ title: "Équipement et types de ruches"
 L'apiculture ne demande pas énormément de matériel, mais quelques bons outils rendent chaque visite plus calme, plus sûre et plus rapide. Cette page couvre les éléments essentiels, puis donne un aperçu des principaux systèmes de ruches afin que vous puissiez choisir celui qui vous convient et l'enregistrer correctement dans Openbeehive.
 
 :::tip
-Lorsque vous créez une ruche dans Openbeehive, vous choisissez son type (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar ou Autre). Choisir le bon maintient la cohérence de vos nombres de cadres et de vos notes de matériel dans tout votre rucher. Consultez [Ruches](/using-the-app/hives).
+Lorsque vous créez une ruche dans Openbeehive, vous choisissez son type (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar ou Autre). Choisir le bon maintient la cohérence de vos nombres de cadres et de vos notes de matériel dans tout votre rucher. Consultez [Ruches](../using-the-app/hives.md).
 :::
 
 ## Les éléments essentiels
@@ -52,13 +52,13 @@ Un **lève-cadre** plat en acier est utilisé en permanence : pour décoller des
 
 Un **nourrisseur** vous permet de donner à la colonie du sirop de sucre (au printemps ou en automne) ou du candi (en hiver). Les types courants comprennent les nourrisseurs à contact (seau), les nourrisseurs-cadres qui se suspendent à l'intérieur de la boîte, et les nourrisseurs-plateaux qui se posent au-dessus du couvre-cadres.
 
-Consignez le nourrissement dans Openbeehive afin de savoir ce que chaque colonie a reçu et quand. Consultez [Nourrissement](/beekeeping/feeding).
+Consignez le nourrissement dans Openbeehive afin de savoir ce que chaque colonie a reçu et quand. Consultez [Nourrissement](./feeding.md).
 
 ### Les bases de l'extraction
 
 Pour récolter le miel, vous aurez besoin d'un moyen de désoperculer les cellules scellées (une fourchette à désoperculer ou un couteau chauffant) et d'un moyen de retirer le miel des rayons. La plupart des apiculteurs utilisent un **extracteur centrifuge**, qui fait sortir le miel des cadres par centrifugation de sorte que les rayons bâtis puissent être réutilisés. Vous voudrez également un tamis et des seaux propres de qualité alimentaire pour la décantation et la mise en pots.
 
-Pour un déroulé complet, consultez [Récolte du miel](/beekeeping/honey-harvest) et consignez les rendements sous [Récoltes](/using-the-app/harvests).
+Pour un déroulé complet, consultez [Récolte du miel](./honey-harvest.md) et consignez les rendements sous [Récoltes](../using-the-app/harvests.md).
 
 ## Les systèmes de ruches
 
@@ -78,7 +78,7 @@ Les systèmes à cadres mobiles (Langstroth, Dadant, Zander, Deutsch Normal) fon
 Si votre ruche ne correspond à aucune de celles-ci, choisissez **Autre** dans Openbeehive et notez les détails dans une note de visite.
 
 :::note
-Il n'existe pas de « meilleure » ruche unique. Le choix le plus pratique est généralement celui qu'utilisent votre **association locale et les apiculteurs voisins**, afin que vous puissiez emprunter du matériel, échanger des cadres et obtenir une aide concrète. Pour une comparaison plus approfondie et les dimensions des cadres, consultez [Types de ruches](/knowledge-base/hive-types).
+Il n'existe pas de « meilleure » ruche unique. Le choix le plus pratique est généralement celui qu'utilisent votre **association locale et les apiculteurs voisins**, afin que vous puissiez emprunter du matériel, échanger des cadres et obtenir une aide concrète. Pour une comparaison plus approfondie et les dimensions des cadres, consultez [Types de ruches](../knowledge-base/hive-types.md).
 :::
 
 ## Acheter neuf ou d'occasion
@@ -97,4 +97,4 @@ Conseils raisonnables pour le matériel d'occasion :
 - **Cadres et rayons** : à éviter sauf s'ils proviennent d'une source de confiance avec un état sanitaire irréprochable. Les vieux rayons sont peu coûteux à remplacer et, de toute façon, il vaut mieux les renouveler régulièrement.
 - **Colonies entières** : n'achetez qu'auprès d'un apiculteur réputé, idéalement après une inspection sanitaire cadre par cadre. Vérifiez le schéma de couvain et recherchez les signes de maladie.
 
-La déclaration des maladies et les règles varient selon le pays et la région ; **la loque américaine est à déclaration obligatoire dans de nombreux endroits**. Vérifiez auprès de votre autorité nationale de santé des abeilles et consultez votre association locale avant d'introduire tout matériel d'occasion ou toute nouvelle colonie. Consultez [Maladies et ravageurs](/knowledge-base/diseases-and-pests).
+La déclaration des maladies et les règles varient selon le pays et la région ; **la loque américaine est à déclaration obligatoire dans de nombreux endroits**. Vérifiez auprès de votre autorité nationale de santé des abeilles et consultez votre association locale avant d'introduire tout matériel d'occasion ou toute nouvelle colonie. Consultez [Maladies et ravageurs](../knowledge-base/diseases-and-pests.md).

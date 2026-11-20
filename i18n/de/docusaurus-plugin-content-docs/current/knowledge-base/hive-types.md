@@ -7,7 +7,7 @@ title: "Referenz der Beutentypen"
 
 Wenn du in Openbeehive einen Bienenstock anlegst, wählst du einen **Typ**. Dieser einzelne Wert hält das Beutensystem fest, das du betreibst, was dir hilft, Rähmchen, Honigräume und Ersatzteile in deinem Bienenstand kompatibel zu halten.
 
-Der Typ ist lediglich ein Etikett für deine eigenen Aufzeichnungen. Er ändert nichts daran, wie Durchsichten, Behandlungen oder Ernten funktionieren, also mach dir keine Sorgen, ihn „falsch“ zu wählen: Du kannst ihn jederzeit ändern, indem du den Bienenstock bearbeitest. Siehe [Bienenstöcke](/using-the-app/hives), um zu erfahren, wie du einen Bienenstock hinzufügst und bearbeitest.
+Der Typ ist lediglich ein Etikett für deine eigenen Aufzeichnungen. Er ändert nichts daran, wie Durchsichten, Behandlungen oder Ernten funktionieren, also mach dir keine Sorgen, ihn „falsch“ zu wählen: Du kannst ihn jederzeit ändern, indem du den Bienenstock bearbeitest. Siehe [Bienenstöcke](../using-the-app/hives.md), um zu erfahren, wie du einen Bienenstock hinzufügst und bearbeitest.
 
 Openbeehive bietet sieben Optionen: **Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar** und **Sonstige**.
 
@@ -65,4 +65,4 @@ Wähle **Sonstige** und vermerke die Einzelheiten (Rähmchengröße, Anzahl der 
 **Beeinflusst der Typ Behandlungen oder Ernten?**
 Nein. Er ist ein beschreibendes Etikett. Alle Durchsichten, Behandlungen, Aufgaben und Ernten funktionieren unabhängig vom Typ gleich.
 
-Weitere Hintergründe zur Ausrüstung und dazu, wie die Teile eines Bienenstocks zusammenpassen, findest du unter [Ausrüstung](/beekeeping/equipment) und im [Glossar](/knowledge-base/glossary).
+Weitere Hintergründe zur Ausrüstung und dazu, wie die Teile eines Bienenstocks zusammenpassen, findest du unter [Ausrüstung](../beekeeping/equipment.md) und im [Glossar](./glossary.md).

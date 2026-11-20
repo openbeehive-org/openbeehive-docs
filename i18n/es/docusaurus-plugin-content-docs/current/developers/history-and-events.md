@@ -80,7 +80,7 @@ de sincronización como cualquier otro cambio. Las filas de detalle (`harvest`,
 trata como append-only por convención. Nada en la aplicación edita ni elimina un
 evento.
 
-Los números de tipo de evento se listan en el [modelo de datos](/developers/data-model#event).
+Los números de tipo de evento se listan en el [modelo de datos](./data-model.md#event).
 
 ## Leer el historial
 
@@ -118,4 +118,4 @@ Las filas de `event` llevan `scope_id` (el id del colmenar) como columna y se
 sincronizan como cualquier otra tabla, con last-writer-wins por campo. Como
 cada evento tiene un UUID nuevo y nunca se edita, dos dispositivos que añaden
 eventos sin conexión nunca tocan la misma fila y ambos conjuntos sobreviven.
-Consulta el [protocolo de sincronización](/developers/sync-protocol).
+Consulta el [protocolo de sincronización](./sync-protocol.md).

@@ -48,11 +48,11 @@ the pre-commit hook runs; `make help` lists every target.
 file in the repo root (copy `.env.example`). The defaults give you SQLite
 and filesystem blobs; leave `BEEHIVE_PASSWORD_AUTH` off,
 `BEEHIVE_OIDC_PROVIDERS` empty and `BEEHIVE_WEBAUTHN_ENABLED=false` to run
-without a login. See [Configuration](/self-hosting/configuration).
+without a login. See [Configuration](../self-hosting/configuration.md).
 
 To build a release binary: `make proto && make build` writes
 `server/bin/openbeehive` with the SPA embedded. See
-[Single binary](/self-hosting/single-binary).
+[Single binary](../self-hosting/single-binary.md).
 
 ## Generated code
 
@@ -66,7 +66,7 @@ To build a release binary: `make proto && make build` writes
 Both directories are gitignored. Run `make proto` after cloning and after
 every `.proto` change; never edit the output by hand. The Docker build runs
 `buf generate` itself in its first stage. Every service in the protos is
-registered on the server; see [Using the API](/using-the-api/overview) for
+registered on the server; see [Using the API](../using-the-api/overview.md) for
 the list.
 
 ## Conventions
@@ -82,11 +82,11 @@ the list.
 3. **Keep `merge.go` and `merge.ts` identical.** Per-field last-writer-wins
    and the add-wins OR-Set are implemented in `server/internal/sync/merge.go`
    and `app/src/lib/local/merge.ts`. Change both, with tests. See the
-   [sync protocol](/developers/sync-protocol).
+   [sync protocol](./sync-protocol.md).
 4. **Write portable SQL.** The server runs on PostgreSQL, MySQL and SQLite.
    Migrations use the portable subset described at the top of
    `0001_init.sql`; the store translates the remaining dialect differences.
-   See [Databases](/self-hosting/databases).
+   See [Databases](../self-hosting/databases.md).
 5. **English in code, translations for users.** Code, comments, identifiers
    and commit messages are English. Every user-facing string goes through
    `svelte-i18n` with entries in `app/src/lib/i18n/locales/{en,de,fr,es,it}.json`.

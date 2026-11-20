@@ -34,7 +34,7 @@ Depuis la liste **Ruchers** (ou le bouton **+ Nouveau** de la Vue d'ensemble), c
 | **Note** | Non | Codes de portail, notes d'accès, nom du propriétaire, stationnement. |
 | **Latitude / Longitude** | Non | Coordonnées en degrés décimaux. |
 
-Fonctionne hors ligne ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Fonctionne hors ligne ; voir [Hors ligne et synchronisation](./offline-and-sync.md).
 
 ### Définir les coordonnées GPS
 
@@ -64,11 +64,11 @@ Ouvrez un rucher pour voir ses ruches avec la date de la dernière visite de cha
 - **Ajouter une ruche** : saisissez un nom et ajoutez-la. Définissez ensuite son type et son statut en modifiant la ruche.
 - **Ouvrir une ruche** pour consulter sa reine, son journal des visites, ses récoltes et ses traitements.
 
-Voir [Ruches](/using-the-app/hives) et [Reines](/using-the-app/queens).
+Voir [Ruches](./hives.md) et [Reines](./queens.md).
 
 ## Imprimer les étiquettes QR du rucher
 
-Le bouton **Étiquettes QR** de la page du rucher imprime une feuille A4 avec une étiquette par ruche du rucher. Chaque étiquette encode un lien profond vers cette ruche ; la scanner ouvre Openbeehive sur la ruche. Voir [Étiquettes QR](/using-the-app/qr-labels).
+Le bouton **Étiquettes QR** de la page du rucher imprime une feuille A4 avec une étiquette par ruche du rucher. Chaque étiquette encode un lien profond vers cette ruche ; la scanner ouvre Openbeehive sur la ruche. Voir [Étiquettes QR](./qr-labels.md).
 
 ## Modifier et réorganiser
 
@@ -78,4 +78,4 @@ Si une ruche change d'emplacement, utilisez **Déplacer** sur la ruche pour la r
 
 ## Partage
 
-Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace (tenant) est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espaces → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](/using-the-app/accounts-tenants).
+Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace (tenant) est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espaces → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](./accounts-tenants.md).

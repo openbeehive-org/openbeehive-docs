@@ -29,7 +29,7 @@ No hay un intervalo configurable: la lista se ordena por el tiempo transcurrido 
 
 ## Próximas tareas
 
-Muestra hasta cinco tareas abiertas con sus fechas de vencimiento. Las tareas cuya fecha ya ha pasado se marcan con **!**. Marca las tareas como hechas en la vista **Tareas**; consulta [Tareas](/using-the-app/tasks).
+Muestra hasta cinco tareas abiertas con sus fechas de vencimiento. Las tareas cuya fecha ya ha pasado se marcan con **!**. Marca las tareas como hechas en la vista **Tareas**; consulta [Tareas](./tasks.md).
 
 ## Cómo moverte
 
@@ -43,14 +43,14 @@ Los mismos destinos están disponibles en todas partes: **Resumen, Colmenares, E
 **Ajustes** contiene:
 
 - **Idioma**: inglés, alemán, francés, español, italiano. La elección se guarda en el dispositivo.
-- **Espacios**: cambiar, crear, invitar y gestionar (en instancias con inicio de sesión). Consulta [Cuentas y espacios](/using-the-app/accounts-tenants).
+- **Espacios**: cambiar, crear, invitar y gestionar (en instancias con inicio de sesión). Consulta [Cuentas y espacios](./accounts-tenants.md).
 - **Passkeys**: añadir o eliminar passkeys (cuando el servidor las habilita).
 - **Claves API**: crear y eliminar claves para scripts y dispositivos (en instancias con inicio de sesión). Consulta [Cuentas y espacios](./accounts-tenants.md#api-keys).
-- **Datos y copia de seguridad**: exportar e importar; consulta [Importar y exportar](/using-the-app/import-export).
+- **Datos y copia de seguridad**: exportar e importar; consulta [Importar y exportar](./import-export.md).
 - **Cuenta**: con qué cuenta has iniciado sesión, y **Cerrar sesión**.
 
 En una instancia autoalojada de un solo usuario sin inicio de sesión no hay sesión que cerrar; el bloque de cuenta muestra la identidad local.
 
 ## El indicador de conexión/sin conexión
 
-La barra lateral muestra **En línea** o **Sin conexión** junto a tu cuenta, y mientras estás sin conexión una barra en la parte superior indica "Sin conexión: los cambios se guardan y se sincronizan más tarde". Sigue registrando exactamente igual que siempre; la sincronización se reanuda cuando vuelve la conexión. Consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+La barra lateral muestra **En línea** o **Sin conexión** junto a tu cuenta, y mientras estás sin conexión una barra en la parte superior indica "Sin conexión: los cambios se guardan y se sincronizan más tarde". Sigue registrando exactamente igual que siempre; la sincronización se reanuda cuando vuelve la conexión. Consulta [Sin conexión y sincronización](./offline-and-sync.md).

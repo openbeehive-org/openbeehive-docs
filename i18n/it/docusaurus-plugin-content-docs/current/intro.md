@@ -20,12 +20,12 @@ server, così funziona in apiario con o senza segnale.
 
 | Se vuoi… | Vai a |
 | --- | --- |
-| Imparare a registrare la tua apicoltura | [Usare l'app](/using-the-app/dashboard) |
-| Eseguire la tua istanza | [Auto-ospitalità](/self-hosting/quick-start) |
-| Chiamare l'API da script | [Utilizzo dell'API](/using-the-api/overview) |
-| Conoscere l'apicoltura stessa | [Nozioni di base di apicoltura](/beekeeping/getting-started) |
-| Cercare qualcosa | [Base di conoscenza](/knowledge-base/glossary) |
-| Comprendere i meccanismi interni | [Sviluppatori](/developers/architecture) |
+| Imparare a registrare la tua apicoltura | [Usare l'app](./using-the-app/dashboard.md) |
+| Eseguire la tua istanza | [Auto-ospitalità](./self-hosting/quick-start.md) |
+| Chiamare l'API da script | [Utilizzo dell'API](./using-the-api/overview.md) |
+| Conoscere l'apicoltura stessa | [Nozioni di base di apicoltura](./beekeeping/getting-started.md) |
+| Cercare qualcosa | [Base di conoscenza](./knowledge-base/glossary.md) |
+| Comprendere i meccanismi interni | [Sviluppatori](./developers/architecture.md) |
 
 :::note
 Questa documentazione segue la versione corrente dell'app; usa il selettore di

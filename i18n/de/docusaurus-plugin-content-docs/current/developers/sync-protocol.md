@@ -51,7 +51,7 @@ message Change {
 
 `payload_json` ist ein partielles Delta, nicht die ganze Zeile: `patch()` des
 Clients schreibt nur die Spalten, die es geändert hat. Die Schlüssel sind die
-`snake_case`-Spaltennamen aus dem [Datenmodell](/developers/data-model). Eine
+`snake_case`-Spaltennamen aus dem [Datenmodell](./data-model.md). Eine
 auf dem Gerät angelegte Zeile ist ein Delta, das jede Spalte enthält. Ein
 Löschen ist `op = CHANGE_OP_DELETE`; der Empfänger setzt `deleted = true` und
 ignoriert das Payload.

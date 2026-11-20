@@ -10,10 +10,10 @@ Zwei Wege zu einer laufenden Openbeehive-Instanz, die du im Browser öffnen kann
 - **Variante A, einzelne Binärdatei.** Baue eine eigenständige ausführbare Datei, die SQLite und das lokale Dateisystem nutzt. Kein Docker, kein Datenbankserver, kein Objektspeicher. Gut für einen Heimserver, einen Raspberry Pi oder einen kleinen VPS.
 - **Variante B, Docker.** Starte das veröffentlichte Image mit einem Befehl.
 
-Beide verwenden das Bereitstellungsprofil **selfhost**, das standardmäßig eine eingebettete SQLite-Datenbank und Blob-Speicher im Dateisystem nutzt. Du kannst später auf PostgreSQL und MinIO/S3 umstellen; siehe [Konfiguration](/self-hosting/configuration).
+Beide verwenden das Bereitstellungsprofil **selfhost**, das standardmäßig eine eingebettete SQLite-Datenbank und Blob-Speicher im Dateisystem nutzt. Du kannst später auf PostgreSQL und MinIO/S3 umstellen; siehe [Konfiguration](./configuration.md).
 
 :::tip Einzelnutzer? Keine Anmeldung nötig
-Im selfhost-Profil ist standardmäßig keine Anmeldemethode aktiviert: `BEEHIVE_PASSWORD_AUTH` ist aus, `BEEHIVE_OIDC_PROVIDERS` ist leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Die App öffnet direkt deine Aufzeichnungen. Um später eine Anmeldung hinzuzufügen, siehe [Authentifizierung](/self-hosting/authentication).
+Im selfhost-Profil ist standardmäßig keine Anmeldemethode aktiviert: `BEEHIVE_PASSWORD_AUTH` ist aus, `BEEHIVE_OIDC_PROVIDERS` ist leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Die App öffnet direkt deine Aufzeichnungen. Um später eine Anmeldung hinzuzufügen, siehe [Authentifizierung](./authentication.md).
 :::
 
 ## Die kleinstmögliche funktionierende Konfiguration
@@ -27,7 +27,7 @@ BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 
 `BEEHIVE_PUBLIC_BASE_URL` ist die Adresse, die der Server in die von ihm erzeugten Links einsetzt (OIDC-Redirects, Einladungs- und Verifizierungslinks). Zum lokalen Testen ist `http://localhost:8080` in Ordnung. Für eine echte Bereitstellung setze sie auf deine öffentliche URL, zum Beispiel `https://bees.example.com`.
 
-Alles andere hat Standardwerte für das Self-Hosting. Die vollständige Liste findest du unter [Konfiguration](/self-hosting/configuration).
+Alles andere hat Standardwerte für das Self-Hosting. Die vollständige Liste findest du unter [Konfiguration](./configuration.md).
 
 ## Variante A: einzelne Binärdatei (kein Docker)
 
@@ -58,7 +58,7 @@ cp .env.example .env
 Standardmäßig lauscht die Binärdatei auf `:8080` und liefert die Web-App selbst aus (`BEEHIVE_SERVE_WEB=true`), sodass die API und die PWA vom selben Ursprung kommen. Öffne die Adresse aus `BEEHIVE_PUBLIC_BASE_URL`.
 
 :::note Wo deine Daten liegen
-Im selfhost-Modus landen deine Aufzeichnungen in einer SQLite-Datei (standardmäßig `openbeehive.db` im Arbeitsverzeichnis) und hochgeladene Fotos in einem Blob-Verzeichnis (standardmäßig `./data/blobs`). Sichere beides und du hast alles gesichert; siehe [Backups](/self-hosting/backups).
+Im selfhost-Modus landen deine Aufzeichnungen in einer SQLite-Datei (standardmäßig `openbeehive.db` im Arbeitsverzeichnis) und hochgeladene Fotos in einem Blob-Verzeichnis (standardmäßig `./data/blobs`). Sichere beides und du hast alles gesichert; siehe [Backups](./backups.md).
 :::
 
 ## Variante B: Docker
@@ -86,10 +86,10 @@ docker stop openbeehive
 docker rm openbeehive
 ```
 
-Wenn du die E-Mail-/Passwort-Anmeldung einschaltest (`BEEHIVE_PASSWORD_AUTH=true`), startet der Server erst, wenn auch `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` gesetzt sind. Siehe [Authentifizierung](/self-hosting/authentication).
+Wenn du die E-Mail-/Passwort-Anmeldung einschaltest (`BEEHIVE_PASSWORD_AUTH=true`), startet der Server erst, wenn auch `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` gesetzt sind. Siehe [Authentifizierung](./authentication.md).
 
 :::tip Lieber Cloud-Stack?
-Der obige Befehl startet das schlanke selfhost-Profil. Für das **cloud**-Profil (PostgreSQL + MinIO) liefert das Repository Compose-Dateien mit; siehe [Docker](/self-hosting/docker).
+Der obige Befehl startet das schlanke selfhost-Profil. Für das **cloud**-Profil (PostgreSQL + MinIO) liefert das Repository Compose-Dateien mit; siehe [Docker](./docker.md).
 :::
 
 ## Erste Schritte nach der Installation
@@ -98,4 +98,4 @@ Der obige Befehl startet das schlanke selfhost-Profil. Für das **cloud**-Profil
 2. Füge eine Beute hinzu, bearbeite sie, um ihren Typ zu setzen, und erfasse eine Durchsicht.
 3. Drucke ein QR-Etikett für die Beute, damit du im Feld direkt dorthin scannen kannst.
 
-Bevor du die Instanz im Internet erreichbar machst, setze einen TLS-terminierenden [Reverse Proxy](/self-hosting/reverse-proxy) davor und setze `BEEHIVE_PUBLIC_BASE_URL` auf die `https://`-Adresse. Richte dann [Backups](/self-hosting/backups) ein.
+Bevor du die Instanz im Internet erreichbar machst, setze einen TLS-terminierenden [Reverse Proxy](./reverse-proxy.md) davor und setze `BEEHIVE_PUBLIC_BASE_URL` auf die `https://`-Adresse. Richte dann [Backups](./backups.md) ein.

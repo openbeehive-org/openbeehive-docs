@@ -7,7 +7,7 @@ title: "Inspeccionar una colonia"
 
 Una inspección de colmena es el corazón de la apicultura práctica. Abrir una colonia te permite comprobar que está sana, bien alimentada y con reina, y te da la oportunidad de actuar antes de que los problemas pequeños se hagan grandes. Bien hecha, una inspección es tranquila, rápida y resuelta. Mal hecha, estresa a las abejas, enfría la cría y te enseña muy poco.
 
-Esta página cubre cómo inspeccionar una colonia correctamente. Para cómo registrar lo que encuentres en Openbeehive, consulta [registrar inspecciones](/using-the-app/inspections).
+Esta página cubre cómo inspeccionar una colonia correctamente. Para cómo registrar lo que encuentres en Openbeehive, consulta [registrar inspecciones](../using-the-app/inspections.md).
 
 ## Cuándo inspeccionar
 
@@ -85,11 +85,11 @@ Comprueba que la colonia tiene suficiente alimento, especialmente en primavera a
 
 ### Realeras
 
-Encontrar realeras cargadas o selladas en el panal es una de las cosas más importantes que revela una inspección, ya que a menudo significa que la colonia se prepara para enjambrar. Registra su número y etapa. Consulta [enjambrazón](/beekeeping/swarming) para saber cómo responder.
+Encontrar realeras cargadas o selladas en el panal es una de las cosas más importantes que revela una inspección, ya que a menudo significa que la colonia se prepara para enjambrar. Registra su número y etapa. Consulta [enjambrazón](./swarming.md) para saber cómo responder.
 
 ### Enfermedades, plagas y varroa
 
-Observa de cerca la cría en busca de cualquier cosa anormal: opérculos hundidos, grasientos o perforados, un olor desagradable, o momias blancas calcáreas. Vigila a las abejas adultas en busca de alas deformes o ácaros visibles. El manejo de la varroa es una tarea de todo el año; consulta [varroa](/beekeeping/varroa).
+Observa de cerca la cría en busca de cualquier cosa anormal: opérculos hundidos, grasientos o perforados, un olor desagradable, o momias blancas calcáreas. Vigila a las abejas adultas en busca de alas deformes o ácaros visibles. El manejo de la varroa es una tarea de todo el año; consulta [varroa](./varroa.md).
 
 :::danger
 Si sospechas de una enfermedad de declaración obligatoria como la loque americana o europea, detente, cierra y contacta con tu autoridad nacional de sanidad apícola. Los requisitos de notificación varían según el país y a menudo son una obligación legal.
@@ -103,4 +103,4 @@ Cada inspección es una pequeña perturbación. Mantenla proporcionada. Si solo 
 
 Una inspección solo es tan útil como las notas que conserves. Registra el temperamento, las reservas, el espacio, la cría y cualquier realera o signo de enfermedad mientras los detalles están frescos, idealmente junto a la colmena en tu teléfono.
 
-Consulta [registrar inspecciones](/using-the-app/inspections) para captar tus hallazgos, y la [sección de apicultura](/category/beekeeping-basics) para el contexto estacional más amplio.
+Consulta [registrar inspecciones](../using-the-app/inspections.md) para captar tus hallazgos, y la [sección de apicultura](/category/beekeeping-basics) para el contexto estacional más amplio.

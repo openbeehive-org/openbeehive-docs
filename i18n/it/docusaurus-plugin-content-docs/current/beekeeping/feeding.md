@@ -79,7 +79,7 @@ Ogni nutrizione merita di essere registrata. Sapere quanto sciroppo o candito ha
 
 In Openbeehive, registra la nutrizione come parte della visita: inserisci la quantità nel campo **Nutrita (kg)** e indica il tipo di alimento (sciroppo leggero, sciroppo denso o candito) nella nota, così che stia accanto a tutto il resto di ciò che hai visto quel giorno.
 
-Vedi [Ispezioni](/using-the-app/inspections) per come registrare una visita e annotare le quantità di nutrizione.
+Vedi [Ispezioni](../using-the-app/inspections.md) per come registrare una visita e annotare le quantità di nutrizione.
 
 :::tip
 Nell'arco di una stagione, i tuoi registri di nutrizione diventano un quadro utile della salute di ciascuna colonia. Un'arnia che ha sempre bisogno di nutrizione extra può avere un problema di flora, popolazione o regina che vale la pena indagare.

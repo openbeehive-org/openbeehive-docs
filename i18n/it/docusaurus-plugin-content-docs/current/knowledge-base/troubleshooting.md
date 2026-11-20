@@ -25,7 +25,7 @@ Le tue modifiche vengono salvate all'istante sul dispositivo. La sincronizzazion
 La sincronizzazione è priva di conflitti per progettazione. La modifica più recente a un campo vince, le aggiunte (foto, visite, raccolte, trattamenti) vengono conservate, e non perderai il lavoro perché due dispositivi hanno modificato contemporaneamente.
 :::
 
-Se ospiti autonomamente e la sincronizzazione fallisce per tutti, il problema è più probabilmente lato server. Vedi [Configurazione del Self-Hosting](/self-hosting/configuration) e controlla i log del server.
+Se ospiti autonomamente e la sincronizzazione fallisce per tutti, il problema è più probabilmente lato server. Vedi [Configurazione del Self-Hosting](../self-hosting/configuration.md) e controlla i log del server.
 
 ## Come funziona l'archiviazione locale
 
@@ -35,7 +35,7 @@ Alcune conseguenze pratiche:
 
 - I tuoi dati sono legati al browser e al dispositivo in cui usi Openbeehive. Ogni dispositivo mantiene la propria copia locale e si sincronizza con il server.
 - L'archiviazione OPFS è privata dell'origine dell'app. Altri siti web non possono leggerla.
-- Installare l'app nella schermata Home (vedi [Installazione](/using-the-app/install)) usa, sulla maggior parte delle piattaforme, la stessa archiviazione della scheda del browser.
+- Installare l'app nella schermata Home (vedi [Installazione](../using-the-app/install.md)) usa, sulla maggior parte delle piattaforme, la stessa archiviazione della scheda del browser.
 
 :::caution
 Gli strumenti del browser che "cancellano i dati del sito", "cancellano cookie e archiviazione", o la navigazione privata/in incognito possono cancellare il database OPFS locale. Questo è sicuro **solo se i tuoi dati sono già stati sincronizzati** con il server, perché verranno scaricati di nuovo al successivo accesso. Se hai modifiche offline non sincronizzate, assicurati di essere online e lascia che la sincronizzazione si completi prima.
@@ -84,10 +84,10 @@ Non cancellare l'archiviazione se hai modifiche solo offline che non hanno ancor
 
 ## La fotocamera e lo scanner QR non funzionano
 
-Ogni alveare può portare un'etichetta QR stampabile che rimanda direttamente a quell'alveare (vedi [Etichette QR](/using-the-app/qr-labels)). La scansione necessita dell'accesso alla fotocamera.
+Ogni alveare può portare un'etichetta QR stampabile che rimanda direttamente a quell'alveare (vedi [Etichette QR](../using-the-app/qr-labels.md)). La scansione necessita dell'accesso alla fotocamera.
 
 - **Concedi l'autorizzazione alla fotocamera.** Quando richiesto, consenti l'accesso alla fotocamera. Se in precedenza l'hai negato, riabilitalo nelle impostazioni del browser o del sistema operativo per il sito, poi ricarica.
-- **Usa HTTPS.** I browser consentono l'accesso alla fotocamera solo su origini sicure. L'app ospitata viene servita tramite HTTPS; chi ospita autonomamente deve servire tramite HTTPS anche (oppure `localhost` per i test). Vedi [Reverse proxy](/self-hosting/reverse-proxy).
+- **Usa HTTPS.** I browser consentono l'accesso alla fotocamera solo su origini sicure. L'app ospitata viene servita tramite HTTPS; chi ospita autonomamente deve servire tramite HTTPS anche (oppure `localhost` per i test). Vedi [Reverse proxy](../self-hosting/reverse-proxy.md).
 - **Verifica che non sia in uso.** Chiudi altre app o schede che potrebbero tenere occupata la fotocamera.
 
 :::tip iOS Safari
@@ -97,7 +97,7 @@ Su iPhone e iPad lo scanner integrato nell'app può essere limitato. Se la scans
 ## Problemi di accesso
 
 - **Bloccato sulla schermata di accesso.** Conferma di raggiungere l'indirizzo corretto (l'app ospitata è su app.openbeehive.org). Dopo l'accesso con il tuo provider dovresti essere reindirizzato automaticamente; in caso contrario, ricarica la pagina.
-- **Il reindirizzamento fallisce o errori "invalid redirect" (self-host).** Questo significa quasi sempre che l'URL di reindirizzamento OIDC o `BEEHIVE_PUBLIC_BASE_URL` è configurato male. Vedi [Autenticazione e configurazione](/self-hosting/authentication).
+- **Il reindirizzamento fallisce o errori "invalid redirect" (self-host).** Questo significa quasi sempre che l'URL di reindirizzamento OIDC o `BEEHIVE_PUBLIC_BASE_URL` è configurato male. Vedi [Autenticazione e configurazione](../self-hosting/authentication.md).
 - **La passkey non viene offerta.** Le passkey devono essere abilitate sul server e devi averne aggiunta una in Impostazioni → Passkeys. Altrimenti accedi con un altro metodo.
 - **Self-host a utente singolo senza login.** Con l'autenticazione a password disattivata, nessun provider OIDC e WebAuthn disabilitato, non c'è alcun passaggio di accesso. Se vedi inaspettatamente una schermata di accesso, controlla la configurazione del tuo server.
 
@@ -120,4 +120,4 @@ Se nulla di quanto sopra aiuta, apri una issue su [github.com/openbeehive-org/op
 Per favore non incollare segreti. Oscura i segreti di sessione, i segreti client OIDC, le password dei database e i dati personali prima di condividere log o configurazioni.
 :::
 
-Per domande sul self-hosting, parti dal [riferimento di configurazione](/self-hosting/configuration).
+Per domande sul self-hosting, parti dal [riferimento di configurazione](../self-hosting/configuration.md).

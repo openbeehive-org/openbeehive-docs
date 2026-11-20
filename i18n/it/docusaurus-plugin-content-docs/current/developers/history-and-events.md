@@ -79,7 +79,7 @@ dettaglio (`harvest`, `treatment`, `inspection`) sono normali righe
 sincronizzate; solo `event` è trattata come append-only per convenzione. Nulla
 nell'app modifica o elimina un evento.
 
-I numeri dei tipi di evento sono elencati nel [modello dei dati](/developers/data-model#event).
+I numeri dei tipi di evento sono elencati nel [modello dei dati](./data-model.md#event).
 
 ## Leggere la storia
 
@@ -117,4 +117,4 @@ Le righe di `event` portano `scope_id` (l'id dell'apiario) come colonna e si
 sincronizzano come ogni altra tabella, con last-writer-wins per campo. Poiché
 ogni evento ha un UUID nuovo e non viene mai modificato, due dispositivi che
 aggiungono eventi offline non toccano mai la stessa riga ed entrambi gli insiemi
-sopravvivono. Vedi il [protocollo di sincronizzazione](/developers/sync-protocol).
+sopravvivono. Vedi il [protocollo di sincronizzazione](./sync-protocol.md).

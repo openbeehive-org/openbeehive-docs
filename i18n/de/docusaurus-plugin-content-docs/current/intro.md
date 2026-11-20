@@ -21,12 +21,12 @@ funktioniert.
 
 | Wenn du … möchtest | Gehe zu |
 | --- | --- |
-| Lernen, wie du deine Imkerei dokumentierst | [Die App nutzen](/using-the-app/dashboard) |
-| Eine eigene Instanz betreiben | [Self-Hosting](/self-hosting/quick-start) |
-| Die API aus Skripten aufrufen | [Die API verwenden](/using-the-api/overview) |
-| Etwas über die Imkerei selbst lernen | [Grundlagen der Imkerei](/beekeeping/getting-started) |
-| Etwas nachschlagen | [Wissensdatenbank](/knowledge-base/glossary) |
-| Die internen Abläufe verstehen | [Entwickler](/developers/architecture) |
+| Lernen, wie du deine Imkerei dokumentierst | [Die App nutzen](./using-the-app/dashboard.md) |
+| Eine eigene Instanz betreiben | [Self-Hosting](./self-hosting/quick-start.md) |
+| Die API aus Skripten aufrufen | [Die API verwenden](./using-the-api/overview.md) |
+| Etwas über die Imkerei selbst lernen | [Grundlagen der Imkerei](./beekeeping/getting-started.md) |
+| Etwas nachschlagen | [Wissensdatenbank](./knowledge-base/glossary.md) |
+| Die internen Abläufe verstehen | [Entwickler](./developers/architecture.md) |
 
 :::note
 Diese Dokumentation folgt der aktuellen App-Version; ältere Stände findest du

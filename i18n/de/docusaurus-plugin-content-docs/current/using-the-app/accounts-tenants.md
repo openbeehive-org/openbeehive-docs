@@ -23,7 +23,7 @@ Die Methoden gehören zu einem Konto: Wenn du dich mit E-Mail und Passwort regis
 Wenn die Instanz eine E-Mail-Bestätigung verlangt, erhältst du nach der Registrierung einen Bestätigungslink per E-Mail. Öffne ihn vor deiner ersten Anmeldung.
 
 :::note Wer der Admin ist
-Der Instanz-Administrator ist nicht die erste Person, die sich registriert. Auf einer selbst gehosteten Instanz ist es das Konto, das der Betreiber mit `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` konfiguriert (siehe [Authentifizierung](/self-hosting/authentication)); auf dem gehosteten Dienst ist es der Betreiber. Eine Registrierung vergibt diese Rolle nie.
+Der Instanz-Administrator ist nicht die erste Person, die sich registriert. Auf einer selbst gehosteten Instanz ist es das Konto, das der Betreiber mit `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` konfiguriert (siehe [Authentifizierung](../self-hosting/authentication.md)); auf dem gehosteten Dienst ist es der Betreiber. Eine Registrierung vergibt diese Rolle nie.
 :::
 
 ## Was ein Mandant ist
@@ -70,7 +70,7 @@ Ein Mandanten-Admin kann den Mandanten unter **Einstellungen → Mandanten → G
 
 ## API-Schlüssel \{#api-keys}
 
-Unter **Einstellungen → API-Schlüssel** erstellst du Zugangsdaten für Skripte und Geräte wie eine Stockwaage, die die [API](/using-the-api/overview) in deinem Namen nutzen. Der Bereich erscheint nur, wenn du angemeldet bist; eine Einzelbenutzer-Instanz ohne Anmeldung hat keine Schlüssel und braucht auch keine.
+Unter **Einstellungen → API-Schlüssel** erstellst du Zugangsdaten für Skripte und Geräte wie eine Stockwaage, die die [API](../using-the-api/overview.md) in deinem Namen nutzen. Der Bereich erscheint nur, wenn du angemeldet bist; eine Einzelbenutzer-Instanz ohne Anmeldung hat keine Schlüssel und braucht auch keine.
 
 - Gib im Feld **Schlüssel benennen (z. B. Stockwaage)** einen Namen ein, wähle die Berechtigungen in der Auswahl **Berechtigungen** (**Lesen und Schreiben**, die Vorgabe, oder **Nur Lesen**) und die Laufzeit in der Auswahl **Läuft ab nach** (**Läuft nie ab**, die Vorgabe, **30 Tagen**, **90 Tagen** oder **1 Jahr**) und tippe auf **Schlüssel erstellen**. Der Schlüssel erscheint darunter mit dem Hinweis „Kopiere den Schlüssel jetzt. Er wird nur einmal angezeigt." und einem Button **Kopieren** (er zeigt kurz **Kopiert**). Was du jetzt nicht kopierst, ist weg; der Server behält nur einen Hash.
 - Jeder Schlüssel ist mit seinem Namen aufgeführt (**Unbenannter Schlüssel**, wenn du das Feld leer gelassen hast), seinen ersten Zeichen, einem Badge **Lesen und Schreiben** oder **Nur Lesen**, **Erstellt**, dann **Läuft ab** und dem Datum, wenn du eine Laufzeit gesetzt hast (**Abgelaufen** und das Datum, in Rot, sobald dieser Tag vorbei ist), und, sobald ein Skript ihn verwendet hat, **Zuletzt verwendet**. Abgelaufene Schlüssel bleiben in der Liste, bis du sie entfernst.
@@ -82,4 +82,4 @@ Ein Schlüssel handelt als du in dem Mandanten, der beim Erstellen aktiv war; we
 
 ## Die Demo
 
-Manche Instanzen betreiben ein **Demo-Konto**. Solange du darin angemeldet bist, erinnert dich ein Banner daran, dass die Daten jede Stunde zurückgesetzt werden. Der Server lehnt Änderungen vom Demo-Konto ab, alles, was du eingibst, bleibt also nur auf deinem Gerät. Betreiber können sie über den [Demo-Modus](/self-hosting/demo) aktivieren.
+Manche Instanzen betreiben ein **Demo-Konto**. Solange du darin angemeldet bist, erinnert dich ein Banner daran, dass die Daten jede Stunde zurückgesetzt werden. Der Server lehnt Änderungen vom Demo-Konto ab, alles, was du eingibst, bleibt also nur auf deinem Gerät. Betreiber können sie über den [Demo-Modus](../self-hosting/demo.md) aktivieren.

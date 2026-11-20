@@ -17,7 +17,7 @@ perdido, cómo reemplazar la reina, y una suave introducción a criar reinas tú
 
 :::tip Registra todo en la app
 Lleva el seguimiento del origen, la edad, el color de marcaje y las notas de cada reina en la
-[página de Reinas](/using-the-app/queens). Un registro preciso de cuándo se introdujo una
+[página de Reinas](../using-the-app/queens.md). Un registro preciso de cuándo se introdujo una
 reina es lo más útil que existe para juzgar su rendimiento más adelante.
 :::
 
@@ -150,11 +150,11 @@ Así, una reina criada en 2026 se marca de **blanco**. Aplica un pequeño punto 
 marcaje de reinas en la parte superior de su tórax, sujétala con suavidad o usa una jaula de
 marcaje, y deja que se seque antes de soltarla. Para la referencia completa y una regla
 mnemotécnica útil, consulta
-[Colores de marcaje de reinas](/knowledge-base/queen-marking-colours).
+[Colores de marcaje de reinas](../knowledge-base/queen-marking-colours.md).
 
 :::tip
 Cuando marques una reina, registra su color de marcaje en la app en la
-[página de Reinas](/using-the-app/queens). Openbeehive establece automáticamente el color
+[página de Reinas](../using-the-app/queens.md). Openbeehive establece automáticamente el color
 esperado a partir del año, para que puedas confirmar de un vistazo si una reina tiene la edad
 que crees.
 :::

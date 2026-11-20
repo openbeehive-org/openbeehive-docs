@@ -101,7 +101,7 @@ L'account demo è in sola lettura e non può creare chiavi; lì
 ## Trovare l'id dell'arnia
 
 `hiveId` è l'UUID dell'arnia, lo stesso codificato nella sua
-[etichetta QR](/using-the-app/qr-labels). Cercalo una volta e conservalo sul
+[etichetta QR](../using-the-app/qr-labels.md). Cercalo una volta e conservalo sul
 dispositivo:
 
 ```bash

@@ -18,7 +18,7 @@ Openbeehive vous laisse choisir le niveau d'authentification dont vous avez beso
 
 Les méthodes de connexion se combinent. L'écran de connexion propose celles qui sont activées, et un même compte fonctionne avec toutes : se connecter avec un fournisseur lie le compte à un compte e-mail/mot de passe existant ayant la même adresse e-mail.
 
-Activer une méthode de connexion active aussi les espaces (tenants) et les invitations (Paramètres → Espaces) ; voir [Comptes et espaces](/using-the-app/accounts-tenants).
+Activer une méthode de connexion active aussi les espaces (tenants) et les invitations (Paramètres → Espaces) ; voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
 
 ## Mode 1 : utilisateur unique, sans connexion
 
@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 Gardez `BEEHIVE_SESSION_SECRET` secret et stable. Quiconque en prend connaissance peut falsifier des sessions. Si vous le modifiez, toutes les sessions existantes sont invalidées. Ne le validez jamais dans un système de gestion de versions.
 :::
 
-Si vous servez l'application via HTTPS à travers un reverse proxy, assurez-vous que `BEEHIVE_PUBLIC_BASE_URL` utilise `https://` afin que les liens de redirection et d'invitation soient corrects. Voir [Reverse proxy](/self-hosting/reverse-proxy).
+Si vous servez l'application via HTTPS à travers un reverse proxy, assurez-vous que `BEEHIVE_PUBLIC_BASE_URL` utilise `https://` afin que les liens de redirection et d'invitation soient corrects. Voir [Reverse proxy](./reverse-proxy.md).
 
 ## Mode 2 : e-mail et mot de passe (comptes intégrés)
 
@@ -79,7 +79,7 @@ Le serveur garantit ce compte à chaque démarrage : il est créé s'il manque, 
 
 Pour empêcher des inconnus de créer des comptes, réglez `BEEHIVE_REGISTRATION=false`. L'administrateur vient de l'environnement, donc une instance neuve en a toujours un. Toutes les autres personnes rejoignent l'instance via des liens d'invitation, qu'un administrateur d'espace émet depuis Paramètres → Espaces. L'inscription via un lien d'invitation doit utiliser l'adresse e-mail invitée. L'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement ; les comptes existants se connectent normalement.
 
-Chaque nouveau compte démarre avec son propre [espace](/using-the-app/accounts-tenants) personnel. Seul le compte administrateur configuré porte le rôle d'administrateur de l'instance.
+Chaque nouveau compte démarre avec son propre [espace](../using-the-app/accounts-tenants.md) personnel. Seul le compte administrateur configuré porte le rôle d'administrateur de l'instance.
 
 ### Vérification facultative de l'e-mail
 
@@ -181,4 +181,4 @@ Redémarrez le serveur et chargez l'application dans un navigateur :
 2. Avec une méthode de connexion activée, l'écran de connexion propose chaque méthode activée (et « Découvrir la démo » si la démo est activée).
 3. Effectuez une connexion et confirmez que vous accédez à la Vue d'ensemble et que les enregistrements se synchronisent.
 
-Si quelque chose ne fonctionne pas, consultez les journaux du serveur et le [Dépannage](/knowledge-base/troubleshooting).
+Si quelque chose ne fonctionne pas, consultez les journaux du serveur et le [Dépannage](../knowledge-base/troubleshooting.md).

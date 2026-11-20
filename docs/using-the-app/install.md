@@ -20,8 +20,8 @@ when you are out at the apiary with no signal.
 - **A full-screen window** with no browser chrome, so there is more room for
   your hives and inspections.
 - **Offline access.** Your records live in a local database on the device and
-  sync in the background. See [Offline and sync](/using-the-app/offline-and-sync).
-- **Quick QR scanning.** Scanning a hive's [QR label](/using-the-app/qr-labels)
+  sync in the background. See [Offline and sync](./offline-and-sync.md).
+- **Quick QR scanning.** Scanning a hive's [QR label](./qr-labels.md)
   opens that hive.
 
 :::tip
@@ -91,7 +91,7 @@ stay on your own infrastructure.
 :::caution
 For installation to work smoothly, a self-hosted instance should be served over
 **HTTPS** with a valid certificate. Most browsers only offer PWA install on
-secure origins. See [Reverse proxy](/self-hosting/reverse-proxy) for how to put
+secure origins. See [Reverse proxy](../self-hosting/reverse-proxy.md) for how to put
 TLS in front of your server.
 :::
 
@@ -118,5 +118,5 @@ not delete records that have already synced to the server. To uninstall:
 :::caution
 If you have records that have not yet synced when you uninstall, they live only
 in the device's local database and may be lost. Make sure the app has synced
-before removing it. See [Offline and sync](/using-the-app/offline-and-sync).
+before removing it. See [Offline and sync](./offline-and-sync.md).
 :::

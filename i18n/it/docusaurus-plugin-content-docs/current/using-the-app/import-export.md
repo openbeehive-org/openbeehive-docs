@@ -28,7 +28,7 @@ la finestra di stampa del tuo browser — scegli "Salva come PDF" per conservarn
 L'esportazione riflette ciò che è presente sul tuo dispositivo in questo momento. Le foto non sono incluse
 nelle esportazioni CSV/XLSX/BeeXML (sono memorizzate come blob) — il quadro completo risiede nel
 tuo account sincronizzato e nel suo archivio blob; vedi
-[Self-hosting → Backup](/self-hosting/backups) per i backup lato server.
+[Self-hosting → Backup](../self-hosting/backups.md) per i backup lato server.
 
 ## Importazione e ripristino
 

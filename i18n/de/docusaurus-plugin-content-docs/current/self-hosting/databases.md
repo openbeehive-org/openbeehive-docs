@@ -22,7 +22,7 @@ Jede Datenbank wird über dasselbe Variablenpaar konfiguriert:
 | `BEEHIVE_DATABASE_DRIVER` | Welche Engine verwendet werden soll: `sqlite`, `postgres` oder `mysql`. |
 | `BEEHIVE_DATABASE_DSN` | Die Verbindungszeichenfolge (Data Source Name) für diese Engine. |
 
-Das `selfhost`-Bereitstellungsprofil nutzt standardmäßig SQLite, und das `cloud`-Profil nutzt standardmäßig PostgreSQL. Du kannst beide überschreiben, indem du diese zwei Variablen explizit setzt. Siehe [Konfiguration](/self-hosting/configuration) für die vollständige Liste der Umgebungsvariablen.
+Das `selfhost`-Bereitstellungsprofil nutzt standardmäßig SQLite, und das `cloud`-Profil nutzt standardmäßig PostgreSQL. Du kannst beide überschreiben, indem du diese zwei Variablen explizit setzt. Siehe [Konfiguration](./configuration.md) für die vollständige Liste der Umgebungsvariablen.
 
 ## Welche Datenbank soll ich wählen?
 
@@ -39,7 +39,7 @@ Im Zweifel nutze SQLite. Es braucht keinen separaten Dienst, lebt in einer einzi
 
 ## SQLite (Standard für Self-Host)
 
-SQLite ist die Wahl ohne Abhängigkeiten. Es gibt keinen Datenbankserver zu installieren oder zu verwalten: Deine Daten liegen in einer Datei auf der Festplatte, was [Backups](/self-hosting/backups) so einfach macht wie das Kopieren dieser Datei.
+SQLite ist die Wahl ohne Abhängigkeiten. Es gibt keinen Datenbankserver zu installieren oder zu verwalten: Deine Daten liegen in einer Datei auf der Festplatte, was [Backups](./backups.md) so einfach macht wie das Kopieren dieser Datei.
 
 ```bash
 BEEHIVE_DATABASE_DRIVER=sqlite
@@ -60,7 +60,7 @@ BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)&_pragma=busy_
 Du kannst einen relativen Pfad (aufgelöst relativ zum Arbeitsverzeichnis des Servers) oder einen absoluten Pfad wie `file:/var/lib/openbeehive/openbeehive.db?_pragma=journal_mode(WAL)` verwenden.
 
 :::caution WAL erzeugt zusätzliche Dateien
-Im WAL-Modus hält SQLite Begleitdateien neben der Hauptdatenbank (`openbeehive.db-wal` und `openbeehive.db-shm`). Wenn du per Dateikopie sicherst, stoppe zuerst den Server oder verwende SQLites eigenes Backup-Werkzeug, damit du einen konsistenten Snapshot erfasst. Siehe [Backups](/self-hosting/backups).
+Im WAL-Modus hält SQLite Begleitdateien neben der Hauptdatenbank (`openbeehive.db-wal` und `openbeehive.db-shm`). Wenn du per Dateikopie sicherst, stoppe zuerst den Server oder verwende SQLites eigenes Backup-Werkzeug, damit du einen konsistenten Snapshot erfasst. Siehe [Backups](./backups.md).
 :::
 
 ## PostgreSQL
@@ -133,7 +133,7 @@ Du führst Migrationen nicht von Hand aus. Bei jedem Start prüft der Server das
 Das SQL ist portabel geschrieben, sodass dasselbe Schema über alle drei Engines hinweg funktioniert; es gibt kein engine-spezifisches Setup über das oben gezeigte Erstellen von Datenbank und Benutzer hinaus.
 
 :::tip Vor dem Upgrade immer sichern
-Da eine neue Version Migrationen enthalten kann, die das Schema ändern, erstelle ein Backup, bevor du aktualisierst. Siehe [Aktualisieren](/self-hosting/upgrading) und [Backups](/self-hosting/backups).
+Da eine neue Version Migrationen enthalten kann, die das Schema ändern, erstelle ein Backup, bevor du aktualisierst. Siehe [Aktualisieren](./upgrading.md) und [Backups](./backups.md).
 :::
 
 ## Später die Datenbank wechseln
@@ -142,4 +142,4 @@ Die Treiber sind auf Datenebene nicht austauschbar: `BEEHIVE_DATABASE_DRIVER` au
 
 Wenn du nur einen zentralen Server für dich selbst brauchst, wird SQLite dir lange gute Dienste leisten.
 
-Für mehr zum umliegenden Setup siehe [Self-Hosting](/category/self-hosting) und [Speicher](/self-hosting/storage).
+Für mehr zum umliegenden Setup siehe [Self-Hosting](/category/self-hosting) und [Speicher](./storage.md).

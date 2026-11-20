@@ -5,7 +5,7 @@ title: "Hives"
 
 # Hives
 
-A hive in Openbeehive is a single colony in a physical box. Almost everything you log day to day (visits, harvests, treatments) hangs off a hive. Each hive belongs to one apiary at a time and can have a queen. Works offline; see [Offline and sync](/using-the-app/offline-and-sync).
+A hive in Openbeehive is a single colony in a physical box. Almost everything you log day to day (visits, harvests, treatments) hangs off a hive. Each hive belongs to one apiary at a time and can have a queen. Works offline; see [Offline and sync](./offline-and-sync.md).
 
 ## Creating a hive
 
@@ -35,7 +35,7 @@ Keep names short and consistent across an apiary, for example "1", "2", "3". Sho
 | Top-bar | Horizontal, frameless bars. |
 | Other | Anything not listed above. |
 
-For a fuller description of each standard, see [Hive types](/knowledge-base/hive-types).
+For a fuller description of each standard, see [Hive types](../knowledge-base/hive-types.md).
 
 ### Status
 
@@ -58,7 +58,7 @@ To relocate a hive, open it, tap the **Move** action and pick the destination ap
 Every move is recorded as a dated entry under **Location history** at the bottom of the hive page, so you know where a colony was at any point in time. Useful for tracing disease exposure and for migratory records.
 
 :::caution
-In many regions, moving hives between locations is subject to bee health and movement rules, especially within disease control zones. Check your national or local requirements before relocating colonies. See [Diseases and pests](/knowledge-base/diseases-and-pests).
+In many regions, moving hives between locations is subject to bee health and movement rules, especially within disease control zones. Check your national or local requirements before relocating colonies. See [Diseases and pests](../knowledge-base/diseases-and-pests.md).
 :::
 
 ## The hive page
@@ -71,7 +71,7 @@ The header shows the photo, the name, and the status and type. The action icons 
 
 - **Stock card**: a printable table of every visit (with a **Print** button).
 - **Development**: charts of the readings recorded on visits (occupied frames, brood frames, food stores, swarm cells, gentleness, calmness, varroa, hive weight, feed, youngest larva, temperature and humidity) plus honey harvests over time.
-- **Edit hive**, **Move**, **QR** (shows the hive's label with **Print** and **SVG** buttons; see [QR labels](/using-the-app/qr-labels)) and **Delete**.
+- **Edit hive**, **Move**, **QR** (shows the hive's label with **Print** and **SVG** buttons; see [QR labels](./qr-labels.md)) and **Delete**.
 
 ### Latest readings
 
@@ -79,15 +79,15 @@ Below the header, pills show the non-zero numbers from the most recent visit: oc
 
 ### Queen
 
-The **Current queen** card shows her year, number, marking colour, origin and comment, with **Replace queen** (or **Set queen** if none is recorded). **Queen history** lists earlier queens with their introduced and replaced dates. See [Queens](/using-the-app/queens).
+The **Current queen** card shows her year, number, marking colour, origin and comment, with **Replace queen** (or **Set queen** if none is recorded). **Queen history** lists earlier queens with their introduced and replaced dates. See [Queens](./queens.md).
 
 ### Visit log
 
-**Record visit** opens the visit form. Below it the five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos. **See all N visits** opens the full log. See [Inspections](/using-the-app/inspections).
+**Record visit** opens the visit form. Below it the five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos. **See all N visits** opens the full log. See [Inspections](./inspections.md).
 
 ### Honey and Treatments
 
-**Honey** shows the hive's harvest total in its heading and lists each harvest (**Record harvest**). **Treatments** lists each treatment (**Record treatment**). See [Harvests](/using-the-app/harvests) and [Treatments](/using-the-app/treatments).
+**Honey** shows the hive's harvest total in its heading and lists each harvest (**Record harvest**). **Treatments** lists each treatment (**Record treatment**). See [Harvests](./harvests.md) and [Treatments](./treatments.md).
 
 ## Deleting versus retiring a hive
 

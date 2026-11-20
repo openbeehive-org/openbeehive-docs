@@ -30,7 +30,7 @@ speichern", um eine Kopie zu behalten.
 Der Export gibt wieder, was sich gerade auf deinem Gerät befindet. Fotos sind in
 den CSV-/XLSX-/BeeXML-Exporten nicht enthalten (sie werden als Blobs gespeichert)
 — das vollständige Bild liegt in deinem synchronisierten Konto und dessen
-Blob-Speicher; siehe [Self-Hosting → Sicherungen](/self-hosting/backups) für
+Blob-Speicher; siehe [Self-Hosting → Sicherungen](../self-hosting/backups.md) für
 serverseitige Sicherungen.
 
 ## Importieren & Wiederherstellen

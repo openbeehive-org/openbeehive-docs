@@ -95,7 +95,7 @@ returns `permission_denied` there.
 ## Find the hive id
 
 `hiveId` is the hive's UUID, the same one encoded in its
-[QR label](/using-the-app/qr-labels). Look it up once and store it on the
+[QR label](../using-the-app/qr-labels.md). Look it up once and store it on the
 device:
 
 ```bash

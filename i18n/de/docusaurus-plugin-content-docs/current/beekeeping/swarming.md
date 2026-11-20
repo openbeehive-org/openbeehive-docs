@@ -50,7 +50,7 @@ Legen der Königin, während das Volk sie auf den Flug vorbereitet, viele Bienen
 :::tip
 Erfasse, was du bei jedem Besuch siehst. Protokolliere in Openbeehive Weiselzellen, Enge
 und deine Entscheidungen in der Durchsicht, sodass das Bild über die Besuche hinweg entsteht. Siehe
-[Durchsichten](/using-the-app/inspections).
+[Durchsichten](../using-the-app/inspections.md).
 :::
 
 ## Vorbeugung: gib ihnen Platz
@@ -92,7 +92,7 @@ Pagden-Kunstschwarm genannt; mehrere benannte Varianten existieren.
 :::note
 Ein Kunstschwarm ist auch eine saubere Art, deinen Bienenstand zu erweitern oder umzuweiseln. Wenn du
 Königinnen gezielt heranziehen willst, siehe
-[Königinnenzucht](/beekeeping/queen-rearing).
+[Königinnenzucht](./queen-rearing.md).
 :::
 
 ### Weiselzellen entfernen — mit Vorsicht

@@ -14,9 +14,9 @@ memorizzano il numero proto; l'etichetta visualizzata è quella che mostra l'app
 
 Ogni tabella sincronizzata porta tre colonne di gestione non ripetute sotto:
 `organization_id` (tenant), `field_hlc` (orologio dei campi in JSON, vedi il
-[protocollo di sincronizzazione](/developers/sync-protocol)) e `deleted` (flag di
+[protocollo di sincronizzazione](./sync-protocol.md)) e `deleted` (flag di
 cancellazione logica). Gli id sono UUID, generati sul dispositivo oppure dal
-server per le righe create tramite l'[API](/using-the-api/overview). I
+server per le righe create tramite l'[API](../using-the-api/overview.md). I
 timestamp sono memorizzati come stringhe ISO 8601 sul client e come
 `TIMESTAMP` sul server.
 
@@ -53,7 +53,7 @@ nel messaggio `Change`.
 
 | Colonna | Tipo | Note |
 | --- | --- | --- |
-| `id` | text | codificato anche nell'[etichetta QR](/developers/qr-codes) |
+| `id` | text | codificato anche nell'[etichetta QR](./qr-codes.md) |
 | `apiary_id` | text | apiario attuale |
 | `name` | text | |
 | `type` | int | `HiveType`, vedi sotto |
@@ -189,7 +189,7 @@ Un'attività senza `apiary_id` si sincronizza sotto lo scope personale
 `EventType`: 1 Creata, 2 Regina introdotta, 3 Regina sostituita, 4 Spostata,
 5 Ispezione, 6 Trattamento, 7 Raccolto, 8 Stato, 9 Sciolta. L'app scrive i
 tipi da 1 a 7 (`app/src/lib/local/history.ts`). Vedi
-[Storia ed eventi](/developers/history-and-events).
+[Storia ed eventi](./history-and-events.md).
 
 ## Tabelle solo server
 

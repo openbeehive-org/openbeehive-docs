@@ -5,7 +5,7 @@ title: "Attività"
 
 # Attività
 
-L'apicoltura è piena di piccoli lavori facili da dimenticare: aggiungere un melario prima dell'importazione, montare un escludi-api il giorno prima della smielatura, trattare contro la varroa una volta tolto il miele. Le attività sono i promemoria di Openbeehive: un titolo e una scadenza facoltativa. Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+L'apicoltura è piena di piccoli lavori facili da dimenticare: aggiungere un melario prima dell'importazione, montare un escludi-api il giorno prima della smielatura, trattare contro la varroa una volta tolto il miele. Le attività sono i promemoria di Openbeehive: un titolo e una scadenza facoltativa. Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
 ## Creare un'attività
 
@@ -36,7 +36,7 @@ Se tu e un co-apicoltore spuntate entrambi la stessa attività su dispositivi di
 
 ## Le attività nella Panoramica
 
-Il riquadro **Attività aperte** conta le attività non completate. **Prossime attività** elenca fino a cinque attività aperte con le loro scadenze; le attività la cui scadenza è passata sono contrassegnate con **!**. Vedi [La dashboard](/using-the-app/dashboard).
+Il riquadro **Attività aperte** conta le attività non completate. **Prossime attività** elenca fino a cinque attività aperte con le loro scadenze; le attività la cui scadenza è passata sono contrassegnate con **!**. Vedi [La dashboard](./dashboard.md).
 
 :::tip
 Per i lavori ricorrenti, aggiungi l'attività successiva quando spunti quella attuale. Dopo un controllo sciamatura a sette giorni, aggiungi "Controllo sciamatura" per la settimana seguente.
@@ -75,5 +75,5 @@ Per i lavori ricorrenti, aggiungi l'attività successiva quando spunti quella at
 - Riparare e costruire l'attrezzatura pronta per la primavera.
 
 :::caution
-I tempi dei trattamenti e i prodotti che puoi usare legalmente variano da paese a paese e da regione a regione. Segui le indicazioni locali e l'etichetta del prodotto. Vedi [Varroa](/beekeeping/varroa).
+I tempi dei trattamenti e i prodotti che puoi usare legalmente variano da paese a paese e da regione a regione. Segui le indicazioni locali e l'etichetta del prodotto. Vedi [Varroa](../beekeeping/varroa.md).
 :::

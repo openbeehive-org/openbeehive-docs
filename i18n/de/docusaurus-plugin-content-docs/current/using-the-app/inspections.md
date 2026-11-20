@@ -5,15 +5,15 @@ title: "Durchsichten (Besuche)"
 
 # Durchsichten (Besuche)
 
-Eine Durchsicht ist die Aufzeichnung eines einzelnen Besuchs an einer Beute: was du gesehen hast, was du getan hast und alles, was erwähnenswert ist. Über eine Saison fügen sich die Besuche zu einem Bild zusammen, wie sich jedes Volk entwickelt. Funktioniert offline; siehe [Offline & Synchronisation](/using-the-app/offline-and-sync).
+Eine Durchsicht ist die Aufzeichnung eines einzelnen Besuchs an einer Beute: was du gesehen hast, was du getan hast und alles, was erwähnenswert ist. Über eine Saison fügen sich die Besuche zu einem Bild zusammen, wie sich jedes Volk entwickelt. Funktioniert offline; siehe [Offline & Synchronisation](./offline-and-sync.md).
 
 :::tip
-Wonach du bei einem Besuch suchen solltest und wie oft du durchsehen solltest, liest du unter [Ein Volk durchsehen](/beekeeping/inspecting). Diese Seite behandelt, wie du es erfasst.
+Wonach du bei einem Besuch suchen solltest und wie oft du durchsehen solltest, liest du unter [Ein Volk durchsehen](../beekeeping/inspecting.md). Diese Seite behandelt, wie du es erfasst.
 :::
 
 ## Eine Durchsicht beginnen
 
-Öffne eine Beute (oder scanne ihr [QR-Etikett](/using-the-app/qr-labels)) und tippe über der Durchsichtenliste auf **Durchsicht erfassen**. Das Formular öffnet sich mit dem heutigen Datum.
+Öffne eine Beute (oder scanne ihr [QR-Etikett](./qr-labels.md)) und tippe über der Durchsichtenliste auf **Durchsicht erfassen**. Das Formular öffnet sich mit dem heutigen Datum.
 
 Jedes Feld ist optional. Ein schnelles „alles in Ordnung" ohne weitere Angaben ist ein gültiger Eintrag.
 
@@ -55,7 +55,7 @@ Das Trio „Stifte gesehen / jüngste Larve / verdeckelte Brut" bestätigt meist
 | Drohnenrahmen geschnitten | Ob du eine Drohnenbrutwabe ausgeschnitten hast (eine Maßnahme zur Varroa-Kontrolle). |
 | Honigraum gegeben | Ob du einen Honigraum aufgesetzt hast. |
 
-Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](/beekeeping/varroa) und [Honigernte](/beekeeping/honey-harvest). Honig, den du zum Abfüllen abnimmst, wird separat als [Ernte](/using-the-app/harvests) erfasst, mit Sorte, Wassergehalt und Chargennummer.
+Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](../beekeeping/varroa.md) und [Honigernte](../beekeeping/honey-harvest.md). Honig, den du zum Abfüllen abnimmst, wird separat als [Ernte](./harvests.md) erfasst, mit Sorte, Wassergehalt und Chargennummer.
 
 ## Klima
 
@@ -69,14 +69,14 @@ Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](/beeke
 Alle vier sind optional. Mit der Zeit erscheinen sie in den Diagrammen unter **Entwicklung** der Beute zusammen mit Gewicht und Volksstärke.
 
 :::tip
-Eine Stockwaage oder ein Klimasensor kann diese Felder über die API senden; jeder Messwert wird zu einer Durchsicht an der Beute und synchronisiert auf deine Geräte. Siehe [Automatische Tracker](/using-the-api/automated-trackers).
+Eine Stockwaage oder ein Klimasensor kann diese Felder über die API senden; jeder Messwert wird zu einer Durchsicht an der Beute und synchronisiert auf deine Geräte. Siehe [Automatische Tracker](../using-the-api/automated-trackers.md).
 :::
 
 ## Notiz und Fotos
 
 Füge eine **Notiz** als Freitext für alles hinzu, was die strukturierten Felder nicht abdecken: eine markierte Nachschaffungszelle, eine Wesensart, die im Auge behalten werden muss, eine Erinnerung zum Umweiseln.
 
-**Foto hinzufügen** hängt ein oder mehrere Bilder an (Brutmuster, Krankheitsverdacht, Weiselzellen). Sie werden mit dem Besuch gespeichert und synchronisieren mit dem Rest deiner Aufzeichnungen. Wenn etwas nachverfolgt werden muss, lege eine [Aufgabe](/using-the-app/tasks) mit Fälligkeitsdatum an.
+**Foto hinzufügen** hängt ein oder mehrere Bilder an (Brutmuster, Krankheitsverdacht, Weiselzellen). Sie werden mit dem Besuch gespeichert und synchronisieren mit dem Rest deiner Aufzeichnungen. Wenn etwas nachverfolgt werden muss, lege eine [Aufgabe](./tasks.md) mit Fälligkeitsdatum an.
 
 ## Die Durchsichtenliste
 
@@ -94,5 +94,5 @@ Das Protokoll lässt dich Trends erkennen: Brut, die sich im Frühjahr aufbaut, 
 - **Fotografiere das Zweifelhafte.** Ein Bild eines auffälligen Brutmusters ist mehr wert als eine getippte Beschreibung.
 
 :::caution
-Wenn du eine anzeigepflichtige Krankheit wie die Amerikanische oder Europäische Faulbrut vermutest, fotografiere sie, mach zu und befolge deine örtlichen Meldevorschriften. Siehe [Krankheiten & Schädlinge](/knowledge-base/diseases-and-pests).
+Wenn du eine anzeigepflichtige Krankheit wie die Amerikanische oder Europäische Faulbrut vermutest, fotografiere sie, mach zu und befolge deine örtlichen Meldevorschriften. Siehe [Krankheiten & Schädlinge](../knowledge-base/diseases-and-pests.md).
 :::

@@ -25,10 +25,10 @@ Normalmente hay una reina por colonia. Es la única hembra plenamente desarrolla
 
 La reina no es una gobernante. No dirige la colonia; en cambio, la mantiene unida químicamente. Su **feromona mandibular de la reina** indica a las obreras que la colonia está "con reina", suprimiendo la cría de nuevas reinas y el desarrollo de obreras ponedoras. Cuando esa señal se desvanece —porque ha muerto, está fallando, o la colonia ha crecido demasiado para que su olor llegue a todas— las obreras responden criando una sustituta.
 
-Una reina se aparea una sola vez en su vida, durante unos pocos días al principio, almacenando esperma para el resto de sus años. En Openbeehive puedes registrar cada reina, su color de marcaje y su año, y su origen. Consulta [Reinas](/using-the-app/queens).
+Una reina se aparea una sola vez en su vida, durante unos pocos días al principio, almacenando esperma para el resto de sus años. En Openbeehive puedes registrar cada reina, su color de marcaje y su año, y su origen. Consulta [Reinas](../using-the-app/queens.md).
 
 :::tip Marcaje de la reina
-Las reinas suelen marcarse con un punto de color siguiendo el esquema internacional de colores, que registra el año en que nació. Consulta [Colores de marcaje de reinas](/knowledge-base/queen-marking-colours).
+Las reinas suelen marcarse con un punto de color siguiendo el esquema internacional de colores, que registra el año en que nació. Consulta [Colores de marcaje de reinas](../knowledge-base/queen-marking-colours.md).
 :::
 
 ### Obreras
@@ -59,7 +59,7 @@ El panal se construye con cera secretada por glándulas del abdomen de las obrer
 - Una banda de **polen** ("pan de abeja") alrededor de la cría.
 - **Miel** almacenada en la parte superior y en los bordes exteriores, operculada con cera cuando madura.
 
-La cría se desarrolla en tres etapas: **huevo** (3 días), **larva** (alimentada por las nodrizas y luego operculada) y **pupa** (sellada en su celdilla hasta que emerge). Aprender a leer el patrón de cría —compacto y uniforme frente a irregular— es una de las habilidades de inspección más útiles. Registra lo que encuentres en [Inspecciones](/using-the-app/inspections).
+La cría se desarrolla en tres etapas: **huevo** (3 días), **larva** (alimentada por las nodrizas y luego operculada) y **pupa** (sellada en su celdilla hasta que emerge). Aprender a leer el patrón de cría —compacto y uniforme frente a irregular— es una de las habilidades de inspección más útiles. Registra lo que encuentres en [Inspecciones](../using-the-app/inspections.md).
 
 ## El ciclo anual de población
 
@@ -71,7 +71,7 @@ El tamaño de una colonia sube y baja con las estaciones, siguiendo la disponibi
 - **Otoño** — la puesta se ralentiza, los zánganos son expulsados y la colonia cría unas "abejas de invierno" especiales y longevas.
 - **Invierno** — sin vuelo, sin cría (o muy poca); el racimo vive de la miel almacenada.
 
-Para una guía mes a mes consulta el [Año apícola](/beekeeping/beekeeping-year), y para la mecánica de la reproducción natural consulta [Enjambrazón](/beekeeping/swarming).
+Para una guía mes a mes consulta el [Año apícola](./beekeeping-year.md), y para la mecánica de la reproducción natural consulta [Enjambrazón](./swarming.md).
 
 ## Cómo se comunica una colonia
 
@@ -85,7 +85,7 @@ La **danza del meneo** es como una pecoreadora indica a sus hermanas dónde enco
 
 La miel es el combustible almacenado de la colonia. Las pecoreadoras recogen **néctar** —agua azucarada de las flores— en un buche melario especial. De vuelta en la colmena lo pasan boca a boca a las abejas de casa, añadiendo enzimas que comienzan a convertir los azúcares complejos del néctar en otros más simples.
 
-Las abejas de casa extienden entonces el néctar en las celdillas y lo ventilan con sus alas, eliminando agua hasta que el contenido de humedad baja a alrededor del 18–20 %. En ese punto es estable y no fermentará, y las abejas **operculan** la celdilla con una tapa de cera. Esa miel operculada y madura es el excedente que cosechan los apicultores. Consulta [Cosecha de miel](/beekeeping/honey-harvest) y registra los rendimientos en [Cosechas](/using-the-app/harvests).
+Las abejas de casa extienden entonces el néctar en las celdillas y lo ventilan con sus alas, eliminando agua hasta que el contenido de humedad baja a alrededor del 18–20 %. En ese punto es estable y no fermentará, y las abejas **operculan** la celdilla con una tapa de cera. Esa miel operculada y madura es el excedente que cosechan los apicultores. Consulta [Cosecha de miel](./honey-harvest.md) y registra los rendimientos en [Cosechas](../using-the-app/harvests.md).
 
 ## Cómo inverna una colonia
 
@@ -94,7 +94,7 @@ En climas fríos la colonia no hiberna ni calienta toda la colmena. En cambio, l
 El racimo funciona enteramente con la miel almacenada, comiéndose poco a poco hacia arriba a través de los panales a lo largo de los meses. Dos cosas deciden si sobrevive: **suficientes reservas** en el lugar adecuado y una población de abejas de invierno sanas. Por eso importan tanto la alimentación de otoño y el control de la varroa.
 
 :::caution Las pérdidas invernales son reales
-Incluso colonias de aspecto sano pueden morir durante el invierno por inanición, enfermedad o una fuerte carga de ácaros al entrar en otoño. Llegar al invierno fuertes y sanas es mucho más importante que cualquier intervención a mitad de invierno. Consulta [Varroa](/beekeeping/varroa) y [Alimentación](/beekeeping/feeding).
+Incluso colonias de aspecto sano pueden morir durante el invierno por inanición, enfermedad o una fuerte carga de ácaros al entrar en otoño. Llegar al invierno fuertes y sanas es mucho más importante que cualquier intervención a mitad de invierno. Consulta [Varroa](./varroa.md) y [Alimentación](./feeding.md).
 :::
 
 :::note Variación regional

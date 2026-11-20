@@ -51,7 +51,7 @@ de la ponte de la reine alors que la colonie la prépare au vol, beaucoup d'abei
 :::tip
 Consignez ce que vous voyez à chaque visite. Dans Openbeehive, enregistrez les cellules
 royales, la congestion et vos décisions dans la visite afin que l'image se construise au
-fil des visites. Consultez [Visites](/using-the-app/inspections).
+fil des visites. Consultez [Visites](../using-the-app/inspections.md).
 :::
 
 ## Prévention : donnez-leur de la place
@@ -97,7 +97,7 @@ variantes nommées existent.
 :::note
 Un essaim artificiel est aussi un moyen propre d'agrandir votre rucher ou de remérer. Si
 vous voulez élever des reines délibérément, consultez
-[Élevage de reines](/beekeeping/queen-rearing).
+[Élevage de reines](./queen-rearing.md).
 :::
 
 ### Retirer les cellules royales — avec prudence

@@ -7,7 +7,7 @@ title: "Ispezionare una colonia"
 
 L'ispezione dell'arnia è il cuore dell'apicoltura pratica. Aprire una colonia ti permette di verificare che sia sana, ben nutrita e con la regina, e ti dà la possibilità di agire prima che piccoli problemi diventino grandi. Fatta bene, un'ispezione è tranquilla, rapida e mirata. Fatta male, stressa le api, raffredda la covata e ti insegna ben poco.
 
-Questa pagina copre come ispezionare correttamente una colonia. Per come registrare ciò che trovi in Openbeehive, vedi [registrare le ispezioni](/using-the-app/inspections).
+Questa pagina copre come ispezionare correttamente una colonia. Per come registrare ciò che trovi in Openbeehive, vedi [registrare le ispezioni](../using-the-app/inspections.md).
 
 ## Quando ispezionare
 
@@ -85,11 +85,11 @@ Verifica che la colonia abbia cibo sufficiente, soprattutto in primavera prima d
 
 ### Celle reali
 
-Trovare celle reali cariche o opercolate sul favo è una delle cose più importanti che un'ispezione rivela, poiché spesso significa che la colonia si sta preparando a sciamare. Registra il loro numero e stadio. Vedi [sciamatura](/beekeeping/swarming) per come rispondere.
+Trovare celle reali cariche o opercolate sul favo è una delle cose più importanti che un'ispezione rivela, poiché spesso significa che la colonia si sta preparando a sciamare. Registra il loro numero e stadio. Vedi [sciamatura](./swarming.md) per come rispondere.
 
 ### Malattie, parassiti e varroa
 
-Guarda da vicino la covata per qualsiasi cosa anomala: opercoli infossati, untuosi o perforati, un odore sgradevole, o mummie bianche gessose. Osserva le api adulte per ali deformi o acari visibili. La gestione della varroa è un compito di tutto l'anno; vedi [varroa](/beekeeping/varroa).
+Guarda da vicino la covata per qualsiasi cosa anomala: opercoli infossati, untuosi o perforati, un odore sgradevole, o mummie bianche gessose. Osserva le api adulte per ali deformi o acari visibili. La gestione della varroa è un compito di tutto l'anno; vedi [varroa](./varroa.md).
 
 :::danger
 Se sospetti una malattia soggetta a denuncia obbligatoria come la peste americana o europea, fermati, richiudi e contatta la tua autorità sanitaria apistica nazionale. Gli obblighi di denuncia variano da Paese a Paese e sono spesso un obbligo di legge.
@@ -103,4 +103,4 @@ Ogni ispezione è una piccola perturbazione. Mantienila proporzionata. Se devi s
 
 Un'ispezione è utile solo quanto le note che conservi. Registra temperamento, scorte, spazio, covata ed eventuali celle reali o segni di malattia mentre i dettagli sono freschi, idealmente accanto all'arnia sul tuo telefono.
 
-Vedi [registrare le ispezioni](/using-the-app/inspections) per catturare i tuoi rilievi, e la [sezione apicoltura](/category/beekeeping-basics) per il contesto stagionale più ampio.
+Vedi [registrare le ispezioni](../using-the-app/inspections.md) per catturare i tuoi rilievi, e la [sezione apicoltura](/category/beekeeping-basics) per il contesto stagionale più ampio.

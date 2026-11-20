@@ -8,7 +8,7 @@ title: "Mise à niveau"
 Les mises à niveau sont simples : remplacez le binaire ou récupérez une nouvelle image, redémarrez, et le serveur met le schéma de la base de données à jour de lui-même.
 
 :::caution Sauvegardez d'abord, à chaque fois
-Faites une sauvegarde avant de mettre à niveau. Voir [Sauvegardes](/self-hosting/backups).
+Faites une sauvegarde avant de mettre à niveau. Voir [Sauvegardes](./backups.md).
 :::
 
 ## Avant de commencer
@@ -69,13 +69,13 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Cela produit un nouveau `./server/bin/openbeehive`. Les prérequis sont dans [Binaire unique](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
+Cela produit un nouveau `./server/bin/openbeehive`. Les prérequis sont dans [Binaire unique](./single-binary.md) (Go 1.27+, Node 24+, buf).
 
 ## Mettre à niveau avec Docker
 
 La commande nécessaire dépend de la provenance de l'image.
 
-**Image publiée** (le `docker run` mono-conteneur du [démarrage rapide](/self-hosting/quick-start), ou un fichier Compose avec une ligne `image:` tel que `docker-compose.demo.yml`) :
+**Image publiée** (le `docker run` mono-conteneur du [démarrage rapide](./quick-start.md), ou un fichier Compose avec une ligne `image:` tel que `docker-compose.demo.yml`) :
 
 ```bash
 docker compose -f docker-compose.demo.yml pull
@@ -139,4 +139,4 @@ Ne restaurez pas une ancienne base de données sous un binaire plus récent, et 
 - Ouvrez l'application et confirmez que vos ruchers, ruches et visites récentes apparaissent.
 - Enregistrez quelque chose sur un appareil et confirmez que cela se synchronise.
 
-Si quelque chose semble anormal, voir [Dépannage](/knowledge-base/troubleshooting) et revenez à votre sauvegarde pendant que vous enquêtez.
+Si quelque chose semble anormal, voir [Dépannage](../knowledge-base/troubleshooting.md) et revenez à votre sauvegarde pendant que vous enquêtez.

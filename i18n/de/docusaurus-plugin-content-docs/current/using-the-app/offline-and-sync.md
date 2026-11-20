@@ -18,7 +18,7 @@ Openbeehive hält eine vollständige Kopie deiner Aufzeichnungen in einer kleine
 - **Deine Daten gehören dir.** Die Aufzeichnungen leben auf deinem Gerät; der Server ist die Kopie zum Synchronisieren und Teilen.
 
 :::tip
-Da Aufzeichnungen auf dem Gerät gespeichert werden, installiere Openbeehive als App, statt es in einem Browser-Tab zu nutzen. Siehe [Openbeehive installieren](/using-the-app/install).
+Da Aufzeichnungen auf dem Gerät gespeichert werden, installiere Openbeehive als App, statt es in einem Browser-Tab zu nutzen. Siehe [Openbeehive installieren](./install.md).
 :::
 
 ## Die Offline-Anzeige
@@ -28,7 +28,7 @@ Hat das Gerät keine Verbindung, wechselt der Konto-Block in der Seitenleiste vo
 Sobald das Gerät wieder online ist, verschwindet die Leiste und alle offline vorgenommenen Änderungen werden automatisch hochgesendet. Es gibt keinen Button „Jetzt synchronisieren".
 
 :::note
-Eine dauerhafte Offline-Anzeige bedeutet meist schwachen Empfang am Bienenstand. Bleibt sie selbst bei guter Verbindung zu Hause bestehen, siehe [Fehlerbehebung](/knowledge-base/troubleshooting).
+Eine dauerhafte Offline-Anzeige bedeutet meist schwachen Empfang am Bienenstand. Bleibt sie selbst bei guter Verbindung zu Hause bestehen, siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md).
 :::
 
 ## Deine erste Synchronisation auf einem neuen Gerät
@@ -56,7 +56,7 @@ Openbeehive löst überlappende Änderungen **automatisch** auf, ohne Abfragen d
 Jedes Gerät konvergiert auf denselben Zustand, sobald alle synchronisiert haben.
 
 :::tip
-Die Kurzfassung: füge frei hinzu, bearbeite zuversichtlich. Wie das unter der Haube funktioniert, steht auf den Seiten zum [Sync-Protokoll](/developers/sync-protocol) und zur [Architektur](/developers/architecture).
+Die Kurzfassung: füge frei hinzu, bearbeite zuversichtlich. Wie das unter der Haube funktioniert, steht auf den Seiten zum [Sync-Protokoll](../developers/sync-protocol.md) und zur [Architektur](../developers/architecture.md).
 :::
 
 ## Teilen
@@ -68,7 +68,7 @@ Aufzeichnungen werden über **Mandanten** geteilt. Jedes Mitglied eines Mandante
 | **Admin** (Eigentümer des Mandanten) | Alles, was ein Mitglied kann, plus einladen und zurückziehen sowie den Mandanten löschen. |
 | **Mitglied** | Bienenstände, Beuten, Durchsichten, Aufgaben, Ernten und Behandlungen im Mandanten anlegen und bearbeiten. |
 
-Um einen Standort mit einem Mentor zu teilen und andere privat zu halten, legst du diesen Standort in einen eigenen Mandanten und lädst den Mentor dorthin ein. Geteilte Aufzeichnungen synchronisieren und lösen Konflikte genau wie deine eigenen. Siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+Um einen Standort mit einem Mentor zu teilen und andere privat zu halten, legst du diesen Standort in einen eigenen Mandanten und lädst den Mentor dorthin ein. Geteilte Aufzeichnungen synchronisieren und lösen Konflikte genau wie deine eigenen. Siehe [Konten & Mandanten](./accounts-tenants.md).
 
 ## Wenn etwas nicht gespeichert werden kann
 
@@ -76,10 +76,10 @@ Gespeichert wird auf deinem Gerät, deshalb schlägt das praktisch nie fehl. Fal
 
 Beim öffentlichen **Demo-Konto** lehnt der Server Änderungen ab (die Demo setzt sich stündlich zurück). Deine Änderungen werden auf deinem Gerät gespeichert und bleiben einfach dort, statt zu synchronisieren.
 
-Es gibt eine Situation, in der Speichern funktioniert, aber nicht von Dauer ist: Kann der Browser der App ihren privaten Speicher nicht geben, weicht die App auf eine Datenbank im Arbeitsspeicher aus und zeigt den Hinweis **„Speicher nicht verfügbar – Änderungen bleiben auf diesem Gerät nicht erhalten."** Für die Sitzung funktioniert alles weiter, und Änderungen werden weiterhin mit dem Server synchronisiert, wenn du angemeldet bist, aber die lokale Kopie ist weg, sobald der Tab geschlossen wird. Das passiert in privaten Browserfenstern und wenn ein zweiter Tab der App den Speicher noch hält; siehe [Fehlerbehebung](/knowledge-base/troubleshooting#storage-is-unavailable).
+Es gibt eine Situation, in der Speichern funktioniert, aber nicht von Dauer ist: Kann der Browser der App ihren privaten Speicher nicht geben, weicht die App auf eine Datenbank im Arbeitsspeicher aus und zeigt den Hinweis **„Speicher nicht verfügbar – Änderungen bleiben auf diesem Gerät nicht erhalten."** Für die Sitzung funktioniert alles weiter, und Änderungen werden weiterhin mit dem Server synchronisiert, wenn du angemeldet bist, aber die lokale Kopie ist weg, sobald der Tab geschlossen wird. Das passiert in privaten Browserfenstern und wenn ein zweiter Tab der App den Speicher noch hält; siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
 ## Werde ich jemals Daten verlieren?
 
 Deine Aufzeichnungen werden zuerst auf dein Gerät geschrieben und nicht entfernt, weil du offline bist oder die App geschlossen wird. Sie warten auf dem Gerät, bis sie synchronisiert werden können.
 
-Wenn du selbst hostest, halte zusätzlich Server-Backups vor. Siehe [Backups](/self-hosting/backups).
+Wenn du selbst hostest, halte zusätzlich Server-Backups vor. Siehe [Backups](../self-hosting/backups.md).

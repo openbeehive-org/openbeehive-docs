@@ -88,4 +88,4 @@ Listez plusieurs origines séparées par des virgules. Évitez `*` avec `BEEHIVE
 - `BEEHIVE_CORS_ALLOWED_ORIGINS` n'est défini que si l'application est sur une origine différente.
 - Les étiquettes QR encodent l'adresse depuis laquelle elles ont été imprimées ; réimprimez-les après un changement de domaine.
 
-Pour les options serveur, voir [Configuration](/self-hosting/configuration).
+Pour les options serveur, voir [Configuration](./configuration.md).

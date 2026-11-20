@@ -22,7 +22,7 @@ Ogni database è configurato tramite la stessa coppia di variabili:
 | `BEEHIVE_DATABASE_DRIVER` | Quale motore usare: `sqlite`, `postgres` o `mysql`. |
 | `BEEHIVE_DATABASE_DSN` | La stringa di connessione (Data Source Name) per quel motore. |
 
-Il profilo di deployment `selfhost` usa SQLite per impostazione predefinita, mentre il profilo `cloud` usa PostgreSQL. Puoi sovrascrivere entrambi impostando esplicitamente queste due variabili. Vedi [Configurazione](/self-hosting/configuration) per l'elenco completo delle variabili d'ambiente.
+Il profilo di deployment `selfhost` usa SQLite per impostazione predefinita, mentre il profilo `cloud` usa PostgreSQL. Puoi sovrascrivere entrambi impostando esplicitamente queste due variabili. Vedi [Configurazione](./configuration.md) per l'elenco completo delle variabili d'ambiente.
 
 ## Quale database dovrei scegliere?
 
@@ -39,7 +39,7 @@ In caso di dubbio, usa SQLite. Non richiede un servizio separato, risiede in un 
 
 ## SQLite (predefinito per il self-host)
 
-SQLite è la scelta a dipendenza zero. Non c'è alcun server di database da installare o gestire: i tuoi dati risiedono in un file su disco, il che rende i [backup](/self-hosting/backups) semplici come copiare quel file.
+SQLite è la scelta a dipendenza zero. Non c'è alcun server di database da installare o gestire: i tuoi dati risiedono in un file su disco, il che rende i [backup](./backups.md) semplici come copiare quel file.
 
 ```bash
 BEEHIVE_DATABASE_DRIVER=sqlite
@@ -60,7 +60,7 @@ BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)&_pragma=busy_
 Puoi usare un percorso relativo (risolto rispetto alla directory di lavoro del server) o un percorso assoluto come `file:/var/lib/openbeehive/openbeehive.db?_pragma=journal_mode(WAL)`.
 
 :::caution Il WAL crea file extra
-In modalità WAL SQLite mantiene file di accompagnamento accanto al database principale (`openbeehive.db-wal` e `openbeehive.db-shm`). Quando esegui il backup tramite copia di file, ferma prima il server, oppure usa gli strumenti di backup propri di SQLite, così catturi un'istantanea coerente. Vedi [Backup](/self-hosting/backups).
+In modalità WAL SQLite mantiene file di accompagnamento accanto al database principale (`openbeehive.db-wal` e `openbeehive.db-shm`). Quando esegui il backup tramite copia di file, ferma prima il server, oppure usa gli strumenti di backup propri di SQLite, così catturi un'istantanea coerente. Vedi [Backup](./backups.md).
 :::
 
 ## PostgreSQL
@@ -133,7 +133,7 @@ Non esegui le migrazioni a mano. A ogni avvio, il server controlla lo schema e a
 L'SQL è scritto in modo portabile così lo stesso schema funziona su tutti e tre i motori; non c'è alcuna configurazione specifica del motore oltre alla creazione del database e dell'utente mostrata sopra.
 
 :::tip Esegui sempre il backup prima di aggiornare
-Poiché una nuova versione può includere migrazioni che modificano lo schema, esegui un backup prima di aggiornare. Vedi [Aggiornamento](/self-hosting/upgrading) e [Backup](/self-hosting/backups).
+Poiché una nuova versione può includere migrazioni che modificano lo schema, esegui un backup prima di aggiornare. Vedi [Aggiornamento](./upgrading.md) e [Backup](./backups.md).
 :::
 
 ## Cambiare database in seguito
@@ -142,4 +142,4 @@ I driver non sono intercambiabili a livello di dati: puntare `BEEHIVE_DATABASE_D
 
 Se ti serve solo un server centrale per te stesso, SQLite ti servirà bene per molto tempo.
 
-Per saperne di più sulla configurazione circostante, vedi [Self-hosting](/category/self-hosting) e [Archiviazione](/self-hosting/storage).
+Per saperne di più sulla configurazione circostante, vedi [Self-hosting](/category/self-hosting) e [Archiviazione](./storage.md).

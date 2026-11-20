@@ -22,7 +22,7 @@ In der Praxis bedeutet das:
 - **Dokumentation**, damit du dich daran erinnerst, was jedes Volk tut, und Trends über die Zeit erkennen kannst.
 
 :::tip
-Gute Aufzeichnungen sind einer der größten Gefallen, die du deinem zukünftigen Ich tun kannst. Notiere, was du bei jedem Besuch gesehen hast, was du getan hast und was du als Nächstes planst. Die Funktion [Durchsichten](/using-the-app/inspections) von Openbeehive ist genau um diesen Rhythmus herum gebaut.
+Gute Aufzeichnungen sind einer der größten Gefallen, die du deinem zukünftigen Ich tun kannst. Notiere, was du bei jedem Besuch gesehen hast, was du getan hast und was du als Nächstes planst. Die Funktion [Durchsichten](../using-the-app/inspections.md) von Openbeehive ist genau um diesen Rhythmus herum gebaut.
 :::
 
 ## Erwartungen an Zeit und Kosten
@@ -35,7 +35,7 @@ Sei ehrlich zu dir selbst, was beides betrifft, bevor du dich festlegst.
 
 | Posten | Hinweise |
 | --- | --- |
-| Ein Bienenstock | Neu, gebraucht oder selbst gebaut. Wähle einen in deiner Region verbreiteten [Beutentyp](/knowledge-base/hive-types). |
+| Ein Bienenstock | Neu, gebraucht oder selbst gebaut. Wähle einen in deiner Region verbreiteten [Beutentyp](../knowledge-base/hive-types.md). |
 | Schutzkleidung | Ein Anzug oder eine Jacke plus Handschuhe. |
 | Grundwerkzeug | Stockmeißel, Smoker, Abkehrbesen. |
 | Bienen | Ein Ableger oder ein Schwarm. |
@@ -79,11 +79,11 @@ Du brauchst nicht viel Platz, aber ein guter Standort macht alles einfacher. Ach
 - **Wasser in der Nähe.** Bienen brauchen Wasser; sorge für eine sichere Quelle, falls keine vorhanden ist, damit sie nicht den Teich oder das Planschbecken des Nachbarn aufsuchen.
 - **Vernünftiger Zugang.** Du wirst schwere Honigräume tragen, also denke an den Weg vom Auto zum Stock.
 
-Wenn du bereit bist, kannst du den Standort, die Beuten und die Völker in der App erfassen. Siehe [Bienenstände](/using-the-app/apiaries) und [Beuten](/using-the-app/hives), um loszulegen.
+Wenn du bereit bist, kannst du den Standort, die Beuten und die Völker in der App erfassen. Siehe [Bienenstände](../using-the-app/apiaries.md) und [Beuten](../using-the-app/hives.md), um loszulegen.
 
 ## Ein realistischer Plan für das erste Jahr
 
-Der Kalender jeder Region ist anders, betrachte dies also eher als Form denn als feste Daten. Das [Imkerjahr](/beekeeping/beekeeping-year) bietet eine ausführlichere Anleitung Monat für Monat.
+Der Kalender jeder Region ist anders, betrachte dies also eher als Form denn als feste Daten. Das [Imkerjahr](./beekeeping-year.md) bietet eine ausführlichere Anleitung Monat für Monat.
 
 1. **Winter, bevor du anfängst.** Tritt deinem Verein bei, besuche einen Anfängerkurs, lies und bestelle Ausrüstung, damit sie im Frühjahr bereit ist.
 2. **Frühjahr.** Beschaffe dein erstes Volk, idealerweise einen örtlichen Ableger von einem seriösen Anbieter. Setze es ein, füttere bei Bedarf und beginne mit behutsamen wöchentlichen Durchsichten.

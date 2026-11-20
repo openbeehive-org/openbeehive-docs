@@ -20,9 +20,9 @@ Man mano che le giornate si allungano, la regina ricomincia a deporre e la colon
 Cosa fare:
 
 - Riduci al minimo il disturbo. Una rapida "soppesatura" dell'arnia (sollevando un lato per giudicare il peso) ti dice se le scorte si stanno esaurendo senza aprire.
-- Nel primo giorno mite e fermo, una breve occhiata conferma che la colonia è viva, con regina e cibo. Nutri se le scorte scarseggiano (vedi [Nutrizione](/beekeeping/feeding)).
+- Nel primo giorno mite e fermo, una breve occhiata conferma che la colonia è viva, con regina e cibo. Nutri se le scorte scarseggiano (vedi [Nutrizione](./feeding.md)).
 - Pulisci e prepara l'attrezzatura: cassette di scorta, telaini e fogli cerei per la stagione a venire.
-- Pianifica ora la tua strategia contro la varroa, piuttosto che nel panico più tardi (vedi [Varroa](/beekeeping/varroa)).
+- Pianifica ora la tua strategia contro la varroa, piuttosto che nel panico più tardi (vedi [Varroa](./varroa.md)).
 
 Registra man mano la prima ispezione e ogni nutrizione. Registrare presto i livelli delle scorte ti dà un riferimento di base per l'anno.
 
@@ -34,11 +34,11 @@ Cosa fare:
 
 - Ispeziona all'incirca ogni sette-nove giorni durante lo sviluppo. Questa cadenza corrisponde al ciclo delle celle reali e ti consente di cogliere i preparativi della sciamatura prima che vadano troppo oltre.
 - Osserva le celle reali, la congestione e una colonia che "ribolle" di api. Dai spazio per tempo aggiungendo cassette o melari.
-- Applica il metodo di controllo della sciamatura che hai scelto se compaiono celle (vedi [Sciamatura](/beekeeping/swarming)).
-- Considera di allevare nuove regine o di fare aumento da ceppi forti (vedi [Allevamento delle regine](/beekeeping/queen-rearing)).
+- Applica il metodo di controllo della sciamatura che hai scelto se compaiono celle (vedi [Sciamatura](./swarming.md)).
+- Considera di allevare nuove regine o di fare aumento da ceppi forti (vedi [Allevamento delle regine](./queen-rearing.md)).
 
 :::tip Usa le attività per restare in ritmo
-Il ciclo di sette giorni è facile da perdere di vista su più arnie. Aggiungi un'attività con una scadenza per la prossima visita e, quando la spunti, aggiungi la successiva. Vedi [Attività](/using-the-app/tasks).
+Il ciclo di sette giorni è facile da perdere di vista su più arnie. Aggiungi un'attività con una scadenza per la prossima visita e, quando la spunti, aggiungi la successiva. Vedi [Attività](../using-the-app/tasks.md).
 :::
 
 ## Estate: l'importazione del miele
@@ -50,7 +50,7 @@ Cosa fare:
 - Resta in anticipo sulle api con lo spazio dei melari. Una colonia affollata immagazzina meno ed è più incline a sciamare.
 - Continua le ispezioni, ma puoi allentarne la frequenza una volta passato l'impulso alla sciamatura (spesso dopo il giorno più lungo).
 - Monitora i livelli di varroa durante la stagione così da non avere sorprese al momento della raccolta.
-- Raccogli il miele opercolato quando i telaini sono pronti e l'importazione si esaurisce (vedi [Raccolta del miele](/beekeeping/honey-harvest)).
+- Raccogli il miele opercolato quando i telaini sono pronti e l'importazione si esaurisce (vedi [Raccolta del miele](./honey-harvest.md)).
 
 Registra ogni raccolta con i pesi e quali arnie l'hanno prodotta. Nell'arco di qualche stagione questo si trasforma in dati davvero utili sulle tue colonie migliori e sulla tua flora migliore.
 
@@ -65,10 +65,10 @@ Cosa fare:
 - Una volta che il trattamento lo consente, nutri per integrare le scorte invernali se la colonia è leggera. Nutri con sciroppo concentrato per tempo così che le api possano maturarlo e opercolarlo prima che faccia freddo.
 
 :::caution Le regole sui trattamenti variano da Paese a Paese
-I trattamenti contro la varroa approvati, i dosaggi e i tempi differiscono tra regioni, e alcuni hanno requisiti di legge. Usa sempre un prodotto autorizzato dove vivi e segui le indicazioni nazionali. Vedi [Varroa](/beekeeping/varroa) per una panoramica, ma verifica le regole locali.
+I trattamenti contro la varroa approvati, i dosaggi e i tempi differiscono tra regioni, e alcuni hanno requisiti di legge. Usa sempre un prodotto autorizzato dove vivi e segui le indicazioni nazionali. Vedi [Varroa](./varroa.md) per una panoramica, ma verifica le regole locali.
 :::
 
-Registra ogni trattamento: prodotto, dose e date. Questo ti tutela, ti aiuta a giudicare cosa funziona e mantiene una storia sanitaria onesta per ciascuna arnia. I registri dei [Trattamenti](/using-the-app/treatments) dell'app sono progettati esattamente per questo.
+Registra ogni trattamento: prodotto, dose e date. Questo ti tutela, ti aiuta a giudicare cosa funziona e mantiene una storia sanitaria onesta per ciascuna arnia. I registri dei [Trattamenti](../using-the-app/treatments.md) dell'app sono progettati esattamente per questo.
 
 ## Autunno: preparazione
 
@@ -82,7 +82,7 @@ Cosa fare:
 - Assicura la ventilazione e che l'arnia scoli la pioggia. Fissa i tetti contro il vento.
 - Riordina e conserva al sicuro il favo costruito contro la tarma della cera.
 
-Usa le attività per assicurarti che nessuna arnia venga dimenticata. Una semplice attività di lista di controllo "preparazione invernale" per arnia significa che nulla sfugge prima dell'arrivo del freddo. Vedi [Attività](/using-the-app/tasks).
+Usa le attività per assicurarti che nessuna arnia venga dimenticata. Una semplice attività di lista di controllo "preparazione invernale" per arnia significa che nulla sfugge prima dell'arrivo del freddo. Vedi [Attività](../using-the-app/tasks.md).
 
 ## Inverno: il glomere riposa
 
@@ -104,4 +104,4 @@ L'inverno è il momento perfetto per guardare indietro. Rivedere le ispezioni, l
 
 L'anno è un ciclo: sviluppo, stagione della sciamatura, importazione del miele, trattare e nutrire, preparare, riposare. Ogni fase prepara la successiva, e i buoni registri sono ciò che le collega.
 
-Più costantemente registri ispezioni, attività, raccolte e trattamenti, più facile diventa l'anno successivo. Per saperne di più sulla biologia della colonia dietro questi ritmi, vedi [La colonia](/beekeeping/the-colony), e per le guide apistiche più ampie inizia dalla [Sezione apicoltura](/category/beekeeping-basics).
+Più costantemente registri ispezioni, attività, raccolte e trattamenti, più facile diventa l'anno successivo. Per saperne di più sulla biologia della colonia dietro questi ritmi, vedi [La colonia](./the-colony.md), e per le guide apistiche più ampie inizia dalla [Sezione apicoltura](/category/beekeeping-basics).

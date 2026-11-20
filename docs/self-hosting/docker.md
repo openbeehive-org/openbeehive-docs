@@ -32,7 +32,7 @@ gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owne
 Both commands print the signing identity and the commit the image was built from. Images published before 0.4.0 are not signed.
 
 :::tip
-For a single-user instance on one machine the [single binary](/self-hosting/single-binary) is even simpler than Docker. Reach for Compose when you want Postgres and S3-style storage.
+For a single-user instance on one machine the [single binary](./single-binary.md) is even simpler than Docker. Reach for Compose when you want Postgres and S3-style storage.
 :::
 
 ## Run the single container
@@ -56,7 +56,7 @@ docker run -d \
 - The `BEEHIVE_DATABASE_DSN` and `BEEHIVE_BLOB_DIR` lines point the database and the uploaded photos at the volume explicitly. The defaults (`openbeehive.db`, `./data/blobs`) are relative to the working directory, which is `/data` since 0.4.0, but spelling the paths out keeps the command unambiguous and matches the backup instructions.
 - `BEEHIVE_PUBLIC_BASE_URL` must be the address users reach, including scheme. The server uses it for OIDC redirect URLs and for invite and verification links.
 
-With no login method enabled (the selfhost default) the instance runs in single-user mode. To add authentication, set `BEEHIVE_SESSION_SECRET` (generate it once with `openssl rand -base64 32` and keep it stable; changing it signs everyone out) plus the variables for the method you want. Email/password login also needs `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD`, or the server refuses to start. See [Authentication](/self-hosting/authentication).
+With no login method enabled (the selfhost default) the instance runs in single-user mode. To add authentication, set `BEEHIVE_SESSION_SECRET` (generate it once with `openssl rand -base64 32` and keep it stable; changing it signs everyone out) plus the variables for the method you want. Email/password login also needs `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD`, or the server refuses to start. See [Authentication](./authentication.md).
 
 ### Using an env file
 
@@ -130,13 +130,13 @@ Inside the Compose network, containers reach each other by service name, which i
 
 ### A production-shaped file
 
-`docker-compose.demo.yml` in the repository is the file behind the hosted instance: it uses the published image instead of building, publishes no database or MinIO ports, adds restart policies and healthchecks, takes every secret from `.env`, closes registration (invite-only) and enables the [demo tenant](/self-hosting/demo). Its header comment lists the variables it needs. Use it as the starting point for your own production stack:
+`docker-compose.demo.yml` in the repository is the file behind the hosted instance: it uses the published image instead of building, publishes no database or MinIO ports, adds restart policies and healthchecks, takes every secret from `.env`, closes registration (invite-only) and enables the [demo tenant](./demo.md). Its header comment lists the variables it needs. Use it as the starting point for your own production stack:
 
 ```bash
 docker compose -f docker-compose.demo.yml up -d
 ```
 
-For the full list of variables see [Configuration](/self-hosting/configuration).
+For the full list of variables see [Configuration](./configuration.md).
 
 ## Persisting your data
 
@@ -144,7 +144,7 @@ For the full list of variables see [Configuration](/self-hosting/configuration).
 - **Cloud profile:** records live in the `pg` volume (Postgres) and uploaded files in the `minio` volume. The server container is stateless and can be replaced freely.
 
 :::danger Back up before you upgrade
-Named volumes survive `docker compose up` and image upgrades, but not `docker compose down -v` or a removed volume. Take a backup before any upgrade or destructive command. See [Backups](/self-hosting/backups).
+Named volumes survive `docker compose up` and image upgrades, but not `docker compose down -v` or a removed volume. Take a backup before any upgrade or destructive command. See [Backups](./backups.md).
 :::
 
 ## Common operations

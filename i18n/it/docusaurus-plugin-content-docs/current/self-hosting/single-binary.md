@@ -10,7 +10,7 @@ Il modo più semplice per eseguire Openbeehive sulla tua macchina è il **binari
 Questa pagina ti guida nella compilazione di quel binario dai sorgenti e nella sua esecuzione come servizio di lunga durata.
 
 :::tip Hai fretta?
-Se preferisci scaricare un'immagine container precompilata, vedi [Docker](/self-hosting/docker). Per confrontare prima entrambi gli approcci, parti dalla [panoramica del self-hosting](/category/self-hosting).
+Se preferisci scaricare un'immagine container precompilata, vedi [Docker](./docker.md). Per confrontare prima entrambi gli approcci, parti dalla [panoramica del self-hosting](/category/self-hosting).
 :::
 
 ## Prerequisiti
@@ -63,10 +63,10 @@ openssl rand -base64 32
 Incolla il risultato in `BEEHIVE_SESSION_SECRET=`.
 
 :::note Nessun login per impostazione predefinita
-Il profilo selfhost non abilita alcun metodo di login: `BEEHIVE_PASSWORD_AUTH` è disattivato, `BEEHIVE_OIDC_PROVIDERS` è vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`. Lasciali così per eseguire come utente singolo senza passaggio di accesso. Quando vuoi account, passkey o un provider, vedi [Autenticazione](/self-hosting/authentication).
+Il profilo selfhost non abilita alcun metodo di login: `BEEHIVE_PASSWORD_AUTH` è disattivato, `BEEHIVE_OIDC_PROVIDERS` è vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`. Lasciali così per eseguire come utente singolo senza passaggio di accesso. Quando vuoi account, passkey o un provider, vedi [Autenticazione](./authentication.md).
 :::
 
-Se intendi raggiungere l'istanza da un altro dispositivo sulla tua rete, imposta `BEEHIVE_PUBLIC_BASE_URL` su un indirizzo che quel dispositivo possa effettivamente risolvere (ad esempio `http://192.168.1.20:8080` o il tuo dominio dietro un [reverse proxy](/self-hosting/reverse-proxy)). Le etichette QR codificano l'indirizzo con cui apri l'app, quindi usa sempre lo stesso indirizzo.
+Se intendi raggiungere l'istanza da un altro dispositivo sulla tua rete, imposta `BEEHIVE_PUBLIC_BASE_URL` su un indirizzo che quel dispositivo possa effettivamente risolvere (ad esempio `http://192.168.1.20:8080` o il tuo dominio dietro un [reverse proxy](./reverse-proxy.md)). Le etichette QR codificano l'indirizzo con cui apri l'app, quindi usa sempre lo stesso indirizzo.
 
 ## Compila
 
@@ -162,7 +162,7 @@ journalctl -u openbeehive -f
 ```
 
 :::caution Binding alla porta 80 o 443
-L'esempio si lega a `:8080`, che un utente non privilegiato può usare. Non eseguire il servizio come root per raggiungere le porte 80/443 - mantieni invece Openbeehive su `:8080` e metti davanti ad esso un [reverse proxy](/self-hosting/reverse-proxy) (come Caddy o nginx) per gestire il TLS e la porta pubblica.
+L'esempio si lega a `:8080`, che un utente non privilegiato può usare. Non eseguire il servizio come root per raggiungere le porte 80/443 - mantieni invece Openbeehive su `:8080` e metti davanti ad esso un [reverse proxy](./reverse-proxy.md) (come Caddy o nginx) per gestire il TLS e la porta pubblica.
 :::
 
 ## Dove risiedono i tuoi dati
@@ -188,8 +188,8 @@ Poiché tutto lo stato è costituito da file in un'unica directory, ricollocare 
 Copiare `openbeehive.db` mentre il server è in esecuzione può catturare un'istantanea lacerata e incoerente. Ferma il servizio (o usa una procedura di backup adeguata) prima di copiare i file del database.
 :::
 
-Per backup pianificati, ritenzione e tecniche di backup a caldo sicure per SQLite, vedi [Backup](/self-hosting/backups).
+Per backup pianificati, ritenzione e tecniche di backup a caldo sicure per SQLite, vedi [Backup](./backups.md).
 
 ## Aggiornamento
 
-Per passare a una versione più recente, scarica il codice più recente, ricompila e sostituisci il binario - il tuo database e la directory `data/` restano dove sono e le migrazioni vengono eseguite al successivo avvio. La procedura completa, incluso come effettuare il rollback, è trattata in [Aggiornamento](/self-hosting/upgrading).
+Per passare a una versione più recente, scarica il codice più recente, ricompila e sostituisci il binario - il tuo database e la directory `data/` restano dove sono e le migrazioni vengono eseguite al successivo avvio. La procedura completa, incluso come effettuare il rollback, è trattata in [Aggiornamento](./upgrading.md).

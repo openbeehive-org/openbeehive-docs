@@ -50,7 +50,7 @@ o formano la barba all'ingresso, e fuchi presenti in buon numero.
 :::tip
 Registra ciò che vedi a ogni visita. In Openbeehive, registra celle reali, congestione
 e le tue decisioni nell'ispezione così che il quadro si costruisca attraverso le visite. Vedi
-[Ispezioni](/using-the-app/inspections).
+[Ispezioni](../using-the-app/inspections.md).
 :::
 
 ## Prevenzione: dai loro spazio
@@ -92,7 +92,7 @@ chiamato sciame artificiale di Pagden; esistono diverse varianti note.
 :::note
 Uno sciame artificiale è anche un modo ordinato per espandere il tuo apiario o sostituire la regina. Se
 vuoi allevare regine deliberatamente, vedi
-[Allevamento delle regine](/beekeeping/queen-rearing).
+[Allevamento delle regine](./queen-rearing.md).
 :::
 
 ### Rimuovere le celle reali — con cautela

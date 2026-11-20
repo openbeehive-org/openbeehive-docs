@@ -25,10 +25,10 @@ Il y a généralement une reine par colonie. C'est la seule femelle pleinement d
 
 La reine n'est pas une dirigeante. Elle ne commande pas la colonie ; elle la maintient plutôt unie chimiquement. Sa **phéromone mandibulaire** signale aux ouvrières que la colonie est « pourvue d'une reine », supprimant l'élevage de nouvelles reines et le développement d'ouvrières pondeuses. Lorsque ce signal s'estompe (parce qu'elle est morte, qu'elle décline, ou que la colonie est devenue trop grande pour que son odeur atteigne tout le monde), les ouvrières réagissent en élevant une remplaçante.
 
-Une reine ne s'accouple qu'une seule fois dans sa vie, sur quelques jours au début, stockant le sperme pour le reste de ses années. Dans Openbeehive, vous pouvez consigner chaque reine, sa couleur de marquage et son année, ainsi que son origine. Consultez [Reines](/using-the-app/queens).
+Une reine ne s'accouple qu'une seule fois dans sa vie, sur quelques jours au début, stockant le sperme pour le reste de ses années. Dans Openbeehive, vous pouvez consigner chaque reine, sa couleur de marquage et son année, ainsi que son origine. Consultez [Reines](../using-the-app/queens.md).
 
 :::tip Marquage de la reine
-Les reines sont souvent marquées d'un point coloré selon le code couleur international, qui indique l'année de sa naissance. Consultez [Couleurs de marquage des reines](/knowledge-base/queen-marking-colours).
+Les reines sont souvent marquées d'un point coloré selon le code couleur international, qui indique l'année de sa naissance. Consultez [Couleurs de marquage des reines](../knowledge-base/queen-marking-colours.md).
 :::
 
 ### Les ouvrières
@@ -59,7 +59,7 @@ Les rayons sont construits à partir de cire sécrétée par des glandes située
 - Une bande de **pollen** (« pain d'abeille ») autour du couvain.
 - Le **miel** stocké en haut et sur les bords extérieurs, operculé de cire une fois mûr.
 
-Le couvain se développe en trois stades : **œuf** (3 jours), **larve** (nourrie par les nourricières, puis operculée), et **nymphe** (scellée dans sa cellule jusqu'à son émergence). Apprendre à lire le schéma de ponte (compact et régulier par opposition à clairsemé) est l'une des compétences d'inspection les plus utiles. Consignez vos observations dans les [Visites](/using-the-app/inspections).
+Le couvain se développe en trois stades : **œuf** (3 jours), **larve** (nourrie par les nourricières, puis operculée), et **nymphe** (scellée dans sa cellule jusqu'à son émergence). Apprendre à lire le schéma de ponte (compact et régulier par opposition à clairsemé) est l'une des compétences d'inspection les plus utiles. Consignez vos observations dans les [Visites](../using-the-app/inspections.md).
 
 ## Le cycle annuel de la population
 
@@ -71,7 +71,7 @@ La taille d'une colonie augmente et diminue au fil des saisons, suivant la dispo
 - **Automne** : la ponte ralentit, les faux-bourdons sont expulsés, et la colonie élève des « abeilles d'hiver » spéciales à longue durée de vie.
 - **Hiver** : pas de vol, pas de couvain (ou très peu) ; la grappe vit sur le miel stocké.
 
-Pour un guide mois par mois, consultez l'[Année apicole](/beekeeping/beekeeping-year), et pour les mécanismes de la reproduction naturelle, consultez [Essaimage](/beekeeping/swarming).
+Pour un guide mois par mois, consultez l'[Année apicole](./beekeeping-year.md), et pour les mécanismes de la reproduction naturelle, consultez [Essaimage](./swarming.md).
 
 ## Comment une colonie communique
 
@@ -85,7 +85,7 @@ La **danse frétillante** est la façon dont une butineuse indique à ses sœurs
 
 Le miel est le carburant stocké de la colonie. Les butineuses collectent le **nectar** (de l'eau sucrée des fleurs) dans un jabot spécial. De retour à la ruche, elles le transmettent de bouche à bouche aux abeilles d'intérieur, ajoutant des enzymes qui commencent à convertir les sucres complexes du nectar en sucres plus simples.
 
-Les abeilles d'intérieur étalent ensuite le nectar dans les cellules et le ventilent de leurs ailes, chassant l'eau jusqu'à ce que la teneur en humidité descende autour de 18 à 20 %. À ce moment-là, il est stable et ne fermentera pas, et les abeilles **operculent** la cellule d'un couvercle de cire. C'est ce miel operculé et mûr dont les apiculteurs récoltent le surplus. Consultez [Récolte du miel](/beekeeping/honey-harvest) et consignez les rendements dans [Récoltes](/using-the-app/harvests).
+Les abeilles d'intérieur étalent ensuite le nectar dans les cellules et le ventilent de leurs ailes, chassant l'eau jusqu'à ce que la teneur en humidité descende autour de 18 à 20 %. À ce moment-là, il est stable et ne fermentera pas, et les abeilles **operculent** la cellule d'un couvercle de cire. C'est ce miel operculé et mûr dont les apiculteurs récoltent le surplus. Consultez [Récolte du miel](./honey-harvest.md) et consignez les rendements dans [Récoltes](../using-the-app/harvests.md).
 
 ## Comment une colonie hiverne
 
@@ -94,7 +94,7 @@ Dans les climats froids, la colonie n'hiberne pas et ne chauffe pas toute la ruc
 La grappe fonctionne entièrement sur le miel stocké, se frayant lentement un chemin vers le haut à travers les rayons au fil des mois. Deux choses déterminent sa survie : **des réserves suffisantes** au bon endroit, et une population d'abeilles d'hiver en bonne santé. C'est pourquoi le nourrissement d'automne et la lutte contre le varroa comptent tant.
 
 :::caution Les pertes hivernales sont réelles
-Même des colonies d'apparence saine peuvent mourir pendant l'hiver de famine, de maladie ou d'une lourde charge d'acariens à l'entrée de l'automne. Aborder l'hiver fort et en bonne santé est bien plus important que toute intervention en plein hiver. Consultez [Varroa](/beekeeping/varroa) et [Nourrissement](/beekeeping/feeding).
+Même des colonies d'apparence saine peuvent mourir pendant l'hiver de famine, de maladie ou d'une lourde charge d'acariens à l'entrée de l'automne. Aborder l'hiver fort et en bonne santé est bien plus important que toute intervention en plein hiver. Consultez [Varroa](./varroa.md) et [Nourrissement](./feeding.md).
 :::
 
 :::note Variation régionale

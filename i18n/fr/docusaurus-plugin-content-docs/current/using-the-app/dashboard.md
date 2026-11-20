@@ -29,7 +29,7 @@ Il n'y a pas d'intervalle configurable : la liste est triée selon le temps éco
 
 ## Tâches à venir
 
-Affiche jusqu'à cinq tâches ouvertes avec leur échéance. Les tâches dont l'échéance est dépassée sont signalées par un **!**. Cochez les tâches dans la vue **Tâches** ; voir [Tâches](/using-the-app/tasks).
+Affiche jusqu'à cinq tâches ouvertes avec leur échéance. Les tâches dont l'échéance est dépassée sont signalées par un **!**. Cochez les tâches dans la vue **Tâches** ; voir [Tâches](./tasks.md).
 
 ## Se repérer dans l'application
 
@@ -43,14 +43,14 @@ Les mêmes destinations sont disponibles partout : **Vue d'ensemble, Ruchers, Sc
 Les **Paramètres** contiennent :
 
 - **Langue** : anglais, allemand, français, espagnol, italien. Le choix est enregistré sur l'appareil.
-- **Espaces** : basculer, créer, inviter et gérer (sur les instances avec connexion). Voir [Comptes et espaces](/using-the-app/accounts-tenants).
+- **Espaces** : basculer, créer, inviter et gérer (sur les instances avec connexion). Voir [Comptes et espaces](./accounts-tenants.md).
 - **Passkeys** : ajouter ou supprimer des passkeys (lorsque le serveur les active).
 - **Clés API** : créer et supprimer des clés pour les scripts et les appareils (sur les instances avec connexion). Voir [Comptes et espaces](./accounts-tenants.md#api-keys).
-- **Données & sauvegarde** : export et import ; voir [Import et export](/using-the-app/import-export).
+- **Données & sauvegarde** : export et import ; voir [Import et export](./import-export.md).
 - **Compte** : l'identité avec laquelle vous êtes connecté, et **Se déconnecter**.
 
 Sur une instance auto-hébergée mono-utilisateur sans connexion, il n'y a rien dont se déconnecter ; le bloc de compte affiche l'identité locale.
 
 ## L'indicateur en ligne/hors ligne
 
-La barre latérale affiche **En ligne** ou **Hors ligne** à côté de votre compte, et tant que vous êtes hors ligne, une barre en haut indique « Hors ligne : les modifications sont enregistrées et synchronisées plus tard. » Continuez à enregistrer exactement comme d'habitude ; la synchronisation reprend au retour de la connexion. Voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+La barre latérale affiche **En ligne** ou **Hors ligne** à côté de votre compte, et tant que vous êtes hors ligne, une barre en haut indique « Hors ligne : les modifications sont enregistrées et synchronisées plus tard. » Continuez à enregistrer exactement comme d'habitude ; la synchronisation reprend au retour de la connexion. Voir [Hors ligne et synchronisation](./offline-and-sync.md).

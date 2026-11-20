@@ -23,7 +23,7 @@ I metodi sono legati a un unico account: se ti sei registrato con e-mail e passw
 Se l'istanza richiede la verifica dell'e-mail, dopo la registrazione ricevi un link di conferma via e-mail. Aprilo prima del tuo primo accesso.
 
 :::note Chi è l'admin
-L'admin dell'istanza non è la prima persona che si registra. Su un'istanza self-hosted è l'account che l'operatore configura con `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD` (vedi [Autenticazione](/self-hosting/authentication)); sul servizio in hosting è l'operatore. La registrazione non concede mai quel ruolo.
+L'admin dell'istanza non è la prima persona che si registra. Su un'istanza self-hosted è l'account che l'operatore configura con `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD` (vedi [Autenticazione](../self-hosting/authentication.md)); sul servizio in hosting è l'operatore. La registrazione non concede mai quel ruolo.
 :::
 
 ## Cos'è un tenant
@@ -70,7 +70,7 @@ Un admin del tenant può eliminare il tenant in **Impostazioni → Spazi → Zon
 
 ## Chiavi API \{#api-keys}
 
-**Impostazioni → Chiavi API** è dove crei le credenziali per script e dispositivi, come una bilancia per arnie, che usano l'[API](/using-the-api/overview) a tuo nome. La sezione compare solo quando hai effettuato l'accesso; un'istanza a utente singolo senza login non ha chiavi e non ne ha bisogno.
+**Impostazioni → Chiavi API** è dove crei le credenziali per script e dispositivi, come una bilancia per arnie, che usano l'[API](../using-the-api/overview.md) a tuo nome. La sezione compare solo quando hai effettuato l'accesso; un'istanza a utente singolo senza login non ha chiavi e non ne ha bisogno.
 
 - Digita un nome nel campo **Dai un nome alla chiave (es. bilancia arnia)**, scegli i permessi nel selettore **Permessi** (**Lettura e scrittura**, il valore predefinito, o **Sola lettura**) e la durata nel selettore **Scade dopo** (**Non scade**, il valore predefinito, **30 giorni**, **90 giorni** o **1 anno**), poi tocca **Crea chiave**. La chiave compare sotto con l'avviso "Copia la chiave adesso. Viene mostrata una sola volta." e un pulsante **Copia** (per un attimo diventa **Copiata**). Tutto ciò che non copi adesso è perso; il server conserva solo un hash.
 - Ogni chiave è elencata con il suo nome (**Chiave senza nome** se hai lasciato il campo vuoto), i suoi primi caratteri, un badge **Lettura e scrittura** o **Sola lettura**, **Creata**, poi **Scade** e la data se hai impostato una durata (**Scaduta** e la data, in rosso, una volta passato quel giorno) e, una volta che uno script l'ha usata, **Ultimo utilizzo**. Le chiavi scadute restano nell'elenco finché non le rimuovi.
@@ -82,4 +82,4 @@ Una chiave agisce a tuo nome nel tenant che era attivo quando l'hai creata, quin
 
 ## La demo
 
-Alcune istanze eseguono un **account demo**. Mentre sei connesso con esso, un banner ti ricorda che i dati si reimpostano ogni ora. Il server rifiuta le modifiche provenienti dall'account demo, quindi tutto ciò che inserisci resta solo sul tuo dispositivo. Gli operatori possono abilitarla tramite [Modalità demo](/self-hosting/demo).
+Alcune istanze eseguono un **account demo**. Mentre sei connesso con esso, un banner ti ricorda che i dati si reimpostano ogni ora. Il server rifiuta le modifiche provenienti dall'account demo, quindi tutto ciò che inserisci resta solo sul tuo dispositivo. Gli operatori possono abilitarla tramite [Modalità demo](../self-hosting/demo.md).

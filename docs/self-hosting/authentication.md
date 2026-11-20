@@ -18,7 +18,7 @@ Openbeehive lets you choose how much authentication you need. A solo beekeeper r
 
 The login methods combine. The sign-in screen offers whichever are enabled, and one account works across them: signing in with a provider links to an existing email/password account with the same email.
 
-Enabling any login method also enables tenants and invites (Settings → Tenants); see [Accounts & tenants](/using-the-app/accounts-tenants).
+Enabling any login method also enables tenants and invites (Settings → Tenants); see [Accounts & tenants](../using-the-app/accounts-tenants.md).
 
 ## Mode 1: single user, no login
 
@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 Keep `BEEHIVE_SESSION_SECRET` secret and stable. Anyone who learns it can forge sessions. If you change it, every existing session is invalidated. Never commit it to version control.
 :::
 
-If you serve the app over HTTPS through a reverse proxy, make sure `BEEHIVE_PUBLIC_BASE_URL` uses `https://` so redirect and invite links are correct. See [Reverse proxy](/self-hosting/reverse-proxy).
+If you serve the app over HTTPS through a reverse proxy, make sure `BEEHIVE_PUBLIC_BASE_URL` uses `https://` so redirect and invite links are correct. See [Reverse proxy](./reverse-proxy.md).
 
 ## Mode 2: email & password (in-app accounts)
 
@@ -79,7 +79,7 @@ The server ensures this account on every start: created if missing, role forced 
 
 To stop strangers creating accounts, set `BEEHIVE_REGISTRATION=false`. The admin comes from the environment, so a fresh instance always has one. Everyone else joins through invite links, which a tenant admin issues from Settings → Tenants. Sign-up through an invite link must use the invited email address. The sign-in screen shows a notice that the instance is invite-only; existing accounts sign in normally.
 
-Every new account starts with its own personal [tenant](/using-the-app/accounts-tenants). Only the configured admin account carries the instance admin role.
+Every new account starts with its own personal [tenant](../using-the-app/accounts-tenants.md). Only the configured admin account carries the instance admin role.
 
 ### Optional email verification
 
@@ -181,4 +181,4 @@ Restart the server and load the app in a browser:
 2. With a login method enabled, the sign-in screen offers each enabled method (and "Explore the demo" if the demo is on).
 3. Complete a sign-in and confirm you reach the Overview and that records sync.
 
-If something does not work, check the server logs and [Troubleshooting](/knowledge-base/troubleshooting).
+If something does not work, check the server logs and [Troubleshooting](../knowledge-base/troubleshooting.md).

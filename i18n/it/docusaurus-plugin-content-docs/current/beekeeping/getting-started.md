@@ -22,7 +22,7 @@ In pratica questo significa:
 - **Tenuta dei registri**, così da ricordare cosa sta facendo ciascuna colonia e poter individuare tendenze nel tempo.
 
 :::tip
-Dei buoni registri sono uno dei più grandi favori che puoi fare al te stesso del futuro. Annota cosa hai visto a ogni visita, cosa hai fatto e cosa intendi fare in seguito. La funzione [Ispezioni](/using-the-app/inspections) di Openbeehive è costruita proprio attorno a questo ritmo.
+Dei buoni registri sono uno dei più grandi favori che puoi fare al te stesso del futuro. Annota cosa hai visto a ogni visita, cosa hai fatto e cosa intendi fare in seguito. La funzione [Ispezioni](../using-the-app/inspections.md) di Openbeehive è costruita proprio attorno a questo ritmo.
 :::
 
 ## Aspettative su tempo e costi
@@ -35,7 +35,7 @@ Sii onesto con te stesso su entrambi prima di impegnarti.
 
 | Voce | Note |
 | --- | --- |
-| Un'arnia | Nuova, usata o autocostruita. Scegli un [tipo di arnia](/knowledge-base/hive-types) diffuso nella tua zona. |
+| Un'arnia | Nuova, usata o autocostruita. Scegli un [tipo di arnia](../knowledge-base/hive-types.md) diffuso nella tua zona. |
 | Abbigliamento protettivo | Una tuta o giacca più i guanti. |
 | Attrezzi di base | Leva da apicoltore, affumicatore, spazzola per api. |
 | Api | Un nucleo ("nuc") o uno sciame. |
@@ -79,11 +79,11 @@ Non serve molto spazio, ma un buon sito rende tutto più facile. Cerca:
 - **Acqua nelle vicinanze.** Le api hanno bisogno di acqua; fornisci una fonte sicura se non ce n'è, così non andranno a visitare lo stagno o la piscinetta di un vicino.
 - **Un accesso ragionevole.** Dovrai trasportare melari pesanti carichi di miele, quindi pensa al percorso dall'auto all'arnia.
 
-Quando sei pronto, puoi registrare nell'app la posizione, le arnie e le colonie. Vedi [Apiari](/using-the-app/apiaries) e [Arnie](/using-the-app/hives) per configurare tutto.
+Quando sei pronto, puoi registrare nell'app la posizione, le arnie e le colonie. Vedi [Apiari](../using-the-app/apiaries.md) e [Arnie](../using-the-app/hives.md) per configurare tutto.
 
 ## Un piano realistico per il primo anno
 
-Il calendario di ogni regione è diverso, quindi consideralo come una forma più che come date fisse. Vedi l'[Anno apistico](/beekeeping/beekeeping-year) per una guida mese per mese più completa.
+Il calendario di ogni regione è diverso, quindi consideralo come una forma più che come date fisse. Vedi l'[Anno apistico](./beekeeping-year.md) per una guida mese per mese più completa.
 
 1. **L'inverno prima di iniziare.** Iscriviti alla tua associazione, segui un corso per principianti, leggi e ordina l'attrezzatura così che sia pronta in primavera.
 2. **Primavera.** Procurati la tua prima colonia, idealmente un nucleo locale da un fornitore affidabile. Installalo, nutrilo se necessario e inizia delicate ispezioni settimanali.

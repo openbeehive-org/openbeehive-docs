@@ -101,8 +101,8 @@ les a poussées.
 - `EventService` est en lecture seule. Les événements sont écrits par les flux
   ci-dessus et par l'application.
 
-Voir le [protocole de synchronisation](/developers/sync-protocol) pour le
-format des changements et le [modèle de données](/developers/data-model) pour
+Voir le [protocole de synchronisation](../developers/sync-protocol.md) pour le
+format des changements et le [modèle de données](../developers/data-model.md) pour
 les colonnes derrière chaque message.
 
 ## Endpoints hors RPC
@@ -237,15 +237,15 @@ le compte de démonstration ne peut appeler que les RPC dont le nom commence par
 `Get`, `List`, `Pull` ou `Subscribe`. Tout autre RPC renvoie
 `permission_denied`.
 
-Voir [Authentification](/self-hosting/authentication) pour configurer les
+Voir [Authentification](../self-hosting/authentication.md) pour configurer les
 méthodes de connexion.
 
 ## Pages par protocole
 
-- [REST / HTTP + JSON](/using-the-api/rest) : exemples curl, forme du JSON et
+- [REST / HTTP + JSON](./rest.md) : exemples curl, forme du JSON et
   contrat de pagination.
-- [gRPC](/using-the-api/grpc) : clients générés et l'appel `Subscribe` en
+- [gRPC](./grpc.md) : clients générés et l'appel `Subscribe` en
   streaming.
-- [Trackers automatisés](/using-the-api/automated-trackers) : envoyer les
+- [Trackers automatisés](./automated-trackers.md) : envoyer les
   relevés d'une balance de ruche ou d'un capteur climatique depuis un script
   ou un appareil.

@@ -7,7 +7,7 @@ title: "Architecture offline-first"
 
 Openbeehive est conçu pour que l'apiculture se déroule sur le rucher, souvent loin de tout signal. Chaque appareil emporte une copie complète des données dont il a besoin, l'interface lit et écrit cette copie locale instantanément, et un moteur d'arrière-plan maintient discrètement tout en phase avec le serveur lorsqu'une connexion est disponible.
 
-Cette page explique comment les pièces s'assemblent. Pour connaître les règles exactes qui maintiennent la cohérence des réplicas, voir [le protocole de synchronisation](/developers/sync-protocol) et [historique et événements](/developers/history-and-events).
+Cette page explique comment les pièces s'assemblent. Pour connaître les règles exactes qui maintiennent la cohérence des réplicas, voir [le protocole de synchronisation](./sync-protocol.md) et [historique et événements](./history-and-events.md).
 
 ## Local-first par conception
 
@@ -49,7 +49,7 @@ Le schéma ci-dessous montre comment un changement voyage d'une pression dans l'
 
 Le moteur de synchronisation n'échange que les enregistrements qui appartiennent aux scopes auxquels un utilisateur a accès, de sorte qu'un appareil ne télécharge jamais le monde entier : seulement les ruchers auxquels il a droit.
 
-Les scripts et les capteurs entrent dans le même schéma via les services CRUD du serveur ([Utiliser l'API](/using-the-api/overview)). Leurs écritures ne contournent pas ce flux : le serveur applique chacune d'elles avec la même fusion champ par champ et l'ajoute au même journal des changements qu'un changement poussé, de sorte qu'un relevé envoyé par une balance de ruche n'est qu'un changement de plus que les appareils récupèrent à leur prochaine synchronisation.
+Les scripts et les capteurs entrent dans le même schéma via les services CRUD du serveur ([Utiliser l'API](../using-the-api/overview.md)). Leurs écritures ne contournent pas ce flux : le serveur applique chacune d'elles avec la même fusion champ par champ et l'ajoute au même journal des changements qu'un changement poussé, de sorte qu'un relevé envoyé par une balance de ruche n'est qu'un changement de plus que les appareils récupèrent à leur prochaine synchronisation.
 
 ## Résolution des conflits
 
@@ -69,7 +69,7 @@ Les champs de type liste (actuellement uniquement les clés de photos d'une insp
 
 ### Événements en ajout seul
 
-La table `event` est en ajout seul par convention : chaque écriture dans l'historique insère une nouvelle ligne avec un nouvel identifiant, et rien ne modifie ni ne supprime une ligne existante, de sorte que deux appareils ajoutant des événements hors ligne ne touchent jamais la même ligne. Voir [historique et événements](/developers/history-and-events) pour les détails.
+La table `event` est en ajout seul par convention : chaque écriture dans l'historique insère une nouvelle ligne avec un nouvel identifiant, et rien ne modifie ni ne supprime une ligne existante, de sorte que deux appareils ajoutant des événements hors ligne ne touchent jamais la même ligne. Voir [historique et événements](./history-and-events.md) pour les détails.
 
 :::tip
 Parce que les fusions sont déterministes, deux appareils ayant vu le même ensemble de changements calculeront toujours exactement le même résultat, quel que soit l'ordre dans lequel ces changements sont arrivés.
@@ -103,4 +103,4 @@ L'application est une Progressive Web App, conçue d'abord pour le téléphone d
 
 Cette séparation est ce qui donne à Openbeehive sa promesse fondamentale : les enregistrements sont toujours avec vous, toujours rapides et toujours cohérents une fois que tout le monde est de nouveau à portée.
 
-Pour aller plus loin, lisez [le protocole de synchronisation](/developers/sync-protocol) et [historique et événements](/developers/history-and-events), ou parcourez le reste de la [documentation développeur](/category/developers).
+Pour aller plus loin, lisez [le protocole de synchronisation](./sync-protocol.md) et [historique et événements](./history-and-events.md), ou parcourez le reste de la [documentation développeur](/category/developers).

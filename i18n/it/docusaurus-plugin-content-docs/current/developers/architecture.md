@@ -7,7 +7,7 @@ title: "Architettura offline-first"
 
 Openbeehive è costruito in modo che l'apicoltura si svolga all'apiario, spesso lontano da qualsiasi segnale. Ogni dispositivo porta con sé una copia completa dei dati di cui ha bisogno, l'interfaccia legge e scrive immediatamente quella copia locale, e un motore in background mantiene in silenzio tutto allineato con il server quando è disponibile una connessione.
 
-Questa pagina spiega come si incastrano i vari pezzi. Per le regole esatte che mantengono coerenti le repliche, consulta [il protocollo di sincronizzazione](/developers/sync-protocol) e [storia ed eventi](/developers/history-and-events).
+Questa pagina spiega come si incastrano i vari pezzi. Per le regole esatte che mantengono coerenti le repliche, consulta [il protocollo di sincronizzazione](./sync-protocol.md) e [storia ed eventi](./history-and-events.md).
 
 ## Local-first per progettazione
 
@@ -49,7 +49,7 @@ Il diagramma seguente mostra come una modifica viaggia da un tocco nell'interfac
 
 Il motore di sincronizzazione scambia solo i record che appartengono agli ambiti a cui un utente può accedere, quindi un dispositivo non scarica mai il mondo intero: solo gli apiari a cui ha diritto.
 
-Script e sensori entrano nello stesso quadro tramite i servizi CRUD del server ([Utilizzo dell'API](/using-the-api/overview)). Le loro scritture non aggirano questo flusso: il server applica ciascuna con la stessa unione per campo e la aggiunge allo stesso registro delle modifiche di una modifica inviata con push, quindi una lettura inviata da una bilancia per arnie è solo un'altra modifica che i dispositivi scaricano alla sincronizzazione successiva.
+Script e sensori entrano nello stesso quadro tramite i servizi CRUD del server ([Utilizzo dell'API](../using-the-api/overview.md)). Le loro scritture non aggirano questo flusso: il server applica ciascuna con la stessa unione per campo e la aggiunge allo stesso registro delle modifiche di una modifica inviata con push, quindi una lettura inviata da una bilancia per arnie è solo un'altra modifica che i dispositivi scaricano alla sincronizzazione successiva.
 
 ## Risoluzione dei conflitti
 
@@ -69,7 +69,7 @@ I campi simili a elenchi (attualmente solo le chiavi delle foto di un'ispezione)
 
 ### Eventi append-only
 
-La tabella `event` è append-only per convenzione: ogni scrittura nella storia inserisce una nuova riga con un id nuovo e nulla la modifica o la elimina, quindi due dispositivi che aggiungono eventi offline non toccano mai la stessa riga. Vedi [storia ed eventi](/developers/history-and-events) per i dettagli.
+La tabella `event` è append-only per convenzione: ogni scrittura nella storia inserisce una nuova riga con un id nuovo e nulla la modifica o la elimina, quindi due dispositivi che aggiungono eventi offline non toccano mai la stessa riga. Vedi [storia ed eventi](./history-and-events.md) per i dettagli.
 
 :::tip
 Poiché le unioni sono deterministiche, due dispositivi qualsiasi che hanno visto lo stesso insieme di modifiche calcoleranno sempre esattamente lo stesso risultato, indipendentemente dall'ordine in cui tali modifiche sono arrivate.
@@ -103,4 +103,4 @@ L'app è una Progressive Web App, progettata innanzitutto per il telefono che ha
 
 Questa separazione è ciò che dà a Openbeehive la sua promessa fondamentale: i record sono sempre con te, sempre veloci e sempre coerenti una volta che tutti tornano a portata.
 
-Per approfondire, leggi [il protocollo di sincronizzazione](/developers/sync-protocol) e [storia ed eventi](/developers/history-and-events), oppure sfoglia il resto della [documentazione per sviluppatori](/category/developers).
+Per approfondire, leggi [il protocollo di sincronizzazione](./sync-protocol.md) e [storia ed eventi](./history-and-events.md), oppure sfoglia il resto della [documentazione per sviluppatori](/category/developers).

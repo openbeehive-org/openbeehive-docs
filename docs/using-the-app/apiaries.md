@@ -34,7 +34,7 @@ From the **Apiaries** list (or the **+ New** button on the Overview) choose **Ne
 | **Note** | No | Gate codes, access notes, the landowner's name, parking. |
 | **Latitude / Longitude** | No | Coordinates in decimal degrees. |
 
-Works offline; see [Offline and sync](/using-the-app/offline-and-sync).
+Works offline; see [Offline and sync](./offline-and-sync.md).
 
 ### Setting GPS coordinates
 
@@ -64,11 +64,11 @@ Open an apiary to see its hives with the date of each one's last inspection. Fro
 - **Add hive**: type a name and add it. Set its type and status afterwards by editing the hive.
 - **Open a hive** to see its queen, visit log, harvests and treatments.
 
-See [Hives](/using-the-app/hives) and [Queens](/using-the-app/queens).
+See [Hives](./hives.md) and [Queens](./queens.md).
 
 ## Printing QR labels for the apiary
 
-The **QR labels** button on the apiary page prints an A4 sheet with one label per hive in the apiary. Each label encodes a deep link to that hive; scanning it opens Openbeehive at the hive. See [QR labels](/using-the-app/qr-labels).
+The **QR labels** button on the apiary page prints an A4 sheet with one label per hive in the apiary. Each label encodes a deep link to that hive; scanning it opens Openbeehive at the hive. See [QR labels](./qr-labels.md).
 
 ## Editing and reorganising
 
@@ -78,4 +78,4 @@ If a hive moves to a different location, use **Move** on the hive to reassign it
 
 ## Sharing
 
-Apiaries are not shared individually. Everything in a tenant is visible to every member of that tenant, so to work on an apiary with someone, invite them to the tenant that holds it (Settings → Tenants → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate tenant for the club. See [Accounts & tenants](/using-the-app/accounts-tenants).
+Apiaries are not shared individually. Everything in a tenant is visible to every member of that tenant, so to work on an apiary with someone, invite them to the tenant that holds it (Settings → Tenants → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate tenant for the club. See [Accounts & tenants](./accounts-tenants.md).

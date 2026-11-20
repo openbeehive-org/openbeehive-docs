@@ -35,4 +35,4 @@ Honig sollte generell unter etwa 18 % Wasser liegen, bevor er verkauft oder lang
 
 Eine Ernte speichert die Beute, den Bienenstand und die Königin, deren Amtszeit das Erntedatum abdeckt. Späteres Umweiseln oder Wandern der Beute ändert nicht, wem eine frühere Ernte zugerechnet wird.
 
-Funktioniert offline; siehe [Offline & Synchronisation](/using-the-app/offline-and-sync). Zum Abnehmen und Verarbeiten des Honigs siehe den Imkereileitfaden zur [Honigernte](/beekeeping/honey-harvest).
+Funktioniert offline; siehe [Offline & Synchronisation](./offline-and-sync.md). Zum Abnehmen und Verarbeiten des Honigs siehe den Imkereileitfaden zur [Honigernte](../beekeeping/honey-harvest.md).

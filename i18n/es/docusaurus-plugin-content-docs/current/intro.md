@@ -20,12 +20,12 @@ sincroniza con el servidor, de modo que funciona en el colmenar con o sin señal
 
 | Si quieres… | Ve a |
 | --- | --- |
-| Aprender a registrar tu actividad apícola | [Uso de la aplicación](/using-the-app/dashboard) |
-| Ejecutar tu propia instancia | [Autoalojamiento](/self-hosting/quick-start) |
-| Llamar a la API desde scripts | [Uso de la API](/using-the-api/overview) |
-| Aprender sobre apicultura en sí | [Conceptos básicos de apicultura](/beekeeping/getting-started) |
-| Consultar algo | [Base de conocimientos](/knowledge-base/glossary) |
-| Entender el funcionamiento interno | [Desarrolladores](/developers/architecture) |
+| Aprender a registrar tu actividad apícola | [Uso de la aplicación](./using-the-app/dashboard.md) |
+| Ejecutar tu propia instancia | [Autoalojamiento](./self-hosting/quick-start.md) |
+| Llamar a la API desde scripts | [Uso de la API](./using-the-api/overview.md) |
+| Aprender sobre apicultura en sí | [Conceptos básicos de apicultura](./beekeeping/getting-started.md) |
+| Consultar algo | [Base de conocimientos](./knowledge-base/glossary.md) |
+| Entender el funcionamiento interno | [Desarrolladores](./developers/architecture.md) |
 
 :::note
 Esta documentación sigue la versión actual de la aplicación; usa el selector de

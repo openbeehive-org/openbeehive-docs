@@ -138,10 +138,10 @@ l'etichetta per l'intervallo richiesto e rispettalo.
 
 La varroa è la minaccia principale, ma una buona salute generale aiuta la colonia a far fronte:
 
-- Mantieni le colonie forti e ben nutrite; vedi [Nutrizione](/beekeeping/feeding).
+- Mantieni le colonie forti e ben nutrite; vedi [Nutrizione](./feeding.md).
 - Sostituisci periodicamente il favo vecchio e scuro per ridurre il carico di malattie.
 - Sorveglia le malattie della covata e altri parassiti; vedi
-  [Malattie e parassiti](/knowledge-base/diseases-and-pests) nella knowledge base.
+  [Malattie e parassiti](../knowledge-base/diseases-and-pests.md) nella knowledge base.
 - Alcune malattie della covata sono **soggette a denuncia obbligatoria** in molte regioni e devono essere segnalate alle
   autorità. Conosci le tue regole locali.
 
@@ -154,7 +154,7 @@ Paesi.
 In Openbeehive registri ogni applicazione come un **Trattamento** su un'arnia: la
 data, il prodotto, il principio attivo, il metodo, la dose, il numero di lotto, il
 motivo e la data di fine del tempo di attesa. Nel tempo questo costruisce una storia
-chiara di cosa hai usato e quando. Vedi [Trattamenti](/using-the-app/treatments).
+chiara di cosa hai usato e quando. Vedi [Trattamenti](../using-the-app/treatments.md).
 
 :::note
 Tenere registri accurati dei trattamenti è spesso un obbligo di legge, soprattutto

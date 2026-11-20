@@ -29,7 +29,7 @@ There is no configurable interval: the list is ordered by time since the last re
 
 ## Upcoming tasks
 
-Shows up to five open tasks with their due dates. Tasks whose due date has passed are flagged with **!**. Tick tasks off in the **Tasks** view; see [Tasks](/using-the-app/tasks).
+Shows up to five open tasks with their due dates. Tasks whose due date has passed are flagged with **!**. Tick tasks off in the **Tasks** view; see [Tasks](./tasks.md).
 
 ## Finding your way around
 
@@ -43,14 +43,14 @@ The same destinations are available everywhere: **Overview, Apiaries, Scan, Hive
 **Settings** holds:
 
 - **Language**: English, German, French, Spanish, Italian. The choice is saved on the device.
-- **Tenants**: switch, create, invite and manage (on instances with login). See [Accounts & tenants](/using-the-app/accounts-tenants).
+- **Tenants**: switch, create, invite and manage (on instances with login). See [Accounts & tenants](./accounts-tenants.md).
 - **Passkeys**: add or remove passkeys (when the server enables them).
 - **API keys**: create and remove keys for scripts and devices (on instances with login). See [Accounts & tenants](./accounts-tenants.md#api-keys).
-- **Data & backup**: export and import; see [Import & export](/using-the-app/import-export).
+- **Data & backup**: export and import; see [Import & export](./import-export.md).
 - **Account**: who you are signed in as, and **Sign out**.
 
 On a single-user self-hosted instance with no login there is nothing to sign out of; the account block shows the local identity.
 
 ## The online/offline indicator
 
-The sidebar shows **Online** or **Offline** next to your account, and while you are offline a bar at the top reads "Offline — changes are saved and synced later." Keep recording exactly as usual; sync resumes when the connection returns. See [Offline and sync](/using-the-app/offline-and-sync).
+The sidebar shows **Online** or **Offline** next to your account, and while you are offline a bar at the top reads "Offline — changes are saved and synced later." Keep recording exactly as usual; sync resumes when the connection returns. See [Offline and sync](./offline-and-sync.md).

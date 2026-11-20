@@ -20,12 +20,12 @@ in the bee yard with or without a signal.
 
 | If you want to… | Go to |
 | --- | --- |
-| Learn how to record your beekeeping | [Using the app](/using-the-app/dashboard) |
-| Run your own instance | [Self-hosting](/self-hosting/quick-start) |
-| Call the API from scripts | [Using the API](/using-the-api/overview) |
-| Learn about beekeeping itself | [Beekeeping basics](/beekeeping/getting-started) |
-| Look something up | [Knowledge base](/knowledge-base/glossary) |
-| Understand the internals | [Developers](/developers/architecture) |
+| Learn how to record your beekeeping | [Using the app](./using-the-app/dashboard.md) |
+| Run your own instance | [Self-hosting](./self-hosting/quick-start.md) |
+| Call the API from scripts | [Using the API](./using-the-api/overview.md) |
+| Learn about beekeeping itself | [Beekeeping basics](./beekeeping/getting-started.md) |
+| Look something up | [Knowledge base](./knowledge-base/glossary.md) |
+| Understand the internals | [Developers](./developers/architecture.md) |
 
 :::note
 These docs follow the current app release; use the version switch in the

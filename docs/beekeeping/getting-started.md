@@ -22,7 +22,7 @@ In practice that means:
 - **Record-keeping**, so you remember what each colony is doing and can spot trends over time.
 
 :::tip
-Good records are one of the biggest favours you can do your future self. Note what you saw at each visit, what you did, and what you plan to do next. Openbeehive's [Inspections](/using-the-app/inspections) feature is built around exactly this rhythm.
+Good records are one of the biggest favours you can do your future self. Note what you saw at each visit, what you did, and what you plan to do next. Openbeehive's [Inspections](../using-the-app/inspections.md) feature is built around exactly this rhythm.
 :::
 
 ## Time and cost expectations
@@ -35,7 +35,7 @@ Be honest with yourself about both before you commit.
 
 | Item | Notes |
 | --- | --- |
-| A hive | New, second-hand, or self-built. Choose a [hive type](/knowledge-base/hive-types) common in your area. |
+| A hive | New, second-hand, or self-built. Choose a [hive type](../knowledge-base/hive-types.md) common in your area. |
 | Protective clothing | A suit or jacket plus gloves. |
 | Basic tools | Hive tool, smoker, bee brush. |
 | Bees | A nucleus colony ("nuc") or a swarm. |
@@ -79,11 +79,11 @@ You do not need much space, but a good site makes everything easier. Look for:
 - **Water nearby.** Bees need water; provide a safe source if there is none, so they do not visit a neighbour's pond or paddling pool.
 - **Reasonable access.** You will carry heavy supers of honey, so think about the walk from car to hive.
 
-When you are ready, you can record the location, hives and colonies in the app. See [Apiaries](/using-the-app/apiaries) and [Hives](/using-the-app/hives) to get set up.
+When you are ready, you can record the location, hives and colonies in the app. See [Apiaries](../using-the-app/apiaries.md) and [Hives](../using-the-app/hives.md) to get set up.
 
 ## A realistic first-year plan
 
-Every region's calendar differs, so treat this as a shape rather than fixed dates. See the [Beekeeping year](/beekeeping/beekeeping-year) for a fuller month-by-month guide.
+Every region's calendar differs, so treat this as a shape rather than fixed dates. See the [Beekeeping year](./beekeeping-year.md) for a fuller month-by-month guide.
 
 1. **Winter before you start.** Join your association, take a beginners' course, read, and order equipment so it is ready in spring.
 2. **Spring.** Acquire your first colony, ideally a local nucleus from a reputable supplier. Install it, feed if needed, and begin gentle weekly inspections.

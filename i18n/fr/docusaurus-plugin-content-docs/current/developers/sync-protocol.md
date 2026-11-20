@@ -52,7 +52,7 @@ message Change {
 
 `payload_json` est un delta partiel, pas la ligne entière : le `patch()` du
 client n'écrit que les colonnes qu'il a modifiées. Les clés sont les noms de
-colonnes en `snake_case` du [modèle de données](/developers/data-model). Une
+colonnes en `snake_case` du [modèle de données](./data-model.md). Une
 ligne créée sur l'appareil est un delta contenant toutes les colonnes. Une
 suppression est `op = CHANGE_OP_DELETE` ; le destinataire positionne
 `deleted = true` et ignore la charge utile.

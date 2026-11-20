@@ -50,11 +50,11 @@ cibles.
 donnent SQLite et des blobs sur le système de fichiers ; laissez
 `BEEHIVE_PASSWORD_AUTH` désactivé, `BEEHIVE_OIDC_PROVIDERS` vide et
 `BEEHIVE_WEBAUTHN_ENABLED=false` pour fonctionner sans connexion. Voir
-[Configuration](/self-hosting/configuration).
+[Configuration](../self-hosting/configuration.md).
 
 Pour compiler un binaire de version : `make proto && make build` écrit
 `server/bin/openbeehive` avec la SPA embarquée. Voir
-[Binaire unique](/self-hosting/single-binary).
+[Binaire unique](../self-hosting/single-binary.md).
 
 ## Code généré
 
@@ -69,7 +69,7 @@ Les deux répertoires sont ignorés par git. Exécutez `make proto` après le cl
 et après chaque modification d'un `.proto` ; ne modifiez jamais la sortie à la
 main. Le build Docker exécute lui-même `buf generate` dans sa première étape.
 Chaque service des protos est enregistré sur le serveur ; voir
-[Utiliser l'API](/using-the-api/overview) pour la liste.
+[Utiliser l'API](../using-the-api/overview.md) pour la liste.
 
 ## Conventions
 
@@ -86,11 +86,11 @@ Chaque service des protos est enregistré sur le serveur ; voir
    gagne » par champ et l'OR-Set « l'ajout gagne » sont implémentés dans
    `server/internal/sync/merge.go` et `app/src/lib/local/merge.ts`. Modifiez
    les deux, avec des tests. Voir le
-   [protocole de synchronisation](/developers/sync-protocol).
+   [protocole de synchronisation](./sync-protocol.md).
 4. **Écrivez du SQL portable.** Le serveur fonctionne sur PostgreSQL, MySQL et
    SQLite. Les migrations utilisent le sous-ensemble portable décrit en tête de
    `0001_init.sql` ; le store traduit les différences de dialecte restantes.
-   Voir [Bases de données](/self-hosting/databases).
+   Voir [Bases de données](../self-hosting/databases.md).
 5. **L'anglais dans le code, les traductions pour les utilisateurs.** Le code,
    les commentaires, les identifiants et les messages de commit sont en anglais.
    Chaque chaîne destinée aux utilisateurs passe par `svelte-i18n` avec des

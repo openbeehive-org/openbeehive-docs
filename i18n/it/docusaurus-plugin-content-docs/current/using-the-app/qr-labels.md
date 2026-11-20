@@ -63,7 +63,7 @@ Sui dispositivi il cui browser non supporta lo scanner integrato, la schermata l
 | Ti chiede di accedere | Non hai effettuato l'accesso su questo dispositivo, oppure l'arnia è in un tenant di cui non sei membro | Accedi; chiedi all'admin del tenant di invitarti |
 | Non succede nulla al tocco | Il telefono non ha riconosciuto il codice come link | Usa lo scanner integrato o un altro lettore QR |
 
-L'accesso segue l'appartenenza al tenant; vedi [Account e tenant](/using-the-app/accounts-tenants).
+L'accesso segue l'appartenenza al tenant; vedi [Account e tenant](./accounts-tenants.md).
 
 ## Ristampare e cambiare le etichette
 
@@ -75,4 +75,4 @@ Le etichette codificano l'indirizzo da cui le hai stampate. Se la tua istanza se
 Non spostare un'etichetta stampata da una cassetta a un'altra aspettandoti che punti alla nuova colonia; aprirà comunque l'arnia originale. Stampa invece una nuova etichetta.
 :::
 
-Dettagli tecnici del formato del link: [Codici QR per sviluppatori](/developers/qr-codes).
+Dettagli tecnici del formato del link: [Codici QR per sviluppatori](../developers/qr-codes.md).

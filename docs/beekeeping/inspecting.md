@@ -7,7 +7,7 @@ title: "Inspecting a colony"
 
 A hive inspection is the heart of practical beekeeping. Opening a colony lets you check that it is healthy, well fed and queenright, and gives you the chance to act before small problems become big ones. Done well, an inspection is calm, quick and purposeful. Done badly, it stresses the bees, chills the brood and teaches you very little.
 
-This page covers how to inspect a colony properly. For how to capture what you find in Openbeehive, see [recording inspections](/using-the-app/inspections).
+This page covers how to inspect a colony properly. For how to capture what you find in Openbeehive, see [recording inspections](../using-the-app/inspections.md).
 
 ## When to inspect
 
@@ -85,11 +85,11 @@ Check the colony has enough food, especially in spring before the flow and in la
 
 ### Queen cells
 
-Finding charged or sealed queen cells on the comb is one of the most important things an inspection reveals, as it often means the colony is preparing to swarm. Record their number and stage. See [swarming](/beekeeping/swarming) for how to respond.
+Finding charged or sealed queen cells on the comb is one of the most important things an inspection reveals, as it often means the colony is preparing to swarm. Record their number and stage. See [swarming](./swarming.md) for how to respond.
 
 ### Disease, pests and varroa
 
-Look closely at the brood for anything abnormal: sunken, greasy or perforated cappings, an unpleasant smell, or chalky white mummies. Watch adult bees for deformed wings or visible mites. Varroa management is a year-round task; see [varroa](/beekeeping/varroa).
+Look closely at the brood for anything abnormal: sunken, greasy or perforated cappings, an unpleasant smell, or chalky white mummies. Watch adult bees for deformed wings or visible mites. Varroa management is a year-round task; see [varroa](./varroa.md).
 
 :::danger
 If you suspect a notifiable disease such as American or European foul brood, stop, close up, and contact your national bee health authority. Reporting requirements vary by country and are often a legal obligation.
@@ -103,4 +103,4 @@ Every inspection is a small disruption. Keep it proportionate. If you only need 
 
 An inspection is only as useful as the notes you keep. Record temperament, stores, space, brood and any queen cells or disease signs while the details are fresh, ideally hive-side on your phone.
 
-See [recording inspections](/using-the-app/inspections) to capture your findings, and the [beekeeping section](/category/beekeeping-basics) for the wider seasonal context.
+See [recording inspections](../using-the-app/inspections.md) to capture your findings, and the [beekeeping section](/category/beekeeping-basics) for the wider seasonal context.

@@ -7,7 +7,7 @@ title: "Ein Volk durchsehen"
 
 Die Durchsicht eines Bienenstocks ist das Herzstück der praktischen Imkerei. Ein Volk zu öffnen erlaubt dir zu prüfen, ob es gesund, gut versorgt und weiselrichtig ist, und gibt dir die Gelegenheit zu handeln, bevor aus kleinen Problemen große werden. Gut gemacht ist eine Durchsicht ruhig, schnell und zielgerichtet. Schlecht gemacht stresst sie die Bienen, kühlt die Brut aus und lehrt dich sehr wenig.
 
-Diese Seite behandelt, wie man ein Volk richtig durchsieht. Wie du das Gefundene in Openbeehive festhältst, erfährst du unter [Durchsichten erfassen](/using-the-app/inspections).
+Diese Seite behandelt, wie man ein Volk richtig durchsieht. Wie du das Gefundene in Openbeehive festhältst, erfährst du unter [Durchsichten erfassen](../using-the-app/inspections.md).
 
 ## Wann durchsehen
 
@@ -85,11 +85,11 @@ Prüfe, ob das Volk genug Futter hat, besonders im Frühjahr vor der Tracht und 
 
 ### Weiselzellen
 
-Bestiftete oder verdeckelte Weiselzellen auf der Wabe zu finden ist eines der wichtigsten Dinge, die eine Durchsicht offenbart, da es oft bedeutet, dass das Volk sich auf das Schwärmen vorbereitet. Erfasse ihre Anzahl und ihr Stadium. Siehe [Schwärmen](/beekeeping/swarming) für die Reaktion darauf.
+Bestiftete oder verdeckelte Weiselzellen auf der Wabe zu finden ist eines der wichtigsten Dinge, die eine Durchsicht offenbart, da es oft bedeutet, dass das Volk sich auf das Schwärmen vorbereitet. Erfasse ihre Anzahl und ihr Stadium. Siehe [Schwärmen](./swarming.md) für die Reaktion darauf.
 
 ### Krankheit, Schädlinge und Varroa
 
-Sieh dir die Brut genau auf alles Auffällige an: eingesunkene, fettige oder durchlöcherte Deckel, einen unangenehmen Geruch oder kalkweiße Mumien. Achte bei den erwachsenen Bienen auf verkrüppelte Flügel oder sichtbare Milben. Die Varroabehandlung ist eine ganzjährige Aufgabe; siehe [Varroa](/beekeeping/varroa).
+Sieh dir die Brut genau auf alles Auffällige an: eingesunkene, fettige oder durchlöcherte Deckel, einen unangenehmen Geruch oder kalkweiße Mumien. Achte bei den erwachsenen Bienen auf verkrüppelte Flügel oder sichtbare Milben. Die Varroabehandlung ist eine ganzjährige Aufgabe; siehe [Varroa](./varroa.md).
 
 :::danger
 Wenn du eine anzeigepflichtige Krankheit wie die Amerikanische oder Europäische Faulbrut vermutest, halte inne, schließe den Stock und kontaktiere deine nationale Bienengesundheitsbehörde. Meldepflichten variieren je nach Land und sind oft eine gesetzliche Verpflichtung.
@@ -103,4 +103,4 @@ Jede Durchsicht ist eine kleine Störung. Halte sie verhältnismäßig. Wenn du 
 
 Eine Durchsicht ist nur so nützlich wie die Notizen, die du behältst. Erfasse Wesensart, Vorräte, Platz, Brut und alle Weiselzellen oder Krankheitszeichen, solange die Details frisch sind, idealerweise am Stock auf deinem Handy.
 
-Siehe [Durchsichten erfassen](/using-the-app/inspections), um deine Befunde festzuhalten, und den [Imkerei-Bereich](/category/beekeeping-basics) für den umfassenderen saisonalen Kontext.
+Siehe [Durchsichten erfassen](../using-the-app/inspections.md), um deine Befunde festzuhalten, und den [Imkerei-Bereich](/category/beekeeping-basics) für den umfassenderen saisonalen Kontext.

@@ -22,7 +22,7 @@ En pratique, cela signifie :
 - **La tenue de registres**, afin de vous souvenir de ce que fait chaque colonie et de pouvoir repérer les tendances au fil du temps.
 
 :::tip
-De bons registres sont l'un des plus grands services que vous puissiez rendre à votre futur vous-même. Notez ce que vous avez observé à chaque visite, ce que vous avez fait, et ce que vous prévoyez de faire ensuite. La fonctionnalité [Visites](/using-the-app/inspections) d'Openbeehive est construite précisément autour de ce rythme.
+De bons registres sont l'un des plus grands services que vous puissiez rendre à votre futur vous-même. Notez ce que vous avez observé à chaque visite, ce que vous avez fait, et ce que vous prévoyez de faire ensuite. La fonctionnalité [Visites](../using-the-app/inspections.md) d'Openbeehive est construite précisément autour de ce rythme.
 :::
 
 ## Attentes en matière de temps et de coût
@@ -35,7 +35,7 @@ Soyez honnête avec vous-même sur ces deux points avant de vous engager.
 
 | Élément | Remarques |
 | --- | --- |
-| Une ruche | Neuve, d'occasion ou autoconstruite. Choisissez un [type de ruche](/knowledge-base/hive-types) courant dans votre région. |
+| Une ruche | Neuve, d'occasion ou autoconstruite. Choisissez un [type de ruche](../knowledge-base/hive-types.md) courant dans votre région. |
 | Vêtements de protection | Une combinaison ou une veste, plus des gants. |
 | Outils de base | Lève-cadre, enfumoir, brosse à abeilles. |
 | Abeilles | Une colonie sur cadres (« nucléus ») ou un essaim. |
@@ -79,11 +79,11 @@ Vous n'avez pas besoin de beaucoup d'espace, mais un bon emplacement facilite to
 - **De l'eau à proximité.** Les abeilles ont besoin d'eau ; fournissez une source sûre s'il n'y en a pas, afin qu'elles n'aillent pas visiter l'étang ou la pataugeoire d'un voisin.
 - **Un accès raisonnable.** Vous porterez de lourdes hausses de miel, alors pensez au trajet de la voiture à la ruche.
 
-Lorsque vous serez prêt, vous pourrez enregistrer l'emplacement, les ruches et les colonies dans l'application. Consultez [Ruchers](/using-the-app/apiaries) et [Ruches](/using-the-app/hives) pour vous installer.
+Lorsque vous serez prêt, vous pourrez enregistrer l'emplacement, les ruches et les colonies dans l'application. Consultez [Ruchers](../using-the-app/apiaries.md) et [Ruches](../using-the-app/hives.md) pour vous installer.
 
 ## Un plan réaliste pour la première année
 
-Le calendrier de chaque région diffère, alors considérez ceci comme une forme générale plutôt que comme des dates fixes. Consultez l'[Année apicole](/beekeeping/beekeeping-year) pour un guide mois par mois plus complet.
+Le calendrier de chaque région diffère, alors considérez ceci comme une forme générale plutôt que comme des dates fixes. Consultez l'[Année apicole](./beekeeping-year.md) pour un guide mois par mois plus complet.
 
 1. **L'hiver avant de commencer.** Rejoignez votre association, suivez un cours pour débutants, lisez, et commandez du matériel pour qu'il soit prêt au printemps.
 2. **Printemps.** Procurez-vous votre première colonie, idéalement un nucléus local provenant d'un fournisseur réputé. Installez-la, nourrissez-la si nécessaire, et commencez de douces visites hebdomadaires.

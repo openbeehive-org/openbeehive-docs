@@ -10,7 +10,7 @@ La façon la plus simple d'exécuter Openbeehive sur votre propre machine est le
 Cette page vous guide pour compiler ce binaire à partir des sources et l'exécuter comme un service de longue durée.
 
 :::tip Pressé ?
-Si vous préférez récupérer une image de conteneur préconstruite, voir [Docker](/self-hosting/docker). Pour comparer d'abord les deux approches, commencez par la [présentation de l'auto-hébergement](/category/self-hosting).
+Si vous préférez récupérer une image de conteneur préconstruite, voir [Docker](./docker.md). Pour comparer d'abord les deux approches, commencez par la [présentation de l'auto-hébergement](/category/self-hosting).
 :::
 
 ## Prérequis
@@ -63,10 +63,10 @@ openssl rand -base64 32
 Collez le résultat dans `BEEHIVE_SESSION_SECRET=`.
 
 :::note Aucune connexion par défaut
-Le profil selfhost n'active aucune méthode de connexion : `BEEHIVE_PASSWORD_AUTH` est désactivé, `BEEHIVE_OIDC_PROVIDERS` est vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. Laissez-les ainsi pour fonctionner en mono-utilisateur sans étape de connexion. Lorsque vous voudrez des comptes, des passkeys ou un fournisseur, voir [Authentification](/self-hosting/authentication).
+Le profil selfhost n'active aucune méthode de connexion : `BEEHIVE_PASSWORD_AUTH` est désactivé, `BEEHIVE_OIDC_PROVIDERS` est vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. Laissez-les ainsi pour fonctionner en mono-utilisateur sans étape de connexion. Lorsque vous voudrez des comptes, des passkeys ou un fournisseur, voir [Authentification](./authentication.md).
 :::
 
-Si vous comptez accéder à l'instance depuis un autre appareil de votre réseau, définissez `BEEHIVE_PUBLIC_BASE_URL` sur une adresse que cet appareil peut réellement résoudre (par exemple `http://192.168.1.20:8080` ou votre domaine derrière un [reverse proxy](/self-hosting/reverse-proxy)). Les étiquettes QR encodent l'adresse à laquelle vous ouvrez l'application, utilisez donc cette même adresse de manière cohérente.
+Si vous comptez accéder à l'instance depuis un autre appareil de votre réseau, définissez `BEEHIVE_PUBLIC_BASE_URL` sur une adresse que cet appareil peut réellement résoudre (par exemple `http://192.168.1.20:8080` ou votre domaine derrière un [reverse proxy](./reverse-proxy.md)). Les étiquettes QR encodent l'adresse à laquelle vous ouvrez l'application, utilisez donc cette même adresse de manière cohérente.
 
 ## Compiler
 
@@ -162,7 +162,7 @@ journalctl -u openbeehive -f
 ```
 
 :::caution Liaison au port 80 ou 443
-L'exemple se lie à `:8080`, ce qu'un utilisateur non privilégié peut utiliser. N'exécutez pas le service en tant que root pour atteindre les ports 80/443 ; gardez plutôt Openbeehive sur `:8080` et placez un [reverse proxy](/self-hosting/reverse-proxy) (tel que Caddy ou nginx) devant lui pour gérer TLS et le port public.
+L'exemple se lie à `:8080`, ce qu'un utilisateur non privilégié peut utiliser. N'exécutez pas le service en tant que root pour atteindre les ports 80/443 ; gardez plutôt Openbeehive sur `:8080` et placez un [reverse proxy](./reverse-proxy.md) (tel que Caddy ou nginx) devant lui pour gérer TLS et le port public.
 :::
 
 ## Où se trouvent vos données
@@ -188,8 +188,8 @@ Comme tout l'état tient dans des fichiers d'un seul répertoire, déplacer une 
 Copier `openbeehive.db` pendant que le serveur fonctionne peut capturer un instantané déchiré et incohérent. Arrêtez le service (ou utilisez une procédure de sauvegarde appropriée) avant de copier les fichiers de base de données.
 :::
 
-Pour les sauvegardes planifiées, la rétention et les techniques sûres de sauvegarde à chaud pour SQLite, voir [Sauvegardes](/self-hosting/backups).
+Pour les sauvegardes planifiées, la rétention et les techniques sûres de sauvegarde à chaud pour SQLite, voir [Sauvegardes](./backups.md).
 
 ## Mise à niveau
 
-Pour passer à une version plus récente, récupérez le dernier code, recompilez et remplacez le binaire : votre base de données et votre répertoire `data/` restent en place et les migrations s'exécutent au démarrage suivant. La procédure complète, y compris comment revenir en arrière, est décrite dans [Mise à niveau](/self-hosting/upgrading).
+Pour passer à une version plus récente, récupérez le dernier code, recompilez et remplacez le binaire : votre base de données et votre répertoire `data/` restent en place et les migrations s'exécutent au démarrage suivant. La procédure complète, y compris comment revenir en arrière, est décrite dans [Mise à niveau](./upgrading.md).

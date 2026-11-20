@@ -28,7 +28,7 @@ el diálogo de impresión de tu navegador — elige "Guardar como PDF" para cons
 La exportación refleja lo que hay en tu dispositivo en este momento. Las fotos no se incluyen en
 las exportaciones CSV/XLSX/BeeXML (se almacenan como blobs) — la imagen completa reside en
 tu cuenta sincronizada y su almacenamiento de blobs; consulta
-[Autoalojamiento → Copias de seguridad](/self-hosting/backups) para copias de seguridad del lado del servidor.
+[Autoalojamiento → Copias de seguridad](../self-hosting/backups.md) para copias de seguridad del lado del servidor.
 
 ## Importar y restaurar
 

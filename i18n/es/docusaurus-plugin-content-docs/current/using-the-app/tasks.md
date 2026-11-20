@@ -5,7 +5,7 @@ title: "Tareas"
 
 # Tareas
 
-La apicultura está llena de pequeños trabajos que es fácil olvidar: añadir un alza antes de la mielada, colocar un escape de abejas el día antes de la extracción, tratar contra la varroa en cuanto se retira la miel. Las tareas son los recordatorios de Openbeehive: un título y una fecha de vencimiento opcional. Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+La apicultura está llena de pequeños trabajos que es fácil olvidar: añadir un alza antes de la mielada, colocar un escape de abejas el día antes de la extracción, tratar contra la varroa en cuanto se retira la miel. Las tareas son los recordatorios de Openbeehive: un título y una fecha de vencimiento opcional. Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md).
 
 ## Crear una tarea
 
@@ -36,7 +36,7 @@ Si tú y un coapicultor marcáis ambos la misma tarea en distintos dispositivos,
 
 ## Las tareas en el Resumen
 
-El mosaico **Tareas abiertas** cuenta las tareas que no están hechas. **Próximas tareas** lista hasta cinco tareas abiertas con sus fechas de vencimiento; las tareas cuya fecha ya ha pasado se marcan con **!**. Consulta [El panel de control](/using-the-app/dashboard).
+El mosaico **Tareas abiertas** cuenta las tareas que no están hechas. **Próximas tareas** lista hasta cinco tareas abiertas con sus fechas de vencimiento; las tareas cuya fecha ya ha pasado se marcan con **!**. Consulta [El panel de control](./dashboard.md).
 
 :::tip
 Para los trabajos recurrentes, añade la siguiente tarea cuando marques la actual como hecha. Tras una revisión de enjambrazón de siete días, añade "Revisión de enjambrazón" para la semana siguiente.
@@ -75,5 +75,5 @@ Para los trabajos recurrentes, añade la siguiente tarea cuando marques la actua
 - Reparar y construir equipo listo para la primavera.
 
 :::caution
-El momento de los tratamientos y los productos que puedes usar legalmente varían según el país y la región. Sigue las indicaciones de tu zona y la etiqueta del producto. Consulta [Varroa](/beekeeping/varroa).
+El momento de los tratamientos y los productos que puedes usar legalmente varían según el país y la región. Sigue las indicaciones de tu zona y la etiqueta del producto. Consulta [Varroa](../beekeeping/varroa.md).
 :::

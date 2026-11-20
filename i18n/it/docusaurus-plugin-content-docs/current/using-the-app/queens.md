@@ -35,7 +35,7 @@ Openbeehive segue lo schema internazionale dei colori delle regine, che ruota og
 | 4 o 9 | Verde |
 | 5 o 0 | Blu |
 
-Quando imposti l'anno, viene selezionato il colore corrispondente. Deseleziona **auto** per registrare un colore diverso se la regina che hai acquistato ne porta uno, così il punto nei tuoi registri corrisponde al punto sull'ape. Per lo schema completo e la filastrocca mnemonica, vedi [Colori di marcatura delle regine](/knowledge-base/queen-marking-colours).
+Quando imposti l'anno, viene selezionato il colore corrispondente. Deseleziona **auto** per registrare un colore diverso se la regina che hai acquistato ne porta uno, così il punto nei tuoi registri corrisponde al punto sull'ape. Per lo schema completo e la filastrocca mnemonica, vedi [Colori di marcatura delle regine](../knowledge-base/queen-marking-colours.md).
 
 ## Sostituire una regina
 
@@ -53,4 +53,4 @@ Annota *perché* hai sostituito la regina nel commento della nuova: scarsa ovide
 
 Visite, smielature e trattamenti portano la propria data e vengono attribuiti alla regina il cui regno copriva quella data, non necessariamente alla regina a capo dell'arnia oggi. Se una sostituzione di regina e una visita retrodatata cadono vicine, controlla le date affinché ogni registro finisca sotto il regno giusto.
 
-Le schede delle regine si sincronizzano come tutto il resto; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Le schede delle regine si sincronizzano come tutto il resto; vedi [Offline e sincronizzazione](./offline-and-sync.md).

@@ -20,9 +20,9 @@ A medida que los días se alargan, la reina empieza a poner de nuevo y la coloni
 Qué hacer:
 
 - Mantén las molestias al mínimo. Un rápido "sopesado" de la colmena (levantar un lado para juzgar el peso) te indica si las reservas se están agotando sin tener que abrir.
-- En el primer día suave y sin viento, una breve ojeada confirma que la colonia está viva, con reina y con alimento. Alimenta si las reservas son escasas (consulta [Alimentación](/beekeeping/feeding)).
+- En el primer día suave y sin viento, una breve ojeada confirma que la colonia está viva, con reina y con alimento. Alimenta si las reservas son escasas (consulta [Alimentación](./feeding.md)).
 - Limpia y prepara el equipo: cajas, cuadros y cera estampada de repuesto para la temporada que viene.
-- Planifica ahora tu estrategia contra la varroa en lugar de hacerlo a la carrera más tarde (consulta [Varroa](/beekeeping/varroa)).
+- Planifica ahora tu estrategia contra la varroa en lugar de hacerlo a la carrera más tarde (consulta [Varroa](./varroa.md)).
 
 Registra la primera inspección y cualquier alimentación sobre la marcha. Anotar pronto los niveles de reservas te da una referencia para el año.
 
@@ -34,11 +34,11 @@ Qué hacer:
 
 - Inspecciona más o menos cada siete a nueve días durante el desarrollo. Esta cadencia coincide con el ciclo de las realeras y te permite detectar los preparativos de enjambrazón antes de que vayan demasiado lejos.
 - Vigila las realeras, la congestión y una colonia "hirviendo" de abejas. Da espacio pronto añadiendo cajas o alzas.
-- Aplica tu método elegido de control de enjambrazón si aparecen realeras (consulta [Enjambrazón](/beekeeping/swarming)).
-- Considera criar nuevas reinas o aumentar el número de colonias a partir de stock fuerte (consulta [Cría de reinas](/beekeeping/queen-rearing)).
+- Aplica tu método elegido de control de enjambrazón si aparecen realeras (consulta [Enjambrazón](./swarming.md)).
+- Considera criar nuevas reinas o aumentar el número de colonias a partir de stock fuerte (consulta [Cría de reinas](./queen-rearing.md)).
 
 :::tip Usa tareas para mantener el ritmo
-El ciclo de siete días es fácil de perder de vista con varias colmenas. Añade una tarea con fecha de vencimiento para la próxima visita y, cuando la marques como hecha, añade la siguiente. Consulta [Tareas](/using-the-app/tasks).
+El ciclo de siete días es fácil de perder de vista con varias colmenas. Añade una tarea con fecha de vencimiento para la próxima visita y, cuando la marques como hecha, añade la siguiente. Consulta [Tareas](../using-the-app/tasks.md).
 :::
 
 ## Verano: la entrada de miel
@@ -50,7 +50,7 @@ Qué hacer:
 - Mantente por delante de las abejas con espacio de alzas. Una colonia congestionada almacena menos y es más propensa a enjambrar.
 - Continúa las inspecciones, pero puedes reducir la frecuencia una vez que pase el impulso de enjambrar (a menudo tras el día más largo).
 - Monitoriza los niveles de varroa durante la temporada para no llevarte una sorpresa en el momento de la cosecha.
-- Cosecha la miel operculada cuando los cuadros estén listos y la entrada de néctar decaiga (consulta [Cosecha de miel](/beekeeping/honey-harvest)).
+- Cosecha la miel operculada cuando los cuadros estén listos y la entrada de néctar decaiga (consulta [Cosecha de miel](./honey-harvest.md)).
 
 Registra cada cosecha con pesos y qué colmenas la produjeron. A lo largo de unas pocas temporadas esto se convierte en datos realmente útiles sobre tus mejores colonias y tu mejor alimento disponible.
 
@@ -65,10 +65,10 @@ Qué hacer:
 - Una vez que el tratamiento lo permita, alimenta para completar las reservas de invierno si la colonia está ligera. Da jarabe concentrado con tiempo suficiente para que las abejas puedan madurarlo y opercularlo antes de que llegue el frío.
 
 :::caution Las normas de tratamiento varían según el país
-Los tratamientos aprobados contra la varroa, las dosis y los tiempos difieren entre regiones, y algunos tienen requisitos legales. Usa siempre un producto autorizado donde vives y sigue las directrices nacionales. Consulta [Varroa](/beekeeping/varroa) para una visión general, pero comprueba las normas locales.
+Los tratamientos aprobados contra la varroa, las dosis y los tiempos difieren entre regiones, y algunos tienen requisitos legales. Usa siempre un producto autorizado donde vives y sigue las directrices nacionales. Consulta [Varroa](./varroa.md) para una visión general, pero comprueba las normas locales.
 :::
 
-Registra cada tratamiento: producto, dosis y fechas. Esto te protege, te ayuda a juzgar qué funciona y mantiene un historial sanitario honesto de cada colmena. Los registros de [Tratamientos](/using-the-app/treatments) de la app están diseñados justamente para esto.
+Registra cada tratamiento: producto, dosis y fechas. Esto te protege, te ayuda a juzgar qué funciona y mantiene un historial sanitario honesto de cada colmena. Los registros de [Tratamientos](../using-the-app/treatments.md) de la app están diseñados justamente para esto.
 
 ## Otoño: preparación
 
@@ -82,7 +82,7 @@ Qué hacer:
 - Asegura la ventilación y que la colmena evacúe la lluvia. Asegura los techos contra el viento.
 - Ordena y guarda el panal estirado a salvo de la polilla de la cera.
 
-Usa tareas para asegurarte de que no se omita ninguna colmena. Una sencilla tarea de lista de comprobación de "preparación invernal" por colmena hace que nada se escape antes de que llegue el frío. Consulta [Tareas](/using-the-app/tasks).
+Usa tareas para asegurarte de que no se omita ninguna colmena. Una sencilla tarea de lista de comprobación de "preparación invernal" por colmena hace que nada se escape antes de que llegue el frío. Consulta [Tareas](../using-the-app/tasks.md).
 
 ## Invierno: el racimo descansa
 
@@ -104,4 +104,4 @@ El invierno es el momento perfecto para mirar atrás. Revisar las inspecciones, 
 
 El año es un bucle: desarrollo, temporada de enjambrazón, entrada de miel, tratar y alimentar, preparar, descansar. Cada fase prepara la siguiente, y los buenos registros son lo que las conecta.
 
-Cuanto más sistemáticamente registres inspecciones, tareas, cosechas y tratamientos, más fácil se vuelve el año siguiente. Para más sobre la biología de la colonia que hay detrás de estos ritmos, consulta [La colonia](/beekeeping/the-colony), y para las guías apícolas más amplias empieza por la [sección de apicultura](/category/beekeeping-basics).
+Cuanto más sistemáticamente registres inspecciones, tareas, cosechas y tratamientos, más fácil se vuelve el año siguiente. Para más sobre la biología de la colonia que hay detrás de estos ritmos, consulta [La colonia](./the-colony.md), y para las guías apícolas más amplias empieza por la [sección de apicultura](/category/beekeeping-basics).

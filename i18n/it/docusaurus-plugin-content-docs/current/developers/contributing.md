@@ -49,11 +49,11 @@ tutti i target.
 `.env` nella radice del repository (copia `.env.example`). I valori predefiniti
 ti danno SQLite e blob su filesystem; lascia `BEEHIVE_PASSWORD_AUTH`
 disattivato, `BEEHIVE_OIDC_PROVIDERS` vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`
-per lavorare senza login. Vedi [Configurazione](/self-hosting/configuration).
+per lavorare senza login. Vedi [Configurazione](../self-hosting/configuration.md).
 
 Per compilare un binario di release: `make proto && make build` scrive
 `server/bin/openbeehive` con la SPA incorporata. Vedi
-[Singolo binario](/self-hosting/single-binary).
+[Singolo binario](../self-hosting/single-binary.md).
 
 ## Codice generato
 
@@ -68,7 +68,7 @@ Entrambe le directory sono in gitignore. Esegui `make proto` dopo il clone e
 dopo ogni modifica a un `.proto`; non modificare mai l'output a mano. La build
 Docker esegue `buf generate` da sola nel suo primo stage. Ogni servizio nei
 proto è registrato sul server; vedi
-[Utilizzo dell'API](/using-the-api/overview) per l'elenco.
+[Utilizzo dell'API](../using-the-api/overview.md) per l'elenco.
 
 ## Convenzioni
 
@@ -85,11 +85,11 @@ proto è registrato sul server; vedi
    campo e l'OR-Set add-wins sono implementati in
    `server/internal/sync/merge.go` e `app/src/lib/local/merge.ts`. Modifica
    entrambi, con test. Vedi il
-   [protocollo di sincronizzazione](/developers/sync-protocol).
+   [protocollo di sincronizzazione](./sync-protocol.md).
 4. **Scrivi SQL portabile.** Il server gira su PostgreSQL, MySQL e SQLite. Le
    migrazioni usano il sottoinsieme portabile descritto in cima a
    `0001_init.sql`; lo store traduce le restanti differenze di dialetto.
-   Vedi [Database](/self-hosting/databases).
+   Vedi [Database](../self-hosting/databases.md).
 5. **Inglese nel codice, traduzioni per gli utenti.** Codice, commenti,
    identificatori e messaggi di commit sono in inglese. Ogni stringa rivolta
    all'utente passa da `svelte-i18n` con voci in

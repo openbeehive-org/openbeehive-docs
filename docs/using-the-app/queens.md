@@ -35,7 +35,7 @@ Openbeehive follows the international queen colour scheme, cycling every five ye
 | 4 or 9 | Green |
 | 5 or 0 | Blue |
 
-When you set the year, the matching colour is selected. Untick **auto** to record a different colour if the queen you bought carries one, so the dot in your records matches the dot on the bee. For the full scheme and the mnemonic, see [Queen marking colours](/knowledge-base/queen-marking-colours).
+When you set the year, the matching colour is selected. Untick **auto** to record a different colour if the queen you bought carries one, so the dot in your records matches the dot on the bee. For the full scheme and the mnemonic, see [Queen marking colours](../knowledge-base/queen-marking-colours.md).
 
 ## Replacing a queen
 
@@ -53,4 +53,4 @@ Note *why* you requeened in the new queen's comment: poor laying, defensive bees
 
 Visits, harvests and treatments carry their own date and are attributed to the queen whose reign covered that date, not necessarily the queen heading the hive today. If a requeening and a back-dated visit fall close together, check the dates so each record lands under the right reign.
 
-Queen records sync like everything else; see [Offline and sync](/using-the-app/offline-and-sync).
+Queen records sync like everything else; see [Offline and sync](./offline-and-sync.md).

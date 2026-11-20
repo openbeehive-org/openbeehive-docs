@@ -18,7 +18,7 @@ Openbeehive conserve une copie complète de vos enregistrements dans une petite 
 - **Vos données sont à vous.** Les enregistrements vivent sur votre appareil ; le serveur est la copie qui sert à la synchronisation et au partage.
 
 :::tip
-Comme les enregistrements sont stockés sur l'appareil, installez Openbeehive comme une application plutôt que de l'utiliser dans un onglet de navigateur. Voir [Installer Openbeehive](/using-the-app/install).
+Comme les enregistrements sont stockés sur l'appareil, installez Openbeehive comme une application plutôt que de l'utiliser dans un onglet de navigateur. Voir [Installer Openbeehive](./install.md).
 :::
 
 ## L'indicateur hors ligne
@@ -28,7 +28,7 @@ Lorsque l'appareil n'a pas de connexion, le bloc de compte dans la barre latéra
 Lorsque l'appareil est de nouveau en ligne, la barre disparaît et les modifications faites hors ligne sont envoyées automatiquement. Il n'y a pas de bouton « synchroniser maintenant ».
 
 :::note
-Un indicateur hors ligne persistant signifie généralement une couverture faible au rucher. S'il reste affiché même avec une bonne connexion à la maison, consultez [Dépannage](/knowledge-base/troubleshooting).
+Un indicateur hors ligne persistant signifie généralement une couverture faible au rucher. S'il reste affiché même avec une bonne connexion à la maison, consultez [Dépannage](../knowledge-base/troubleshooting.md).
 :::
 
 ## Votre première synchronisation sur un nouvel appareil
@@ -56,7 +56,7 @@ Openbeehive résout les modifications qui se chevauchent **automatiquement**, sa
 Chaque appareil converge vers le même état une fois que tous ont synchronisé.
 
 :::tip
-En bref : ajoutez librement, modifiez en confiance. Le fonctionnement sous le capot est décrit sur les pages [protocole de synchronisation](/developers/sync-protocol) et [architecture](/developers/architecture).
+En bref : ajoutez librement, modifiez en confiance. Le fonctionnement sous le capot est décrit sur les pages [protocole de synchronisation](../developers/sync-protocol.md) et [architecture](../developers/architecture.md).
 :::
 
 ## Partage
@@ -68,7 +68,7 @@ Les enregistrements se partagent via les **espaces** (tenants). Chaque membre d'
 | **Admin** (propriétaire de l'espace) | Tout ce qu'un membre peut faire, plus inviter et révoquer, et supprimer l'espace. |
 | **Membre** | Ajouter et modifier des ruchers, ruches, visites, tâches, récoltes et traitements dans l'espace. |
 
-Pour partager un emplacement avec un mentor tout en gardant les autres privés, placez cet emplacement dans son propre espace et invitez-y le mentor. Les enregistrements partagés se synchronisent et résolvent les conflits exactement comme les vôtres. Voir [Comptes et espaces](/using-the-app/accounts-tenants).
+Pour partager un emplacement avec un mentor tout en gardant les autres privés, placez cet emplacement dans son propre espace et invitez-y le mentor. Les enregistrements partagés se synchronisent et résolvent les conflits exactement comme les vôtres. Voir [Comptes et espaces](./accounts-tenants.md).
 
 ## Si quelque chose ne peut pas être enregistré
 
@@ -76,10 +76,10 @@ L'enregistrement se fait sur votre appareil, il n'échoue donc pratiquement jama
 
 Sur le **compte de démonstration** public, le serveur rejette les modifications (la démo se réinitialise toutes les heures). Vos modifications sont enregistrées sur votre appareil et y restent simplement au lieu de se synchroniser.
 
-Il existe une situation où l'enregistrement fonctionne mais ne dure pas : si le navigateur ne peut pas donner à l'application son stockage privé, l'application se rabat sur une base de données en mémoire et affiche le message **« Le stockage est indisponible : les modifications ne seront pas conservées sur cet appareil. »** Tout continue de fonctionner pendant la session, et les modifications se synchronisent toujours avec le serveur si vous êtes connecté, mais la copie locale disparaît à la fermeture de l'onglet. Cela se produit dans les fenêtres de navigation privée et lorsqu'un second onglet de l'application détient encore le stockage ; voir [Dépannage](/knowledge-base/troubleshooting#storage-is-unavailable).
+Il existe une situation où l'enregistrement fonctionne mais ne dure pas : si le navigateur ne peut pas donner à l'application son stockage privé, l'application se rabat sur une base de données en mémoire et affiche le message **« Le stockage est indisponible : les modifications ne seront pas conservées sur cet appareil. »** Tout continue de fonctionner pendant la session, et les modifications se synchronisent toujours avec le serveur si vous êtes connecté, mais la copie locale disparaît à la fermeture de l'onglet. Cela se produit dans les fenêtres de navigation privée et lorsqu'un second onglet de l'application détient encore le stockage ; voir [Dépannage](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
 ## Vais-je perdre des données ?
 
 Vos enregistrements sont d'abord écrits sur votre appareil et ne sont pas supprimés parce que vous êtes hors ligne ou que l'application se ferme. Ils attendent sur l'appareil jusqu'à pouvoir être synchronisés.
 
-Si vous auto-hébergez, conservez aussi des sauvegardes du serveur. Voir [Sauvegardes](/self-hosting/backups).
+Si vous auto-hébergez, conservez aussi des sauvegardes du serveur. Voir [Sauvegardes](../self-hosting/backups.md).

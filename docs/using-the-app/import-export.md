@@ -28,7 +28,7 @@ your browser's print dialog — choose "Save as PDF" to keep a copy.
 The export reflects what's on your device right now. Photos are not included in
 the CSV/XLSX/BeeXML exports (they're stored as blobs) — the full picture lives in
 your synced account and its blob storage; see
-[Self-hosting → Backups](/self-hosting/backups) for server-side backups.
+[Self-hosting → Backups](../self-hosting/backups.md) for server-side backups.
 
 ## Importing & restoring
 

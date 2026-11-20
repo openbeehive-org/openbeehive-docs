@@ -49,7 +49,7 @@ Record the batch number straight from the packaging at the time you treat. It is
 4. Set the **withdrawal until** date if the product specifies a withdrawal period.
 5. Save.
 
-Works offline; see [Offline & sync](/using-the-app/offline-and-sync).
+Works offline; see [Offline & sync](./offline-and-sync.md).
 
 ## Withdrawal periods and harvesting
 
@@ -74,4 +74,4 @@ Because treatment entries sync across your devices, the log you build in the fie
 
 ## Treatments and varroa
 
-The varroa mite is the reason most beekeepers reach for a treatment in the first place, and getting the timing right across the season is its own subject. For a fuller picture of monitoring mite levels, choosing an approach, and planning treatments around the beekeeping year, see [the varroa guide](/beekeeping/varroa).
+The varroa mite is the reason most beekeepers reach for a treatment in the first place, and getting the timing right across the season is its own subject. For a fuller picture of monitoring mite levels, choosing an approach, and planning treatments around the beekeeping year, see [the varroa guide](../beekeeping/varroa.md).

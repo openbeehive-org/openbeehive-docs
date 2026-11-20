@@ -18,7 +18,7 @@ Openbeehive keeps a complete copy of your records in a small database on your de
 - **Your data is yours.** The records live on your device; the server is the copy for syncing and sharing.
 
 :::tip
-Because records are stored on the device, install Openbeehive as an app rather than using it in a browser tab. See [Install Openbeehive](/using-the-app/install).
+Because records are stored on the device, install Openbeehive as an app rather than using it in a browser tab. See [Install Openbeehive](./install.md).
 :::
 
 ## The offline indicator
@@ -28,7 +28,7 @@ When the device has no connection, the account block in the sidebar switches fro
 When the device is back online the bar clears and any changes made offline are sent up automatically. There is no "sync now" button.
 
 :::note
-A persistent offline indicator usually means weak coverage at the apiary. If it stays on even on a good connection at home, see [Troubleshooting](/knowledge-base/troubleshooting).
+A persistent offline indicator usually means weak coverage at the apiary. If it stays on even on a good connection at home, see [Troubleshooting](../knowledge-base/troubleshooting.md).
 :::
 
 ## Your first sync on a new device
@@ -56,7 +56,7 @@ Openbeehive resolves overlapping changes **automatically**, with no "which versi
 Every device converges on the same state once all have synced.
 
 :::tip
-The short version: add freely, edit confidently. How this works under the bonnet is on the [sync protocol](/developers/sync-protocol) and [architecture](/developers/architecture) pages.
+The short version: add freely, edit confidently. How this works under the bonnet is on the [sync protocol](../developers/sync-protocol.md) and [architecture](../developers/architecture.md) pages.
 :::
 
 ## Sharing
@@ -68,7 +68,7 @@ Records are shared through **tenants**. Every member of a tenant sees and edits 
 | **Admin** (tenant owner) | Everything a member can, plus invite and revoke, and delete the tenant. |
 | **Member** | Add and edit apiaries, hives, visits, tasks, harvests and treatments in the tenant. |
 
-To share one yard with a mentor while keeping others private, put that yard in its own tenant and invite the mentor there. Shared records sync and resolve conflicts exactly like your own. See [Accounts & tenants](/using-the-app/accounts-tenants).
+To share one yard with a mentor while keeping others private, put that yard in its own tenant and invite the mentor there. Shared records sync and resolve conflicts exactly like your own. See [Accounts & tenants](./accounts-tenants.md).
 
 ## If something cannot be saved
 
@@ -76,10 +76,10 @@ Saving happens on your device, so it virtually never fails. If it does (for exam
 
 On the public **demo account** the server rejects changes (the demo resets itself hourly). Your changes are saved on your device and simply stay there instead of syncing.
 
-There is one situation where saving works but does not last: if the browser cannot give the app its private storage, the app falls back to an in-memory database and shows the toast **"Storage is unavailable — changes will not persist on this device."** Everything keeps working for the session, and edits still sync to the server if you are signed in, but the local copy is gone once the tab closes. This happens in private browsing windows and when a second tab of the app is still holding the storage; see [Troubleshooting](/knowledge-base/troubleshooting#storage-is-unavailable).
+There is one situation where saving works but does not last: if the browser cannot give the app its private storage, the app falls back to an in-memory database and shows the toast **"Storage is unavailable — changes will not persist on this device."** Everything keeps working for the session, and edits still sync to the server if you are signed in, but the local copy is gone once the tab closes. This happens in private browsing windows and when a second tab of the app is still holding the storage; see [Troubleshooting](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
 ## Will I ever lose data?
 
 Your records are written to your device first and are not removed because you are offline or the app closes. They wait on the device until they can be synced.
 
-If you self-host, keep server backups as well. See [Backups](/self-hosting/backups).
+If you self-host, keep server backups as well. See [Backups](../self-hosting/backups.md).

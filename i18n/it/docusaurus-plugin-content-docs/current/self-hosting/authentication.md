@@ -18,7 +18,7 @@ Openbeehive ti permette di scegliere quanta autenticazione ti serve. Un apicolto
 
 I metodi di accesso si combinano. La schermata di accesso offre quelli abilitati, e un unico account funziona con tutti: accedere con un provider si collega a un account email/password esistente con la stessa email.
 
-Abilitare un qualsiasi metodo di accesso abilita anche i tenant e gli inviti (Impostazioni → Spazi); vedi [Account e tenant](/using-the-app/accounts-tenants).
+Abilitare un qualsiasi metodo di accesso abilita anche i tenant e gli inviti (Impostazioni → Spazi); vedi [Account e tenant](../using-the-app/accounts-tenants.md).
 
 ## Modalità 1: utente singolo, nessun accesso
 
@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 Mantieni `BEEHIVE_SESSION_SECRET` segreto e stabile. Chiunque lo scopra può falsificare le sessioni. Se lo cambi, tutte le sessioni esistenti vengono invalidate. Non inserirlo mai nel controllo di versione.
 :::
 
-Se servi l'app tramite HTTPS attraverso un reverse proxy, assicurati che `BEEHIVE_PUBLIC_BASE_URL` usi `https://` in modo che i link di reindirizzamento e di invito siano corretti. Vedi [Reverse proxy](/self-hosting/reverse-proxy).
+Se servi l'app tramite HTTPS attraverso un reverse proxy, assicurati che `BEEHIVE_PUBLIC_BASE_URL` usi `https://` in modo che i link di reindirizzamento e di invito siano corretti. Vedi [Reverse proxy](./reverse-proxy.md).
 
 ## Modalità 2: email e password (account in-app)
 
@@ -79,7 +79,7 @@ Il server garantisce questo account a ogni avvio: viene creato se manca, il ruol
 
 Per impedire a estranei di creare account, imposta `BEEHIVE_REGISTRATION=false`. L'amministratore viene dall'ambiente, quindi un'istanza nuova ne ha sempre uno. Tutti gli altri si uniscono tramite link di invito, che un amministratore del tenant emette da Impostazioni → Spazi. La registrazione tramite un link di invito deve usare l'indirizzo email invitato. La schermata di accesso mostra un avviso che l'istanza è solo su invito; gli account esistenti accedono normalmente.
 
-Ogni nuovo account inizia con il proprio [tenant](/using-the-app/accounts-tenants) personale. Solo l'account amministratore configurato porta il ruolo di amministratore dell'istanza.
+Ogni nuovo account inizia con il proprio [tenant](../using-the-app/accounts-tenants.md) personale. Solo l'account amministratore configurato porta il ruolo di amministratore dell'istanza.
 
 ### Verifica email facoltativa
 
@@ -181,4 +181,4 @@ Riavvia il server e carica l'app in un browser:
 2. Con un metodo di accesso abilitato, la schermata di accesso offre ciascun metodo abilitato (e "Esplora la demo" se la demo è attiva).
 3. Completa un accesso e verifica di raggiungere la Panoramica e che i dati si sincronizzino.
 
-Se qualcosa non funziona, controlla i log del server e la [Risoluzione dei problemi](/knowledge-base/troubleshooting).
+Se qualcosa non funziona, controlla i log del server e la [Risoluzione dei problemi](../knowledge-base/troubleshooting.md).

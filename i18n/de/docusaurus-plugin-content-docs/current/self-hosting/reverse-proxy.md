@@ -88,4 +88,4 @@ Liste mehrere Ursprünge kommagetrennt auf. Vermeide `*` zusammen mit `BEEHIVE_C
 - `BEEHIVE_CORS_ALLOWED_ORIGINS` ist nur gesetzt, wenn die App auf einem anderen Ursprung liegt.
 - QR-Etiketten enthalten die Adresse, von der sie gedruckt wurden; drucke sie nach einem Domainwechsel neu.
 
-Für die Server-Optionen siehe [Konfiguration](/self-hosting/configuration).
+Für die Server-Optionen siehe [Konfiguration](./configuration.md).

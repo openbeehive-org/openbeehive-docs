@@ -35,4 +35,4 @@ Honey should generally be below about 18% water before it is sold or stored long
 
 A harvest stores the hive, the apiary and the queen whose reign covered the harvest date. Requeening or moving the hive later does not change what an earlier harvest is attributed to.
 
-Works offline; see [Offline & sync](/using-the-app/offline-and-sync). For taking off and processing honey, see the beekeeping guide on [Honey harvest](/beekeeping/honey-harvest).
+Works offline; see [Offline & sync](./offline-and-sync.md). For taking off and processing honey, see the beekeeping guide on [Honey harvest](../beekeeping/honey-harvest.md).

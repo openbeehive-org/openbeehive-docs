@@ -59,12 +59,12 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 :::caution Sichere es
 Das Blob-Verzeichnis ist **nicht** in deiner Datenbank gespeichert. Ein Datenbank-Backup allein
 wird deine Fotos nicht retten. Beziehe `BEEHIVE_BLOB_DIR` in deine Backup-Routine ein. Siehe
-[Backups](/self-hosting/backups) für eine vollständige Strategie.
+[Backups](./backups.md) für eine vollständige Strategie.
 :::
 
 ### Docker-Hinweis
 
-Wenn du das [Docker-Image](/self-hosting/docker) betreibst, hänge ein Volume ein, damit Blobs
+Wenn du das [Docker-Image](./docker.md) betreibst, hänge ein Volume ein, damit Blobs
 Container-Neustarts und Upgrades überstehen. Der Container läuft als uid `65532`;
 ein per Bind-Mount eingehängtes Host-Verzeichnis muss diesem Benutzer gehören:
 
@@ -143,7 +143,7 @@ und Secret-Key, wähle deinen Bucket und setze `BEEHIVE_MINIO_USE_SSL=true`.
 Einige Anbieter reagieren empfindlich auf Regions-Einstellungen oder erfordern Path-Style- gegenüber
 Virtual-Hosted-Adressierung. Wenn Uploads bei einem anderen Anbieter als MinIO fehlschlagen,
 prüfe noch einmal den Endpunkt und dass der Bucket in der erwarteten Region existiert.
-Siehe [Fehlerbehebung](/knowledge-base/troubleshooting), falls Probleme weiterhin bestehen.
+Siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md), falls Probleme weiterhin bestehen.
 :::
 
 ## Später Backends wechseln

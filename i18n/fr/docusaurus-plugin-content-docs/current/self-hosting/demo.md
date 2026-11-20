@@ -35,7 +35,7 @@ BEEHIVE_DEMO=true
 ```
 
 C'est tout ce dont vous avez besoin. Activer le mode démo active automatiquement
-la [connexion par e-mail/mot de passe](/self-hosting/authentication) afin que le
+la [connexion par e-mail/mot de passe](./authentication.md) afin que le
 compte de démonstration puisse se connecter. Vous pouvez éventuellement remplacer
 les identifiants :
 
@@ -48,7 +48,7 @@ Redémarrez le serveur. Vous verrez une ligne de journal confirmant que la démo
 été installée, et le compte de démonstration peut se connecter immédiatement. Comme le mode
 démo implique l'authentification par mot de passe, l'instance a aussi besoin de son
 administrateur dédié (`BEEHIVE_ADMIN_EMAIL` et `BEEHIVE_ADMIN_PASSWORD`, voir
-[Authentification](/self-hosting/authentication)), et l'e-mail de l'administrateur doit
+[Authentification](./authentication.md)), et l'e-mail de l'administrateur doit
 différer de celui de la démo.
 
 ### Hôtes de démonstration : sauter l'écran de connexion

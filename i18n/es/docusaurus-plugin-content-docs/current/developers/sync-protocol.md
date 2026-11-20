@@ -51,7 +51,7 @@ message Change {
 
 `payload_json` es un delta parcial, no la fila completa: el `patch()` del
 cliente escribe solo las columnas que cambió. Las claves son los nombres de
-columna en `snake_case` del [modelo de datos](/developers/data-model). Una fila
+columna en `snake_case` del [modelo de datos](./data-model.md). Una fila
 creada en el dispositivo es un delta que contiene todas las columnas. Una
 eliminación es `op = CHANGE_OP_DELETE`; el receptor establece `deleted = true`
 e ignora la carga.

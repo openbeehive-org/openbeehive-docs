@@ -34,7 +34,7 @@ Desde la lista de **Colmenares** (o el botón **+ Nuevo** del Resumen) elige **N
 | **Nota** | No | Códigos de puertas, indicaciones de acceso, el nombre del propietario del terreno, aparcamiento. |
 | **Latitud / Longitud** | No | Coordenadas en grados decimales. |
 
-Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md).
 
 ### Establecer coordenadas GPS
 
@@ -64,11 +64,11 @@ Abre un colmenar para ver sus colmenas con la fecha de la última inspección de
 - **Añadir colmena**: escribe un nombre y añádela. Define su tipo y estado después, editando la colmena.
 - **Abrir una colmena** para ver su reina, su registro de visitas, sus cosechas y sus tratamientos.
 
-Consulta [Colmenas](/using-the-app/hives) y [Reinas](/using-the-app/queens).
+Consulta [Colmenas](./hives.md) y [Reinas](./queens.md).
 
 ## Imprimir etiquetas QR para el colmenar
 
-El botón **Etiquetas QR** de la página del colmenar imprime una hoja A4 con una etiqueta por cada colmena del colmenar. Cada etiqueta codifica un enlace profundo a esa colmena; al escanearla se abre Openbeehive en la colmena. Consulta [Etiquetas QR](/using-the-app/qr-labels).
+El botón **Etiquetas QR** de la página del colmenar imprime una hoja A4 con una etiqueta por cada colmena del colmenar. Cada etiqueta codifica un enlace profundo a esa colmena; al escanearla se abre Openbeehive en la colmena. Consulta [Etiquetas QR](./qr-labels.md).
 
 ## Editar y reorganizar
 
@@ -78,4 +78,4 @@ Si una colmena se traslada a otra ubicación, usa **Mover** en la colmena para r
 
 ## Compartir
 
-Los colmenares no se comparten individualmente. Todo lo que hay en un espacio (tenant) es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacios → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](/using-the-app/accounts-tenants).
+Los colmenares no se comparten individualmente. Todo lo que hay en un espacio (tenant) es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacios → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](./accounts-tenants.md).

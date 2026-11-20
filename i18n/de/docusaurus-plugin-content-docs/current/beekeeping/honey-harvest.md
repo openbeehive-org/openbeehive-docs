@@ -134,6 +134,6 @@ Wassergehalt, deine Chargennummer und das Mindesthaltbarkeitsdatum sowie eine No
 zu Geschmack oder Stand. Die Chargennummer, die du hier speicherst, ist diejenige, die
 du auf das Glas druckst, und schließt den Kreis von der Wabe ins Regal.
 
-Siehe [Ernten in der App](/using-the-app/harvests), wie du deine Erntedatensätze eingibst und verwaltest,
+Siehe [Ernten in der App](../using-the-app/harvests.md), wie du deine Erntedatensätze eingibst und verwaltest,
 und die umfassendere [Imkerei-Anleitung](/category/beekeeping-basics) für die
 Saison rund um die Ernte.

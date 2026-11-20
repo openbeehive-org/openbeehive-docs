@@ -10,7 +10,7 @@ Der einfachste Weg, Openbeehive auf der eigenen Maschine zu betreiben, ist die *
 Diese Seite führt dich durch das Bauen dieser Binärdatei aus dem Quellcode und das Ausführen als langlebigen Dienst.
 
 :::tip Wenig Zeit?
-Wenn du lieber ein vorgefertigtes Container-Image herunterladen möchtest, siehe [Docker](/self-hosting/docker). Um beide Ansätze zunächst zu vergleichen, beginne bei der [Self-Hosting-Übersicht](/category/self-hosting).
+Wenn du lieber ein vorgefertigtes Container-Image herunterladen möchtest, siehe [Docker](./docker.md). Um beide Ansätze zunächst zu vergleichen, beginne bei der [Self-Hosting-Übersicht](/category/self-hosting).
 :::
 
 ## Voraussetzungen
@@ -63,10 +63,10 @@ openssl rand -base64 32
 Füge das Ergebnis in `BEEHIVE_SESSION_SECRET=` ein.
 
 :::note Standardmäßig keine Anmeldung
-Das selfhost-Profil aktiviert keine Anmeldemethode: `BEEHIVE_PASSWORD_AUTH` ist aus, `BEEHIVE_OIDC_PROVIDERS` ist leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Lass das so, um als Einzelnutzer ohne Anmeldeschritt zu arbeiten. Wenn du Konten, Passkeys oder einen Provider möchtest, siehe [Authentifizierung](/self-hosting/authentication).
+Das selfhost-Profil aktiviert keine Anmeldemethode: `BEEHIVE_PASSWORD_AUTH` ist aus, `BEEHIVE_OIDC_PROVIDERS` ist leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Lass das so, um als Einzelnutzer ohne Anmeldeschritt zu arbeiten. Wenn du Konten, Passkeys oder einen Provider möchtest, siehe [Authentifizierung](./authentication.md).
 :::
 
-Wenn du die Instanz von einem anderen Gerät in deinem Netzwerk erreichen möchtest, setze `BEEHIVE_PUBLIC_BASE_URL` auf eine Adresse, die dieses Gerät tatsächlich auflösen kann (zum Beispiel `http://192.168.1.20:8080` oder deine Domain hinter einem [Reverse Proxy](/self-hosting/reverse-proxy)). QR-Etiketten kodieren die Adresse, unter der du die App öffnest, also verwende durchgehend dieselbe Adresse.
+Wenn du die Instanz von einem anderen Gerät in deinem Netzwerk erreichen möchtest, setze `BEEHIVE_PUBLIC_BASE_URL` auf eine Adresse, die dieses Gerät tatsächlich auflösen kann (zum Beispiel `http://192.168.1.20:8080` oder deine Domain hinter einem [Reverse Proxy](./reverse-proxy.md)). QR-Etiketten kodieren die Adresse, unter der du die App öffnest, also verwende durchgehend dieselbe Adresse.
 
 ## Bauen
 
@@ -162,7 +162,7 @@ journalctl -u openbeehive -f
 ```
 
 :::caution An Port 80 oder 443 binden
-Das Beispiel bindet an `:8080`, was ein nicht privilegierter Benutzer verwenden kann. Betreibe den Dienst nicht als root, um die Ports 80/443 zu erreichen - belasse Openbeehive stattdessen auf `:8080` und setze einen [Reverse Proxy](/self-hosting/reverse-proxy) (etwa Caddy oder nginx) davor, der TLS und den öffentlichen Port übernimmt.
+Das Beispiel bindet an `:8080`, was ein nicht privilegierter Benutzer verwenden kann. Betreibe den Dienst nicht als root, um die Ports 80/443 zu erreichen - belasse Openbeehive stattdessen auf `:8080` und setze einen [Reverse Proxy](./reverse-proxy.md) (etwa Caddy oder nginx) davor, der TLS und den öffentlichen Port übernimmt.
 :::
 
 ## Wo deine Daten liegen
@@ -188,8 +188,8 @@ Da der gesamte Zustand aus Dateien in einem Verzeichnis besteht, ist das Umziehe
 Das Kopieren von `openbeehive.db` während der Server läuft, kann einen zerrissenen, inkonsistenten Snapshot erfassen. Stoppe den Dienst (oder verwende ein ordentliches Backup-Verfahren), bevor du Datenbankdateien kopierst.
 :::
 
-Für geplante Backups, Aufbewahrung und sichere Live-Backup-Techniken für SQLite siehe [Backups](/self-hosting/backups).
+Für geplante Backups, Aufbewahrung und sichere Live-Backup-Techniken für SQLite siehe [Backups](./backups.md).
 
 ## Aktualisieren
 
-Um auf eine neuere Version umzusteigen, ziehe den aktuellen Code, baue neu und ersetze die Binärdatei - deine Datenbank und das Verzeichnis `data/` bleiben, wo sie sind, und die Migrationen laufen beim nächsten Start. Das vollständige Verfahren, einschließlich wie man zurückrollt, wird unter [Aktualisieren](/self-hosting/upgrading) behandelt.
+Um auf eine neuere Version umzusteigen, ziehe den aktuellen Code, baue neu und ersetze die Binärdatei - deine Datenbank und das Verzeichnis `data/` bleiben, wo sie sind, und die Migrationen laufen beim nächsten Start. Das vollständige Verfahren, einschließlich wie man zurückrollt, wird unter [Aktualisieren](./upgrading.md) behandelt.

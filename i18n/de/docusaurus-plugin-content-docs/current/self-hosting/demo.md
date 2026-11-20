@@ -34,7 +34,7 @@ BEEHIVE_DEMO=true
 ```
 
 Mehr ist nicht nötig. Das Aktivieren des Demo-Modus schaltet automatisch die
-[Anmeldung per E-Mail/Passwort](/self-hosting/authentication) ein, damit sich das Demo-Konto
+[Anmeldung per E-Mail/Passwort](./authentication.md) ein, damit sich das Demo-Konto
 anmelden kann. Optional können die Zugangsdaten überschrieben werden:
 
 ```bash
@@ -46,7 +46,7 @@ Starte den Server neu. Du siehst eine Log-Zeile, die bestätigt, dass die Demo i
 wurde, und das Demo-Konto kann sich sofort anmelden. Da der Demo-Modus die
 Passwort-Anmeldung impliziert, braucht die Instanz auch ihren eigenen Admin
 (`BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD`, siehe
-[Authentifizierung](/self-hosting/authentication)), und die Admin-E-Mail muss sich von der
+[Authentifizierung](./authentication.md)), und die Admin-E-Mail muss sich von der
 Demo-E-Mail unterscheiden.
 
 ### Schaufenster-Hosts: den Anmeldebildschirm überspringen

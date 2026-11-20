@@ -5,15 +5,15 @@ title: "Inspections (visits)"
 
 # Inspections (visits)
 
-An inspection is the record of a single visit to a hive: what you saw, what you did, and anything worth remembering. Over a season the visits build into a picture of how each colony is developing. Works offline; see [Offline & sync](/using-the-app/offline-and-sync).
+An inspection is the record of a single visit to a hive: what you saw, what you did, and anything worth remembering. Over a season the visits build into a picture of how each colony is developing. Works offline; see [Offline & sync](./offline-and-sync.md).
 
 :::tip
-For what to look for during a visit and how often to inspect, read [Inspecting a colony](/beekeeping/inspecting). This page covers how to record it.
+For what to look for during a visit and how often to inspect, read [Inspecting a colony](../beekeeping/inspecting.md). This page covers how to record it.
 :::
 
 ## Starting a visit
 
-Open a hive (or scan its [QR label](/using-the-app/qr-labels)) and tap **Record visit** above the visit log. The form opens with today's date.
+Open a hive (or scan its [QR label](./qr-labels.md)) and tap **Record visit** above the visit log. The form opens with today's date.
 
 Every field is optional. A quick "all fine" with nothing else filled in is a valid entry.
 
@@ -55,7 +55,7 @@ The "eggs seen / youngest larva / capped brood" trio usually confirms a healthy 
 | Drone frame cut | Whether you cut out a drone brood frame (a varroa control measure). |
 | Super added | Whether you added a super. |
 
-For the bigger picture on mite management and harvesting, see [Varroa](/beekeeping/varroa) and [Honey harvest](/beekeeping/honey-harvest). Honey you take off for jarring is recorded separately as a [harvest](/using-the-app/harvests), with variety, water content and batch number.
+For the bigger picture on mite management and harvesting, see [Varroa](../beekeeping/varroa.md) and [Honey harvest](../beekeeping/honey-harvest.md). Honey you take off for jarring is recorded separately as a [harvest](./harvests.md), with variety, water content and batch number.
 
 ## Climate
 
@@ -69,14 +69,14 @@ For the bigger picture on mite management and harvesting, see [Varroa](/beekeepi
 All four are optional. Over time they appear in the hive's **Development** charts alongside weight and colony strength.
 
 :::tip
-A hive scale or climate sensor can post these fields through the API; each reading becomes a visit on the hive and syncs to your devices. See [Automated trackers](/using-the-api/automated-trackers).
+A hive scale or climate sensor can post these fields through the API; each reading becomes a visit on the hive and syncs to your devices. See [Automated trackers](../using-the-api/automated-trackers.md).
 :::
 
 ## Note and photos
 
 Add a free-text **note** for anything the structured fields do not cover: a marked supersedure cell, a temper that needs watching, a reminder to requeen.
 
-**Add photo** attaches one or more pictures (brood pattern, suspect disease, queen cells). They are stored with the visit and sync with the rest of your records. If something needs following up, add a [task](/using-the-app/tasks) with a due date.
+**Add photo** attaches one or more pictures (brood pattern, suspect disease, queen cells). They are stored with the visit and sync with the rest of your records. If something needs following up, add a [task](./tasks.md) with a due date.
 
 ## The visit log
 
@@ -94,5 +94,5 @@ The log lets you spot trends: brood building up in spring, stores running down b
 - **Photograph the doubtful.** A picture of an odd brood pattern is worth more than a typed description.
 
 :::caution
-If you suspect a notifiable disease such as American or European foulbrood, photograph it, close up, and follow your local reporting rules. See [Diseases & pests](/knowledge-base/diseases-and-pests).
+If you suspect a notifiable disease such as American or European foulbrood, photograph it, close up, and follow your local reporting rules. See [Diseases & pests](../knowledge-base/diseases-and-pests.md).
 :::

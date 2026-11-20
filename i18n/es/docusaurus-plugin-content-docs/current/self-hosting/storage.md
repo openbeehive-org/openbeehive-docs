@@ -59,12 +59,12 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 :::caution Hazle copia de seguridad
 El directorio de blobs **no** se almacena en tu base de datos. Una copia de seguridad de la base de datos por si sola
 no salvara tus fotos. Incluye `BEEHIVE_BLOB_DIR` en tu rutina de copia de seguridad. Consulta
-[Copias de seguridad](/self-hosting/backups) para una estrategia completa.
+[Copias de seguridad](./backups.md) para una estrategia completa.
 :::
 
 ### Nota sobre Docker
 
-Si ejecutas la [imagen de Docker](/self-hosting/docker), monta un volumen para que los blobs
+Si ejecutas la [imagen de Docker](./docker.md), monta un volumen para que los blobs
 sobrevivan a los reinicios y actualizaciones del contenedor. El contenedor se ejecuta como el uid `65532`;
 un directorio del host montado con bind mount debe pertenecer a ese usuario:
 
@@ -144,7 +144,7 @@ y secreta, elige tu bucket y establece `BEEHIVE_MINIO_USE_SSL=true`.
 Algunos proveedores son sensibles a los ajustes de region o requieren direccionamiento
 de estilo de ruta frente al alojado virtualmente. Si las subidas fallan con un proveedor distinto de MinIO,
 verifica el endpoint y que el bucket exista en la region esperada.
-Consulta [Resolucion de problemas](/knowledge-base/troubleshooting) si los problemas persisten.
+Consulta [Resolucion de problemas](../knowledge-base/troubleshooting.md) si los problemas persisten.
 :::
 
 ## Cambiar de backend mas adelante

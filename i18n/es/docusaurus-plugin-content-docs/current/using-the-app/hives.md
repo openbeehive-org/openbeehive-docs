@@ -5,7 +5,7 @@ title: "Colmenas"
 
 # Colmenas
 
-Una colmena en Openbeehive es una sola colonia en una caja física. Casi todo lo que anotas en el día a día (visitas, cosechas, tratamientos) cuelga de una colmena. Cada colmena pertenece a un colmenar a la vez y puede tener una reina. Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+Una colmena en Openbeehive es una sola colonia en una caja física. Casi todo lo que anotas en el día a día (visitas, cosechas, tratamientos) cuelga de una colmena. Cada colmena pertenece a un colmenar a la vez y puede tener una reina. Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md).
 
 ## Crear una colmena
 
@@ -35,7 +35,7 @@ Mantén los nombres cortos y coherentes dentro de un colmenar, por ejemplo "1", 
 | Top-bar | Barras horizontales, sin cuadros. |
 | Otro | Cualquier cosa no listada arriba. |
 
-Para una descripción más completa de cada estándar, consulta [Tipos de colmena](/knowledge-base/hive-types).
+Para una descripción más completa de cada estándar, consulta [Tipos de colmena](../knowledge-base/hive-types.md).
 
 ### Estado
 
@@ -58,7 +58,7 @@ Para reubicar una colmena, ábrela, toca la acción **Mover** y elige el colmena
 Cada traslado se registra como una entrada fechada en **Historial de ubicaciones**, al final de la página de la colmena, de modo que sabes dónde estaba una colonia en cualquier momento. Es útil para rastrear la exposición a enfermedades y para los registros de trashumancia.
 
 :::caution
-En muchas regiones, mover colmenas entre ubicaciones está sujeto a normas de sanidad y movimiento apícola, especialmente dentro de zonas de control de enfermedades. Consulta los requisitos nacionales o locales antes de reubicar colonias. Consulta [Enfermedades y plagas](/knowledge-base/diseases-and-pests).
+En muchas regiones, mover colmenas entre ubicaciones está sujeto a normas de sanidad y movimiento apícola, especialmente dentro de zonas de control de enfermedades. Consulta los requisitos nacionales o locales antes de reubicar colonias. Consulta [Enfermedades y plagas](../knowledge-base/diseases-and-pests.md).
 :::
 
 ## La página de la colmena
@@ -71,7 +71,7 @@ La cabecera muestra la foto, el nombre, y el estado y el tipo. Los iconos de acc
 
 - **Ficha de colmena**: una tabla imprimible de todas las visitas (con un botón **Imprimir**).
 - **Evolución**: gráficos de las lecturas registradas en las visitas (cuadros ocupados, cuadros de cría, reservas de alimento, celdas reales, mansedumbre, comportamiento en el cuadro, varroa, peso de la colmena, alimentación, larva más joven, temperatura y humedad) más las cosechas de miel a lo largo del tiempo.
-- **Editar colmena**, **Mover**, **QR** (muestra la etiqueta de la colmena con botones **Imprimir** y **SVG**; consulta [Etiquetas QR](/using-the-app/qr-labels)) y **Eliminar**.
+- **Editar colmena**, **Mover**, **QR** (muestra la etiqueta de la colmena con botones **Imprimir** y **SVG**; consulta [Etiquetas QR](./qr-labels.md)) y **Eliminar**.
 
 ### Últimas lecturas
 
@@ -79,15 +79,15 @@ Bajo la cabecera, unas píldoras muestran los valores distintos de cero de la vi
 
 ### Reina
 
-La tarjeta **Reina actual** muestra su año, número, color de marcado, origen y comentario, con **Reemplazar reina** (o **Definir reina** si no hay ninguna registrada). **Historial de reinas** lista las reinas anteriores con sus fechas de introducción y reemplazo. Consulta [Reinas](/using-the-app/queens).
+La tarjeta **Reina actual** muestra su año, número, color de marcado, origen y comentario, con **Reemplazar reina** (o **Definir reina** si no hay ninguna registrada). **Historial de reinas** lista las reinas anteriores con sus fechas de introducción y reemplazo. Consulta [Reinas](./queens.md).
 
 ### Registro de visitas
 
-**Registrar visita** abre el formulario de visita. Debajo se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas reales, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](/using-the-app/inspections).
+**Registrar visita** abre el formulario de visita. Debajo se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas reales, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](./inspections.md).
 
 ### Miel y Tratamientos
 
-**Miel** muestra el total de cosecha de la colmena en su encabezado y lista cada cosecha (**Registrar cosecha**). **Tratamientos** lista cada tratamiento (**Registrar tratamiento**). Consulta [Cosechas](/using-the-app/harvests) y [Tratamientos](/using-the-app/treatments).
+**Miel** muestra el total de cosecha de la colmena en su encabezado y lista cada cosecha (**Registrar cosecha**). **Tratamientos** lista cada tratamiento (**Registrar tratamiento**). Consulta [Cosechas](./harvests.md) y [Tratamientos](./treatments.md).
 
 ## Eliminar frente a retirar una colmena
 

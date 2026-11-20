@@ -10,7 +10,7 @@ La forma mas sencilla de ejecutar Openbeehive en tu propia maquina es el **binar
 Esta pagina te guia a traves de la compilacion de ese binario desde el codigo fuente y su ejecucion como un servicio de larga duracion.
 
 :::tip ¿Tienes prisa?
-Si prefieres descargar una imagen de contenedor precompilada, consulta [Docker](/self-hosting/docker). Para comparar primero ambos enfoques, empieza por la [vision general del alojamiento propio](/category/self-hosting).
+Si prefieres descargar una imagen de contenedor precompilada, consulta [Docker](./docker.md). Para comparar primero ambos enfoques, empieza por la [vision general del alojamiento propio](/category/self-hosting).
 :::
 
 ## Requisitos previos
@@ -63,10 +63,10 @@ openssl rand -base64 32
 Pega el resultado en `BEEHIVE_SESSION_SECRET=`.
 
 :::note Sin inicio de sesion por defecto
-El perfil selfhost no habilita ningún método de inicio de sesión: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. Déjalos así para ejecutar como un solo usuario sin paso de inicio de sesión. Cuando quieras cuentas, passkeys o un proveedor, consulta [Autenticación](/self-hosting/authentication).
+El perfil selfhost no habilita ningún método de inicio de sesión: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. Déjalos así para ejecutar como un solo usuario sin paso de inicio de sesión. Cuando quieras cuentas, passkeys o un proveedor, consulta [Autenticación](./authentication.md).
 :::
 
-Si tienes la intencion de acceder a la instancia desde otro dispositivo de tu red, configura `BEEHIVE_PUBLIC_BASE_URL` con una direccion que ese dispositivo pueda resolver realmente (por ejemplo `http://192.168.1.20:8080` o tu dominio detras de un [proxy inverso](/self-hosting/reverse-proxy)). Las etiquetas QR codifican la dirección en la que abres la aplicación, así que usa siempre esa misma dirección.
+Si tienes la intencion de acceder a la instancia desde otro dispositivo de tu red, configura `BEEHIVE_PUBLIC_BASE_URL` con una direccion que ese dispositivo pueda resolver realmente (por ejemplo `http://192.168.1.20:8080` o tu dominio detras de un [proxy inverso](./reverse-proxy.md)). Las etiquetas QR codifican la dirección en la que abres la aplicación, así que usa siempre esa misma dirección.
 
 ## Compilar
 
@@ -162,7 +162,7 @@ journalctl -u openbeehive -f
 ```
 
 :::caution Enlazar al puerto 80 o 443
-El ejemplo se enlaza a `:8080`, que un usuario sin privilegios puede usar. No ejecutes el servicio como root para acceder a los puertos 80/443; en su lugar, manten Openbeehive en `:8080` y pon un [proxy inverso](/self-hosting/reverse-proxy) (como Caddy o nginx) por delante para gestionar el TLS y el puerto publico.
+El ejemplo se enlaza a `:8080`, que un usuario sin privilegios puede usar. No ejecutes el servicio como root para acceder a los puertos 80/443; en su lugar, manten Openbeehive en `:8080` y pon un [proxy inverso](./reverse-proxy.md) (como Caddy o nginx) por delante para gestionar el TLS y el puerto publico.
 :::
 
 ## Donde residen tus datos
@@ -188,8 +188,8 @@ Como todo el estado son archivos en un unico directorio, reubicar una instancia 
 Copiar `openbeehive.db` mientras el servidor esta en ejecucion puede capturar una instantanea rota e inconsistente. Detén el servicio (o usa un procedimiento de copia de seguridad adecuado) antes de copiar los archivos de base de datos.
 :::
 
-Para copias de seguridad programadas, retencion y tecnicas seguras de copia en caliente para SQLite, consulta [Copias de seguridad](/self-hosting/backups).
+Para copias de seguridad programadas, retencion y tecnicas seguras de copia en caliente para SQLite, consulta [Copias de seguridad](./backups.md).
 
 ## Actualizar
 
-Para pasar a una version mas reciente, descarga el codigo mas reciente, recompila y reemplaza el binario: tu base de datos y el directorio `data/` permanecen donde estan y las migraciones se ejecutan en el siguiente arranque. El procedimiento completo, incluyendo como revertir, se cubre en [Actualizacion](/self-hosting/upgrading).
+Para pasar a una version mas reciente, descarga el codigo mas reciente, recompila y reemplaza el binario: tu base de datos y el directorio `data/` permanecen donde estan y las migraciones se ejecutan en el siguiente arranque. El procedimiento completo, incluyendo como revertir, se cubre en [Actualizacion](./upgrading.md).

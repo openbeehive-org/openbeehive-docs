@@ -138,6 +138,6 @@ agua, tu número de lote y la fecha de consumo preferente, además de una nota s
 cuajado. El número de lote que guardas aquí es el que imprimir en el tarro, cerrando el ciclo del
 panal al estante.
 
-Consulta [Cosechas en la app](/using-the-app/harvests) para saber cómo introducir y gestionar tus
+Consulta [Cosechas en la app](../using-the-app/harvests.md) para saber cómo introducir y gestionar tus
 registros de cosecha, y la [guía de apicultura](/category/beekeeping-basics) más amplia para la
 temporada en torno a la cosecha.

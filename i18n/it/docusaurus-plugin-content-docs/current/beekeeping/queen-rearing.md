@@ -16,7 +16,7 @@ sostituirla, e una dolce rampa di accesso all'allevamento delle regine da soli.
 
 :::tip Registra tutto nell'app
 Tieni traccia di origine, età, colore di marcatura e note di ciascuna regina nella
-[pagina Regine](/using-the-app/queens). Un registro accurato di quando una regina è stata
+[pagina Regine](../using-the-app/queens.md). Un registro accurato di quando una regina è stata
 introdotta è la cosa più utile in assoluto per giudicare in seguito le sue prestazioni.
 :::
 
@@ -142,10 +142,10 @@ cifra:
 Quindi una regina allevata nel 2026 viene marcata **bianca**. Applica un minuscolo punto di vernice
 per marcatura sulla parte superiore del suo torace, tienila delicatamente o usa una gabbietta da marcatura, e lascia
 asciugare prima di rilasciarla. Per il riferimento completo e un comodo aiuto mnemonico, vedi
-[Colori di marcatura della regina](/knowledge-base/queen-marking-colours).
+[Colori di marcatura della regina](../knowledge-base/queen-marking-colours.md).
 
 :::tip
 Quando marchi una regina, registra il suo colore di marcatura nell'app nella
-[pagina Regine](/using-the-app/queens). Openbeehive imposta automaticamente il colore atteso dall'
+[pagina Regine](../using-the-app/queens.md). Openbeehive imposta automaticamente il colore atteso dall'
 anno, così puoi confermare a colpo d'occhio se una regina ha l'età che pensi.
 :::

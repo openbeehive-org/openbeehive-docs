@@ -22,8 +22,8 @@ tuoi registri disponibili anche quando sei in apiario senza segnale.
   spazio per le tue arnie e ispezioni.
 - **Accesso offline.** I tuoi registri vivono in un database locale sul
   dispositivo e si sincronizzano in background. Vedi
-  [Offline e sincronizzazione](/using-the-app/offline-and-sync).
-- **Scansione QR rapida.** Scansionare l'[etichetta QR](/using-the-app/qr-labels)
+  [Offline e sincronizzazione](./offline-and-sync.md).
+- **Scansione QR rapida.** Scansionare l'[etichetta QR](./qr-labels.md)
   di un'arnia apre quell'arnia.
 
 :::tip
@@ -96,7 +96,7 @@ tuoi registri restano sulla tua infrastruttura.
 Affinché l'installazione funzioni senza problemi, un'istanza self-hosted dovrebbe
 essere servita su **HTTPS** con un certificato valido. La maggior parte dei
 browser offre l'installazione PWA solo su origini sicure. Vedi
-[Reverse proxy](/self-hosting/reverse-proxy) per come mettere il TLS davanti al
+[Reverse proxy](../self-hosting/reverse-proxy.md) per come mettere il TLS davanti al
 tuo server.
 :::
 
@@ -125,5 +125,5 @@ disinstallare:
 Se hai registri non ancora sincronizzati quando disinstalli, essi vivono solo nel
 database locale del dispositivo e potrebbero andare persi. Assicurati che l'app si
 sia sincronizzata prima di rimuoverla. Vedi
-[Offline e sincronizzazione](/using-the-app/offline-and-sync).
+[Offline e sincronizzazione](./offline-and-sync.md).
 :::

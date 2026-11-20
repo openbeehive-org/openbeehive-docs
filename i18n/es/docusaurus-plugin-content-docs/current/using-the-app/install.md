@@ -22,8 +22,8 @@ disponibles incluso cuando estás en el colmenar sin cobertura.
   para tus colmenas e inspecciones.
 - **Acceso sin conexión.** Tus registros viven en una base de datos local en el
   dispositivo y se sincronizan en segundo plano. Consulta
-  [Sin conexión y sincronización](/using-the-app/offline-and-sync).
-- **Escaneo QR rápido.** Escanear la [etiqueta QR](/using-the-app/qr-labels) de una colmena
+  [Sin conexión y sincronización](./offline-and-sync.md).
+- **Escaneo QR rápido.** Escanear la [etiqueta QR](./qr-labels.md) de una colmena
   abre esa colmena.
 
 :::tip
@@ -93,7 +93,7 @@ registros se quedan en tu propia infraestructura.
 :::caution
 Para que la instalación funcione sin problemas, una instancia autoalojada debería servirse
 a través de **HTTPS** con un certificado válido. La mayoría de los navegadores solo ofrecen
-la instalación de PWA en orígenes seguros. Consulta [Proxy inverso](/self-hosting/reverse-proxy) para ver cómo poner
+la instalación de PWA en orígenes seguros. Consulta [Proxy inverso](../self-hosting/reverse-proxy.md) para ver cómo poner
 TLS delante de tu servidor.
 :::
 
@@ -120,5 +120,5 @@ borra los registros que ya se han sincronizado con el servidor. Para desinstalar
 :::caution
 Si tienes registros que aún no se han sincronizado cuando desinstalas, viven solo en la
 base de datos local del dispositivo y pueden perderse. Asegúrate de que la aplicación se ha
-sincronizado antes de eliminarla. Consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+sincronizado antes de eliminarla. Consulta [Sin conexión y sincronización](./offline-and-sync.md).
 :::

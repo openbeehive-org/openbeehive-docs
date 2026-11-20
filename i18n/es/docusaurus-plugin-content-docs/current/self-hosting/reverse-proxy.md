@@ -88,4 +88,4 @@ Enumera varios orígenes separados por comas. Evita `*` junto con `BEEHIVE_CORS_
 - `BEEHIVE_CORS_ALLOWED_ORIGINS` se establece solo si la aplicación está en un origen distinto.
 - Las etiquetas QR codifican la dirección desde la que se imprimieron; reimprímelas tras un cambio de dominio.
 
-Para las opciones del servidor, consulta [Configuración](/self-hosting/configuration).
+Para las opciones del servidor, consulta [Configuración](./configuration.md).

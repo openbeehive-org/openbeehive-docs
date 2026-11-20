@@ -50,7 +50,7 @@ about" or bearding at the entrance, and drones present in good numbers.
 :::tip
 Record what you see at each visit. In Openbeehive, log queen cells, congestion
 and your decisions in the inspection so the picture builds across visits. See
-[Inspections](/using-the-app/inspections).
+[Inspections](../using-the-app/inspections.md).
 :::
 
 ## Prevention: give them room
@@ -92,7 +92,7 @@ called a Pagden artificial swarm; several named variations exist.
 :::note
 An artificial swarm is also a tidy way to expand your apiary or requeen. If you
 want to raise queens deliberately, see
-[Queen rearing](/beekeeping/queen-rearing).
+[Queen rearing](./queen-rearing.md).
 :::
 
 ### Removing queen cells — with caution

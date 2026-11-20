@@ -49,7 +49,7 @@ Registra il numero di lotto direttamente dalla confezione nel momento in cui tra
 4. Imposta la data di **sospensione fino al** se il prodotto specifica un tempo di sospensione.
 5. Salva.
 
-Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
 ## Tempi di sospensione e raccolta
 
@@ -74,4 +74,4 @@ Poiché le voci dei trattamenti si sincronizzano tra i tuoi dispositivi, il regi
 
 ## Trattamenti e varroa
 
-L'acaro varroa è il motivo per cui la maggior parte degli apicoltori ricorre a un trattamento in primo luogo, e azzeccare i tempi nel corso della stagione è un argomento a sé. Per un quadro più completo sul monitoraggio dei livelli di acari, sulla scelta di un approccio e sulla pianificazione dei trattamenti nel corso dell'anno apistico, vedi [la guida alla varroa](/beekeeping/varroa).
+L'acaro varroa è il motivo per cui la maggior parte degli apicoltori ricorre a un trattamento in primo luogo, e azzeccare i tempi nel corso della stagione è un argomento a sé. Per un quadro più completo sul monitoraggio dei livelli di acari, sulla scelta di un approccio e sulla pianificazione dei trattamenti nel corso dell'anno apistico, vedi [la guida alla varroa](../beekeeping/varroa.md).

@@ -25,7 +25,7 @@ Deine Änderungen werden sofort auf dem Gerät gespeichert. Die Synchronisierung
 Die Synchronisierung ist konzeptbedingt konfliktfrei. Die jüngste Bearbeitung eines Feldes gewinnt, Hinzufügungen (Fotos, Durchsichten, Ernten, Behandlungen) bleiben erhalten, und du verlierst keine Arbeit, weil zwei Geräte gleichzeitig bearbeitet haben.
 :::
 
-Wenn du selbst hostest und die Synchronisierung für alle fehlschlägt, liegt das Problem eher serverseitig. Siehe [Selbst-Hosting-Konfiguration](/self-hosting/configuration) und prüfe die Serverprotokolle.
+Wenn du selbst hostest und die Synchronisierung für alle fehlschlägt, liegt das Problem eher serverseitig. Siehe [Selbst-Hosting-Konfiguration](../self-hosting/configuration.md) und prüfe die Serverprotokolle.
 
 ## Wie der lokale Speicher funktioniert
 
@@ -35,7 +35,7 @@ Ein paar praktische Folgen:
 
 - Deine Daten sind an den Browser und das Gerät gebunden, auf dem du Openbeehive verwendest. Jedes Gerät behält seine eigene lokale Kopie und synchronisiert mit dem Server.
 - Der OPFS-Speicher ist privat für den Origin der App. Andere Websites können ihn nicht lesen.
-- Das Installieren der App auf deinem Startbildschirm (siehe [Installation](/using-the-app/install)) verwendet auf den meisten Plattformen denselben Speicher wie der Browser-Tab.
+- Das Installieren der App auf deinem Startbildschirm (siehe [Installation](../using-the-app/install.md)) verwendet auf den meisten Plattformen denselben Speicher wie der Browser-Tab.
 
 :::caution
 Browser-Werkzeuge, die „Websitedaten löschen“, „Cookies und Speicher löschen“ oder privates/Inkognito-Surfen können die lokale OPFS-Datenbank löschen. Das ist **nur dann sicher, wenn deine Daten bereits** zum Server synchronisiert wurden, da sie bei der nächsten Anmeldung erneut heruntergeladen werden. Wenn du nicht synchronisierte Offline-Änderungen hast, stelle sicher, dass du online bist, und lass die Synchronisierung zuerst abschließen.
@@ -85,10 +85,10 @@ Leere den Speicher nicht, wenn du ausschließlich offline vorhandene Änderungen
 
 ## Kamera und QR-Scanner funktionieren nicht
 
-Jeder Bienenstock kann ein druckbares QR-Etikett tragen, das per Deep Link zu diesem Bienenstock führt (siehe [QR-Etiketten](/using-the-app/qr-labels)). Das Scannen benötigt Kamerazugriff.
+Jeder Bienenstock kann ein druckbares QR-Etikett tragen, das per Deep Link zu diesem Bienenstock führt (siehe [QR-Etiketten](../using-the-app/qr-labels.md)). Das Scannen benötigt Kamerazugriff.
 
 - **Erteile die Kameraberechtigung.** Erlaube den Kamerazugriff, wenn du dazu aufgefordert wirst. Falls du ihn zuvor verweigert hast, aktiviere ihn in deinen Browser- oder Betriebssystemeinstellungen für die Website erneut und lade dann neu.
-- **Verwende HTTPS.** Browser erlauben Kamerazugriff nur auf sicheren Origins. Die gehostete App wird über HTTPS ausgeliefert; Selbst-Hoster müssen ebenfalls über HTTPS ausliefern (oder `localhost` zum Testen). Siehe [Reverse Proxy](/self-hosting/reverse-proxy).
+- **Verwende HTTPS.** Browser erlauben Kamerazugriff nur auf sicheren Origins. Die gehostete App wird über HTTPS ausgeliefert; Selbst-Hoster müssen ebenfalls über HTTPS ausliefern (oder `localhost` zum Testen). Siehe [Reverse Proxy](../self-hosting/reverse-proxy.md).
 - **Prüfe, ob sie nicht in Verwendung ist.** Schließe andere Apps oder Tabs, die die Kamera möglicherweise belegen.
 
 :::tip iOS Safari
@@ -98,7 +98,7 @@ Auf iPhone und iPad kann der App-interne Scanner eingeschränkt sein. Wenn das S
 ## Anmeldeprobleme
 
 - **Beim Anmeldebildschirm hängengeblieben.** Bestätige, dass du die richtige Adresse erreichst (die gehostete App ist unter app.openbeehive.org). Nach der Anmeldung bei deinem Anbieter solltest du automatisch zurückgeleitet werden; falls nicht, lade die Seite neu.
-- **Weiterleitung schlägt fehl oder „ungültige Weiterleitung“-Fehler (Selbst-Hosting).** Das bedeutet fast immer, dass die OIDC-Weiterleitungs-URL oder `BEEHIVE_PUBLIC_BASE_URL` falsch konfiguriert ist. Siehe [Authentifizierung und Konfiguration](/self-hosting/authentication).
+- **Weiterleitung schlägt fehl oder „ungültige Weiterleitung“-Fehler (Selbst-Hosting).** Das bedeutet fast immer, dass die OIDC-Weiterleitungs-URL oder `BEEHIVE_PUBLIC_BASE_URL` falsch konfiguriert ist. Siehe [Authentifizierung und Konfiguration](../self-hosting/authentication.md).
 - **Passkey nicht angeboten.** Passkeys müssen auf dem Server aktiviert sein, und du musst unter Einstellungen → Passkeys einen hinzugefügt haben. Andernfalls melde dich mit einer anderen Methode an.
 - **Einzelnutzer-Selbst-Hosting ohne Anmeldung.** Mit ausgeschalteter Passwort-Anmeldung, ohne OIDC-Anbieter und mit deaktiviertem WebAuthn gibt es überhaupt keinen Anmeldeschritt. Wenn du unerwartet einen Anmeldebildschirm siehst, prüfe deine Serverkonfiguration.
 
@@ -121,4 +121,4 @@ Wenn nichts davon hilft, eröffne bitte ein Issue unter [github.com/openbeehive-
 Bitte füge keine Geheimnisse ein. Schwärze Sitzungsgeheimnisse, OIDC-Client-Geheimnisse, Datenbankpasswörter und personenbezogene Daten, bevor du Protokolle oder Konfiguration teilst.
 :::
 
-Für Fragen zum Selbst-Hosting beginne mit der [Konfigurationsreferenz](/self-hosting/configuration).
+Für Fragen zum Selbst-Hosting beginne mit der [Konfigurationsreferenz](../self-hosting/configuration.md).

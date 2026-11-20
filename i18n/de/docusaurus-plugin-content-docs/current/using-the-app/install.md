@@ -21,8 +21,8 @@ selbst wenn du draußen am Bienenstand ohne Empfang bist.
 - **Ein Vollbildfenster** ohne Browser-Bedienelemente, sodass mehr Platz für deine
   Beuten und Durchsichten bleibt.
 - **Offline-Zugriff.** Deine Aufzeichnungen leben in einer lokalen Datenbank auf
-  dem Gerät und synchronisieren im Hintergrund. Siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
-- **Schnelles QR-Scannen.** Das [QR-Etikett](/using-the-app/qr-labels) einer Beute zu
+  dem Gerät und synchronisieren im Hintergrund. Siehe [Offline und Synchronisation](./offline-and-sync.md).
+- **Schnelles QR-Scannen.** Das [QR-Etikett](./qr-labels.md) einer Beute zu
   scannen öffnet diese Beute.
 
 :::tip
@@ -92,7 +92,7 @@ bleiben auf deiner eigenen Infrastruktur.
 :::caution
 Damit die Installation reibungslos funktioniert, sollte eine selbst gehostete Instanz über
 **HTTPS** mit einem gültigen Zertifikat ausgeliefert werden. Die meisten Browser bieten die
-PWA-Installation nur auf sicheren Ursprüngen an. Siehe [Reverse Proxy](/self-hosting/reverse-proxy)
+PWA-Installation nur auf sicheren Ursprüngen an. Siehe [Reverse Proxy](../self-hosting/reverse-proxy.md)
 dafür, wie du TLS vor deinen Server setzt.
 :::
 
@@ -119,5 +119,5 @@ löscht keine Aufzeichnungen, die bereits zum Server synchronisiert wurden. Zum 
 :::caution
 Wenn du Aufzeichnungen hast, die beim Deinstallieren noch nicht synchronisiert wurden, leben
 sie nur in der lokalen Datenbank des Geräts und können verloren gehen. Stelle sicher, dass die
-App synchronisiert hat, bevor du sie entfernst. Siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+App synchronisiert hat, bevor du sie entfernst. Siehe [Offline und Synchronisation](./offline-and-sync.md).
 :::

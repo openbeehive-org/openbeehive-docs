@@ -7,7 +7,7 @@ title: "Offline-first-Architektur"
 
 Openbeehive ist so konzipiert, dass Imkerei draußen am Bienenstand stattfindet, oft weit entfernt von jeglichem Empfang. Jedes Gerät trägt eine vollständige Kopie der benötigten Daten, die Oberfläche liest und schreibt diese lokale Kopie sofort, und ein Hintergrundmodul hält im Stillen alles mit dem Server im Gleichschritt, sobald eine Verbindung verfügbar ist.
 
-Diese Seite erklärt, wie die einzelnen Teile zusammenpassen. Die genauen Regeln, die Replikate konsistent halten, findest du im [Sync-Protokoll](/developers/sync-protocol) und unter [Historie und Ereignisse](/developers/history-and-events).
+Diese Seite erklärt, wie die einzelnen Teile zusammenpassen. Die genauen Regeln, die Replikate konsistent halten, findest du im [Sync-Protokoll](./sync-protocol.md) und unter [Historie und Ereignisse](./history-and-events.md).
 
 ## Local-first von Grund auf
 
@@ -49,7 +49,7 @@ Das folgende Diagramm zeigt, wie eine Änderung von einer Berührung in der Ober
 
 Das Sync-Modul tauscht nur die Datensätze aus, die zu den Bereichen (Scopes) gehören, auf die ein Nutzer Zugriff hat, sodass ein Gerät niemals die ganze Welt herunterlädt: nur die Bienenstände, zu denen es berechtigt ist.
 
-Skripte und Sensoren treten über die CRUD-Dienste des Servers in dasselbe Bild ein ([Die API verwenden](/using-the-api/overview)). Deren Schreibvorgänge umgehen diesen Fluss nicht: Der Server wendet jeden mit demselben feldweisen Merge an und hängt ihn an dasselbe Änderungsprotokoll an wie eine gepushte Änderung, sodass ein von einer Stockwaage gesendeter Messwert einfach eine weitere Änderung ist, die die Geräte bei ihrem nächsten Sync abholen.
+Skripte und Sensoren treten über die CRUD-Dienste des Servers in dasselbe Bild ein ([Die API verwenden](../using-the-api/overview.md)). Deren Schreibvorgänge umgehen diesen Fluss nicht: Der Server wendet jeden mit demselben feldweisen Merge an und hängt ihn an dasselbe Änderungsprotokoll an wie eine gepushte Änderung, sodass ein von einer Stockwaage gesendeter Messwert einfach eine weitere Änderung ist, die die Geräte bei ihrem nächsten Sync abholen.
 
 ## Konfliktauflösung
 
@@ -69,7 +69,7 @@ Listenartige Felder (derzeit nur die Foto-Schlüssel einer Durchsicht) verwenden
 
 ### Append-only-Ereignisse
 
-Die Tabelle `event` ist per Konvention append-only: Jeder Historien-Schreibvorgang fügt eine neue Zeile mit frischer ID ein, und nichts bearbeitet oder löscht eine, sodass zwei Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile berühren. Einzelheiten dazu findest du unter [Historie und Ereignisse](/developers/history-and-events).
+Die Tabelle `event` ist per Konvention append-only: Jeder Historien-Schreibvorgang fügt eine neue Zeile mit frischer ID ein, und nichts bearbeitet oder löscht eine, sodass zwei Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile berühren. Einzelheiten dazu findest du unter [Historie und Ereignisse](./history-and-events.md).
 
 :::tip
 Da Zusammenführungen deterministisch sind, berechnen zwei beliebige Geräte, die denselben Satz von Änderungen gesehen haben, stets genau dasselbe Ergebnis, unabhängig von der Reihenfolge, in der diese Änderungen eingetroffen sind.
@@ -103,4 +103,4 @@ Die App ist eine Progressive Web App, in erster Linie für das Telefon in deiner
 
 Diese Trennung verleiht Openbeehive sein Kernversprechen: Die Aufzeichnungen sind immer bei dir, immer schnell und immer konsistent, sobald alle wieder in Reichweite sind.
 
-Um tiefer einzusteigen, lies das [Sync-Protokoll](/developers/sync-protocol) und [Historie und Ereignisse](/developers/history-and-events), oder durchstöbere den Rest der [Entwicklerdokumentation](/category/developers).
+Um tiefer einzusteigen, lies das [Sync-Protokoll](./sync-protocol.md) und [Historie und Ereignisse](./history-and-events.md), oder durchstöbere den Rest der [Entwicklerdokumentation](/category/developers).

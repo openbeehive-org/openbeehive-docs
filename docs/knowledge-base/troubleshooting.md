@@ -25,7 +25,7 @@ Your changes save instantly to the device. Syncing to the server happens quietly
 Sync is conflict-free by design. The most recent edit to a field wins, additions (photos, visits, harvests, treatments) are kept, and you will not lose work because two devices edited at once.
 :::
 
-If you self-host and sync fails for everyone, the problem is more likely server-side. See [Self-Hosting configuration](/self-hosting/configuration) and check the server logs.
+If you self-host and sync fails for everyone, the problem is more likely server-side. See [Self-Hosting configuration](../self-hosting/configuration.md) and check the server logs.
 
 ## How local storage works
 
@@ -35,7 +35,7 @@ A few practical consequences:
 
 - Your data is tied to the browser and device where you use Openbeehive. Each device keeps its own local copy and syncs to the server.
 - OPFS storage is private to the app's origin. Other websites cannot read it.
-- Installing the app to your home screen (see [Install](/using-the-app/install)) uses the same storage as the browser tab on most platforms.
+- Installing the app to your home screen (see [Install](../using-the-app/install.md)) uses the same storage as the browser tab on most platforms.
 
 :::caution
 Browser tools that "clear site data", "clear cookies and storage", or private/incognito browsing can wipe the local OPFS database. That is safe **only if your data has already synced** to the server, because it will download again on next sign-in. If you have unsynced offline changes, make sure you are online and let sync finish first.
@@ -84,10 +84,10 @@ Do not clear storage if you have offline-only changes that have not yet reached 
 
 ## Camera and QR scanner not working
 
-Each hive can carry a printable QR label that deep-links to that hive (see [QR labels](/using-the-app/qr-labels)). Scanning needs camera access.
+Each hive can carry a printable QR label that deep-links to that hive (see [QR labels](../using-the-app/qr-labels.md)). Scanning needs camera access.
 
 - **Grant camera permission.** When prompted, allow camera access. If you previously denied it, re-enable it in your browser or operating system settings for the site, then reload.
-- **Use HTTPS.** Browsers only allow camera access on secure origins. The hosted app is served over HTTPS; self-hosters must serve over HTTPS too (or `localhost` for testing). See [Reverse proxy](/self-hosting/reverse-proxy).
+- **Use HTTPS.** Browsers only allow camera access on secure origins. The hosted app is served over HTTPS; self-hosters must serve over HTTPS too (or `localhost` for testing). See [Reverse proxy](../self-hosting/reverse-proxy.md).
 - **Check it is not in use.** Close other apps or tabs that may be holding the camera.
 
 :::tip iOS Safari
@@ -97,7 +97,7 @@ On iPhone and iPad the in-app scanner can be restricted. If scanning does not wo
 ## Login problems
 
 - **Stuck on the sign-in screen.** Confirm you are reaching the correct address (the hosted app is at app.openbeehive.org). After signing in with your provider you should be redirected back automatically; if not, reload the page.
-- **Redirect fails or "invalid redirect" errors (self-host).** This almost always means the OIDC redirect URL or `BEEHIVE_PUBLIC_BASE_URL` is misconfigured. See [Authentication and configuration](/self-hosting/authentication).
+- **Redirect fails or "invalid redirect" errors (self-host).** This almost always means the OIDC redirect URL or `BEEHIVE_PUBLIC_BASE_URL` is misconfigured. See [Authentication and configuration](../self-hosting/authentication.md).
 - **Passkey not offered.** Passkeys must be enabled on the server and you must have added one under Settings → Passkeys. Otherwise sign in with another method.
 - **Single-user self-host with no login.** With password auth off, no OIDC providers and WebAuthn disabled, there is no sign-in step at all. If you unexpectedly see a login screen, check your server configuration.
 
@@ -120,4 +120,4 @@ If none of the above helps, please open an issue at [github.com/openbeehive-org/
 Please do not paste secrets. Redact session secrets, OIDC client secrets, database passwords and personal data before sharing logs or configuration.
 :::
 
-For self-hosting questions, start with the [configuration reference](/self-hosting/configuration).
+For self-hosting questions, start with the [configuration reference](../self-hosting/configuration.md).

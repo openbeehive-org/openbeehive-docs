@@ -49,11 +49,11 @@ die der Pre-Commit-Hook ausführt; `make help` listet jedes Target auf.
 `.env`-Datei im Repo-Root (kopiere `.env.example`). Die Vorgaben geben dir
 SQLite und Blobs im Dateisystem; lass `BEEHIVE_PASSWORD_AUTH` aus,
 `BEEHIVE_OIDC_PROVIDERS` leer und `BEEHIVE_WEBAUTHN_ENABLED=false`, um ohne
-Login zu arbeiten. Siehe [Konfiguration](/self-hosting/configuration).
+Login zu arbeiten. Siehe [Konfiguration](../self-hosting/configuration.md).
 
 Für ein Release-Binary: `make proto && make build` schreibt
 `server/bin/openbeehive` mit eingebetteter SPA. Siehe
-[Einzelnes Binary](/self-hosting/single-binary).
+[Einzelnes Binary](../self-hosting/single-binary.md).
 
 ## Generierter Code
 
@@ -68,7 +68,7 @@ Beide Verzeichnisse sind gitignored. Führe `make proto` nach dem Klonen und
 nach jeder `.proto`-Änderung aus; bearbeite die Ausgabe nie von Hand. Der
 Docker-Build führt `buf generate` selbst in seiner ersten Stufe aus. Jeder
 Dienst aus den Protos ist auf dem Server registriert; die Liste steht unter
-[Die API verwenden](/using-the-api/overview).
+[Die API verwenden](../using-the-api/overview.md).
 
 ## Konventionen
 
@@ -84,11 +84,11 @@ Dienst aus den Protos ist auf dem Server registriert; die Liste steht unter
 3. **Halte `merge.go` und `merge.ts` identisch.** Feldweises Last-Writer-Wins
    und das Add-wins-OR-Set sind in `server/internal/sync/merge.go` und
    `app/src/lib/local/merge.ts` implementiert. Ändere beide, mit Tests. Siehe
-   [Sync-Protokoll](/developers/sync-protocol).
+   [Sync-Protokoll](./sync-protocol.md).
 4. **Schreibe portables SQL.** Der Server läuft auf PostgreSQL, MySQL und
    SQLite. Migrationen nutzen die portable Teilmenge, die am Anfang von
    `0001_init.sql` beschrieben ist; der Store übersetzt die verbleibenden
-   Dialektunterschiede. Siehe [Datenbanken](/self-hosting/databases).
+   Dialektunterschiede. Siehe [Datenbanken](../self-hosting/databases.md).
 5. **Englisch im Code, Übersetzungen für Nutzer.** Code, Kommentare,
    Bezeichner und Commit-Nachrichten sind Englisch. Jede nutzersichtbare
    Zeichenkette geht durch `svelte-i18n` mit Einträgen in

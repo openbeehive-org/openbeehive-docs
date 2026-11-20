@@ -15,7 +15,7 @@ Varias de las afecciones que aparecen a continuación son de **declaración obli
 
 ## Registrar lo que ves
 
-Cuando algo parezca ir mal, anótalo. En Openbeehive puedes registrar un hallazgo en la inspección correspondiente, fijar una [tarea](/using-the-app/tasks) de seguimiento y registrar cualquier [tratamiento](/using-the-app/treatments) que apliques. Unos buenos registros os ayudan a ti, y a tu inspector, a detectar patrones a lo largo del tiempo. Consulta [Inspección](/beekeeping/inspecting) para saber cómo realizar una revisión a fondo.
+Cuando algo parezca ir mal, anótalo. En Openbeehive puedes registrar un hallazgo en la inspección correspondiente, fijar una [tarea](../using-the-app/tasks.md) de seguimiento y registrar cualquier [tratamiento](../using-the-app/treatments.md) que apliques. Unos buenos registros os ayudan a ti, y a tu inspector, a detectar patrones a lo largo del tiempo. Consulta [Inspección](../beekeeping/inspecting.md) para saber cómo realizar una revisión a fondo.
 
 ## Varroa (Varroa destructor)
 
@@ -25,7 +25,7 @@ La plaga más importante para la mayoría de los apicultores del mundo. Este ác
 
 **Manejo:** controla los niveles de ácaros a lo largo de la temporada y trata según los recuentos, no según el calendario. Combina enfoques (una estrategia "integrada") como la retirada de cría de zánganos, las interrupciones de cría y los acaricidas aprobados, eligiendo productos adecuados a la temporada y a si las alzas de miel están puestas.
 
-Consulta la guía completa: [Varroa](/beekeeping/varroa).
+Consulta la guía completa: [Varroa](../beekeeping/varroa.md).
 
 ## Loque americana (AFB)
 

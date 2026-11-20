@@ -134,6 +134,6 @@ water content, your batch number and the best-before date, plus a note for
 taste or set. The batch number you save here is the one to print on the jar,
 closing the loop from comb to shelf.
 
-See [Harvests in the app](/using-the-app/harvests) for how to enter and manage
+See [Harvests in the app](../using-the-app/harvests.md) for how to enter and manage
 your harvest records, and the wider [beekeeping guide](/category/beekeeping-basics) for the
 season around the harvest.

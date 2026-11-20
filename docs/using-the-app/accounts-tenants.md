@@ -23,7 +23,7 @@ The methods are tied to one account: if you registered with email and password a
 If the instance requires email verification, you get a confirmation link by email after signing up. Open it before your first sign-in.
 
 :::note Who is the admin
-The instance admin is not the first person to sign up. On a self-hosted instance it is the account the operator configures with `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` (see [Authentication](/self-hosting/authentication)); on the hosted service it is the operator. Sign-up never grants that role.
+The instance admin is not the first person to sign up. On a self-hosted instance it is the account the operator configures with `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` (see [Authentication](../self-hosting/authentication.md)); on the hosted service it is the operator. Sign-up never grants that role.
 :::
 
 ## What a tenant is
@@ -70,7 +70,7 @@ A tenant admin can delete the tenant under **Settings → Tenants → Danger zon
 
 ## API keys \{#api-keys}
 
-**Settings → API keys** is where you create credentials for scripts and devices, such as a hive scale, that use the [API](/using-the-api/overview) as you. The section appears only when you are signed in; a single-user instance without login has no keys and needs none.
+**Settings → API keys** is where you create credentials for scripts and devices, such as a hive scale, that use the [API](../using-the-api/overview.md) as you. The section appears only when you are signed in; a single-user instance without login has no keys and needs none.
 
 - Type a name in the **Name this key (e.g. hive scale)** field, choose the permissions in the **Permissions** select (**Read and write**, the default, or **Read-only**) and the lifetime in the **Expires after** select (**Never expires**, the default, **30 days**, **90 days** or **1 year**), then tap **Create key**. The key appears below with the note "Copy the key now. It is shown only once." and a **Copy** button (it reads **Copied** for a moment). Anything you do not copy now is gone; the server keeps only a hash.
 - Each key is listed with its name (**Unnamed key** if you left the field empty), its first characters, a **Read and write** or **Read-only** badge, **Created**, then **Expires** and the date when you set a lifetime (**Expired** and the date, in red, once that day has passed) and, once a script has used it, **Last used**. Expired keys stay in the list until you remove them.
@@ -82,4 +82,4 @@ A key acts as you in the tenant that was active when you created it, so switch t
 
 ## The demo
 
-Some instances run a **demo account**. While you are signed in to it, a banner reminds you that the data resets every hour. The server rejects changes from the demo account, so anything you enter stays on your device only. Operators can enable it via [Demo mode](/self-hosting/demo).
+Some instances run a **demo account**. While you are signed in to it, a banner reminds you that the data resets every hour. The server rejects changes from the demo account, so anything you enter stays on your device only. Operators can enable it via [Demo mode](../self-hosting/demo.md).

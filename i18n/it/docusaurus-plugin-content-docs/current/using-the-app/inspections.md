@@ -5,15 +5,15 @@ title: "Ispezioni (visite)"
 
 # Ispezioni (visite)
 
-Un'ispezione è la registrazione di una singola visita a un'arnia: ciò che hai visto, ciò che hai fatto e qualsiasi cosa valga la pena ricordare. Nell'arco di una stagione le visite compongono un quadro di come si sta sviluppando ogni colonia. Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Un'ispezione è la registrazione di una singola visita a un'arnia: ciò che hai visto, ciò che hai fatto e qualsiasi cosa valga la pena ricordare. Nell'arco di una stagione le visite compongono un quadro di come si sta sviluppando ogni colonia. Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
 :::tip
-Per cosa cercare durante una visita e con quale frequenza ispezionare, leggi [Ispezionare una colonia](/beekeeping/inspecting). Questa pagina spiega come registrarla.
+Per cosa cercare durante una visita e con quale frequenza ispezionare, leggi [Ispezionare una colonia](../beekeeping/inspecting.md). Questa pagina spiega come registrarla.
 :::
 
 ## Avviare una visita
 
-Apri un'arnia (o scansiona la sua [etichetta QR](/using-the-app/qr-labels)) e tocca **Registra visita** sopra il diario delle visite. Il modulo si apre con la data di oggi.
+Apri un'arnia (o scansiona la sua [etichetta QR](./qr-labels.md)) e tocca **Registra visita** sopra il diario delle visite. Il modulo si apre con la data di oggi.
 
 Ogni campo è facoltativo. Un rapido "tutto a posto" senza nient'altro compilato è una voce valida.
 
@@ -55,7 +55,7 @@ Il trio "uova viste / larva più giovane / covata opercolata" di solito conferma
 | Telaino da fuco tagliato | Se hai asportato un telaino di covata da fuco (una misura di controllo della varroa). |
 | Melario aggiunto | Se hai aggiunto un melario. |
 
-Per un quadro più ampio sulla gestione degli acari e sulla raccolta, vedi [Varroa](/beekeeping/varroa) e [Raccolto del miele](/beekeeping/honey-harvest). Il miele che prelevi per l'invasettamento si registra separatamente come [smielatura](/using-the-app/harvests), con varietà, contenuto d'acqua e numero di lotto.
+Per un quadro più ampio sulla gestione degli acari e sulla raccolta, vedi [Varroa](../beekeeping/varroa.md) e [Raccolto del miele](../beekeeping/honey-harvest.md). Il miele che prelevi per l'invasettamento si registra separatamente come [smielatura](./harvests.md), con varietà, contenuto d'acqua e numero di lotto.
 
 ## Clima
 
@@ -69,14 +69,14 @@ Per un quadro più ampio sulla gestione degli acari e sulla raccolta, vedi [Varr
 Tutti e quattro sono facoltativi. Col tempo compaiono nei grafici **Andamento** dell'arnia insieme al peso e alla forza della colonia.
 
 :::tip
-Una bilancia per arnie o un sensore climatico può inviare questi campi tramite l'API; ogni lettura diventa una visita sull'arnia e si sincronizza sui tuoi dispositivi. Vedi [Tracker automatici](/using-the-api/automated-trackers).
+Una bilancia per arnie o un sensore climatico può inviare questi campi tramite l'API; ogni lettura diventa una visita sull'arnia e si sincronizza sui tuoi dispositivi. Vedi [Tracker automatici](../using-the-api/automated-trackers.md).
 :::
 
 ## Nota e foto
 
 Aggiungi una **nota** in testo libero per tutto ciò che i campi strutturati non coprono: una cella di sostituzione contrassegnata, un carattere da tenere d'occhio, un promemoria per sostituire la regina.
 
-**Aggiungi foto** allega una o più immagini (schema di covata, sospetta malattia, celle reali). Vengono memorizzate con la visita e si sincronizzano con il resto dei tuoi registri. Se qualcosa richiede un seguito, aggiungi un'[attività](/using-the-app/tasks) con una scadenza.
+**Aggiungi foto** allega una o più immagini (schema di covata, sospetta malattia, celle reali). Vengono memorizzate con la visita e si sincronizzano con il resto dei tuoi registri. Se qualcosa richiede un seguito, aggiungi un'[attività](./tasks.md) con una scadenza.
 
 ## Il diario delle visite
 
@@ -94,5 +94,5 @@ Il diario ti permette di individuare le tendenze: la covata che cresce in primav
 - **Fotografa i casi dubbi.** Un'immagine di uno schema di covata insolito vale più di una descrizione scritta.
 
 :::caution
-Se sospetti una malattia soggetta a denuncia come la peste americana o europea, fotografala, chiudi l'arnia e segui le norme di segnalazione locali. Vedi [Malattie e parassiti](/knowledge-base/diseases-and-pests).
+Se sospetti una malattia soggetta a denuncia come la peste americana o europea, fotografala, chiudi l'arnia e segui le norme di segnalazione locali. Vedi [Malattie e parassiti](../knowledge-base/diseases-and-pests.md).
 :::

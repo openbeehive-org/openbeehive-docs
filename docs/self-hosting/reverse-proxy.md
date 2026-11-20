@@ -88,4 +88,4 @@ List multiple origins comma-separated. Avoid `*` together with `BEEHIVE_CORS_ALL
 - `BEEHIVE_CORS_ALLOWED_ORIGINS` is set only if the app is on a different origin.
 - QR labels encode the address they were printed from; reprint them after a domain change.
 
-For the server options see [Configuration](/self-hosting/configuration).
+For the server options see [Configuration](./configuration.md).

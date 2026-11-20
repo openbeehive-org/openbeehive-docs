@@ -79,7 +79,7 @@ Chaque nourrissement mérite d'être consigné. Savoir combien de sirop ou de ca
 
 Dans Openbeehive, enregistrez le nourrissement dans le cadre de la visite : saisissez la quantité dans le champ **Nourri (kg)** et indiquez le type de nourrissement (sirop léger, sirop lourd ou candi) dans la note, afin qu'il figure aux côtés de tout ce que vous avez observé ce jour-là.
 
-Consultez [Visites](/using-the-app/inspections) pour savoir comment enregistrer une visite et saisir les quantités de nourrissement.
+Consultez [Visites](../using-the-app/inspections.md) pour savoir comment enregistrer une visite et saisir les quantités de nourrissement.
 
 :::tip
 Au fil d'une saison, vos registres de nourrissement deviennent une image utile de la santé de chaque colonie. Une ruche qui a toujours besoin d'un nourrissement supplémentaire peut avoir un problème de butin, de population ou de reine qui mérite d'être étudié.

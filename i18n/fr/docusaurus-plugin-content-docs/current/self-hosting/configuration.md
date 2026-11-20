@@ -10,7 +10,7 @@ Openbeehive se configure entièrement au moyen de variables d'environnement. Cet
 Vous pouvez définir ces variables dans votre shell, dans un fichier `.env` à côté du binaire, dans votre fichier `docker compose`, ou via le gestionnaire de secrets de votre plateforme d'hébergement. Le serveur les lit une seule fois au démarrage, de sorte que les modifications prennent effet après un redémarrage.
 
 :::tip Commencez petit
-Vous n'avez besoin que d'une poignée de ces variables pour démarrer. Pour un serveur domestique mono-utilisateur, définissez `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET`, et laissez le reste aux valeurs par défaut. Consultez le [Démarrage rapide](/self-hosting/quick-start) pour être opérationnel en quelques minutes.
+Vous n'avez besoin que d'une poignée de ces variables pour démarrer. Pour un serveur domestique mono-utilisateur, définissez `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET`, et laissez le reste aux valeurs par défaut. Consultez le [Démarrage rapide](./quick-start.md) pour être opérationnel en quelques minutes.
 :::
 
 ## Comment fonctionne le profil de déploiement
@@ -25,7 +25,7 @@ Le réglage le plus important est `BEEHIVE_DEPLOYMENT_PROFILE`. Il choisit des v
 Le profil ne fait que définir des *valeurs par défaut*. Toute variable que vous définissez explicitement l'emporte toujours. Par exemple, vous pouvez exécuter le profil `selfhost` tout en le pointant vers PostgreSQL en définissant vous-même `BEEHIVE_DATABASE_DRIVER` et `BEEHIVE_DATABASE_DSN`.
 
 :::note
-Les deux profils sont documentés en détail sur leurs propres pages : [Binaire unique](/self-hosting/single-binary) et [Docker](/self-hosting/docker). Cette page se concentre sur les variables elles-mêmes.
+Les deux profils sont documentés en détail sur leurs propres pages : [Binaire unique](./single-binary.md) et [Docker](./docker.md). Cette page se concentre sur les variables elles-mêmes.
 :::
 
 ## Profil de déploiement
@@ -103,7 +103,7 @@ BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
 
-Pour le choix du pilote, l'optimisation et les notes de migration, consultez [Bases de données](/self-hosting/databases).
+Pour le choix du pilote, l'optimisation et les notes de migration, consultez [Bases de données](./databases.md).
 
 ## Stockage d'objets
 
@@ -120,7 +120,7 @@ Les photos et autres pièces jointes sont stockées sous forme de blobs, soit su
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nom du bucket où sont stockés les blobs.                               |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Définissez `true` pour vous connecter au point de terminaison via HTTPS. |
 
-Les variables `MINIO_*` ne sont utilisées que lorsque `BEEHIVE_BLOB_BACKEND=minio`. Pour un accompagnement complet, consultez [Stockage](/self-hosting/storage).
+Les variables `MINIO_*` ne sont utilisées que lorsque `BEEHIVE_BLOB_BACKEND=minio`. Pour un accompagnement complet, consultez [Stockage](./storage.md).
 
 ## Session et authentification
 
@@ -137,7 +137,7 @@ Définissez toujours un `BEEHIVE_SESSION_SECRET` fort et unique, et gardez-le pr
 
 Comptes intégrés pour les instances multi-utilisateurs sans fournisseur d'identité externe.
 L'administrateur de l'instance est un compte dédié que vous configurez, et non la première
-personne à s'inscrire. Consultez [Authentification](/self-hosting/authentication).
+personne à s'inscrire. Consultez [Authentification](./authentication.md).
 
 | Variable | Défaut | Description |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ personne à s'inscrire. Consultez [Authentification](/self-hosting/authenticatio
 ## Espace de démonstration
 
 Installe un compte et un espace (tenant) de démonstration de présentation. Désactivé par défaut, consultez
-[Mode démo](/self-hosting/demo).
+[Mode démo](./demo.md).
 
 | Variable | Défaut | Description |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 Pour une instance auto-hébergée personnelle, vous pouvez ignorer entièrement la connexion : laissez `BEEHIVE_PASSWORD_AUTH` désactivé (la valeur par défaut de selfhost), `BEEHIVE_OIDC_PROVIDERS` vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. L'application s'exécute alors en mode mono-utilisateur, sans étape de connexion.
 :::
 
-Pour les guides de configuration des fournisseurs, les URL de redirection et les conseils de sécurité, consultez [Authentification](/self-hosting/authentication).
+Pour les guides de configuration des fournisseurs, les URL de redirection et les conseils de sécurité, consultez [Authentification](./authentication.md).
 
 ## Un exemple selfhost minimal
 

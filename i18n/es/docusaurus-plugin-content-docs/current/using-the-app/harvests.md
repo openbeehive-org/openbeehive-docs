@@ -35,4 +35,4 @@ La miel debería estar generalmente por debajo de alrededor del 18 % de agua ant
 
 Una cosecha guarda la colmena, el colmenar y la reina cuyo reinado cubría la fecha de la cosecha. Cambiar la reina o mover la colmena más tarde no cambia a qué se atribuye una cosecha anterior.
 
-Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync). Para retirar y procesar la miel, consulta la guía apícola sobre [Cosecha de miel](/beekeeping/honey-harvest).
+Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md). Para retirar y procesar la miel, consulta la guía apícola sobre [Cosecha de miel](../beekeeping/honey-harvest.md).

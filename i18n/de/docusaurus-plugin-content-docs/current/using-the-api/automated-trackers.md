@@ -105,7 +105,7 @@ Das Demo-Konto ist schreibgeschützt und kann keine Schlüssel erstellen;
 ## Die Beuten-Id finden
 
 `hiveId` ist die UUID der Beute, dieselbe, die in ihrem
-[QR-Etikett](/using-the-app/qr-labels) kodiert ist. Schlag sie einmal nach
+[QR-Etikett](../using-the-app/qr-labels.md) kodiert ist. Schlag sie einmal nach
 und speichere sie auf dem Gerät:
 
 ```bash

@@ -18,7 +18,7 @@ Openbeehive mantiene una copia completa dei tuoi registri in un piccolo database
 - **I tuoi dati sono tuoi.** I registri vivono sul tuo dispositivo; il server è la copia per la sincronizzazione e la condivisione.
 
 :::tip
-Poiché i registri sono memorizzati sul dispositivo, installa Openbeehive come app anziché usarla in una scheda del browser. Vedi [Installare Openbeehive](/using-the-app/install).
+Poiché i registri sono memorizzati sul dispositivo, installa Openbeehive come app anziché usarla in una scheda del browser. Vedi [Installare Openbeehive](./install.md).
 :::
 
 ## L'indicatore offline
@@ -28,7 +28,7 @@ Quando il dispositivo non ha connessione, il blocco account nella barra laterale
 Quando il dispositivo torna online la barra scompare e tutte le modifiche fatte offline vengono inviate automaticamente. Non c'è alcun pulsante "sincronizza ora".
 
 :::note
-Un indicatore offline persistente di solito significa copertura debole in apiario. Se resta attivo anche con una buona connessione a casa, vedi [Risoluzione dei problemi](/knowledge-base/troubleshooting).
+Un indicatore offline persistente di solito significa copertura debole in apiario. Se resta attivo anche con una buona connessione a casa, vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md).
 :::
 
 ## La prima sincronizzazione su un nuovo dispositivo
@@ -56,7 +56,7 @@ Openbeehive risolve le modifiche sovrapposte **automaticamente**, senza richiest
 Ogni dispositivo converge sullo stesso stato una volta che tutti si sono sincronizzati.
 
 :::tip
-In breve: aggiungi liberamente, modifica con sicurezza. Come funziona sotto il cofano è spiegato nelle pagine sul [protocollo di sincronizzazione](/developers/sync-protocol) e sull'[architettura](/developers/architecture).
+In breve: aggiungi liberamente, modifica con sicurezza. Come funziona sotto il cofano è spiegato nelle pagine sul [protocollo di sincronizzazione](../developers/sync-protocol.md) e sull'[architettura](../developers/architecture.md).
 :::
 
 ## Condivisione
@@ -68,7 +68,7 @@ I registri si condividono tramite i **tenant**. Ogni membro di un tenant vede e 
 | **Admin** (proprietario del tenant) | Tutto ciò che può fare un membro, più invitare e revocare, ed eliminare il tenant. |
 | **Membro** | Aggiungere e modificare apiari, arnie, visite, attività, smielature e trattamenti nel tenant. |
 
-Per condividere una postazione con un mentore mantenendo private le altre, metti quella postazione in un tenant a sé e invita lì il mentore. I registri condivisi si sincronizzano e risolvono i conflitti esattamente come i tuoi. Vedi [Account e tenant](/using-the-app/accounts-tenants).
+Per condividere una postazione con un mentore mantenendo private le altre, metti quella postazione in un tenant a sé e invita lì il mentore. I registri condivisi si sincronizzano e risolvono i conflitti esattamente come i tuoi. Vedi [Account e tenant](./accounts-tenants.md).
 
 ## Se qualcosa non può essere salvato
 
@@ -76,10 +76,10 @@ Il salvataggio avviene sul tuo dispositivo, quindi in pratica non fallisce mai. 
 
 Con l'**account demo** pubblico il server rifiuta le modifiche (la demo si azzera ogni ora). Le tue modifiche vengono salvate sul dispositivo e semplicemente restano lì invece di sincronizzarsi.
 
-C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata, l'app ripiega su un database in memoria e mostra l'avviso **"Archiviazione non disponibile: le modifiche non verranno conservate su questo dispositivo."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Succede nelle finestre di navigazione privata e quando una seconda scheda dell'app sta ancora trattenendo l'archiviazione; vedi [Risoluzione dei problemi](/knowledge-base/troubleshooting#storage-is-unavailable).
+C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata, l'app ripiega su un database in memoria e mostra l'avviso **"Archiviazione non disponibile: le modifiche non verranno conservate su questo dispositivo."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Succede nelle finestre di navigazione privata e quando una seconda scheda dell'app sta ancora trattenendo l'archiviazione; vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
 ## Perderò mai dei dati?
 
 I tuoi registri vengono scritti prima sul tuo dispositivo e non vengono rimossi perché sei offline o perché l'app si chiude. Attendono sul dispositivo finché non possono essere sincronizzati.
 
-Se fai self-hosting, mantieni anche backup del server. Vedi [Backup](/self-hosting/backups).
+Se fai self-hosting, mantieni anche backup del server. Vedi [Backup](../self-hosting/backups.md).

@@ -8,7 +8,7 @@ title: "Aktualisieren"
 Upgrades sind einfach: Ersetze die Binärdatei oder ziehe ein neues Image, starte neu, und der Server bringt das Datenbankschema von selbst auf den neuesten Stand.
 
 :::caution Sichere jedes Mal zuerst
-Erstelle vor dem Upgrade ein Backup. Siehe [Backups](/self-hosting/backups).
+Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 :::
 
 ## Bevor du beginnst
@@ -69,13 +69,13 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Das erzeugt eine frische `./server/bin/openbeehive`. Die Voraussetzungen stehen unter [Einzelne Binärdatei](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
+Das erzeugt eine frische `./server/bin/openbeehive`. Die Voraussetzungen stehen unter [Einzelne Binärdatei](./single-binary.md) (Go 1.27+, Node 24+, buf).
 
 ## Mit Docker aktualisieren
 
 Welchen Befehl du brauchst, hängt davon ab, woher das Image kommt.
 
-**Veröffentlichtes Image** (der Einzel-Container per `docker run` aus dem [Schnelleinstieg](/self-hosting/quick-start) oder eine Compose-Datei mit einer `image:`-Zeile wie `docker-compose.demo.yml`):
+**Veröffentlichtes Image** (der Einzel-Container per `docker run` aus dem [Schnelleinstieg](./quick-start.md) oder eine Compose-Datei mit einer `image:`-Zeile wie `docker-compose.demo.yml`):
 
 ```bash
 docker compose -f docker-compose.demo.yml pull
@@ -139,4 +139,4 @@ Stelle keine alte Datenbank unter einer neueren Binärdatei wieder her und betre
 - Öffne die App und bestätige, dass deine Standorte, Beuten und letzten Durchsichten erscheinen.
 - Erfasse etwas auf einem Gerät und bestätige, dass es synchronisiert.
 
-Wenn etwas falsch aussieht, siehe [Fehlerbehebung](/knowledge-base/troubleshooting) und rolle auf dein Backup zurück, während du die Ursache untersuchst.
+Wenn etwas falsch aussieht, siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md) und rolle auf dein Backup zurück, während du die Ursache untersuchst.

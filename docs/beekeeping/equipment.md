@@ -8,7 +8,7 @@ title: "Equipment & hive types"
 Beekeeping does not demand a great deal of kit, but a few good tools make every visit calmer, safer and quicker. This page covers the essentials, then gives an overview of the main hive systems so you can choose the one that suits you and record it correctly in Openbeehive.
 
 :::tip
-When you create a hive in Openbeehive, you pick its type (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar or Other). Choosing the right one keeps your frame counts and equipment notes consistent across your apiary. See [Hives](/using-the-app/hives).
+When you create a hive in Openbeehive, you pick its type (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar or Other). Choosing the right one keeps your frame counts and equipment notes consistent across your apiary. See [Hives](../using-the-app/hives.md).
 :::
 
 ## The essentials
@@ -52,13 +52,13 @@ A flat steel **hive tool** is used constantly — to prise apart boxes glued wit
 
 A **feeder** lets you give the colony sugar syrup (in spring or autumn) or fondant (in winter). Common types include contact (bucket) feeders, frame feeders that hang inside the box, and tray feeders that sit above the crown board.
 
-Record feeding in Openbeehive so you know what each colony received and when. See [Feeding](/beekeeping/feeding).
+Record feeding in Openbeehive so you know what each colony received and when. See [Feeding](./feeding.md).
 
 ### Extraction basics
 
 To take honey off, you will need a way to uncap the sealed cells (an uncapping fork or heated knife) and a means of removing the honey from the comb. Most beekeepers use a **centrifugal extractor**, which spins honey out of the frames so the drawn comb can be reused. You will also want a strainer and clean food-grade buckets for settling and bottling.
 
-For a full walkthrough, see [Honey harvest](/beekeeping/honey-harvest) and record yields under [Harvests](/using-the-app/harvests).
+For a full walkthrough, see [Honey harvest](./honey-harvest.md) and record yields under [Harvests](../using-the-app/harvests.md).
 
 ## Hive systems
 
@@ -78,7 +78,7 @@ Movable-frame systems (Langstroth, Dadant, Zander, Deutsch Normal) all work in t
 If your hive does not match any of these, choose **Other** in Openbeehive and note the details in a visit note.
 
 :::note
-There is no single "best" hive. The most practical choice is usually whatever your **local association and nearby beekeepers** use, so you can borrow equipment, swap frames and get hands-on help. For a deeper comparison and frame dimensions, see [Hive types](/knowledge-base/hive-types).
+There is no single "best" hive. The most practical choice is usually whatever your **local association and nearby beekeepers** use, so you can borrow equipment, swap frames and get hands-on help. For a deeper comparison and frame dimensions, see [Hive types](../knowledge-base/hive-types.md).
 :::
 
 ## Buying new vs used
@@ -97,4 +97,4 @@ Sensible guidance for used equipment:
 - **Frames and comb** — avoid unless from a trusted source with a clean bill of health. Old comb is cheap to replace and best renewed regularly anyway.
 - **Whole colonies** — only buy from a reputable beekeeper, ideally after a frame-by-frame health inspection. Check the brood pattern and look for signs of disease.
 
-Disease reporting and rules vary by country and region; **AFB is notifiable in many places**. Check your national bee health authority and consult your local association before introducing any used equipment or new colonies. See [Diseases & pests](/knowledge-base/diseases-and-pests).
+Disease reporting and rules vary by country and region; **AFB is notifiable in many places**. Check your national bee health authority and consult your local association before introducing any used equipment or new colonies. See [Diseases & pests](../knowledge-base/diseases-and-pests.md).

@@ -79,7 +79,7 @@ Every feed is worth recording. Knowing how much syrup or fondant a colony took, 
 
 In Openbeehive, log feeding as part of the visit: enter the amount in the **Fed (kg)** field and put the feed type (thin syrup, thick syrup or fondant) in the note, so it sits alongside everything else you saw that day.
 
-See [Inspections](/using-the-app/inspections) for how to record a visit and capture feeding amounts.
+See [Inspections](../using-the-app/inspections.md) for how to record a visit and capture feeding amounts.
 
 :::tip
 Over a season, your feeding records become a useful picture of each colony's health. A hive that always needs extra feed may have a forage, population or queen problem worth investigating.

@@ -63,7 +63,7 @@ Auf Geräten, deren Browser den In-App-Scanner nicht unterstützt, sagt der Bild
 | Fordert zur Anmeldung auf | Du bist auf diesem Gerät nicht angemeldet, oder die Beute liegt in einem Mandanten, dessen Mitglied du nicht bist | Melde dich an; bitte den Mandanten-Admin, dich einzuladen |
 | Beim Antippen passiert nichts | Das Smartphone hat den Code nicht als Link erkannt | Nutze den In-App-Scanner oder einen anderen QR-Reader |
 
-Der Zugriff folgt der Mandanten-Mitgliedschaft; siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+Der Zugriff folgt der Mandanten-Mitgliedschaft; siehe [Konten & Mandanten](./accounts-tenants.md).
 
 ## Neudruck und Etiketten ändern
 
@@ -75,4 +75,4 @@ Etiketten kodieren die Adresse, von der aus du sie gedruckt hast. Zieht deine se
 Versetze ein gedrucktes Etikett nicht von einer Zarge auf eine andere und erwarte, dass es auf das neue Volk zeigt; es öffnet weiterhin die ursprüngliche Beute. Drucke stattdessen ein frisches Etikett.
 :::
 
-Technische Details zum Linkformat: [QR-Codes für Entwickler](/developers/qr-codes).
+Technische Details zum Linkformat: [QR-Codes für Entwickler](../developers/qr-codes.md).

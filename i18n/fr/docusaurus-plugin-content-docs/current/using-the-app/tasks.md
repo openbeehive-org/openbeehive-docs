@@ -5,7 +5,7 @@ title: "Tâches"
 
 # Tâches
 
-L'apiculture est pleine de petits travaux faciles à oublier : ajouter une hausse avant la miellée, poser un chasse-abeilles la veille de l'extraction, traiter contre le varroa une fois le miel retiré. Les tâches sont les rappels d'Openbeehive : un titre et une échéance facultative. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+L'apiculture est pleine de petits travaux faciles à oublier : ajouter une hausse avant la miellée, poser un chasse-abeilles la veille de l'extraction, traiter contre le varroa une fois le miel retiré. Les tâches sont les rappels d'Openbeehive : un titre et une échéance facultative. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](./offline-and-sync.md).
 
 ## Créer une tâche
 
@@ -36,7 +36,7 @@ Si vous et un coapiculteur cochez tous les deux la même tâche sur des appareil
 
 ## Les tâches dans la Vue d'ensemble
 
-La tuile **Tâches ouvertes** compte les tâches non terminées. **Tâches à venir** liste jusqu'à cinq tâches ouvertes avec leur échéance ; les tâches dont l'échéance est dépassée sont signalées par un **!**. Voir [Le tableau de bord](/using-the-app/dashboard).
+La tuile **Tâches ouvertes** compte les tâches non terminées. **Tâches à venir** liste jusqu'à cinq tâches ouvertes avec leur échéance ; les tâches dont l'échéance est dépassée sont signalées par un **!**. Voir [Le tableau de bord](./dashboard.md).
 
 :::tip
 Pour les travaux récurrents, ajoutez la tâche suivante au moment où vous cochez la tâche en cours. Après un contrôle d'essaimage à sept jours, ajoutez « Contrôle d'essaimage » pour la semaine suivante.
@@ -75,5 +75,5 @@ Pour les travaux récurrents, ajoutez la tâche suivante au moment où vous coch
 - Réparer et fabriquer du matériel pour le printemps.
 
 :::caution
-Le moment des traitements et les produits que vous pouvez légalement utiliser varient selon le pays et la région. Suivez vos recommandations locales et l'étiquette du produit. Voir [Varroa](/beekeeping/varroa).
+Le moment des traitements et les produits que vous pouvez légalement utiliser varient selon le pays et la région. Suivez vos recommandations locales et l'étiquette du produit. Voir [Varroa](../beekeeping/varroa.md).
 :::

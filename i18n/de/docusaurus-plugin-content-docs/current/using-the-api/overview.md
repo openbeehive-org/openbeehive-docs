@@ -103,8 +103,8 @@ Geräte-Schreibvorgänge sobald das Gerät sie gepusht hat.
   oben und von der App geschrieben.
 
 Das Format der Änderungen beschreibt das
-[Sync-Protokoll](/developers/sync-protocol), die Spalten hinter jeder
-Nachricht das [Datenmodell](/developers/data-model).
+[Sync-Protokoll](../developers/sync-protocol.md), die Spalten hinter jeder
+Nachricht das [Datenmodell](../developers/data-model.md).
 
 ## Endpunkte außerhalb von RPC
 
@@ -240,13 +240,13 @@ kann nur RPCs aufrufen, deren Namen mit `Get`, `List`, `Pull` oder `Subscribe`
 beginnen. Jeder andere RPC liefert `permission_denied`.
 
 Wie du die Anmeldemethoden konfigurierst, steht unter
-[Authentifizierung](/self-hosting/authentication).
+[Authentifizierung](../self-hosting/authentication.md).
 
 ## Protokollseiten
 
-- [REST / HTTP + JSON](/using-the-api/rest): curl-Beispiele, die JSON-Form
+- [REST / HTTP + JSON](./rest.md): curl-Beispiele, die JSON-Form
   und der Paginierungsvertrag.
-- [gRPC](/using-the-api/grpc): generierte Clients und der streamende
+- [gRPC](./grpc.md): generierte Clients und der streamende
   `Subscribe`-Aufruf.
-- [Automatische Tracker](/using-the-api/automated-trackers): Stockwaagen- und
+- [Automatische Tracker](./automated-trackers.md): Stockwaagen- und
   Klimawerte aus einem Skript oder Gerät senden.

@@ -32,7 +32,7 @@ gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owne
 Beide Befehle geben die Signatur-Identität und den Commit aus, aus dem das Image gebaut wurde. Images, die vor 0.4.0 veröffentlicht wurden, sind nicht signiert.
 
 :::tip
-Für eine Einzelnutzer-Instanz auf einer Maschine ist die [einzelne Binärdatei](/self-hosting/single-binary) sogar noch einfacher als Docker. Greife zu Compose, wenn du Postgres und Speicher im S3-Stil möchtest.
+Für eine Einzelnutzer-Instanz auf einer Maschine ist die [einzelne Binärdatei](./single-binary.md) sogar noch einfacher als Docker. Greife zu Compose, wenn du Postgres und Speicher im S3-Stil möchtest.
 :::
 
 ## Den einzelnen Container ausführen
@@ -56,7 +56,7 @@ docker run -d \
 - Die Zeilen `BEEHIVE_DATABASE_DSN` und `BEEHIVE_BLOB_DIR` zeigen die Datenbank und die hochgeladenen Fotos explizit auf das Volume. Die Standardwerte (`openbeehive.db`, `./data/blobs`) sind relativ zum Arbeitsverzeichnis, das seit 0.4.0 `/data` ist; die Pfade auszuschreiben hält den Befehl aber eindeutig und passt zur Backup-Anleitung.
 - `BEEHIVE_PUBLIC_BASE_URL` muss die Adresse sein, die Nutzer erreichen, einschließlich Schema. Der Server verwendet sie für OIDC-Redirect-URLs sowie für Einladungs- und Verifizierungslinks.
 
-Ohne aktivierte Anmeldemethode (der selfhost-Standard) läuft die Instanz im Einzelnutzer-Modus. Um Authentifizierung hinzuzufügen, setze `BEEHIVE_SESSION_SECRET` (einmal mit `openssl rand -base64 32` generieren und stabil halten; eine Änderung meldet alle ab) plus die Variablen für die gewünschte Methode. Die E-Mail-/Passwort-Anmeldung braucht außerdem `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD`, sonst startet der Server nicht. Siehe [Authentifizierung](/self-hosting/authentication).
+Ohne aktivierte Anmeldemethode (der selfhost-Standard) läuft die Instanz im Einzelnutzer-Modus. Um Authentifizierung hinzuzufügen, setze `BEEHIVE_SESSION_SECRET` (einmal mit `openssl rand -base64 32` generieren und stabil halten; eine Änderung meldet alle ab) plus die Variablen für die gewünschte Methode. Die E-Mail-/Passwort-Anmeldung braucht außerdem `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD`, sonst startet der Server nicht. Siehe [Authentifizierung](./authentication.md).
 
 ### Eine env-Datei verwenden
 
@@ -130,13 +130,13 @@ Innerhalb des Compose-Netzwerks erreichen Container einander über den Dienstnam
 
 ### Eine produktionsnahe Datei
 
-`docker-compose.demo.yml` im Repository ist die Datei hinter der gehosteten Instanz: Sie verwendet das veröffentlichte Image statt zu bauen, veröffentlicht keine Datenbank- oder MinIO-Ports, ergänzt Restart-Policies und Healthchecks, bezieht jedes Secret aus `.env`, schließt die Registrierung (nur auf Einladung) und aktiviert den [Demo-Mandanten](/self-hosting/demo). Ihr Kopfkommentar listet die benötigten Variablen auf. Nutze sie als Ausgangspunkt für deinen eigenen Produktions-Stack:
+`docker-compose.demo.yml` im Repository ist die Datei hinter der gehosteten Instanz: Sie verwendet das veröffentlichte Image statt zu bauen, veröffentlicht keine Datenbank- oder MinIO-Ports, ergänzt Restart-Policies und Healthchecks, bezieht jedes Secret aus `.env`, schließt die Registrierung (nur auf Einladung) und aktiviert den [Demo-Mandanten](./demo.md). Ihr Kopfkommentar listet die benötigten Variablen auf. Nutze sie als Ausgangspunkt für deinen eigenen Produktions-Stack:
 
 ```bash
 docker compose -f docker-compose.demo.yml up -d
 ```
 
-Die vollständige Liste der Variablen findest du unter [Konfiguration](/self-hosting/configuration).
+Die vollständige Liste der Variablen findest du unter [Konfiguration](./configuration.md).
 
 ## Deine Daten persistieren
 
@@ -144,7 +144,7 @@ Die vollständige Liste der Variablen findest du unter [Konfiguration](/self-hos
 - **Cloud-Profil:** Aufzeichnungen liegen im Volume `pg` (Postgres) und hochgeladene Dateien im Volume `minio`. Der Server-Container ist zustandslos und kann frei ersetzt werden.
 
 :::danger Vor dem Upgrade sichern
-Benannte Volumes überstehen `docker compose up` und Image-Upgrades, aber nicht `docker compose down -v` oder ein entferntes Volume. Erstelle vor jedem Upgrade oder destruktiven Befehl ein Backup. Siehe [Backups](/self-hosting/backups).
+Benannte Volumes überstehen `docker compose up` und Image-Upgrades, aber nicht `docker compose down -v` oder ein entferntes Volume. Erstelle vor jedem Upgrade oder destruktiven Befehl ein Backup. Siehe [Backups](./backups.md).
 :::
 
 ## Häufige Operationen

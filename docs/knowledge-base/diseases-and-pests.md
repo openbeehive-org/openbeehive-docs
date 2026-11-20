@@ -15,7 +15,7 @@ Several of the conditions below are **notifiable** in many countries, meaning yo
 
 ## Recording what you see
 
-When something looks wrong, write it down. In Openbeehive you can log a finding on the relevant inspection, set a follow-up [task](/using-the-app/tasks), and record any [treatment](/using-the-app/treatments) you apply. Good records help you, and your inspector, spot patterns over time. See [Inspecting](/beekeeping/inspecting) for how to run a thorough check.
+When something looks wrong, write it down. In Openbeehive you can log a finding on the relevant inspection, set a follow-up [task](../using-the-app/tasks.md), and record any [treatment](../using-the-app/treatments.md) you apply. Good records help you, and your inspector, spot patterns over time. See [Inspecting](../beekeeping/inspecting.md) for how to run a thorough check.
 
 ## Varroa (Varroa destructor)
 
@@ -25,7 +25,7 @@ The single most important pest for most beekeepers worldwide. This mite feeds on
 
 **Management:** monitor mite levels through the season and treat based on counts, not the calendar. Combine approaches (an "integrated" strategy) such as drone-brood removal, brood breaks and approved miticides, choosing products suited to the season and whether honey supers are on.
 
-See the full guide: [Varroa](/beekeeping/varroa).
+See the full guide: [Varroa](../beekeeping/varroa.md).
 
 ## American foulbrood (AFB)
 

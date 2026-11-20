@@ -5,15 +5,15 @@ title: "Inspections (visites)"
 
 # Inspections (visites)
 
-Une inspection est le compte rendu d'une seule visite à une ruche : ce que vous avez observé, ce que vous avez fait et tout ce qui mérite d'être retenu. Au fil d'une saison, les visites dessinent une image de l'évolution de chaque colonie. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Une inspection est le compte rendu d'une seule visite à une ruche : ce que vous avez observé, ce que vous avez fait et tout ce qui mérite d'être retenu. Au fil d'une saison, les visites dessinent une image de l'évolution de chaque colonie. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](./offline-and-sync.md).
 
 :::tip
-Pour savoir quoi observer lors d'une visite et à quelle fréquence inspecter, lisez [Inspecter une colonie](/beekeeping/inspecting). Cette page explique comment l'enregistrer.
+Pour savoir quoi observer lors d'une visite et à quelle fréquence inspecter, lisez [Inspecter une colonie](../beekeeping/inspecting.md). Cette page explique comment l'enregistrer.
 :::
 
 ## Démarrer une visite
 
-Ouvrez une ruche (ou scannez son [étiquette QR](/using-the-app/qr-labels)) et touchez **Enregistrer une visite** au-dessus du journal des visites. Le formulaire s'ouvre avec la date du jour.
+Ouvrez une ruche (ou scannez son [étiquette QR](./qr-labels.md)) et touchez **Enregistrer une visite** au-dessus du journal des visites. Le formulaire s'ouvre avec la date du jour.
 
 Chaque champ est facultatif. Un simple « tout va bien » sans rien d'autre est une entrée valide.
 
@@ -55,7 +55,7 @@ Le trio « œufs vus / larve la plus jeune / couvain operculé » confirme gén�
 | Cadre à mâles découpé | Si vous avez découpé un cadre de couvain de mâles (une mesure de lutte contre le varroa). |
 | Hausse ajoutée | Si vous avez ajouté une hausse. |
 
-Pour une vue d'ensemble de la gestion du varroa et de la récolte, consultez [Varroa](/beekeeping/varroa) et [Récolte de miel](/beekeeping/honey-harvest). Le miel que vous prélevez pour la mise en pot est enregistré séparément comme une [récolte](/using-the-app/harvests), avec la variété, la teneur en eau et le numéro de lot.
+Pour une vue d'ensemble de la gestion du varroa et de la récolte, consultez [Varroa](../beekeeping/varroa.md) et [Récolte de miel](../beekeeping/honey-harvest.md). Le miel que vous prélevez pour la mise en pot est enregistré séparément comme une [récolte](./harvests.md), avec la variété, la teneur en eau et le numéro de lot.
 
 ## Climat
 
@@ -69,14 +69,14 @@ Pour une vue d'ensemble de la gestion du varroa et de la récolte, consultez [Va
 Les quatre sont facultatifs. Avec le temps, ils apparaissent dans les graphiques **Évolution** de la ruche aux côtés du poids et de la force de la colonie.
 
 :::tip
-Une balance de ruche ou un capteur climatique peut envoyer ces champs via l'API ; chaque relevé devient une visite sur la ruche et se synchronise vers vos appareils. Voir [Trackers automatisés](/using-the-api/automated-trackers).
+Une balance de ruche ou un capteur climatique peut envoyer ces champs via l'API ; chaque relevé devient une visite sur la ruche et se synchronise vers vos appareils. Voir [Trackers automatisés](../using-the-api/automated-trackers.md).
 :::
 
 ## Note et photos
 
 Ajoutez une **note** en texte libre pour tout ce que les champs structurés ne couvrent pas : une cellule de supersédure repérée, un tempérament à surveiller, un rappel de remérage.
 
-**Ajouter une photo** joint une ou plusieurs images (aspect du couvain, maladie suspectée, cellules royales). Elles sont stockées avec la visite et se synchronisent avec le reste de vos enregistrements. Si quelque chose demande un suivi, ajoutez une [tâche](/using-the-app/tasks) avec une échéance.
+**Ajouter une photo** joint une ou plusieurs images (aspect du couvain, maladie suspectée, cellules royales). Elles sont stockées avec la visite et se synchronisent avec le reste de vos enregistrements. Si quelque chose demande un suivi, ajoutez une [tâche](./tasks.md) avec une échéance.
 
 ## Le journal des visites
 
@@ -94,5 +94,5 @@ Le journal vous permet de repérer des tendances : le couvain qui se développe 
 - **Photographiez ce qui est douteux.** Une photo d'un couvain à l'aspect étrange vaut plus qu'une description tapée.
 
 :::caution
-Si vous suspectez une maladie à déclaration obligatoire comme la loque américaine ou européenne, photographiez, refermez et suivez vos règles locales de déclaration. Voir [Maladies et parasites](/knowledge-base/diseases-and-pests).
+Si vous suspectez une maladie à déclaration obligatoire comme la loque américaine ou européenne, photographiez, refermez et suivez vos règles locales de déclaration. Voir [Maladies et parasites](../knowledge-base/diseases-and-pests.md).
 :::

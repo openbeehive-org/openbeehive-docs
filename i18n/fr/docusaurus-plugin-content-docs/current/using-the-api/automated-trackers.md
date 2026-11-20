@@ -104,7 +104,7 @@ Le compte de démonstration est en lecture seule et ne peut pas créer de clés 
 ## Trouver l'id de la ruche
 
 `hiveId` est l'UUID de la ruche, le même que celui encodé dans son
-[étiquette QR](/using-the-app/qr-labels). Recherchez-le une fois et stockez-le
+[étiquette QR](../using-the-app/qr-labels.md). Recherchez-le une fois et stockez-le
 sur l'appareil :
 
 ```bash

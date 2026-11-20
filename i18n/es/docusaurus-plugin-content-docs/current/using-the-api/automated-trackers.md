@@ -102,7 +102,7 @@ La cuenta de demostración es de solo lectura y no puede crear claves;
 ## Encontrar el id de la colmena
 
 `hiveId` es el UUID de la colmena, el mismo que está codificado en su
-[etiqueta QR](/using-the-app/qr-labels). Búscalo una vez y guárdalo en el
+[etiqueta QR](../using-the-app/qr-labels.md). Búscalo una vez y guárdalo en el
 dispositivo:
 
 ```bash

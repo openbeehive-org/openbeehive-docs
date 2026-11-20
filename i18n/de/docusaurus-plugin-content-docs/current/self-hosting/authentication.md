@@ -18,7 +18,7 @@ Mit Openbeehive entscheidest du selbst, wie viel Authentifizierung du brauchst. 
 
 Die Anmeldemethoden lassen sich kombinieren. Der Anmeldebildschirm bietet die jeweils aktivierten Methoden an, und ein Konto funktioniert über alle hinweg: Die Anmeldung über einen Provider wird mit einem bestehenden E-Mail-/Passwort-Konto mit derselben E-Mail-Adresse verknüpft.
 
-Sobald eine Anmeldemethode aktiviert ist, sind auch Mandanten und Einladungen verfügbar (Einstellungen → Mandanten); siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+Sobald eine Anmeldemethode aktiviert ist, sind auch Mandanten und Einladungen verfügbar (Einstellungen → Mandanten); siehe [Konten & Mandanten](../using-the-app/accounts-tenants.md).
 
 ## Modus 1: Einzelnutzer, keine Anmeldung
 
@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 Halte `BEEHIVE_SESSION_SECRET` geheim und stabil. Jeder, der es erfährt, kann Sessions fälschen. Wenn du es änderst, werden alle bestehenden Sessions ungültig. Committe es niemals in die Versionsverwaltung.
 :::
 
-Wenn du die App über HTTPS durch einen Reverse Proxy ausliefern lässt, stelle sicher, dass `BEEHIVE_PUBLIC_BASE_URL` `https://` verwendet, damit Redirect- und Einladungslinks korrekt sind. Siehe [Reverse Proxy](/self-hosting/reverse-proxy).
+Wenn du die App über HTTPS durch einen Reverse Proxy ausliefern lässt, stelle sicher, dass `BEEHIVE_PUBLIC_BASE_URL` `https://` verwendet, damit Redirect- und Einladungslinks korrekt sind. Siehe [Reverse Proxy](./reverse-proxy.md).
 
 ## Modus 2: E-Mail & Passwort (App-interne Konten)
 
@@ -79,7 +79,7 @@ Der Server stellt dieses Konto bei jedem Start sicher: Es wird angelegt, falls e
 
 Damit Fremde keine Konten erstellen können, setze `BEEHIVE_REGISTRATION=false`. Der Admin kommt aus der Umgebung, sodass eine frische Instanz immer einen hat. Alle anderen treten über Einladungslinks bei, die ein Mandanten-Admin unter Einstellungen → Mandanten ausstellt. Die Registrierung über einen Einladungslink muss die eingeladene E-Mail-Adresse verwenden. Der Anmeldebildschirm zeigt einen Hinweis, dass die Instanz nur auf Einladung zugänglich ist; bestehende Konten melden sich normal an.
 
-Jedes neue Konto startet mit seinem eigenen persönlichen [Mandanten](/using-the-app/accounts-tenants). Nur das konfigurierte Admin-Konto trägt die Admin-Rolle der Instanz.
+Jedes neue Konto startet mit seinem eigenen persönlichen [Mandanten](../using-the-app/accounts-tenants.md). Nur das konfigurierte Admin-Konto trägt die Admin-Rolle der Instanz.
 
 ### Optionale E-Mail-Verifizierung
 
@@ -181,4 +181,4 @@ Starte den Server neu und lade die App in einem Browser:
 2. Bei aktivierter Anmeldemethode bietet der Anmeldebildschirm jede aktivierte Methode an (und "Demo erkunden", wenn die Demo aktiv ist).
 3. Führe eine Anmeldung durch und bestätige, dass du die Übersicht erreichst und dass Aufzeichnungen synchronisieren.
 
-Wenn etwas nicht funktioniert, prüfe die Server-Logs und die [Fehlerbehebung](/knowledge-base/troubleshooting).
+Wenn etwas nicht funktioniert, prüfe die Server-Logs und die [Fehlerbehebung](../knowledge-base/troubleshooting.md).

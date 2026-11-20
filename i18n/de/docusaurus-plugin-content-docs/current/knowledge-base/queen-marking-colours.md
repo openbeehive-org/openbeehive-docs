@@ -69,7 +69,7 @@ Wenn du eine Königin in Openbeehive erfasst, legst du ihr **Jahr** fest, und di
 
 Du kannst außerdem die tatsächlich aufgebrachte Markierung, ihre Herkunft und ihren Status vermerken und sie dann über Durchsichten und Umweiselungsereignisse hinweg verfolgen.
 
-Siehe [Königinnen](/using-the-app/queens), um zu erfahren, wie du Königinnen hinzufügst und verwaltest, und die umfassendere [Wissensdatenbank](/category/knowledge-base) für weiteres Referenzmaterial.
+Siehe [Königinnen](../using-the-app/queens.md), um zu erfahren, wie du Königinnen hinzufügst und verwaltest, und die umfassendere [Wissensdatenbank](/category/knowledge-base) für weiteres Referenzmaterial.
 
 :::tip Regionaler Hinweis
 Das Fünf-Farben-Schema über fünf Jahre ist der internationale Standard, der in weiten Teilen der Welt verwendet wird. Gepflogenheiten beim Beschneiden, Farbtöne der Lieferanten und etwaige Dokumentationspflichten können je nach Land und Verband variieren — im Zweifel folge den Empfehlungen deines örtlichen Imkerverbands.

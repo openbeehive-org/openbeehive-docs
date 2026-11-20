@@ -36,7 +36,7 @@ BEEHIVE_DEMO=true
 ```
 
 Eso es todo lo que necesitas. Al activar el modo demo se habilita
-automáticamente el [inicio de sesión con correo/contraseña](/self-hosting/authentication)
+automáticamente el [inicio de sesión con correo/contraseña](./authentication.md)
 para que la cuenta de demostración pueda iniciar sesión. Opcionalmente, puedes
 sobrescribir las credenciales:
 
@@ -49,7 +49,7 @@ Reinicia el servidor. Verás una línea de registro que confirma que la demo se
 instaló, y la cuenta de demostración podrá iniciar sesión de inmediato. Como el modo demo
 implica la autenticación por contraseña, la instancia también necesita su administrador
 dedicado (`BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`, consulta
-[Autenticación](/self-hosting/authentication)), y el correo del administrador debe ser
+[Autenticación](./authentication.md)), y el correo del administrador debe ser
 distinto del correo de la demo.
 
 ### Hosts de demostración: saltarse la pantalla de inicio de sesión

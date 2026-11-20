@@ -32,7 +32,7 @@ gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owne
 Ambos comandos muestran la identidad firmante y el commit a partir del cual se compiló la imagen. Las imágenes publicadas antes de 0.4.0 no están firmadas.
 
 :::tip
-Para una instancia de un solo usuario en una máquina, el [binario único](/self-hosting/single-binary) es aún más sencillo que Docker. Recurre a Compose cuando quieras Postgres y almacenamiento estilo S3.
+Para una instancia de un solo usuario en una máquina, el [binario único](./single-binary.md) es aún más sencillo que Docker. Recurre a Compose cuando quieras Postgres y almacenamiento estilo S3.
 :::
 
 ## Ejecutar el contenedor único
@@ -56,7 +56,7 @@ docker run -d \
 - Las líneas `BEEHIVE_DATABASE_DSN` y `BEEHIVE_BLOB_DIR` apuntan explícitamente la base de datos y las fotos subidas al volumen. Los valores por defecto (`openbeehive.db`, `./data/blobs`) son relativos al directorio de trabajo, que desde 0.4.0 es `/data`, pero escribir las rutas completas mantiene el comando inequívoco y coincide con las instrucciones de copia de seguridad.
 - `BEEHIVE_PUBLIC_BASE_URL` debe ser la dirección que alcanzan los usuarios, incluido el esquema. El servidor la usa para las URL de redirección OIDC y para los enlaces de invitación y verificación.
 
-Sin ningún método de inicio de sesión habilitado (el valor predeterminado de selfhost), la instancia se ejecuta en modo de un solo usuario. Para añadir autenticación, define `BEEHIVE_SESSION_SECRET` (genéralo una vez con `openssl rand -base64 32` y mantenlo estable; cambiarlo cierra la sesión de todo el mundo) más las variables del método que quieras. El inicio de sesión con correo y contraseña también necesita `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`, o el servidor se niega a arrancar. Consulta [Autenticación](/self-hosting/authentication).
+Sin ningún método de inicio de sesión habilitado (el valor predeterminado de selfhost), la instancia se ejecuta en modo de un solo usuario. Para añadir autenticación, define `BEEHIVE_SESSION_SECRET` (genéralo una vez con `openssl rand -base64 32` y mantenlo estable; cambiarlo cierra la sesión de todo el mundo) más las variables del método que quieras. El inicio de sesión con correo y contraseña también necesita `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`, o el servidor se niega a arrancar. Consulta [Autenticación](./authentication.md).
 
 ### Usar un archivo de entorno
 
@@ -130,13 +130,13 @@ Dentro de la red de Compose, los contenedores se alcanzan entre sí por el nombr
 
 ### Un archivo con forma de producción
 
-`docker-compose.demo.yml` en el repositorio es el archivo que hay detrás de la instancia alojada: usa la imagen publicada en lugar de compilar, no publica puertos de base de datos ni de MinIO, añade políticas de reinicio y comprobaciones de salud, toma todos los secretos de `.env`, cierra el registro (solo por invitación) y habilita el [espacio de demostración](/self-hosting/demo). Su comentario de cabecera lista las variables que necesita. Úsalo como punto de partida para tu propia pila de producción:
+`docker-compose.demo.yml` en el repositorio es el archivo que hay detrás de la instancia alojada: usa la imagen publicada en lugar de compilar, no publica puertos de base de datos ni de MinIO, añade políticas de reinicio y comprobaciones de salud, toma todos los secretos de `.env`, cierra el registro (solo por invitación) y habilita el [espacio de demostración](./demo.md). Su comentario de cabecera lista las variables que necesita. Úsalo como punto de partida para tu propia pila de producción:
 
 ```bash
 docker compose -f docker-compose.demo.yml up -d
 ```
 
-Para la lista completa de variables, consulta [Configuración](/self-hosting/configuration).
+Para la lista completa de variables, consulta [Configuración](./configuration.md).
 
 ## Persistir tus datos
 
@@ -144,7 +144,7 @@ Para la lista completa de variables, consulta [Configuración](/self-hosting/con
 - **Perfil cloud:** los registros residen en el volumen `pg` (Postgres) y los archivos subidos en el volumen `minio`. El contenedor del servidor no tiene estado y puede reemplazarse libremente.
 
 :::danger Haz copia de seguridad antes de actualizar
-Los volúmenes con nombre sobreviven a `docker compose up` y a las actualizaciones de imagen, pero no a `docker compose down -v` ni a un volumen eliminado. Haz una copia de seguridad antes de cualquier actualización o comando destructivo. Consulta [Copias de seguridad](/self-hosting/backups).
+Los volúmenes con nombre sobreviven a `docker compose up` y a las actualizaciones de imagen, pero no a `docker compose down -v` ni a un volumen eliminado. Haz una copia de seguridad antes de cualquier actualización o comando destructivo. Consulta [Copias de seguridad](./backups.md).
 :::
 
 ## Operaciones comunes

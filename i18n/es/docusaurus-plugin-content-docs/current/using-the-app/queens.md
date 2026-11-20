@@ -35,7 +35,7 @@ Openbeehive sigue el esquema internacional de colores de reina, que rota cada ci
 | 4 o 9 | Verde |
 | 5 o 0 | Azul |
 
-Cuando estableces el año, se selecciona el color correspondiente. Desmarca **auto** para registrar otro color si la reina que compraste lleva uno distinto, de modo que el punto en tus registros coincida con el punto en la abeja. Para el esquema completo y la regla mnemotécnica, consulta [Colores de marcado de reinas](/knowledge-base/queen-marking-colours).
+Cuando estableces el año, se selecciona el color correspondiente. Desmarca **auto** para registrar otro color si la reina que compraste lleva uno distinto, de modo que el punto en tus registros coincida con el punto en la abeja. Para el esquema completo y la regla mnemotécnica, consulta [Colores de marcado de reinas](../knowledge-base/queen-marking-colours.md).
 
 ## Reemplazar una reina
 
@@ -53,4 +53,4 @@ Anota *por qué* cambiaste de reina en el comentario de la nueva: mala puesta, a
 
 Las visitas, cosechas y tratamientos llevan su propia fecha y se atribuyen a la reina cuyo reinado cubría esa fecha, no necesariamente a la reina que encabeza la colmena hoy. Si un cambio de reina y una visita con fecha retroactiva caen cerca el uno del otro, comprueba las fechas para que cada registro recaiga bajo el reinado correcto.
 
-Las fichas de reinas se sincronizan como todo lo demás; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+Las fichas de reinas se sincronizan como todo lo demás; consulta [Sin conexión y sincronización](./offline-and-sync.md).

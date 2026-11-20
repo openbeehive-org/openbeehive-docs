@@ -15,7 +15,7 @@ Diverse delle condizioni elencate qui sotto sono **soggette a notifica obbligato
 
 ## Registrare ciò che vedi
 
-Quando qualcosa sembra sbagliato, annotalo. In Openbeehive puoi registrare un riscontro sull'ispezione pertinente, impostare un'[attività](/using-the-app/tasks) di follow-up e registrare qualsiasi [trattamento](/using-the-app/treatments) che applichi. Buoni registri aiutano te, e il tuo ispettore, a individuare schemi nel tempo. Vedi [Ispezionare](/beekeeping/inspecting) per come eseguire un controllo approfondito.
+Quando qualcosa sembra sbagliato, annotalo. In Openbeehive puoi registrare un riscontro sull'ispezione pertinente, impostare un'[attività](../using-the-app/tasks.md) di follow-up e registrare qualsiasi [trattamento](../using-the-app/treatments.md) che applichi. Buoni registri aiutano te, e il tuo ispettore, a individuare schemi nel tempo. Vedi [Ispezionare](../beekeeping/inspecting.md) per come eseguire un controllo approfondito.
 
 ## Varroa (Varroa destructor)
 
@@ -25,7 +25,7 @@ Il singolo parassita più importante per la maggior parte degli apicoltori in tu
 
 **Gestione:** monitora i livelli di acaro nel corso della stagione e tratta in base ai conteggi, non al calendario. Combina gli approcci (una strategia "integrata") come l'asportazione della covata da fuco, le interruzioni di covata e gli acaricidi approvati, scegliendo prodotti adatti alla stagione e al fatto che i melari da miele siano presenti o meno.
 
-Vedi la guida completa: [Varroa](/beekeeping/varroa).
+Vedi la guida completa: [Varroa](../beekeeping/varroa.md).
 
 ## Peste americana (AFB)
 

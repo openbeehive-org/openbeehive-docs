@@ -15,7 +15,7 @@ Mehrere der unten genannten Krankheiten sind in vielen Ländern **anzeigepflicht
 
 ## Festhalten, was du siehst
 
-Wenn etwas nicht in Ordnung aussieht, halte es schriftlich fest. In Openbeehive kannst du einen Befund bei der betreffenden Durchsicht protokollieren, eine Folge-[Aufgabe](/using-the-app/tasks) festlegen und jede angewandte [Behandlung](/using-the-app/treatments) erfassen. Gute Aufzeichnungen helfen dir und deinem Sachverständigen, Muster im Lauf der Zeit zu erkennen. Siehe [Durchsicht](/beekeeping/inspecting), um zu erfahren, wie du eine gründliche Kontrolle durchführst.
+Wenn etwas nicht in Ordnung aussieht, halte es schriftlich fest. In Openbeehive kannst du einen Befund bei der betreffenden Durchsicht protokollieren, eine Folge-[Aufgabe](../using-the-app/tasks.md) festlegen und jede angewandte [Behandlung](../using-the-app/treatments.md) erfassen. Gute Aufzeichnungen helfen dir und deinem Sachverständigen, Muster im Lauf der Zeit zu erkennen. Siehe [Durchsicht](../beekeeping/inspecting.md), um zu erfahren, wie du eine gründliche Kontrolle durchführst.
 
 ## Varroa (Varroa destructor)
 
@@ -25,7 +25,7 @@ Der mit Abstand wichtigste Schädling für die meisten Imker weltweit. Diese Mil
 
 **Bekämpfung:** Überwache die Milbenbelastung über die Saison hinweg und behandle anhand der Zählungen, nicht nach dem Kalender. Kombiniere Ansätze (eine „integrierte“ Strategie) wie Drohnenbrutentnahme, Brutpausen und zugelassene Varroazide und wähle Produkte, die zur Jahreszeit passen und dazu, ob Honigräume aufgesetzt sind.
 
-Siehe den vollständigen Leitfaden: [Varroa](/beekeeping/varroa).
+Siehe den vollständigen Leitfaden: [Varroa](../beekeeping/varroa.md).
 
 ## Amerikanische Faulbrut (AFB)
 

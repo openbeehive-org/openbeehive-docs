@@ -13,9 +13,9 @@ display label is what the app shows (`app/src/lib/i18n/locales/en.json`).
 
 Every synced table carries three bookkeeping columns not repeated below:
 `organization_id` (tenant), `field_hlc` (JSON field clock, see the
-[sync protocol](/developers/sync-protocol)) and `deleted` (soft-delete flag).
+[sync protocol](./sync-protocol.md)) and `deleted` (soft-delete flag).
 Ids are UUIDs, minted on the device or by the server for rows created
-through the [API](/using-the-api/overview). Timestamps are stored as ISO
+through the [API](../using-the-api/overview.md). Timestamps are stored as ISO
 8601 strings on the client and as `TIMESTAMP` on the server.
 
 ## Hierarchy
@@ -50,7 +50,7 @@ for the other tables it is carried on the `Change` message.
 
 | Column | Type | Notes |
 | --- | --- | --- |
-| `id` | text | also encoded in the [QR label](/developers/qr-codes) |
+| `id` | text | also encoded in the [QR label](./qr-codes.md) |
 | `apiary_id` | text | current apiary |
 | `name` | text | |
 | `type` | int | `HiveType`, see below |
@@ -186,7 +186,7 @@ A task without `apiary_id` syncs under the personal scope
 `EventType`: 1 Created, 2 Queen introduced, 3 Queen replaced, 4 Moved,
 5 Inspection, 6 Treatment, 7 Harvest, 8 Status, 9 Dissolved. The app writes
 types 1 to 7 (`app/src/lib/local/history.ts`). See
-[History and events](/developers/history-and-events).
+[History and events](./history-and-events.md).
 
 ## Server-only tables
 

@@ -10,10 +10,10 @@ Two routes to a running Openbeehive instance you can open in a browser:
 - **Option A, single binary.** Build one self-contained executable that uses SQLite and the local filesystem. No Docker, no database server, no object storage. Good for a home server, a Raspberry Pi or a small VPS.
 - **Option B, Docker.** Run the published image with one command.
 
-Both use the **selfhost** deployment profile, which defaults to an embedded SQLite database and filesystem blob storage. You can switch to PostgreSQL and MinIO/S3 later; see [Configuration](/self-hosting/configuration).
+Both use the **selfhost** deployment profile, which defaults to an embedded SQLite database and filesystem blob storage. You can switch to PostgreSQL and MinIO/S3 later; see [Configuration](./configuration.md).
 
 :::tip Single user? No login needed
-In the selfhost profile no login method is enabled by default: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. The app opens straight to your records. To add sign-in later, see [Authentication](/self-hosting/authentication).
+In the selfhost profile no login method is enabled by default: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. The app opens straight to your records. To add sign-in later, see [Authentication](./authentication.md).
 :::
 
 ## The smallest working config
@@ -27,7 +27,7 @@ BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 
 `BEEHIVE_PUBLIC_BASE_URL` is the address the server puts into the links it generates (OIDC redirects, invite and verification links). For local testing `http://localhost:8080` is fine. For a real deployment, set it to your public URL, for example `https://bees.example.com`.
 
-Everything else has defaults for self-hosting. The full list is in [Configuration](/self-hosting/configuration).
+Everything else has defaults for self-hosting. The full list is in [Configuration](./configuration.md).
 
 ## Option A: single binary (no Docker)
 
@@ -58,7 +58,7 @@ cp .env.example .env
 By default the binary listens on `:8080` and serves the web app itself (`BEEHIVE_SERVE_WEB=true`), so the API and the PWA come from the same origin. Open the address in `BEEHIVE_PUBLIC_BASE_URL`.
 
 :::note Where your data lives
-In selfhost mode your records go into a SQLite file (`openbeehive.db` in the working directory by default) and uploaded photos into a blob directory (`./data/blobs` by default). Back up both and you have backed up everything; see [Backups](/self-hosting/backups).
+In selfhost mode your records go into a SQLite file (`openbeehive.db` in the working directory by default) and uploaded photos into a blob directory (`./data/blobs` by default). Back up both and you have backed up everything; see [Backups](./backups.md).
 :::
 
 ## Option B: Docker
@@ -86,10 +86,10 @@ docker stop openbeehive
 docker rm openbeehive
 ```
 
-If you turn on email/password login (`BEEHIVE_PASSWORD_AUTH=true`), the server refuses to start until `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` are set as well. See [Authentication](/self-hosting/authentication).
+If you turn on email/password login (`BEEHIVE_PASSWORD_AUTH=true`), the server refuses to start until `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` are set as well. See [Authentication](./authentication.md).
 
 :::tip Cloud stack instead?
-The command above runs the lightweight selfhost profile. For the **cloud** profile (PostgreSQL + MinIO) the repository ships Compose files; see [Docker](/self-hosting/docker).
+The command above runs the lightweight selfhost profile. For the **cloud** profile (PostgreSQL + MinIO) the repository ships Compose files; see [Docker](./docker.md).
 :::
 
 ## First steps after install
@@ -98,4 +98,4 @@ The command above runs the lightweight selfhost profile. For the **cloud** profi
 2. Add a hive, edit it to set its type, and record a visit.
 3. Print a QR label for the hive so you can scan straight to it in the field.
 
-Before you expose the instance to the internet, put a TLS-terminating [reverse proxy](/self-hosting/reverse-proxy) in front of it and set `BEEHIVE_PUBLIC_BASE_URL` to the `https://` address. Then set up [backups](/self-hosting/backups).
+Before you expose the instance to the internet, put a TLS-terminating [reverse proxy](./reverse-proxy.md) in front of it and set `BEEHIVE_PUBLIC_BASE_URL` to the `https://` address. Then set up [backups](./backups.md).

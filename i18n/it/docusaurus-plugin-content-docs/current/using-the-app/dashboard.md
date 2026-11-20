@@ -29,7 +29,7 @@ Non esiste un intervallo configurabile: l'elenco è ordinato per tempo trascorso
 
 ## Prossime attività
 
-Mostra fino a cinque attività aperte con le loro scadenze. Le attività la cui scadenza è passata sono contrassegnate con **!**. Spunta le attività nella vista **Attività**; vedi [Attività](/using-the-app/tasks).
+Mostra fino a cinque attività aperte con le loro scadenze. Le attività la cui scadenza è passata sono contrassegnate con **!**. Spunta le attività nella vista **Attività**; vedi [Attività](./tasks.md).
 
 ## Come orientarsi
 
@@ -43,14 +43,14 @@ Le stesse destinazioni sono disponibili ovunque: **Panoramica, Apiari, Scansiona
 **Impostazioni** contiene:
 
 - **Lingua**: inglese, tedesco, francese, spagnolo, italiano. La scelta viene salvata sul dispositivo.
-- **Spazi**: cambia, crea, invita e gestisci (sulle istanze con login). Vedi [Account e tenant](/using-the-app/accounts-tenants).
+- **Spazi**: cambia, crea, invita e gestisci (sulle istanze con login). Vedi [Account e tenant](./accounts-tenants.md).
 - **Passkeys**: aggiungi o rimuovi passkey (quando il server le abilita).
 - **Chiavi API**: crea e rimuovi chiavi per script e dispositivi (sulle istanze con login). Vedi [Account e tenant](./accounts-tenants.md#api-keys).
-- **Dati e backup**: esporta e importa; vedi [Importazione ed esportazione](/using-the-app/import-export).
+- **Dati e backup**: esporta e importa; vedi [Importazione ed esportazione](./import-export.md).
 - **Account**: con quale utente hai effettuato l'accesso, e **Esci**.
 
 Su un'istanza self-hosted a utente singolo senza login non c'è nulla da cui disconnettersi; il blocco account mostra l'identità locale.
 
 ## L'indicatore online/offline
 
-La barra laterale mostra **Online** oppure **Offline** accanto al tuo account, e mentre sei offline una barra in alto dice "Offline: le modifiche vengono salvate e sincronizzate più tardi". Continua a registrare esattamente come sempre; la sincronizzazione riprende quando torna la connessione. Vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+La barra laterale mostra **Online** oppure **Offline** accanto al tuo account, e mentre sei offline una barra in alto dice "Offline: le modifiche vengono salvate e sincronizzate più tardi". Continua a registrare esattamente come sempre; la sincronizzazione riprende quando torna la connessione. Vedi [Offline e sincronizzazione](./offline-and-sync.md).

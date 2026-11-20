@@ -33,7 +33,7 @@ BEEHIVE_DEMO=true
 ```
 
 That's all you need. Enabling demo mode automatically turns on
-[email/password sign-in](/self-hosting/authentication) so the demo account can log
+[email/password sign-in](./authentication.md) so the demo account can log
 in. Optionally override the credentials:
 
 ```bash
@@ -44,7 +44,7 @@ BEEHIVE_DEMO_PASSWORD=demo
 Restart the server. You'll see a log line confirming the demo was installed, and
 the demo account can sign in immediately. Because demo mode implies password
 auth, the instance also needs its dedicated admin (`BEEHIVE_ADMIN_EMAIL` and
-`BEEHIVE_ADMIN_PASSWORD`, see [Authentication](/self-hosting/authentication)),
+`BEEHIVE_ADMIN_PASSWORD`, see [Authentication](./authentication.md)),
 and the admin email must differ from the demo email.
 
 ### Showcase hosts: skip the login screen

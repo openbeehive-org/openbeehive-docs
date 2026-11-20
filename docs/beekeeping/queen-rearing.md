@@ -16,7 +16,7 @@ to requeen, and a gentle on-ramp to raising queens yourself.
 
 :::tip Record everything in the app
 Track each queen's origin, age, marking colour and notes on the
-[Queens page](/using-the-app/queens). An accurate record of when a queen was
+[Queens page](../using-the-app/queens.md). An accurate record of when a queen was
 introduced is the single most useful thing for judging her performance later.
 :::
 
@@ -143,11 +143,11 @@ digit:
 So a queen raised in 2026 is marked **white**. Apply a tiny dot of queen-marking
 paint to the top of her thorax, hold her gently or use a marking cage, and let
 it dry before releasing her. For the full reference and a handy mnemonic, see
-[Queen marking colours](/knowledge-base/queen-marking-colours).
+[Queen marking colours](../knowledge-base/queen-marking-colours.md).
 
 :::tip
 When you mark a queen, record her marking colour in the app on the
-[Queens page](/using-the-app/queens). Openbeehive sets the expected colour from
+[Queens page](../using-the-app/queens.md). Openbeehive sets the expected colour from
 the year automatically, so you can confirm at a glance whether a queen is the
 age you think she is.
 :::

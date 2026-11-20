@@ -8,7 +8,7 @@ title: "Aggiornamento"
 Gli aggiornamenti sono semplici: sostituisci il binario o scarica una nuova immagine, riavvia, e il server porta da solo lo schema del database alla versione corrente.
 
 :::caution Esegui prima il backup, ogni volta
-Esegui un backup prima di aggiornare. Vedi [Backup](/self-hosting/backups).
+Esegui un backup prima di aggiornare. Vedi [Backup](./backups.md).
 :::
 
 ## Prima di iniziare
@@ -69,13 +69,13 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-Questo produce un nuovo `./server/bin/openbeehive`. I prerequisiti sono in [Binario singolo](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
+Questo produce un nuovo `./server/bin/openbeehive`. I prerequisiti sono in [Binario singolo](./single-binary.md) (Go 1.27+, Node 24+, buf).
 
 ## Aggiornare con Docker
 
 Il comando necessario dipende da dove proviene l'immagine.
 
-**Immagine pubblicata** (il `docker run` a singolo container dell'[avvio rapido](/self-hosting/quick-start), oppure un file Compose con una riga `image:` come `docker-compose.demo.yml`):
+**Immagine pubblicata** (il `docker run` a singolo container dell'[avvio rapido](./quick-start.md), oppure un file Compose con una riga `image:` come `docker-compose.demo.yml`):
 
 ```bash
 docker compose -f docker-compose.demo.yml pull
@@ -139,4 +139,4 @@ Non ripristinare un vecchio database sotto un binario più recente, né eseguire
 - Apri l'app e conferma che i tuoi apiari, le arnie e le visite recenti appaiano.
 - Registra qualcosa su un dispositivo e conferma che si sincronizzi.
 
-Se qualcosa sembra sbagliato, vedi [Risoluzione dei problemi](/knowledge-base/troubleshooting) ed effettua il rollback al tuo backup mentre indaghi.
+Se qualcosa sembra sbagliato, vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md) ed effettua il rollback al tuo backup mentre indaghi.

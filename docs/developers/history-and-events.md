@@ -78,7 +78,7 @@ outbox like any other change. The detail rows (`harvest`, `treatment`,
 `inspection`) are normal synced rows; only `event` is treated as append-only
 by convention. Nothing in the app edits or deletes an event.
 
-Event type numbers are listed in the [data model](/developers/data-model#event).
+Event type numbers are listed in the [data model](./data-model.md#event).
 
 ## Reading history
 
@@ -115,4 +115,4 @@ to current state is needed.
 `event` rows carry `scope_id` (the apiary id) as a column and sync like every
 other table, with per-field last-writer-wins. Since each event has a fresh
 UUID and is never edited, two devices adding events offline never touch the
-same row and both sets survive. See the [sync protocol](/developers/sync-protocol).
+same row and both sets survive. See the [sync protocol](./sync-protocol.md).

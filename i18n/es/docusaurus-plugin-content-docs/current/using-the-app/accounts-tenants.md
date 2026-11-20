@@ -23,7 +23,7 @@ Los métodos están vinculados a una sola cuenta: si te registraste con correo y
 Si la instancia requiere verificación de correo, recibirás un enlace de confirmación por correo después de registrarte. Ábrelo antes de tu primer inicio de sesión.
 
 :::note Quién es el administrador
-El administrador de la instancia no es la primera persona que se registra. En una instancia autoalojada es la cuenta que el operador configura con `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD` (consulta [Autenticación](/self-hosting/authentication)); en el servicio alojado es el operador. El registro nunca concede ese rol.
+El administrador de la instancia no es la primera persona que se registra. En una instancia autoalojada es la cuenta que el operador configura con `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD` (consulta [Autenticación](../self-hosting/authentication.md)); en el servicio alojado es el operador. El registro nunca concede ese rol.
 :::
 
 ## Qué es un espacio
@@ -70,7 +70,7 @@ Un admin del espacio puede eliminarlo en **Ajustes → Espacios → Zona de peli
 
 ## Claves API \{#api-keys}
 
-**Ajustes → Claves API** es donde creas credenciales para scripts y dispositivos, como una báscula de colmena, que usan la [API](/using-the-api/overview) en tu nombre. La sección aparece solo cuando has iniciado sesión; una instancia de un solo usuario sin inicio de sesión no tiene claves y no las necesita.
+**Ajustes → Claves API** es donde creas credenciales para scripts y dispositivos, como una báscula de colmena, que usan la [API](../using-the-api/overview.md) en tu nombre. La sección aparece solo cuando has iniciado sesión; una instancia de un solo usuario sin inicio de sesión no tiene claves y no las necesita.
 
 - Escribe un nombre en el campo **Nombra esta clave (p. ej. báscula de colmena)**, elige los permisos en el selector **Permisos** (**Lectura y escritura**, el valor predeterminado, o **Solo lectura**) y la duración en el selector **Caduca tras** (**No caduca**, el valor predeterminado, **30 días**, **90 días** o **1 año**), y después toca **Crear clave**. La clave aparece debajo con el aviso "Copia la clave ahora. Solo se muestra una vez." y un botón **Copiar** (que muestra **Copiada** durante un momento). Lo que no copies ahora se pierde; el servidor conserva solo un hash.
 - Cada clave se lista con su nombre (**Clave sin nombre** si dejaste el campo vacío), sus primeros caracteres, una insignia **Lectura y escritura** o **Solo lectura**, **Creada**, después **Caduca** y la fecha cuando estableciste una duración (**Caducada** y la fecha, en rojo, una vez pasado ese día) y, una vez que un script la ha usado, **Último uso**. Las claves caducadas permanecen en la lista hasta que las eliminas.
@@ -82,4 +82,4 @@ Una clave actúa como tú en el espacio que estaba activo cuando la creaste, as�
 
 ## La demo
 
-Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso te recuerda que los datos se restablecen cada hora. El servidor rechaza los cambios de la cuenta de demostración, así que todo lo que introduzcas se queda solo en tu dispositivo. Los operadores pueden habilitarla mediante el [Modo demostración](/self-hosting/demo).
+Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso te recuerda que los datos se restablecen cada hora. El servidor rechaza los cambios de la cuenta de demostración, así que todo lo que introduzcas se queda solo en tu dispositivo. Los operadores pueden habilitarla mediante el [Modo demostración](../self-hosting/demo.md).

@@ -32,7 +32,7 @@ gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owne
 Entrambi i comandi stampano l'identità di firma e il commit da cui è stata compilata l'immagine. Le immagini pubblicate prima della 0.4.0 non sono firmate.
 
 :::tip
-Per un'istanza a utente singolo su una macchina, il [binario singolo](/self-hosting/single-binary) è ancora più semplice di Docker. Ricorri a Compose quando vuoi Postgres e archiviazione in stile S3.
+Per un'istanza a utente singolo su una macchina, il [binario singolo](./single-binary.md) è ancora più semplice di Docker. Ricorri a Compose quando vuoi Postgres e archiviazione in stile S3.
 :::
 
 ## Esegui il singolo container
@@ -56,7 +56,7 @@ docker run -d \
 - Le righe `BEEHIVE_DATABASE_DSN` e `BEEHIVE_BLOB_DIR` puntano esplicitamente il database e le foto caricate al volume. I valori predefiniti (`openbeehive.db`, `./data/blobs`) sono relativi alla directory di lavoro, che dalla 0.4.0 è `/data`, ma scrivere i percorsi per esteso rende il comando inequivocabile e coerente con le istruzioni di backup.
 - `BEEHIVE_PUBLIC_BASE_URL` deve essere l'indirizzo che gli utenti raggiungono, schema incluso. Il server lo usa per gli URL di redirect OIDC e per i link di invito e di verifica.
 
-Senza alcun metodo di accesso abilitato (il valore predefinito di selfhost) l'istanza viene eseguita in modalità utente singolo. Per aggiungere l'autenticazione, imposta `BEEHIVE_SESSION_SECRET` (generalo una volta con `openssl rand -base64 32` e mantienilo stabile; cambiarlo disconnette tutti) più le variabili del metodo che vuoi. L'accesso con email/password richiede anche `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD`, altrimenti il server rifiuta di avviarsi. Vedi [Autenticazione](/self-hosting/authentication).
+Senza alcun metodo di accesso abilitato (il valore predefinito di selfhost) l'istanza viene eseguita in modalità utente singolo. Per aggiungere l'autenticazione, imposta `BEEHIVE_SESSION_SECRET` (generalo una volta con `openssl rand -base64 32` e mantienilo stabile; cambiarlo disconnette tutti) più le variabili del metodo che vuoi. L'accesso con email/password richiede anche `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD`, altrimenti il server rifiuta di avviarsi. Vedi [Autenticazione](./authentication.md).
 
 ### Usare un file env
 
@@ -130,13 +130,13 @@ All'interno della rete Compose, i container si raggiungono per nome del servizio
 
 ### Un file in forma di produzione
 
-`docker-compose.demo.yml` nel repository è il file dietro l'istanza ospitata: usa l'immagine pubblicata invece di compilare, non pubblica porte del database o di MinIO, aggiunge politiche di riavvio e healthcheck, prende ogni segreto da `.env`, chiude la registrazione (solo su invito) e abilita il [tenant demo](/self-hosting/demo). Il commento in testa elenca le variabili di cui ha bisogno. Usalo come punto di partenza per il tuo stack di produzione:
+`docker-compose.demo.yml` nel repository è il file dietro l'istanza ospitata: usa l'immagine pubblicata invece di compilare, non pubblica porte del database o di MinIO, aggiunge politiche di riavvio e healthcheck, prende ogni segreto da `.env`, chiude la registrazione (solo su invito) e abilita il [tenant demo](./demo.md). Il commento in testa elenca le variabili di cui ha bisogno. Usalo come punto di partenza per il tuo stack di produzione:
 
 ```bash
 docker compose -f docker-compose.demo.yml up -d
 ```
 
-Per l'elenco completo delle variabili vedi [Configurazione](/self-hosting/configuration).
+Per l'elenco completo delle variabili vedi [Configurazione](./configuration.md).
 
 ## Conservare i tuoi dati
 
@@ -144,7 +144,7 @@ Per l'elenco completo delle variabili vedi [Configurazione](/self-hosting/config
 - **Profilo cloud:** i registri risiedono nel volume `pg` (Postgres) e i file caricati nel volume `minio`. Il container del server è stateless e può essere sostituito liberamente.
 
 :::danger Esegui il backup prima di aggiornare
-I volumi con nome sopravvivono a `docker compose up` e agli aggiornamenti dell'immagine, ma non a `docker compose down -v` o a un volume rimosso. Esegui un backup prima di qualsiasi aggiornamento o comando distruttivo. Vedi [Backup](/self-hosting/backups).
+I volumi con nome sopravvivono a `docker compose up` e agli aggiornamenti dell'immagine, ma non a `docker compose down -v` o a un volume rimosso. Esegui un backup prima di qualsiasi aggiornamento o comando distruttivo. Vedi [Backup](./backups.md).
 :::
 
 ## Operazioni comuni

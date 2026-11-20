@@ -14,10 +14,10 @@ aplicación (`app/src/lib/i18n/locales/en.json`).
 
 Cada tabla sincronizada lleva tres columnas de contabilidad que no se repiten
 abajo: `organization_id` (espacio/tenant), `field_hlc` (reloj de campos en
-JSON, consulta el [protocolo de sincronización](/developers/sync-protocol)) y
+JSON, consulta el [protocolo de sincronización](./sync-protocol.md)) y
 `deleted` (marca de borrado lógico). Los id son UUID, acuñados en el
 dispositivo o por el servidor para las filas creadas a través de la
-[API](/using-the-api/overview). Las marcas de tiempo se almacenan como cadenas
+[API](../using-the-api/overview.md). Las marcas de tiempo se almacenan como cadenas
 ISO 8601 en el cliente y como `TIMESTAMP` en el servidor.
 
 ## Jerarquía
@@ -53,7 +53,7 @@ almacena `scope_id` como columna; para las demás tablas viaja en el mensaje
 
 | Columna | Tipo | Notas |
 | --- | --- | --- |
-| `id` | text | también codificado en la [etiqueta QR](/developers/qr-codes) |
+| `id` | text | también codificado en la [etiqueta QR](./qr-codes.md) |
 | `apiary_id` | text | colmenar actual |
 | `name` | text | |
 | `type` | int | `HiveType`, ver abajo |
@@ -189,7 +189,7 @@ Una tarea sin `apiary_id` se sincroniza bajo el ámbito personal
 `EventType`: 1 Creada, 2 Reina introducida, 3 Reina reemplazada, 4 Movida,
 5 Inspección, 6 Tratamiento, 7 Cosecha, 8 Estado, 9 Disuelta. La aplicación
 escribe los tipos 1 a 7 (`app/src/lib/local/history.ts`). Consulta
-[Historial y eventos](/developers/history-and-events).
+[Historial y eventos](./history-and-events.md).
 
 ## Tablas solo del servidor
 

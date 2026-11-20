@@ -138,10 +138,10 @@ Gebrauchsanweisung für das erforderliche Intervall und befolge es.
 
 Varroa ist die Hauptbedrohung, aber eine gute allgemeine Gesundheit hilft dem Volk, damit zurechtzukommen:
 
-- Halte Völker stark und gut versorgt; siehe [Füttern](/beekeeping/feeding).
+- Halte Völker stark und gut versorgt; siehe [Füttern](./feeding.md).
 - Ersetze alte, dunkle Wabe regelmäßig, um die Krankheitslast zu verringern.
 - Achte auf Brutkrankheiten und andere Schädlinge; siehe
-  [Krankheiten & Schädlinge](/knowledge-base/diseases-and-pests) in der Wissensdatenbank.
+  [Krankheiten & Schädlinge](../knowledge-base/diseases-and-pests.md) in der Wissensdatenbank.
 - Manche Brutkrankheiten sind in vielen Regionen **anzeigepflichtig** und müssen den
   Behörden gemeldet werden. Kenne deine örtlichen Regeln.
 
@@ -154,7 +154,7 @@ Ländern für Imker gelten.
 In Openbeehive protokollierst du jede Anwendung als **Behandlung** zu einer Beute:
 Datum, Mittel, Wirkstoff, Methode, Dosis, Chargennummer, Grund und das Datum, bis zu
 dem die Wartezeit läuft. Mit der Zeit entsteht daraus eine klare Geschichte, was du
-wann verwendet hast. Siehe [Behandlungen](/using-the-app/treatments).
+wann verwendet hast. Siehe [Behandlungen](../using-the-app/treatments.md).
 
 :::note
 Das Führen genauer Behandlungsaufzeichnungen ist oft eine gesetzliche Pflicht, besonders

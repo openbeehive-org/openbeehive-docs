@@ -35,4 +35,4 @@ Le miel devrait généralement être en dessous d'environ 18 % d'eau avant d'êt
 
 Une récolte stocke la ruche, le rucher et la reine dont le règne couvrait la date de récolte. Remérer ou déplacer la ruche plus tard ne change pas ce à quoi une récolte antérieure est attribuée.
 
-Fonctionne hors ligne ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync). Pour le prélèvement et le traitement du miel, consultez le guide apicole sur la [Récolte de miel](/beekeeping/honey-harvest).
+Fonctionne hors ligne ; voir [Hors ligne et synchronisation](./offline-and-sync.md). Pour le prélèvement et le traitement du miel, consultez le guide apicole sur la [Récolte de miel](../beekeeping/honey-harvest.md).

@@ -32,7 +32,7 @@ L'export reflète ce qui se trouve sur votre appareil à l'instant présent. Les
 photos ne sont pas incluses dans les exports CSV/XLSX/BeeXML (elles sont stockées
 sous forme de blobs) — l'ensemble complet se trouve dans votre compte synchronisé
 et son stockage de blobs ; consultez
-[Auto-hébergement → Sauvegardes](/self-hosting/backups) pour les sauvegardes côté
+[Auto-hébergement → Sauvegardes](../self-hosting/backups.md) pour les sauvegardes côté
 serveur.
 
 ## Importer et restaurer

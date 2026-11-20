@@ -80,7 +80,7 @@ normales ; seule `event` est traitée en ajout seul, par convention. Rien dans
 l'application ne modifie ni ne supprime un événement.
 
 Les numéros de type d'événement sont listés dans le
-[modèle de données](/developers/data-model#event).
+[modèle de données](./data-model.md#event).
 
 ## Lire l'historique
 
@@ -119,4 +119,4 @@ synchronisent comme toute autre table, avec le « dernier écrivain gagne » par
 champ. Comme chaque événement a un UUID neuf et n'est jamais modifié, deux
 appareils qui ajoutent des événements hors ligne ne touchent jamais la même
 ligne et les deux ensembles sont conservés. Voir le
-[protocole de synchronisation](/developers/sync-protocol).
+[protocole de synchronisation](./sync-protocol.md).

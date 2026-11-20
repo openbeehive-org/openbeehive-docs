@@ -5,7 +5,7 @@ title: "Beuten"
 
 # Beuten
 
-Eine Beute in Openbeehive ist ein einzelnes Volk in einer physischen Zarge. Fast alles, was du Tag für Tag erfasst (Durchsichten, Ernten, Behandlungen), hängt an einer Beute. Jede Beute gehört zu jeweils einem Bienenstand und kann eine Königin haben. Funktioniert offline; siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+Eine Beute in Openbeehive ist ein einzelnes Volk in einer physischen Zarge. Fast alles, was du Tag für Tag erfasst (Durchsichten, Ernten, Behandlungen), hängt an einer Beute. Jede Beute gehört zu jeweils einem Bienenstand und kann eine Königin haben. Funktioniert offline; siehe [Offline und Synchronisation](./offline-and-sync.md).
 
 ## Eine Beute anlegen
 
@@ -35,7 +35,7 @@ Halte Namen innerhalb eines Bienenstands kurz und einheitlich, zum Beispiel „1
 | Top-Bar | Horizontale, rähmchenlose Oberträger. |
 | Sonstige | Alles, was oben nicht aufgeführt ist. |
 
-Für eine ausführlichere Beschreibung jedes Standards siehe [Beutentypen](/knowledge-base/hive-types).
+Für eine ausführlichere Beschreibung jedes Standards siehe [Beutentypen](../knowledge-base/hive-types.md).
 
 ### Status
 
@@ -58,7 +58,7 @@ Um eine Beute umzusiedeln, öffne sie, tippe auf die Aktion **Wandern** und wäh
 Jeder Umzug wird als datierter Eintrag unter **Standort-Historie** am Ende der Beutenseite festgehalten, sodass du weißt, wo ein Volk zu welchem Zeitpunkt war. Nützlich für die Rückverfolgung von Krankheitsexposition und für Wanderimker-Aufzeichnungen.
 
 :::caution
-In vielen Regionen unterliegt das Verbringen von Beuten zwischen Standorten Bienengesundheits- und Verbringungsvorschriften, besonders innerhalb von Seuchenbekämpfungszonen. Prüfe deine nationalen oder lokalen Vorgaben, bevor du Völker umsiedelst. Siehe [Krankheiten und Schädlinge](/knowledge-base/diseases-and-pests).
+In vielen Regionen unterliegt das Verbringen von Beuten zwischen Standorten Bienengesundheits- und Verbringungsvorschriften, besonders innerhalb von Seuchenbekämpfungszonen. Prüfe deine nationalen oder lokalen Vorgaben, bevor du Völker umsiedelst. Siehe [Krankheiten und Schädlinge](../knowledge-base/diseases-and-pests.md).
 :::
 
 ## Die Beutenseite
@@ -71,7 +71,7 @@ Der Kopfbereich zeigt das Foto, den Namen sowie Status und Typ. Die Aktionssymbo
 
 - **Stockkarte**: eine druckbare Tabelle aller Durchsichten (mit einem Button **Drucken**).
 - **Entwicklung**: Diagramme der bei Durchsichten erfassten Werte (besetzte Waben, Brutwaben, Futtervorrat, Schwarmzellen, Sanftmut, Wabensitz, Varroa, Stockgewicht, Fütterung, jüngste Larve, Temperatur und Luftfeuchte) plus Honigernten im Zeitverlauf.
-- **Beute bearbeiten**, **Wandern**, **QR** (zeigt das Etikett der Beute mit den Buttons **Drucken** und **SVG**; siehe [QR-Etiketten](/using-the-app/qr-labels)) und **Löschen**.
+- **Beute bearbeiten**, **Wandern**, **QR** (zeigt das Etikett der Beute mit den Buttons **Drucken** und **SVG**; siehe [QR-Etiketten](./qr-labels.md)) und **Löschen**.
 
 ### Letzte Werte
 
@@ -79,15 +79,15 @@ Unter dem Kopfbereich zeigen Pills die Werte ungleich null aus der jüngsten Dur
 
 ### Königin
 
-Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommentar, mit **Königin ersetzen** (oder **Königin einsetzen**, wenn keine erfasst ist). **Königinnen-Historie** listet frühere Königinnen mit Einsetz- und Ersetzungsdatum. Siehe [Königinnen](/using-the-app/queens).
+Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommentar, mit **Königin ersetzen** (oder **Königin einsetzen**, wenn keine erfasst ist). **Königinnen-Historie** listet frühere Königinnen mit Einsetz- und Ersetzungsdatum. Siehe [Königinnen](./queens.md).
 
 ### Durchsichten
 
-**Durchsicht erfassen** öffnet das Durchsichtsformular. Darunter sind die fünf jüngsten Durchsichten aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](/using-the-app/inspections).
+**Durchsicht erfassen** öffnet das Durchsichtsformular. Darunter sind die fünf jüngsten Durchsichten aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
 
 ### Honig und Behandlungen
 
-**Honig** zeigt die Erntesumme der Beute in seiner Überschrift und listet jede Ernte (**Ernte erfassen**). **Behandlungen** listet jede Behandlung (**Behandlung erfassen**). Siehe [Ernten](/using-the-app/harvests) und [Behandlungen](/using-the-app/treatments).
+**Honig** zeigt die Erntesumme der Beute in seiner Überschrift und listet jede Ernte (**Ernte erfassen**). **Behandlungen** listet jede Behandlung (**Behandlung erfassen**). Siehe [Ernten](./harvests.md) und [Behandlungen](./treatments.md).
 
 ## Löschen gegenüber Stilllegen einer Beute
 

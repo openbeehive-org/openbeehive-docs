@@ -23,7 +23,7 @@ Les méthodes sont liées à un seul compte : si vous vous êtes inscrit avec un
 Si l'instance exige la vérification de l'e-mail, vous recevez un lien de confirmation par e-mail après l'inscription. Ouvrez-le avant votre première connexion.
 
 :::note Qui est l'administrateur
-L'administrateur de l'instance n'est pas la première personne à s'inscrire. Sur une instance auto-hébergée, c'est le compte que l'opérateur configure avec `BEEHIVE_ADMIN_EMAIL` et `BEEHIVE_ADMIN_PASSWORD` (voir [Authentification](/self-hosting/authentication)) ; sur le service hébergé, c'est l'opérateur. L'inscription n'accorde jamais ce rôle.
+L'administrateur de l'instance n'est pas la première personne à s'inscrire. Sur une instance auto-hébergée, c'est le compte que l'opérateur configure avec `BEEHIVE_ADMIN_EMAIL` et `BEEHIVE_ADMIN_PASSWORD` (voir [Authentification](../self-hosting/authentication.md)) ; sur le service hébergé, c'est l'opérateur. L'inscription n'accorde jamais ce rôle.
 :::
 
 ## Qu'est-ce qu'un espace
@@ -70,7 +70,7 @@ Un admin d'espace peut supprimer l'espace sous **Paramètres → Espaces → Zon
 
 ## Clés API \{#api-keys}
 
-**Paramètres → Clés API** est l'endroit où vous créez des identifiants pour les scripts et les appareils, comme une balance de ruche, qui utilisent l'[API](/using-the-api/overview) en votre nom. La section n'apparaît que lorsque vous êtes connecté ; une instance mono-utilisateur sans connexion n'a pas de clés et n'en a pas besoin.
+**Paramètres → Clés API** est l'endroit où vous créez des identifiants pour les scripts et les appareils, comme une balance de ruche, qui utilisent l'[API](../using-the-api/overview.md) en votre nom. La section n'apparaît que lorsque vous êtes connecté ; une instance mono-utilisateur sans connexion n'a pas de clés et n'en a pas besoin.
 
 - Saisissez un nom dans le champ **Nommez cette clé (ex. balance de ruche)**, choisissez les permissions dans le sélecteur **Permissions** (**Lecture et écriture**, par défaut, ou **Lecture seule**) et la durée de vie dans le sélecteur **Expire après** (**N'expire jamais**, par défaut, **30 jours**, **90 jours** ou **1 an**), puis touchez **Créer une clé**. La clé apparaît en dessous avec la mention « Copiez la clé maintenant. Elle n'est affichée qu'une seule fois. » et un bouton **Copier** (il indique **Copié** pendant un instant). Tout ce que vous ne copiez pas maintenant est perdu ; le serveur ne conserve qu'un hachage.
 - Chaque clé est listée avec son nom (**Clé sans nom** si vous avez laissé le champ vide), ses premiers caractères, un badge **Lecture et écriture** ou **Lecture seule**, **Créée**, puis **Expire le** et la date lorsque vous avez défini une durée de vie (**Expirée le** et la date, en rouge, une fois ce jour passé) et, une fois qu'un script l'a utilisée, **Dernière utilisation**. Les clés expirées restent dans la liste jusqu'à ce que vous les supprimiez.
@@ -82,4 +82,4 @@ Une clé agit en votre nom dans l'espace qui était actif lorsque vous l'avez cr
 
 ## La démo
 
-Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière vous rappelle que les données sont réinitialisées chaque heure. Le serveur rejette les modifications venant du compte de démonstration, donc tout ce que vous saisissez reste uniquement sur votre appareil. Les opérateurs peuvent l'activer via le [Mode démo](/self-hosting/demo).
+Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière vous rappelle que les données sont réinitialisées chaque heure. Le serveur rejette les modifications venant du compte de démonstration, donc tout ce que vous saisissez reste uniquement sur votre appareil. Les opérateurs peuvent l'activer via le [Mode démo](../self-hosting/demo.md).

@@ -49,7 +49,7 @@ Erfasse die Chargennummer direkt von der Verpackung zum Zeitpunkt der Behandlung
 4. Setze das Datum **Wartezeit bis**, wenn das Mittel eine Wartezeit vorgibt.
 5. Speichere.
 
-Funktioniert offline; siehe [Offline & Synchronisation](/using-the-app/offline-and-sync).
+Funktioniert offline; siehe [Offline & Synchronisation](./offline-and-sync.md).
 
 ## Wartezeiten und Ernte
 
@@ -74,4 +74,4 @@ Da Behandlungseinträge über deine Geräte hinweg synchronisieren, ist das Prot
 
 ## Behandlungen und Varroa
 
-Die Varroamilbe ist der Grund, warum die meisten Imker überhaupt zu einer Behandlung greifen, und das richtige Timing über die Saison hinweg ist ein eigenes Thema. Für ein vollständigeres Bild zur Überwachung der Milbenbelastung, zur Wahl eines Ansatzes und zur Planung von Behandlungen rund um das Imkerjahr siehe [den Varroa-Leitfaden](/beekeeping/varroa).
+Die Varroamilbe ist der Grund, warum die meisten Imker überhaupt zu einer Behandlung greifen, und das richtige Timing über die Saison hinweg ist ein eigenes Thema. Für ein vollständigeres Bild zur Überwachung der Milbenbelastung, zur Wahl eines Ansatzes und zur Planung von Behandlungen rund um das Imkerjahr siehe [den Varroa-Leitfaden](../beekeeping/varroa.md).

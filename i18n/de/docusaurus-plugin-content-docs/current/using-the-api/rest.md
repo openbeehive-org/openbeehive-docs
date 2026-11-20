@@ -435,7 +435,7 @@ der Tabelle sind. Gib `nextCursor` als `cursor` zurück, um fortzufahren. Der
 Feed enthält jede Änderung, egal ob ein Gerät sie gepusht oder ein Dienst-RPC
 sie geschrieben hat; Placements tauchen nur hier auf, da sie keinen eigenen
 Dienst haben. Wie du Änderungen mit `Push` schreibst, steht
-im [Sync-Protokoll](/developers/sync-protocol).
+im [Sync-Protokoll](../developers/sync-protocol.md).
 
 ## Paginierung
 
@@ -478,4 +478,4 @@ Die vollständige Liste der Codes findest du in der
 - `Content-Type: application/json` wählt das Connect-JSON-Protokoll aus.
   `application/proto` sendet binäres Protobuf über dieselbe URL.
 - `SyncService.Subscribe` ist ein Server-Stream und braucht einen
-  Streaming-Client; siehe [gRPC](/using-the-api/grpc).
+  Streaming-Client; siehe [gRPC](./grpc.md).

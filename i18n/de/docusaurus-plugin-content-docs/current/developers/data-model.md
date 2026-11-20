@@ -14,9 +14,9 @@ die Proto-Nummer; das Anzeigelabel ist das, was die App zeigt
 
 Jede synchronisierte Tabelle trägt drei Verwaltungsspalten, die unten nicht
 wiederholt werden: `organization_id` (Mandant), `field_hlc` (JSON-Feld-Uhr,
-siehe [Sync-Protokoll](/developers/sync-protocol)) und `deleted`
+siehe [Sync-Protokoll](./sync-protocol.md)) und `deleted`
 (Soft-Delete-Flag). Ids sind UUIDs, die auf dem Gerät erzeugt werden oder,
-bei Zeilen, die über die [API](/using-the-api/overview) angelegt werden, vom
+bei Zeilen, die über die [API](../using-the-api/overview.md) angelegt werden, vom
 Server. Zeitstempel werden auf dem Client als ISO-8601-Strings und auf dem
 Server als `TIMESTAMP` gespeichert.
 
@@ -53,7 +53,7 @@ Standorts für den Standort und alles darunter. Nur `event` speichert
 
 | Spalte | Typ | Hinweise |
 | --- | --- | --- |
-| `id` | text | auch im [QR-Etikett](/developers/qr-codes) kodiert |
+| `id` | text | auch im [QR-Etikett](./qr-codes.md) kodiert |
 | `apiary_id` | text | aktueller Standort |
 | `name` | text | |
 | `type` | int | `HiveType`, siehe unten |
@@ -189,7 +189,7 @@ Eine Aufgabe ohne `apiary_id` synchronisiert unter dem persönlichen Scope
 `EventType`: 1 Angelegt, 2 Königin eingesetzt, 3 Königin ersetzt, 4 Gewandert,
 5 Durchsicht, 6 Behandlung, 7 Ernte, 8 Status, 9 Aufgelöst. Die App schreibt
 die Typen 1 bis 7 (`app/src/lib/local/history.ts`). Siehe
-[Historie und Events](/developers/history-and-events).
+[Historie und Events](./history-and-events.md).
 
 ## Tabellen nur auf dem Server
 

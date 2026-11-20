@@ -81,7 +81,7 @@ lokalen Tabelle und der Sync-Outbox. Die Detailzeilen (`harvest`, `treatment`,
 Konvention als append-only behandelt. Nichts in der App bearbeitet oder löscht
 ein Ereignis.
 
-Die Nummern der Ereignistypen stehen im [Datenmodell](/developers/data-model#event).
+Die Nummern der Ereignistypen stehen im [Datenmodell](./data-model.md#event).
 
 ## Historie lesen
 
@@ -119,4 +119,4 @@ ist kein Join auf den aktuellen Zustand nötig.
 synchronisieren wie jede andere Tabelle, mit feldweisem Last-Writer-Wins. Da
 jedes Ereignis eine frische UUID hat und nie bearbeitet wird, berühren zwei
 Geräte, die offline Ereignisse hinzufügen, nie dieselbe Zeile, und beide Mengen
-bleiben erhalten. Siehe [Sync-Protokoll](/developers/sync-protocol).
+bleiben erhalten. Siehe [Sync-Protokoll](./sync-protocol.md).

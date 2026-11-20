@@ -51,7 +51,7 @@ message Change {
 
 `payload_json` è un delta parziale, non l'intera riga: il `patch()` del client
 scrive solo le colonne che ha modificato. Le chiavi sono i nomi delle colonne in
-`snake_case` del [modello dei dati](/developers/data-model). Una riga creata sul
+`snake_case` del [modello dei dati](./data-model.md). Una riga creata sul
 dispositivo è un delta che contiene ogni colonna. Una cancellazione è
 `op = CHANGE_OP_DELETE`; il ricevente imposta `deleted = true` e ignora il
 payload.

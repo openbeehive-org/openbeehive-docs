@@ -5,7 +5,7 @@ title: "FAQ"
 
 # Domande frequenti
 
-Risposte rapide alle domande che sentiamo più spesso. Se manca qualcosa, consulta la [guida alla risoluzione dei problemi](/knowledge-base/troubleshooting) o chiedi alla community su [GitHub](https://github.com/openbeehive-org/openbeehive-app).
+Risposte rapide alle domande che sentiamo più spesso. Se manca qualcosa, consulta la [guida alla risoluzione dei problemi](./troubleshooting.md) o chiedi alla community su [GitHub](https://github.com/openbeehive-org/openbeehive-app).
 
 ## Openbeehive è gratuito?
 
@@ -27,11 +27,11 @@ Vuoi il pieno controllo? Vedi [Self-hosting](/category/self-hosting) per eseguir
 
 Sì, completamente. Openbeehive è una Progressive Web App (PWA) che mantiene una copia completa dei tuoi dati sul dispositivo. La lettura e la scrittura dei registri sono locali e istantanee, quindi funziona perfettamente in un apiario senza segnale.
 
-Quando recuperi la connettività, le tue modifiche si sincronizzano automaticamente. Leggi di più in [Offline e sincronizzazione](/using-the-app/offline-and-sync).
+Quando recuperi la connettività, le tue modifiche si sincronizzano automaticamente. Leggi di più in [Offline e sincronizzazione](../using-the-app/offline-and-sync.md).
 
 ## Funziona sul mio telefono?
 
-Sì. Openbeehive funziona in qualsiasi browser moderno e può essere installato nella schermata Home così da comportarsi come un'app. Funziona su telefoni, tablet e desktop. Vedi [Installare l'app](/using-the-app/install) per i passaggi su ciascuna piattaforma.
+Sì. Openbeehive funziona in qualsiasi browser moderno e può essere installato nella schermata Home così da comportarsi come un'app. Funziona su telefoni, tablet e desktop. Vedi [Installare l'app](../using-the-app/install.md) per i passaggi su ciascuna piattaforma.
 
 ## Esiste un'app nativa?
 
@@ -39,7 +39,7 @@ Oggi non esiste un'app nativa separata nell'App Store o nel Play Store, e non te
 
 ## Posso esportare i miei dati?
 
-Sì. **Impostazioni → Dati e backup** esporta tutto ciò che è sul tuo dispositivo come backup completo JSON, foglio di calcolo (XLSX), file CSV in uno ZIP, BeeXML o report PDF stampabile, e importa JSON, BeeXML e CSV da altre app. Vedi [Importazione ed esportazione](/using-the-app/import-export). Chi ospita autonomamente può anche effettuare il backup del database del server direttamente; vedi [Backup](/self-hosting/backups).
+Sì. **Impostazioni → Dati e backup** esporta tutto ciò che è sul tuo dispositivo come backup completo JSON, foglio di calcolo (XLSX), file CSV in uno ZIP, BeeXML o report PDF stampabile, e importa JSON, BeeXML e CSV da altre app. Vedi [Importazione ed esportazione](../using-the-app/import-export.md). Chi ospita autonomamente può anche effettuare il backup del database del server direttamente; vedi [Backup](../self-hosting/backups.md).
 
 ## Posso ospitarlo autonomamente?
 
@@ -50,15 +50,15 @@ Assolutamente, ed è progettato per essere facile. Ci sono due profili di distri
 | `selfhost` | Hobbisti, utente singolo | Un unico binario, SQLite + file locali, nessun Docker necessario |
 | `cloud` | Multiutente, configurazioni più grandi | Docker, PostgreSQL + archiviazione S3/MinIO |
 
-Inizia con la [Guida rapida](/self-hosting/quick-start), oppure salta alla [guida al binario singolo](/self-hosting/single-binary).
+Inizia con la [Guida rapida](../self-hosting/quick-start.md), oppure salta alla [guida al binario singolo](../self-hosting/single-binary.md).
 
 :::note
-Per un'istanza privata a utente singolo puoi disabilitare del tutto il login. Vedi [Autenticazione](/self-hosting/authentication).
+Per un'istanza privata a utente singolo puoi disabilitare del tutto il login. Vedi [Autenticazione](../self-hosting/authentication.md).
 :::
 
 ## Come funziona la condivisione?
 
-I registri si condividono tramite i **tenant**. Ogni account ha un tenant personale e può essere invitato in altri, per esempio quello di un club. Tutti i membri di un tenant vedono e modificano tutti i suoi apiari, alveari e registri; non esiste una condivisione per singolo apiario. La sincronizzazione è priva di conflitti, quindi due persone che modificano nello stesso tenant su dispositivi diversi non sovrascrivono il lavoro l'una dell'altra. Vedi [Account e tenant](/using-the-app/accounts-tenants).
+I registri si condividono tramite i **tenant**. Ogni account ha un tenant personale e può essere invitato in altri, per esempio quello di un club. Tutti i membri di un tenant vedono e modificano tutti i suoi apiari, alveari e registri; non esiste una condivisione per singolo apiario. La sincronizzazione è priva di conflitti, quindi due persone che modificano nello stesso tenant su dispositivi diversi non sovrascrivono il lavoro l'una dell'altra. Vedi [Account e tenant](../using-the-app/accounts-tenants.md).
 
 ## Quali tipi di alveare sono supportati?
 
@@ -72,7 +72,7 @@ Openbeehive supporta i sistemi a telaino e top-bar più comuni:
 - Top-bar
 - Altro
 
-Vedi [Tipi di alveare](/knowledge-base/hive-types) per le indicazioni sulla scelta.
+Vedi [Tipi di alveare](./hive-types.md) per le indicazioni sulla scelta.
 
 ## Come vengono marcate le regine?
 
@@ -86,11 +86,11 @@ Openbeehive segue lo schema internazionale dei colori di marcatura delle regine,
 | 4 o 9 | Verde |
 | 5 o 0 | Blu |
 
-L'app sceglie automaticamente il colore giusto per te. Tutti i dettagli sono nella pagina [colori di marcatura delle regine](/knowledge-base/queen-marking-colours).
+L'app sceglie automaticamente il colore giusto per te. Tutti i dettagli sono nella pagina [colori di marcatura delle regine](./queen-marking-colours.md).
 
 ## A cosa servono le etichette QR?
 
-Ogni alveare può avere un'etichetta QR stampabile. Scansionandola si apre Openbeehive direttamente su quell'alveare, così puoi richiamarne i registri nell'apiario senza digitare o cercare. Vedi [Etichette QR](/using-the-app/qr-labels).
+Ogni alveare può avere un'etichetta QR stampabile. Scansionandola si apre Openbeehive direttamente su quell'alveare, così puoi richiamarne i registri nell'apiario senza digitare o cercare. Vedi [Etichette QR](../using-the-app/qr-labels.md).
 
 ## In quali lingue è disponibile?
 
@@ -100,18 +100,18 @@ L'app include cinque lingue: inglese, tedesco, francese, spagnolo e italiano. Ca
 
 In self-hosting, il backend è modulare:
 
-- **Database:** PostgreSQL, MySQL o SQLite. Vedi [Database](/self-hosting/databases).
-- **Archiviazione blob:** archiviazione di oggetti compatibile con MinIO/S3, o il filesystem locale. Vedi [Archiviazione](/self-hosting/storage).
+- **Database:** PostgreSQL, MySQL o SQLite. Vedi [Database](../self-hosting/databases.md).
+- **Archiviazione blob:** archiviazione di oggetti compatibile con MinIO/S3, o il filesystem locale. Vedi [Archiviazione](../self-hosting/storage.md).
 
 ## Come accedo?
 
-Il servizio ospitato usa account con e-mail e password. Chi ospita autonomamente può abilitare gli account con e-mail e password, aggiungere provider OIDC (Google, Keycloak, Authentik e simili), abilitare le passkey o disattivare del tutto il login per una configurazione a utente singolo. Vedi [Autenticazione](/self-hosting/authentication).
+Il servizio ospitato usa account con e-mail e password. Chi ospita autonomamente può abilitare gli account con e-mail e password, aggiungere provider OIDC (Google, Keycloak, Authentik e simili), abilitare le passkey o disattivare del tutto il login per una configurazione a utente singolo. Vedi [Autenticazione](../self-hosting/authentication.md).
 
 ## Come segnalo un bug o richiedo una funzionalità?
 
 Apri una issue nel [repository GitHub](https://github.com/openbeehive-org/openbeehive-app). Passaggi chiari per riprodurre il problema, la tua piattaforma e il tuo browser, e uno screenshot aiutano.
 
-La [pagina di risoluzione dei problemi](/knowledge-base/troubleshooting) potrebbe già coprire i problemi comuni.
+La [pagina di risoluzione dei problemi](./troubleshooting.md) potrebbe già coprire i problemi comuni.
 
 ## Come posso contribuire?
 
@@ -119,4 +119,4 @@ Sono benvenuti contributi di ogni tipo: codice, documentazione, traduzioni, segn
 
 ## Quale versione è questa?
 
-Le versioni sono taggate su [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Chi ospita autonomamente esegue il tag che ha compilato o il tag dell'immagine che ha scaricato; consulta la [guida all'aggiornamento](/self-hosting/upgrading) quando arrivano nuove versioni.
+Le versioni sono taggate su [GitHub](https://github.com/openbeehive-org/openbeehive-app/releases). Chi ospita autonomamente esegue il tag che ha compilato o il tag dell'immagine che ha scaricato; consulta la [guida all'aggiornamento](../self-hosting/upgrading.md) quando arrivano nuove versioni.

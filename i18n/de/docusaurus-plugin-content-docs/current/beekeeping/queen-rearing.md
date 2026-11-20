@@ -16,7 +16,7 @@ umweiselt, und einen sanften Einstieg in das eigene Heranziehen von Königinnen.
 
 :::tip Erfasse alles in der App
 Verfolge Herkunft, Alter, Markierungsfarbe und Notizen jeder Königin auf der
-[Königinnen-Seite](/using-the-app/queens). Eine genaue Aufzeichnung, wann eine Königin
+[Königinnen-Seite](../using-the-app/queens.md). Eine genaue Aufzeichnung, wann eine Königin
 eingeweiselt wurde, ist das Nützlichste, um ihre Leistung später zu beurteilen.
 :::
 
@@ -141,11 +141,11 @@ internationale Farbschema weist jedem Jahr anhand seiner letzten Ziffer eine Far
 Eine 2026 herangezogene Königin wird also **weiß** markiert. Bringe einen winzigen Punkt
 Königinnen-Markierungsfarbe auf die Oberseite ihres Brustabschnitts auf, halte sie sanft fest oder verwende einen
 Markierkäfig und lass ihn trocknen, bevor du sie freilässt. Für die vollständige Referenz und eine handliche Eselsbrücke siehe
-[Königinnen-Markierungsfarben](/knowledge-base/queen-marking-colours).
+[Königinnen-Markierungsfarben](../knowledge-base/queen-marking-colours.md).
 
 :::tip
 Wenn du eine Königin markierst, erfasse ihre Markierungsfarbe in der App auf der
-[Königinnen-Seite](/using-the-app/queens). Openbeehive setzt die erwartete Farbe automatisch aus
+[Königinnen-Seite](../using-the-app/queens.md). Openbeehive setzt die erwartete Farbe automatisch aus
 dem Jahr, sodass du auf einen Blick bestätigen kannst, ob eine Königin das Alter hat,
 das du vermutest.
 :::

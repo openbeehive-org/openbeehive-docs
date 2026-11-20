@@ -35,7 +35,7 @@ Openbeehive folgt dem internationalen Königinnen-Farbschema, das alle fünf Jah
 | 4 oder 9 | Grün |
 | 5 oder 0 | Blau |
 
-Wenn du das Jahr festlegst, wird die passende Farbe ausgewählt. Hake **auto** ab, um eine andere Farbe zu erfassen, falls die gekaufte Königin eine trägt, damit der Punkt in deinen Aufzeichnungen mit dem Punkt auf der Biene übereinstimmt. Für das vollständige Schema und die Merkregel siehe [Königinnen-Markierungsfarben](/knowledge-base/queen-marking-colours).
+Wenn du das Jahr festlegst, wird die passende Farbe ausgewählt. Hake **auto** ab, um eine andere Farbe zu erfassen, falls die gekaufte Königin eine trägt, damit der Punkt in deinen Aufzeichnungen mit dem Punkt auf der Biene übereinstimmt. Für das vollständige Schema und die Merkregel siehe [Königinnen-Markierungsfarben](../knowledge-base/queen-marking-colours.md).
 
 ## Eine Königin ersetzen
 
@@ -53,4 +53,4 @@ Notiere im Kommentar der neuen Königin, *warum* du umgeweiselt hast: schlechtes
 
 Durchsichten, Ernten und Behandlungen tragen ihr eigenes Datum und werden der Königin zugeordnet, deren Regentschaft dieses Datum abdeckt, nicht unbedingt der Königin, die die Beute heute führt. Liegen eine Umweiselung und eine rückdatierte Durchsicht zeitlich nah beieinander, prüfe die Daten, damit jede Aufzeichnung unter der richtigen Regentschaft landet.
 
-Königinnen-Aufzeichnungen synchronisieren wie alles andere; siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+Königinnen-Aufzeichnungen synchronisieren wie alles andere; siehe [Offline und Synchronisation](./offline-and-sync.md).

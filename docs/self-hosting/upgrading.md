@@ -8,7 +8,7 @@ title: "Upgrading"
 Upgrades are simple: replace the binary or pull a new image, restart, and the server brings the database schema up to date on its own.
 
 :::caution Back up first, every time
-Take a backup before upgrading. See [Backups](/self-hosting/backups).
+Take a backup before upgrading. See [Backups](./backups.md).
 :::
 
 ## Before you start
@@ -69,13 +69,13 @@ git checkout vX.Y.Z
 make proto && make build
 ```
 
-This produces a fresh `./server/bin/openbeehive`. Prerequisites are in [Single binary](/self-hosting/single-binary) (Go 1.27+, Node 24+, buf).
+This produces a fresh `./server/bin/openbeehive`. Prerequisites are in [Single binary](./single-binary.md) (Go 1.27+, Node 24+, buf).
 
 ## Upgrading with Docker
 
 Which command you need depends on where the image comes from.
 
-**Published image** (the single-container `docker run` from the [quick start](/self-hosting/quick-start), or a Compose file with an `image:` line such as `docker-compose.demo.yml`):
+**Published image** (the single-container `docker run` from the [quick start](./quick-start.md), or a Compose file with an `image:` line such as `docker-compose.demo.yml`):
 
 ```bash
 docker compose -f docker-compose.demo.yml pull
@@ -139,4 +139,4 @@ Do not restore an old database under a newer binary, or run a newer database und
 - Open the app and confirm your apiaries, hives and recent visits appear.
 - Record something on a device and confirm it syncs.
 
-If something looks wrong, see [Troubleshooting](/knowledge-base/troubleshooting) and roll back to your backup while you investigate.
+If something looks wrong, see [Troubleshooting](../knowledge-base/troubleshooting.md) and roll back to your backup while you investigate.

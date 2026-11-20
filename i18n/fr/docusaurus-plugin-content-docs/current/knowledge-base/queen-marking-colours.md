@@ -69,7 +69,7 @@ Lorsque vous enregistrez une reine dans Openbeehive, vous définissez son **ann�
 
 Vous pouvez aussi noter le marquage réel que vous avez appliqué, son origine et son statut, puis la suivre au fil des inspections et des événements de remérage.
 
-Voir [Reines](/using-the-app/queens) pour savoir comment ajouter et gérer les reines, et la [base de connaissances](/category/knowledge-base) plus large pour davantage de documentation de référence.
+Voir [Reines](../using-the-app/queens.md) pour savoir comment ajouter et gérer les reines, et la [base de connaissances](/category/knowledge-base) plus large pour davantage de documentation de référence.
 
 :::tip Note régionale
 Le code à cinq couleurs sur cinq ans est le standard international utilisé dans la plus grande partie du monde. Les conventions de coupe d'aile, les nuances de couleur des fournisseurs et les éventuelles obligations de tenue d'archives peuvent varier selon le pays et l'association — en cas de doute, suivez les recommandations de votre organisme apicole local.

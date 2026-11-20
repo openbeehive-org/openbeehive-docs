@@ -97,8 +97,8 @@ dell'API e quelle dei dispositivi non appena il dispositivo le ha inviate.
 - `EventService` è in sola lettura. Gli eventi vengono scritti dai flussi qui
   sopra e dall'app.
 
-Vedi il [protocollo di sincronizzazione](/developers/sync-protocol) per il
-formato delle modifiche e il [modello dei dati](/developers/data-model) per le
+Vedi il [protocollo di sincronizzazione](../developers/sync-protocol.md) per il
+formato delle modifiche e il [modello dei dati](../developers/data-model.md) per le
 colonne dietro ogni messaggio.
 
 ## Endpoint non RPC
@@ -228,14 +228,14 @@ Con `BEEHIVE_DEMO=true` le sessioni demo sono in sola lettura: l'account demo
 può chiamare solo gli RPC il cui nome inizia con `Get`, `List`, `Pull` o
 `Subscribe`. Ogni altro RPC restituisce `permission_denied`.
 
-Vedi [Autenticazione](/self-hosting/authentication) per come configurare i
+Vedi [Autenticazione](../self-hosting/authentication.md) per come configurare i
 metodi di login.
 
 ## Pagine sui protocolli
 
-- [REST / HTTP + JSON](/using-the-api/rest): esempi con curl, la forma del
+- [REST / HTTP + JSON](./rest.md): esempi con curl, la forma del
   JSON e il contratto di paginazione.
-- [gRPC](/using-the-api/grpc): client generati e la chiamata in streaming
+- [gRPC](./grpc.md): client generati e la chiamata in streaming
   `Subscribe`.
-- [Tracker automatici](/using-the-api/automated-trackers): inviare letture di
+- [Tracker automatici](./automated-trackers.md): inviare letture di
   bilance e sensori climatici da uno script o da un dispositivo.

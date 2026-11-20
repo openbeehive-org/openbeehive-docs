@@ -144,10 +144,10 @@ peuvent altérer le miel. Lisez l'étiquette pour le délai requis et respectez-
 
 Le varroa est la menace phare, mais une bonne santé générale aide la colonie à faire face :
 
-- Gardez les colonies fortes et bien nourries ; consultez [Nourrissement](/beekeeping/feeding).
+- Gardez les colonies fortes et bien nourries ; consultez [Nourrissement](./feeding.md).
 - Remplacez périodiquement les vieux rayons sombres pour réduire la charge en maladies.
 - Surveillez les maladies du couvain et autres ravageurs ; consultez
-  [Maladies et ravageurs](/knowledge-base/diseases-and-pests) dans la base de connaissances.
+  [Maladies et ravageurs](../knowledge-base/diseases-and-pests.md) dans la base de connaissances.
 - Certaines maladies du couvain sont **à déclaration obligatoire** dans de nombreuses
   régions et doivent être signalées aux autorités. Connaissez vos règles locales.
 
@@ -160,7 +160,7 @@ s'appliquent aux apiculteurs dans de nombreux pays.
 Dans Openbeehive, vous enregistrez chaque application en tant que **Traitement** sur une
 ruche : la date, le produit, la substance active, la méthode, la dose, le numéro de lot, le
 motif et la date de fin du délai d'attente. Au fil du temps, cela construit un historique
-clair de ce que vous avez utilisé et quand. Consultez [Traitements](/using-the-app/treatments).
+clair de ce que vous avez utilisé et quand. Consultez [Traitements](../using-the-app/treatments.md).
 
 :::note
 Tenir des registres de traitement précis est souvent une obligation légale, surtout là où

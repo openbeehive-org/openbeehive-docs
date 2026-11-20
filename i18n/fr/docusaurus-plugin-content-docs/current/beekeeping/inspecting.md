@@ -7,7 +7,7 @@ title: "Inspecter une colonie"
 
 Une visite de ruche est le cœur de l'apiculture pratique. Ouvrir une colonie permet de vérifier qu'elle est en bonne santé, bien nourrie et pourvue d'une reine, et vous donne la possibilité d'agir avant que de petits problèmes ne deviennent grands. Bien menée, une visite est calme, rapide et déterminée. Mal menée, elle stresse les abeilles, refroidit le couvain et vous apprend très peu.
 
-Cette page explique comment inspecter correctement une colonie. Pour savoir comment consigner ce que vous trouvez dans Openbeehive, consultez [enregistrer les visites](/using-the-app/inspections).
+Cette page explique comment inspecter correctement une colonie. Pour savoir comment consigner ce que vous trouvez dans Openbeehive, consultez [enregistrer les visites](../using-the-app/inspections.md).
 
 ## Quand inspecter
 
@@ -85,11 +85,11 @@ Vérifiez que la colonie a assez de nourriture, surtout au printemps avant la mi
 
 ### Cellules royales
 
-Trouver des cellules royales chargées ou operculées sur le rayon est l'une des choses les plus importantes qu'une visite révèle, car cela signifie souvent que la colonie se prépare à essaimer. Consignez leur nombre et leur stade. Consultez [essaimage](/beekeeping/swarming) pour savoir comment réagir.
+Trouver des cellules royales chargées ou operculées sur le rayon est l'une des choses les plus importantes qu'une visite révèle, car cela signifie souvent que la colonie se prépare à essaimer. Consignez leur nombre et leur stade. Consultez [essaimage](./swarming.md) pour savoir comment réagir.
 
 ### Maladies, ravageurs et varroa
 
-Examinez attentivement le couvain à la recherche de tout ce qui est anormal : opercules affaissés, gras ou perforés, une odeur désagréable, ou des momies blanches plâtreuses. Surveillez les abeilles adultes à la recherche d'ailes déformées ou d'acariens visibles. La gestion du varroa est une tâche permanente ; consultez [varroa](/beekeeping/varroa).
+Examinez attentivement le couvain à la recherche de tout ce qui est anormal : opercules affaissés, gras ou perforés, une odeur désagréable, ou des momies blanches plâtreuses. Surveillez les abeilles adultes à la recherche d'ailes déformées ou d'acariens visibles. La gestion du varroa est une tâche permanente ; consultez [varroa](./varroa.md).
 
 :::danger
 Si vous suspectez une maladie à déclaration obligatoire telle que la loque américaine ou européenne, arrêtez, refermez, et contactez votre autorité nationale de santé des abeilles. Les obligations de déclaration varient selon le pays et constituent souvent une obligation légale.
@@ -103,4 +103,4 @@ Chaque visite est une petite perturbation. Gardez-la proportionnée. Si vous ave
 
 Une visite n'est utile que dans la mesure des notes que vous conservez. Consignez le tempérament, les réserves, l'espace, le couvain et toute cellule royale ou signe de maladie tant que les détails sont frais, idéalement au pied de la ruche sur votre téléphone.
 
-Consultez [enregistrer les visites](/using-the-app/inspections) pour saisir vos observations, et la [section Apiculture](/category/beekeeping-basics) pour le contexte saisonnier plus large.
+Consultez [enregistrer les visites](../using-the-app/inspections.md) pour saisir vos observations, et la [section Apiculture](/category/beekeeping-basics) pour le contexte saisonnier plus large.

@@ -421,7 +421,7 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
 names. Pass `nextCursor` back as `cursor` to continue. The feed contains
 every change, whether a device pushed it or a service RPC wrote it;
 placements appear only here, since they have no service of their own. See
-the [sync protocol](/developers/sync-protocol) for how to write changes with
+the [sync protocol](../developers/sync-protocol.md) for how to write changes with
 `Push`.
 
 ## Pagination
@@ -465,4 +465,4 @@ for the full code list.
 - `Content-Type: application/json` selects the Connect JSON protocol.
   `application/proto` sends binary protobuf over the same URL.
 - `SyncService.Subscribe` is a server stream and needs a streaming client; see
-  [gRPC](/using-the-api/grpc).
+  [gRPC](./grpc.md).

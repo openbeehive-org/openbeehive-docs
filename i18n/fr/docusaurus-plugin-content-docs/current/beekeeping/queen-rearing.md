@@ -18,7 +18,7 @@ vous-même.
 
 :::tip Consignez tout dans l'application
 Suivez l'origine, l'âge, la couleur de marquage et les notes de chaque reine sur la
-[page Reines](/using-the-app/queens). Un registre précis de la date d'introduction
+[page Reines](../using-the-app/queens.md). Un registre précis de la date d'introduction
 d'une reine est la chose la plus utile pour juger plus tard de sa performance.
 :::
 
@@ -154,11 +154,11 @@ Ainsi, une reine élevée en 2026 est marquée en **blanc**. Appliquez un minusc
 peinture de marquage sur le haut de son thorax, tenez-la délicatement ou utilisez une cage
 de marquage, et laissez sécher avant de la relâcher. Pour la référence complète et un
 moyen mnémotechnique pratique, consultez
-[Couleurs de marquage des reines](/knowledge-base/queen-marking-colours).
+[Couleurs de marquage des reines](../knowledge-base/queen-marking-colours.md).
 
 :::tip
 Lorsque vous marquez une reine, consignez sa couleur de marquage dans l'application sur la
-[page Reines](/using-the-app/queens). Openbeehive définit automatiquement la couleur
+[page Reines](../using-the-app/queens.md). Openbeehive définit automatiquement la couleur
 attendue d'après l'année, afin que vous puissiez confirmer d'un coup d'œil si une reine a
 bien l'âge que vous pensez.
 :::

@@ -34,7 +34,7 @@ Wähle in der Liste **Standorte** (oder über den Button **+ Neu** auf der Über
 | **Notiz** | Nein | Torcodes, Zugangshinweise, der Name des Grundbesitzers, Parkmöglichkeiten. |
 | **Breitengrad / Längengrad** | Nein | Koordinaten in Dezimalgrad. |
 
-Funktioniert offline; siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+Funktioniert offline; siehe [Offline und Synchronisation](./offline-and-sync.md).
 
 ### GPS-Koordinaten festlegen
 
@@ -64,11 +64,11 @@ Eine Statuszeile unter der Karte zeigt, was die Suche gerade tut:
 - **Beute hinzufügen**: Gib einen Namen ein und füge sie hinzu. Typ und Status legst du danach fest, indem du die Beute bearbeitest.
 - **Eine Beute öffnen**, um ihre Königin, ihre Durchsichten, Ernten und Behandlungen zu sehen.
 
-Siehe [Beuten](/using-the-app/hives) und [Königinnen](/using-the-app/queens).
+Siehe [Beuten](./hives.md) und [Königinnen](./queens.md).
 
 ## QR-Etiketten für den Bienenstand drucken
 
-Der Button **QR-Etiketten** auf der Bienenstand-Seite druckt ein A4-Blatt mit einem Etikett je Beute des Bienenstands. Jedes Etikett kodiert einen Deep Link zu dieser Beute; beim Scannen öffnet sich Openbeehive direkt bei der Beute. Siehe [QR-Etiketten](/using-the-app/qr-labels).
+Der Button **QR-Etiketten** auf der Bienenstand-Seite druckt ein A4-Blatt mit einem Etikett je Beute des Bienenstands. Jedes Etikett kodiert einen Deep Link zu dieser Beute; beim Scannen öffnet sich Openbeehive direkt bei der Beute. Siehe [QR-Etiketten](./qr-labels.md).
 
 ## Bearbeiten und umorganisieren
 
@@ -78,4 +78,4 @@ Wenn eine Beute an einen anderen Ort umzieht, ordne sie mit **Wandern** an der B
 
 ## Teilen
 
-Bienenstände werden nicht einzeln geteilt. Alles in einem Mandanten ist für jedes Mitglied dieses Mandanten sichtbar. Um mit jemandem an einem Bienenstand zu arbeiten, lädst du die Person also in den Mandanten ein, der ihn enthält (Einstellungen → Mandanten → Imker:in einladen). Um deine Völker zu Hause privat zu halten und trotzdem an einem Vereinsstand mitzuarbeiten, erstelle für den Verein einen eigenen Mandanten. Siehe [Konten & Mandanten](/using-the-app/accounts-tenants).
+Bienenstände werden nicht einzeln geteilt. Alles in einem Mandanten ist für jedes Mitglied dieses Mandanten sichtbar. Um mit jemandem an einem Bienenstand zu arbeiten, lädst du die Person also in den Mandanten ein, der ihn enthält (Einstellungen → Mandanten → Imker:in einladen). Um deine Völker zu Hause privat zu halten und trotzdem an einem Vereinsstand mitzuarbeiten, erstelle für den Verein einen eigenen Mandanten. Siehe [Konten & Mandanten](./accounts-tenants.md).

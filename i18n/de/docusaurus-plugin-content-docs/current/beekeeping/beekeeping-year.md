@@ -20,9 +20,9 @@ Mit länger werdenden Tagen beginnt die Königin wieder zu legen und das Volk f�
 Was zu tun ist:
 
 - Halte Störungen auf ein Minimum. Ein schnelles „Heften" des Stocks (das Anheben einer Seite, um das Gewicht abzuschätzen) zeigt dir, ob die Vorräte zur Neige gehen, ohne ihn zu öffnen.
-- Am ersten milden, windstillen Tag bestätigt ein kurzer Blick, dass das Volk lebt, weiselrichtig ist und Futter hat. Füttere, wenn die Vorräte knapp sind (siehe [Füttern](/beekeeping/feeding)).
+- Am ersten milden, windstillen Tag bestätigt ein kurzer Blick, dass das Volk lebt, weiselrichtig ist und Futter hat. Füttere, wenn die Vorräte knapp sind (siehe [Füttern](./feeding.md)).
 - Reinige und bereite die Ausrüstung vor: Ersatzzargen, Rähmchen und Mittelwände für die kommende Saison.
-- Plane deine Varroastrategie jetzt, statt später in Panik (siehe [Varroa](/beekeeping/varroa)).
+- Plane deine Varroastrategie jetzt, statt später in Panik (siehe [Varroa](./varroa.md)).
 
 Erfasse die erste Durchsicht und jede Fütterung, während du dabei bist. Das frühe Festhalten der Vorratsmengen gibt dir eine Ausgangsbasis für das Jahr.
 
@@ -34,11 +34,11 @@ Was zu tun ist:
 
 - Sieh während des Aufbaus etwa alle sieben bis neun Tage durch. Diese Taktung entspricht dem Weiselzellen-Zyklus und lässt dich Schwarmvorbereitungen erkennen, bevor sie zu weit gehen.
 - Achte auf Weiselzellen, Enge und ein Volk, das vor Bienen „überquillt". Gib früh Platz, indem du Zargen oder Honigräume aufsetzt.
-- Wende deine gewählte Schwarmverhinderungsmethode an, wenn Zellen auftauchen (siehe [Schwärmen](/beekeeping/swarming)).
-- Erwäge, neue Königinnen heranzuziehen oder aus starkem Stock Vermehrung zu betreiben (siehe [Königinnenzucht](/beekeeping/queen-rearing)).
+- Wende deine gewählte Schwarmverhinderungsmethode an, wenn Zellen auftauchen (siehe [Schwärmen](./swarming.md)).
+- Erwäge, neue Königinnen heranzuziehen oder aus starkem Stock Vermehrung zu betreiben (siehe [Königinnenzucht](./queen-rearing.md)).
 
 :::tip Nutze Aufgaben, um im Rhythmus zu bleiben
-Der Sieben-Tage-Zyklus ist über mehrere Beuten hinweg leicht aus dem Blick zu verlieren. Lege eine Aufgabe mit Fälligkeitsdatum für den nächsten Besuch an, und wenn du sie abhakst, lege die nächste an. Siehe [Aufgaben](/using-the-app/tasks).
+Der Sieben-Tage-Zyklus ist über mehrere Beuten hinweg leicht aus dem Blick zu verlieren. Lege eine Aufgabe mit Fälligkeitsdatum für den nächsten Besuch an, und wenn du sie abhakst, lege die nächste an. Siehe [Aufgaben](../using-the-app/tasks.md).
 :::
 
 ## Sommer: die Honigtracht
@@ -50,7 +50,7 @@ Was zu tun ist:
 - Bleibe den Bienen mit Honigraumplatz voraus. Ein gedrängtes Volk lagert weniger ein und schwärmt eher.
 - Setze die Durchsichten fort, aber du kannst die Häufigkeit verringern, sobald der Schwarmtrieb nachlässt (oft nach dem längsten Tag).
 - Überwache die Varroawerte über die Saison, damit du zur Erntezeit nicht überrascht wirst.
-- Ernte verdeckelten Honig, wenn die Rähmchen reif sind und die Tracht abklingt (siehe [Honigernte](/beekeeping/honey-harvest)).
+- Ernte verdeckelten Honig, wenn die Rähmchen reif sind und die Tracht abklingt (siehe [Honigernte](./honey-harvest.md)).
 
 Erfasse jede Ernte mit Gewichten und welche Beuten sie erbracht haben. Über ein paar Saisons hinweg wird daraus wirklich nützliches Datenmaterial über deine besten Völker und deine beste Tracht.
 
@@ -65,10 +65,10 @@ Was zu tun ist:
 - Sobald die Behandlung es zulässt, füttere, um die Wintervorräte aufzustocken, falls das Volk leicht ist. Füttere konzentrierten Sirup rechtzeitig, damit die Bienen ihn reifen und verdeckeln können, bevor es kalt wird.
 
 :::caution Behandlungsregeln variieren je nach Land
-Zugelassene Varroabehandlungen, Dosierungen und Zeitpunkte unterscheiden sich zwischen Regionen, und manche haben gesetzliche Vorgaben. Verwende stets ein dort, wo du lebst, zugelassenes Produkt und befolge die nationalen Vorgaben. Siehe [Varroa](/beekeeping/varroa) für einen Überblick, aber prüfe die örtlichen Regeln.
+Zugelassene Varroabehandlungen, Dosierungen und Zeitpunkte unterscheiden sich zwischen Regionen, und manche haben gesetzliche Vorgaben. Verwende stets ein dort, wo du lebst, zugelassenes Produkt und befolge die nationalen Vorgaben. Siehe [Varroa](./varroa.md) für einen Überblick, aber prüfe die örtlichen Regeln.
 :::
 
-Protokolliere jede Behandlung: Produkt, Dosis und Daten. Das schützt dich, hilft dir zu beurteilen, was funktioniert, und führt eine ehrliche Gesundheitsgeschichte für jede Beute. Die [Behandlungen](/using-the-app/treatments)-Einträge der App sind genau dafür gedacht.
+Protokolliere jede Behandlung: Produkt, Dosis und Daten. Das schützt dich, hilft dir zu beurteilen, was funktioniert, und führt eine ehrliche Gesundheitsgeschichte für jede Beute. Die [Behandlungen](../using-the-app/treatments.md)-Einträge der App sind genau dafür gedacht.
 
 ## Herbst: Vorbereitung
 
@@ -82,7 +82,7 @@ Was zu tun ist:
 - Sorge für Belüftung und dafür, dass die Beute Regen ableitet. Sichere die Dächer gegen Wind.
 - Räume ausgebaute Waben auf und lagere sie sicher gegen die Wachsmotte.
 
-Nutze Aufgaben, um sicherzustellen, dass keine Beute übersehen wird. Eine einfache „Wintervorbereitung"-Checklistenaufgabe pro Beute sorgt dafür, dass nichts durchrutscht, bevor die Kälte einsetzt. Siehe [Aufgaben](/using-the-app/tasks).
+Nutze Aufgaben, um sicherzustellen, dass keine Beute übersehen wird. Eine einfache „Wintervorbereitung"-Checklistenaufgabe pro Beute sorgt dafür, dass nichts durchrutscht, bevor die Kälte einsetzt. Siehe [Aufgaben](../using-the-app/tasks.md).
 
 ## Winter: die Traube ruht
 
@@ -104,4 +104,4 @@ Der Winter ist die perfekte Zeit für einen Rückblick. Das Durchsehen der Durch
 
 Das Jahr ist eine Schleife: Aufbau, Schwarmzeit, Honigtracht, behandeln und füttern, vorbereiten, ruhen. Jede Phase bereitet die nächste vor, und gute Aufzeichnungen sind das, was sie verbindet.
 
-Je konsequenter du Durchsichten, Aufgaben, Ernten und Behandlungen erfasst, desto leichter wird das folgende Jahr. Mehr zur Biologie des Volkes hinter diesen Rhythmen findest du unter [Das Bienenvolk](/beekeeping/the-colony), und für die umfassenderen Imkerei-Anleitungen beginne im [Imkerei-Bereich](/category/beekeeping-basics).
+Je konsequenter du Durchsichten, Aufgaben, Ernten und Behandlungen erfasst, desto leichter wird das folgende Jahr. Mehr zur Biologie des Volkes hinter diesen Rhythmen findest du unter [Das Bienenvolk](./the-colony.md), und für die umfassenderen Imkerei-Anleitungen beginne im [Imkerei-Bereich](/category/beekeeping-basics).

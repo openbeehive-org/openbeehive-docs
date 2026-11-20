@@ -7,7 +7,7 @@ title: "Riferimento sui tipi di alveare"
 
 Quando crei un alveare in Openbeehive, scegli un **tipo**. Questo singolo valore registra il sistema di arnia che stai utilizzando, il che ti aiuta a mantenere telaini, melari e parti di ricambio compatibili in tutto il tuo apiario.
 
-Il tipo è puramente un'etichetta per i tuoi registri. Non cambia il funzionamento di ispezioni, trattamenti o raccolte, quindi non preoccuparti di "sbagliarlo": puoi modificarlo in qualsiasi momento modificando l'alveare. Vedi [Alveari](/using-the-app/hives) per come aggiungere e modificare un alveare.
+Il tipo è puramente un'etichetta per i tuoi registri. Non cambia il funzionamento di ispezioni, trattamenti o raccolte, quindi non preoccuparti di "sbagliarlo": puoi modificarlo in qualsiasi momento modificando l'alveare. Vedi [Alveari](../using-the-app/hives.md) per come aggiungere e modificare un alveare.
 
 Openbeehive offre sette opzioni: **Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar** e **Altro**.
 
@@ -65,4 +65,4 @@ Scegli **Altro** e registra le specifiche (dimensione del telaino, numero di cas
 **Il tipo influisce su trattamenti o raccolte?**
 No. È un'etichetta descrittiva. Tutte le ispezioni, i trattamenti, le attività e le raccolte funzionano allo stesso modo indipendentemente dal tipo.
 
-Per maggiori informazioni sull'attrezzatura e su come si incastrano le parti di un alveare, vedi [Attrezzatura](/beekeeping/equipment) e il [Glossario](/knowledge-base/glossary).
+Per maggiori informazioni sull'attrezzatura e su come si incastrano le parti di un alveare, vedi [Attrezzatura](../beekeeping/equipment.md) e il [Glossario](./glossary.md).

@@ -49,7 +49,7 @@ Registra el número de lote directamente del envase en el momento en que tratas.
 4. Fija la fecha de **espera hasta** si el producto especifica un periodo de retirada.
 5. Guarda.
 
-Funciona sin conexión; consulta [Sin conexión y sincronización](/using-the-app/offline-and-sync).
+Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md).
 
 ## Periodos de retirada y cosecha
 
@@ -74,4 +74,4 @@ Como las entradas de tratamiento se sincronizan entre tus dispositivos, el regis
 
 ## Tratamientos y varroa
 
-El ácaro varroa es la razón por la que la mayoría de los apicultores recurren a un tratamiento en primer lugar, y acertar con el momento a lo largo de la temporada es un tema en sí mismo. Para una visión más completa sobre el seguimiento de los niveles de ácaros, la elección de un enfoque y la planificación de los tratamientos en torno al año apícola, consulta [la guía de varroa](/beekeeping/varroa).
+El ácaro varroa es la razón por la que la mayoría de los apicultores recurren a un tratamiento en primer lugar, y acertar con el momento a lo largo de la temporada es un tema en sí mismo. Para una visión más completa sobre el seguimiento de los niveles de ácaros, la elección de un enfoque y la planificación de los tratamientos en torno al año apícola, consulta [la guía de varroa](../beekeeping/varroa.md).

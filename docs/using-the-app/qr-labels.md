@@ -63,7 +63,7 @@ On devices whose browser does not support the in-app scanner, the screen says so
 | Asks you to sign in | You are not signed in on this device, or the hive is in a tenant you are not a member of | Sign in; ask the tenant admin to invite you |
 | Nothing happens on tap | The phone did not recognise the code as a link | Use the in-app scanner or another QR reader |
 
-Access follows tenant membership; see [Accounts & tenants](/using-the-app/accounts-tenants).
+Access follows tenant membership; see [Accounts & tenants](./accounts-tenants.md).
 
 ## Reprinting and changing labels
 
@@ -75,4 +75,4 @@ Labels encode the address you printed them from. If your self-hosted instance mo
 Don't move a printed label from one box to another and expect it to point at the new colony; it still opens the original hive. Print a fresh label instead.
 :::
 
-Technical details of the link format: [QR codes for developers](/developers/qr-codes).
+Technical details of the link format: [QR codes for developers](../developers/qr-codes.md).

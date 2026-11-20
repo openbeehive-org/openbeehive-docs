@@ -25,10 +25,10 @@ Di solito c'è una regina per colonia. È l'unica femmina completamente sviluppa
 
 La regina non è una sovrana. Non dirige la colonia; piuttosto la tiene unita chimicamente. Il suo **feromone mandibolare della regina** segnala alle operaie che la colonia è "orfana di nulla" (queenright), sopprimendo l'allevamento di nuove regine e lo sviluppo di operaie ovificatrici. Quando quel segnale svanisce — perché è morta, sta deperendo, o la colonia è diventata troppo grande perché il suo odore raggiunga tutte — le operaie rispondono allevando una sostituta.
 
-Una regina si accoppia una sola volta nella vita, nell'arco di pochi giorni all'inizio, immagazzinando lo sperma per il resto dei suoi anni. In Openbeehive puoi registrare ogni regina, il suo colore di marcatura e l'anno, e la sua origine. Vedi [Regine](/using-the-app/queens).
+Una regina si accoppia una sola volta nella vita, nell'arco di pochi giorni all'inizio, immagazzinando lo sperma per il resto dei suoi anni. In Openbeehive puoi registrare ogni regina, il suo colore di marcatura e l'anno, e la sua origine. Vedi [Regine](../using-the-app/queens.md).
 
 :::tip Marcatura della regina
-Le regine vengono spesso marcate con un punto colorato secondo lo schema internazionale dei colori, che registra l'anno in cui è nata. Vedi [Colori di marcatura della regina](/knowledge-base/queen-marking-colours).
+Le regine vengono spesso marcate con un punto colorato secondo lo schema internazionale dei colori, che registra l'anno in cui è nata. Vedi [Colori di marcatura della regina](../knowledge-base/queen-marking-colours.md).
 :::
 
 ### Operaie
@@ -59,7 +59,7 @@ Il favo è costruito con la cera secreta da ghiandole sull'addome delle operaie 
 - Una fascia di **polline** ("pane delle api") intorno alla covata.
 - **Miele** immagazzinato in alto e ai bordi esterni, opercolato con cera quando è maturo.
 
-La covata si sviluppa attraverso tre stadi: **uovo** (3 giorni), **larva** (nutrita dalle nutrici, poi opercolata) e **pupa** (sigillata nella sua cella fino allo sfarfallamento). Imparare a leggere lo schema della covata — compatto e uniforme contro disomogeneo — è una delle abilità di ispezione più utili. Registra ciò che trovi nelle [Ispezioni](/using-the-app/inspections).
+La covata si sviluppa attraverso tre stadi: **uovo** (3 giorni), **larva** (nutrita dalle nutrici, poi opercolata) e **pupa** (sigillata nella sua cella fino allo sfarfallamento). Imparare a leggere lo schema della covata — compatto e uniforme contro disomogeneo — è una delle abilità di ispezione più utili. Registra ciò che trovi nelle [Ispezioni](../using-the-app/inspections.md).
 
 ## Il ciclo annuale della popolazione
 
@@ -71,7 +71,7 @@ La dimensione di una colonia sale e scende con le stagioni, seguendo la disponib
 - **Autunno** — la deposizione rallenta, i fuchi vengono scacciati e la colonia alleva speciali "api invernali" longeve.
 - **Inverno** — niente volo, niente covata (o pochissima); il glomere vive sul miele immagazzinato.
 
-Per una guida mese per mese vedi l'[Anno apistico](/beekeeping/beekeeping-year), e per i meccanismi della riproduzione naturale vedi [Sciamatura](/beekeeping/swarming).
+Per una guida mese per mese vedi l'[Anno apistico](./beekeeping-year.md), e per i meccanismi della riproduzione naturale vedi [Sciamatura](./swarming.md).
 
 ## Come comunica una colonia
 
@@ -85,7 +85,7 @@ La **danza dell'addome** (waggle dance) è il modo in cui una bottinatrice dice 
 
 Il miele è il carburante immagazzinato della colonia. Le bottinatrici raccolgono il **nettare** — acqua zuccherina dei fiori — in uno speciale stomaco del miele. Tornate all'arnia lo passano bocca a bocca alle api di casa, aggiungendo enzimi che iniziano a convertire gli zuccheri complessi del nettare in altri più semplici.
 
-Le api di casa poi spargono il nettare nelle celle e lo ventilano con le ali, eliminando acqua finché il contenuto di umidità scende intorno al 18–20%. A quel punto è stabile e non fermenterà, e le api **opercolano** la cella con un coperchio di cera. Quel miele opercolato e maturo è ciò di cui gli apicoltori raccolgono il surplus. Vedi [Raccolta del miele](/beekeeping/honey-harvest) e registra le rese nelle [Raccolte](/using-the-app/harvests).
+Le api di casa poi spargono il nettare nelle celle e lo ventilano con le ali, eliminando acqua finché il contenuto di umidità scende intorno al 18–20%. A quel punto è stabile e non fermenterà, e le api **opercolano** la cella con un coperchio di cera. Quel miele opercolato e maturo è ciò di cui gli apicoltori raccolgono il surplus. Vedi [Raccolta del miele](./honey-harvest.md) e registra le rese nelle [Raccolte](../using-the-app/harvests.md).
 
 ## Come una colonia supera l'inverno
 
@@ -94,7 +94,7 @@ Nei climi freddi la colonia non va in letargo e non riscalda l'intera arnia. Le 
 Il glomere funziona interamente sul miele immagazzinato, mangiandosi lentamente la strada verso l'alto attraverso i favi nel corso dei mesi. Due cose decidono se sopravvive: **scorte sufficienti** nel posto giusto e una popolazione di api invernali sane. Ecco perché la nutrizione autunnale e il controllo della varroa contano così tanto.
 
 :::caution Le perdite invernali sono reali
-Anche colonie dall'aspetto sano possono morire durante l'inverno per fame, malattia o un pesante carico di acari all'ingresso dell'autunno. Entrare nell'inverno forti e sani è di gran lunga più importante di qualsiasi intervento di pieno inverno. Vedi [Varroa](/beekeeping/varroa) e [Nutrizione](/beekeeping/feeding).
+Anche colonie dall'aspetto sano possono morire durante l'inverno per fame, malattia o un pesante carico di acari all'ingresso dell'autunno. Entrare nell'inverno forti e sani è di gran lunga più importante di qualsiasi intervento di pieno inverno. Vedi [Varroa](./varroa.md) e [Nutrizione](./feeding.md).
 :::
 
 :::note Variazione regionale

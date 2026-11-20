@@ -138,10 +138,10 @@ label for the required interval and follow it.
 
 Varroa is the headline threat, but good general health helps the colony cope:
 
-- Keep colonies strong and well fed; see [Feeding](/beekeeping/feeding).
+- Keep colonies strong and well fed; see [Feeding](./feeding.md).
 - Replace old, dark comb periodically to reduce disease load.
 - Watch for brood diseases and other pests; see
-  [Diseases & pests](/knowledge-base/diseases-and-pests) in the knowledge base.
+  [Diseases & pests](../knowledge-base/diseases-and-pests.md) in the knowledge base.
 - Some brood diseases are **notifiable** in many regions and must be reported to
   the authorities. Know your local rules.
 
@@ -154,7 +154,7 @@ countries.
 In Openbeehive you log each application as a **Treatment** against a hive: the
 date, product, active ingredient, method, dose, batch number, reason and the
 withdrawal-until date. Over time this builds a clear history of what you used
-and when. See [Treatments](/using-the-app/treatments).
+and when. See [Treatments](../using-the-app/treatments.md).
 
 :::note
 Keeping accurate treatment records is often a legal requirement, especially

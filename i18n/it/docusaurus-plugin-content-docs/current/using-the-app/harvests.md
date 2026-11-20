@@ -35,4 +35,4 @@ Il miele dovrebbe in genere essere sotto il 18% circa di acqua prima di essere v
 
 Una smielatura memorizza l'arnia, l'apiario e la regina il cui regno copriva la data del raccolto. Sostituire la regina o spostare l'arnia in seguito non cambia a cosa è attribuita una smielatura precedente.
 
-Funziona offline; vedi [Offline e sincronizzazione](/using-the-app/offline-and-sync). Per il prelievo e la lavorazione del miele, vedi la guida apistica sul [Raccolto del miele](/beekeeping/honey-harvest).
+Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md). Per il prelievo e la lavorazione del miele, vedi la guida apistica sul [Raccolto del miele](../beekeeping/honey-harvest.md).

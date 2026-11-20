@@ -25,7 +25,7 @@ Vos modifications sont enregistrées instantanément sur l'appareil. La synchron
 La synchronisation est sans conflit par conception. La modification la plus récente d'un champ l'emporte, les ajouts (photos, visites, récoltes, traitements) sont conservés, et vous ne perdrez pas de travail parce que deux appareils ont modifié en même temps.
 :::
 
-Si vous l'hébergez vous-même et que la synchronisation échoue pour tout le monde, le problème est plus probablement côté serveur. Voir [Configuration de l'auto-hébergement](/self-hosting/configuration) et vérifiez les journaux du serveur.
+Si vous l'hébergez vous-même et que la synchronisation échoue pour tout le monde, le problème est plus probablement côté serveur. Voir [Configuration de l'auto-hébergement](../self-hosting/configuration.md) et vérifiez les journaux du serveur.
 
 ## Comment fonctionne le stockage local
 
@@ -35,7 +35,7 @@ Quelques conséquences pratiques :
 
 - Vos données sont liées au navigateur et à l'appareil sur lequel vous utilisez Openbeehive. Chaque appareil conserve sa propre copie locale et se synchronise au serveur.
 - Le stockage OPFS est privé à l'origine de l'application. Les autres sites web ne peuvent pas le lire.
-- Installer l'application sur votre écran d'accueil (voir [Installation](/using-the-app/install)) utilise le même stockage que l'onglet du navigateur sur la plupart des plateformes.
+- Installer l'application sur votre écran d'accueil (voir [Installation](../using-the-app/install.md)) utilise le même stockage que l'onglet du navigateur sur la plupart des plateformes.
 
 :::caution
 Les outils de navigateur qui « effacent les données du site », « effacent les cookies et le stockage », ou la navigation privée/incognito peuvent effacer la base de données OPFS locale. Cela n'est sans danger **que si vos données ont déjà été synchronisées** sur le serveur, car elles seront retéléchargées à la prochaine connexion. Si vous avez des modifications hors ligne non synchronisées, assurez-vous d'être en ligne et laissez la synchronisation se terminer d'abord.
@@ -86,10 +86,10 @@ N'effacez pas le stockage si vous avez des modifications uniquement hors ligne q
 
 ## L'appareil photo et le scanner QR ne fonctionnent pas
 
-Chaque ruche peut porter une étiquette QR imprimable qui pointe directement vers cette ruche (voir [Étiquettes QR](/using-the-app/qr-labels)). Le scan nécessite l'accès à l'appareil photo.
+Chaque ruche peut porter une étiquette QR imprimable qui pointe directement vers cette ruche (voir [Étiquettes QR](../using-the-app/qr-labels.md)). Le scan nécessite l'accès à l'appareil photo.
 
 - **Accordez l'autorisation d'accès à l'appareil photo.** Lorsque cela vous est demandé, autorisez l'accès à l'appareil photo. Si vous l'aviez précédemment refusé, réactivez-le dans les réglages de votre navigateur ou de votre système d'exploitation pour le site, puis rechargez.
-- **Utilisez HTTPS.** Les navigateurs n'autorisent l'accès à l'appareil photo que sur des origines sécurisées. L'application hébergée est servie en HTTPS ; les auto-hébergeurs doivent aussi servir en HTTPS (ou `localhost` pour les tests). Voir [Proxy inverse](/self-hosting/reverse-proxy).
+- **Utilisez HTTPS.** Les navigateurs n'autorisent l'accès à l'appareil photo que sur des origines sécurisées. L'application hébergée est servie en HTTPS ; les auto-hébergeurs doivent aussi servir en HTTPS (ou `localhost` pour les tests). Voir [Proxy inverse](../self-hosting/reverse-proxy.md).
 - **Vérifiez qu'il n'est pas déjà utilisé.** Fermez les autres applications ou onglets susceptibles de mobiliser l'appareil photo.
 
 :::tip Safari sur iOS
@@ -99,7 +99,7 @@ Sur iPhone et iPad, le scanner intégré à l'application peut être restreint. 
 ## Problèmes de connexion
 
 - **Bloqué sur l'écran de connexion.** Confirmez que vous accédez à la bonne adresse (l'application hébergée est sur app.openbeehive.org). Après vous être connecté avec votre fournisseur, vous devriez être redirigé automatiquement ; sinon, rechargez la page.
-- **Échec de redirection ou erreurs « invalid redirect » (auto-hébergement).** Cela signifie presque toujours que l'URL de redirection OIDC ou `BEEHIVE_PUBLIC_BASE_URL` est mal configurée. Voir [Authentification et configuration](/self-hosting/authentication).
+- **Échec de redirection ou erreurs « invalid redirect » (auto-hébergement).** Cela signifie presque toujours que l'URL de redirection OIDC ou `BEEHIVE_PUBLIC_BASE_URL` est mal configurée. Voir [Authentification et configuration](../self-hosting/authentication.md).
 - **Passkey non proposée.** Les passkeys doivent être activées sur le serveur et vous devez en avoir ajouté une sous Paramètres → Passkeys. Sinon, connectez-vous avec une autre méthode.
 - **Auto-hébergement à utilisateur unique sans connexion.** Avec l'authentification par mot de passe désactivée, sans fournisseur OIDC et avec WebAuthn désactivé, il n'y a aucune étape de connexion. Si vous voyez de manière inattendue un écran de connexion, vérifiez la configuration de votre serveur.
 
@@ -122,4 +122,4 @@ Si rien de ce qui précède n'aide, veuillez ouvrir un ticket sur [github.com/op
 Veuillez ne pas coller de secrets. Masquez les secrets de session, les secrets client OIDC, les mots de passe de base de données et les données personnelles avant de partager des journaux ou de la configuration.
 :::
 
-Pour les questions d'auto-hébergement, commencez par la [référence de configuration](/self-hosting/configuration).
+Pour les questions d'auto-hébergement, commencez par la [référence de configuration](../self-hosting/configuration.md).

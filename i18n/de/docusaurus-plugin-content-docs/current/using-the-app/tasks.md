@@ -5,7 +5,7 @@ title: "Aufgaben"
 
 # Aufgaben
 
-Die Imkerei ist voller kleiner Arbeiten, die leicht zu vergessen sind: einen Honigraum vor der Tracht aufsetzen, am Tag vor dem Schleudern eine Bienenflucht einlegen, gegen Varroa behandeln, sobald der Honig herunter ist. Aufgaben sind Openbeehives Erinnerungen: ein Titel und ein optionales Fälligkeitsdatum. Funktioniert offline; siehe [Offline und Synchronisation](/using-the-app/offline-and-sync).
+Die Imkerei ist voller kleiner Arbeiten, die leicht zu vergessen sind: einen Honigraum vor der Tracht aufsetzen, am Tag vor dem Schleudern eine Bienenflucht einlegen, gegen Varroa behandeln, sobald der Honig herunter ist. Aufgaben sind Openbeehives Erinnerungen: ein Titel und ein optionales Fälligkeitsdatum. Funktioniert offline; siehe [Offline und Synchronisation](./offline-and-sync.md).
 
 ## Eine Aufgabe erstellen
 
@@ -36,7 +36,7 @@ Wenn du und ein Mitimker dieselbe Aufgabe auf verschiedenen Geräten abhakt, end
 
 ## Aufgaben auf der Übersicht
 
-Die Kachel **Offene Aufgaben** zählt Aufgaben, die nicht erledigt sind. **Anstehende Aufgaben** listet bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum; Aufgaben, deren Fälligkeit verstrichen ist, sind mit **!** markiert. Siehe [Das Dashboard](/using-the-app/dashboard).
+Die Kachel **Offene Aufgaben** zählt Aufgaben, die nicht erledigt sind. **Anstehende Aufgaben** listet bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum; Aufgaben, deren Fälligkeit verstrichen ist, sind mit **!** markiert. Siehe [Das Dashboard](./dashboard.md).
 
 :::tip
 Für wiederkehrende Arbeiten legst du die nächste Aufgabe an, wenn du die aktuelle abhakst. Nach einer 7-Tage-Schwarmkontrolle fügst du „Schwarmkontrolle" für die folgende Woche hinzu.
@@ -75,5 +75,5 @@ Für wiederkehrende Arbeiten legst du die nächste Aufgabe an, wenn du die aktue
 - Gerät reparieren und bauen, bereit für den Frühling.
 
 :::caution
-Das Timing von Behandlungen und die Produkte, die du legal verwenden darfst, variieren je nach Land und Region. Befolge deine örtlichen Vorgaben und das Produktetikett. Siehe [Varroa](/beekeeping/varroa).
+Das Timing von Behandlungen und die Produkte, die du legal verwenden darfst, variieren je nach Land und Region. Befolge deine örtlichen Vorgaben und das Produktetikett. Siehe [Varroa](../beekeeping/varroa.md).
 :::

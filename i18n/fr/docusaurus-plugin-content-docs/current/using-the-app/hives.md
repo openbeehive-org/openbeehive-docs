@@ -5,7 +5,7 @@ title: "Ruches"
 
 # Ruches
 
-Une ruche dans Openbeehive est une seule colonie dans une caisse physique. Presque tout ce que vous consignez au quotidien (visites, récoltes, traitements) se rattache à une ruche. Chaque ruche appartient à un seul rucher à la fois et peut avoir une reine. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Une ruche dans Openbeehive est une seule colonie dans une caisse physique. Presque tout ce que vous consignez au quotidien (visites, récoltes, traitements) se rattache à une ruche. Chaque ruche appartient à un seul rucher à la fois et peut avoir une reine. Fonctionne hors ligne ; voir [Hors ligne et synchronisation](./offline-and-sync.md).
 
 ## Créer une ruche
 
@@ -35,7 +35,7 @@ Gardez des noms courts et cohérents au sein d'un rucher, par exemple « 1 », �
 | Top-bar | Barres horizontales sans cadre. |
 | Autre | Tout ce qui n'est pas listé ci-dessus. |
 
-Pour une description plus complète de chaque standard, consultez [Types de ruche](/knowledge-base/hive-types).
+Pour une description plus complète de chaque standard, consultez [Types de ruche](../knowledge-base/hive-types.md).
 
 ### Statut
 
@@ -58,7 +58,7 @@ Pour déplacer une ruche, ouvrez-la, touchez l'action **Déplacer** et choisisse
 Chaque déplacement est consigné comme une entrée datée sous **Historique des emplacements** en bas de la page de la ruche, de sorte que vous savez où se trouvait une colonie à tout moment. Utile pour retracer une exposition aux maladies et pour les enregistrements de transhumance.
 
 :::caution
-Dans de nombreuses régions, le déplacement de ruches entre emplacements est soumis à des règles de santé et de mouvement des abeilles, en particulier au sein des zones de lutte contre les maladies. Vérifiez vos exigences nationales ou locales avant de déplacer des colonies. Consultez [Maladies et parasites](/knowledge-base/diseases-and-pests).
+Dans de nombreuses régions, le déplacement de ruches entre emplacements est soumis à des règles de santé et de mouvement des abeilles, en particulier au sein des zones de lutte contre les maladies. Vérifiez vos exigences nationales ou locales avant de déplacer des colonies. Consultez [Maladies et parasites](../knowledge-base/diseases-and-pests.md).
 :::
 
 ## La page de la ruche
@@ -71,7 +71,7 @@ L'en-tête affiche la photo, le nom, ainsi que le statut et le type. Les icônes
 
 - **Fiche de ruche** : un tableau imprimable de toutes les visites (avec un bouton **Imprimer**).
 - **Évolution** : des graphiques des relevés enregistrés lors des visites (cadres occupés, cadres de couvain, réserves de nourriture, cellules royales, douceur, tenue au cadre, varroa, poids de la ruche, nourrissement, larve la plus jeune, température et humidité) ainsi que les récoltes de miel dans le temps.
-- **Modifier la ruche**, **Déplacer**, **QR** (affiche l'étiquette de la ruche avec des boutons **Imprimer** et **SVG** ; voir [Étiquettes QR](/using-the-app/qr-labels)) et **Supprimer**.
+- **Modifier la ruche**, **Déplacer**, **QR** (affiche l'étiquette de la ruche avec des boutons **Imprimer** et **SVG** ; voir [Étiquettes QR](./qr-labels.md)) et **Supprimer**.
 
 ### Derniers relevés
 
@@ -79,15 +79,15 @@ Sous l'en-tête, des pastilles affichent les valeurs non nulles de la visite la 
 
 ### Reine
 
-La carte **Reine actuelle** affiche son année, son numéro, sa couleur de marquage, son origine et son commentaire, avec **Remplacer la reine** (ou **Définir la reine** si aucune n'est enregistrée). **Historique des reines** liste les reines précédentes avec leurs dates d'introduction et de remplacement. Voir [Reines](/using-the-app/queens).
+La carte **Reine actuelle** affiche son année, son numéro, sa couleur de marquage, son origine et son commentaire, avec **Remplacer la reine** (ou **Définir la reine** si aucune n'est enregistrée). **Historique des reines** liste les reines précédentes avec leurs dates d'introduction et de remplacement. Voir [Reines](./queens.md).
 
 ### Journal des visites
 
-**Enregistrer une visite** ouvre le formulaire de visite. En dessous, les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules royales, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos. **Voir les N visites** ouvre le journal complet. Voir [Visites](/using-the-app/inspections).
+**Enregistrer une visite** ouvre le formulaire de visite. En dessous, les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules royales, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos. **Voir les N visites** ouvre le journal complet. Voir [Visites](./inspections.md).
 
 ### Miel et Traitements
 
-**Miel** affiche le total des récoltes de la ruche dans son titre et liste chaque récolte (**Enregistrer une récolte**). **Traitements** liste chaque traitement (**Enregistrer un traitement**). Voir [Récoltes](/using-the-app/harvests) et [Traitements](/using-the-app/treatments).
+**Miel** affiche le total des récoltes de la ruche dans son titre et liste chaque récolte (**Enregistrer une récolte**). **Traitements** liste chaque traitement (**Enregistrer un traitement**). Voir [Récoltes](./harvests.md) et [Traitements](./treatments.md).
 
 ## Supprimer ou retirer une ruche
 

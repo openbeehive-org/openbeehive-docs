@@ -95,8 +95,8 @@ as soon as the device has pushed them.
 - `EventService` is read-only. Events are written by the flows above and by
   the app.
 
-See the [sync protocol](/developers/sync-protocol) for the change format and
-the [data model](/developers/data-model) for the columns behind each message.
+See the [sync protocol](../developers/sync-protocol.md) for the change format and
+the [data model](../developers/data-model.md) for the columns behind each message.
 
 ## Non-RPC endpoints
 
@@ -220,14 +220,14 @@ With `BEEHIVE_DEMO=true`, demo sessions are read-only: the demo account can
 call only RPCs whose names start with `Get`, `List`, `Pull` or `Subscribe`.
 Every other RPC returns `permission_denied`.
 
-See [Authentication](/self-hosting/authentication) for how to configure the
+See [Authentication](../self-hosting/authentication.md) for how to configure the
 login methods.
 
 ## Protocol pages
 
-- [REST / HTTP + JSON](/using-the-api/rest): curl examples, the JSON shape
+- [REST / HTTP + JSON](./rest.md): curl examples, the JSON shape
   and the pagination contract.
-- [gRPC](/using-the-api/grpc): generated clients and the streaming
+- [gRPC](./grpc.md): generated clients and the streaming
   `Subscribe` call.
-- [Automated trackers](/using-the-api/automated-trackers): posting hive-scale
+- [Automated trackers](./automated-trackers.md): posting hive-scale
   and climate readings from a script or device.

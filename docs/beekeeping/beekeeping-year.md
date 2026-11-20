@@ -20,9 +20,9 @@ As days lengthen, the queen starts laying again and the colony begins to grow. T
 What to do:
 
 - Keep disturbance to a minimum. A quick "heft" of the hive (lifting one side to judge weight) tells you whether stores are running low without opening up.
-- On the first mild, still day, a brief peek confirms the colony is alive, queenright and has food. Feed if stores are short (see [Feeding](/beekeeping/feeding)).
+- On the first mild, still day, a brief peek confirms the colony is alive, queenright and has food. Feed if stores are short (see [Feeding](./feeding.md)).
 - Clean and prepare equipment: spare boxes, frames and foundation for the season ahead.
-- Plan your varroa strategy now rather than in a panic later (see [Varroa](/beekeeping/varroa)).
+- Plan your varroa strategy now rather than in a panic later (see [Varroa](./varroa.md)).
 
 Record the first inspection and any feeding as you go. Logging stores levels early gives you a baseline for the year.
 
@@ -34,11 +34,11 @@ What to do:
 
 - Inspect roughly every seven to nine days through the build-up. This cadence matches the queen-cell cycle and lets you catch swarm preparations before they go too far.
 - Watch for queen cells, congestion and a colony "boiling" with bees. Give space early by adding boxes or supers.
-- Apply your chosen swarm-control method if cells appear (see [Swarming](/beekeeping/swarming)).
-- Consider raising new queens or making increase from strong stock (see [Queen rearing](/beekeeping/queen-rearing)).
+- Apply your chosen swarm-control method if cells appear (see [Swarming](./swarming.md)).
+- Consider raising new queens or making increase from strong stock (see [Queen rearing](./queen-rearing.md)).
 
 :::tip Use tasks to stay on rhythm
-The seven-day cycle is easy to lose track of across several hives. Add a task with a due date for the next visit, and when you tick it off, add the next one. See [Tasks](/using-the-app/tasks).
+The seven-day cycle is easy to lose track of across several hives. Add a task with a due date for the next visit, and when you tick it off, add the next one. See [Tasks](../using-the-app/tasks.md).
 :::
 
 ## Summer: the honey flow
@@ -50,7 +50,7 @@ What to do:
 - Keep ahead of the bees with super space. A crowded colony stores less and is more likely to swarm.
 - Continue inspections, but you can ease the frequency once the swarming urge passes (often after the longest day).
 - Monitor varroa levels through the season so you are not surprised at harvest time.
-- Harvest capped honey when frames are ready and the flow tails off (see [Honey harvest](/beekeeping/honey-harvest)).
+- Harvest capped honey when frames are ready and the flow tails off (see [Honey harvest](./honey-harvest.md)).
 
 Record each harvest with weights and which hives produced it. Over a few seasons this turns into genuinely useful data about your best colonies and your best forage.
 
@@ -65,10 +65,10 @@ What to do:
 - Once treatment allows, feed to top up winter stores if the colony is light. Feed concentrated syrup in good time so the bees can ripen and cap it before it turns cold.
 
 :::caution Treatment rules vary by country
-Approved varroa treatments, dose rates and timing differ between regions, and some have legal requirements. Always use a product licensed where you live and follow national guidance. See [Varroa](/beekeeping/varroa) for an overview, but check local rules.
+Approved varroa treatments, dose rates and timing differ between regions, and some have legal requirements. Always use a product licensed where you live and follow national guidance. See [Varroa](./varroa.md) for an overview, but check local rules.
 :::
 
-Log every treatment: product, dose and dates. This protects you, helps you judge what works, and keeps an honest health history for each hive. The app's [Treatments](/using-the-app/treatments) records are designed exactly for this.
+Log every treatment: product, dose and dates. This protects you, helps you judge what works, and keeps an honest health history for each hive. The app's [Treatments](../using-the-app/treatments.md) records are designed exactly for this.
 
 ## Autumn: preparation
 
@@ -82,7 +82,7 @@ What to do:
 - Ensure ventilation and that the hive sheds rain. Secure roofs against wind.
 - Tidy and store drawn comb safely against wax moth.
 
-Use tasks to make sure no hive is missed. A simple "winter prep" checklist task per hive means nothing slips through before the cold sets in. See [Tasks](/using-the-app/tasks).
+Use tasks to make sure no hive is missed. A simple "winter prep" checklist task per hive means nothing slips through before the cold sets in. See [Tasks](../using-the-app/tasks.md).
 
 ## Winter: the cluster rests
 
@@ -104,4 +104,4 @@ Winter is the perfect time to look back. Reviewing each hive's inspections, harv
 
 The year is a loop: build-up, swarm season, honey flow, treat and feed, prepare, rest. Each phase sets up the next, and good records are what connect them.
 
-The more consistently you record inspections, tasks, harvests and treatments, the easier the following year becomes. For more on the colony's biology behind these rhythms, see [The colony](/beekeeping/the-colony), and for the wider beekeeping guides start at the [Beekeeping section](/category/beekeeping-basics).
+The more consistently you record inspections, tasks, harvests and treatments, the easier the following year becomes. For more on the colony's biology behind these rhythms, see [The colony](./the-colony.md), and for the wider beekeeping guides start at the [Beekeeping section](/category/beekeeping-basics).

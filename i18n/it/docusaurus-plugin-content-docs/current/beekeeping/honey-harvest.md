@@ -133,6 +133,6 @@ contenuto d'acqua, il tuo numero di lotto e la data di consumo preferibile, più
 nota per gusto o cristallizzazione. Il numero di lotto che salvi qui è quello da
 stampare sul vasetto, chiudendo il cerchio dal favo allo scaffale.
 
-Vedi [Raccolte nell'app](/using-the-app/harvests) per come inserire e gestire
+Vedi [Raccolte nell'app](../using-the-app/harvests.md) per come inserire e gestire
 i tuoi registri di raccolta, e la più ampia [guida apistica](/category/beekeeping-basics) per la
 stagione attorno alla raccolta.

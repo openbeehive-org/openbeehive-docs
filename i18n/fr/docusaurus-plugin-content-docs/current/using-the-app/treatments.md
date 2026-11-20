@@ -49,7 +49,7 @@ Notez le numéro de lot directement depuis l'emballage au moment où vous traite
 4. Définissez la date du **délai d'attente jusqu'au** si le produit prévoit un délai d'attente.
 5. Enregistrez.
 
-Fonctionne hors ligne ; consultez [Hors ligne et synchronisation](/using-the-app/offline-and-sync).
+Fonctionne hors ligne ; consultez [Hors ligne et synchronisation](./offline-and-sync.md).
 
 ## Délais d'attente et récolte
 
@@ -74,4 +74,4 @@ Comme les entrées de traitement se synchronisent sur tous vos appareils, le reg
 
 ## Traitements et varroa
 
-L'acarien varroa est la raison pour laquelle la plupart des apiculteurs ont recours à un traitement en premier lieu, et bien gérer le calendrier tout au long de la saison est un sujet à part entière. Pour une vision plus complète de la surveillance du niveau d'infestation, du choix d'une approche et de la planification des traitements au fil de l'année apicole, consultez [le guide du varroa](/beekeeping/varroa).
+L'acarien varroa est la raison pour laquelle la plupart des apiculteurs ont recours à un traitement en premier lieu, et bien gérer le calendrier tout au long de la saison est un sujet à part entière. Pour une vision plus complète de la surveillance du niveau d'infestation, du choix d'une approche et de la planification des traitements au fil de l'année apicole, consultez [le guide du varroa](../beekeeping/varroa.md).

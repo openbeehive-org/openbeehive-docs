@@ -8,7 +8,7 @@ title: "Equipo y tipos de colmena"
 La apicultura no exige una gran cantidad de material, pero unas pocas buenas herramientas hacen que cada visita sea más tranquila, segura y rápida. Esta página cubre lo esencial y luego ofrece una visión general de los principales sistemas de colmena para que puedas elegir el que más te convenga y registrarlo correctamente en Openbeehive.
 
 :::tip
-Cuando creas una colmena en Openbeehive, eliges su tipo (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar u Otro). Elegir el correcto mantiene coherentes el número de cuadros y las notas de equipo en todo tu colmenar. Consulta [Colmenas](/using-the-app/hives).
+Cuando creas una colmena en Openbeehive, eliges su tipo (Zander, Dadant, Deutsch Normal, Langstroth, Warré, Top-bar u Otro). Elegir el correcto mantiene coherentes el número de cuadros y las notas de equipo en todo tu colmenar. Consulta [Colmenas](../using-the-app/hives.md).
 :::
 
 ## Lo esencial
@@ -52,13 +52,13 @@ Una **palanca** plana de acero se usa constantemente: para separar cajas pegadas
 
 Un **alimentador** te permite dar a la colonia jarabe de azúcar (en primavera u otoño) o cándi (en invierno). Los tipos habituales incluyen alimentadores de contacto (de cubo), alimentadores de cuadro que cuelgan dentro de la caja y alimentadores de bandeja que se colocan sobre la entretapa.
 
-Registra la alimentación en Openbeehive para que sepas qué recibió cada colonia y cuándo. Consulta [Alimentación](/beekeeping/feeding).
+Registra la alimentación en Openbeehive para que sepas qué recibió cada colonia y cuándo. Consulta [Alimentación](./feeding.md).
 
 ### Conceptos básicos de la extracción
 
 Para retirar la miel, necesitarás una forma de desopercular las celdillas selladas (un peine o cuchillo desoperculador, o un cuchillo caliente) y un medio para extraer la miel del panal. La mayoría de los apicultores usan un **extractor centrífugo**, que hace girar la miel fuera de los cuadros para que el panal estirado pueda reutilizarse. También querrás un colador y cubos limpios de grado alimentario para decantar y envasar.
 
-Para un recorrido completo, consulta [Cosecha de miel](/beekeeping/honey-harvest) y registra los rendimientos en [Cosechas](/using-the-app/harvests).
+Para un recorrido completo, consulta [Cosecha de miel](./honey-harvest.md) y registra los rendimientos en [Cosechas](../using-the-app/harvests.md).
 
 ## Sistemas de colmena
 
@@ -78,7 +78,7 @@ Los sistemas de cuadros móviles (Langstroth, Dadant, Zander, Deutsch Normal) fu
 Si tu colmena no coincide con ninguna de estas, elige **Otro** en Openbeehive y anota los detalles en la nota de una visita.
 
 :::note
-No existe una única colmena "mejor". La elección más práctica suele ser la que usen tu **asociación local y los apicultores cercanos**, para que puedas tomar prestado equipo, intercambiar cuadros y recibir ayuda práctica. Para una comparación más detallada y las dimensiones de los cuadros, consulta [Tipos de colmena](/knowledge-base/hive-types).
+No existe una única colmena "mejor". La elección más práctica suele ser la que usen tu **asociación local y los apicultores cercanos**, para que puedas tomar prestado equipo, intercambiar cuadros y recibir ayuda práctica. Para una comparación más detallada y las dimensiones de los cuadros, consulta [Tipos de colmena](../knowledge-base/hive-types.md).
 :::
 
 ## Comprar nuevo o usado
@@ -97,4 +97,4 @@ Orientación sensata para el equipo usado:
 - **Cuadros y panal** — evítalos salvo que provengan de una fuente de confianza con un estado sanitario impecable. El panal viejo es barato de reemplazar y, de todos modos, conviene renovarlo regularmente.
 - **Colonias completas** — cómpralas solo a un apicultor de buena reputación, idealmente tras una inspección sanitaria cuadro a cuadro. Comprueba el patrón de cría y busca signos de enfermedad.
 
-La notificación de enfermedades y las normas varían según el país y la región; **la AFB es de declaración obligatoria en muchos lugares**. Consulta a tu autoridad nacional de sanidad apícola y a tu asociación local antes de introducir cualquier equipo usado o colonias nuevas. Consulta [Enfermedades y plagas](/knowledge-base/diseases-and-pests).
+La notificación de enfermedades y las normas varían según el país y la región; **la AFB es de declaración obligatoria en muchos lugares**. Consulta a tu autoridad nacional de sanidad apícola y a tu asociación local antes de introducir cualquier equipo usado o colonias nuevas. Consulta [Enfermedades y plagas](../knowledge-base/diseases-and-pests.md).

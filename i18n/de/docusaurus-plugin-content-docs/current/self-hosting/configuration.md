@@ -10,7 +10,7 @@ Openbeehive wird vollständig über Umgebungsvariablen konfiguriert. Diese Seite
 Du kannst diese Variablen in deiner Shell, in einer `.env`-Datei neben der Binärdatei, in deiner `docker compose`-Datei oder über den Secrets-Manager deiner Hosting-Plattform setzen. Der Server liest sie einmal beim Start, daher werden Änderungen erst nach einem Neustart wirksam.
 
 :::tip Klein anfangen
-Du brauchst nur eine Handvoll davon, um loszulegen. Für einen Heimserver mit einem Benutzer setzt du `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, ein `BEEHIVE_SESSION_SECRET` und lässt den Rest auf den Standardwerten. Siehe den [Schnellstart](/self-hosting/quick-start), um in wenigen Minuten loszulegen.
+Du brauchst nur eine Handvoll davon, um loszulegen. Für einen Heimserver mit einem Benutzer setzt du `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, ein `BEEHIVE_SESSION_SECRET` und lässt den Rest auf den Standardwerten. Siehe den [Schnellstart](./quick-start.md), um in wenigen Minuten loszulegen.
 :::
 
 ## Wie das Deployment-Profil funktioniert
@@ -25,7 +25,7 @@ Die mit Abstand wichtigste Einstellung ist `BEEHIVE_DEPLOYMENT_PROFILE`. Sie wä
 Das Profil setzt nur *Standardwerte*. Jede Variable, die du explizit setzt, gewinnt immer. Du kannst zum Beispiel das `selfhost`-Profil verwenden, es aber auf PostgreSQL zeigen lassen, indem du `BEEHIVE_DATABASE_DRIVER` und `BEEHIVE_DATABASE_DSN` selbst setzt.
 
 :::note
-Die beiden Profile werden ausführlich auf ihren eigenen Seiten dokumentiert: [Einzelne Binärdatei](/self-hosting/single-binary) und [Docker](/self-hosting/docker). Diese Seite konzentriert sich auf die Variablen selbst.
+Die beiden Profile werden ausführlich auf ihren eigenen Seiten dokumentiert: [Einzelne Binärdatei](./single-binary.md) und [Docker](./docker.md). Diese Seite konzentriert sich auf die Variablen selbst.
 :::
 
 ## Deployment-Profil
@@ -103,7 +103,7 @@ BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
 
-Für Treiberauswahl, Tuning und Migrationshinweise siehe [Datenbanken](/self-hosting/databases).
+Für Treiberauswahl, Tuning und Migrationshinweise siehe [Datenbanken](./databases.md).
 
 ## Blob-Speicher
 
@@ -120,7 +120,7 @@ Fotos und andere Anhänge werden als Blobs gespeichert, entweder auf dem lokalen
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Bucket-Name, in dem Blobs gespeichert werden.                          |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Setze `true`, um über HTTPS mit dem Endpunkt zu verbinden.             |
 
-Die `MINIO_*`-Variablen werden nur verwendet, wenn `BEEHIVE_BLOB_BACKEND=minio`. Für vollständige Hinweise siehe [Speicher](/self-hosting/storage).
+Die `MINIO_*`-Variablen werden nur verwendet, wenn `BEEHIVE_BLOB_BACKEND=minio`. Für vollständige Hinweise siehe [Speicher](./storage.md).
 
 ## Sitzung und Authentifizierung
 
@@ -137,7 +137,7 @@ Setze immer ein starkes, eindeutiges `BEEHIVE_SESSION_SECRET` und halte es gehei
 
 Eingebaute Konten für Mehrbenutzer-Instanzen ohne externen Identitätsanbieter.
 Der Instanz-Admin ist ein eigenes Konto, das du konfigurierst – nicht die erste Person,
-die sich registriert. Siehe [Authentifizierung](/self-hosting/authentication).
+die sich registriert. Siehe [Authentifizierung](./authentication.md).
 
 | Variable | Standard | Beschreibung |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ die sich registriert. Siehe [Authentifizierung](/self-hosting/authentication).
 ## Demo-Mandant
 
 Installiert ein Demo-Schaukonto und einen Demo-Mandanten. Standardmäßig deaktiviert — siehe
-[Demo-Modus](/self-hosting/demo).
+[Demo-Modus](./demo.md).
 
 | Variable | Standard | Beschreibung |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 Für eine persönliche selbst gehostete Instanz kannst du die Anmeldung komplett überspringen: Lass `BEEHIVE_PASSWORD_AUTH` aus (der selfhost-Standard), `BEEHIVE_OIDC_PROVIDERS` leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Die App läuft dann im Einzelbenutzermodus ohne Anmeldeschritt.
 :::
 
-Für Anleitungen zur Anbietereinrichtung, Weiterleitungs-URLs und Sicherheitshinweise siehe [Authentifizierung](/self-hosting/authentication).
+Für Anleitungen zur Anbietereinrichtung, Weiterleitungs-URLs und Sicherheitshinweise siehe [Authentifizierung](./authentication.md).
 
 ## Ein minimales selfhost-Beispiel
 

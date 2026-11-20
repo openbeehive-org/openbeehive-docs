@@ -79,7 +79,7 @@ Cada alimentación merece ser registrada. Saber cuánto jarabe o cándi tomó un
 
 En Openbeehive, anota la alimentación como parte de la visita: introduce la cantidad en el campo **Alimentada** (kg) y apunta el tipo de alimento (jarabe ligero, jarabe pesado o cándi) en la nota, para que quede junto a todo lo demás que viste ese día.
 
-Consulta [Inspecciones](/using-the-app/inspections) para saber cómo registrar una visita y captar las cantidades de alimentación.
+Consulta [Inspecciones](../using-the-app/inspections.md) para saber cómo registrar una visita y captar las cantidades de alimentación.
 
 :::tip
 A lo largo de una temporada, tus registros de alimentación se convierten en una imagen útil de la salud de cada colonia. Una colmena que siempre necesita alimento extra puede tener un problema de alimento disponible, población o reina que merece la pena investigar.

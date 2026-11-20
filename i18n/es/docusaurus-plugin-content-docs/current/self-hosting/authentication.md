@@ -18,7 +18,7 @@ Openbeehive te permite elegir cuánta autenticación necesitas. Un apicultor en 
 
 Los métodos de inicio de sesión se combinan. La pantalla de inicio de sesión ofrece los que estén habilitados, y una misma cuenta funciona con todos ellos: iniciar sesión con un proveedor se vincula a una cuenta de correo y contraseña existente con el mismo correo.
 
-Habilitar cualquier método de inicio de sesión también habilita los espacios (tenants) y las invitaciones (Ajustes → Espacios); consulta [Cuentas y espacios](/using-the-app/accounts-tenants).
+Habilitar cualquier método de inicio de sesión también habilita los espacios (tenants) y las invitaciones (Ajustes → Espacios); consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md).
 
 ## Modo 1: un solo usuario, sin inicio de sesión
 
@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 Mantén `BEEHIVE_SESSION_SECRET` en secreto y estable. Cualquiera que lo conozca puede falsificar sesiones. Si lo cambias, todas las sesiones existentes quedan invalidadas. Nunca lo subas al control de versiones.
 :::
 
-Si sirves la aplicación a través de HTTPS mediante un proxy inverso, asegúrate de que `BEEHIVE_PUBLIC_BASE_URL` use `https://` para que los enlaces de redirección e invitación sean correctos. Consulta [Proxy inverso](/self-hosting/reverse-proxy).
+Si sirves la aplicación a través de HTTPS mediante un proxy inverso, asegúrate de que `BEEHIVE_PUBLIC_BASE_URL` use `https://` para que los enlaces de redirección e invitación sean correctos. Consulta [Proxy inverso](./reverse-proxy.md).
 
 ## Modo 2: correo y contraseña (cuentas en la aplicación)
 
@@ -79,7 +79,7 @@ El servidor garantiza esta cuenta en cada arranque: se crea si falta, su rol se 
 
 Para impedir que desconocidos creen cuentas, establece `BEEHIVE_REGISTRATION=false`. El administrador viene del entorno, así que una instancia nueva siempre tiene uno. Todos los demás se unen mediante enlaces de invitación, que un admin de espacio emite desde Ajustes → Espacios. El registro a través de un enlace de invitación debe usar la dirección de correo invitada. La pantalla de inicio de sesión muestra un aviso de que la instancia es solo por invitación; las cuentas existentes inician sesión con normalidad.
 
-Cada cuenta nueva comienza con su propio [espacio](/using-the-app/accounts-tenants) personal. Solo la cuenta de administrador configurada lleva el rol de administrador de la instancia.
+Cada cuenta nueva comienza con su propio [espacio](../using-the-app/accounts-tenants.md) personal. Solo la cuenta de administrador configurada lleva el rol de administrador de la instancia.
 
 ### Verificación de correo opcional
 
@@ -181,4 +181,4 @@ Reinicia el servidor y carga la aplicación en un navegador:
 2. Con un método de inicio de sesión habilitado, la pantalla de inicio de sesión ofrece cada método habilitado (y "Explorar la demo" si la demo está activa).
 3. Completa un inicio de sesión y confirma que llegas al Resumen y que los registros se sincronizan.
 
-Si algo no funciona, revisa los registros del servidor y [Resolución de problemas](/knowledge-base/troubleshooting).
+Si algo no funciona, revisa los registros del servidor y [Resolución de problemas](../knowledge-base/troubleshooting.md).

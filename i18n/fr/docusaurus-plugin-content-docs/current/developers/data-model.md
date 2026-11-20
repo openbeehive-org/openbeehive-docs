@@ -14,10 +14,10 @@ que montre l'application (`app/src/lib/i18n/locales/en.json`).
 
 Chaque table synchronisée porte trois colonnes de gestion qui ne sont pas
 répétées ci-dessous : `organization_id` (espace, tenant), `field_hlc` (horloge de
-champ en JSON, voir le [protocole de synchronisation](/developers/sync-protocol))
+champ en JSON, voir le [protocole de synchronisation](./sync-protocol.md))
 et `deleted` (indicateur de suppression douce). Les ids sont des UUID, générés
 sur l'appareil ou par le serveur pour les lignes créées via
-l'[API](/using-the-api/overview). Les horodatages sont stockés sous forme de
+l'[API](../using-the-api/overview.md). Les horodatages sont stockés sous forme de
 chaînes ISO 8601 sur le client et en `TIMESTAMP` sur le serveur.
 
 ## Hiérarchie
@@ -53,7 +53,7 @@ le message `Change`.
 
 | Colonne | Type | Notes |
 | --- | --- | --- |
-| `id` | text | également encodé dans l'[étiquette QR](/developers/qr-codes) |
+| `id` | text | également encodé dans l'[étiquette QR](./qr-codes.md) |
 | `apiary_id` | text | rucher actuel |
 | `name` | text | |
 | `type` | int | `HiveType`, voir ci-dessous |
@@ -189,7 +189,7 @@ Une tâche sans `apiary_id` se synchronise sous le scope personnel
 `EventType` : 1 Créée, 2 Reine introduite, 3 Reine remplacée, 4 Déplacée,
 5 Visite, 6 Traitement, 7 Récolte, 8 Statut, 9 Dissoute. L'application écrit
 les types 1 à 7 (`app/src/lib/local/history.ts`). Voir
-[Historique et événements](/developers/history-and-events).
+[Historique et événements](./history-and-events.md).
 
 ## Tables réservées au serveur
 

@@ -18,7 +18,7 @@ Openbeehive mantiene una copia completa de tus registros en una pequeña base de
 - **Tus datos son tuyos.** Los registros viven en tu dispositivo; el servidor es la copia para sincronizar y compartir.
 
 :::tip
-Como los registros se almacenan en el dispositivo, instala Openbeehive como una aplicación en lugar de usarlo en una pestaña del navegador. Consulta [Instalar Openbeehive](/using-the-app/install).
+Como los registros se almacenan en el dispositivo, instala Openbeehive como una aplicación en lugar de usarlo en una pestaña del navegador. Consulta [Instalar Openbeehive](./install.md).
 :::
 
 ## El indicador de sin conexión
@@ -28,7 +28,7 @@ Cuando el dispositivo no tiene conexión, el bloque de cuenta de la barra latera
 Cuando el dispositivo vuelve a estar en línea, la barra desaparece y cualquier cambio hecho sin conexión se envía automáticamente. No hay ningún botón de "sincronizar ahora".
 
 :::note
-Un indicador de sin conexión persistente normalmente significa poca cobertura en el colmenar. Si se mantiene incluso con una buena conexión en casa, consulta [Resolución de problemas](/knowledge-base/troubleshooting).
+Un indicador de sin conexión persistente normalmente significa poca cobertura en el colmenar. Si se mantiene incluso con una buena conexión en casa, consulta [Resolución de problemas](../knowledge-base/troubleshooting.md).
 :::
 
 ## Tu primera sincronización en un dispositivo nuevo
@@ -56,7 +56,7 @@ Openbeehive resuelve los cambios superpuestos **automáticamente**, sin avisos d
 Cada dispositivo converge en el mismo estado una vez que todos se han sincronizado.
 
 :::tip
-La versión corta: añade con libertad, edita con confianza. Cómo funciona esto por dentro se explica en las páginas del [protocolo de sincronización](/developers/sync-protocol) y la [arquitectura](/developers/architecture).
+La versión corta: añade con libertad, edita con confianza. Cómo funciona esto por dentro se explica en las páginas del [protocolo de sincronización](../developers/sync-protocol.md) y la [arquitectura](../developers/architecture.md).
 :::
 
 ## Compartir
@@ -68,7 +68,7 @@ Los registros se comparten mediante **espacios** (tenants). Todos los miembros d
 | **Admin** (propietario del espacio) | Todo lo que puede hacer un miembro, además de invitar y revocar, y eliminar el espacio. |
 | **Miembro** | Añadir y editar colmenares, colmenas, visitas, tareas, cosechas y tratamientos en el espacio. |
 
-Para compartir un emplazamiento con un mentor mientras mantienes otros privados, pon ese emplazamiento en su propio espacio e invita allí al mentor. Los registros compartidos se sincronizan y resuelven los conflictos exactamente igual que los tuyos. Consulta [Cuentas y espacios](/using-the-app/accounts-tenants).
+Para compartir un emplazamiento con un mentor mientras mantienes otros privados, pon ese emplazamiento en su propio espacio e invita allí al mentor. Los registros compartidos se sincronizan y resuelven los conflictos exactamente igual que los tuyos. Consulta [Cuentas y espacios](./accounts-tenants.md).
 
 ## Si algo no se puede guardar
 
@@ -76,10 +76,10 @@ El guardado ocurre en tu dispositivo, así que prácticamente nunca falla. Si oc
 
 En la **cuenta de demostración** pública el servidor rechaza los cambios (la demo se reinicia cada hora). Tus cambios se guardan en tu dispositivo y simplemente se quedan ahí en lugar de sincronizarse.
 
-Hay una situación en la que guardar funciona pero no perdura: si el navegador no puede darle a la aplicación su almacenamiento privado, la aplicación recurre a una base de datos en memoria y muestra el aviso **"El almacenamiento no está disponible: los cambios no se conservarán en este dispositivo."** Todo sigue funcionando durante la sesión, y los cambios se siguen sincronizando con el servidor si has iniciado sesión, pero la copia local desaparece al cerrar la pestaña. Esto ocurre en ventanas de navegación privada y cuando una segunda pestaña de la aplicación sigue reteniendo el almacenamiento; consulta [Resolución de problemas](/knowledge-base/troubleshooting#storage-is-unavailable).
+Hay una situación en la que guardar funciona pero no perdura: si el navegador no puede darle a la aplicación su almacenamiento privado, la aplicación recurre a una base de datos en memoria y muestra el aviso **"El almacenamiento no está disponible: los cambios no se conservarán en este dispositivo."** Todo sigue funcionando durante la sesión, y los cambios se siguen sincronizando con el servidor si has iniciado sesión, pero la copia local desaparece al cerrar la pestaña. Esto ocurre en ventanas de navegación privada y cuando una segunda pestaña de la aplicación sigue reteniendo el almacenamiento; consulta [Resolución de problemas](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
 ## ¿Perderé datos alguna vez?
 
 Tus registros se escriben primero en tu dispositivo y no se eliminan porque estés sin conexión o porque la aplicación se cierre. Esperan en el dispositivo hasta que se puedan sincronizar.
 
-Si te autoalojas, mantén también copias de seguridad del servidor. Consulta [Copias de seguridad](/self-hosting/backups).
+Si te autoalojas, mantén también copias de seguridad del servidor. Consulta [Copias de seguridad](../self-hosting/backups.md).

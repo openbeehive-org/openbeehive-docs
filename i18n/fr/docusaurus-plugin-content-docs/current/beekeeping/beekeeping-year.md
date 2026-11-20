@@ -20,9 +20,9 @@ Les mois du calendrier ci-dessous supposent l'hémisphère nord. Dans l'hémisph
 Que faire :
 
 - Réduisez les dérangements au minimum. Un rapide « soupèsement » de la ruche (soulever un côté pour juger du poids) vous indique si les réserves baissent sans avoir à ouvrir.
-- Le premier jour doux et calme, un bref coup d'œil confirme que la colonie est vivante, pourvue d'une reine et qu'elle a de la nourriture. Nourrissez si les réserves sont basses (consultez [Nourrissement](/beekeeping/feeding)).
+- Le premier jour doux et calme, un bref coup d'œil confirme que la colonie est vivante, pourvue d'une reine et qu'elle a de la nourriture. Nourrissez si les réserves sont basses (consultez [Nourrissement](./feeding.md)).
 - Nettoyez et préparez le matériel : boîtes de rechange, cadres et cire gaufrée pour la saison à venir.
-- Planifiez votre stratégie contre le varroa dès maintenant plutôt que dans la panique plus tard (consultez [Varroa](/beekeeping/varroa)).
+- Planifiez votre stratégie contre le varroa dès maintenant plutôt que dans la panique plus tard (consultez [Varroa](./varroa.md)).
 
 Consignez la première visite et tout nourrissement au fur et à mesure. Enregistrer tôt les niveaux de réserves vous donne une référence pour l'année.
 
@@ -34,11 +34,11 @@ Que faire :
 
 - Inspectez environ tous les sept à neuf jours pendant le développement. Cette cadence correspond au cycle des cellules royales et vous permet de détecter les préparatifs d'essaimage avant qu'ils n'aillent trop loin.
 - Surveillez les cellules royales, la congestion et une colonie « débordante » d'abeilles. Donnez de la place tôt en ajoutant des boîtes ou des hausses.
-- Appliquez la méthode de contrôle de l'essaimage que vous avez choisie si des cellules apparaissent (consultez [Essaimage](/beekeeping/swarming)).
-- Envisagez d'élever de nouvelles reines ou de faire des divisions à partir d'un cheptel fort (consultez [Élevage de reines](/beekeeping/queen-rearing)).
+- Appliquez la méthode de contrôle de l'essaimage que vous avez choisie si des cellules apparaissent (consultez [Essaimage](./swarming.md)).
+- Envisagez d'élever de nouvelles reines ou de faire des divisions à partir d'un cheptel fort (consultez [Élevage de reines](./queen-rearing.md)).
 
 :::tip Utilisez les tâches pour garder le rythme
-Le cycle de sept jours est facile à perdre de vue lorsqu'on a plusieurs ruches. Ajoutez une tâche avec une date d'échéance pour la prochaine visite et, lorsque vous la cochez, ajoutez la suivante. Consultez [Tâches](/using-the-app/tasks).
+Le cycle de sept jours est facile à perdre de vue lorsqu'on a plusieurs ruches. Ajoutez une tâche avec une date d'échéance pour la prochaine visite et, lorsque vous la cochez, ajoutez la suivante. Consultez [Tâches](../using-the-app/tasks.md).
 :::
 
 ## Été : la miellée
@@ -50,7 +50,7 @@ Que faire :
 - Restez en avance sur les abeilles avec de l'espace de hausses. Une colonie à l'étroit stocke moins et est plus susceptible d'essaimer.
 - Poursuivez les visites, mais vous pouvez en réduire la fréquence une fois l'envie d'essaimer passée (souvent après le jour le plus long).
 - Surveillez les niveaux de varroa tout au long de la saison afin de ne pas être surpris au moment de la récolte.
-- Récoltez le miel operculé lorsque les cadres sont prêts et que la miellée s'essouffle (consultez [Récolte du miel](/beekeeping/honey-harvest)).
+- Récoltez le miel operculé lorsque les cadres sont prêts et que la miellée s'essouffle (consultez [Récolte du miel](./honey-harvest.md)).
 
 Consignez chaque récolte avec les poids et les ruches qui l'ont produite. Au fil de quelques saisons, cela se transforme en données réellement utiles sur vos meilleures colonies et votre meilleur butin.
 
@@ -65,10 +65,10 @@ Que faire :
 - Une fois que le traitement le permet, nourrissez pour compléter les réserves d'hiver si la colonie est légère. Donnez un sirop concentré suffisamment tôt pour que les abeilles puissent le faire mûrir et l'operculer avant le froid.
 
 :::caution Les règles de traitement varient selon le pays
-Les traitements homologués contre le varroa, les doses et le calendrier diffèrent selon les régions, et certains comportent des obligations légales. Utilisez toujours un produit autorisé là où vous vivez et suivez les recommandations nationales. Consultez [Varroa](/beekeeping/varroa) pour un aperçu, mais vérifiez les règles locales.
+Les traitements homologués contre le varroa, les doses et le calendrier diffèrent selon les régions, et certains comportent des obligations légales. Utilisez toujours un produit autorisé là où vous vivez et suivez les recommandations nationales. Consultez [Varroa](./varroa.md) pour un aperçu, mais vérifiez les règles locales.
 :::
 
-Consignez chaque traitement : produit, dose et dates. Cela vous protège, vous aide à juger de ce qui fonctionne, et tient un historique sanitaire honnête pour chaque ruche. Les enregistrements de [Traitements](/using-the-app/treatments) de l'application sont conçus exactement pour cela.
+Consignez chaque traitement : produit, dose et dates. Cela vous protège, vous aide à juger de ce qui fonctionne, et tient un historique sanitaire honnête pour chaque ruche. Les enregistrements de [Traitements](../using-the-app/treatments.md) de l'application sont conçus exactement pour cela.
 
 ## Automne : la préparation
 
@@ -82,7 +82,7 @@ Que faire :
 - Assurez la ventilation et que la ruche évacue la pluie. Sécurisez les toits contre le vent.
 - Rangez proprement et en sécurité les rayons bâtis pour les protéger de la fausse teigne.
 
-Utilisez les tâches pour vous assurer qu'aucune ruche n'est oubliée. Une simple tâche de liste de contrôle « préparation hivernale » par ruche garantit que rien ne passe à travers les mailles avant que le froid ne s'installe. Consultez [Tâches](/using-the-app/tasks).
+Utilisez les tâches pour vous assurer qu'aucune ruche n'est oubliée. Une simple tâche de liste de contrôle « préparation hivernale » par ruche garantit que rien ne passe à travers les mailles avant que le froid ne s'installe. Consultez [Tâches](../using-the-app/tasks.md).
 
 ## Hiver : la grappe se repose
 
@@ -104,4 +104,4 @@ L'hiver est le moment idéal pour regarder en arrière. Passer en revue les visi
 
 L'année est une boucle : développement, saison de l'essaimage, miellée, traiter et nourrir, préparer, se reposer. Chaque phase met en place la suivante, et de bons registres sont ce qui les relie.
 
-Plus vous consignez de manière régulière les visites, les tâches, les récoltes et les traitements, plus l'année suivante devient facile. Pour en savoir plus sur la biologie de la colonie derrière ces rythmes, consultez [La colonie](/beekeeping/the-colony), et pour les guides apicoles plus larges, commencez par la [section Apiculture](/category/beekeeping-basics).
+Plus vous consignez de manière régulière les visites, les tâches, les récoltes et les traitements, plus l'année suivante devient facile. Pour en savoir plus sur la biologie de la colonie derrière ces rythmes, consultez [La colonie](./the-colony.md), et pour les guides apicoles plus larges, commencez par la [section Apiculture](/category/beekeeping-basics).

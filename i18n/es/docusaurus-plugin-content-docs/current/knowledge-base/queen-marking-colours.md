@@ -69,7 +69,7 @@ Cuando registras una reina en Openbeehive, indicas su **año**, y la aplicación
 
 También puedes anotar la marca real que aplicaste, su origen y su estado, y luego seguirla a través de las inspecciones y los eventos de reposición.
 
-Consulta [Reinas](/using-the-app/queens) para saber cómo añadir y gestionar reinas, y la [base de conocimiento](/category/knowledge-base) más amplia para más material de referencia.
+Consulta [Reinas](../using-the-app/queens.md) para saber cómo añadir y gestionar reinas, y la [base de conocimiento](/category/knowledge-base) más amplia para más material de referencia.
 
 :::tip Nota regional
 El esquema de cinco colores y cinco años es el estándar internacional usado en la mayor parte del mundo. Las convenciones sobre el recorte, los matices de color de los proveedores y cualquier requisito de registro pueden variar según el país y la asociación; en caso de duda, sigue las indicaciones de tu organismo apícola local.

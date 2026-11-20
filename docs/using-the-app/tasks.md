@@ -5,7 +5,7 @@ title: "Tasks"
 
 # Tasks
 
-Beekeeping is full of small jobs that are easy to forget: add a super before the flow, fit a clearer board the day before extraction, treat for varroa once the honey is off. Tasks are Openbeehive's reminders: a title and an optional due date. Works offline; see [Offline and sync](/using-the-app/offline-and-sync).
+Beekeeping is full of small jobs that are easy to forget: add a super before the flow, fit a clearer board the day before extraction, treat for varroa once the honey is off. Tasks are Openbeehive's reminders: a title and an optional due date. Works offline; see [Offline and sync](./offline-and-sync.md).
 
 ## Creating a task
 
@@ -36,7 +36,7 @@ If you and a co-beekeeper both tick off the same task on different devices, the 
 
 ## Tasks on the Overview
 
-The **Open tasks** tile counts tasks that are not done. **Upcoming tasks** lists up to five open tasks with their due dates; tasks whose due date has passed are flagged with **!**. See [The dashboard](/using-the-app/dashboard).
+The **Open tasks** tile counts tasks that are not done. **Upcoming tasks** lists up to five open tasks with their due dates; tasks whose due date has passed are flagged with **!**. See [The dashboard](./dashboard.md).
 
 :::tip
 For recurring jobs, add the next task when you tick off the current one. After a seven-day swarm check, add "Swarm check" for the following week.
@@ -75,5 +75,5 @@ For recurring jobs, add the next task when you tick off the current one. After a
 - Repair and build equipment ready for spring.
 
 :::caution
-Treatment timing and the products you may legally use vary by country and region. Follow your local guidance and the product label. See [Varroa](/beekeeping/varroa).
+Treatment timing and the products you may legally use vary by country and region. Follow your local guidance and the product label. See [Varroa](../beekeeping/varroa.md).
 :::

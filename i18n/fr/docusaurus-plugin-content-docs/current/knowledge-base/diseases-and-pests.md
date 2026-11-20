@@ -15,7 +15,7 @@ Plusieurs des affections ci-dessous sont **à déclaration obligatoire** dans de
 
 ## Enregistrer ce que vous observez
 
-Quand quelque chose semble anormal, notez-le. Dans Openbeehive, vous pouvez consigner une observation sur l'inspection concernée, créer une [tâche](/using-the-app/tasks) de suivi et enregistrer tout [traitement](/using-the-app/treatments) que vous appliquez. De bonnes archives vous aident, vous et votre inspecteur, à repérer des tendances dans le temps. Voir [Inspecter](/beekeeping/inspecting) pour savoir comment mener un contrôle approfondi.
+Quand quelque chose semble anormal, notez-le. Dans Openbeehive, vous pouvez consigner une observation sur l'inspection concernée, créer une [tâche](../using-the-app/tasks.md) de suivi et enregistrer tout [traitement](../using-the-app/treatments.md) que vous appliquez. De bonnes archives vous aident, vous et votre inspecteur, à repérer des tendances dans le temps. Voir [Inspecter](../beekeeping/inspecting.md) pour savoir comment mener un contrôle approfondi.
 
 ## Varroa (Varroa destructor)
 
@@ -25,7 +25,7 @@ Le ravageur le plus important pour la plupart des apiculteurs dans le monde. Cet
 
 **Gestion :** surveillez les niveaux d'acariens tout au long de la saison et traitez en fonction des comptages, pas du calendrier. Combinez les approches (stratégie « intégrée ») comme le retrait du couvain de mâles, les ruptures de ponte et les acaricides homologués, en choisissant des produits adaptés à la saison et au fait que les hausses à miel soient en place ou non.
 
-Voir le guide complet : [Varroa](/beekeeping/varroa).
+Voir le guide complet : [Varroa](../beekeeping/varroa.md).
 
 ## Loque américaine (AFB)
 

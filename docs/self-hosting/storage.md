@@ -59,12 +59,12 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 :::caution Back it up
 The blob directory is **not** stored in your database. A database backup alone
 will not save your photos. Include `BEEHIVE_BLOB_DIR` in your backup routine. See
-[Backups](/self-hosting/backups) for a full strategy.
+[Backups](./backups.md) for a full strategy.
 :::
 
 ### Docker note
 
-If you run the [Docker image](/self-hosting/docker), mount a volume so blobs
+If you run the [Docker image](./docker.md), mount a volume so blobs
 survive container restarts and upgrades. The container runs as uid `65532`;
 a bind-mounted host directory must be owned by that user:
 
@@ -143,7 +143,7 @@ and secret keys, choose your bucket, and set `BEEHIVE_MINIO_USE_SSL=true`.
 Some providers are sensitive to region settings or require path-style versus
 virtual-hosted addressing. If uploads fail with a provider other than MinIO,
 double-check the endpoint and that the bucket exists in the expected region.
-See [Troubleshooting](/knowledge-base/troubleshooting) if problems persist.
+See [Troubleshooting](../knowledge-base/troubleshooting.md) if problems persist.
 :::
 
 ## Switching backends later

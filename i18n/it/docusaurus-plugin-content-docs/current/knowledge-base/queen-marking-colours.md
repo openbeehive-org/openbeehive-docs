@@ -69,7 +69,7 @@ Quando registri una regina in Openbeehive, imposti il suo **anno**, e l'app most
 
 Puoi anche annotare il marchio effettivo che hai applicato, la sua origine e il suo stato, e poi seguirla attraverso le ispezioni e gli eventi di sostituzione.
 
-Vedi [Regine](/using-the-app/queens) per come aggiungere e gestire le regine, e l'intera [knowledge base](/category/knowledge-base) per altro materiale di riferimento.
+Vedi [Regine](../using-the-app/queens.md) per come aggiungere e gestire le regine, e l'intera [knowledge base](/category/knowledge-base) per altro materiale di riferimento.
 
 :::tip Nota regionale
 Lo schema a cinque colori e cinque anni è lo standard internazionale usato nella maggior parte del mondo. Le convenzioni per la tarpatura, le tonalità di colore dei fornitori e gli eventuali obblighi di tenuta dei registri possono variare per paese e associazione — in caso di dubbio, segui le indicazioni del tuo ente apistico locale.

@@ -10,7 +10,7 @@ Openbeehive viene configurato interamente tramite variabili d'ambiente. Questa p
 Puoi impostare queste variabili nella tua shell, in un file `.env` accanto al binario, nel tuo file `docker compose` o tramite il gestore di segreti della tua piattaforma di hosting. Il server le legge una volta all'avvio, quindi le modifiche hanno effetto dopo un riavvio.
 
 :::tip Inizia in piccolo
-Te ne servono solo una manciata per iniziare. Per un server domestico a utente singolo, imposta `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET` e lascia il resto ai valori predefiniti. Consulta la [Guida rapida](/self-hosting/quick-start) per essere operativo in pochi minuti.
+Te ne servono solo una manciata per iniziare. Per un server domestico a utente singolo, imposta `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, un `BEEHIVE_SESSION_SECRET` e lascia il resto ai valori predefiniti. Consulta la [Guida rapida](./quick-start.md) per essere operativo in pochi minuti.
 :::
 
 ## Come funziona il profilo di distribuzione
@@ -25,7 +25,7 @@ L'impostazione di gran lunga più importante è `BEEHIVE_DEPLOYMENT_PROFILE`. Sc
 Il profilo imposta solo i *valori predefiniti*. Qualsiasi variabile che imposti esplicitamente ha sempre la precedenza. Ad esempio, puoi eseguire il profilo `selfhost` ma indirizzarlo a PostgreSQL impostando tu stesso `BEEHIVE_DATABASE_DRIVER` e `BEEHIVE_DATABASE_DSN`.
 
 :::note
-I due profili sono documentati in dettaglio nelle rispettive pagine: [Binario singolo](/self-hosting/single-binary) e [Docker](/self-hosting/docker). Questa pagina si concentra sulle variabili stesse.
+I due profili sono documentati in dettaglio nelle rispettive pagine: [Binario singolo](./single-binary.md) e [Docker](./docker.md). Questa pagina si concentra sulle variabili stesse.
 :::
 
 ## Profilo di distribuzione
@@ -103,7 +103,7 @@ BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
 
-Per la scelta del driver, l'ottimizzazione e le note sulla migrazione, consulta [Database](/self-hosting/databases).
+Per la scelta del driver, l'ottimizzazione e le note sulla migrazione, consulta [Database](./databases.md).
 
 ## Archiviazione blob
 
@@ -120,7 +120,7 @@ Le foto e gli altri allegati vengono archiviati come blob, sul filesystem locale
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nome del bucket in cui vengono archiviati i blob.                                     |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Imposta `true` per connetterti all'endpoint tramite HTTPS.                       |
 
-Le variabili `MINIO_*` vengono usate solo quando `BEEHIVE_BLOB_BACKEND=minio`. Per indicazioni complete, consulta [Archiviazione](/self-hosting/storage).
+Le variabili `MINIO_*` vengono usate solo quando `BEEHIVE_BLOB_BACKEND=minio`. Per indicazioni complete, consulta [Archiviazione](./storage.md).
 
 ## Sessione e autenticazione
 
@@ -137,7 +137,7 @@ Imposta sempre un `BEEHIVE_SESSION_SECRET` robusto e univoco e tienilo privato. 
 
 Account integrati per istanze multi-utente senza un provider di identità esterno.
 L'amministratore dell'istanza è un account dedicato che configuri tu, non la prima persona
-che si registra. Consulta [Autenticazione](/self-hosting/authentication).
+che si registra. Consulta [Autenticazione](./authentication.md).
 
 | Variabile | Predefinito | Descrizione |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ che si registra. Consulta [Autenticazione](/self-hosting/authentication).
 ## Tenant demo
 
 Installa un account e un tenant demo dimostrativi. Disattivato per impostazione predefinita — consulta
-[Modalità demo](/self-hosting/demo).
+[Modalità demo](./demo.md).
 
 | Variabile | Predefinito | Descrizione |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 Per un'istanza personale self-hosted puoi saltare del tutto il login: lascia `BEEHIVE_PASSWORD_AUTH` disattivato (il valore predefinito di selfhost), `BEEHIVE_OIDC_PROVIDERS` vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`. L'app viene quindi eseguita in modalità a utente singolo senza alcun passaggio di accesso.
 :::
 
-Per le procedure guidate di configurazione dei provider, gli URL di reindirizzamento e i consigli sulla sicurezza, consulta [Autenticazione](/self-hosting/authentication).
+Per le procedure guidate di configurazione dei provider, gli URL di reindirizzamento e i consigli sulla sicurezza, consulta [Autenticazione](./authentication.md).
 
 ## Un esempio selfhost minimale
 

@@ -35,7 +35,7 @@ BEEHIVE_DEMO=true
 ```
 
 È tutto ciò che serve. Abilitare la modalità demo attiva automaticamente
-l'[accesso con email/password](/self-hosting/authentication) in modo che l'account
+l'[accesso con email/password](./authentication.md) in modo che l'account
 demo possa effettuare il login. Facoltativamente puoi sovrascrivere le credenziali:
 
 ```bash
@@ -47,7 +47,7 @@ Riavvia il server. Vedrai una riga di log che conferma l'installazione della dem
 e l'account demo potrà effettuare l'accesso immediatamente. Poiché la modalità demo implica
 l'autenticazione con password, l'istanza ha bisogno anche del suo amministratore dedicato
 (`BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD`, vedi
-[Autenticazione](/self-hosting/authentication)), e l'email dell'amministratore deve essere
+[Autenticazione](./authentication.md)), e l'email dell'amministratore deve essere
 diversa da quella della demo.
 
 ### Host dimostrativi: saltare la schermata di accesso

@@ -25,10 +25,10 @@ There is usually one queen per colony. She is the only fully developed female an
 
 The queen is not a ruler. She does not direct the colony; instead she binds it together chemically. Her **queen mandibular pheromone** signals to the workers that the colony is "queenright", suppressing the rearing of new queens and the development of laying workers. When that signal fades — because she has died, is failing, or the colony has grown too large for her scent to reach everyone — the workers respond by raising a replacement.
 
-A queen mates only once in her life, over a few days early on, storing sperm for the rest of her years. In Openbeehive you can record each queen, her marking colour and year, and her origin. See [Queens](/using-the-app/queens).
+A queen mates only once in her life, over a few days early on, storing sperm for the rest of her years. In Openbeehive you can record each queen, her marking colour and year, and her origin. See [Queens](../using-the-app/queens.md).
 
 :::tip Queen marking
-Queens are often marked with a coloured dot following the international colour scheme, which records the year she was born. See [Queen marking colours](/knowledge-base/queen-marking-colours).
+Queens are often marked with a coloured dot following the international colour scheme, which records the year she was born. See [Queen marking colours](../knowledge-base/queen-marking-colours.md).
 :::
 
 ### Workers
@@ -59,7 +59,7 @@ Comb is built from wax secreted by glands on the workers' abdomens and shaped in
 - A band of **pollen** ("bee bread") around the brood.
 - **Honey** stored at the top and outer edges, capped with wax when ripe.
 
-Brood develops through three stages: **egg** (3 days), **larva** (fed by nurses, then capped), and **pupa** (sealed in its cell until it emerges). Learning to read the brood pattern — solid and even versus patchy — is one of the most useful inspection skills. Record what you find in [Inspections](/using-the-app/inspections).
+Brood develops through three stages: **egg** (3 days), **larva** (fed by nurses, then capped), and **pupa** (sealed in its cell until it emerges). Learning to read the brood pattern — solid and even versus patchy — is one of the most useful inspection skills. Record what you find in [Inspections](../using-the-app/inspections.md).
 
 ## The annual population cycle
 
@@ -71,7 +71,7 @@ A colony's size rises and falls with the seasons, tracking the availability of f
 - **Autumn** — laying slows, drones are evicted, and the colony rears special long-lived "winter bees".
 - **Winter** — no flight, no brood (or very little); the cluster lives on stored honey.
 
-For a month-by-month guide see the [Beekeeping year](/beekeeping/beekeeping-year), and for the mechanics of natural reproduction see [Swarming](/beekeeping/swarming).
+For a month-by-month guide see the [Beekeeping year](./beekeeping-year.md), and for the mechanics of natural reproduction see [Swarming](./swarming.md).
 
 ## How a colony communicates
 
@@ -85,7 +85,7 @@ The **waggle dance** is how a forager tells her sisters where to find food. On t
 
 Honey is the colony's stored fuel. Foragers collect **nectar** — sugary water from flowers — in a special honey stomach. Back at the hive they pass it mouth-to-mouth to house bees, adding enzymes that begin converting the nectar's complex sugars into simpler ones.
 
-The house bees then spread the nectar in cells and fan it with their wings, driving off water until the moisture content drops to around 18–20%. At that point it is stable and will not ferment, and the bees **cap** the cell with a wax lid. That capped, ripe honey is what beekeepers harvest the surplus of. See [Honey harvest](/beekeeping/honey-harvest) and record yields in [Harvests](/using-the-app/harvests).
+The house bees then spread the nectar in cells and fan it with their wings, driving off water until the moisture content drops to around 18–20%. At that point it is stable and will not ferment, and the bees **cap** the cell with a wax lid. That capped, ripe honey is what beekeepers harvest the surplus of. See [Honey harvest](./honey-harvest.md) and record yields in [Harvests](../using-the-app/harvests.md).
 
 ## How a colony overwinters
 
@@ -94,7 +94,7 @@ In cold climates the colony does not hibernate and does not heat the whole hive.
 The cluster runs entirely on stored honey, eating its way slowly upward through the combs over the months. Two things decide whether it survives: **enough stores** in the right place, and a population of healthy winter bees. This is why autumn feeding and varroa control matter so much.
 
 :::caution Winter losses are real
-Even healthy-looking colonies can die over winter from starvation, disease or a heavy mite load entering autumn. Going into winter strong and healthy is far more important than any midwinter intervention. See [Varroa](/beekeeping/varroa) and [Feeding](/beekeeping/feeding).
+Even healthy-looking colonies can die over winter from starvation, disease or a heavy mite load entering autumn. Going into winter strong and healthy is far more important than any midwinter intervention. See [Varroa](./varroa.md) and [Feeding](./feeding.md).
 :::
 
 :::note Regional variation

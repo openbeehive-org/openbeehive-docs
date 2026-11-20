@@ -7,7 +7,7 @@ title: "Arquitectura offline-first"
 
 Openbeehive está construido para que la apicultura se desarrolle en el colmenar, a menudo lejos de cualquier cobertura. Cada dispositivo lleva una copia completa de los datos que necesita, la interfaz lee y escribe esa copia local al instante, y un motor en segundo plano mantiene todo sincronizado discretamente con el servidor cuando hay conexión disponible.
 
-Esta página explica cómo encajan las piezas. Para conocer las reglas exactas que mantienen consistentes las réplicas, consulta [el protocolo de sincronización](/developers/sync-protocol) e [historial y eventos](/developers/history-and-events).
+Esta página explica cómo encajan las piezas. Para conocer las reglas exactas que mantienen consistentes las réplicas, consulta [el protocolo de sincronización](./sync-protocol.md) e [historial y eventos](./history-and-events.md).
 
 ## Local-first por diseño
 
@@ -49,7 +49,7 @@ El diagrama siguiente muestra cómo un cambio viaja desde una pulsación en la i
 
 El motor de sincronización intercambia únicamente los registros que pertenecen a los ámbitos a los que un usuario puede acceder, de modo que un dispositivo nunca descarga todo el mundo: solo los colmenares a los que tiene derecho.
 
-Los scripts y los sensores entran en este mismo esquema a través de los servicios CRUD del servidor ([Uso de la API](/using-the-api/overview)). Sus escrituras no se saltan este flujo: el servidor aplica cada una con la misma fusión por campo y la añade al mismo registro de cambios que un cambio enviado por push, así que una lectura publicada por una báscula de colmena es simplemente otro cambio que los dispositivos descargan en su siguiente sincronización.
+Los scripts y los sensores entran en este mismo esquema a través de los servicios CRUD del servidor ([Uso de la API](../using-the-api/overview.md)). Sus escrituras no se saltan este flujo: el servidor aplica cada una con la misma fusión por campo y la añade al mismo registro de cambios que un cambio enviado por push, así que una lectura publicada por una báscula de colmena es simplemente otro cambio que los dispositivos descargan en su siguiente sincronización.
 
 ## Resolución de conflictos
 
@@ -69,7 +69,7 @@ Los campos de tipo lista (actualmente solo las claves de foto de una inspección
 
 ### Eventos append-only
 
-La tabla `event` es append-only por convención: cada escritura de historial inserta una fila nueva con un id nuevo y nada edita ni elimina ninguna, así que dos dispositivos que añaden eventos sin conexión nunca tocan la misma fila. Consulta [historial y eventos](/developers/history-and-events) para más detalle.
+La tabla `event` es append-only por convención: cada escritura de historial inserta una fila nueva con un id nuevo y nada edita ni elimina ninguna, así que dos dispositivos que añaden eventos sin conexión nunca tocan la misma fila. Consulta [historial y eventos](./history-and-events.md) para más detalle.
 
 :::tip
 Como las fusiones son deterministas, dos dispositivos cualesquiera que hayan visto el mismo conjunto de cambios calcularán siempre exactamente el mismo resultado, sin importar el orden en que esos cambios llegaron.
@@ -103,4 +103,4 @@ La aplicación es una Progressive Web App, diseñada primero para el teléfono q
 
 Esta separación es lo que da a Openbeehive su promesa fundamental: los registros están siempre contigo, siempre son rápidos y siempre consistentes una vez que todos vuelven a tener cobertura.
 
-Para profundizar, lee [el protocolo de sincronización](/developers/sync-protocol) e [historial y eventos](/developers/history-and-events), o explora el resto de la [documentación para desarrolladores](/category/developers).
+Para profundizar, lee [el protocolo de sincronización](./sync-protocol.md) e [historial y eventos](./history-and-events.md), o explora el resto de la [documentación para desarrolladores](/category/developers).

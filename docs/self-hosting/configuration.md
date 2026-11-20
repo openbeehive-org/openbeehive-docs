@@ -10,7 +10,7 @@ Openbeehive is configured entirely through environment variables. This page is t
 You can set these variables in your shell, in a `.env` file alongside the binary, in your `docker compose` file, or through your hosting platform's secrets manager. The server reads them once at start-up, so changes take effect after a restart.
 
 :::tip Start small
-You only need a handful of these to get going. For a single-user home server, set `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, a `BEEHIVE_SESSION_SECRET`, and leave the rest at their defaults. See the [Quick start](/self-hosting/quick-start) to be running in minutes.
+You only need a handful of these to get going. For a single-user home server, set `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, a `BEEHIVE_SESSION_SECRET`, and leave the rest at their defaults. See the [Quick start](./quick-start.md) to be running in minutes.
 :::
 
 ## How the deployment profile works
@@ -25,7 +25,7 @@ The single most important setting is `BEEHIVE_DEPLOYMENT_PROFILE`. It chooses se
 The profile only sets *defaults*. Any variable you set explicitly always wins. For example, you can run the `selfhost` profile but point it at PostgreSQL by setting `BEEHIVE_DATABASE_DRIVER` and `BEEHIVE_DATABASE_DSN` yourself.
 
 :::note
-The two profiles are documented in depth on their own pages: [Single binary](/self-hosting/single-binary) and [Docker](/self-hosting/docker). This page focuses on the variables themselves.
+The two profiles are documented in depth on their own pages: [Single binary](./single-binary.md) and [Docker](./docker.md). This page focuses on the variables themselves.
 :::
 
 ## Deployment profile
@@ -103,7 +103,7 @@ BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
 
-For driver choice, tuning and migration notes, see [Databases](/self-hosting/databases).
+For driver choice, tuning and migration notes, see [Databases](./databases.md).
 
 ## Blob storage
 
@@ -120,7 +120,7 @@ Photos and other attachments are stored as blobs, either on the local filesystem
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive`  | Bucket name where blobs are stored.                                     |
 | `BEEHIVE_MINIO_USE_SSL`   | `false`        | Set `true` to connect to the endpoint over HTTPS.                       |
 
-The `MINIO_*` variables are only used when `BEEHIVE_BLOB_BACKEND=minio`. For full guidance, see [Storage](/self-hosting/storage).
+The `MINIO_*` variables are only used when `BEEHIVE_BLOB_BACKEND=minio`. For full guidance, see [Storage](./storage.md).
 
 ## Session and authentication
 
@@ -137,7 +137,7 @@ Always set a strong, unique `BEEHIVE_SESSION_SECRET` and keep it private. If it 
 
 Built-in accounts for multi-user instances without an external identity provider.
 The instance admin is a dedicated account you configure, not the first person
-to sign up. See [Authentication](/self-hosting/authentication).
+to sign up. See [Authentication](./authentication.md).
 
 | Variable | Default | Description |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ to sign up. See [Authentication](/self-hosting/authentication).
 ## Demo tenant
 
 Installs a showcase demo account and tenant. Off by default — see
-[Demo mode](/self-hosting/demo).
+[Demo mode](./demo.md).
 
 | Variable | Default | Description |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 For a personal self-hosted instance you can skip login entirely: leave `BEEHIVE_PASSWORD_AUTH` off (the selfhost default), `BEEHIVE_OIDC_PROVIDERS` empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. The app then runs in single-user mode with no sign-in step.
 :::
 
-For provider set-up walkthroughs, redirect URLs and security advice, see [Authentication](/self-hosting/authentication).
+For provider set-up walkthroughs, redirect URLs and security advice, see [Authentication](./authentication.md).
 
 ## A minimal selfhost example
 
