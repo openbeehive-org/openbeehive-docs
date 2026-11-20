@@ -34,6 +34,7 @@ A small status chip at the top of every page (and under your email address in th
 | **Sync failed · retrying** | The server could not be reached or answered with an error. The app keeps trying. |
 | **Signed out · sign in to sync** | Your session has ended. Tap the chip to sign in; nothing is lost. |
 | **Sync problems: 2** | The server refused two changes; see below. |
+| **App out of date · update to sync** | The server requires a newer version of the app. Load the new version; until then changes wait on the device. |
 
 Tap the chip to sync at once. Without tapping, the app syncs after every change, at short intervals while it is open, and as soon as the connection returns.
 
@@ -45,7 +46,7 @@ A persistent offline indicator usually means weak coverage at the apiary. If it 
 
 ### Sync problems \{#sync-problems}
 
-Now and then the server does not accept a change, for example because the record belongs to another workspace or because the clock of the device was far ahead. Such a change is not thrown away: it stays on the device, and the chip shows **Sync problems** with the number of refused changes. The **Sync problems** list names each one with the reason and offers **Try again** and **Discard**. Discard stops the upload; the record stays on this device as it is but never reaches the server, your other devices or the other members.
+Now and then the server does not accept a change, for example because the record belongs to another workspace or because the clock of the device was far ahead. Such a change is not thrown away: it stays on the device, and the chip shows **Sync problems** with the number of refused changes. The **Sync problems** list in **Settings** names each one with the reason and offers **Try again** (or **Try all again**) and **Discard**. Discard stops the upload; the record stays on this device as it is but never reaches the server, your other devices or the other members.
 
 ### Device clocks
 
@@ -53,7 +54,7 @@ Every change carries the time of the device that made it. The server refuses cha
 
 ## Your first sync on a new device
 
-Signing in on a new device, or reopening the app after its storage was cleared, starts with an empty local database that fills up in the background:
+Signing in on a new device, or reopening the app after its storage was cleared, starts with an empty local database. The app loads the current records of the workspace from the server, not the full history of every change, and fills the database in the background:
 
 - Lists show **shimmering placeholders** while they read from the local database.
 - While the first download is still running, the Overview and the apiary, hive and task lists show **"Syncing your data…"** rather than an empty state.
@@ -61,7 +62,11 @@ Signing in on a new device, or reopening the app after its storage was cleared, 
 
 Only once the app knows the data is complete does it show a real empty state. If the device is offline or the server is unreachable, the hint gives way to whatever is stored locally.
 
-After the app has updated to version 0.5.0, each device downloads its records once more from the start. This repairs gaps earlier versions could leave and needs no action from you.
+After the app has updated to version 0.5.0, each device loads the current records from the server once more. This repairs gaps earlier versions could leave and needs no action from you. A device that has not synced for longer than the server keeps its list of changes (180 days by default) does the same.
+
+### After the server was restored \{#after-restore}
+
+If the operator restores the server from a backup, the server may lack changes your device had already synced. The app notices this at the next sync, uploads all records it holds again, together with the photos it keeps, and loads the current data. It then shows "The server's data was reset or restored. This device has sent its records again and loaded the current data." Nothing needs to be done; tap **OK** to close the message.
 
 ## Syncing across your devices
 
@@ -73,6 +78,7 @@ Openbeehive resolves overlapping changes **automatically**, with no "which versi
 
 - **You edit an apiary's note on your phone, your co-beekeeper edits the same note on theirs.** The most recent edit to that field wins.
 - **You both add photos to the same visit while offline.** Both sets of photos are kept.
+- **You change your units on one device.** Units and language are saved with your account and follow you to every device; see [Settings](./dashboard.md#settings).
 - **You each log a separate visit.** Every visit, harvest and treatment is a record of its own, so both are kept side by side.
 
 Every device converges on the same state once all have synced.
@@ -80,6 +86,12 @@ Every device converges on the same state once all have synced.
 :::tip
 The short version: add freely, edit confidently. How this works under the bonnet is on the [sync protocol](../developers/sync-protocol.md) and [architecture](../developers/architecture.md) pages.
 :::
+
+## Photos \{#photos}
+
+A photo has two parts. A small preview syncs with the record like everything else, so every device shows it at once, also offline. The full-size image is kept on the device that took the photo and uploaded in the background when there is a connection; until then the photo shows **Waiting to upload**. Other devices load the full image the first time you open the photo and keep a copy.
+
+Deleting a photo is final: it disappears from every device and the image is removed from the server. Devices that still run version 0.4 of the app do not see photos added by updated devices.
 
 ## Sharing
 
@@ -96,7 +108,7 @@ To share one yard with a mentor while keeping others private, put that yard in i
 
 Saving happens on your device, so it virtually never fails. If it does (for example because the browser's storage is full or damaged) the form stays open with everything you typed and an error message explains what went wrong.
 
-On the public **demo account** the server rejects changes (the demo resets itself hourly). Your changes are saved on your device and simply stay there instead of syncing.
+On the public **demo account** the server accepts no changes (the demo resets itself hourly). When you change something there, the app undoes the change and says that it was not saved.
 
 There is one situation where saving works but does not last: if the browser cannot give the app its private storage (a private browsing window, or storage blocked in the browser settings), the app keeps the records in memory and shows a banner: **"This browser is not saving data on this device (private window or blocked storage). Anything that has not synced is lost when you close this tab."** Everything keeps working for the session, and edits still sync to the server if you are signed in, but the local copy is gone once the tab closes. See [Troubleshooting](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

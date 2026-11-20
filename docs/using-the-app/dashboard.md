@@ -21,7 +21,7 @@ Until your first visit is recorded, the Overview greets you with "Welcome to Ope
 | **Hives** | Number of hives. |
 | **Queens** | Queens currently recorded as heading a colony. |
 | **Open tasks** | Tasks not yet ticked off. |
-| **Honey this season** | Total harvested kilograms recorded in the current calendar year. |
+| **Honey this season** | Total honey harvested in the current calendar year, in kilograms or pounds as chosen under **Settings → Units**. |
 
 The tiles are counts only; use the navigation to open the matching section.
 
@@ -44,19 +44,23 @@ The same destinations are available everywhere: **Overview, Apiaries, Scan, Hive
 - On a phone, a **bottom tab bar** holds all six.
 - On a desktop or tablet, a **sidebar** on the left lists Overview, Apiaries, Scan, Hives and Tasks, with your account (email and sync status) at the bottom linking to Settings.
 
-## Settings
+## Settings \{#settings}
 
 **Settings** holds:
 
-- **Language**: English, German, French, Spanish, Italian. The choice is saved on the device.
-- **Appearance**: **System** (follow the device's light or dark setting), **Light** or **Dark**. The choice is saved on the device.
-- **Workspaces**: switch, create, invite and manage (on instances with login). See [Accounts & workspaces](./accounts-tenants.md).
+- **Language**: English, German, French, Spanish or Italian. The choice is saved with your account and applies on all your devices.
+- **Appearance**: **System** (follow the device's light or dark setting), **Light** or **Dark**. The choice is saved on this device only.
+- **Units**: **Weight** in kilograms or pounds and **Temperature** in Celsius or Fahrenheit, for showing and entering values. The choice is saved with your account and applies on all your devices and workspaces. Until you choose, the app follows the region of your browser (pounds and Fahrenheit in the United States, for example). Records are always stored in kilograms and degrees Celsius, and exports and the API stay metric; see [Inspections](./inspections.md#units).
+- **Workspaces**: switch, create, invite, manage members and delete (on instances with login). See [Accounts & workspaces](./accounts-tenants.md).
+- **Sync problems**: changes the server refused, with **Try again** and **Discard**. See [Offline & sync](./offline-and-sync.md#sync-problems).
+- **Data & backup**: backups, other export formats, the server copy and import; see [Import & export](./import-export.md).
+- **Account**: who you are signed in as, **Sign out**, **Password** and **Log out everywhere**. See [Accounts & workspaces](./accounts-tenants.md#password).
 - **Passkeys**: add or remove passkeys (when the server enables them).
 - **API keys**: create and remove keys for scripts and devices (on instances with login). See [Accounts & workspaces](./accounts-tenants.md#api-keys).
-- **Data & backup**: export and import; see [Import & export](./import-export.md).
-- **Account**: who you are signed in as, and **Sign out**.
+- **Reset a user's password**: only for the instance admin; see [Authentication](../self-hosting/authentication.md#password-reset).
+- **Delete account**: see [Accounts & workspaces](./accounts-tenants.md#delete-account).
 
-On a single-user self-hosted instance with no login there is nothing to sign out of; the account block shows the local identity.
+On a single-user self-hosted instance with no login there is nothing to sign out of; the account block shows the local identity, and units and language are kept for that identity.
 
 ## The sync status
 

@@ -17,7 +17,7 @@ Eine Beute in Openbeehive ist ein einzelnes Volk in einer physischen Zarge. Fast
 | **Typ** | Der Rähmchen- und Zargenstandard; siehe unten. |
 | **Status** | Der Zustand des Volkes; siehe unten. |
 
-Ein **Foto** fügst du auf der Beutenseite hinzu, indem du auf den Bildplatzhalter neben dem Namen tippst (**Foto entfernen** nimmt es wieder weg).
+Ein **Foto** fügst du auf der Beutenseite hinzu, indem du auf den Bildplatzhalter neben dem Namen tippst. Tippst du später auf das Bild, öffnet es sich in der Ansicht mit **Foto ersetzen** und **Foto löschen**. Wie bei den Fotos einer Durchsicht wird sofort eine kleine Vorschau auf jedes Gerät synchronisiert, und das Bild in voller Größe wird im Hintergrund hochgeladen; siehe [Offline und Synchronisation](./offline-and-sync.md#photos).
 
 :::tip
 Halte Namen innerhalb eines Bienenstands kurz und einheitlich, zum Beispiel „1", „2", „3". Kurze Namen drucken sich sauber auf QR-Etiketten und sind im Feld schnell zu lesen.
@@ -93,7 +93,7 @@ Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommen
 
 ### Durchsichten
 
-**Durchsicht erfassen** öffnet das Durchsichtsformular. Die fünf jüngsten Durchsichten sind aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos. Jede Durchsicht hat Aktionen zum Bearbeiten und Löschen. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
+**Durchsicht erfassen** öffnet das Durchsichtsformular. Die fünf jüngsten Durchsichten sind aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos (ein Tipp auf eines öffnet die Ansicht). Gewichte und Temperaturen erscheinen in den Einheiten, die unter **Einstellungen → Einheiten** gewählt sind. Jede Durchsicht hat Aktionen zum Bearbeiten und Löschen. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
 
 ### Honig und Behandlungen
 

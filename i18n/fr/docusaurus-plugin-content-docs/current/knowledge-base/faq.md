@@ -41,7 +41,7 @@ Il n'y a pas aujourd'hui d'application native distincte sur l'App Store ou le Pl
 
 ## Puis-je exporter mes données ?
 
-Oui. **Paramètres → Données & sauvegarde** exporte tout ce qui se trouve sur votre appareil sous forme de sauvegarde JSON complète, de feuille de calcul (XLSX), de fichiers CSV dans un ZIP, de BeeXML ou de rapport PDF imprimable, et importe du JSON, du BeeXML et du CSV depuis d'autres applications. Voir [Import et export](../using-the-app/import-export.md). Les auto-hébergeurs peuvent aussi sauvegarder directement la base de données du serveur ; voir [Sauvegardes](../self-hosting/backups.md).
+Oui. **Paramètres → Données & sauvegarde** exporte un espace sous forme de sauvegarde complète (JSON, ou ZIP avec les photos), de feuille de calcul (XLSX), de fichiers CSV dans un ZIP, de BeeXML ou de rapport PDF imprimable, et permet aussi de télécharger la copie de l'espace que détient le serveur. Il importe des sauvegardes, du BeeXML et du CSV depuis d'autres applications, affiche d'abord un aperçu et n'écrase jamais rien sans que vous le demandiez. Voir [Import et export](../using-the-app/import-export.md). Les auto-hébergeurs sauvegardent la base de données du serveur et le stockage des photos ; voir [Sauvegardes](../self-hosting/backups.md).
 
 ## Puis-je l'héberger moi-même ?
 
@@ -96,7 +96,19 @@ Chaque ruche peut avoir une étiquette QR imprimable. La scanner ouvre Openbeehi
 
 ## En quelles langues est-il disponible ?
 
-Cinq langues sont livrées dans l'application : anglais, allemand, français, espagnol et italien. Changez de langue sous **Paramètres → Langue**. D'autres traductions sont les bienvenues sous forme de contributions.
+Cinq langues sont livrées dans l'application : anglais, allemand, français, espagnol et italien. Changez de langue sous **Paramètres → Langue** ; ce choix est enregistré avec votre compte et vous suit sur tous vos appareils. D'autres traductions sont les bienvenues sous forme de contributions.
+
+## Puis-je utiliser les livres et les degrés Fahrenheit ?
+
+Oui. Sous **Paramètres → Unités**, choisissez kilogrammes ou livres, et Celsius ou Fahrenheit. L'application affiche et accepte alors les poids et les températures dans ces unités sur tous vos appareils. Les enregistrements sont stockés en kilogrammes et en degrés Celsius, si bien que les exports et l'API restent en unités métriques. Voir [Paramètres](../using-the-app/dashboard.md#settings).
+
+## J'ai oublié mon mot de passe. Que faire ?
+
+Touchez **Mot de passe oublié ?** sur l'écran de connexion. Si le serveur envoie des e-mails, vous recevez un lien pour en choisir un nouveau ; sinon, l'administrateur de l'instance peut créer un tel lien pour vous. Voir [Comptes et espaces](../using-the-app/accounts-tenants.md#password).
+
+## Puis-je supprimer mon compte ?
+
+Oui, sous **Paramètres → Supprimer le compte**. L'application montre d'abord ce qui serait supprimé et ce qui reste pour les autres membres. Voir [Comptes et espaces](../using-the-app/accounts-tenants.md#delete-account).
 
 ## Quelles bases de données et quels stockages sont pris en charge ?
 

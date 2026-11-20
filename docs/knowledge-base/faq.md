@@ -41,7 +41,7 @@ There is no separate native app in the App Store or Play Store today, and you do
 
 ## Can I export my data?
 
-Yes. **Settings → Data & backup** exports everything on your device as a full JSON backup, a spreadsheet (XLSX), CSV files in a ZIP, BeeXML, or a printable PDF report, and imports JSON, BeeXML and CSV from other apps. See [Import & export](../using-the-app/import-export.md). Self-hosters can also back up the server database directly; see [Backups](../self-hosting/backups.md).
+Yes. **Settings → Data & backup** exports a workspace as a full backup (JSON, or a ZIP with photos), a spreadsheet (XLSX), CSV files in a ZIP, BeeXML, or a printable PDF report, and can also download the server's copy of the workspace. It imports backups, BeeXML and CSV from other apps, shows a preview first and never overwrites anything unless you ask it to. See [Import & export](../using-the-app/import-export.md). Self-hosters back up the server database and the photo storage; see [Backups](../self-hosting/backups.md).
 
 ## Can I self-host it?
 
@@ -96,7 +96,19 @@ Each hive can have a printable QR label. Scanning it opens Openbeehive straight 
 
 ## What languages is it available in?
 
-Five languages ship in the app: English, German, French, Spanish and Italian. Switch under **Settings → Language**. Further translations are welcome as contributions.
+Five languages ship in the app: English, German, French, Spanish and Italian. Switch under **Settings → Language**; the choice is saved with your account and follows you to every device. Further translations are welcome as contributions.
+
+## Can I use pounds and Fahrenheit?
+
+Yes. Under **Settings → Units** choose kilograms or pounds and Celsius or Fahrenheit. The app then shows and accepts weights and temperatures in those units on all your devices. Records are stored in kilograms and degrees Celsius, so exports and the API stay metric. See [Settings](../using-the-app/dashboard.md#settings).
+
+## I forgot my password. What now?
+
+Tap **Forgot password?** on the sign-in screen. If the server sends email you get a link to choose a new one; otherwise the administrator of the instance can create such a link for you. See [Accounts & workspaces](../using-the-app/accounts-tenants.md#password).
+
+## Can I delete my account?
+
+Yes, under **Settings → Delete account**. The app shows first what would be deleted and what stays for other members. See [Accounts & workspaces](../using-the-app/accounts-tenants.md#delete-account).
 
 ## Which databases and storage backends are supported?
 

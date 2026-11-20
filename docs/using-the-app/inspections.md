@@ -32,6 +32,10 @@ If the hive has an earlier visit, **Start from last visit** (with that visit's d
 | Date | Defaults to today; change it to log a past visit. Future dates are not accepted. |
 | Weather | Free text, e.g. "sunny, 22°C". |
 
+## Weights and temperatures \{#units}
+
+Weights and temperatures are shown and entered in the units chosen under **Settings → Units**: kilograms or pounds, degrees Celsius or Fahrenheit. The choice is saved with your account and applies on all your devices. You can type a decimal comma or a decimal point. The app stores every value in kilograms and degrees Celsius, so changing the units never changes your records, and exports and the API stay metric.
+
 ## Colony & behaviour
 
 | Field | What it records |
@@ -47,7 +51,7 @@ If the hive has an earlier visit, **Start from last visit** (with that visit's d
 | Gentleness | Very gentle, Gentle, Normal, Nervous or Aggressive. |
 | Calmness on comb | Runs off comb, Restless, Calm or Very calm. |
 | Varroa | Mites per day. Enter a plain number such as `3` if you want it in the charts; other text is kept but not charted. |
-| Hive weight | In kg, if you weigh the hive. |
+| Hive weight | In kg or lb, if you weigh the hive. |
 
 :::note
 The "eggs seen / youngest larva / capped brood" trio usually confirms a healthy laying queen without finding her each time.
@@ -59,7 +63,7 @@ This section starts collapsed; tap its heading to open it.
 
 | Activity | Records |
 | --- | --- |
-| Fed | Amount fed, in kg. |
+| Fed | Amount fed, in kg or lb. |
 | Frames added / removed | Frames you put in or took out. |
 | Drone frame cut | Whether you cut out a drone brood frame (a varroa control measure). |
 | Super added | Whether you added a super. |
@@ -74,8 +78,8 @@ This section starts collapsed as well.
 
 | Field | Unit |
 | --- | --- |
-| Hive temperature | °C |
-| Outside temperature | °C |
+| Hive temperature | °C or °F |
+| Outside temperature | °C or °F |
 | Hive humidity | % |
 | Outside humidity | % |
 
@@ -89,7 +93,9 @@ A hive scale or climate sensor can post these fields through the API. Such readi
 
 Add a free-text **note** for anything the structured fields do not cover: a marked supersedure cell, a temper that needs watching, a reminder to requeen.
 
-**Add photo** attaches one or more pictures (brood pattern, suspect disease, queen cells). They are stored with the visit and sync with the rest of your records. If something needs following up, add a [task](./tasks.md) with a due date.
+**Add photo** attaches one or more pictures (brood pattern, suspect disease, queen cells). The app scales each one to at most 2048 pixels and removes what the camera stored besides the picture, such as the location. A small preview syncs with the visit to every device straight away; the full-size image is uploaded in the background when there is a connection, and the photo shows **Waiting to upload** until then.
+
+Tap a photo to open it in the viewer, which loads the full-size image the first time and keeps it on the device. **Delete photo** in the viewer, or the remove button on a photo while you edit the visit, deletes it for good, on every device. If something needs following up, add a [task](./tasks.md) with a due date.
 
 ## The visit log
 
@@ -101,7 +107,7 @@ The log lets you spot trends: brood building up in spring, stores running down b
 
 Every visit in the log has an edit and a delete action.
 
-- **Edit visit** opens the form with the saved values. Change what was wrong, including the date, and save. If two devices correct the same visit, the most recent change to each field wins.
+- **Edit visit** opens the form with the saved values. Change what was wrong, including the date, and save. Only the fields you changed are saved, so a correction does not overwrite what someone else changed in the meantime. If two devices correct the same field, the most recent change wins.
 - **Delete** asks for confirmation naming the visit's date. Afterwards a bar offers **Undo** for a few seconds. Deleting a visit also removes it from the hive's history and charts.
 
 ## Sensor readings \{#sensor-readings}

@@ -21,7 +21,7 @@ Bis deine erste Durchsicht erfasst ist, begrüßt dich die Übersicht mit „Wil
 | **Beuten** | Anzahl der Beuten. |
 | **Königinnen** | Königinnen, die aktuell als Weisel eines Volkes erfasst sind. |
 | **Offene Aufgaben** | Aufgaben, die noch nicht abgehakt sind. |
-| **Honig diese Saison** | Summe der im laufenden Kalenderjahr erfassten Erntekilogramm. |
+| **Honig diese Saison** | Summe des im laufenden Kalenderjahr geernteten Honigs, in Kilogramm oder Pfund, je nach Wahl unter **Einstellungen → Einheiten**. |
 
 Die Kacheln sind reine Zähler; nutze die Navigation, um den passenden Bereich zu öffnen.
 
@@ -44,19 +44,23 @@ Dieselben Ziele sind überall erreichbar: **Übersicht, Standorte, Scannen, Beut
 - Auf dem Smartphone enthält eine **untere Tab-Leiste** alle sechs.
 - Auf Desktop oder Tablet listet eine **Seitenleiste** links Übersicht, Standorte, Scannen, Beuten und Aufgaben, mit deinem Konto (E-Mail und Synchronisationsstatus) unten als Link zu den Einstellungen.
 
-## Einstellungen
+## Einstellungen \{#settings}
 
 **Einstellungen** enthält:
 
-- **Sprache**: Englisch, Deutsch, Französisch, Spanisch, Italienisch. Die Wahl wird auf dem Gerät gespeichert.
-- **Darstellung**: **System** (folgt der Hell- oder Dunkel-Einstellung des Geräts), **Hell** oder **Dunkel**. Die Wahl wird auf dem Gerät gespeichert.
-- **Arbeitsbereiche**: wechseln, erstellen, einladen und verwalten (auf Instanzen mit Anmeldung). Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md).
+- **Sprache**: Englisch, Deutsch, Französisch, Spanisch oder Italienisch. Die Wahl wird mit deinem Konto gespeichert und gilt auf allen deinen Geräten.
+- **Darstellung**: **System** (folgt der Hell- oder Dunkel-Einstellung des Geräts), **Hell** oder **Dunkel**. Die Wahl wird nur auf diesem Gerät gespeichert.
+- **Einheiten**: **Gewicht** in Kilogramm oder Pfund und **Temperatur** in Celsius oder Fahrenheit, für Anzeige und Eingabe. Die Wahl wird mit deinem Konto gespeichert und gilt auf allen deinen Geräten und in allen Arbeitsbereichen. Bis du wählst, richtet sich die App nach der Region deines Browsers (in den USA zum Beispiel Pfund und Fahrenheit). Aufzeichnungen werden immer in Kilogramm und Grad Celsius gespeichert, und Exporte und die API bleiben metrisch; siehe [Durchsichten](./inspections.md#units).
+- **Arbeitsbereiche**: wechseln, erstellen, einladen, Mitglieder verwalten und löschen (auf Instanzen mit Anmeldung). Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md).
+- **Sync-Probleme**: Änderungen, die der Server abgelehnt hat, mit **Erneut versuchen** und **Verwerfen**. Siehe [Offline und Synchronisation](./offline-and-sync.md#sync-problems).
+- **Daten & Backup**: Backups, weitere Exportformate, die Server-Kopie und Import; siehe [Import & Export](./import-export.md).
+- **Konto**: als wer du angemeldet bist, **Abmelden**, **Passwort** und **Überall abmelden**. Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md#password).
 - **Passkeys**: Passkeys hinzufügen oder entfernen (wenn der Server sie aktiviert hat).
 - **API-Schlüssel**: Schlüssel für Skripte und Geräte erstellen und entfernen (auf Instanzen mit Anmeldung). Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md#api-keys).
-- **Daten & Backup**: Export und Import; siehe [Import & Export](./import-export.md).
-- **Konto**: als wer du angemeldet bist, und **Abmelden**.
+- **Passwort eines Nutzers zurücksetzen**: nur für den Instanz-Administrator; siehe [Authentifizierung](../self-hosting/authentication.md#password-reset).
+- **Konto löschen**: siehe [Konten & Arbeitsbereiche](./accounts-tenants.md#delete-account).
 
-Auf einer selbst gehosteten Einzelnutzer-Instanz ohne Anmeldung gibt es nichts, wovon man sich abmelden könnte; der Konto-Block zeigt die lokale Identität.
+Auf einer selbst gehosteten Einzelnutzer-Instanz ohne Anmeldung gibt es nichts, wovon man sich abmelden könnte; der Konto-Block zeigt die lokale Identität, und Einheiten und Sprache werden für diese Identität gespeichert.
 
 ## Der Synchronisationsstatus
 

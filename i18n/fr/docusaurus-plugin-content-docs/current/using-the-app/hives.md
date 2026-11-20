@@ -17,7 +17,7 @@ Ouvrez un rucher, saisissez un nom sous **Ajouter une ruche** et ajoutez-la. La 
 | **Type** | Le standard de cadre et de caisse ; voir ci-dessous. |
 | **Statut** | L'état de la colonie ; voir ci-dessous. |
 
-Une **photo** s'ajoute depuis la page de la ruche en touchant l'emplacement d'image à côté du nom (**Supprimer la photo** la retire).
+Une **photo** s'ajoute depuis la page de la ruche en touchant l'emplacement d'image à côté du nom. Toucher ensuite l'image l'ouvre dans la visionneuse, avec **Remplacer la photo** et **Supprimer la photo**. Comme pour les photos d'une visite, un petit aperçu se synchronise immédiatement sur chaque appareil et l'image en taille réelle est envoyée en arrière-plan ; voir [Hors ligne et synchronisation](./offline-and-sync.md#photos).
 
 :::tip
 Gardez des noms courts et cohérents au sein d'un rucher, par exemple « 1 », « 2 », « 3 ». Les noms courts s'impriment clairement sur les étiquettes QR et se lisent rapidement sur le terrain.
@@ -93,7 +93,7 @@ La carte **Reine** affiche son année, son numéro, sa couleur de marquage, son 
 
 ### Journal des visites
 
-**Enregistrer une visite** ouvre le formulaire de visite. Les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules d'essaimage, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos. Chaque visite dispose d'actions pour la modifier et la supprimer. **Voir les N visites** ouvre le journal complet. Voir [Visites](./inspections.md).
+**Enregistrer une visite** ouvre le formulaire de visite. Les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules d'essaimage, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos (touchez-en une pour ouvrir la visionneuse). Les poids et les températures s'affichent dans les unités choisies sous **Paramètres → Unités**. Chaque visite dispose d'actions pour la modifier et la supprimer. **Voir les N visites** ouvre le journal complet. Voir [Visites](./inspections.md).
 
 ### Miel et Traitements
 

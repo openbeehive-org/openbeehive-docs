@@ -17,7 +17,7 @@ Apri un apiario, digita un nome sotto **Aggiungi arnia** e aggiungila. L'elenco 
 | **Tipo** | Lo standard di telaino e cassetta; vedi sotto. |
 | **Stato** | Lo stato della colonia; vedi sotto. |
 
-Una **foto** si aggiunge dalla pagina dell'arnia toccando il segnaposto dell'immagine accanto al nome (**Rimuovi foto** la toglie di nuovo).
+Una **foto** si aggiunge dalla pagina dell'arnia toccando il segnaposto dell'immagine accanto al nome. Toccando poi l'immagine la apri nel visualizzatore, con **Sostituisci la foto** ed **Elimina la foto**. Come per le foto di una visita, una piccola anteprima si sincronizza subito su ogni dispositivo e l'immagine a piena risoluzione viene caricata in background; vedi [Offline e sincronizzazione](./offline-and-sync.md#photos).
 
 :::tip
 Mantieni i nomi brevi e coerenti all'interno di un apiario, ad esempio "1", "2", "3". I nomi brevi si stampano chiaramente sulle etichette QR e sono rapidi da leggere sul campo.
@@ -93,7 +93,7 @@ La scheda **Regina** mostra anno, numero, colore di marcatura, origine e comment
 
 ### Diario delle visite
 
-**Registra visita** apre il modulo della visita. Sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto. Ogni visita ha azioni per modificarla ed eliminarla. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
+**Registra visita** apre il modulo della visita. Sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto (toccane una per aprire il visualizzatore). Pesi e temperature compaiono nelle unità scelte in **Impostazioni → Unità**. Ogni visita ha azioni per modificarla ed eliminarla. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
 
 ### Miele e Trattamenti
 

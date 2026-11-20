@@ -34,6 +34,7 @@ Un pequeño indicador de estado en la parte superior de cada página (y bajo tu 
 | **Falló la sincronización · reintentando** | No se pudo contactar con el servidor o este respondió con un error. La aplicación sigue intentándolo. |
 | **Sesión cerrada · inicia sesión para sincronizar** | Tu sesión ha terminado. Toca el indicador para iniciar sesión; no se pierde nada. |
 | **Problemas de sincronización: 2** | El servidor rechazó dos cambios; ver más abajo. |
+| **Aplicación desactualizada · actualízala para sincronizar** | El servidor requiere una versión más reciente de la aplicación. Carga la nueva versión; hasta entonces, los cambios esperan en el dispositivo. |
 
 Toca el indicador para sincronizar de inmediato. Sin tocarlo, la aplicación sincroniza después de cada cambio, a intervalos cortos mientras está abierta y en cuanto vuelve la conexión.
 
@@ -45,7 +46,7 @@ Un indicador de sin conexión persistente normalmente significa poca cobertura e
 
 ### Problemas de sincronización \{#sync-problems}
 
-De vez en cuando el servidor no acepta un cambio, por ejemplo porque el registro pertenece a otro espacio o porque el reloj del dispositivo iba muy adelantado. Un cambio así no se descarta: se queda en el dispositivo, y el indicador muestra **Problemas de sincronización** con el número de cambios rechazados. La lista **Problemas de sincronización** nombra cada uno con el motivo y ofrece **Reintentar** y **Descartar**. Descartar detiene la subida; el registro se queda en este dispositivo tal como está, pero nunca llega al servidor, a tus otros dispositivos ni a los demás miembros.
+De vez en cuando el servidor no acepta un cambio, por ejemplo porque el registro pertenece a otro espacio o porque el reloj del dispositivo iba muy adelantado. Un cambio así no se descarta: se queda en el dispositivo, y el indicador muestra **Problemas de sincronización** con el número de cambios rechazados. La lista **Problemas de sincronización** de **Ajustes** nombra cada uno con el motivo y ofrece **Reintentar** (o **Reintentar todos**) y **Descartar**. Descartar detiene la subida; el registro se queda en este dispositivo tal como está, pero nunca llega al servidor, a tus otros dispositivos ni a los demás miembros.
 
 ### Relojes de los dispositivos
 
@@ -53,7 +54,7 @@ Cada cambio lleva la hora del dispositivo que lo hizo. El servidor rechaza los c
 
 ## Tu primera sincronización en un dispositivo nuevo
 
-Iniciar sesión en un dispositivo nuevo, o volver a abrir la aplicación después de borrar su almacenamiento, empieza con una base de datos local vacía que se va llenando en segundo plano:
+Iniciar sesión en un dispositivo nuevo, o volver a abrir la aplicación después de borrar su almacenamiento, empieza con una base de datos local vacía. La aplicación carga desde el servidor los registros actuales del espacio, no el historial completo de cada cambio, y llena la base de datos en segundo plano:
 
 - Las listas muestran **marcadores de posición con brillo** mientras leen de la base de datos local.
 - Mientras la primera descarga sigue en marcha, el Resumen y las listas de colmenares, colmenas y tareas muestran **"Sincronizando tus datos…"** en lugar de un estado vacío.
@@ -61,7 +62,11 @@ Iniciar sesión en un dispositivo nuevo, o volver a abrir la aplicación despué
 
 Solo cuando la aplicación sabe que los datos están completos muestra un estado vacío real. Si el dispositivo está sin conexión o no se puede llegar al servidor, el aviso da paso a lo que haya almacenado localmente.
 
-Después de que la aplicación se haya actualizado a la versión 0.5.0, cada dispositivo descarga sus registros una vez más desde el principio. Esto repara los huecos que las versiones anteriores podían dejar y no requiere ninguna acción por tu parte.
+Después de que la aplicación se haya actualizado a la versión 0.5.0, cada dispositivo vuelve a cargar una vez los registros actuales del servidor. Esto repara los huecos que las versiones anteriores podían dejar y no requiere ninguna acción por tu parte. Un dispositivo que lleva sin sincronizar más tiempo del que el servidor conserva su lista de cambios (180 días por defecto) hace lo mismo.
+
+### Después de que se restaurara el servidor \{#after-restore}
+
+Si el operador restaura el servidor desde una copia de seguridad, puede que al servidor le falten cambios que tu dispositivo ya había sincronizado. La aplicación lo detecta en la siguiente sincronización, vuelve a subir todos los registros que tiene, junto con las fotos que conserva, y carga los datos actuales. Después muestra "Los datos del servidor se restablecieron o se restauraron. Este dispositivo ha vuelto a enviar sus registros y ha cargado los datos actuales." No hay que hacer nada; toca **Aceptar** para cerrar el mensaje.
 
 ## Sincronizar entre tus dispositivos
 
@@ -73,6 +78,7 @@ Openbeehive resuelve los cambios superpuestos **automáticamente**, sin avisos d
 
 - **Tú editas la nota de un colmenar en tu teléfono, tu coapicultor edita la misma nota en el suyo.** La edición más reciente de ese campo prevalece.
 - **Ambos añadís fotos a la misma visita mientras estáis sin conexión.** Se conservan ambos conjuntos de fotos.
+- **Cambias tus unidades en un dispositivo.** Las unidades y el idioma se guardan con tu cuenta y te acompañan en todos tus dispositivos; consulta [Ajustes](./dashboard.md#settings).
 - **Cada uno registra una visita distinta.** Cada visita, cosecha y tratamiento es un registro propio, así que ambas se conservan una al lado de la otra.
 
 Cada dispositivo converge en el mismo estado una vez que todos se han sincronizado.
@@ -80,6 +86,12 @@ Cada dispositivo converge en el mismo estado una vez que todos se han sincroniza
 :::tip
 La versión corta: añade con libertad, edita con confianza. Cómo funciona esto por dentro se explica en las páginas del [protocolo de sincronización](../developers/sync-protocol.md) y la [arquitectura](../developers/architecture.md).
 :::
+
+## Fotos \{#photos}
+
+Una foto tiene dos partes. Una vista previa pequeña se sincroniza con el registro como todo lo demás, así que todos los dispositivos la muestran de inmediato, también sin conexión. La imagen a tamaño completo se guarda en el dispositivo que tomó la foto y se sube en segundo plano cuando hay conexión; hasta entonces la foto muestra **Pendiente de subir**. Los demás dispositivos cargan la imagen completa la primera vez que abres la foto y guardan una copia.
+
+Eliminar una foto es definitivo: desaparece de todos los dispositivos y la imagen se borra del servidor. Los dispositivos que aún usan la versión 0.4 de la aplicación no ven las fotos añadidas desde dispositivos actualizados.
 
 ## Compartir
 
@@ -96,7 +108,7 @@ Para compartir un emplazamiento con un mentor mientras mantienes otros privados,
 
 El guardado ocurre en tu dispositivo, así que prácticamente nunca falla. Si ocurre (por ejemplo porque el almacenamiento del navegador está lleno o dañado), el formulario permanece abierto con todo lo que escribiste y un mensaje de error explica qué salió mal.
 
-En la **cuenta de demostración** pública el servidor rechaza los cambios (la demo se reinicia cada hora). Tus cambios se guardan en tu dispositivo y simplemente se quedan ahí en lugar de sincronizarse.
+En la **cuenta de demostración** pública el servidor no acepta cambios (la demo se reinicia cada hora). Cuando cambias algo allí, la aplicación deshace el cambio y avisa de que no se ha guardado.
 
 Hay una situación en la que guardar funciona pero no perdura: si el navegador no puede darle a la aplicación su almacenamiento privado (una ventana de navegación privada, o el almacenamiento bloqueado en los ajustes del navegador), la aplicación mantiene los registros en memoria y muestra un aviso: **"Este navegador no guarda datos en este dispositivo (ventana privada o almacenamiento bloqueado). Lo que no se haya sincronizado se pierde al cerrar esta pestaña."** Todo sigue funcionando durante la sesión, y los cambios se siguen sincronizando con el servidor si has iniciado sesión, pero la copia local desaparece al cerrar la pestaña. Consulta [Resolución de problemas](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

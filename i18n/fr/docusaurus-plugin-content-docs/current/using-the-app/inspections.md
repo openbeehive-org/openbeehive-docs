@@ -32,6 +32,10 @@ Si la ruche a une visite antérieure, **Partir de la dernière visite** (avec la
 | Date | Par défaut aujourd'hui ; modifiez-la pour consigner une visite passée. Les dates futures ne sont pas acceptées. |
 | Météo | Texte libre, par exemple « ensoleillé, 22°C ». |
 
+## Poids et températures \{#units}
+
+Les poids et les températures s'affichent et se saisissent dans les unités choisies sous **Paramètres → Unités** : kilogrammes ou livres, degrés Celsius ou Fahrenheit. Ce choix est enregistré avec votre compte et s'applique sur tous vos appareils. Vous pouvez taper une virgule ou un point décimal. L'application stocke chaque valeur en kilogrammes et en degrés Celsius : changer d'unités ne modifie donc jamais vos enregistrements, et les exports comme l'API restent en unités métriques.
+
 ## Colonie & comportement
 
 | Champ | Ce qu'il enregistre |
@@ -47,7 +51,7 @@ Si la ruche a une visite antérieure, **Partir de la dernière visite** (avec la
 | Douceur | Très douce, Douce, Normale, Nerveuse ou Agressive. |
 | Tenue au cadre | Quitte le cadre, Agitée, Calme ou Très calme. |
 | Varroa | Varroas par jour. Saisissez un nombre seul, comme `3`, si vous voulez le voir dans les graphiques ; tout autre texte est conservé mais n'est pas représenté. |
-| Poids de la ruche | En kg, si vous pesez la ruche. |
+| Poids de la ruche | En kg ou en lb, si vous pesez la ruche. |
 
 :::note
 Le trio « œufs vus / larve la plus jeune / couvain operculé » confirme généralement une reine en ponte et en bonne santé sans avoir à la trouver à chaque fois.
@@ -59,7 +63,7 @@ Cette section est repliée au départ ; touchez son titre pour l'ouvrir.
 
 | Activité | Enregistre |
 | --- | --- |
-| Nourri | Quantité donnée, en kg. |
+| Nourri | Quantité donnée, en kg ou en lb. |
 | Cadres ajoutés / retirés | Cadres que vous avez mis ou enlevés. |
 | Cadre à mâles découpé | Si vous avez découpé un cadre de couvain de mâles (une mesure de lutte contre le varroa). |
 | Hausse ajoutée | Si vous avez ajouté une hausse. |
@@ -74,8 +78,8 @@ Cette section est elle aussi repliée au départ.
 
 | Champ | Unité |
 | --- | --- |
-| Température de la ruche | °C |
-| Température extérieure | °C |
+| Température de la ruche | °C ou °F |
+| Température extérieure | °C ou °F |
 | Humidité de la ruche | % |
 | Humidité extérieure | % |
 
@@ -89,7 +93,9 @@ Une balance de ruche ou un capteur climatique peut envoyer ces champs via l'API.
 
 Ajoutez une **note** en texte libre pour tout ce que les champs structurés ne couvrent pas : une cellule de supersédure repérée, un tempérament à surveiller, un rappel de remérage.
 
-**Ajouter une photo** joint une ou plusieurs images (aspect du couvain, maladie suspectée, cellules royales). Elles sont stockées avec la visite et se synchronisent avec le reste de vos enregistrements. Si quelque chose demande un suivi, ajoutez une [tâche](./tasks.md) avec une échéance.
+**Ajouter une photo** joint une ou plusieurs images (aspect du couvain, maladie suspectée, cellules royales). L'application réduit chacune à 2048 pixels au plus et retire ce que l'appareil photo a enregistré en plus de l'image, comme la position. Un petit aperçu se synchronise immédiatement avec la visite sur chaque appareil ; l'image en taille réelle est envoyée en arrière-plan dès qu'une connexion est disponible, et la photo affiche **En attente d'envoi** d'ici là.
+
+Touchez une photo pour l'ouvrir dans la visionneuse, qui charge l'image en taille réelle la première fois et la conserve sur l'appareil. **Supprimer la photo** dans la visionneuse, ou le bouton de retrait sur une photo pendant que vous modifiez la visite, la supprime définitivement, sur tous les appareils. Si quelque chose demande un suivi, ajoutez une [tâche](./tasks.md) avec une échéance.
 
 ## Le journal des visites
 
@@ -101,7 +107,7 @@ Le journal vous permet de repérer des tendances : le couvain qui se développe 
 
 Chaque visite du journal dispose d'une action de modification et d'une action de suppression.
 
-- **Modifier la visite** ouvre le formulaire avec les valeurs enregistrées. Changez ce qui était erroné, y compris la date, et enregistrez. Si deux appareils corrigent la même visite, la modification la plus récente de chaque champ l'emporte.
+- **Modifier la visite** ouvre le formulaire avec les valeurs enregistrées. Changez ce qui était erroné, y compris la date, et enregistrez. Seuls les champs que vous avez modifiés sont enregistrés : une correction n'écrase donc pas ce que quelqu'un d'autre a modifié entre-temps. Si deux appareils corrigent le même champ, la modification la plus récente l'emporte.
 - **Supprimer** demande une confirmation qui mentionne la date de la visite. Ensuite, une barre propose **Annuler** pendant quelques secondes. Supprimer une visite la retire aussi de l'historique et des graphiques de la ruche.
 
 ## Relevés de capteur \{#sensor-readings}

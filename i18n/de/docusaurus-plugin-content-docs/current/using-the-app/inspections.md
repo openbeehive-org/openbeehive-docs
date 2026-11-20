@@ -32,6 +32,10 @@ Hat die Beute eine frühere Durchsicht, füllt **Von letzter Durchsicht ausgehen
 | Datum | Standardmäßig heute; ändere es, um einen vergangenen Besuch zu erfassen. Zukünftige Daten werden nicht angenommen. |
 | Wetter | Freitext, z. B. „sonnig, 22 °C". |
 
+## Gewichte und Temperaturen \{#units}
+
+Gewichte und Temperaturen werden in den Einheiten angezeigt und eingegeben, die unter **Einstellungen → Einheiten** gewählt sind: Kilogramm oder Pfund, Grad Celsius oder Fahrenheit. Die Wahl wird mit deinem Konto gespeichert und gilt auf allen deinen Geräten. Du kannst ein Dezimalkomma oder einen Dezimalpunkt eingeben. Die App speichert jeden Wert in Kilogramm und Grad Celsius; ein Wechsel der Einheiten ändert deine Aufzeichnungen also nie, und Exporte und die API bleiben metrisch.
+
 ## Volk & Verhalten
 
 | Feld | Was es erfasst |
@@ -47,7 +51,7 @@ Hat die Beute eine frühere Durchsicht, füllt **Von letzter Durchsicht ausgehen
 | Sanftmut | Sehr sanft, Sanft, Normal, Nervös oder Aggressiv. |
 | Wabensitz | Läuft ab, Unruhig, Ruhig oder Sehr ruhig. |
 | Varroa | Milben pro Tag. Gib eine reine Zahl wie `3` ein, wenn du sie in den Diagrammen haben möchtest; anderer Text bleibt erhalten, erscheint aber nicht im Diagramm. |
-| Stockgewicht | In kg, falls du die Beute wiegst. |
+| Stockgewicht | In kg oder lb, falls du die Beute wiegst. |
 
 :::note
 Das Trio „Stifte gesehen / jüngste Larve / verdeckelte Brut" bestätigt meist eine gesunde legende Königin, ohne sie jedes Mal finden zu müssen.
@@ -59,7 +63,7 @@ Dieser Abschnitt ist anfangs eingeklappt; tippe auf seine Überschrift, um ihn z
 
 | Tätigkeit | Erfasst |
 | --- | --- |
-| Gefüttert | Gefütterte Menge, in kg. |
+| Gefüttert | Gefütterte Menge, in kg oder lb. |
 | Waben gegeben / entnommen | Waben, die du eingesetzt oder entnommen hast. |
 | Drohnenrahmen geschnitten | Ob du eine Drohnenbrutwabe ausgeschnitten hast (eine Maßnahme zur Varroa-Kontrolle). |
 | Honigraum gegeben | Ob du einen Honigraum aufgesetzt hast. |
@@ -74,8 +78,8 @@ Auch dieser Abschnitt ist anfangs eingeklappt.
 
 | Feld | Einheit |
 | --- | --- |
-| Temperatur im Stock | °C |
-| Außentemperatur | °C |
+| Temperatur im Stock | °C oder °F |
+| Außentemperatur | °C oder °F |
 | Luftfeuchte im Stock | % |
 | Außenluftfeuchte | % |
 
@@ -89,7 +93,9 @@ Eine Stockwaage oder ein Klimasensor kann diese Felder über die API senden. Sol
 
 Füge eine **Notiz** als Freitext für alles hinzu, was die strukturierten Felder nicht abdecken: eine markierte Nachschaffungszelle, eine Wesensart, die im Auge behalten werden muss, eine Erinnerung zum Umweiseln.
 
-**Foto hinzufügen** hängt ein oder mehrere Bilder an (Brutmuster, Krankheitsverdacht, Weiselzellen). Sie werden mit dem Besuch gespeichert und synchronisieren mit dem Rest deiner Aufzeichnungen. Wenn etwas nachverfolgt werden muss, lege eine [Aufgabe](./tasks.md) mit Fälligkeitsdatum an.
+**Foto hinzufügen** hängt ein oder mehrere Bilder an (Brutmuster, Krankheitsverdacht, Weiselzellen). Die App verkleinert jedes auf höchstens 2048 Pixel und entfernt, was die Kamera außer dem Bild gespeichert hat, etwa den Aufnahmeort. Eine kleine Vorschau synchronisiert mit der Durchsicht sofort auf jedes Gerät; das Bild in voller Größe wird im Hintergrund hochgeladen, sobald eine Verbindung besteht, und bis dahin zeigt das Foto **Wartet auf den Upload**.
+
+Tippe auf ein Foto, um es in der Ansicht zu öffnen, die beim ersten Mal das Bild in voller Größe lädt und es auf dem Gerät behält. **Foto löschen** in der Ansicht oder die Entfernen-Schaltfläche an einem Foto, während du die Durchsicht bearbeitest, löscht es endgültig, auf jedem Gerät. Wenn etwas nachverfolgt werden muss, lege eine [Aufgabe](./tasks.md) mit Fälligkeitsdatum an.
 
 ## Die Durchsichtenliste
 
@@ -101,7 +107,7 @@ Das Protokoll lässt dich Trends erkennen: Brut, die sich im Frühjahr aufbaut, 
 
 Jede Durchsicht im Protokoll hat eine Aktion zum Bearbeiten und eine zum Löschen.
 
-- **Durchsicht bearbeiten** öffnet das Formular mit den gespeicherten Werten. Ändere, was falsch war, auch das Datum, und speichere. Korrigieren zwei Geräte dieselbe Durchsicht, gewinnt je Feld die jüngste Änderung.
+- **Durchsicht bearbeiten** öffnet das Formular mit den gespeicherten Werten. Ändere, was falsch war, auch das Datum, und speichere. Gespeichert werden nur die Felder, die du geändert hast, sodass eine Korrektur nicht überschreibt, was jemand anderes inzwischen geändert hat. Korrigieren zwei Geräte dasselbe Feld, gewinnt die jüngste Änderung.
 - **Löschen** fragt nach einer Bestätigung, die das Datum der Durchsicht nennt. Danach bietet eine Leiste ein paar Sekunden lang **Rückgängig** an. Das Löschen einer Durchsicht entfernt sie auch aus der Historie und den Diagrammen der Beute.
 
 ## Sensormessungen \{#sensor-readings}

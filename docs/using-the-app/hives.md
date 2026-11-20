@@ -17,7 +17,7 @@ Open an apiary, type a name under **Add hive** and add it. The **Hives** list ha
 | **Type** | The frame and box standard; see below. |
 | **Status** | The state of the colony; see below. |
 
-A **photo** is added from the hive page by tapping the picture placeholder next to the name (**Remove photo** takes it away again).
+A **photo** is added from the hive page by tapping the picture placeholder next to the name. Tapping the picture later opens it in the viewer, with **Replace photo** and **Delete photo**. Like the photos of a visit, a small preview syncs to every device at once and the full-size image is uploaded in the background; see [Offline & sync](./offline-and-sync.md#photos).
 
 :::tip
 Keep names short and consistent across an apiary, for example "1", "2", "3". Short names print clearly on QR labels and are quick to read in the field.
@@ -93,7 +93,7 @@ The **Queen** card shows her year, number, marking colour, origin and comment, w
 
 ### Visit log
 
-**Record visit** opens the visit form. The five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos. Each visit has actions to edit and delete it. **See all N visits** opens the full log. See [Inspections](./inspections.md).
+**Record visit** opens the visit form. The five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos (tap one to open the viewer). Weights and temperatures appear in the units chosen under **Settings → Units**. Each visit has actions to edit and delete it. **See all N visits** opens the full log. See [Inspections](./inspections.md).
 
 ### Honey and Treatments
 

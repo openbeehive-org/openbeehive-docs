@@ -6,48 +6,95 @@ title: "Import & Export"
 # Import & Export
 
 Deine Aufzeichnungen gehören dir. Mit Openbeehive kannst du **all deine Daten**
-mitnehmen — als Sicherung, zum Umzug auf eine andere Instanz, zur Auswertung in
-einer Tabellenkalkulation oder zum Teilen mit anderen Werkzeugen. Alles läuft
-lokal über **Einstellungen → Daten & Sicherung**; keine Daten verlassen dein
-Gerät, es sei denn, du entscheidest dich, die Datei zu teilen.
+mitnehmen: als Backup, zum Umzug auf eine andere Instanz, zur Auswertung in
+einer Tabellenkalkulation oder zum Teilen mit anderen Werkzeugen. Alles findest
+du unter **Einstellungen → Daten & Backup**.
 
-## Exportieren
+Export und Import arbeiten mit dem **aktiven Arbeitsbereich**. Beide warten, bis
+das Gerät die erste Synchronisierung des Arbeitsbereichs abgeschlossen hat; bis
+dahin weist der Bereich darauf hin.
 
-Öffne die **Einstellungen**, suche **Daten & Sicherung** und wähle ein Format:
+## Vollständiges Backup \{#full-backup}
+
+**Vollständiges Backup herunterladen** speichert alle Bienenstände, Beuten,
+Königinnen, Durchsichten, Behandlungen, Ernten, Aufgaben und Verlaufseinträge
+des Arbeitsbereichs so, wie dieses Gerät sie hat, einschließlich deiner
+persönlichen Aufgaben und noch nicht hochgeladener Änderungen. Der Bereich
+zeigt, wie viele solcher Änderungen es gibt und wie viele der Server abgelehnt
+hat (siehe [Sync-Probleme](./offline-and-sync.md#sync-problems)): Sie sind in
+der Datei enthalten, aber nicht auf dem Server.
+
+- Ohne Fotos ist das Backup eine JSON-Datei.
+- Mit **Fotos einschließen** ist es ein ZIP, das auch die Bilder in voller
+  Größe enthält. Bilder, die nicht auf diesem Gerät sind, holt die App vom
+  Server; geht das nicht (offline oder noch nicht hochgeladen), sagt die App,
+  wie viele fehlen, und deren Vorschaubilder werden aufgenommen.
+
+Gewichte und Temperaturen werden immer in Kilogramm und Grad Celsius
+exportiert, egal welche Einheiten du unter **Einstellungen → Einheiten**
+gewählt hast.
+
+### Vom Server herunterladen \{#server-copy}
+
+**Server-Kopie herunterladen** holt die vollständige Kopie des Arbeitsbereichs,
+die der Server hat, im selben Format. Sie enthält deine eigenen persönlichen
+Aufgaben, aber nicht die anderer Mitglieder, und ihr fehlen Änderungen, die ein
+Gerät noch nicht hochgeladen hat. Einige Downloads pro Stunde sind möglich.
+Skripte können dieselbe Datei mit einem API-Schlüssel abrufen; siehe
+[REST](../using-the-api/rest.md#export). Das Demo-Konto kann sie nicht
+herunterladen.
+
+## Weitere Formate
 
 | Format | Was du bekommst | Am besten geeignet für |
 | --- | --- | --- |
-| **Vollständige Sicherung (JSON)** | Jede Aufzeichnung — Bienenstände, Beuten, Königinnen, Durchsichten, Ernten, Aufgaben, Platzierungen und Ereignisse — in einer Datei | Aufbewahrung und **Umzug auf eine andere Instanz** (verlustfrei hin und zurück) |
-| **Tabellenkalkulation (XLSX)** | Eine Arbeitsmappe, ein Tabellenblatt je Objekt | Auswertung in Excel / LibreOffice / Google Sheets |
-| **CSV (ZIP)** | Eine `.csv` je Objekt, gebündelt in einer `.zip` | Universeller Austausch, Skripte, andere Apps |
-| **BeeXML** | Eine strukturierte XML-Datei (Bienenstand → Beute → Königin / Durchsicht) | Teilen mit Werkzeugen, die das [BeeXML](https://beexml.org/)-Austauschformat sprechen |
-| **Bericht (PDF)** | Ein druckbarer Bienenstand-Bericht — Beuten, aktuelle Königinnen und neueste Messwerte | Drucken, Teilen, Audit / Dokumentation |
+| **Tabelle (XLSX)** | Eine Arbeitsmappe, ein Tabellenblatt je Art von Eintrag | Auswertung in Excel / LibreOffice / Google Sheets |
+| **CSV (ZIP)** | Eine `.csv` je Art von Eintrag, gebündelt in einer `.zip` | Universeller Austausch, Skripte, andere Apps |
+| **BeeXML** | Bienenstände, Beuten, Königinnen und Durchsichten in einer strukturierten XML-Datei | Teilen mit Werkzeugen, die das [BeeXML](https://beexml.org/)-Austauschformat sprechen |
+| **Bericht (PDF)** | Ein druckbarer Bienenstand-Bericht: Beuten, aktuelle Königinnen und neueste Messwerte | Drucken, Teilen, Dokumentation |
 
-Der **Bericht (PDF)** öffnet eine übersichtliche, gebrandete Zusammenfassung in
-einem neuen Tab und löst den Druckdialog deines Browsers aus — wähle „Als PDF
-speichern", um eine Kopie zu behalten.
+Diese Formate sind zum Lesen anderswo gedacht; zum Wiederherstellen deiner Daten
+dient das vollständige Backup. Der **Bericht (PDF)** öffnet eine Zusammenfassung
+in einem neuen Tab und löst den Druckdialog deines Browsers aus; wähle „Als PDF
+speichern“, um eine Kopie zu behalten. Für serverseitige Backups einer ganzen
+Instanz siehe [Self-Hosting → Backups](../self-hosting/backups.md).
 
-Der Export gibt wieder, was sich gerade auf deinem Gerät befindet. Fotos sind in
-den CSV-/XLSX-/BeeXML-Exporten nicht enthalten (sie werden als Blobs gespeichert)
-— das vollständige Bild liegt in deinem synchronisierten Konto und dessen
-Blob-Speicher; siehe [Self-Hosting → Sicherungen](../self-hosting/backups.md) für
-serverseitige Sicherungen.
+## Importieren \{#importing}
 
-## Importieren & Wiederherstellen
+**Importieren → Datei wählen…** liest eine Datei in den aktiven Arbeitsbereich
+ein. Wähle das **Dateiformat** oder lass es auf **Automatisch erkennen**:
 
-Wähle im selben Bereich **Daten & Sicherung** ein Format und eine Datei aus:
-
-- **Openbeehive-Sicherung (JSON)** — stellt einen früheren Export wieder her.
-  Aufzeichnungen behalten ihre IDs, daher ist das erneute Importieren derselben
-  Sicherung unbedenklich (es entstehen keine Duplikate).
-- **BeeXML** — importiert Bienenstände, Beuten, Königinnen und Durchsichten aus
-  einer Datei im BeeXML-Stil.
-- **CSV aus einer anderen App** — migriere von einer anderen Imkerei-App oder
+- **Openbeehive-Backup (JSON oder ZIP)**: ein vollständiges Backup dieser oder
+  einer anderen Instanz, mit Fotos, wenn es ein ZIP ist.
+- **BeeXML**: Bienenstände, Beuten, Königinnen und Durchsichten aus einer Datei
+  im BeeXML-Stil.
+- **CSV aus einer anderen App**: Durchsichten aus einer anderen Imker-App oder
   einer Tabellenkalkulation (siehe unten).
-- **Automatische Erkennung** — wählt den passenden Leser anhand der Datei aus.
 
-Importierte Aufzeichnungen werden Teil **deines** Kontos und synchronisieren sich
-wie alles, was du von Hand eingibst.
+Nichts wird geschrieben, bevor du eine **Vorschau** siehst: je Art von Eintrag,
+wie viele **Neu**, **Überschrieben**, **Wiederhergestellt** und **Übersprungen
+(schon vorhanden)** sind. Tippe dann auf **Jetzt importieren**.
+
+Standardmäßig fügt ein Import nur hinzu. Einträge, die es in diesem
+Arbeitsbereich schon gibt, auch gelöschte, werden übersprungen und nie
+geändert; dasselbe Backup zweimal zu importieren ändert also nichts. Zwei
+Optionen ändern das:
+
+- **Bestehende Einträge überschreiben** schreibt die Werte aus der Datei, wo sie
+  abweichen. Geschrieben werden nur Felder, die die Datei enthält; Änderungen
+  seit dem Export gehen verloren. Gelöschte Einträge bleiben gelöscht.
+- **Auch gelöschte Einträge wiederherstellen** holt Einträge zurück, die hier
+  gelöscht wurden.
+
+Eine Datei aus einem **anderen Arbeitsbereich** bekommt neue IDs und berührt
+daher nie bestehende Einträge; die Vorschau weist darauf hin. Importierte
+Einträge synchronisieren wie alles, was du von Hand eingibst. Zahlen in der
+Datei werden als Kilogramm und Grad Celsius gelesen.
+
+**Letzten Import rückgängig machen** löscht, was der letzte Import angelegt hat,
+auch offline. Ein Bienenstand oder eine Beute, zu dem bzw. der seitdem eigene
+Einträge hinzugekommen sind (eine Durchsicht, eine dorthin gewanderte Beute),
+bleibt erhalten, und die App sagt, wie viele.
 
 ## Migration von einer anderen App
 
@@ -72,16 +119,21 @@ keine Rolle; mehrere Sprachen werden verstanden):
 | Außenfeuchtigkeit | humidity, outside humidity |
 | Beutengewicht | weight, hive weight, gewicht |
 | Honig | honey, harvest, yield, honig, ernte |
-| Notizen | note, notes, comment, remarks, notiz |
+| Notizen | note, notes, comment, comments, remarks, notiz, bemerkung |
 
-Jede CSV-Zeile wird zu einer **Durchsicht** an der passenden Beute und legt
-Bienenstände und Beuten nach Bedarf an (Zeilen ohne Bienenstand landen in einem
-Bienenstand „Imported"). Nicht erkannte Spalten werden übersprungen — nichts geht
-kaputt, du behältst einfach den Rest.
+Jede CSV-Zeile wird zu einer **Durchsicht** der passenden Beute. Bienenstände
+und Beuten, die es mit demselben Namen schon gibt (ohne Rücksicht auf Groß- und
+Kleinschreibung), werden verwendet; andere werden angelegt (Zeilen ohne
+Bienenstand landen in einem Bienenstand „Imported“). Eine Durchsicht, die für
+diese Beute an diesem Tag mit denselben Werten schon erfasst ist, wird
+übersprungen; dieselbe Datei zweimal zu importieren ändert also nichts, und ein
+überschreibender Import lässt solche Durchsichten, wie sie sind. Nicht erkannte
+Spalten werden übersprungen. Gewichte und Temperaturen werden als Kilogramm und
+Grad Celsius gelesen.
 
 :::tip Erst hin und zurück
-Wenn du zwischen Openbeehive-Instanzen umziehst, bevorzuge die **JSON-Sicherung**
-— sie ist vollständig und verlustfrei. Verwende CSV für den Wechsel **von**
+Wenn du zwischen Openbeehive-Instanzen umziehst, bevorzuge das **vollständige
+Backup** (als ZIP mit Fotos): Es ist vollständig und verlustfrei. Verwende CSV für den Wechsel **von**
 anderen Apps.
 :::
 

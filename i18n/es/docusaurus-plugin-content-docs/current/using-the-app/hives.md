@@ -17,7 +17,7 @@ Abre un colmenar, escribe un nombre en **Añadir colmena** y añádela. La lista
 | **Tipo** | El estándar de cuadro y caja; ver más abajo. |
 | **Estado** | El estado de la colonia; ver más abajo. |
 
-Una **foto** se añade desde la página de la colmena tocando el marcador de imagen junto al nombre (**Eliminar foto** la quita de nuevo).
+Una **foto** se añade desde la página de la colmena tocando el marcador de imagen junto al nombre. Si después tocas la imagen, se abre en el visor, con **Sustituir la foto** y **Eliminar la foto**. Igual que con las fotos de una visita, una vista previa pequeña se sincroniza de inmediato con todos los dispositivos y la imagen a tamaño completo se sube en segundo plano; consulta [Sin conexión y sincronización](./offline-and-sync.md#photos).
 
 :::tip
 Mantén los nombres cortos y coherentes dentro de un colmenar, por ejemplo "1", "2", "3". Los nombres cortos se imprimen con claridad en las etiquetas QR y son rápidos de leer sobre el terreno.
@@ -93,7 +93,7 @@ La tarjeta **Reina** muestra su año, número, color de marcado, origen y coment
 
 ### Registro de visitas
 
-**Registrar visita** abre el formulario de visita. Se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas de enjambrazón, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya. Cada visita tiene acciones para editarla y eliminarla. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](./inspections.md).
+**Registrar visita** abre el formulario de visita. Se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas de enjambrazón, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya (toca una para abrir el visor). Los pesos y las temperaturas aparecen en las unidades elegidas en **Ajustes → Unidades**. Cada visita tiene acciones para editarla y eliminarla. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](./inspections.md).
 
 ### Miel y Tratamientos
 

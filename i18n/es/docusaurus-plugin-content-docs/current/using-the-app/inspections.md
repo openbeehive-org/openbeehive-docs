@@ -32,6 +32,10 @@ Si la colmena tiene una visita anterior, **Partir de la última visita** (con la
 | Fecha | Por defecto es hoy; cámbiala para registrar una visita pasada. No se aceptan fechas futuras. |
 | Clima | Texto libre, p. ej. "soleado, 22°C". |
 
+## Pesos y temperaturas \{#units}
+
+Los pesos y las temperaturas se muestran e introducen en las unidades elegidas en **Ajustes → Unidades**: kilogramos o libras, grados Celsius o Fahrenheit. La elección se guarda con tu cuenta y se aplica en todos tus dispositivos. Puedes escribir los decimales con coma o con punto. La aplicación guarda cada valor en kilogramos y grados Celsius, así que cambiar las unidades nunca modifica tus registros, y las exportaciones y la API siguen en el sistema métrico.
+
 ## Colonia y comportamiento
 
 | Campo | Qué registra |
@@ -47,7 +51,7 @@ Si la colmena tiene una visita anterior, **Partir de la última visita** (con la
 | Mansedumbre | Muy mansa, Mansa, Normal, Nerviosa o Agresiva. |
 | Comportamiento en el cuadro | Abandona el cuadro, Inquieta, Tranquila o Muy tranquila. |
 | Varroa | Varroas por día. Introduce un número solo, como `3`, si quieres que aparezca en los gráficos; cualquier otro texto se conserva, pero no se grafica. |
-| Peso de la colmena | En kg, si pesas la colmena. |
+| Peso de la colmena | En kg o lb, si pesas la colmena. |
 
 :::note
 El trío "huevos vistos / larva más joven / cría operculada" suele confirmar una reina sana en puesta sin necesidad de encontrarla cada vez.
@@ -59,7 +63,7 @@ Esta sección empieza plegada; toca su encabezado para abrirla.
 
 | Actividad | Registra |
 | --- | --- |
-| Alimentada | Cantidad de alimento dada, en kg. |
+| Alimentada | Cantidad de alimento dada, en kg o lb. |
 | Cuadros añadidos / retirados | Cuadros que pusiste o quitaste. |
 | Cuadro de zánganos cortado | Si recortaste un cuadro de cría de zánganos (una medida de control de varroa). |
 | Alza añadida | Si añadiste un alza. |
@@ -74,8 +78,8 @@ Esta sección también empieza plegada.
 
 | Campo | Unidad |
 | --- | --- |
-| Temperatura de la colmena | °C |
-| Temperatura exterior | °C |
+| Temperatura de la colmena | °C o °F |
+| Temperatura exterior | °C o °F |
 | Humedad de la colmena | % |
 | Humedad exterior | % |
 
@@ -89,7 +93,9 @@ Una báscula de colmena o un sensor de clima pueden publicar estos campos a trav
 
 Añade una **nota** de texto libre para todo lo que los campos estructurados no cubran: una realera de reemplazo marcada, un carácter que conviene vigilar, un recordatorio para cambiar la reina.
 
-**Añadir foto** adjunta una o más imágenes (patrón de cría, sospecha de enfermedad, realeras). Se almacenan con la visita y se sincronizan con el resto de tus registros. Si algo necesita seguimiento, añade una [tarea](./tasks.md) con fecha de vencimiento.
+**Añadir foto** adjunta una o más imágenes (patrón de cría, sospecha de enfermedad, realeras). La aplicación reduce cada una a como máximo 2048 píxeles y elimina lo que la cámara guardó además de la imagen, como la ubicación. Una vista previa pequeña se sincroniza con la visita en todos los dispositivos de inmediato; la imagen a tamaño completo se sube en segundo plano cuando hay conexión, y hasta entonces la foto muestra **Pendiente de subir**.
+
+Toca una foto para abrirla en el visor, que carga la imagen a tamaño completo la primera vez y la conserva en el dispositivo. **Eliminar la foto** en el visor, o el botón de quitar de una foto mientras editas la visita, la elimina de forma definitiva, en todos los dispositivos. Si algo necesita seguimiento, añade una [tarea](./tasks.md) con fecha de vencimiento.
 
 ## El registro de visitas
 
@@ -101,7 +107,7 @@ El registro te permite detectar tendencias: la cría aumentando en primavera, la
 
 Cada visita del registro tiene una acción de edición y otra de eliminación.
 
-- **Editar visita** abre el formulario con los valores guardados. Cambia lo que estaba mal, incluida la fecha, y guarda. Si dos dispositivos corrigen la misma visita, gana el cambio más reciente de cada campo.
+- **Editar visita** abre el formulario con los valores guardados. Cambia lo que estaba mal, incluida la fecha, y guarda. Solo se guardan los campos que cambiaste, así que una corrección no sobrescribe lo que otra persona haya cambiado mientras tanto. Si dos dispositivos corrigen el mismo campo, gana el cambio más reciente.
 - **Eliminar** pide una confirmación que nombra la fecha de la visita. Después, una barra ofrece **Deshacer** durante unos segundos. Eliminar una visita también la quita del historial y de los gráficos de la colmena.
 
 ## Lecturas de sensor \{#sensor-readings}

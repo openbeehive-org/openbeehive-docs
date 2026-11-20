@@ -34,6 +34,7 @@ Un piccolo chip di stato in cima a ogni pagina (e sotto il tuo indirizzo e-mail 
 | **Sincronizzazione non riuscita · nuovo tentativo** | Il server non è stato raggiunto o ha risposto con un errore. L'app continua a riprovare. |
 | **Disconnesso · accedi per sincronizzare** | La tua sessione è terminata. Tocca il chip per accedere; non si perde nulla. |
 | **Problemi di sincronizzazione: 2** | Il server ha rifiutato due modifiche; vedi sotto. |
+| **App non aggiornata · aggiornala per sincronizzare** | Il server richiede una versione più recente dell'app. Carica la nuova versione; fino ad allora le modifiche attendono sul dispositivo. |
 
 Tocca il chip per sincronizzare subito. Anche senza toccarlo, l'app sincronizza dopo ogni modifica, a brevi intervalli mentre è aperta, e non appena torna la connessione.
 
@@ -45,7 +46,7 @@ Un indicatore offline persistente di solito significa copertura debole in apiari
 
 ### Problemi di sincronizzazione \{#sync-problems}
 
-Di tanto in tanto il server non accetta una modifica, per esempio perché il dato appartiene a un altro spazio o perché l'orologio del dispositivo era molto avanti. Una modifica del genere non viene buttata via: resta sul dispositivo, e il chip mostra **Problemi di sincronizzazione** con il numero di modifiche rifiutate. L'elenco **Problemi di sincronizzazione** le indica una per una con il motivo e offre **Riprova** e **Scarta**. Scarta interrompe l'invio; il dato resta su questo dispositivo così com'è ma non raggiunge mai il server, gli altri tuoi dispositivi o gli altri membri.
+Di tanto in tanto il server non accetta una modifica, per esempio perché il dato appartiene a un altro spazio o perché l'orologio del dispositivo era molto avanti. Una modifica del genere non viene buttata via: resta sul dispositivo, e il chip mostra **Problemi di sincronizzazione** con il numero di modifiche rifiutate. L'elenco **Problemi di sincronizzazione** nelle **Impostazioni** le indica una per una con il motivo e offre **Riprova** (oppure **Riprova tutte**) e **Scarta**. Scarta interrompe l'invio; il dato resta su questo dispositivo così com'è ma non raggiunge mai il server, gli altri tuoi dispositivi o gli altri membri.
 
 ### Orologi dei dispositivi
 
@@ -53,7 +54,7 @@ Ogni modifica porta l'ora del dispositivo che l'ha fatta. Il server rifiuta le m
 
 ## La prima sincronizzazione su un nuovo dispositivo
 
-Accedere su un nuovo dispositivo, o riaprire l'app dopo che la sua archiviazione è stata cancellata, inizia con un database locale vuoto che si riempie in background:
+Accedere su un nuovo dispositivo, o riaprire l'app dopo che la sua archiviazione è stata cancellata, inizia con un database locale vuoto. L'app carica dal server i dati attuali dello spazio, non l'intera storia di ogni modifica, e riempie il database in background:
 
 - Le liste mostrano **segnaposto luccicanti** mentre leggono dal database locale.
 - Finché il primo download è ancora in corso, la Panoramica e le liste di apiari, arnie e attività mostrano **"Sincronizzazione dei dati…"** anziché uno stato vuoto.
@@ -61,7 +62,11 @@ Accedere su un nuovo dispositivo, o riaprire l'app dopo che la sua archiviazione
 
 Solo quando l'app sa che i dati sono completi mostra un vero stato vuoto. Se il dispositivo è offline o il server non è raggiungibile, l'indicazione lascia il posto a ciò che è archiviato localmente.
 
-Dopo che l'app si è aggiornata alla versione 0.5.0, ogni dispositivo scarica i propri registri ancora una volta dall'inizio. Questo ripara le lacune che le versioni precedenti potevano lasciare e non richiede alcuna azione da parte tua.
+Dopo che l'app si è aggiornata alla versione 0.5.0, ogni dispositivo carica ancora una volta i dati attuali dal server. Questo ripara le lacune che le versioni precedenti potevano lasciare e non richiede alcuna azione da parte tua. Lo stesso fa un dispositivo che non si sincronizza da più tempo di quanto il server conservi il suo elenco di modifiche (180 giorni per impostazione predefinita).
+
+### Dopo il ripristino del server \{#after-restore}
+
+Se l'operatore ripristina il server da un backup, al server possono mancare modifiche che il tuo dispositivo aveva già sincronizzato. L'app se ne accorge alla sincronizzazione successiva, carica di nuovo tutti i dati che ha, insieme alle foto che conserva, e scarica i dati attuali. Poi mostra "I dati del server sono stati reimpostati o ripristinati. Questo dispositivo ha inviato di nuovo i suoi dati e ha caricato quelli attuali." Non c'è nulla da fare; tocca **OK** per chiudere il messaggio.
 
 ## Sincronizzazione tra i tuoi dispositivi
 
@@ -73,6 +78,7 @@ Openbeehive risolve le modifiche sovrapposte **automaticamente**, senza richiest
 
 - **Tu modifichi la nota di un apiario sul telefono, il tuo co-apicoltore modifica la stessa nota sul suo.** La modifica più recente a quel campo prevale.
 - **Aggiungete entrambi foto alla stessa visita mentre siete offline.** Entrambi i gruppi di foto vengono conservati.
+- **Cambi le unità su un dispositivo.** Unità e lingua vengono salvate nel tuo account e ti seguono su ogni dispositivo; vedi [Impostazioni](./dashboard.md#settings).
 - **Ciascuno di voi registra una visita separata.** Ogni visita, smielatura e trattamento è una registrazione a sé, quindi entrambe vengono mantenute affiancate.
 
 Ogni dispositivo converge sullo stesso stato una volta che tutti si sono sincronizzati.
@@ -80,6 +86,12 @@ Ogni dispositivo converge sullo stesso stato una volta che tutti si sono sincron
 :::tip
 In breve: aggiungi liberamente, modifica con sicurezza. Come funziona sotto il cofano è spiegato nelle pagine sul [protocollo di sincronizzazione](../developers/sync-protocol.md) e sull'[architettura](../developers/architecture.md).
 :::
+
+## Foto \{#photos}
+
+Una foto ha due parti. Una piccola anteprima si sincronizza con il dato come tutto il resto, quindi ogni dispositivo la mostra subito, anche offline. L'immagine a piena risoluzione resta sul dispositivo che ha scattato la foto e viene caricata in background quando c'è connessione; fino ad allora la foto mostra **In attesa di caricamento**. Gli altri dispositivi caricano l'immagine completa la prima volta che apri la foto e ne conservano una copia.
+
+Eliminare una foto è definitivo: sparisce da ogni dispositivo e l'immagine viene rimossa dal server. I dispositivi che usano ancora la versione 0.4 dell'app non vedono le foto aggiunte dai dispositivi aggiornati.
 
 ## Condivisione
 
@@ -96,7 +108,7 @@ Per condividere una postazione con un mentore mantenendo private le altre, metti
 
 Il salvataggio avviene sul tuo dispositivo, quindi in pratica non fallisce mai. Se dovesse succedere (ad esempio perché l'archiviazione del browser è piena o danneggiata) il modulo resta aperto con tutto ciò che hai digitato e un messaggio di errore spiega cosa è andato storto.
 
-Con l'**account demo** pubblico il server rifiuta le modifiche (la demo si azzera ogni ora). Le tue modifiche vengono salvate sul dispositivo e semplicemente restano lì invece di sincronizzarsi.
+Con l'**account demo** pubblico il server non accetta modifiche (la demo si azzera ogni ora). Quando lì modifichi qualcosa, l'app annulla la modifica e ti dice che non è stata salvata.
 
 C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata (una finestra di navigazione privata, o l'archiviazione bloccata nelle impostazioni del browser), l'app tiene i registri in memoria e mostra un banner: **"Questo browser non salva dati su questo dispositivo (finestra privata o archiviazione bloccata). Ciò che non è stato sincronizzato va perso alla chiusura di questa scheda."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

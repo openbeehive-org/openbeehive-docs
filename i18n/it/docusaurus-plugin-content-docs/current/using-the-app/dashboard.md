@@ -21,7 +21,7 @@ Finché non viene registrata la tua prima visita, la Panoramica ti accoglie con 
 | **Arnie** | Numero di arnie. |
 | **Regine** | Regine attualmente registrate a capo di una colonia. |
 | **Attività aperte** | Attività non ancora spuntate. |
-| **Miele in questa stagione** | Totale dei chilogrammi raccolti registrati nell'anno solare corrente. |
+| **Miele in questa stagione** | Totale del miele raccolto nell'anno solare corrente, in chilogrammi o libbre secondo la scelta fatta in **Impostazioni → Unità**. |
 
 I riquadri sono solo conteggi; usa la navigazione per aprire la sezione corrispondente.
 
@@ -44,19 +44,23 @@ Le stesse destinazioni sono disponibili ovunque: **Panoramica, Apiari, Scansiona
 - Su un telefono, una **barra delle schede inferiore** le contiene tutte e sei.
 - Su desktop o tablet, una **barra laterale** a sinistra elenca Panoramica, Apiari, Scansiona, Arnie e Attività, con il tuo account (e-mail e stato della sincronizzazione) in fondo che rimanda alle Impostazioni.
 
-## Impostazioni
+## Impostazioni \{#settings}
 
 **Impostazioni** contiene:
 
-- **Lingua**: inglese, tedesco, francese, spagnolo, italiano. La scelta viene salvata sul dispositivo.
-- **Aspetto**: **Sistema** (segue l'impostazione chiara o scura del dispositivo), **Chiaro** o **Scuro**. La scelta viene salvata sul dispositivo.
-- **Spazi**: cambia, crea, invita e gestisci (sulle istanze con login). Vedi [Account e spazi](./accounts-tenants.md).
+- **Lingua**: inglese, tedesco, francese, spagnolo o italiano. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi.
+- **Aspetto**: **Sistema** (segue l'impostazione chiara o scura del dispositivo), **Chiaro** o **Scuro**. La scelta viene salvata solo su questo dispositivo.
+- **Unità**: **Peso** in chilogrammi o libbre e **Temperatura** in Celsius o Fahrenheit, per mostrare e inserire i valori. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi e spazi. Finché non scegli, l'app segue la regione del tuo browser (per esempio libbre e Fahrenheit negli Stati Uniti). I dati vengono sempre memorizzati in chilogrammi e gradi Celsius, e le esportazioni e l'API restano nel sistema metrico; vedi [Ispezioni](./inspections.md#units).
+- **Spazi**: cambia, crea, invita, gestisci i membri ed elimina (sulle istanze con login). Vedi [Account e spazi](./accounts-tenants.md).
+- **Problemi di sincronizzazione**: le modifiche che il server ha rifiutato, con **Riprova** e **Scarta**. Vedi [Offline e sincronizzazione](./offline-and-sync.md#sync-problems).
+- **Dati e backup**: backup, altri formati di esportazione, la copia del server e l'importazione; vedi [Importazione ed esportazione](./import-export.md).
+- **Account**: con quale utente hai effettuato l'accesso, **Esci**, **Password** ed **Esci ovunque**. Vedi [Account e spazi](./accounts-tenants.md#password).
 - **Passkeys**: aggiungi o rimuovi passkey (quando il server le abilita).
 - **Chiavi API**: crea e rimuovi chiavi per script e dispositivi (sulle istanze con login). Vedi [Account e spazi](./accounts-tenants.md#api-keys).
-- **Dati e backup**: esporta e importa; vedi [Importazione ed esportazione](./import-export.md).
-- **Account**: con quale utente hai effettuato l'accesso, e **Esci**.
+- **Reimposta la password di un utente**: solo per l'admin dell'istanza; vedi [Autenticazione](../self-hosting/authentication.md#password-reset).
+- **Elimina l’account**: vedi [Account e spazi](./accounts-tenants.md#delete-account).
 
-Su un'istanza self-hosted a utente singolo senza login non c'è nulla da cui disconnettersi; il blocco account mostra l'identità locale.
+Su un'istanza self-hosted a utente singolo senza login non c'è nulla da cui disconnettersi; il blocco account mostra l'identità locale, e unità e lingua vengono conservate per quell'identità.
 
 ## Lo stato della sincronizzazione
 

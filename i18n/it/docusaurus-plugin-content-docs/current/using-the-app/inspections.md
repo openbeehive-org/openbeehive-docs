@@ -32,6 +32,10 @@ Se l'arnia ha una visita precedente, **Parti dall'ultima visita** (con la data d
 | Data | Predefinita a oggi; modificala per registrare una visita passata. Le date future non sono accettate. |
 | Meteo | Testo libero, ad es. "soleggiato, 22°C". |
 
+## Pesi e temperature \{#units}
+
+Pesi e temperature vengono mostrati e inseriti nelle unità scelte in **Impostazioni → Unità**: chilogrammi o libbre, gradi Celsius o Fahrenheit. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi. Puoi digitare la virgola o il punto decimale. L'app memorizza ogni valore in chilogrammi e gradi Celsius, quindi cambiare le unità non modifica mai i tuoi dati, e le esportazioni e l'API restano nel sistema metrico.
+
 ## Colonia e comportamento
 
 | Campo | Cosa registra |
@@ -47,7 +51,7 @@ Se l'arnia ha una visita precedente, **Parti dall'ultima visita** (con la data d
 | Docilità | Molto docile, Docile, Normale, Nervosa o Aggressiva. |
 | Calma sul favo | Fugge dal favo, Irrequieta, Calma o Molto calma. |
 | Varroa | Acari al giorno. Inserisci un numero semplice come `3` se vuoi che compaia nei grafici; altro testo viene conservato ma non rappresentato nei grafici. |
-| Peso dell'arnia | In kg, se pesi l'arnia. |
+| Peso dell'arnia | In kg o lb, se pesi l'arnia. |
 
 :::note
 Il trio "uova viste / larva più giovane / covata opercolata" di solito conferma una regina in deposizione in salute senza doverla trovare ogni volta.
@@ -59,7 +63,7 @@ Questa sezione parte compressa; tocca la sua intestazione per aprirla.
 
 | Attività | Registra |
 | --- | --- |
-| Nutrita | Quantità somministrata, in kg. |
+| Nutrita | Quantità somministrata, in kg o lb. |
 | Telaini aggiunti / rimossi | I telaini che hai inserito o tolto. |
 | Telaino da fuco tagliato | Se hai asportato un telaino di covata da fuco (una misura di controllo della varroa). |
 | Melario aggiunto | Se hai aggiunto un melario. |
@@ -74,8 +78,8 @@ Anche questa sezione parte compressa.
 
 | Campo | Unità |
 | --- | --- |
-| Temperatura dell'arnia | °C |
-| Temperatura esterna | °C |
+| Temperatura dell'arnia | °C o °F |
+| Temperatura esterna | °C o °F |
 | Umidità dell'arnia | % |
 | Umidità esterna | % |
 
@@ -89,7 +93,9 @@ Una bilancia per arnie o un sensore climatico può inviare questi campi tramite 
 
 Aggiungi una **nota** in testo libero per tutto ciò che i campi strutturati non coprono: una cella di sostituzione contrassegnata, un carattere da tenere d'occhio, un promemoria per sostituire la regina.
 
-**Aggiungi foto** allega una o più immagini (schema di covata, sospetta malattia, celle reali). Vengono memorizzate con la visita e si sincronizzano con il resto dei tuoi registri. Se qualcosa richiede un seguito, aggiungi un'[attività](./tasks.md) con una scadenza.
+**Aggiungi foto** allega una o più immagini (schema di covata, sospetta malattia, celle reali). L'app riduce ciascuna a un massimo di 2048 pixel e rimuove ciò che la fotocamera ha salvato oltre all'immagine, come la posizione. Una piccola anteprima si sincronizza subito con la visita su ogni dispositivo; l'immagine a piena risoluzione viene caricata in background quando c'è connessione, e fino ad allora la foto mostra **In attesa di caricamento**.
+
+Tocca una foto per aprirla nel visualizzatore, che la prima volta carica l'immagine a piena risoluzione e la conserva sul dispositivo. **Elimina la foto** nel visualizzatore, oppure il pulsante di rimozione su una foto mentre modifichi la visita, la elimina definitivamente, su ogni dispositivo. Se qualcosa richiede un seguito, aggiungi un'[attività](./tasks.md) con una scadenza.
 
 ## Il diario delle visite
 
@@ -101,7 +107,7 @@ Il diario ti permette di individuare le tendenze: la covata che cresce in primav
 
 Ogni visita nel diario ha un'azione di modifica e una di eliminazione.
 
-- **Modifica visita** apre il modulo con i valori salvati. Cambia ciò che era sbagliato, data compresa, e salva. Se due dispositivi correggono la stessa visita, per ciascun campo prevale la modifica più recente.
+- **Modifica visita** apre il modulo con i valori salvati. Cambia ciò che era sbagliato, data compresa, e salva. Vengono salvati solo i campi che hai modificato, quindi una correzione non sovrascrive ciò che qualcun altro ha cambiato nel frattempo. Se due dispositivi correggono lo stesso campo, prevale la modifica più recente.
 - **Elimina** chiede una conferma che indica la data della visita. Subito dopo una barra offre **Annulla** per alcuni secondi. Eliminare una visita la rimuove anche dalla cronologia e dai grafici dell'arnia.
 
 ## Letture dei sensori \{#sensor-readings}

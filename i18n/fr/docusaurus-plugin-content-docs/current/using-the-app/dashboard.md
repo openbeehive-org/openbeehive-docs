@@ -21,7 +21,7 @@ Tant que votre première visite n'est pas enregistrée, la Vue d'ensemble vous a
 | **Ruches** | Nombre de ruches. |
 | **Reines** | Reines actuellement enregistrées à la tête d'une colonie. |
 | **Tâches ouvertes** | Tâches pas encore cochées. |
-| **Miel cette saison** | Total des kilogrammes récoltés enregistrés dans l'année civile en cours. |
+| **Miel cette saison** | Total du miel récolté dans l'année civile en cours, en kilogrammes ou en livres selon le choix fait sous **Paramètres → Unités**. |
 
 Les tuiles sont de simples compteurs ; utilisez la navigation pour ouvrir la section correspondante.
 
@@ -44,19 +44,23 @@ Les mêmes destinations sont disponibles partout : **Vue d'ensemble, Ruchers, Sc
 - Sur un téléphone, une **barre d'onglets en bas** contient les six.
 - Sur un ordinateur ou une tablette, une **barre latérale** à gauche liste Vue d'ensemble, Ruchers, Scanner, Ruches et Tâches, avec votre compte (e-mail et état de synchronisation) en bas, qui mène aux Paramètres.
 
-## Paramètres
+## Paramètres \{#settings}
 
 Les **Paramètres** contiennent :
 
-- **Langue** : anglais, allemand, français, espagnol, italien. Le choix est enregistré sur l'appareil.
-- **Apparence** : **Système** (suit le réglage clair ou sombre de l'appareil), **Clair** ou **Sombre**. Le choix est enregistré sur l'appareil.
-- **Espaces** : basculer, créer, inviter et gérer (sur les instances avec connexion). Voir [Comptes et espaces](./accounts-tenants.md).
+- **Langue** : anglais, allemand, français, espagnol ou italien. Le choix est enregistré avec votre compte et s'applique sur tous vos appareils.
+- **Apparence** : **Système** (suit le réglage clair ou sombre de l'appareil), **Clair** ou **Sombre**. Le choix est enregistré sur cet appareil uniquement.
+- **Unités** : **Poids** en kilogrammes ou en livres et **Température** en Celsius ou en Fahrenheit, pour afficher et saisir les valeurs. Le choix est enregistré avec votre compte et s'applique sur tous vos appareils et dans tous vos espaces. Tant que vous n'avez rien choisi, l'application suit la région de votre navigateur (livres et Fahrenheit aux États-Unis, par exemple). Les enregistrements sont toujours stockés en kilogrammes et en degrés Celsius, et les exports comme l'API restent en unités métriques ; voir [Visites](./inspections.md#units).
+- **Espaces** : basculer, créer, inviter, gérer les membres et supprimer (sur les instances avec connexion). Voir [Comptes et espaces](./accounts-tenants.md).
+- **Problèmes de synchronisation** : les modifications refusées par le serveur, avec **Réessayer** et **Abandonner**. Voir [Hors ligne et synchronisation](./offline-and-sync.md#sync-problems).
+- **Données & sauvegarde** : sauvegardes, autres formats d'export, copie du serveur et import ; voir [Import et export](./import-export.md).
+- **Compte** : l'identité avec laquelle vous êtes connecté, **Se déconnecter**, **Mot de passe** et **Se déconnecter partout**. Voir [Comptes et espaces](./accounts-tenants.md#password).
 - **Passkeys** : ajouter ou supprimer des passkeys (lorsque le serveur les active).
 - **Clés API** : créer et supprimer des clés pour les scripts et les appareils (sur les instances avec connexion). Voir [Comptes et espaces](./accounts-tenants.md#api-keys).
-- **Données & sauvegarde** : export et import ; voir [Import et export](./import-export.md).
-- **Compte** : l'identité avec laquelle vous êtes connecté, et **Se déconnecter**.
+- **Réinitialiser le mot de passe d’un utilisateur** : uniquement pour l'administrateur de l'instance ; voir [Authentification](../self-hosting/authentication.md#password-reset).
+- **Supprimer le compte** : voir [Comptes et espaces](./accounts-tenants.md#delete-account).
 
-Sur une instance auto-hébergée mono-utilisateur sans connexion, il n'y a rien dont se déconnecter ; le bloc de compte affiche l'identité locale.
+Sur une instance auto-hébergée mono-utilisateur sans connexion, il n'y a rien dont se déconnecter ; le bloc de compte affiche l'identité locale, et les unités et la langue sont conservées pour cette identité.
 
 ## L'état de synchronisation
 

@@ -5,45 +5,86 @@ title: "Importar y exportar"
 
 # Importar y exportar
 
-Tus registros son tuyos. Openbeehive te permite llevarte **todos tus datos** —
+Tus registros son tuyos. Openbeehive te permite llevarte **todos tus datos**:
 como copia de seguridad, para trasladarte a otra instancia, para analizarlos en una hoja de cálculo o para compartirlos
-con otras herramientas. Todo se ejecuta localmente desde **Ajustes → Datos y copia de seguridad**; ningún
-dato sale de tu dispositivo a menos que decidas compartir el archivo.
+con otras herramientas. Todo está en **Ajustes → Datos y copia de seguridad**.
 
-## Exportar
+La exportación y la importación trabajan sobre el **espacio activo**. Ambas esperan a que el
+dispositivo haya terminado su primera sincronización del espacio; hasta entonces, el panel lo indica.
 
-Abre **Ajustes**, busca **Datos y copia de seguridad** y elige un formato:
+## Copia de seguridad completa \{#full-backup}
+
+**Descargar copia completa** guarda todos los colmenares, colmenas, reinas, visitas, tratamientos,
+cosechas, tareas y entradas de la línea de tiempo del espacio tal como los tiene este dispositivo,
+incluidas tus tareas personales y los cambios que aún no se han subido.
+El panel te indica cuántos cambios de ese tipo hay, y cuántos rechazó el servidor
+(consulta [Problemas de sincronización](./offline-and-sync.md#sync-problems)): están
+en el archivo, pero no en el servidor.
+
+- Sin fotos, la copia es un único archivo JSON.
+- Con **Incluir fotos** es un ZIP que contiene además las imágenes a tamaño completo.
+  Las imágenes que no están en este dispositivo se obtienen del servidor; si eso no
+  es posible (sin conexión, o aún no subidas), la aplicación indica cuántas faltan,
+  y se incluyen sus miniaturas.
+
+Los pesos y las temperaturas se exportan siempre en kilogramos y grados
+Celsius, sean cuales sean las unidades que hayas elegido en **Ajustes → Unidades**.
+
+### Descargar desde el servidor \{#server-copy}
+
+**Descargar copia del servidor** obtiene la copia completa del espacio que guarda el
+servidor, en el mismo formato. Incluye tus propias tareas personales pero no las
+de otros miembros, y le faltan los cambios que un dispositivo aún no ha subido. Se
+permiten unas pocas descargas por hora. Los scripts pueden obtener el mismo archivo con una
+clave API; consulta [REST](../using-the-api/rest.md#export). La cuenta de demostración no
+puede descargarla.
+
+## Otros formatos
 
 | Formato | Lo que obtienes | Ideal para |
 | --- | --- | --- |
-| **Copia de seguridad completa (JSON)** | Todos los registros — colmenares, colmenas, reinas, inspecciones, cosechas, tareas, ubicaciones y eventos — en un solo archivo | Resguardo y **traslado a otra instancia** (reversible) |
-| **Hoja de cálculo (XLSX)** | Un libro de trabajo, una hoja por entidad | Análisis en Excel / LibreOffice / Google Sheets |
-| **CSV (ZIP)** | Un `.csv` por entidad, agrupados en un `.zip` | Intercambio universal, scripts, otras aplicaciones |
-| **BeeXML** | Un archivo XML estructurado (colmenar → colmena → reina / inspección) | Compartir con herramientas que usan el estilo de intercambio [BeeXML](https://beexml.org/) |
-| **Informe (PDF)** | Un informe imprimible del colmenar — colmenas, reinas actuales y últimas lecturas | Imprimir, compartir, auditoría / mantenimiento de registros |
+| **Hoja de cálculo (XLSX)** | Un libro de trabajo, una hoja por tipo de registro | Análisis en Excel / LibreOffice / Google Sheets |
+| **CSV (ZIP)** | Un `.csv` por tipo de registro, agrupados en un `.zip` | Intercambio universal, scripts, otras aplicaciones |
+| **BeeXML** | Colmenares, colmenas, reinas y visitas en un archivo XML estructurado | Compartir con herramientas que usan el estilo de intercambio [BeeXML](https://beexml.org/) |
+| **Informe (PDF)** | Un informe imprimible del colmenar: colmenas, reinas actuales y últimas lecturas | Imprimir, compartir, mantenimiento de registros |
 
-El **Informe (PDF)** abre un resumen limpio y con la identidad de marca en una pestaña nueva y activa
-el diálogo de impresión de tu navegador — elige "Guardar como PDF" para conservar una copia.
+Estos formatos sirven para leer los datos en otro lugar; para restaurar tus datos, usa la copia completa.
+El **Informe (PDF)** abre un resumen en una pestaña nueva y activa el diálogo de
+impresión de tu navegador; elige "Guardar como PDF" para conservar una copia. Para copias de seguridad
+del lado del servidor de una instancia completa, consulta [Autoalojamiento → Copias de seguridad](../self-hosting/backups.md).
 
-La exportación refleja lo que hay en tu dispositivo en este momento. Las fotos no se incluyen en
-las exportaciones CSV/XLSX/BeeXML (se almacenan como blobs) — la imagen completa reside en
-tu cuenta sincronizada y su almacenamiento de blobs; consulta
-[Autoalojamiento → Copias de seguridad](../self-hosting/backups.md) para copias de seguridad del lado del servidor.
+## Importar \{#importing}
 
-## Importar y restaurar
+**Importar → Elegir archivo…** lee un archivo en el espacio activo. Elige el
+**Formato del archivo** o déjalo en **Detección automática**:
 
-En el mismo panel de **Datos y copia de seguridad**, elige un formato y selecciona un archivo:
+- **Copia de Openbeehive (JSON o ZIP)**: una copia completa de esta u otra
+  instancia, con fotos si es un ZIP.
+- **BeeXML**: colmenares, colmenas, reinas y visitas desde un archivo de estilo BeeXML.
+- **CSV de otra app**: visitas de otra aplicación de apicultura o de una
+  hoja de cálculo (ver más abajo).
 
-- **Copia de seguridad de Openbeehive (JSON)** — restaura una exportación anterior. Los registros conservan sus
-  identificadores, por lo que volver a importar la misma copia de seguridad es seguro (no creará duplicados).
-- **BeeXML** — importa colmenares, colmenas, reinas e inspecciones desde un archivo
-  de estilo BeeXML.
-- **CSV de otra aplicación** — migra desde otra aplicación de apicultura o una hoja de cálculo
-  (ver más abajo).
-- **Detección automática** — elige el lector adecuado según el archivo.
+No se escribe nada antes de que veas una **Vista previa**: por tipo de registro, cuántos
+son **Nuevos**, **Sobrescritos**, **Restaurados** y **Omitidos (ya existen)**.
+Después toca **Importar ahora**.
 
-Los registros importados pasan a formar parte de **tu** cuenta y se sincronizan como cualquier cosa que introduzcas
-a mano.
+Por defecto, una importación solo añade. Los registros que ya existen en este
+espacio, también los eliminados, se omiten y nunca se modifican, así que importar
+la misma copia dos veces no cambia nada. Dos opciones cambian eso:
+
+- **Sobrescribir los registros existentes** escribe los valores del archivo donde
+  difieren. Solo se escriben los campos que contiene el archivo; los cambios hechos desde la
+  exportación se pierden. Los registros eliminados siguen eliminados.
+- **Restaurar también los registros eliminados** recupera los registros que se eliminaron
+  aquí.
+
+Un archivo de **otro espacio** recibe id nuevos, así que nunca toca los registros
+existentes, y la vista previa lo indica. Los registros importados se sincronizan como cualquier cosa que
+introduzcas a mano. Los números del archivo se leen como kilogramos y grados Celsius.
+
+**Deshacer la última importación** elimina lo que creó la última importación, también sin conexión. Un
+colmenar o una colmena que desde entonces tiene registros propios (una visita, una colmena trasladada
+allí) se conserva, y la aplicación indica cuántos.
 
 ## Migrar desde otra aplicación
 
@@ -68,15 +109,20 @@ varios idiomas):
 | Humedad exterior | humidity, outside humidity |
 | Peso de la colmena | weight, hive weight, gewicht |
 | Miel | honey, harvest, yield, honig, ernte |
-| Notas | note, notes, comment, remarks, notiz |
+| Notas | note, notes, comment, comments, remarks, notiz, bemerkung |
 
-Cada fila del CSV se convierte en una **inspección** de la colmena correspondiente, creando los colmenares y
-las colmenas según sea necesario (las filas sin colmenar van a parar a un colmenar "Importado"). Las columnas que
-no se reconocen se omiten — nada se rompe, simplemente conservas el resto.
+Cada fila del CSV se convierte en una **visita** de la colmena correspondiente. Se usan los colmenares y las colmenas
+que ya existen con el mismo nombre (sin distinguir mayúsculas y minúsculas); los demás se crean
+(las filas sin colmenar van a parar a un colmenar "Importado").
+Una visita que ya está registrada para esa colmena ese día con los mismos
+valores se omite, así que importar el mismo archivo dos veces no cambia nada, y una
+importación que sobrescribe deja esas visitas como están. Las columnas que no se
+reconocen se omiten. Los pesos y las temperaturas se leen como kilogramos y
+grados Celsius.
 
 :::tip Primero la ida y vuelta
-Si te estás moviendo entre instancias de Openbeehive, prefiere la **copia de seguridad JSON** — es
-completa y sin pérdidas. Usa CSV para venir **desde** otras aplicaciones.
+Si te estás moviendo entre instancias de Openbeehive, prefiere la **copia de seguridad completa**
+(como ZIP con fotos): es completa y sin pérdidas. Usa CSV para venir **desde** otras aplicaciones.
 :::
 
 ## Por qué esto importa
