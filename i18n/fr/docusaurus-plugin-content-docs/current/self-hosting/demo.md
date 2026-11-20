@@ -28,9 +28,10 @@ Lorsqu'il est activé, Openbeehive crée :
   récolte de miel et deux traitements contre le varroa par ruche.
 
 Les données sont **régénérées toutes les heures**, afin que la vitrine ait
-toujours la même apparence. Les sessions de démo sont en lecture seule sur le
-serveur : ce qu'un visiteur modifie reste dans son propre navigateur et
-n'atteint jamais le serveur ni les autres visiteurs.
+toujours la même apparence. Les sessions de démo sont en lecture seule : le
+serveur refuse toute modification du compte de démo, et l'application annule à
+l'écran une modification refusée en affichant un message. Rien de ce que fait un
+visiteur n'atteint le serveur ni les autres visiteurs.
 
 L'écran de connexion reçoit un bouton **Essayer la démo** à côté de la connexion
 normale ; il connecte le visiteur sans mot de passe.
@@ -64,8 +65,8 @@ différer de celui de la démo. Comme toute méthode de connexion, il nécessite
 `BEEHIVE_SESSION_SECRET`.
 
 `docker-compose.demo.yml` dans le dépôt est le déploiement derrière
-`app.openbeehive.org` (inscription sur invitation uniquement, plus la démo avec
-connexion automatique). Ce n'est pas un modèle pour votre propre serveur ; partez
+`app.openbeehive.org` (inscription sur invitation uniquement, plus la démo,
+accessible par le bouton **Essayer la démo** de la page de connexion). Ce n'est pas un modèle pour votre propre serveur ; partez
 de [`docker-compose.prod.yml`](./docker.md#several-users) et ajoutez `BEEHIVE_DEMO: "true"`
 à l'environnement de son service `server` si vous voulez une démo.
 

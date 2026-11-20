@@ -28,8 +28,9 @@ Quando è abilitata, Openbeehive crea:
   di miele e due trattamenti contro la varroa per arnia.
 
 I dati vengono **rigenerati ogni ora**, così la vetrina appare sempre uguale.
-Le sessioni demo sono in sola lettura sul server: ciò che un visitatore modifica
-resta nel suo browser e non raggiunge mai il server né gli altri visitatori.
+Le sessioni demo sono in sola lettura: il server rifiuta ogni modifica dell'account
+demo e l'app annulla sullo schermo una modifica rifiutata mostrando un messaggio.
+Nulla di ciò che fa un visitatore raggiunge il server o gli altri visitatori.
 
 La schermata di accesso riceve un pulsante **Prova la demo** accanto al normale
 accesso; fa accedere il visitatore senza password.
@@ -62,8 +63,8 @@ diversa da quella della demo. Come ogni metodo di accesso, richiede
 `BEEHIVE_SESSION_SECRET`.
 
 `docker-compose.demo.yml` nel repository è il deployment dietro
-`app.openbeehive.org` (registrazione solo su invito più la demo con accesso
-automatico). Non è un modello per il tuo server; parti da
+`app.openbeehive.org` (registrazione solo su invito più la demo, raggiungibile con il
+pulsante **Prova la demo** nella pagina di accesso). Non è un modello per il tuo server; parti da
 [`docker-compose.prod.yml`](./docker.md#several-users) e aggiungi `BEEHIVE_DEMO: "true"`
 all'ambiente del suo servizio `server` se vuoi una demo.
 

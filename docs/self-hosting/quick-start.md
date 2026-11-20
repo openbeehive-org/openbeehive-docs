@@ -96,6 +96,7 @@ BEEHIVE_BIND=0.0.0.0                               # Compose file only: publish 
 - `BEEHIVE_PUBLIC_BASE_URL` is the address the server puts into the links it generates (OIDC redirects, invite and verification links).
 - `BEEHIVE_SESSION_SECRET` must be at least 32 bytes. With any login method the server refuses to start without it.
 - `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` define the instance admin; with email/password login the server refuses to start without them.
+- With `docker run`, `BEEHIVE_BIND` has no effect: to reach the instance from other devices, remove the container and start it again with `-p 8080:8080` instead of `-p 127.0.0.1:8080:8080` (the volume keeps your data). Do this only after login is on.
 
 Records made before login was switched on move into the admin's workspace at the next start; sign in as the admin to see them. Details and the other login methods are in [Authentication](./authentication.md).
 

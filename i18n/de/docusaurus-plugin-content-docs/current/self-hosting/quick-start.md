@@ -96,6 +96,7 @@ BEEHIVE_BIND=0.0.0.0                               # Compose file only: publish 
 - `BEEHIVE_PUBLIC_BASE_URL` ist die Adresse, die der Server in die von ihm erzeugten Links einsetzt (OIDC-Redirects, Einladungs- und Verifizierungslinks).
 - `BEEHIVE_SESSION_SECRET` muss mindestens 32 Bytes lang sein. Mit jeder Anmeldemethode startet der Server ohne es nicht.
 - `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` legen den Instanz-Admin fest; mit der E-Mail-/Passwort-Anmeldung startet der Server ohne sie nicht.
+- Bei `docker run` wirkt `BEEHIVE_BIND` nicht: Damit andere Geräte die Instanz erreichen, entferne den Container und starte ihn mit `-p 8080:8080` statt `-p 127.0.0.1:8080:8080` neu (das Volume behält deine Daten). Tu das erst, wenn die Anmeldung eingeschaltet ist.
 
 Aufzeichnungen, die vor dem Einschalten der Anmeldung entstanden sind, wandern beim nächsten Start in den Arbeitsbereich des Admins; melde dich als Admin an, um sie zu sehen. Einzelheiten und die anderen Anmeldemethoden findest du unter [Authentifizierung](./authentication.md).
 

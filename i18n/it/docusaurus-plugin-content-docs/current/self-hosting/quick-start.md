@@ -96,6 +96,7 @@ BEEHIVE_BIND=0.0.0.0                               # Compose file only: publish 
 - `BEEHIVE_PUBLIC_BASE_URL` è l'indirizzo che il server inserisce nei link che genera (redirect OIDC, link di invito e di verifica).
 - `BEEHIVE_SESSION_SECRET` deve essere di almeno 32 byte. Con qualsiasi metodo di accesso il server rifiuta di avviarsi senza di esso.
 - `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD` definiscono l'amministratore dell'istanza; con l'accesso email/password il server rifiuta di avviarsi senza di essi.
+- Con `docker run`, `BEEHIVE_BIND` non ha effetto: per raggiungere l'istanza da altri dispositivi, rimuovi il container e riavvialo con `-p 8080:8080` invece di `-p 127.0.0.1:8080:8080` (il volume conserva i tuoi dati). Fallo solo dopo aver attivato l'accesso.
 
 I registri creati prima dell'attivazione dell'accesso passano nello spazio dell'amministratore all'avvio successivo; accedi come amministratore per vederli. I dettagli e gli altri metodi di accesso si trovano in [Autenticazione](./authentication.md).
 

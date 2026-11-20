@@ -28,8 +28,9 @@ Wenn aktiviert, erstellt Openbeehive:
   Honigernte und zwei Varroabehandlungen pro Beute.
 
 Die Daten werden **jede Stunde neu aufgesetzt**, sodass die Präsentation immer gleich aussieht.
-Demo-Sitzungen sind auf dem Server schreibgeschützt: Was ein Besucher ändert, bleibt in
-seinem eigenen Browser und erreicht weder den Server noch andere Besucher.
+Demo-Sitzungen sind schreibgeschützt: Der Server lehnt jede Änderung des Demo-Kontos
+ab, und die App macht eine abgelehnte Änderung auf dem Bildschirm mit einem Hinweis
+rückgängig. Nichts, was ein Besucher tut, erreicht den Server oder andere Besucher.
 
 Der Anmeldebildschirm erhält neben der normalen Anmeldung die Schaltfläche
 **Demo ausprobieren**; sie meldet den Besucher ohne Passwort an.
@@ -61,8 +62,8 @@ Demo-E-Mail unterscheiden. Wie jede Anmeldemethode braucht er
 `BEEHIVE_SESSION_SECRET`.
 
 `docker-compose.demo.yml` im Repository ist das Deployment hinter
-`app.openbeehive.org` (Registrierung nur auf Einladung plus die Demo mit automatischer
-Anmeldung). Es ist keine Vorlage für deinen eigenen Server; geh von
+`app.openbeehive.org` (Registrierung nur auf Einladung plus die Demo, erreichbar über die
+Schaltfläche **Demo ausprobieren** auf der Anmeldeseite). Es ist keine Vorlage für deinen eigenen Server; geh von
 [`docker-compose.prod.yml`](./docker.md#several-users) aus und ergänze `BEEHIVE_DEMO: "true"`
 in der Umgebung des `server`-Dienstes, wenn du eine Demo möchtest.
 

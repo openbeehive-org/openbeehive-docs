@@ -246,7 +246,8 @@ secret and the dedicated admin:
 
 ```bash
 BEEHIVE_PUBLIC_BASE_URL=https://hive.example.com
-BEEHIVE_SESSION_SECRET=replace-with-openssl-rand-base64-32
+# Paste the output of: openssl rand -base64 32
+BEEHIVE_SESSION_SECRET=
 BEEHIVE_PASSWORD_AUTH=true
 BEEHIVE_ADMIN_EMAIL=you@example.com
 BEEHIVE_ADMIN_PASSWORD=a-long-password-you-can-recover-with

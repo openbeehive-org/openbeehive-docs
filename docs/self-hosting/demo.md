@@ -27,8 +27,9 @@ When enabled, Openbeehive creates:
   harvest and two varroa treatments per hive.
 
 The data is **re-seeded every hour**, so the showcase always looks the same.
-Demo sessions are read-only on the server: what a visitor changes stays in their
-own browser and never reaches the server or other visitors.
+Demo sessions are read-only: the server refuses every change from the demo
+account, and the app undoes a refused change on screen with a message. Nothing a
+visitor does reaches the server or other visitors.
 
 The sign-in screen gets a **Try the demo** button next to the normal sign-in; it
 signs the visitor in without a password.
@@ -59,8 +60,8 @@ and the admin email must differ from the demo email. Like every login method it
 needs `BEEHIVE_SESSION_SECRET`.
 
 `docker-compose.demo.yml` in the repository is the deployment behind
-`app.openbeehive.org` (invite-only registration plus the demo with automatic
-sign-in). It is not a template for your own server; start from
+`app.openbeehive.org` (invite-only registration plus the demo, reached with the
+**Try the demo** button on the sign-in page). It is not a template for your own server; start from
 [`docker-compose.prod.yml`](./docker.md#several-users) and add `BEEHIVE_DEMO: "true"`
 to the environment of its `server` service if you want a demo.
 
