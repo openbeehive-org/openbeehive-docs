@@ -111,7 +111,7 @@ The file sets `BEEHIVE_TRUST_PROXY_HEADERS=true`, because it expects exactly one
 
 `server` waits until `postgres` and `minio` report healthy.
 
-:::note Service names are hostnames
+:::note[Service names are hostnames]
 Inside the Compose network, containers reach each other by service name, which is why the DSN points at `postgres` and the MinIO endpoint at `minio`.
 :::
 
@@ -131,7 +131,7 @@ For the full list of variables see [Configuration](./configuration.md).
 - **Single container (`selfhost`):** everything is under `/data` on the `openbeehive-data` volume.
 - **PostgreSQL and MinIO:** records live in the `pg` volume and uploaded files in the `minio` volume. The server container is stateless and can be replaced freely.
 
-:::danger Back up before you upgrade
+:::danger[Back up before you upgrade]
 Named volumes survive `docker compose up` and image upgrades, but not `docker compose down -v` or a removed volume. Take a backup before any upgrade or destructive command. See [Backups](./backups.md).
 :::
 

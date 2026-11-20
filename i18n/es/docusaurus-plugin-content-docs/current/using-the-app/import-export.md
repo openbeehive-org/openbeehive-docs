@@ -120,7 +120,7 @@ importación que sobrescribe deja esas visitas como están. Las columnas que no 
 reconocen se omiten. Los pesos y las temperaturas se leen como kilogramos y
 grados Celsius.
 
-:::tip Primero la ida y vuelta
+:::tip[Primero la ida y vuelta]
 Si te estás moviendo entre instancias de Openbeehive, prefiere la **copia de seguridad completa**
 (como ZIP con fotos): es completa y sin pérdidas. Usa CSV para venir **desde** otras aplicaciones.
 :::

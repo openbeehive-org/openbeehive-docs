@@ -120,7 +120,7 @@ overwriting import leaves such visits as they are. Columns that are not
 recognised are skipped. Weights and temperatures are read as kilograms and
 degrees Celsius.
 
-:::tip Round-trip first
+:::tip[Round-trip first]
 If you're moving between Openbeehive instances, prefer the **full backup**
 (as a ZIP with photos): it's complete and lossless. Use CSV for coming
 **from** other apps.

@@ -28,7 +28,7 @@ Sobald die App installiert ist, öffnet der Link die Beute aus deiner lokalen Da
 3. Tippe auf **Drucken**. Ein sauberes Etikett öffnet sich in einem neuen Fenster, gefolgt vom Druckdialog. **SVG** lädt den Code stattdessen als Datei herunter, für eigene Etikettenlayouts.
 4. Drucke auf Etikettenmaterial oder normales Papier und befestige es an der Beute.
 
-:::tip Mach es draußen haltbar
+:::tip[Mach es draußen haltbar]
 Drucke auf wetterfestes oder Vinyl-Etikettenmaterial oder decke ein Papieretikett mit klarem Packband oder einer Laminierhülle ab. Platziere es dort, wo auf- und abgehobene Honigräume es nicht abschaben: an der Seite des Brutraums oder unter der Deckelkante.
 :::
 
@@ -45,7 +45,7 @@ Drucke auf wetterfestes oder Vinyl-Etikettenmaterial oder decke ein Papieretiket
 
 Die meisten Smartphones erkennen QR-Codes in der eingebauten Kamera-App. Richte die Kamera auf das Etikett, tippe auf den erscheinenden Link, und Openbeehive öffnet die Beute im Browser. Das funktioniert für alle mit Zugriff, ohne die App vorher zu öffnen.
 
-:::caution Wenn du die App installiert hast, scanne in ihr
+:::caution[Wenn du die App installiert hast, scanne in ihr]
 Die Kamera des Telefons öffnet den Link im Browser, und der Browser hat eigene Daten, getrennt von der installierten App: Womöglich musst du dich dort erneut anmelden und auf einen Download warten. Wenn du die installierte App nutzt, öffne sie vom Startbildschirm und nutze **Scannen**.
 :::
 

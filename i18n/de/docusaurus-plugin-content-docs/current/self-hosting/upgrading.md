@@ -7,7 +7,7 @@ title: "Aktualisieren"
 
 Upgrades sind einfach: Ersetze die Binärdatei oder ziehe ein neues Image, starte neu, und der Server bringt das Datenbankschema von selbst auf den neuesten Stand.
 
-:::caution Sichere jedes Mal zuerst
+:::caution[Sichere jedes Mal zuerst]
 Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 :::
 
@@ -154,7 +154,7 @@ Openbeehive folgt der [semantischen Versionierung](https://semver.org): `MAJOR.M
 | MINOR | Neue Funktionen, abwärtskompatibel |
 | PATCH | Fehlerbehebungen und Sicherheitspatches, abwärtskompatibel |
 
-:::caution 0.x ist frühe Software
+:::caution[0.x ist frühe Software]
 Solange Openbeehive in der `0.x`-Serie ist, können Minor-Releases Änderungen enthalten, die manuelle Schritte brauchen oder nicht vollständig abwärtskompatibel sind. Lies die Release Notes für jedes Upgrade und halte deine Backups bereit.
 :::
 

@@ -27,7 +27,7 @@ La reine n'est pas une dirigeante. Elle ne commande pas la colonie ; elle la mai
 
 Une reine ne s'accouple qu'une seule fois dans sa vie, sur quelques jours au début, stockant le sperme pour le reste de ses années. Dans Openbeehive, vous pouvez consigner chaque reine, sa couleur de marquage et son année, ainsi que son origine. Consultez [Reines](../using-the-app/queens.md).
 
-:::tip Marquage de la reine
+:::tip[Marquage de la reine]
 Les reines sont souvent marquées d'un point coloré selon le code couleur international, qui indique l'année de sa naissance. Consultez [Couleurs de marquage des reines](../knowledge-base/queen-marking-colours.md).
 :::
 
@@ -93,10 +93,10 @@ Dans les climats froids, la colonie n'hiberne pas et ne chauffe pas toute la ruc
 
 La grappe fonctionne entièrement sur le miel stocké, se frayant lentement un chemin vers le haut à travers les rayons au fil des mois. Deux choses déterminent sa survie : **des réserves suffisantes** au bon endroit, et une population d'abeilles d'hiver en bonne santé. C'est pourquoi le nourrissement d'automne et la lutte contre le varroa comptent tant.
 
-:::caution Les pertes hivernales sont réelles
+:::caution[Les pertes hivernales sont réelles]
 Même des colonies d'apparence saine peuvent mourir pendant l'hiver de famine, de maladie ou d'une lourde charge d'acariens à l'entrée de l'automne. Aborder l'hiver fort et en bonne santé est bien plus important que toute intervention en plein hiver. Consultez [Varroa](./varroa.md) et [Nourrissement](./feeding.md).
 :::
 
-:::note Variation régionale
+:::note[Variation régionale]
 Le comportement des colonies varie selon le climat et la sous-espèce. Le cycle ci-dessus décrit une colonie de climat tempéré ; dans les régions plus chaudes, l'élevage du couvain peut ne jamais s'arrêter complètement, et les échéances se décalent en conséquence. Adaptez toujours à votre propre situation et à vos mentors locaux.
 :::

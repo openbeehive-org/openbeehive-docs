@@ -9,7 +9,7 @@ Openbeehive se configure entièrement au moyen de variables d'environnement. Cet
 
 Vous pouvez définir ces variables dans votre shell, dans votre fichier `docker compose`, via le gestionnaire de secrets de votre plateforme d'hébergement, ou dans un fichier `.env`. Le serveur lit `.env` dans son répertoire de travail au démarrage ; les variables déjà définies dans l'environnement l'emportent sur le fichier. Tout est lu une seule fois, de sorte que les modifications prennent effet après un redémarrage.
 
-:::tip Commencez petit
+:::tip[Commencez petit]
 Vous n'avez besoin que d'une poignée de ces variables pour démarrer. Un serveur domestique mono-utilisateur fonctionne avec les seules valeurs par défaut. Dès que vous activez une méthode de connexion, ajoutez `BEEHIVE_SESSION_SECRET` et, pour la connexion par e-mail/mot de passe, le compte administrateur. Consultez le [Démarrage rapide](./quick-start.md) pour être opérationnel en quelques minutes.
 :::
 
@@ -225,7 +225,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_ID=...
 BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 ```
 
-:::tip Mono-utilisateur, sans connexion
+:::tip[Mono-utilisateur, sans connexion]
 Pour une instance auto-hébergée personnelle, vous pouvez ignorer entièrement la connexion : laissez `BEEHIVE_PASSWORD_AUTH` désactivé (la valeur par défaut de selfhost), `BEEHIVE_OIDC_PROVIDERS` vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. L'application s'exécute alors en mode mono-utilisateur, sans étape de connexion.
 :::
 

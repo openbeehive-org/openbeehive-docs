@@ -131,7 +131,7 @@ diese Beute an diesem Tag mit denselben Werten schon erfasst ist, wird
 Spalten werden übersprungen. Gewichte und Temperaturen werden als Kilogramm und
 Grad Celsius gelesen.
 
-:::tip Erst hin und zurück
+:::tip[Erst hin und zurück]
 Wenn du zwischen Openbeehive-Instanzen umziehst, bevorzuge das **vollständige
 Backup** (als ZIP mit Fotos): Es ist vollständig und verlustfrei. Verwende CSV für den Wechsel **von**
 anderen Apps.

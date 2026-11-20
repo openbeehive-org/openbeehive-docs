@@ -9,7 +9,7 @@ Die Imkerei folgt den Jahreszeiten. Das Volk wächst, erreicht seinen Höhepunkt
 
 Diese Seite ist eine Anleitung Saison für Saison. Betrachte die Monate als grobe Karte, nicht als Stundenplan, und passe alles an deine eigenen Bedingungen an.
 
-:::note Hemisphäre und Klima variieren
+:::note[Hemisphäre und Klima variieren]
 Die Kalendermonate unten gehen von der Nordhalbkugel aus. Auf der Südhalbkugel verschiebe alles um etwa sechs Monate (der Frühling ist von September bis November). So oder so ist dein örtliches Klima wichtiger als das Datum: Ein warmer Küstenstandort ist einem kalten Standort im Bergland Wochen voraus. Beobachte die Bienen und die Tracht, nicht den Kalender.
 :::
 
@@ -37,7 +37,7 @@ Was zu tun ist:
 - Wende deine gewählte Schwarmverhinderungsmethode an, wenn Zellen auftauchen (siehe [Schwärmen](./swarming.md)).
 - Erwäge, neue Königinnen heranzuziehen oder aus starkem Stock Vermehrung zu betreiben (siehe [Königinnenzucht](./queen-rearing.md)).
 
-:::tip Nutze Aufgaben, um im Rhythmus zu bleiben
+:::tip[Nutze Aufgaben, um im Rhythmus zu bleiben]
 Der Sieben-Tage-Zyklus ist über mehrere Beuten hinweg leicht aus dem Blick zu verlieren. Lege eine Aufgabe mit Fälligkeitsdatum für den nächsten Besuch an, und wenn du sie abhakst, lege die nächste an. Siehe [Aufgaben](../using-the-app/tasks.md).
 :::
 
@@ -64,7 +64,7 @@ Was zu tun ist:
 - Verwende eine für deine Region zugelassene Behandlung und befolge die Gebrauchsanweisung genau.
 - Sobald die Behandlung es zulässt, füttere, um die Wintervorräte aufzustocken, falls das Volk leicht ist. Füttere konzentrierten Sirup rechtzeitig, damit die Bienen ihn reifen und verdeckeln können, bevor es kalt wird.
 
-:::caution Behandlungsregeln variieren je nach Land
+:::caution[Behandlungsregeln variieren je nach Land]
 Zugelassene Varroabehandlungen, Dosierungen und Zeitpunkte unterscheiden sich zwischen Regionen, und manche haben gesetzliche Vorgaben. Verwende stets ein dort, wo du lebst, zugelassenes Produkt und befolge die nationalen Vorgaben. Siehe [Varroa](./varroa.md) für einen Überblick, aber prüfe die örtlichen Regeln.
 :::
 
@@ -96,7 +96,7 @@ Was zu tun ist:
 - Halte die Fluglöcher frei von toten Bienen, Schnee und Unrat.
 - Nutze die ruhigen Monate, um Ausrüstung zu warten, zu lesen und deine Aufzeichnungen des vergangenen Jahres durchzusehen.
 
-:::tip Rückblick und Planung
+:::tip[Rückblick und Planung]
 Der Winter ist die perfekte Zeit für einen Rückblick. Das Durchsehen der Durchsichten, Ernten und Behandlungen jeder Beute zeigt, welche Völker gediehen sind und was zu ändern ist. Nimm die Lehren mit in den Plan für das nächste Frühjahr.
 :::
 

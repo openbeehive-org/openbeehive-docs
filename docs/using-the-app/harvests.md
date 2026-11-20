@@ -23,7 +23,7 @@ Open the hive you took honey from and tap **Record harvest** under **Honey**.
 
 You can log more than one harvest per hive per year, for example a spring crop and a summer crop.
 
-:::tip Water content matters
+:::tip[Water content matters]
 Honey should generally be below about 18% water before it is sold or stored long-term; above roughly 20% it risks fermenting. Recording the reading here lets you spot a damp batch before it spoils. Thresholds and labelling rules vary by country, so check your local requirements.
 :::
 

@@ -9,7 +9,7 @@ Gesunde Völker wehren die meisten Probleme von selbst ab. Deine Aufgabe ist es,
 
 Diese Seite ist eine schnelle Feldreferenz zu den Krankheiten und Schädlingen, denen du am ehesten begegnest. Für jede(n) findest du die typischen Anzeichen und das allgemeine Vorgehen bei der Bekämpfung.
 
-:::danger Dies sind allgemeine Informationen, keine Diagnose
+:::danger[Dies sind allgemeine Informationen, keine Diagnose]
 Mehrere der unten genannten Krankheiten sind in vielen Ländern **anzeigepflichtig**, das heißt, du bist gesetzlich verpflichtet, einen Verdachtsfall deiner nationalen Bienengesundheitsbehörde zu melden. Eine Diagnose kann schwierig sein, und mehrere Krankheiten sehen einander ähnlich. Wenn du eine schwerwiegende oder anzeigepflichtige Krankheit vermutest, **halte inne, bewege keine Bienen oder Ausrüstung und kontaktiere unverzüglich deinen örtlichen Bienensachverständigen oder die Veterinärbehörde.** Befolge ihre Anweisungen; sie haben Vorrang vor allem, was hier geschrieben steht.
 :::
 
@@ -35,7 +35,7 @@ Eine schwerwiegende bakterielle Brutkrankheit, verursacht durch *Paenibacillus l
 
 **Bekämpfung:** **AFB ist in den meisten Ländern anzeigepflichtig.** Für den Hobbyimker gibt es keine sichere Heilung; die Behandlung besteht in der Regel in der Vernichtung des Volkes und der kontaminierten Ausrüstung durch Verbrennen unter Aufsicht deines Bienensachverständigen. Versuche nicht, sie selbst zu behandeln oder verdächtige Bienenstöcke zu bewegen.
 
-:::danger Anzeigepflichtig
+:::danger[Anzeigepflichtig]
 Wenn du AFB vermutest, schließe den Bienenstock, belasse ihn an Ort und Stelle und melde es umgehend deiner Bienengesundheitsbehörde.
 :::
 
@@ -104,6 +104,6 @@ Viele Krankheiten und Schädlinge verbreiten sich zwischen Völkern durch Räube
 - Stockmeißel zwischen den Völkern reinigst;
 - Bienenstöcke so platzierst und ausrichtest, dass der Verflug begrenzt wird.
 
-:::tip Kenne deine regionalen Vorschriften
+:::tip[Kenne deine regionalen Vorschriften]
 Der Krankheitsstatus, welche Krankheiten anzeigepflichtig sind und welche Behandlungen legal sind, variieren je nach Land und mitunter je nach Region. Melde dich bei deinem nationalen Bienengesundheitsprogramm an, falls es eines gibt, und lerne deinen örtlichen Verband und Bienensachverständigen kennen, bevor du sie brauchst.
 :::

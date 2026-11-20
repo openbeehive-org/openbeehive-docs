@@ -102,7 +102,7 @@ Each hive can carry a printable QR label that deep-links to that hive (see [QR l
 - **Use HTTPS.** Browsers only allow camera access on secure origins. The hosted app is served over HTTPS; self-hosters must serve over HTTPS too (or `localhost` for testing). See [Reverse proxy](../self-hosting/reverse-proxy.md).
 - **Check it is not in use.** Close other apps or tabs that may be holding the camera.
 
-:::tip No camera, or a worn label
+:::tip[No camera, or a worn label]
 The in-app scanner works in every current browser, including Safari on iPhone and iPad and Firefox. If the camera cannot be used or the label is hard to read, type the six characters printed under the QR code into **Label code** on the Scan screen. If you use the installed app, scan inside it rather than with the phone's camera app, which opens the link in the browser with its own separate data.
 :::
 

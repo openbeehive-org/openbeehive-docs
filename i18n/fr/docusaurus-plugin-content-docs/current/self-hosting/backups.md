@@ -7,7 +7,7 @@ title: "Sauvegardes et restauration"
 
 Quelques minutes passées à configurer les sauvegardes maintenant vous épargneront beaucoup de soucis plus tard. Cette page couvre ce qu'il faut sauvegarder, comment le faire en toute sécurité, et comment restaurer le moment venu.
 
-:::tip Le serveur est la source de vérité
+:::tip[Le serveur est la source de vérité]
 Chaque appareil qui utilise votre instance conserve une copie locale de ses données dans le navigateur. Cette copie est une commodité, pas une sauvegarde : elle peut être effacée en vidant les données du site, en réinstallant, ou en perdant l'appareil.
 
 Pour tout ce qui est partagé entre personnes ou appareils, le **serveur** est la copie de référence. Sauvegardez le serveur, et vous protégez les enregistrements de tous d'un seul coup.
@@ -29,7 +29,7 @@ La base de données et le stockage de blobs dont vous disposez dépendent de vot
 
 Sauvegardez **à la fois** la base de données et les blobs. La base de données contient vos ruchers, ruches, reines, visites, événements ainsi que les enregistrements de photos avec leurs miniatures ; le stockage de blobs contient les images en taille réelle. Une sauvegarde de la base de données sans ses blobs laisse des photos dont on ne voit plus que la miniature.
 
-:::tip D'abord la base de données, puis les blobs
+:::tip[D'abord la base de données, puis les blobs]
 Si vous sauvegardez pendant que le serveur fonctionne, copiez d'abord la base de données, puis les blobs juste après. Les images sont écrites une fois et jamais modifiées, donc une copie des blobs prise plus tard contient toutes les images que connaît la copie de la base. Les images en trop, inconnues de la base restaurée, sont retirées par l'[entretien](./storage.md#upkeep) du serveur.
 :::
 
@@ -40,7 +40,7 @@ SQLite stocke vos données dans un seul fichier (par exemple `openbeehive.db`) p
 - `openbeehive.db-wal` : les changements récents pas encore intégrés au fichier principal
 - `openbeehive.db-shm` : l'index en mémoire partagée pour le WAL
 
-:::caution Ne copiez pas le fichier `.db` seul pendant que le serveur fonctionne
+:::caution[Ne copiez pas le fichier `.db` seul pendant que le serveur fonctionne]
 Avec le WAL activé (le paramètre recommandé), les données les plus récentes peuvent encore se trouver dans le fichier `-wal`. Un simple `cp openbeehive.db backup.db` d'une base de données en cours d'exécution peut produire une copie incohérente ou obsolète.
 :::
 
@@ -164,6 +164,6 @@ Les caractères `%` doivent être échappés en `\%` dans la crontab. Pour Postg
 
 **Paramètres → Données & sauvegarde** dans l'application télécharge un espace en JSON, ou en ZIP avec les photos ; la copie du serveur est aussi disponible via `GET /export` (voir [Import et export](../using-the-app/import-export.md)). Un tel export est utile pour déplacer un espace ou garder votre propre copie, mais il ne contient qu'un seul espace, sans comptes, membres ni clés API. Pour une instance entière, sauvegardez la base de données et les blobs comme décrit ci-dessus.
 
-:::tip Testez vos restaurations
+:::tip[Testez vos restaurations]
 Une sauvegarde que vous n'avez jamais restaurée n'est qu'un espoir. De temps en temps, restaurez dans un répertoire jetable ou une instance de test et confirmez que vous pouvez ouvrir l'application et voir vos ruches. Conservez au moins quelques jours de copies datées, et stockez-en une hors site (un disque externe ou un bucket distant).
 :::

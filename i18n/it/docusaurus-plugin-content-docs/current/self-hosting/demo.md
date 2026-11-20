@@ -10,7 +10,7 @@ visitatori possono provare Openbeehive con dati realistici, senza toccare i dati
 reali di nessuno. È **disattivata per impostazione predefinita** ed è pensata per
 vetrine pubbliche e test.
 
-:::note Cerchi la demo pubblica?
+:::note[Cerchi la demo pubblica?]
 La demo del progetto è il pulsante **Prova la demo** su
 [app.openbeehive.org/login](https://app.openbeehive.org/login). Non esiste un
 sito demo separato. Questa pagina spiega come attivare la demo sulla tua

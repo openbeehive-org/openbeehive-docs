@@ -23,7 +23,7 @@ Ouvrez la ruche dont vous avez prélevé le miel et touchez **Enregistrer une r�
 
 Vous pouvez consigner plus d'une récolte par ruche et par an, par exemple une récolte de printemps et une récolte d'été.
 
-:::tip La teneur en eau compte
+:::tip[La teneur en eau compte]
 Le miel devrait généralement être en dessous d'environ 18 % d'eau avant d'être vendu ou stocké à long terme ; au-dessus d'environ 20 %, il risque de fermenter. Consigner ici la mesure vous permet de repérer un lot humide avant qu'il ne se gâte. Les seuils et les règles d'étiquetage varient selon le pays, vérifiez donc vos exigences locales.
 :::
 

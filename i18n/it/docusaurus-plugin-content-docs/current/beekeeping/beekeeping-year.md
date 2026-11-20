@@ -9,7 +9,7 @@ L'apicoltura segue le stagioni. La colonia cresce, raggiunge il picco, si contra
 
 Questa pagina è una guida stagione per stagione. Considera i mesi come una mappa approssimativa, non un orario, e adatta tutto alle tue condizioni.
 
-:::note Emisfero e clima variano
+:::note[Emisfero e clima variano]
 I mesi del calendario qui sotto presuppongono l'emisfero settentrionale. Nell'emisfero meridionale, sposta tutto di circa sei mesi (la primavera va da settembre a novembre). In ogni caso, il tuo clima locale conta più della data: un sito costiero caldo è settimane in anticipo rispetto a uno freddo d'altura. Osserva le api e la flora, non il calendario.
 :::
 
@@ -37,7 +37,7 @@ Cosa fare:
 - Applica il metodo di controllo della sciamatura che hai scelto se compaiono celle (vedi [Sciamatura](./swarming.md)).
 - Considera di allevare nuove regine o di fare aumento da ceppi forti (vedi [Allevamento delle regine](./queen-rearing.md)).
 
-:::tip Usa le attività per restare in ritmo
+:::tip[Usa le attività per restare in ritmo]
 Il ciclo di sette giorni è facile da perdere di vista su più arnie. Aggiungi un'attività con una scadenza per la prossima visita e, quando la spunti, aggiungi la successiva. Vedi [Attività](../using-the-app/tasks.md).
 :::
 
@@ -64,7 +64,7 @@ Cosa fare:
 - Usa un trattamento approvato per la tua regione e segui esattamente l'etichetta.
 - Una volta che il trattamento lo consente, nutri per integrare le scorte invernali se la colonia è leggera. Nutri con sciroppo concentrato per tempo così che le api possano maturarlo e opercolarlo prima che faccia freddo.
 
-:::caution Le regole sui trattamenti variano da Paese a Paese
+:::caution[Le regole sui trattamenti variano da Paese a Paese]
 I trattamenti contro la varroa approvati, i dosaggi e i tempi differiscono tra regioni, e alcuni hanno requisiti di legge. Usa sempre un prodotto autorizzato dove vivi e segui le indicazioni nazionali. Vedi [Varroa](./varroa.md) per una panoramica, ma verifica le regole locali.
 :::
 
@@ -96,7 +96,7 @@ Cosa fare:
 - Mantieni gli ingressi liberi da api morte, neve e detriti.
 - Usa i mesi tranquilli per manutenere l'attrezzatura, leggere e rivedere i tuoi registri dell'anno appena trascorso.
 
-:::tip Rivedi e pianifica
+:::tip[Rivedi e pianifica]
 L'inverno è il momento perfetto per guardare indietro. Rivedere le ispezioni, le raccolte e i trattamenti di ciascuna arnia mostra quali colonie hanno prosperato e cosa cambiare. Porta le lezioni nel piano della prossima primavera.
 :::
 

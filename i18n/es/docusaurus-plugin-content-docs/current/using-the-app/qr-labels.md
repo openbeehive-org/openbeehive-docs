@@ -28,7 +28,7 @@ Una vez instalada la aplicación, el enlace abre la colmena desde tu base de dat
 3. Toca **Imprimir**. Se abre una etiqueta limpia en una ventana nueva, seguida del diálogo de impresión. **SVG** descarga el código como archivo, para tus propios diseños de etiqueta.
 4. Imprime en papel de etiquetas o papel normal y fíjala a la colmena.
 
-:::tip Haz que dure a la intemperie
+:::tip[Haz que dure a la intemperie]
 Imprime en papel de etiqueta resistente a la intemperie o de vinilo, o cubre una etiqueta de papel con cinta de embalar transparente o una funda de plastificar. Colócala donde no la rocen las alzas al levantarlas y ponerlas: el lateral de la cámara de cría o bajo el borde del techo.
 :::
 
@@ -45,7 +45,7 @@ Imprime en papel de etiqueta resistente a la intemperie o de vinilo, o cubre una
 
 La mayoría de los teléfonos reconocen los códigos QR en la aplicación de cámara integrada. Apunta la cámara a la etiqueta, toca el enlace que aparece y Openbeehive se abre en la colmena en el navegador. Esto funciona para cualquiera con acceso, sin abrir antes la aplicación.
 
-:::caution Si instalaste la aplicación, escanea dentro de ella
+:::caution[Si instalaste la aplicación, escanea dentro de ella]
 La cámara del teléfono abre el enlace en el navegador, y el navegador guarda sus propios datos, separados de los de la aplicación instalada: puede que allí tengas que volver a iniciar sesión y esperar una descarga. Si usas la aplicación instalada, ábrela desde la pantalla de inicio y usa **Escanear**.
 :::
 

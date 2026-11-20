@@ -23,7 +23,7 @@ Apri l'arnia da cui hai prelevato il miele e tocca **Registra raccolto** sotto *
 
 Puoi registrare più di una smielatura per arnia all'anno, ad esempio un raccolto di primavera e uno d'estate.
 
-:::tip Il contenuto d'acqua è importante
+:::tip[Il contenuto d'acqua è importante]
 Il miele dovrebbe in genere essere sotto il 18% circa di acqua prima di essere venduto o conservato a lungo termine; sopra il 20% circa rischia di fermentare. Registrare qui la lettura ti permette di individuare un lotto umido prima che si guasti. Le soglie e le norme di etichettatura variano da paese a paese, quindi verifica i requisiti locali.
 :::
 

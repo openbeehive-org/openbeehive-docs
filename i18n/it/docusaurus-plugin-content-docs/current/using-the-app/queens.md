@@ -20,7 +20,7 @@ Imposta, sostituisci o correggi la regina dalla pagina dell'arnia. Il modulo con
 | Marcatura | Il colore del punto sul suo torace. Segue automaticamente l'anno; deseleziona **auto** per scegliere un colore a mano. |
 | Commento | Qualsiasi altra cosa: linea di selezione, comportamento, schema di ovideposizione, allevatore di origine. |
 
-:::tip Registrare l'origine onestamente
+:::tip[Registrare l'origine onestamente]
 "Allevamento proprio, figlia della #214" o "Acquistata dall'associazione locale, Buckfast" ti dice molto di più, tra due anni, di quanto farà mai "regina".
 :::
 
@@ -46,7 +46,7 @@ Una colonia ha una sola regina regnante alla volta, ma nel corso della sua vita 
 2. Registra la nuova regina con la sua data di introduzione.
 3. Mantiene la vecchia regina sotto **Cronologia regine** nella pagina dell'arnia, con le date di introduzione e sostituzione.
 
-:::tip Sostituzione della regina
+:::tip[Sostituzione della regina]
 Annota *perché* hai sostituito la regina nel commento della nuova: scarsa ovideposizione, api aggressive, età, miglioramento pianificato della linea. Gli schemi su più arnie spesso rivelano più di quanto faccia una singola colonia.
 :::
 

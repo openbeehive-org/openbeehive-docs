@@ -7,7 +7,7 @@ title: "Upgrading"
 
 Upgrades are simple: replace the binary or pull a new image, restart, and the server brings the database schema up to date on its own.
 
-:::caution Back up first, every time
+:::caution[Back up first, every time]
 Take a backup before upgrading. See [Backups](./backups.md).
 :::
 
@@ -154,7 +154,7 @@ Openbeehive follows [semantic versioning](https://semver.org): `MAJOR.MINOR.PATC
 | MINOR | New features, backward compatible |
 | PATCH | Bug fixes and security patches, backward compatible |
 
-:::caution 0.x is early software
+:::caution[0.x is early software]
 While Openbeehive is in the `0.x` series, minor releases may include changes that need manual steps or are not fully backward compatible. Read the release notes for every upgrade, and keep your backups close.
 :::
 

@@ -9,7 +9,7 @@ Openbeehive wird vollständig über Umgebungsvariablen konfiguriert. Diese Seite
 
 Du kannst diese Variablen in deiner Shell, in deiner `docker compose`-Datei, über den Secrets-Manager deiner Hosting-Plattform oder in einer `.env`-Datei setzen. Der Server liest `.env` beim Start aus seinem Arbeitsverzeichnis; Variablen, die bereits in der Umgebung gesetzt sind, haben Vorrang vor der Datei. Alles wird einmal gelesen, daher werden Änderungen erst nach einem Neustart wirksam.
 
-:::tip Klein anfangen
+:::tip[Klein anfangen]
 Du brauchst nur eine Handvoll davon, um loszulegen. Ein Heimserver mit einem Benutzer läuft allein mit den Standardwerten. Sobald du eine Anmeldemethode einschaltest, ergänze `BEEHIVE_SESSION_SECRET` und, für die E-Mail-/Passwort-Anmeldung, das Admin-Konto. Siehe den [Schnellstart](./quick-start.md), um in wenigen Minuten loszulegen.
 :::
 
@@ -225,7 +225,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_ID=...
 BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 ```
 
-:::tip Einzelbenutzer, keine Anmeldung
+:::tip[Einzelbenutzer, keine Anmeldung]
 Für eine persönliche selbst gehostete Instanz kannst du die Anmeldung komplett überspringen: Lass `BEEHIVE_PASSWORD_AUTH` aus (der selfhost-Standard), `BEEHIVE_OIDC_PROVIDERS` leer und `BEEHIVE_WEBAUTHN_ENABLED=false`. Die App läuft dann im Einzelbenutzermodus ohne Anmeldeschritt.
 :::
 

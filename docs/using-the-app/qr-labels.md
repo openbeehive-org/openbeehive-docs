@@ -28,7 +28,7 @@ Once the app is installed, the link opens the hive from your local database, so 
 3. Tap **Print**. A clean label opens in a new window and the print dialog follows. **SVG** downloads the code as a file instead, for your own label layouts.
 4. Print onto label stock or plain paper and fix it to the hive.
 
-:::tip Make it last outdoors
+:::tip[Make it last outdoors]
 Print on weatherproof or vinyl label stock, or cover a paper label with clear packing tape or a laminate pouch. Place it where supers being lifted on and off won't scrape it: the side of the brood box or under the roof lip.
 :::
 
@@ -45,7 +45,7 @@ Print on weatherproof or vinyl label stock, or cover a paper label with clear pa
 
 Most phones recognise QR codes in the built-in camera app. Point the camera at the label, tap the link that appears, and Openbeehive opens at the hive in the browser. This works for anyone with access, without opening the app first.
 
-:::caution If you installed the app, scan inside it
+:::caution[If you installed the app, scan inside it]
 The phone's camera opens the link in the browser, and the browser keeps its own data, separate from the installed app: you may have to sign in again and wait for a download there. If you use the installed app, open it from the home screen and use **Scan**.
 :::
 

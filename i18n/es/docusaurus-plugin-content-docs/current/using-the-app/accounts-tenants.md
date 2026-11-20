@@ -38,7 +38,7 @@ La contraseña del administrador de la instancia se define en la configuración 
 
 **Cerrar sesión en todas partes** cierra tu sesión en todos tus demás dispositivos, por ejemplo tras perder un teléfono. En este sigues con la sesión iniciada, y las claves API siguen funcionando.
 
-:::note Quién es el administrador
+:::note[Quién es el administrador]
 El administrador de la instancia no es la primera persona que se registra. En una instancia autoalojada es la cuenta que el operador configura con `BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD` (consulta [Autenticación](../self-hosting/authentication.md)); en el servicio alojado es el operador. El registro nunca concede ese rol.
 :::
 

@@ -11,7 +11,7 @@ Les trois sont testées à chaque modification : SQLite, PostgreSQL 18 et MariaD
 
 Cette page explique comment choisir la bonne base de données pour votre situation et comment la configurer correctement.
 
-:::note Où résident les données hors ligne ?
+:::note[Où résident les données hors ligne ?]
 L'application sur votre téléphone ou votre ordinateur portable conserve sa propre base de données SQLite-WASM locale et fonctionne entièrement hors ligne. La base de données serveur décrite ici est la copie centrale vers laquelle les appareils se synchronisent en arrière-plan. Ce sont des stockages distincts ; cette page ne concerne que le serveur.
 :::
 
@@ -35,7 +35,7 @@ Le profil de déploiement `selfhost` s'appuie par défaut sur SQLite, et le prof
 | Nombreux utilisateurs, synchronisation concurrente intensive, ou déploiement hébergé/cloud | **PostgreSQL** |
 | Vous exécutez déjà MariaDB et voulez une chose de moins à gérer | **MariaDB** |
 
-:::tip En bref
+:::tip[En bref]
 Dans le doute, utilisez SQLite. Elle ne nécessite aucun service séparé, tient dans un seul fichier, et est parfaitement capable de faire tourner une ruche personnelle ou familiale. Passez à PostgreSQL lorsque vous avez une véritable concurrence multi-utilisateurs ou que vous voulez un hébergement cloud managé.
 :::
 
@@ -57,7 +57,7 @@ Les deux pragmas (séparés par `&`) :
 
 Vous pouvez utiliser un chemin relatif (résolu par rapport au répertoire de travail du serveur) ou un chemin absolu tel que `file:/var/lib/openbeehive/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)`.
 
-:::caution Le WAL crée des fichiers supplémentaires
+:::caution[Le WAL crée des fichiers supplémentaires]
 En mode WAL, SQLite conserve des fichiers compagnons à côté de la base de données principale (`openbeehive.db-wal` et `openbeehive.db-shm`). Lors d'une sauvegarde par copie de fichier, arrêtez d'abord le serveur, ou utilisez les outils de sauvegarde propres à SQLite, afin de capturer un instantané cohérent. Voir [Sauvegardes](./backups.md).
 :::
 
@@ -85,7 +85,7 @@ Le paramètre `sslmode` contrôle la sécurité du transport :
 | `require` | Chiffrer la connexion (sans vérification de certificat). |
 | `verify-full` | Chiffrer et vérifier le certificat du serveur et le nom d'hôte. Le plus robuste. |
 
-:::caution Sécurité en production
+:::caution[Sécurité en production]
 Utilisez `sslmode=require` ou plus strict chaque fois que la base de données communique avec le serveur sur un réseau que vous ne contrôlez pas entièrement. Réservez `sslmode=disable` aux connexions purement locales.
 :::
 
@@ -129,7 +129,7 @@ Le SQL est écrit de façon portable afin que le même schéma fonctionne sur le
 
 Sur MariaDB, une migration qui échoue à mi-chemin ne peut pas être annulée, car MariaDB valide immédiatement chaque modification de schéma. Restaurez la sauvegarde avant de réessayer.
 
-:::tip Sauvegardez toujours avant de mettre à niveau
+:::tip[Sauvegardez toujours avant de mettre à niveau]
 Comme une nouvelle version peut inclure des migrations qui modifient le schéma, faites une sauvegarde avant de mettre à niveau. Voir [Mise à niveau](./upgrading.md) et [Sauvegardes](./backups.md).
 :::
 

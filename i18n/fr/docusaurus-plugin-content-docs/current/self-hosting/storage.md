@@ -53,7 +53,7 @@ mkdir -p /var/lib/openbeehive/blobs
 chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 ```
 
-:::caution Sauvegardez-le
+:::caution[Sauvegardez-le]
 Le répertoire de blobs n'est **pas** stocké dans votre base de données. Une sauvegarde de la base de données seule
 ne sauvegardera pas vos photos. Une sauvegarde, c'est la base de données plus `BEEHIVE_BLOB_DIR`, et les deux se restaurent ensemble. Voir
 [Sauvegardes](./backups.md).
@@ -96,7 +96,7 @@ BEEHIVE_MINIO_USE_SSL=true
 | `BEEHIVE_MINIO_BUCKET` | Bucket où les blobs sont stockés |
 | `BEEHIVE_MINIO_USE_SSL` | `true` pour se connecter via HTTPS, `false` pour du HTTP simple |
 
-:::tip Format de l'endpoint
+:::tip[Format de l'endpoint]
 Indiquez `BEEHIVE_MINIO_ENDPOINT` comme un hôte, éventuellement avec un port, par exemple
 `minio.example.com` ou `minio.example.com:9000`. N'incluez pas `https://`.
 Contrôlez plutôt le schéma avec `BEEHIVE_MINIO_USE_SSL`.
@@ -111,7 +111,7 @@ mc alias set local https://minio.example.com:9000 ACCESS_KEY SECRET_KEY
 mc mb local/openbeehive
 ```
 
-:::caution Gardez le bucket privé
+:::caution[Gardez le bucket privé]
 Les blobs peuvent contenir des photos identifiantes de vos ruchers. Ne rendez pas le bucket
 accessible publiquement en lecture. Openbeehive ne sert les images qu'aux membres connectés de
 l'espace, donc le stockage objet n'a besoin d'aucun accès public.
@@ -137,7 +137,7 @@ d'accès et secrète, choisissez votre bucket et définissez `BEEHIVE_MINIO_USE_
 | Backblaze B2 | `s3.<region>.backblazeb2.com` |
 | MinIO (auto-hébergé) | `minio.example.com:9000` |
 
-:::note Régions et adressage
+:::note[Régions et adressage]
 Certains fournisseurs sont sensibles aux paramètres de région ou exigent un adressage de type
 path-style plutôt que virtual-hosted. Si les téléversements échouent avec un fournisseur autre que MinIO,
 vérifiez bien l'endpoint et que le bucket existe dans la région attendue.

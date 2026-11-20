@@ -20,7 +20,7 @@ Define, reemplaza o corrige la reina desde la página de la colmena. El formular
 | Marcado | El color del punto en su tórax. Sigue el año automáticamente; desmarca **auto** para elegir un color a mano. |
 | Comentario | Cualquier otra cosa: línea de cría, comportamiento, patrón de puesta, criador de origen. |
 
-:::tip Registrar el origen con honestidad
+:::tip[Registrar el origen con honestidad]
 "Cría propia, hija de la #214" o "Comprada a la asociación local, Buckfast" te dice mucho más dentro de dos años que un simple "reina".
 :::
 
@@ -46,7 +46,7 @@ Una colonia tiene una sola reina reinante a la vez, pero a lo largo de su vida t
 2. Registra la nueva reina con su fecha de introducción.
 3. Conserva a la reina anterior en **Historial de reinas** en la página de la colmena, con sus fechas de introducción y reemplazo.
 
-:::tip Cambio de reina
+:::tip[Cambio de reina]
 Anota *por qué* cambiaste de reina en el comentario de la nueva: mala puesta, abejas defensivas, edad, mejora planificada de la línea. Los patrones en varias colmenas a menudo revelan más que cualquier colonia individual.
 :::
 

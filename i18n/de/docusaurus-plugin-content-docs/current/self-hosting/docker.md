@@ -111,7 +111,7 @@ Die Datei setzt `BEEHIVE_TRUST_PROXY_HEADERS=true`, weil sie genau einen Reverse
 
 `server` wartet, bis `postgres` und `minio` sich als gesund melden.
 
-:::note Dienstnamen sind Hostnamen
+:::note[Dienstnamen sind Hostnamen]
 Innerhalb des Compose-Netzwerks erreichen Container einander über den Dienstnamen. Deshalb zeigt der DSN auf `postgres` und der MinIO-Endpunkt auf `minio`.
 :::
 
@@ -131,7 +131,7 @@ Die vollständige Liste der Variablen findest du unter [Konfiguration](./configu
 - **Einzelner Container (`selfhost`):** Alles liegt unter `/data` auf dem Volume `openbeehive-data`.
 - **PostgreSQL und MinIO:** Aufzeichnungen liegen im Volume `pg` und hochgeladene Dateien im Volume `minio`. Der Server-Container ist zustandslos und kann frei ersetzt werden.
 
-:::danger Vor dem Upgrade sichern
+:::danger[Vor dem Upgrade sichern]
 Benannte Volumes überstehen `docker compose up` und Image-Upgrades, aber nicht `docker compose down -v` oder ein entferntes Volume. Erstelle vor jedem Upgrade oder destruktiven Befehl ein Backup. Siehe [Backups](./backups.md).
 :::
 

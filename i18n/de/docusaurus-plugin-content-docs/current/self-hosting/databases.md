@@ -11,7 +11,7 @@ Alle drei werden bei jeder Änderung getestet: SQLite, PostgreSQL 18 und MariaDB
 
 Diese Seite erklärt, wie du die richtige Datenbank für deine Situation auswählst und sie korrekt konfigurierst.
 
-:::note Wo liegen die Offline-Daten?
+:::note[Wo liegen die Offline-Daten?]
 Die App auf deinem Telefon oder Laptop hält ihre eigene lokale SQLite-WASM-Datenbank und funktioniert vollständig offline. Die hier beschriebene Server-Datenbank ist die zentrale Kopie, mit der Geräte im Hintergrund synchronisieren. Es sind getrennte Speicher; diese Seite befasst sich nur mit dem Server.
 :::
 
@@ -35,7 +35,7 @@ Das `selfhost`-Bereitstellungsprofil nutzt standardmäßig SQLite, und das `clou
 | Viele Nutzer, hohe gleichzeitige Synchronisation oder gehostete/Cloud-Bereitstellung | **PostgreSQL** |
 | Du betreibst bereits MariaDB und möchtest eine Sache weniger zu betreiben haben | **MariaDB** |
 
-:::tip Kurz gesagt
+:::tip[Kurz gesagt]
 Im Zweifel nutze SQLite. Es braucht keinen separaten Dienst, lebt in einer einzigen Datei und ist vollkommen in der Lage, eine persönliche oder Familien-Imkerei zu betreiben. Wechsle zu PostgreSQL, wenn du echte Mehrbenutzer-Gleichzeitigkeit hast oder verwaltetes Cloud-Hosting möchtest.
 :::
 
@@ -57,7 +57,7 @@ Die beiden Pragmas (mit `&` getrennt):
 
 Du kannst einen relativen Pfad (aufgelöst relativ zum Arbeitsverzeichnis des Servers) oder einen absoluten Pfad wie `file:/var/lib/openbeehive/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)` verwenden.
 
-:::caution WAL erzeugt zusätzliche Dateien
+:::caution[WAL erzeugt zusätzliche Dateien]
 Im WAL-Modus hält SQLite Begleitdateien neben der Hauptdatenbank (`openbeehive.db-wal` und `openbeehive.db-shm`). Wenn du per Dateikopie sicherst, stoppe zuerst den Server oder verwende SQLites eigenes Backup-Werkzeug, damit du einen konsistenten Snapshot erfasst. Siehe [Backups](./backups.md).
 :::
 
@@ -85,7 +85,7 @@ Der Parameter `sslmode` steuert die Transportsicherheit:
 | `require` | Verschlüssele die Verbindung (keine Zertifikatsprüfung). |
 | `verify-full` | Verschlüssele und überprüfe das Serverzertifikat und den Hostnamen. Am stärksten. |
 
-:::caution Produktionssicherheit
+:::caution[Produktionssicherheit]
 Verwende `sslmode=require` oder stärker, wann immer die Datenbank über ein Netzwerk mit dem Server spricht, das du nicht vollständig kontrollierst. Reserviere `sslmode=disable` für rein lokale Verbindungen.
 :::
 
@@ -129,7 +129,7 @@ Das SQL ist portabel geschrieben, sodass dasselbe Schema über alle drei Engines
 
 Bei MariaDB lässt sich eine Migration, die auf halbem Weg fehlschlägt, nicht zurückrollen, weil MariaDB jede Schemaänderung sofort festschreibt. Stelle das Backup wieder her, bevor du es erneut versuchst.
 
-:::tip Vor dem Upgrade immer sichern
+:::tip[Vor dem Upgrade immer sichern]
 Da eine neue Version Migrationen enthalten kann, die das Schema ändern, erstelle ein Backup, bevor du aktualisierst. Siehe [Aktualisieren](./upgrading.md) und [Backups](./backups.md).
 :::
 

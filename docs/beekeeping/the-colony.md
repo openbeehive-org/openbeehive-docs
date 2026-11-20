@@ -27,7 +27,7 @@ The queen is not a ruler. She does not direct the colony; instead she binds it t
 
 A queen mates only once in her life, over a few days early on, storing sperm for the rest of her years. In Openbeehive you can record each queen, her marking colour and year, and her origin. See [Queens](../using-the-app/queens.md).
 
-:::tip Queen marking
+:::tip[Queen marking]
 Queens are often marked with a coloured dot following the international colour scheme, which records the year she was born. See [Queen marking colours](../knowledge-base/queen-marking-colours.md).
 :::
 
@@ -93,10 +93,10 @@ In cold climates the colony does not hibernate and does not heat the whole hive.
 
 The cluster runs entirely on stored honey, eating its way slowly upward through the combs over the months. Two things decide whether it survives: **enough stores** in the right place, and a population of healthy winter bees. This is why autumn feeding and varroa control matter so much.
 
-:::caution Winter losses are real
+:::caution[Winter losses are real]
 Even healthy-looking colonies can die over winter from starvation, disease or a heavy mite load entering autumn. Going into winter strong and healthy is far more important than any midwinter intervention. See [Varroa](./varroa.md) and [Feeding](./feeding.md).
 :::
 
-:::note Regional variation
+:::note[Regional variation]
 Colony behaviour varies with climate and subspecies. The cycle above describes a temperate-climate colony; in warmer regions brood rearing may never fully stop, and timings shift accordingly. Always calibrate to your own location and local mentors.
 :::

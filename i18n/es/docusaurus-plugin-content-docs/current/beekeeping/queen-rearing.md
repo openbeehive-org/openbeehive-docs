@@ -15,7 +15,7 @@ gratificantes de la apicultura.
 Esta página presenta el papel de la reina, cómo detectar una reina que falla o que se ha
 perdido, cómo reemplazar la reina, y una suave introducción a criar reinas tú mismo.
 
-:::tip Registra todo en la app
+:::tip[Registra todo en la app]
 Lleva el seguimiento del origen, la edad, el color de marcaje y las notas de cada reina en la
 [página de Reinas](../using-the-app/queens.md). Un registro preciso de cuándo se introdujo una
 reina es lo más útil que existe para juzgar su rendimiento más adelante.
@@ -50,7 +50,7 @@ durante las inspecciones rutinarias.
 | Un "rugido" o una colonia inquieta y agitada | Reina perdida recientemente |
 | Realeras en la cara del panal | Sustitución (la colonia la está reemplazando) |
 
-:::caution Confirma antes de actuar
+:::caution[Confirma antes de actuar]
 Una breve pausa en la puesta puede ser normal —por ejemplo, justo después de un enjambre,
 o mientras una nueva reina se está fecundando. Antes de decidir que una colonia está sin
 reina, busca huevos y larvas muy jóvenes, y considera comprobar de nuevo unos días después.
@@ -78,7 +78,7 @@ planificado.
    poniendo. Evita molestar a la colonia mientras tanto —las inspecciones bruscas provocan
    rechazo.
 
-:::note La introducción es la parte arriesgada
+:::note[La introducción es la parte arriesgada]
 Las colonias a veces rechazan a una nueva reina, especialmente si ya tienen realeras,
 obreras ponedoras, o llevaban mucho tiempo sin reina. Retira cualquier realera antes de
 introducirla, y ten paciencia.

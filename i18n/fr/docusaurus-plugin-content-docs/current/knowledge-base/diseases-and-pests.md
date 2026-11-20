@@ -9,7 +9,7 @@ Les colonies en bonne santé repoussent d'elles-mêmes la plupart des problèmes
 
 Cette page est une référence de terrain rapide sur les maladies et ravageurs que vous êtes le plus susceptible de rencontrer. Pour chacun, vous trouverez les signes typiques et l'approche générale de gestion.
 
-:::danger Ce sont des informations générales, pas un diagnostic
+:::danger[Ce sont des informations générales, pas un diagnostic]
 Plusieurs des affections ci-dessous sont **à déclaration obligatoire** dans de nombreux pays, ce qui signifie que vous êtes légalement tenu de signaler un cas suspecté à votre autorité nationale de santé apicole. Le diagnostic peut être difficile et plusieurs affections se ressemblent. Si vous suspectez une maladie grave ou à déclaration obligatoire, **arrêtez, ne déplacez ni abeilles ni matériel, et contactez immédiatement votre inspecteur sanitaire apicole local ou votre autorité vétérinaire.** Suivez leurs instructions ; elles prévalent sur tout ce qui est écrit ici.
 :::
 
@@ -35,7 +35,7 @@ Une grave maladie bactérienne du couvain causée par *Paenibacillus larvae*. Se
 
 **Gestion :** **la loque américaine est à déclaration obligatoire dans la plupart des pays.** Il n'existe pas de remède sûr pour l'amateur ; le traitement consiste généralement à détruire la colonie et le matériel contaminé par le feu, sous la supervision de votre inspecteur apicole. N'essayez pas de la traiter vous-même ni de déplacer des ruches suspectes.
 
-:::danger À déclaration obligatoire
+:::danger[À déclaration obligatoire]
 Si vous suspectez une loque américaine, refermez la ruche, laissez-la sur place et signalez-la sans délai à votre autorité de santé apicole.
 :::
 
@@ -104,6 +104,6 @@ De nombreuses maladies et ravageurs se propagent entre colonies par le pillage, 
 - nettoyant les lève-cadres entre les colonies ;
 - espaçant et orientant les ruches pour limiter la dérive.
 
-:::tip Connaissez vos règles régionales
+:::tip[Connaissez vos règles régionales]
 Le statut sanitaire, les affections à déclaration obligatoire et les traitements autorisés varient tous selon le pays et parfois selon la région. Inscrivez-vous à votre dispositif national de santé apicole s'il en existe un, et apprenez à connaître votre association locale et votre inspecteur apicole avant d'en avoir besoin.
 :::

@@ -10,7 +10,7 @@ para que los visitantes puedan probar Openbeehive con datos realistas, sin tocar
 los registros reales de nadie. Está **desactivado de forma predeterminada** y
 pensado para exhibiciones públicas y pruebas.
 
-:::note ¿Buscas la demo pública?
+:::note[¿Buscas la demo pública?]
 La demo del propio proyecto es el botón **Probar la demo** en
 [app.openbeehive.org/login](https://app.openbeehive.org/login). No hay un sitio
 de demostración aparte. Esta página trata de cómo activar la demo en tu propia

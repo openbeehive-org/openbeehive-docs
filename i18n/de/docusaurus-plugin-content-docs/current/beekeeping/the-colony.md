@@ -27,7 +27,7 @@ Die Königin ist keine Herrscherin. Sie lenkt das Volk nicht; vielmehr bindet si
 
 Eine Königin paart sich nur einmal in ihrem Leben, über wenige Tage zu Beginn, und speichert Samen für den Rest ihrer Jahre. In Openbeehive kannst du jede Königin, ihre Markierungsfarbe und ihr Jahr sowie ihre Herkunft erfassen. Siehe [Königinnen](../using-the-app/queens.md).
 
-:::tip Königinnenmarkierung
+:::tip[Königinnenmarkierung]
 Königinnen werden oft mit einem farbigen Punkt nach dem internationalen Farbschema markiert, das ihr Geburtsjahr festhält. Siehe [Königinnen-Markierungsfarben](../knowledge-base/queen-marking-colours.md).
 :::
 
@@ -93,10 +93,10 @@ In kalten Klimazonen hält das Volk keinen Winterschlaf und heizt nicht den ganz
 
 Die Traube läuft vollständig mit eingelagertem Honig und frisst sich über die Monate langsam nach oben durch die Waben. Zwei Dinge entscheiden, ob sie überlebt: **genug Vorräte** an der richtigen Stelle und eine Population gesunder Winterbienen. Deshalb sind die Herbstfütterung und die Varroakontrolle so wichtig.
 
-:::caution Winterverluste sind real
+:::caution[Winterverluste sind real]
 Selbst gesund aussehende Völker können über den Winter durch Verhungern, Krankheit oder eine hohe Milbenlast beim Eintritt in den Herbst sterben. Stark und gesund in den Winter zu gehen ist weit wichtiger als jeder Eingriff mitten im Winter. Siehe [Varroa](./varroa.md) und [Füttern](./feeding.md).
 :::
 
-:::note Regionale Unterschiede
+:::note[Regionale Unterschiede]
 Das Verhalten von Völkern variiert mit Klima und Unterart. Der obige Zyklus beschreibt ein Volk im gemäßigten Klima; in wärmeren Regionen hört die Brutaufzucht möglicherweise nie ganz auf, und die Zeitpunkte verschieben sich entsprechend. Richte dich stets nach deinem eigenen Standort und örtlichen Mentoren.
 :::

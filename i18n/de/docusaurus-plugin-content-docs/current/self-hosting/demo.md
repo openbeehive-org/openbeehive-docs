@@ -10,7 +10,7 @@ Besucher Openbeehive mit realistischen Daten ausprobieren können, ohne die echt
 anderer zu berühren. Er ist **standardmäßig deaktiviert** und für öffentliche Präsentationen
 und Tests gedacht.
 
-:::note Suchst du die öffentliche Demo?
+:::note[Suchst du die öffentliche Demo?]
 Die projekteigene Demo ist die Schaltfläche **Demo ausprobieren** auf
 [app.openbeehive.org/login](https://app.openbeehive.org/login). Eine eigene
 Demo-Website gibt es nicht. Auf dieser Seite geht es darum, die Demo für deine

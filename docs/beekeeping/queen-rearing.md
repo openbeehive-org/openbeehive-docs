@@ -14,7 +14,7 @@ eventually raise your own is one of the most rewarding parts of beekeeping.
 This page introduces the queen's role, how to spot a failing or lost queen, how
 to requeen, and a gentle on-ramp to raising queens yourself.
 
-:::tip Record everything in the app
+:::tip[Record everything in the app]
 Track each queen's origin, age, marking colour and notes on the
 [Queens page](../using-the-app/queens.md). An accurate record of when a queen was
 introduced is the single most useful thing for judging her performance later.
@@ -48,7 +48,7 @@ patterns during routine inspections.
 | A "roar" or restless, agitated colony | Recently lost queen |
 | Queen cells on the comb face | Supersedure (colony is replacing her) |
 
-:::caution Confirm before you act
+:::caution[Confirm before you act]
 A brief gap in laying can be normal — for example, just after a swarm, or while
 a new queen is getting mated. Before deciding a colony is queenless, look for
 eggs and very young larvae, and consider checking again in a few days.
@@ -76,7 +76,7 @@ colony is bad-tempered or unproductive, or simply on a planned schedule.
    disturbing the colony in the meantime — heavy-handed inspections cause
    rejection.
 
-:::note Introduction is the risky part
+:::note[Introduction is the risky part]
 Colonies sometimes reject a new queen, especially if they already have queen
 cells, laying workers, or were queenless for a long time. Remove any queen cells
 before introducing, and be patient.

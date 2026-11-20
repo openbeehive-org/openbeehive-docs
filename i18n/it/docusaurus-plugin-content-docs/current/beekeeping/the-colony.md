@@ -27,7 +27,7 @@ La regina non è una sovrana. Non dirige la colonia; piuttosto la tiene unita ch
 
 Una regina si accoppia una sola volta nella vita, nell'arco di pochi giorni all'inizio, immagazzinando lo sperma per il resto dei suoi anni. In Openbeehive puoi registrare ogni regina, il suo colore di marcatura e l'anno, e la sua origine. Vedi [Regine](../using-the-app/queens.md).
 
-:::tip Marcatura della regina
+:::tip[Marcatura della regina]
 Le regine vengono spesso marcate con un punto colorato secondo lo schema internazionale dei colori, che registra l'anno in cui è nata. Vedi [Colori di marcatura della regina](../knowledge-base/queen-marking-colours.md).
 :::
 
@@ -93,10 +93,10 @@ Nei climi freddi la colonia non va in letargo e non riscalda l'intera arnia. Le 
 
 Il glomere funziona interamente sul miele immagazzinato, mangiandosi lentamente la strada verso l'alto attraverso i favi nel corso dei mesi. Due cose decidono se sopravvive: **scorte sufficienti** nel posto giusto e una popolazione di api invernali sane. Ecco perché la nutrizione autunnale e il controllo della varroa contano così tanto.
 
-:::caution Le perdite invernali sono reali
+:::caution[Le perdite invernali sono reali]
 Anche colonie dall'aspetto sano possono morire durante l'inverno per fame, malattia o un pesante carico di acari all'ingresso dell'autunno. Entrare nell'inverno forti e sani è di gran lunga più importante di qualsiasi intervento di pieno inverno. Vedi [Varroa](./varroa.md) e [Nutrizione](./feeding.md).
 :::
 
-:::note Variazione regionale
+:::note[Variazione regionale]
 Il comportamento della colonia varia con il clima e la sottospecie. Il ciclo descritto sopra riguarda una colonia di clima temperato; nelle regioni più calde l'allevamento della covata potrebbe non cessare mai del tutto, e i tempi si spostano di conseguenza. Calibra sempre in base alla tua posizione e ai mentori locali.
 :::

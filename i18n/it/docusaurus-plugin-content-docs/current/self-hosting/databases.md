@@ -11,7 +11,7 @@ Tutti e tre vengono testati a ogni modifica: SQLite, PostgreSQL 18 e MariaDB 13.
 
 Questa pagina spiega come scegliere il database giusto per la tua situazione e come configurarlo correttamente.
 
-:::note Dove risiedono i dati offline?
+:::note[Dove risiedono i dati offline?]
 L'app sul tuo telefono o laptop mantiene il proprio database locale SQLite-WASM e funziona completamente offline. Il database del server descritto qui è la copia centrale verso cui i dispositivi sincronizzano in background. Sono archivi separati; questa pagina riguarda solo il server.
 :::
 
@@ -35,7 +35,7 @@ Il profilo di deployment `selfhost` usa SQLite per impostazione predefinita, men
 | Molti utenti, sincronizzazione concorrente intensa o deployment ospitato/cloud | **PostgreSQL** |
 | Esegui già MariaDB e vuoi una cosa in meno da gestire | **MariaDB** |
 
-:::tip In breve
+:::tip[In breve]
 In caso di dubbio, usa SQLite. Non richiede un servizio separato, risiede in un unico file ed è perfettamente in grado di gestire un alveare personale o familiare. Passa a PostgreSQL quando hai una vera concorrenza multiutente o vuoi un hosting cloud gestito.
 :::
 
@@ -57,7 +57,7 @@ I due pragma (separati da `&`):
 
 Puoi usare un percorso relativo (risolto rispetto alla directory di lavoro del server) o un percorso assoluto come `file:/var/lib/openbeehive/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)`.
 
-:::caution Il WAL crea file extra
+:::caution[Il WAL crea file extra]
 In modalità WAL SQLite mantiene file di accompagnamento accanto al database principale (`openbeehive.db-wal` e `openbeehive.db-shm`). Quando esegui il backup tramite copia di file, ferma prima il server, oppure usa gli strumenti di backup propri di SQLite, così catturi un'istantanea coerente. Vedi [Backup](./backups.md).
 :::
 
@@ -85,7 +85,7 @@ Il parametro `sslmode` controlla la sicurezza del trasporto:
 | `require` | Cifra la connessione (senza verifica del certificato). |
 | `verify-full` | Cifra e verifica il certificato del server e l'hostname. Il più robusto. |
 
-:::caution Sicurezza in produzione
+:::caution[Sicurezza in produzione]
 Usa `sslmode=require` o più forte ogni volta che il database comunica con il server su una rete che non controlli completamente. Riserva `sslmode=disable` alle connessioni solo locali.
 :::
 
@@ -129,7 +129,7 @@ L'SQL è scritto in modo portabile così lo stesso schema funziona su tutti e tr
 
 Su MariaDB una migrazione che fallisce a metà non può essere annullata, perché MariaDB esegue immediatamente il commit di ogni modifica allo schema. Ripristina il backup prima di riprovare.
 
-:::tip Esegui sempre il backup prima di aggiornare
+:::tip[Esegui sempre il backup prima di aggiornare]
 Poiché una nuova versione può includere migrazioni che modificano lo schema, esegui un backup prima di aggiornare. Vedi [Aggiornamento](./upgrading.md) e [Backup](./backups.md).
 :::
 

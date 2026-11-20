@@ -9,7 +9,7 @@ La apicultura sigue las estaciones. La colonia crece, alcanza su máximo, se con
 
 Esta página es una guía estación por estación. Trata los meses como un mapa aproximado, no como un horario, y ajústalo todo a tus propias condiciones.
 
-:::note El hemisferio y el clima varían
+:::note[El hemisferio y el clima varían]
 Los meses del calendario que figuran a continuación suponen el hemisferio norte. En el hemisferio sur, desplázalo todo unos seis meses (la primavera va de septiembre a noviembre). En cualquier caso, tu clima local importa más que la fecha: un emplazamiento costero cálido va semanas por delante de uno frío de montaña. Observa las abejas y el alimento disponible, no el calendario.
 :::
 
@@ -37,7 +37,7 @@ Qué hacer:
 - Aplica tu método elegido de control de enjambrazón si aparecen realeras (consulta [Enjambrazón](./swarming.md)).
 - Considera criar nuevas reinas o aumentar el número de colonias a partir de stock fuerte (consulta [Cría de reinas](./queen-rearing.md)).
 
-:::tip Usa tareas para mantener el ritmo
+:::tip[Usa tareas para mantener el ritmo]
 El ciclo de siete días es fácil de perder de vista con varias colmenas. Añade una tarea con fecha de vencimiento para la próxima visita y, cuando la marques como hecha, añade la siguiente. Consulta [Tareas](../using-the-app/tasks.md).
 :::
 
@@ -64,7 +64,7 @@ Qué hacer:
 - Usa un tratamiento aprobado para tu región y sigue la etiqueta al pie de la letra.
 - Una vez que el tratamiento lo permita, alimenta para completar las reservas de invierno si la colonia está ligera. Da jarabe concentrado con tiempo suficiente para que las abejas puedan madurarlo y opercularlo antes de que llegue el frío.
 
-:::caution Las normas de tratamiento varían según el país
+:::caution[Las normas de tratamiento varían según el país]
 Los tratamientos aprobados contra la varroa, las dosis y los tiempos difieren entre regiones, y algunos tienen requisitos legales. Usa siempre un producto autorizado donde vives y sigue las directrices nacionales. Consulta [Varroa](./varroa.md) para una visión general, pero comprueba las normas locales.
 :::
 
@@ -96,7 +96,7 @@ Qué hacer:
 - Mantén las piqueras despejadas de abejas muertas, nieve y restos.
 - Aprovecha los meses tranquilos para mantener el equipo, leer y revisar tus registros del año que acaba.
 
-:::tip Revisar y planificar
+:::tip[Revisar y planificar]
 El invierno es el momento perfecto para mirar atrás. Revisar las inspecciones, cosechas y tratamientos de cada colmena muestra qué colonias prosperaron y qué cambiar. Lleva las lecciones al plan de la próxima primavera.
 :::
 

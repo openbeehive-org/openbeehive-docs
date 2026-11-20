@@ -119,7 +119,7 @@ saltata, quindi importare due volte lo stesso file non cambia nulla, e un'import
 con sovrascrittura lascia tali visite come sono. Le colonne non riconosciute vengono
 ignorate. Pesi e temperature vengono letti come chilogrammi e gradi Celsius.
 
-:::tip Prima il round-trip
+:::tip[Prima il round-trip]
 Se ti stai spostando tra istanze di Openbeehive, preferisci il **backup completo**
 (come ZIP con le foto): è completo e senza perdite. Usa il CSV per arrivare
 **da** altre app.

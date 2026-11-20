@@ -28,7 +28,7 @@ Il colore è determinato dall'**ultima cifra dell'anno**. Ci sono solo cinque co
 | 4 o 9 | Verde | 2024, 2029, 2034 |
 | 5 o 0 | Blu | 2025, 2030, 2035 |
 
-:::tip La filastrocca
+:::tip[La filastrocca]
 Una nota filastrocca aiuta a tenere l'ordine in mente:
 
 **"W**ill **Y**ou **R**ear **G**ood **B**ees?**"** — **W**hite (bianco), **Y**ellow (giallo), **R**ed (rosso), **G**reen (verde), **B**lue (blu).
@@ -44,7 +44,7 @@ Supponiamo che sia il **2026**. L'anno termina in **6**, quindi le regine di que
 - Una regina marcata in **verde** risale al 2024 (o al 2019). Se è del 2024 sta entrando nel suo terzo anno; tieni d'occhio la sua configurazione di deposizione e valuta la sostituzione.
 - Una regina inaspettatamente **rossa** in una colonia del 2026 significa quasi certamente una sostituzione naturale o uno sciame che non hai notato.
 
-:::note Ambiguità quinquennale
+:::note[Ambiguità quinquennale]
 Poiché il ciclo si ripete ogni cinque anni, il colore da solo non può distinguere una regina bianca del 2021 da una bianca del 2026. In pratica questo è raramente un problema — le regine vivono di rado così a lungo — ma è un altro buon motivo per tenere registri scritti in Openbeehive accanto al punto di vernice.
 :::
 
@@ -57,7 +57,7 @@ Alcuni consigli pratici:
 - Applica un piccolo punto sulla **parte superiore del torace**, tra le basi delle ali. Lascia asciugare completamente prima di rilasciarla.
 - Marca in una giornata calma e tiepida, e riportala prontamente alla sua colonia.
 
-:::caution Maneggia con cura
+:::caution[Maneggia con cura]
 Una regina marcata male o danneggiata può essere rifiutata o "ammassata" dalla colonia. Se sei alle prime armi, fai pratica prima sui fuchi — non possono pungere, e non costa nulla se sbagli.
 :::
 
@@ -71,6 +71,6 @@ Puoi anche annotare il marchio effettivo che hai applicato, la sua origine e il 
 
 Vedi [Regine](../using-the-app/queens.md) per come aggiungere e gestire le regine, e l'intera [knowledge base](/category/knowledge-base) per altro materiale di riferimento.
 
-:::tip Nota regionale
+:::tip[Nota regionale]
 Lo schema a cinque colori e cinque anni è lo standard internazionale usato nella maggior parte del mondo. Le convenzioni per la tarpatura, le tonalità di colore dei fornitori e gli eventuali obblighi di tenuta dei registri possono variare per paese e associazione — in caso di dubbio, segui le indicazioni del tuo ente apistico locale.
 :::

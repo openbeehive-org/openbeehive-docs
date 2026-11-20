@@ -16,7 +16,7 @@ Cette page présente le rôle de la reine, comment repérer une reine défaillan
 perdue, comment remérer, et une initiation en douceur à l'élevage de reines par
 vous-même.
 
-:::tip Consignez tout dans l'application
+:::tip[Consignez tout dans l'application]
 Suivez l'origine, l'âge, la couleur de marquage et les notes de chaque reine sur la
 [page Reines](../using-the-app/queens.md). Un registre précis de la date d'introduction
 d'une reine est la chose la plus utile pour juger plus tard de sa performance.
@@ -51,7 +51,7 @@ Surveillez ces schémas lors des visites de routine.
 | Un « rugissement » ou une colonie agitée et inquiète | Reine récemment perdue |
 | Cellules royales sur la face du rayon | Remérage (la colonie la remplace) |
 
-:::caution Confirmez avant d'agir
+:::caution[Confirmez avant d'agir]
 Une brève interruption de ponte peut être normale, par exemple juste après un essaim,
 ou pendant qu'une nouvelle reine se fait féconder. Avant de décider qu'une colonie est
 orpheline, recherchez des œufs et de très jeunes larves, et envisagez de vérifier à
@@ -80,7 +80,7 @@ que la colonie est agressive ou improductive, ou simplement selon un calendrier 
 5. **Vérifiez l'acceptation.** Après environ une semaine, confirmez qu'elle pond. Évitez de
    déranger la colonie entre-temps : des visites brutales provoquent le rejet.
 
-:::note L'introduction est la partie risquée
+:::note[L'introduction est la partie risquée]
 Les colonies rejettent parfois une nouvelle reine, surtout si elles ont déjà des cellules
 royales, des ouvrières pondeuses, ou si elles sont orphelines depuis longtemps. Retirez
 toute cellule royale avant d'introduire, et soyez patient.

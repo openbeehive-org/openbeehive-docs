@@ -9,7 +9,7 @@ Las colonias sanas se defienden de la mayoría de los problemas por sí solas. T
 
 Esta página es una referencia rápida de campo sobre las enfermedades y plagas que es más probable que encuentres. Para cada una hallarás las señales típicas y el enfoque general de manejo.
 
-:::danger Esto es información general, no un diagnóstico
+:::danger[Esto es información general, no un diagnóstico]
 Varias de las afecciones que aparecen a continuación son de **declaración obligatoria** en muchos países, lo que significa que estás legalmente obligado a notificar un caso sospechoso a tu autoridad nacional de sanidad apícola. El diagnóstico puede ser difícil y varias afecciones se parecen entre sí. Si sospechas de una enfermedad grave o de declaración obligatoria, **detente, no muevas abejas ni equipo, y contacta de inmediato con tu inspector apícola local o autoridad veterinaria.** Sigue sus instrucciones; tienen prioridad sobre cualquier cosa escrita aquí.
 :::
 
@@ -35,7 +35,7 @@ Una grave enfermedad bacteriana de la cría causada por *Paenibacillus larvae*. 
 
 **Manejo:** **la loque americana es de declaración obligatoria en la mayoría de los países.** No hay cura segura para el aficionado; el tratamiento suele consistir en la destrucción de la colonia y el equipo contaminado mediante quema, bajo la supervisión de tu inspector apícola. No intentes tratarla por tu cuenta ni mover colmenas sospechosas.
 
-:::danger De declaración obligatoria
+:::danger[De declaración obligatoria]
 Si sospechas de loque americana, cierra la colmena, déjala donde está y notifícalo de inmediato a tu autoridad de sanidad apícola.
 :::
 
@@ -104,6 +104,6 @@ Muchas enfermedades y plagas se propagan entre colonias a través del pillaje, l
 - limpiando las palancas entre colonias;
 - separando y orientando las colmenas para limitar la deriva.
 
-:::tip Conoce las normas de tu región
+:::tip[Conoce las normas de tu región]
 El estado sanitario, qué afecciones son de declaración obligatoria y qué tratamientos son legales varían según el país y, a veces, según la región. Inscríbete en tu programa nacional de sanidad apícola si existe, y conoce a tu asociación local y a tu inspector apícola antes de necesitarlos.
 :::

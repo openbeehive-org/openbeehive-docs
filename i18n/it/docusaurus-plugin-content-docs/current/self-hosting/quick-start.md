@@ -12,7 +12,7 @@ Due percorsi per avere un'istanza di Openbeehive funzionante da aprire in un bro
 
 Entrambi usano il profilo di deployment **selfhost**: un database SQLite incorporato e i file sul disco locale. Per più utenti su PostgreSQL e MinIO/S3, vedi [Docker e Compose](./docker.md#several-users).
 
-:::caution Nessun accesso nella configurazione iniziale
+:::caution[Nessun accesso nella configurazione iniziale]
 Nel profilo selfhost nessun metodo di accesso è abilitato per impostazione predefinita, quindi l'app si apre direttamente sui tuoi registri e **chiunque possa raggiungere la porta ha accesso completo**. Sul tuo computer va bene così. Per questo motivo gli esempi pubblicano la porta solo su `127.0.0.1`, e un server senza accesso risponde solo a `localhost`, agli indirizzi IP e all'host di `BEEHIVE_PUBLIC_BASE_URL`. Prima di aprirlo ad altri dispositivi o persone, [attiva l'accesso](#turn-login-on).
 :::
 
@@ -76,7 +76,7 @@ auth: NO LOGIN (single-user mode): every request has full access to all data
 auth: accepting requests for hosts: localhost, IP addresses (add names with BEEHIVE_ALLOWED_HOSTS)
 ```
 
-:::note Dove risiedono i tuoi dati
+:::note[Dove risiedono i tuoi dati]
 In modalità selfhost i tuoi registri finiscono in un file SQLite (`openbeehive.db` nella directory di lavoro per impostazione predefinita) e i file caricati in una directory di blob (`./data/blobs` per impostazione predefinita). Esegui il backup di entrambi e avrai eseguito il backup di tutto; vedi [Backup](./backups.md).
 :::
 

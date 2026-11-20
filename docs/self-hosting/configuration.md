@@ -9,7 +9,7 @@ Openbeehive is configured entirely through environment variables. This page is t
 
 You can set these variables in your shell, in your `docker compose` file, through your hosting platform's secrets manager, or in a `.env` file. The server reads `.env` from its working directory at start-up; variables that are already set in the environment win over the file. Everything is read once, so changes take effect after a restart.
 
-:::tip Start small
+:::tip[Start small]
 You only need a handful of these to get going. A single-user home server runs on the defaults alone. Once you turn a login method on, add `BEEHIVE_SESSION_SECRET` and, for email/password login, the admin account. See the [Quick start](./quick-start.md) to be running in minutes.
 :::
 
@@ -225,7 +225,7 @@ BEEHIVE_OIDC_KEYCLOAK_CLIENT_ID=...
 BEEHIVE_OIDC_KEYCLOAK_CLIENT_SECRET=...
 ```
 
-:::tip Single-user, no login
+:::tip[Single-user, no login]
 For a personal self-hosted instance you can skip login entirely: leave `BEEHIVE_PASSWORD_AUTH` off (the selfhost default), `BEEHIVE_OIDC_PROVIDERS` empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. The app then runs in single-user mode with no sign-in step.
 :::
 

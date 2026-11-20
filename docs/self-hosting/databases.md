@@ -11,7 +11,7 @@ All three are tested on every change: SQLite, PostgreSQL 18 and MariaDB 13.0.2. 
 
 This page explains how to pick the right database for your situation and how to configure it correctly.
 
-:::note Where does the offline data live?
+:::note[Where does the offline data live?]
 The app on your phone or laptop keeps its own local SQLite-WASM database and works fully offline. The server database described here is the central copy that devices sync to in the background. They are separate stores; this page is only about the server.
 :::
 
@@ -35,7 +35,7 @@ The `selfhost` deployment profile defaults to SQLite, and the `cloud` profile de
 | Many users, heavy concurrent sync, or hosted/cloud deployment | **PostgreSQL** |
 | You already run MariaDB and want one fewer thing to operate | **MariaDB** |
 
-:::tip In short
+:::tip[In short]
 If in doubt, use SQLite. It needs no separate service, lives in a single file, and is perfectly capable of running a personal or family beehive. Move to PostgreSQL when you have genuine multi-user concurrency or want managed cloud hosting.
 :::
 
@@ -57,7 +57,7 @@ The two pragmas (separated with `&`):
 
 You can use a relative path (resolved against the server's working directory) or an absolute path such as `file:/var/lib/openbeehive/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)`.
 
-:::caution WAL creates extra files
+:::caution[WAL creates extra files]
 In WAL mode SQLite keeps companion files alongside the main database (`openbeehive.db-wal` and `openbeehive.db-shm`). When backing up by file copy, stop the server first, or use SQLite's own backup tooling, so you capture a consistent snapshot. See [Backups](./backups.md).
 :::
 
@@ -85,7 +85,7 @@ The `sslmode` parameter controls transport security:
 | `require` | Encrypt the connection (no certificate verification). |
 | `verify-full` | Encrypt and verify the server certificate and hostname. Strongest. |
 
-:::caution Production security
+:::caution[Production security]
 Use `sslmode=require` or stronger whenever the database talks to the server over a network you do not fully control. Reserve `sslmode=disable` for local-only connections.
 :::
 
@@ -129,7 +129,7 @@ The SQL is written portably so the same schema works across all three engines; t
 
 On MariaDB a migration that fails halfway cannot be rolled back, because MariaDB commits every schema change immediately. Restore the backup before you retry.
 
-:::tip Always back up before upgrading
+:::tip[Always back up before upgrading]
 Because a new release may include migrations that change the schema, take a backup before you upgrade. See [Upgrading](./upgrading.md) and [Backups](./backups.md).
 :::
 

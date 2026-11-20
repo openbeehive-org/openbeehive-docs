@@ -23,7 +23,7 @@ Erfasse jede Ernte, damit du im Winter sehen kannst, welche Beuten sich gelohnt 
 
 Du kannst pro Beute und Jahr mehr als eine Ernte erfassen, zum Beispiel eine Frühjahrs- und eine Sommertracht.
 
-:::tip Der Wassergehalt zählt
+:::tip[Der Wassergehalt zählt]
 Honig sollte generell unter etwa 18 % Wasser liegen, bevor er verkauft oder langfristig gelagert wird; über grob 20 % droht er zu gären. Den Wert hier zu erfassen lässt dich eine feuchte Charge erkennen, bevor sie verdirbt. Schwellenwerte und Kennzeichnungsvorschriften variieren je nach Land, prüfe also deine örtlichen Vorgaben.
 :::
 

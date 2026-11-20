@@ -20,7 +20,7 @@ Set, replace or correct the queen from the hive page. The form has:
 | Marking | The dot colour on her thorax. Follows the year automatically; untick **auto** to pick a colour by hand. |
 | Comment | Anything else: breeding line, behaviour, laying pattern, source breeder. |
 
-:::tip Recording origin honestly
+:::tip[Recording origin honestly]
 "Own breeding, daughter of #214" or "Bought from the local association, Buckfast" tells you far more in two years' time than "queen" ever will.
 :::
 
@@ -46,7 +46,7 @@ A colony has one reigning queen at a time, but over its life it will have many. 
 2. Records the new queen with her introduced date.
 3. Keeps the old queen under **Queen history** on the hive page, with her introduced and replaced dates.
 
-:::tip Requeening
+:::tip[Requeening]
 Note *why* you requeened in the new queen's comment: poor laying, defensive bees, age, planned line improvement. Patterns across several hives often reveal more than any single colony does.
 :::
 

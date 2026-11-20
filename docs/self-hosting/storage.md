@@ -53,7 +53,7 @@ mkdir -p /var/lib/openbeehive/blobs
 chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 ```
 
-:::caution Back it up
+:::caution[Back it up]
 The blob directory is **not** stored in your database. A database backup alone
 will not save your photos. A backup is the database plus `BEEHIVE_BLOB_DIR`, and the two are restored together. See
 [Backups](./backups.md).
@@ -96,7 +96,7 @@ BEEHIVE_MINIO_USE_SSL=true
 | `BEEHIVE_MINIO_BUCKET` | Bucket where blobs are stored |
 | `BEEHIVE_MINIO_USE_SSL` | `true` to connect over HTTPS, `false` for plain HTTP |
 
-:::tip Endpoint format
+:::tip[Endpoint format]
 Give `BEEHIVE_MINIO_ENDPOINT` as a host, optionally with a port, for example
 `minio.example.com` or `minio.example.com:9000`. Do not include `https://`.
 Control the scheme with `BEEHIVE_MINIO_USE_SSL` instead.
@@ -111,7 +111,7 @@ mc alias set local https://minio.example.com:9000 ACCESS_KEY SECRET_KEY
 mc mb local/openbeehive
 ```
 
-:::caution Keep the bucket private
+:::caution[Keep the bucket private]
 Blobs may contain identifying photos of your apiaries. Do not make the bucket
 publicly readable. Openbeehive serves images only to signed-in members of the
 workspace, so the object store needs no public access.
@@ -137,7 +137,7 @@ and secret keys, choose your bucket, and set `BEEHIVE_MINIO_USE_SSL=true`.
 | Backblaze B2 | `s3.<region>.backblazeb2.com` |
 | MinIO (self-host) | `minio.example.com:9000` |
 
-:::note Regions and addressing
+:::note[Regions and addressing]
 Some providers are sensitive to region settings or require path-style versus
 virtual-hosted addressing. If uploads fail with a provider other than MinIO,
 double-check the endpoint and that the bucket exists in the expected region.

@@ -9,7 +9,7 @@ La façon la plus simple d'exécuter Openbeehive sur votre propre machine est le
 
 Cette page vous guide pour compiler ce binaire à partir des sources et l'exécuter comme un service de longue durée.
 
-:::tip Pressé ?
+:::tip[Pressé ?]
 Si vous préférez récupérer une image de conteneur préconstruite, voir [Docker](./docker.md). Pour comparer d'abord les deux approches, commencez par la [présentation de l'auto-hébergement](/category/self-hosting).
 :::
 
@@ -52,7 +52,7 @@ BEEHIVE_SERVE_WEB=true
 # BEEHIVE_BLOB_DIR=./data/blobs
 ```
 
-:::note Aucune connexion par défaut
+:::note[Aucune connexion par défaut]
 Le profil selfhost n'active aucune méthode de connexion : `BEEHIVE_PASSWORD_AUTH` est désactivé, `BEEHIVE_OIDC_PROVIDERS` est vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. Toute personne pouvant atteindre le port dispose alors d'un accès complet, et le serveur ne répond qu'à `localhost`, aux adresses IP et à l'hôte de `BEEHIVE_PUBLIC_BASE_URL` (ajoutez d'autres noms avec `BEEHIVE_ALLOWED_HOSTS`). Lorsque vous voudrez des comptes, des passkeys ou un fournisseur, voir [Authentification](./authentication.md) ; toute méthode de connexion nécessite un `BEEHIVE_SESSION_SECRET` d'au moins 32 octets (`openssl rand -base64 32`).
 :::
 
@@ -92,7 +92,7 @@ Au premier démarrage, le serveur :
 
 Ouvrez `http://localhost:8080` dans votre navigateur. L'application se charge, construit sa base de données locale dans le navigateur, et vous êtes prêt à ajouter votre premier rucher.
 
-:::tip Le répertoire de travail compte
+:::tip[Le répertoire de travail compte]
 Les chemins relatifs comme `file:openbeehive.db` et `./data/blobs` sont résolus par rapport au répertoire depuis lequel le binaire est lancé, et non par rapport à l'emplacement du binaire, et `.env` est lu dans ce même répertoire. Choisissez délibérément un répertoire de travail : l'unité systemd ci-dessous le définit explicitement avec `WorkingDirectory`.
 :::
 
@@ -153,7 +153,7 @@ systemctl status openbeehive
 journalctl -u openbeehive -f
 ```
 
-:::caution Liaison au port 80 ou 443
+:::caution[Liaison au port 80 ou 443]
 L'exemple se lie à `:8080`, ce qu'un utilisateur non privilégié peut utiliser. N'exécutez pas le service en tant que root pour atteindre les ports 80/443 ; gardez plutôt Openbeehive sur `:8080` et placez un [reverse proxy](./reverse-proxy.md) (tel que Caddy ou nginx) devant lui pour gérer TLS et le port public.
 :::
 
@@ -176,7 +176,7 @@ Comme tout l'état tient dans des fichiers d'un seul répertoire, déplacer une 
 2. Copiez le binaire, `.env`, les fichiers de base de données et le répertoire `data/` sur la nouvelle machine, en préservant l'organisation.
 3. Démarrez le service sur le nouvel hôte : `sudo systemctl start openbeehive`.
 
-:::danger Arrêtez toujours le service d'abord
+:::danger[Arrêtez toujours le service d'abord]
 Copier `openbeehive.db` pendant que le serveur fonctionne peut capturer un instantané déchiré et incohérent. Arrêtez le service (ou utilisez une procédure de sauvegarde appropriée) avant de copier les fichiers de base de données.
 :::
 

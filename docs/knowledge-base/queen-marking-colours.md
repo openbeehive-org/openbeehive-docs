@@ -28,7 +28,7 @@ The colour is chosen by the **last digit of the year**. There are only five colo
 | 4 or 9 | Green | 2024, 2029, 2034 |
 | 5 or 0 | Blue | 2025, 2030, 2035 |
 
-:::tip The mnemonic
+:::tip[The mnemonic]
 A well-known rhyme keeps the order straight:
 
 **"W**ill **Y**ou **R**ear **G**ood **B**ees?**"** — **W**hite, **Y**ellow, **R**ed, **G**reen, **B**lue.
@@ -44,7 +44,7 @@ Say it is **2026**. The year ends in **6**, so this season's queens are marked *
 - A queen marked **green** dates from 2024 (or 2019). If she is from 2024 she is heading into her third year; keep an eye on her laying pattern and consider re-queening.
 - An unexpectedly **red** queen in a 2026 colony almost certainly means a supersedure or a swarm you did not catch.
 
-:::note Five-year ambiguity
+:::note[Five-year ambiguity]
 Because the cycle repeats every five years, the colour alone cannot tell a 2021 white queen from a 2026 white queen. In practice this is rarely a problem — queens seldom live that long — but it is another good reason to keep written records in Openbeehive alongside the dot of paint.
 :::
 
@@ -57,7 +57,7 @@ A few practical pointers:
 - Apply a small dot to the **top of the thorax**, between the wing bases. Let it dry fully before releasing her.
 - Mark on a calm, warm day, and return her to her own colony promptly.
 
-:::caution Handle with care
+:::caution[Handle with care]
 A clumsily marked or damaged queen may be rejected or "balled" by the colony. If you are new to this, practise on drones first — they cannot sting, and it costs nothing if you get it wrong.
 :::
 
@@ -71,6 +71,6 @@ You can also note the actual mark you applied, her origin, and her status, then 
 
 See [Queens](../using-the-app/queens.md) for how to add and manage queens, and the wider [knowledge base](/category/knowledge-base) for more reference material.
 
-:::tip Regional note
+:::tip[Regional note]
 The five-colour, five-year scheme is the international standard used across most of the world. Conventions for clipping, supplier colour shades, and any record-keeping requirements can vary by country and association — when in doubt, follow your local beekeeping body's guidance.
 :::

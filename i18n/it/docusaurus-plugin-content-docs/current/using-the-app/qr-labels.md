@@ -28,7 +28,7 @@ Una volta installata l'app, il link apre l'arnia dal tuo database locale, quindi
 3. Tocca **Stampa**. Un'etichetta pulita si apre in una nuova finestra e segue la finestra di stampa. **SVG** scarica invece il codice come file, per i tuoi layout di etichette.
 4. Stampa su un foglio di etichette o su carta semplice e fissala all'arnia.
 
-:::tip Falla durare all'aperto
+:::tip[Falla durare all'aperto]
 Stampa su supporti di etichette resistenti alle intemperie o in vinile, oppure copri un'etichetta di carta con nastro da imballaggio trasparente o una pouch plastificante. Posizionala dove i melari sollevati e rimessi non la raschino: il lato del nido o sotto il bordo del coperchio.
 :::
 
@@ -45,7 +45,7 @@ Stampa su supporti di etichette resistenti alle intemperie o in vinile, oppure c
 
 La maggior parte dei telefoni riconosce i codici QR nell'app fotocamera integrata. Punta la fotocamera verso l'etichetta, tocca il link che compare e Openbeehive si apre sull'arnia nel browser. Funziona per chiunque abbia accesso, senza aprire prima l'app.
 
-:::caution Se hai installato l'app, scansiona al suo interno
+:::caution[Se hai installato l'app, scansiona al suo interno]
 La fotocamera del telefono apre il link nel browser, e il browser conserva dati propri, separati dall'app installata: lì potresti dover accedere di nuovo e attendere un download. Se usi l'app installata, aprila dalla schermata Home e usa **Scansiona**.
 :::
 

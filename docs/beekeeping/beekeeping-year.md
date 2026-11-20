@@ -9,7 +9,7 @@ Beekeeping follows the seasons. The colony grows, peaks, contracts and rests in 
 
 This page is a season-by-season guide. Treat the months as a rough map, not a timetable, and adjust everything to your own conditions.
 
-:::note Hemisphere and climate vary
+:::note[Hemisphere and climate vary]
 Calendar months below assume the Northern Hemisphere. In the Southern Hemisphere, shift everything by roughly six months (spring is September to November). Either way, your local climate matters more than the date: a warm coastal site runs weeks ahead of a cold upland one. Watch the bees and the forage, not the calendar.
 :::
 
@@ -37,7 +37,7 @@ What to do:
 - Apply your chosen swarm-control method if cells appear (see [Swarming](./swarming.md)).
 - Consider raising new queens or making increase from strong stock (see [Queen rearing](./queen-rearing.md)).
 
-:::tip Use tasks to stay on rhythm
+:::tip[Use tasks to stay on rhythm]
 The seven-day cycle is easy to lose track of across several hives. Add a task with a due date for the next visit, and when you tick it off, add the next one. See [Tasks](../using-the-app/tasks.md).
 :::
 
@@ -64,7 +64,7 @@ What to do:
 - Use an approved treatment for your region and follow the label exactly.
 - Once treatment allows, feed to top up winter stores if the colony is light. Feed concentrated syrup in good time so the bees can ripen and cap it before it turns cold.
 
-:::caution Treatment rules vary by country
+:::caution[Treatment rules vary by country]
 Approved varroa treatments, dose rates and timing differ between regions, and some have legal requirements. Always use a product licensed where you live and follow national guidance. See [Varroa](./varroa.md) for an overview, but check local rules.
 :::
 
@@ -96,7 +96,7 @@ What to do:
 - Keep entrances clear of dead bees, snow and debris.
 - Use the quiet months to maintain equipment, read, and review your records for the year just gone.
 
-:::tip Review and plan
+:::tip[Review and plan]
 Winter is the perfect time to look back. Reviewing each hive's inspections, harvests and treatments shows which colonies thrived and what to change. Carry the lessons into next spring's plan.
 :::
 

@@ -7,7 +7,7 @@ title: "Mise à niveau"
 
 Les mises à niveau sont simples : remplacez le binaire ou récupérez une nouvelle image, redémarrez, et le serveur met le schéma de la base de données à jour de lui-même.
 
-:::caution Sauvegardez d'abord, à chaque fois
+:::caution[Sauvegardez d'abord, à chaque fois]
 Faites une sauvegarde avant de mettre à niveau. Voir [Sauvegardes](./backups.md).
 :::
 
@@ -154,7 +154,7 @@ Openbeehive suit le [versionnage sémantique](https://semver.org) : `MAJOR.MINOR
 | MINOR | Nouvelles fonctionnalités, rétrocompatibles |
 | PATCH | Corrections de bugs et correctifs de sécurité, rétrocompatibles |
 
-:::caution La 0.x est un logiciel jeune
+:::caution[La 0.x est un logiciel jeune]
 Tant qu'Openbeehive est dans la série `0.x`, les versions mineures peuvent inclure des changements qui nécessitent des étapes manuelles ou qui ne sont pas entièrement rétrocompatibles. Lisez les notes de version pour chaque mise à niveau, et gardez vos sauvegardes à portée de main.
 :::
 

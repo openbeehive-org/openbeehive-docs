@@ -102,7 +102,7 @@ Ogni alveare può portare un'etichetta QR stampabile che rimanda direttamente a 
 - **Usa HTTPS.** I browser consentono l'accesso alla fotocamera solo su origini sicure. L'app ospitata viene servita tramite HTTPS; chi ospita autonomamente deve servire tramite HTTPS anche (oppure `localhost` per i test). Vedi [Reverse proxy](../self-hosting/reverse-proxy.md).
 - **Verifica che non sia in uso.** Chiudi altre app o schede che potrebbero tenere occupata la fotocamera.
 
-:::tip Niente fotocamera, o un'etichetta consumata
+:::tip[Niente fotocamera, o un'etichetta consumata]
 Lo scanner integrato nell'app funziona in tutti i browser attuali, compresi Safari su iPhone e iPad e Firefox. Se la fotocamera non può essere usata o l'etichetta è difficile da leggere, digita i sei caratteri stampati sotto il codice QR in **Codice dell'etichetta** nella schermata Scansiona. Se usi l'app installata, scansiona al suo interno anziché con l'app fotocamera del telefono, che apre il link nel browser con i suoi dati separati.
 :::
 

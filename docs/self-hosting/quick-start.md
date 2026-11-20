@@ -12,7 +12,7 @@ Two routes to a running Openbeehive instance you can open in a browser:
 
 Both use the **selfhost** deployment profile: an embedded SQLite database and files on the local disk. For several users on PostgreSQL and MinIO/S3, see [Docker & Compose](./docker.md#several-users).
 
-:::caution No login out of the box
+:::caution[No login out of the box]
 In the selfhost profile no login method is enabled by default, so the app opens straight to your records and **whoever can reach the port has full access**. That is fine on your own computer. For that reason the examples publish the port on `127.0.0.1` only, and a server without login answers only to `localhost`, IP addresses and the host of `BEEHIVE_PUBLIC_BASE_URL`. Before you open it to other devices or people, [turn login on](#turn-login-on).
 :::
 
@@ -76,7 +76,7 @@ auth: NO LOGIN (single-user mode): every request has full access to all data
 auth: accepting requests for hosts: localhost, IP addresses (add names with BEEHIVE_ALLOWED_HOSTS)
 ```
 
-:::note Where your data lives
+:::note[Where your data lives]
 In selfhost mode your records go into a SQLite file (`openbeehive.db` in the working directory by default) and uploaded files into a blob directory (`./data/blobs` by default). Back up both and you have backed up everything; see [Backups](./backups.md).
 :::
 

@@ -7,7 +7,7 @@ title: "Backups & restore"
 
 A few minutes spent setting up backups now will save you a great deal of worry later. This page covers what to back up, how to do it safely, and how to restore when you need to.
 
-:::tip The server is the source of truth
+:::tip[The server is the source of truth]
 Every device that uses your instance keeps a local copy of its data in the browser. That copy is a convenience, not a backup: it can be wiped by clearing site data, reinstalling, or losing the device.
 
 For anything shared across people or devices, the **server** is the authoritative copy. Back up the server, and you protect everyone's records at once.
@@ -29,7 +29,7 @@ Which database and blob store you have depends on your deployment profile:
 
 Back up **both** the database and the blobs. The database holds your apiaries, hives, queens, inspections, events and the photo records with their thumbnails; the blob store holds the full-size images. A database backup without its blobs leaves photos that show only their thumbnail.
 
-:::tip Database first, then blobs
+:::tip[Database first, then blobs]
 When you back up while the server runs, copy the database first and the blobs right after. Images are written once and never changed, so a blob copy taken later contains every image the database copy knows. Extra images that the restored database does not know are removed by the server's [upkeep](./storage.md#upkeep).
 :::
 
@@ -40,7 +40,7 @@ SQLite stores your data in one file (for example `openbeehive.db`) plus two comp
 - `openbeehive.db-wal` — recent changes not yet folded into the main file
 - `openbeehive.db-shm` — shared-memory index for the WAL
 
-:::caution Do not copy the `.db` file on its own while the server is running
+:::caution[Do not copy the `.db` file on its own while the server is running]
 With WAL enabled (the recommended setting), the newest data may still be in the `-wal` file. A plain `cp openbeehive.db backup.db` of a running database can produce an inconsistent or stale copy.
 :::
 
@@ -164,6 +164,6 @@ The `%` characters must be escaped as `\%` inside crontab. For Postgres, swap th
 
 **Settings → Data & backup** in the app downloads a workspace as JSON, or as a ZIP with photos; the server copy is also available at `GET /export` (see [Import & export](../using-the-app/import-export.md)). Such an export is useful for moving one workspace or keeping your own copy, but it holds one workspace only, without accounts, members or API keys. For a whole instance, back up the database and the blobs as described above.
 
-:::tip Test your restores
+:::tip[Test your restores]
 A backup you have never restored is only a hope. Every so often, restore into a throwaway directory or test instance and confirm you can open the app and see your hives. Keep at least a few days of dated copies, and store one off-site (an external drive or remote bucket).
 :::

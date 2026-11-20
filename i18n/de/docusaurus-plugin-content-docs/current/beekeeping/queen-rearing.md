@@ -14,7 +14,7 @@ schließlich eigene heranzuziehen zu lernen ist einer der lohnendsten Teile der 
 Diese Seite stellt die Rolle der Königin vor, wie man eine schwächelnde oder verlorene Königin erkennt, wie man
 umweiselt, und einen sanften Einstieg in das eigene Heranziehen von Königinnen.
 
-:::tip Erfasse alles in der App
+:::tip[Erfasse alles in der App]
 Verfolge Herkunft, Alter, Markierungsfarbe und Notizen jeder Königin auf der
 [Königinnen-Seite](../using-the-app/queens.md). Eine genaue Aufzeichnung, wann eine Königin
 eingeweiselt wurde, ist das Nützlichste, um ihre Leistung später zu beurteilen.
@@ -48,7 +48,7 @@ routinemäßigen Durchsichten auf diese Muster.
 | Ein „Brausen" oder ein unruhiges, aufgeregtes Volk | Kürzlich verlorene Königin |
 | Weiselzellen auf der Wabenfläche | Umweiselung (das Volk ersetzt sie) |
 
-:::caution Bestätige, bevor du handelst
+:::caution[Bestätige, bevor du handelst]
 Eine kurze Pause im Legen kann normal sein — zum Beispiel direkt nach einem Schwarm oder während
 eine neue Königin begattet wird. Bevor du ein Volk für weisellos erklärst, suche nach
 Eiern und sehr jungen Larven und erwäge, in ein paar Tagen erneut nachzusehen.
@@ -75,7 +75,7 @@ Volk schlecht gelaunt oder unproduktiv ist oder einfach nach einem geplanten Zei
 5. **Prüfe die Annahme.** Bestätige nach etwa einer Woche, dass sie legt. Vermeide es,
    das Volk in der Zwischenzeit zu stören — grobe Durchsichten verursachen Ablehnung.
 
-:::note Das Einweiseln ist der riskante Teil
+:::note[Das Einweiseln ist der riskante Teil]
 Völker lehnen eine neue Königin manchmal ab, besonders wenn sie bereits Weiselzellen,
 legende Arbeiterinnen haben oder lange weisellos waren. Entferne alle Weiselzellen
 vor dem Einweiseln und sei geduldig.

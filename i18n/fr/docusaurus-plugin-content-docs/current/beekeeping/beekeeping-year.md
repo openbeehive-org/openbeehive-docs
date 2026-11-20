@@ -9,7 +9,7 @@ L'apiculture suit les saisons. La colonie croît, atteint son apogée, se contra
 
 Cette page est un guide saison par saison. Considérez les mois comme une carte approximative, et non comme un calendrier, et adaptez tout à vos propres conditions.
 
-:::note L'hémisphère et le climat varient
+:::note[L'hémisphère et le climat varient]
 Les mois du calendrier ci-dessous supposent l'hémisphère nord. Dans l'hémisphère sud, décalez tout d'environ six mois (le printemps va de septembre à novembre). Quoi qu'il en soit, votre climat local compte plus que la date : un site côtier chaud a des semaines d'avance sur un site de montagne froid. Observez les abeilles et le butin, pas le calendrier.
 :::
 
@@ -37,7 +37,7 @@ Que faire :
 - Appliquez la méthode de contrôle de l'essaimage que vous avez choisie si des cellules apparaissent (consultez [Essaimage](./swarming.md)).
 - Envisagez d'élever de nouvelles reines ou de faire des divisions à partir d'un cheptel fort (consultez [Élevage de reines](./queen-rearing.md)).
 
-:::tip Utilisez les tâches pour garder le rythme
+:::tip[Utilisez les tâches pour garder le rythme]
 Le cycle de sept jours est facile à perdre de vue lorsqu'on a plusieurs ruches. Ajoutez une tâche avec une date d'échéance pour la prochaine visite et, lorsque vous la cochez, ajoutez la suivante. Consultez [Tâches](../using-the-app/tasks.md).
 :::
 
@@ -64,7 +64,7 @@ Que faire :
 - Utilisez un traitement homologué pour votre région et suivez exactement l'étiquette.
 - Une fois que le traitement le permet, nourrissez pour compléter les réserves d'hiver si la colonie est légère. Donnez un sirop concentré suffisamment tôt pour que les abeilles puissent le faire mûrir et l'operculer avant le froid.
 
-:::caution Les règles de traitement varient selon le pays
+:::caution[Les règles de traitement varient selon le pays]
 Les traitements homologués contre le varroa, les doses et le calendrier diffèrent selon les régions, et certains comportent des obligations légales. Utilisez toujours un produit autorisé là où vous vivez et suivez les recommandations nationales. Consultez [Varroa](./varroa.md) pour un aperçu, mais vérifiez les règles locales.
 :::
 
@@ -96,7 +96,7 @@ Que faire :
 - Gardez les entrées dégagées des abeilles mortes, de la neige et des débris.
 - Profitez des mois calmes pour entretenir le matériel, lire, et passer en revue vos registres de l'année écoulée.
 
-:::tip Faire le bilan et planifier
+:::tip[Faire le bilan et planifier]
 L'hiver est le moment idéal pour regarder en arrière. Passer en revue les visites, les récoltes et les traitements de chaque ruche montre quelles colonies ont prospéré et ce qu'il faut changer. Tirez les leçons dans votre plan du printemps suivant.
 :::
 

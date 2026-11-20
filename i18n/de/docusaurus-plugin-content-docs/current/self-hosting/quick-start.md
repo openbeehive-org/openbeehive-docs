@@ -12,7 +12,7 @@ Zwei Wege zu einer laufenden Openbeehive-Instanz, die du im Browser öffnen kann
 
 Beide verwenden das Bereitstellungsprofil **selfhost**: eine eingebettete SQLite-Datenbank und Dateien auf der lokalen Festplatte. Für mehrere Nutzer mit PostgreSQL und MinIO/S3 siehe [Docker & Compose](./docker.md#several-users).
 
-:::caution Von Haus aus keine Anmeldung
+:::caution[Von Haus aus keine Anmeldung]
 Im selfhost-Profil ist standardmäßig keine Anmeldemethode aktiviert, die App öffnet also direkt deine Aufzeichnungen, und **wer den Port erreichen kann, hat vollen Zugriff**. Auf deinem eigenen Rechner ist das in Ordnung. Deshalb veröffentlichen die Beispiele den Port nur auf `127.0.0.1`, und ein Server ohne Anmeldung antwortet nur auf `localhost`, IP-Adressen und den Host aus `BEEHIVE_PUBLIC_BASE_URL`. Bevor du ihn für andere Geräte oder Personen öffnest, [schalte die Anmeldung ein](#turn-login-on).
 :::
 
@@ -76,7 +76,7 @@ auth: NO LOGIN (single-user mode): every request has full access to all data
 auth: accepting requests for hosts: localhost, IP addresses (add names with BEEHIVE_ALLOWED_HOSTS)
 ```
 
-:::note Wo deine Daten liegen
+:::note[Wo deine Daten liegen]
 Im selfhost-Modus landen deine Aufzeichnungen in einer SQLite-Datei (standardmäßig `openbeehive.db` im Arbeitsverzeichnis) und hochgeladene Dateien in einem Blob-Verzeichnis (standardmäßig `./data/blobs`). Sichere beides und du hast alles gesichert; siehe [Backups](./backups.md).
 :::
 

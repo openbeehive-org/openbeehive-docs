@@ -7,7 +7,7 @@ title: "Copias de seguridad y restauración"
 
 Unos pocos minutos dedicados ahora a configurar las copias de seguridad te ahorrarán muchas preocupaciones más adelante. Esta página cubre qué respaldar, cómo hacerlo de forma segura y cómo restaurar cuando lo necesites.
 
-:::tip El servidor es la fuente de verdad
+:::tip[El servidor es la fuente de verdad]
 Cada dispositivo que usa tu instancia mantiene una copia local de sus datos en el navegador. Esa copia es una comodidad, no una copia de seguridad: puede borrarse al limpiar los datos del sitio, reinstalar o perder el dispositivo.
 
 Para todo lo que se comparte entre personas o dispositivos, el **servidor** es la copia autorizada. Haz copia de seguridad del servidor y protegerás los registros de todos a la vez.
@@ -29,7 +29,7 @@ Qué base de datos y almacén de blobs tengas depende de tu perfil de despliegue
 
 Haz copia de seguridad de **ambos**, la base de datos y los blobs. La base de datos contiene tus colmenares, colmenas, reinas, inspecciones, eventos y los registros de fotos con sus miniaturas; el almacén de blobs contiene las imágenes a tamaño completo. Una copia de seguridad de la base de datos sin sus blobs deja fotos que solo muestran su miniatura.
 
-:::tip Primero la base de datos, después los blobs
+:::tip[Primero la base de datos, después los blobs]
 Si haces la copia mientras el servidor está en ejecución, copia primero la base de datos y justo después los blobs. Las imágenes se escriben una vez y nunca cambian, así que una copia de los blobs hecha después contiene todas las imágenes que conoce la copia de la base de datos. Las imágenes sobrantes que la base de datos restaurada no conoce las elimina el [mantenimiento](./storage.md#upkeep) del servidor.
 :::
 
@@ -40,7 +40,7 @@ SQLite almacena tus datos en un archivo (por ejemplo `openbeehive.db`) más dos 
 - `openbeehive.db-wal` — cambios recientes aún no incorporados al archivo principal
 - `openbeehive.db-shm` — índice de memoria compartida para el WAL
 
-:::caution No copies el archivo `.db` por sí solo mientras el servidor está en ejecución
+:::caution[No copies el archivo `.db` por sí solo mientras el servidor está en ejecución]
 Con WAL habilitado (el ajuste recomendado), los datos más nuevos pueden estar todavía en el archivo `-wal`. Un simple `cp openbeehive.db backup.db` de una base de datos en ejecución puede producir una copia inconsistente o desactualizada.
 :::
 
@@ -164,6 +164,6 @@ Los caracteres `%` deben escaparse como `\%` dentro de crontab. Para Postgres, s
 
 **Ajustes → Datos y copia de seguridad** en la aplicación descarga un espacio como JSON, o como ZIP con fotos; la copia del servidor también está disponible en `GET /export` (consulta [Importar y exportar](../using-the-app/import-export.md)). Una exportación así sirve para trasladar un espacio o guardar tu propia copia, pero contiene un solo espacio, sin cuentas, miembros ni claves API. Para una instancia completa, haz copia de seguridad de la base de datos y de los blobs como se describe arriba.
 
-:::tip Prueba tus restauraciones
+:::tip[Prueba tus restauraciones]
 Una copia de seguridad que nunca has restaurado es solo una esperanza. De vez en cuando, restaura en un directorio desechable o una instancia de prueba y confirma que puedes abrir la aplicación y ver tus colmenas. Conserva al menos unos días de copias fechadas y guarda una fuera del sitio (un disco externo o un bucket remoto).
 :::

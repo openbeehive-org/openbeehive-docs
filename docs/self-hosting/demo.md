@@ -9,7 +9,7 @@ Demo mode installs a ready-made **demo account and workspace** so visitors can t
 Openbeehive with realistic data, without touching anyone's real records. It's
 **off by default** and meant for public showcases and testing.
 
-:::note Looking for the public demo?
+:::note[Looking for the public demo?]
 The project's own demo is the **Try the demo** button on
 [app.openbeehive.org/login](https://app.openbeehive.org/login). There is no
 separate demo site. This page is about switching the demo on for your own

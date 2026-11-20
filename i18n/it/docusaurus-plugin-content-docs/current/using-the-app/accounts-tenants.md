@@ -38,7 +38,7 @@ La password dell'admin dell'istanza è impostata nella configurazione del server
 
 **Esci ovunque** ti disconnette da tutti gli altri tuoi dispositivi, per esempio dopo aver perso un telefono. Su questo resti connesso, e le chiavi API continuano a funzionare.
 
-:::note Chi è l'admin
+:::note[Chi è l'admin]
 L'admin dell'istanza non è la prima persona che si registra. Su un'istanza self-hosted è l'account che l'operatore configura con `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD` (vedi [Autenticazione](../self-hosting/authentication.md)); sul servizio in hosting è l'operatore. La registrazione non concede mai quel ruolo.
 :::
 

@@ -38,7 +38,7 @@ The instance admin's password is set in the server configuration and cannot be c
 
 **Log out everywhere** signs you out on all your other devices, for example after losing a phone. You stay signed in on this one, and API keys keep working.
 
-:::note Who is the admin
+:::note[Who is the admin]
 The instance admin is not the first person to sign up. On a self-hosted instance it is the account the operator configures with `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` (see [Authentication](../self-hosting/authentication.md)); on the hosted service it is the operator. Sign-up never grants that role.
 :::
 

@@ -27,7 +27,7 @@ La reina no es una gobernante. No dirige la colonia; en cambio, la mantiene unid
 
 Una reina se aparea una sola vez en su vida, durante unos pocos días al principio, almacenando esperma para el resto de sus años. En Openbeehive puedes registrar cada reina, su color de marcaje y su año, y su origen. Consulta [Reinas](../using-the-app/queens.md).
 
-:::tip Marcaje de la reina
+:::tip[Marcaje de la reina]
 Las reinas suelen marcarse con un punto de color siguiendo el esquema internacional de colores, que registra el año en que nació. Consulta [Colores de marcaje de reinas](../knowledge-base/queen-marking-colours.md).
 :::
 
@@ -93,10 +93,10 @@ En climas fríos la colonia no hiberna ni calienta toda la colmena. En cambio, l
 
 El racimo funciona enteramente con la miel almacenada, comiéndose poco a poco hacia arriba a través de los panales a lo largo de los meses. Dos cosas deciden si sobrevive: **suficientes reservas** en el lugar adecuado y una población de abejas de invierno sanas. Por eso importan tanto la alimentación de otoño y el control de la varroa.
 
-:::caution Las pérdidas invernales son reales
+:::caution[Las pérdidas invernales son reales]
 Incluso colonias de aspecto sano pueden morir durante el invierno por inanición, enfermedad o una fuerte carga de ácaros al entrar en otoño. Llegar al invierno fuertes y sanas es mucho más importante que cualquier intervención a mitad de invierno. Consulta [Varroa](./varroa.md) y [Alimentación](./feeding.md).
 :::
 
-:::note Variación regional
+:::note[Variación regional]
 El comportamiento de la colonia varía con el clima y la subespecie. El ciclo anterior describe una colonia de clima templado; en regiones más cálidas la cría puede no detenerse nunca del todo, y los tiempos cambian en consecuencia. Calibra siempre según tu propia ubicación y tus mentores locales.
 :::

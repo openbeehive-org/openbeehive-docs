@@ -9,7 +9,7 @@ The simplest way to run Openbeehive on your own machine is the **single binary**
 
 This page walks you through building that binary from source and running it as a long-lived service.
 
-:::tip In a hurry?
+:::tip[In a hurry?]
 If you would rather pull a prebuilt container image, see [Docker](./docker.md). To compare both approaches first, start at the [self-hosting overview](/category/self-hosting).
 :::
 
@@ -52,7 +52,7 @@ BEEHIVE_SERVE_WEB=true
 # BEEHIVE_BLOB_DIR=./data/blobs
 ```
 
-:::note No login by default
+:::note[No login by default]
 The selfhost profile enables no login method: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. Everyone who can reach the port then has full access, and the server answers only to `localhost`, IP addresses and the host of `BEEHIVE_PUBLIC_BASE_URL` (add further names with `BEEHIVE_ALLOWED_HOSTS`). When you want accounts, passkeys or a provider, see [Authentication](./authentication.md); any login method needs a `BEEHIVE_SESSION_SECRET` of at least 32 bytes (`openssl rand -base64 32`).
 :::
 
@@ -92,7 +92,7 @@ On first start the server:
 
 Open `http://localhost:8080` in your browser. The app loads, builds its local database in the browser, and you are ready to add your first apiary.
 
-:::tip Working directory matters
+:::tip[Working directory matters]
 Relative paths like `file:openbeehive.db` and `./data/blobs` are resolved against the directory the binary is launched from, not where the binary lives, and `.env` is read from that same directory. Pick a working directory deliberately - the systemd unit below sets it explicitly with `WorkingDirectory`.
 :::
 
@@ -153,7 +153,7 @@ systemctl status openbeehive
 journalctl -u openbeehive -f
 ```
 
-:::caution Binding to port 80 or 443
+:::caution[Binding to port 80 or 443]
 The example binds to `:8080`, which an unprivileged user can use. Do not run the service as root to reach ports 80/443 - instead keep Openbeehive on `:8080` and put a [reverse proxy](./reverse-proxy.md) (such as Caddy or nginx) in front of it to handle TLS and the public port.
 :::
 
@@ -176,7 +176,7 @@ Because all state is files in one directory, relocating an instance is mostly a 
 2. Copy the binary, `.env`, the database files, and the `data/` directory to the new machine, preserving the layout.
 3. Start the service on the new host: `sudo systemctl start openbeehive`.
 
-:::danger Always stop the service first
+:::danger[Always stop the service first]
 Copying `openbeehive.db` while the server is running can capture a torn, inconsistent snapshot. Stop the service (or use a proper backup procedure) before copying database files.
 :::
 

@@ -38,7 +38,7 @@ Le mot de passe de l'administrateur de l'instance est défini dans la configurat
 
 **Se déconnecter partout** vous déconnecte de tous vos autres appareils, par exemple après la perte d'un téléphone. Vous restez connecté sur celui-ci, et les clés API continuent de fonctionner.
 
-:::note Qui est l'administrateur
+:::note[Qui est l'administrateur]
 L'administrateur de l'instance n'est pas la première personne à s'inscrire. Sur une instance auto-hébergée, c'est le compte que l'opérateur configure avec `BEEHIVE_ADMIN_EMAIL` et `BEEHIVE_ADMIN_PASSWORD` (voir [Authentification](../self-hosting/authentication.md)) ; sur le service hébergé, c'est l'opérateur. L'inscription n'accorde jamais ce rôle.
 :::
 

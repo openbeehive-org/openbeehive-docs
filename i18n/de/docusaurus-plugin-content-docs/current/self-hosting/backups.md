@@ -7,7 +7,7 @@ title: "Backups & Wiederherstellung"
 
 Ein paar Minuten, die du jetzt in die Einrichtung von Backups investierst, ersparen dir später viel Sorge. Diese Seite behandelt, was zu sichern ist, wie man es sicher macht und wie man bei Bedarf wiederherstellt.
 
-:::tip Der Server ist die Quelle der Wahrheit
+:::tip[Der Server ist die Quelle der Wahrheit]
 Jedes Gerät, das deine Instanz nutzt, hält eine lokale Kopie seiner Daten im Browser. Diese Kopie ist eine Bequemlichkeit, kein Backup: Sie kann durch das Löschen von Website-Daten, eine Neuinstallation oder den Verlust des Geräts gelöscht werden.
 
 Für alles, was über Personen oder Geräte hinweg geteilt wird, ist der **Server** die maßgebliche Kopie. Sichere den Server und du schützt die Aufzeichnungen aller auf einmal.
@@ -29,7 +29,7 @@ Welche Datenbank und welchen Blob-Speicher du hast, hängt von deinem Bereitstel
 
 Sichere **sowohl** die Datenbank als auch die Blobs. Die Datenbank enthält deine Bienenstände, Bienenstöcke, Königinnen, Durchsichten, Ereignisse und die Foto-Einträge mit ihren Vorschaubildern; der Blob-Speicher enthält die Bilder in voller Größe. Nach einem Datenbank-Backup ohne seine Blobs zeigen Fotos nur noch ihr Vorschaubild.
 
-:::tip Erst die Datenbank, dann die Blobs
+:::tip[Erst die Datenbank, dann die Blobs]
 Wenn du sicherst, während der Server läuft, kopiere zuerst die Datenbank und gleich danach die Blobs. Bilder werden einmal geschrieben und nie verändert, daher enthält eine später erstellte Blob-Kopie jedes Bild, das die Datenbank-Kopie kennt. Zusätzliche Bilder, die die wiederhergestellte Datenbank nicht kennt, entfernt die [Pflege](./storage.md#upkeep) des Servers.
 :::
 
@@ -40,7 +40,7 @@ SQLite speichert deine Daten in einer Datei (zum Beispiel `openbeehive.db`) plus
 - `openbeehive.db-wal` — kürzliche Änderungen, die noch nicht in die Hauptdatei eingearbeitet sind
 - `openbeehive.db-shm` — Shared-Memory-Index für das WAL
 
-:::caution Kopiere die `.db`-Datei nicht allein, während der Server läuft
+:::caution[Kopiere die `.db`-Datei nicht allein, während der Server läuft]
 Mit aktiviertem WAL (die empfohlene Einstellung) können die neuesten Daten noch in der `-wal`-Datei liegen. Ein einfaches `cp openbeehive.db backup.db` einer laufenden Datenbank kann eine inkonsistente oder veraltete Kopie erzeugen.
 :::
 
@@ -164,6 +164,6 @@ Die `%`-Zeichen müssen innerhalb der Crontab als `\%` maskiert werden. Für Pos
 
 **Einstellungen → Daten & Backup** in der App lädt einen Arbeitsbereich als JSON herunter oder als ZIP mit Fotos; die Kopie des Servers gibt es auch unter `GET /export` (siehe [Import & Export](../using-the-app/import-export.md)). Ein solcher Export eignet sich, um einen Arbeitsbereich umzuziehen oder eine eigene Kopie zu behalten, enthält aber nur einen Arbeitsbereich, ohne Konten, Mitglieder oder API-Schlüssel. Für eine ganze Instanz sichere die Datenbank und die Blobs wie oben beschrieben.
 
-:::tip Teste deine Wiederherstellungen
+:::tip[Teste deine Wiederherstellungen]
 Ein Backup, das du nie wiederhergestellt hast, ist nur eine Hoffnung. Stelle hin und wieder in ein Wegwerf-Verzeichnis oder eine Test-Instanz wieder her und bestätige, dass du die App öffnen und deine Bienenstöcke sehen kannst. Behalte mindestens ein paar Tage datierter Kopien und bewahre eine außer Haus auf (eine externe Festplatte oder ein entfernter Bucket).
 :::

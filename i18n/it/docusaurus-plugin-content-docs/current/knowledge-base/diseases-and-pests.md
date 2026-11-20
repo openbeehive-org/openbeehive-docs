@@ -9,7 +9,7 @@ Le colonie sane respingono da sole la maggior parte dei problemi. Il tuo compito
 
 Questa pagina è un rapido riferimento sul campo alle malattie e ai parassiti che con maggiore probabilità incontrerai. Per ciascuno troverai i segni tipici e l'approccio generale alla gestione.
 
-:::danger Questa è un'informazione generale, non una diagnosi
+:::danger[Questa è un'informazione generale, non una diagnosi]
 Diverse delle condizioni elencate qui sotto sono **soggette a notifica obbligatoria** in molti paesi, il che significa che sei legalmente tenuto a segnalare un caso sospetto alla tua autorità nazionale di sanità apistica. La diagnosi può essere difficile e diverse condizioni si assomigliano. Se sospetti una malattia grave o soggetta a notifica, **fermati, non spostare api o attrezzatura, e contatta immediatamente il tuo ispettore apistico locale o l'autorità veterinaria.** Segui le loro istruzioni; hanno la precedenza su qualsiasi cosa scritta qui.
 :::
 
@@ -35,7 +35,7 @@ Una grave malattia batterica della covata causata da *Paenibacillus larvae*. Le 
 
 **Gestione:** **l'AFB è soggetta a notifica obbligatoria nella maggior parte dei paesi.** Non esiste una cura sicura per l'hobbista; il trattamento è di solito la distruzione della colonia e dell'attrezzatura contaminata mediante combustione, sotto la supervisione del tuo ispettore apistico. Non tentare di trattarla da solo né di spostare alveari sospetti.
 
-:::danger Soggetta a notifica
+:::danger[Soggetta a notifica]
 Se sospetti l'AFB, chiudi l'alveare, lascialo dov'è e segnalalo subito alla tua autorità di sanità apistica.
 :::
 
@@ -104,6 +104,6 @@ Molte malattie e parassiti si diffondono tra le colonie attraverso il saccheggio
 - pulendo le leve da apicoltore tra una colonia e l'altra;
 - distanziando e orientando gli alveari per limitare la deriva.
 
-:::tip Conosci le tue norme regionali
+:::tip[Conosci le tue norme regionali]
 Lo stato sanitario, quali condizioni sono soggette a notifica e quali trattamenti sono legali variano tutti per paese e talvolta per regione. Iscriviti al tuo programma nazionale di sanità apistica se ne esiste uno, e impara a conoscere la tua associazione locale e il tuo ispettore apistico prima di averne bisogno.
 :::

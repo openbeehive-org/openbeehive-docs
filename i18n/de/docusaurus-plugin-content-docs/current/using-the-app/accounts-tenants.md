@@ -38,7 +38,7 @@ Das Passwort des Instanz-Administrators steht in der Serverkonfiguration und lä
 
 **Überall abmelden** meldet dich auf allen deinen anderen Geräten ab, zum Beispiel nachdem du ein Handy verloren hast. Auf diesem Gerät bleibst du angemeldet, und API-Schlüssel funktionieren weiter.
 
-:::note Wer der Admin ist
+:::note[Wer der Admin ist]
 Der Instanz-Administrator ist nicht die erste Person, die sich registriert. Auf einer selbst gehosteten Instanz ist es das Konto, das der Betreiber mit `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` konfiguriert (siehe [Authentifizierung](../self-hosting/authentication.md)); auf dem gehosteten Dienst ist es der Betreiber. Eine Registrierung vergibt diese Rolle nie.
 :::
 

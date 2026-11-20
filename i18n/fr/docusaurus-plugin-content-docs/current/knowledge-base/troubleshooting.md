@@ -104,7 +104,7 @@ Chaque ruche peut porter une étiquette QR imprimable qui pointe directement ver
 - **Utilisez HTTPS.** Les navigateurs n'autorisent l'accès à l'appareil photo que sur des origines sécurisées. L'application hébergée est servie en HTTPS ; les auto-hébergeurs doivent aussi servir en HTTPS (ou `localhost` pour les tests). Voir [Proxy inverse](../self-hosting/reverse-proxy.md).
 - **Vérifiez qu'il n'est pas déjà utilisé.** Fermez les autres applications ou onglets susceptibles de mobiliser l'appareil photo.
 
-:::tip Pas d'appareil photo, ou une étiquette usée
+:::tip[Pas d'appareil photo, ou une étiquette usée]
 Le scanner intégré à l'application fonctionne dans tous les navigateurs actuels, y compris Safari sur iPhone et iPad et Firefox. Si l'appareil photo ne peut pas être utilisé ou si l'étiquette est difficile à lire, saisissez les six caractères imprimés sous le code QR dans **Code de l'étiquette** sur l'écran Scanner. Si vous utilisez l'application installée, scannez depuis celle-ci plutôt qu'avec l'application Appareil photo du téléphone, qui ouvre le lien dans le navigateur avec ses propres données, séparées.
 :::
 

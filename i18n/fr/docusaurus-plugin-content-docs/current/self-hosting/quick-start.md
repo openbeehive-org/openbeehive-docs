@@ -12,7 +12,7 @@ Deux options pour obtenir une instance Openbeehive opérationnelle que vous pouv
 
 Les deux utilisent le profil de déploiement **selfhost** : une base de données SQLite intégrée et des fichiers sur le disque local. Pour plusieurs utilisateurs sur PostgreSQL et MinIO/S3, voir [Docker et Compose](./docker.md#several-users).
 
-:::caution Aucune connexion par défaut
+:::caution[Aucune connexion par défaut]
 Dans le profil selfhost, aucune méthode de connexion n'est activée par défaut : l'application ouvre donc directement vos enregistrements et **quiconque peut atteindre le port dispose d'un accès complet**. Cela convient sur votre propre ordinateur. C'est pourquoi les exemples ne publient le port que sur `127.0.0.1`, et un serveur sans connexion ne répond qu'à `localhost`, aux adresses IP et à l'hôte de `BEEHIVE_PUBLIC_BASE_URL`. Avant de l'ouvrir à d'autres appareils ou à d'autres personnes, [activez la connexion](#turn-login-on).
 :::
 
@@ -76,7 +76,7 @@ auth: NO LOGIN (single-user mode): every request has full access to all data
 auth: accepting requests for hosts: localhost, IP addresses (add names with BEEHIVE_ALLOWED_HOSTS)
 ```
 
-:::note Où se trouvent vos données
+:::note[Où se trouvent vos données]
 En mode selfhost, vos enregistrements vont dans un fichier SQLite (`openbeehive.db` dans le répertoire de travail par défaut) et les fichiers téléversés dans un répertoire de blobs (`./data/blobs` par défaut). Sauvegardez les deux et vous aurez tout sauvegardé ; voir [Sauvegardes](./backups.md).
 :::
 

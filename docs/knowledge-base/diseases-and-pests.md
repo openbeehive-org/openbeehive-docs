@@ -9,7 +9,7 @@ Healthy colonies fend off most problems on their own. Your job is to keep them s
 
 This page is a quick field reference to the diseases and pests you are most likely to meet. For each one you will find the typical signs and the general approach to management.
 
-:::danger This is general information, not a diagnosis
+:::danger[This is general information, not a diagnosis]
 Several of the conditions below are **notifiable** in many countries, meaning you are legally required to report a suspected case to your national bee health authority. Diagnosis can be difficult and several conditions look alike. If you suspect a serious or notifiable disease, **stop, do not move bees or equipment, and contact your local bee inspector or veterinary authority immediately.** Follow their instructions; they take precedence over anything written here.
 :::
 
@@ -35,7 +35,7 @@ A serious bacterial brood disease caused by *Paenibacillus larvae*. Its spores s
 
 **Management:** **AFB is notifiable in most countries.** There is no safe cure for the hobbyist; treatment is usually destruction of the colony and contaminated equipment by burning, under the supervision of your bee inspector. Do not attempt to treat it yourself or move suspect hives.
 
-:::danger Notifiable
+:::danger[Notifiable]
 If you suspect AFB, close the hive, keep it where it is, and report it to your bee health authority straight away.
 :::
 
@@ -104,6 +104,6 @@ Many diseases and pests spread between colonies through robbing, drifting bees, 
 - cleaning hive tools between colonies;
 - spacing and orienting hives to limit drift.
 
-:::tip Know your regional rules
+:::tip[Know your regional rules]
 Disease status, which conditions are notifiable, and which treatments are legal all vary by country and sometimes by region. Register with your national bee health scheme if one exists, and get to know your local association and bee inspector before you need them.
 :::

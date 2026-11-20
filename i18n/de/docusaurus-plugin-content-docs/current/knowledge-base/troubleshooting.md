@@ -103,7 +103,7 @@ Jeder Bienenstock kann ein druckbares QR-Etikett tragen, das per Deep Link zu di
 - **Verwende HTTPS.** Browser erlauben Kamerazugriff nur auf sicheren Origins. Die gehostete App wird über HTTPS ausgeliefert; Selbst-Hoster müssen ebenfalls über HTTPS ausliefern (oder `localhost` zum Testen). Siehe [Reverse Proxy](../self-hosting/reverse-proxy.md).
 - **Prüfe, ob sie nicht in Verwendung ist.** Schließe andere Apps oder Tabs, die die Kamera möglicherweise belegen.
 
-:::tip Keine Kamera oder ein abgenutztes Etikett
+:::tip[Keine Kamera oder ein abgenutztes Etikett]
 Der App-interne Scanner funktioniert in jedem aktuellen Browser, auch in Safari auf iPhone und iPad und in Firefox. Wenn die Kamera nicht genutzt werden kann oder das Etikett schwer lesbar ist, tippe die sechs Zeichen, die unter dem QR-Code stehen, auf dem Bildschirm „Scannen“ in **Etikettencode** ein. Wenn du die installierte App nutzt, scanne in ihr und nicht mit der Kamera-App des Telefons, die den Link im Browser mit dessen eigenen, getrennten Daten öffnet.
 :::
 

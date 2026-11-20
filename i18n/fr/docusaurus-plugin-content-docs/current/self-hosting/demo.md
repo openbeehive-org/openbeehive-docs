@@ -10,7 +10,7 @@ l'emploi afin que les visiteurs puissent essayer Openbeehive avec des données
 réalistes, sans toucher aux vrais enregistrements de qui que ce soit. Il est
 **désactivé par défaut** et destiné aux vitrines publiques et aux tests.
 
-:::note Vous cherchez la démo publique ?
+:::note[Vous cherchez la démo publique ?]
 La démo du projet lui-même est le bouton **Essayer la démo** sur
 [app.openbeehive.org/login](https://app.openbeehive.org/login). Il n'existe pas
 de site de démo séparé. Cette page explique comment activer la démo sur votre

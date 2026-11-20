@@ -20,7 +20,7 @@ Setze, ersetze oder korrigiere die Königin von der Beutenseite aus. Das Formula
 | Markierung | Der Farbpunkt auf ihrem Thorax. Folgt automatisch dem Jahr; hake **auto** ab, um eine Farbe von Hand zu wählen. |
 | Kommentar | Alles andere: Zuchtlinie, Verhalten, Legemuster, Quellzüchter. |
 
-:::tip Herkunft ehrlich erfassen
+:::tip[Herkunft ehrlich erfassen]
 „Eigenzucht, Tochter von #214" oder „Vom örtlichen Verein gekauft, Buckfast" sagt dir in zwei Jahren weit mehr als „Königin" je könnte.
 :::
 
@@ -46,7 +46,7 @@ Ein Volk hat immer nur eine regierende Königin zur selben Zeit, aber über sein
 2. Erfasst die neue Königin mit ihrem Einsetzdatum.
 3. Behält die alte Königin unter **Königinnen-Historie** auf der Beutenseite, mit Einsetz- und Ersetzungsdatum.
 
-:::tip Umweiseln
+:::tip[Umweiseln]
 Notiere im Kommentar der neuen Königin, *warum* du umgeweiselt hast: schlechtes Legen, stechlustige Bienen, Alter, geplante Linienverbesserung. Muster über mehrere Beuten hinweg verraten oft mehr als jedes einzelne Volk.
 :::
 

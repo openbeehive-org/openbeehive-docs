@@ -7,7 +7,7 @@ title: "Backup e ripristino"
 
 Pochi minuti spesi ora a configurare i backup ti risparmieranno molte preoccupazioni in seguito. Questa pagina copre cosa sottoporre a backup, come farlo in sicurezza e come ripristinare quando necessario.
 
-:::tip Il server è la fonte di verità
+:::tip[Il server è la fonte di verità]
 Ogni dispositivo che usa la tua istanza mantiene una copia locale dei suoi dati nel browser. Quella copia è una comodità, non un backup: può essere cancellata svuotando i dati del sito, reinstallando o perdendo il dispositivo.
 
 Per tutto ciò che è condiviso tra persone o dispositivi, il **server** è la copia autoritativa. Esegui il backup del server e proteggi i registri di tutti in una volta sola.
@@ -29,7 +29,7 @@ Quale database e quale archivio di blob hai dipende dal tuo profilo di deploymen
 
 Esegui il backup di **entrambi** il database e i blob. Il database contiene i tuoi apiari, le arnie, le regine, le ispezioni, gli eventi e i record delle foto con le loro miniature; l'archivio di blob contiene le immagini a piena risoluzione. Con un backup del database senza i suoi blob, delle foto resta solo la miniatura.
 
-:::tip Prima il database, poi i blob
+:::tip[Prima il database, poi i blob]
 Se esegui il backup mentre il server è in funzione, copia prima il database e subito dopo i blob. Le immagini vengono scritte una sola volta e mai modificate, quindi una copia dei blob fatta dopo contiene tutte le immagini che la copia del database conosce. Le immagini in più che il database ripristinato non conosce vengono rimosse dalla [manutenzione](./storage.md#upkeep) del server.
 :::
 
@@ -40,7 +40,7 @@ SQLite memorizza i tuoi dati in un file (ad esempio `openbeehive.db`) più due f
 - `openbeehive.db-wal` — modifiche recenti non ancora consolidate nel file principale
 - `openbeehive.db-shm` — indice di memoria condivisa per il WAL
 
-:::caution Non copiare il file `.db` da solo mentre il server è in esecuzione
+:::caution[Non copiare il file `.db` da solo mentre il server è in esecuzione]
 Con il WAL abilitato (l'impostazione consigliata), i dati più recenti potrebbero trovarsi ancora nel file `-wal`. Un semplice `cp openbeehive.db backup.db` di un database in esecuzione può produrre una copia incoerente o obsoleta.
 :::
 
@@ -164,6 +164,6 @@ I caratteri `%` devono essere preceduti da escape come `\%` all'interno del cron
 
 **Impostazioni → Dati e backup** nell'app scarica uno spazio come JSON, oppure come ZIP con le foto; la copia del server è disponibile anche su `GET /export` (vedi [Importazione ed esportazione](../using-the-app/import-export.md)). Un'esportazione di questo tipo è utile per spostare un singolo spazio o per tenerne una copia personale, ma contiene un solo spazio, senza account, membri né chiavi API. Per un'intera istanza, esegui il backup del database e dei blob come descritto sopra.
 
-:::tip Testa i tuoi ripristini
+:::tip[Testa i tuoi ripristini]
 Un backup che non hai mai ripristinato è solo una speranza. Di tanto in tanto, ripristina in una directory usa e getta o in un'istanza di test e conferma di poter aprire l'app e vedere le tue arnie. Conserva almeno alcuni giorni di copie datate e tienine una off-site (un disco esterno o un bucket remoto).
 :::

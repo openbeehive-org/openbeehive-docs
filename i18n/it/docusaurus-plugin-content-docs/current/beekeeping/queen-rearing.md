@@ -14,7 +14,7 @@ infine ad allevarne di proprie è una delle parti più gratificanti dell'apicolt
 Questa pagina introduce il ruolo della regina, come individuare una regina che deperisce o persa, come
 sostituirla, e una dolce rampa di accesso all'allevamento delle regine da soli.
 
-:::tip Registra tutto nell'app
+:::tip[Registra tutto nell'app]
 Tieni traccia di origine, età, colore di marcatura e note di ciascuna regina nella
 [pagina Regine](../using-the-app/queens.md). Un registro accurato di quando una regina è stata
 introdotta è la cosa più utile in assoluto per giudicare in seguito le sue prestazioni.
@@ -48,7 +48,7 @@ schemi durante le ispezioni di routine.
 | Un "ruggito" o una colonia irrequieta e agitata | Regina persa di recente |
 | Celle reali sulla faccia del favo | Sostituzione (la colonia la sta rimpiazzando) |
 
-:::caution Conferma prima di agire
+:::caution[Conferma prima di agire]
 Un breve vuoto nella deposizione può essere normale — per esempio, subito dopo uno sciame, o mentre
 una nuova regina si sta fecondando. Prima di decidere che una colonia è orfana, cerca
 uova e larve molto giovani, e considera di ricontrollare nel giro di qualche giorno.
@@ -75,7 +75,7 @@ colonia è bisbetica o improduttiva, o semplicemente secondo un programma pianif
 5. **Controlla l'accettazione.** Dopo circa una settimana, conferma che stia deponendo. Evita di
    disturbare la colonia nel frattempo — ispezioni grossolane causano il rifiuto.
 
-:::note L'introduzione è la parte rischiosa
+:::note[L'introduzione è la parte rischiosa]
 Le colonie a volte rifiutano una nuova regina, soprattutto se hanno già celle reali,
 operaie ovificatrici, o sono state orfane a lungo. Rimuovi eventuali celle reali
 prima di introdurre, e sii paziente.

@@ -132,7 +132,7 @@ même fichier ne change donc rien, et un import avec écrasement laisse ces visi
 telles quelles. Les colonnes non reconnues sont ignorées. Les poids et les
 températures sont lus en kilogrammes et en degrés Celsius.
 
-:::tip Privilégiez l'aller-retour
+:::tip[Privilégiez l'aller-retour]
 Si vous migrez entre instances Openbeehive, préférez la **sauvegarde complète**
 (en ZIP avec les photos) : elle est complète et sans perte. Utilisez le CSV pour venir **depuis** d'autres
 applications.

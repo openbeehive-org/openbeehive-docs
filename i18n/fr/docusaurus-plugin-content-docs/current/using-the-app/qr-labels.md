@@ -28,7 +28,7 @@ Une fois l'application installée, le lien ouvre la ruche depuis votre base de d
 3. Touchez **Imprimer**. Une étiquette épurée s'ouvre dans une nouvelle fenêtre, suivie de la boîte de dialogue d'impression. **SVG** télécharge plutôt le code sous forme de fichier, pour vos propres mises en page d'étiquettes.
 4. Imprimez sur du papier pour étiquettes ou du papier ordinaire et fixez-la sur la ruche.
 
-:::tip Pour qu'elle dure en extérieur
+:::tip[Pour qu'elle dure en extérieur]
 Imprimez sur du papier pour étiquettes résistant aux intempéries ou en vinyle, ou recouvrez une étiquette papier de ruban adhésif transparent ou d'une pochette plastifiée. Placez-la là où les hausses que l'on soulève et repose ne la rayeront pas : le côté du corps de ruche ou sous le rebord du toit.
 :::
 
@@ -45,7 +45,7 @@ Imprimez sur du papier pour étiquettes résistant aux intempéries ou en vinyle
 
 La plupart des téléphones reconnaissent les codes QR dans l'application appareil photo intégrée. Pointez l'appareil photo vers l'étiquette, touchez le lien qui apparaît, et Openbeehive s'ouvre sur la ruche dans le navigateur. Cela fonctionne pour toute personne ayant accès, sans ouvrir l'application au préalable.
 
-:::caution Si vous avez installé l'application, scannez depuis celle-ci
+:::caution[Si vous avez installé l'application, scannez depuis celle-ci]
 L'appareil photo du téléphone ouvre le lien dans le navigateur, et le navigateur conserve ses propres données, séparées de celles de l'application installée : vous devrez peut-être vous y reconnecter et attendre un téléchargement. Si vous utilisez l'application installée, ouvrez-la depuis l'écran d'accueil et utilisez **Scanner**.
 :::
 

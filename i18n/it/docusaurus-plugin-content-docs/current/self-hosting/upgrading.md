@@ -7,7 +7,7 @@ title: "Aggiornamento"
 
 Gli aggiornamenti sono semplici: sostituisci il binario o scarica una nuova immagine, riavvia, e il server porta da solo lo schema del database alla versione corrente.
 
-:::caution Esegui prima il backup, ogni volta
+:::caution[Esegui prima il backup, ogni volta]
 Esegui un backup prima di aggiornare. Vedi [Backup](./backups.md).
 :::
 
@@ -154,7 +154,7 @@ Openbeehive segue il [versioning semantico](https://semver.org): `MAJOR.MINOR.PA
 | MINOR | Nuove funzionalità, retrocompatibili |
 | PATCH | Correzioni di bug e patch di sicurezza, retrocompatibili |
 
-:::caution La 0.x è software in fase iniziale
+:::caution[La 0.x è software in fase iniziale]
 Mentre Openbeehive è nella serie `0.x`, le release minor possono includere modifiche che richiedono passaggi manuali o che non sono completamente retrocompatibili. Leggi le note di rilascio per ogni aggiornamento e tieni i tuoi backup a portata di mano.
 :::
 

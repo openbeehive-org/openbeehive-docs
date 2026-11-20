@@ -104,7 +104,7 @@ Cada colmena puede llevar una etiqueta QR imprimible que enlaza directamente a e
 - **Usa HTTPS.** Los navegadores solo permiten el acceso a la cámara en orígenes seguros. La aplicación alojada se sirve por HTTPS; quienes se autoalojan deben servir también por HTTPS (o `localhost` para pruebas). Consulta [Proxy inverso](../self-hosting/reverse-proxy.md).
 - **Comprueba que no esté en uso.** Cierra otras aplicaciones o pestañas que puedan estar ocupando la cámara.
 
-:::tip Sin cámara, o con una etiqueta desgastada
+:::tip[Sin cámara, o con una etiqueta desgastada]
 El escáner integrado funciona en todos los navegadores actuales, incluidos Safari en iPhone y iPad y Firefox. Si no se puede usar la cámara o la etiqueta se lee mal, escribe los seis caracteres impresos bajo el código QR en **Código de la etiqueta**, en la pantalla Escanear. Si usas la aplicación instalada, escanea dentro de ella y no con la app de cámara del teléfono, que abre el enlace en el navegador, con sus propios datos separados.
 :::
 

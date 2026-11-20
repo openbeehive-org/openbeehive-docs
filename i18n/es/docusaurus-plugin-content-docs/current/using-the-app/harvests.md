@@ -23,7 +23,7 @@ Abre la colmena de la que extrajiste la miel y toca **Registrar cosecha** en **M
 
 Puedes anotar más de una cosecha por colmena y año, por ejemplo una cosecha de primavera y una de verano.
 
-:::tip El contenido de agua importa
+:::tip[El contenido de agua importa]
 La miel debería estar generalmente por debajo de alrededor del 18 % de agua antes de venderse o almacenarse a largo plazo; por encima de aproximadamente el 20 % corre el riesgo de fermentar. Registrar aquí la lectura te permite detectar un lote húmedo antes de que se estropee. Los umbrales y las normas de etiquetado varían según el país, así que consulta los requisitos locales.
 :::
 

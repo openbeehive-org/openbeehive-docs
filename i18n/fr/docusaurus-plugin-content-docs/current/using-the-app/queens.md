@@ -20,7 +20,7 @@ Définissez, remplacez ou corrigez la reine depuis la page de la ruche. Le formu
 | Marquage | La couleur du point sur son thorax. Suit automatiquement l'année ; décochez **auto** pour choisir une couleur à la main. |
 | Commentaire | Tout le reste : lignée d'élevage, comportement, qualité de ponte, éleveur d'origine. |
 
-:::tip Consigner l'origine honnêtement
+:::tip[Consigner l'origine honnêtement]
 « Élevage personnel, fille de la n°214 » ou « Achetée à l'association locale, Buckfast » vous en dira bien plus dans deux ans que « reine ».
 :::
 
@@ -46,7 +46,7 @@ Une colonie n'a qu'une reine régnante à la fois, mais elle en aura beaucoup au
 2. Enregistre la nouvelle reine avec sa date d'introduction.
 3. Conserve l'ancienne reine sous **Historique des reines** sur la page de la ruche, avec ses dates d'introduction et de remplacement.
 
-:::tip Remérage
+:::tip[Remérage]
 Notez *pourquoi* vous avez remété dans le commentaire de la nouvelle reine : ponte médiocre, abeilles défensives, âge, amélioration planifiée de la lignée. Les tendances sur plusieurs ruches en révèlent souvent plus qu'une colonie seule.
 :::
 

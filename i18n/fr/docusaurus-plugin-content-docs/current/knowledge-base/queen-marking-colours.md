@@ -28,7 +28,7 @@ La couleur est déterminée par le **dernier chiffre de l'année**. Il n'y a que
 | 4 ou 9 | Vert | 2024, 2029, 2034 |
 | 5 ou 0 | Bleu | 2025, 2030, 2035 |
 
-:::tip Le moyen mnémotechnique
+:::tip[Le moyen mnémotechnique]
 En anglais, une comptine bien connue permet de garder l'ordre :
 
 **"W**ill **Y**ou **R**ear **G**ood **B**ees?**"** — **W**hite (blanc), **Y**ellow (jaune), **R**ed (rouge), **G**reen (vert), **B**lue (bleu).
@@ -44,7 +44,7 @@ Disons que nous sommes en **2026**. L'année se termine par **6**, donc les rein
 - Une reine marquée en **vert** date de 2024 (ou 2019). Si elle est de 2024, elle entame sa troisième année ; surveillez son schéma de ponte et envisagez un remérage.
 - Une reine inopinément **rouge** dans une colonie de 2026 signifie presque certainement une supersédure ou un essaimage que vous n'avez pas remarqué.
 
-:::note Ambiguïté sur cinq ans
+:::note[Ambiguïté sur cinq ans]
 Comme le cycle se répète tous les cinq ans, la couleur seule ne permet pas de distinguer une reine blanche de 2021 d'une reine blanche de 2026. En pratique, c'est rarement un problème — les reines vivent rarement aussi longtemps — mais c'est une raison de plus de tenir des archives écrites dans Openbeehive en complément du point de peinture.
 :::
 
@@ -57,7 +57,7 @@ Quelques repères pratiques :
 - Appliquez un petit point sur le **dessus du thorax**, entre les attaches des ailes. Laissez-le bien sécher avant de la relâcher.
 - Marquez par une journée calme et douce, et remettez-la rapidement dans sa propre colonie.
 
-:::caution Manipulez avec précaution
+:::caution[Manipulez avec précaution]
 Une reine maladroitement marquée ou abîmée peut être rejetée ou « emballée » par la colonie. Si vous débutez, entraînez-vous d'abord sur des mâles — ils ne peuvent pas piquer, et cela ne coûte rien si vous vous trompez.
 :::
 
@@ -71,6 +71,6 @@ Vous pouvez aussi noter le marquage réel que vous avez appliqué, son origine e
 
 Voir [Reines](../using-the-app/queens.md) pour savoir comment ajouter et gérer les reines, et la [base de connaissances](/category/knowledge-base) plus large pour davantage de documentation de référence.
 
-:::tip Note régionale
+:::tip[Note régionale]
 Le code à cinq couleurs sur cinq ans est le standard international utilisé dans la plus grande partie du monde. Les conventions de coupe d'aile, les nuances de couleur des fournisseurs et les éventuelles obligations de tenue d'archives peuvent varier selon le pays et l'association — en cas de doute, suivez les recommandations de votre organisme apicole local.
 :::

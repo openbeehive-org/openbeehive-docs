@@ -7,7 +7,7 @@ title: "Actualización"
 
 Las actualizaciones son sencillas: reemplaza el binario o descarga una nueva imagen, reinicia, y el servidor pone al día el esquema de la base de datos por su cuenta.
 
-:::caution Haz copia de seguridad primero, siempre
+:::caution[Haz copia de seguridad primero, siempre]
 Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](./backups.md).
 :::
 
@@ -154,7 +154,7 @@ Openbeehive sigue el [versionado semántico](https://semver.org): `MAJOR.MINOR.P
 | MINOR | Nuevas funciones, compatibles hacia atrás |
 | PATCH | Correcciones de errores y parches de seguridad, compatibles hacia atrás |
 
-:::caution 0.x es software temprano
+:::caution[0.x es software temprano]
 Mientras Openbeehive esté en la serie `0.x`, las versiones menores pueden incluir cambios que necesiten pasos manuales o que no sean totalmente compatibles hacia atrás. Lee las notas de la versión en cada actualización y mantén tus copias de seguridad a mano.
 :::
 
