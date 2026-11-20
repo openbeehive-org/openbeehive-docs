@@ -55,6 +55,11 @@
       groupName: 'npm dependencies (non-major)',
     },
     {
+      description: 'TypeScript stays on 6.x until typescript-eslint accepts 7 in its peer range (8.x allows <6.1.0); the 7.0 lock file cannot be resolved.',
+      matchPackageNames: ['typescript'],
+      allowedVersions: '<7',
+    },
+    {
       description: 'Actions digest/non-major bumps are low risk behind the check workflow.',
       matchManagers: ['github-actions'],
       matchUpdateTypes: ['minor', 'patch', 'pin', 'digest'],
