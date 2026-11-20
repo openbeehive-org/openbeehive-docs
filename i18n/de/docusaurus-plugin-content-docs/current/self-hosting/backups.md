@@ -20,14 +20,18 @@ Es gibt zwei Dinge auf dem Server, die es wert sind, geschützt zu werden:
 | Element | Wo es liegt | Backup-Ziel |
 | --- | --- | --- |
 | Die Datenbank | SQLite-Datei oder PostgreSQL/MariaDB | Eine konsistente Kopie oder ein Dump |
-| Blobs (Fotos, Anhänge) | Lokales Dateisystem oder MinIO/S3 | Das Blob-Verzeichnis oder der Bucket |
+| Blobs (Fotos in voller Größe) | Lokales Dateisystem oder MinIO/S3 | Das Blob-Verzeichnis oder der Bucket |
 
 Welche Datenbank und welchen Blob-Speicher du hast, hängt von deinem Bereitstellungsprofil ab:
 
 - **`selfhost`** verwendet eine einzelne SQLite-Datei und ein lokales Blob-Verzeichnis (`BEEHIVE_BLOB_DIR`, Standard `./data/blobs`).
 - **`cloud`** verwendet Postgres und einen MinIO-/S3-Bucket.
 
-Sichere **sowohl** die Datenbank als auch die Blobs. Die Datenbank enthält deine Bienenstände, Bienenstöcke, Königinnen, Durchsichten und Ereignisse; der Blob-Speicher enthält die Dateien, auf die diese Aufzeichnungen verweisen. Ein Datenbank-Backup ohne seine Blobs lässt dich mit defekten Bildverweisen zurück.
+Sichere **sowohl** die Datenbank als auch die Blobs. Die Datenbank enthält deine Bienenstände, Bienenstöcke, Königinnen, Durchsichten, Ereignisse und die Foto-Einträge mit ihren Vorschaubildern; der Blob-Speicher enthält die Bilder in voller Größe. Nach einem Datenbank-Backup ohne seine Blobs zeigen Fotos nur noch ihr Vorschaubild.
+
+:::tip Erst die Datenbank, dann die Blobs
+Wenn du sicherst, während der Server läuft, kopiere zuerst die Datenbank und gleich danach die Blobs. Bilder werden einmal geschrieben und nie verändert, daher enthält eine später erstellte Blob-Kopie jedes Bild, das die Datenbank-Kopie kennt. Zusätzliche Bilder, die die wiederhergestellte Datenbank nicht kennt, entfernt die [Pflege](./storage.md#upkeep) des Servers.
+:::
 
 ## SQLite sichern (selfhost)
 
@@ -84,7 +88,7 @@ Das Custom-Format komprimiert gut und stellt mit `pg_restore` wieder her. Für M
 
 ### Lokales Dateisystem
 
-Kopiere das Blob-Verzeichnis. Dateien hier werden einmal geschrieben und nicht an Ort und Stelle verändert, sodass eine rekursive Kopie auch während des Serverbetriebs sicher ist:
+Kopiere das Blob-Verzeichnis. Dateien hier werden einmal geschrieben und nicht an Ort und Stelle verändert, sodass eine rekursive Kopie auch während des Serverbetriebs sicher ist (gelöschte Fotos verschwinden daraus, daher `--delete`):
 
 ```bash
 rsync -a --delete ./data/blobs/ /backups/blobs/
@@ -102,9 +106,9 @@ aws s3 sync s3://openbeehive /backups/blobs/
 
 Wenn du einen verwalteten S3-kompatiblen Speicher verwendest, kannst du dich auch auf dessen eigene Versionierungs- oder Lebenszyklus-Richtlinien als zweite Verteidigungslinie verlassen.
 
-## Wiederherstellen
+## Wiederherstellen \{#restoring}
 
-Stelle die Datenbank und die Blobs zusammen wieder her, dann starte den Dienst neu.
+Eine Wiederherstellung folgt immer denselben drei Schritten: den Server **stoppen**, **Datenbank und Blobs zusammen** aus demselben Backup wiederherstellen, den Server **starten**. Lass den Server zwischendurch keine Anfragen beantworten: Er muss auf der wiederhergestellten Datenbank starten, bevor irgendein Gerät synchronisiert, denn an diesem Start erkennt er die Wiederherstellung (siehe [nach einer Wiederherstellung](#after-a-restore)).
 
 ### SQLite
 
@@ -123,16 +127,27 @@ Entferne alle veralteten `-wal`-/`-shm`-Dateien vor dem Start, damit SQLite saub
 ### Postgres
 
 ```bash
+systemctl stop openbeehive
+
 pg_restore --clean --if-exists \
   --dbname="postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   /backups/openbeehive-2026-06-19.dump
+mc mirror --overwrite --remove /backups/blobs/ myminio/openbeehive   # blob directory: rsync as above
+
+systemctl start openbeehive
 ```
 
-Stelle dann den Bucket oder das Blob-Verzeichnis wie oben wieder her und starte den Dienst neu.
+Mit Docker Compose treten `docker compose stop server` und `docker compose start server` an die Stelle von `systemctl`.
 
-:::note Geräte synchronisieren automatisch neu
-Nach einer Wiederherstellung gleichen sich verbundene Geräte im Hintergrund mit dem Server ab. Dank Hybrid Logical Clocks und konfliktfreier Zusammenführung synchronisieren Geräte, die neuere Änderungen halten, diese zurück, statt sie zu verlieren, und Append-only-Ereignisse kollidieren nie. Es gibt auf jedem Gerät nichts von Hand zu tun.
-:::
+### Was Geräte nach einer Wiederherstellung tun \{#after-a-restore}
+
+Eine wiederhergestellte Datenbank ist älter als das, was manche Geräte schon gesehen haben. Der Server bemerkt das bei der nächsten Synchronisierung jedes Geräts, und die App behebt es selbst:
+
+- **Aktualisierte Apps (ab 0.5.0), die über den Stand des Backups hinaus synchronisiert hatten,** laden jede Aufzeichnung, die sie haben, erneut hoch, zusammen mit den Fotos, die sie noch vorhalten, und laden dann den aktuellen Stand vom Server. Änderungen, die das Backup verloren hat, kommen so zurück; wo der Server eine Änderung noch hat, passiert nichts. Die App zeigt "Die Daten des Servers wurden zurückgesetzt oder wiederhergestellt. Dieses Gerät hat seine Einträge erneut gesendet und den aktuellen Stand geladen."
+- **Geräte, die nicht über den Stand des Backups hinaus synchronisiert hatten,** machen ganz normal weiter.
+- **Installierte 0.4.x-Apps** bekommen kein solches Signal und laden nichts erneut hoch. Eine, deren Position hinter der wiederhergestellten Datenbank liegt, liest die Daten noch einmal von vorn. Was nur ein solches Gerät hatte, wird nicht wiederhergestellt; aktualisiere also die App auf jedem Gerät, bevor du dich darauf verlässt.
+
+Änderungen, die auf einem Gerät gemacht wurden, während der Server nicht lief, werden wie gewohnt hochgeladen, sobald er wieder da ist.
 
 ## Ein einfacher Cron-Zeitplan
 
@@ -143,7 +158,11 @@ Ein nächtlicher Job, der die Datenbank snapshot und die Blobs spiegelt, reicht 
 30 2 * * * sqlite3 /srv/openbeehive/openbeehive.db ".backup '/backups/openbeehive-$(date +\%F).db'" && rsync -a --delete /srv/openbeehive/data/blobs/ /backups/blobs/
 ```
 
-Die `%`-Zeichen müssen innerhalb der Crontab als `\%` maskiert werden. Für Postgres tausche den `sqlite3`-Aufruf gegen den oben gezeigten `pg_dump`-Befehl.
+Die `%`-Zeichen müssen innerhalb der Crontab als `\%` maskiert werden. Für Postgres tausche den `sqlite3`-Aufruf gegen den oben gezeigten `pg_dump`-Befehl. Die Datenbank wird zuerst kopiert und die Blobs gleich danach, wie oben empfohlen.
+
+## Exporte sind keine Server-Backups
+
+**Einstellungen → Daten & Backup** in der App lädt einen Arbeitsbereich als JSON herunter oder als ZIP mit Fotos; die Kopie des Servers gibt es auch unter `GET /export` (siehe [Import & Export](../using-the-app/import-export.md)). Ein solcher Export eignet sich, um einen Arbeitsbereich umzuziehen oder eine eigene Kopie zu behalten, enthält aber nur einen Arbeitsbereich, ohne Konten, Mitglieder oder API-Schlüssel. Für eine ganze Instanz sichere die Datenbank und die Blobs wie oben beschrieben.
 
 :::tip Teste deine Wiederherstellungen
 Ein Backup, das du nie wiederhergestellt hast, ist nur eine Hoffnung. Stelle hin und wieder in ein Wegwerf-Verzeichnis oder eine Test-Instanz wieder her und bestätige, dass du die App öffnen und deine Bienenstöcke sehen kannst. Behalte mindestens ein paar Tage datierter Kopien und bewahre eine außer Haus auf (eine externe Festplatte oder ein entfernter Bucket).

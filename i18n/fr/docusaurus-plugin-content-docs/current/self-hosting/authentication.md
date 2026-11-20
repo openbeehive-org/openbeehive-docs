@@ -115,6 +115,15 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 Les liens d'invitation et de vérification ne sont jamais écrits dans le journal du serveur. Sans `BEEHIVE_SMTP_HOST`, aucun e-mail d'invitation n'est envoyé ; l'administrateur qui a créé une invitation copie son lien depuis Paramètres → Espaces et le transmet.
 :::
 
+### Changer et réinitialiser un mot de passe \{#password-reset}
+
+Une personne connectée change son mot de passe sous **Paramètres → Compte → Mot de passe** ; cela la déconnecte de tous ses autres appareils. Qui a oublié son mot de passe dispose de deux moyens pour revenir, selon que l'e-mail est configuré ou non :
+
+- **Avec `BEEHIVE_SMTP_HOST`**, « Mot de passe oublié ? » sur la page de connexion envoie par e-mail un lien valable une heure et utilisable une seule fois. La réponse est la même, que l'adresse corresponde ou non à un compte. Les demandes sont limitées comme les connexions.
+- **Sans e-mail**, la page indique de s'adresser à l'administrateur. L'administrateur de l'instance crée le lien sous **Paramètres → Réinitialiser le mot de passe d’un utilisateur** et le transmet ; les administrateurs d'espace ne le peuvent pas.
+
+Définir un nouveau mot de passe via un lien déconnecte le compte partout. Le mot de passe de l'administrateur de l'instance est celui de `BEEHIVE_ADMIN_PASSWORD` : il ne peut être modifié ni dans l'application ni par un lien de réinitialisation. Le mot de passe du compte de démo ne peut pas non plus être modifié.
+
 ## Mode 3 : passkeys (WebAuthn)
 
 Les passkeys permettent aux personnes de se connecter avec une empreinte digitale, une reconnaissance faciale, un code PIN de l'appareil ou une clé de sécurité matérielle.
@@ -187,9 +196,17 @@ https://beehive.example.com/auth/callback
 
 Pièges courants : le schéma doit correspondre (`https` en production), pas de barre oblique finale sauf si votre valeur en comporte une, et utilisez votre domaine public plutôt qu'un nom d'hôte interne. Une erreur « redirect mismatch » signifie que les deux valeurs diffèrent quelque part.
 
+## Comptes \{#accounts}
+
+Chacun supprime son propre compte sous **Paramètres → Supprimer le compte**. Les espaces dont la personne est le seul membre sont supprimés avec lui. Tant qu'elle est le seul administrateur d'un espace qui compte d'autres membres, la suppression est refusée, jusqu'à ce qu'elle nomme quelqu'un d'autre administrateur ou supprime cet espace. Ses enregistrements dans les espaces partagés restent, attribués à un utilisateur supprimé. La suppression se confirme avec le mot de passe, une passkey ou, pour les comptes qui se connectent uniquement via un fournisseur, une connexion datant de moins de 5 minutes. L'administrateur de l'instance défini par `BEEHIVE_ADMIN_EMAIL` et le compte de démo ne peuvent pas être supprimés dans l'application.
+
+Les adresses e-mail sont uniques sans distinction de majuscules et de minuscules. Deux comptes de versions antérieures dont les adresses ne diffèrent que par la casse continuent tous deux de fonctionner, mais la connexion par e-mail, les invitations et les réinitialisations de mot de passe n'atteignent que l'un d'eux. Le journal du serveur nomme chacune de ces paires à chaque démarrage ; décidez quel compte garde l'adresse et supprimez l'autre, ou donnez-lui une autre adresse.
+
+Les liens qu'un navigateur ouvre comme une page (`/auth/verify` depuis un e-mail de vérification, `/auth/login` et `/auth/callback` d'une connexion via un fournisseur) renvoient le navigateur vers la page de connexion avec un message d'erreur traduit en cas de problème, au lieu d'afficher du JSON.
+
 ## Activer la connexion sur une instance mono-utilisateur existante \{#single-user-to-login}
 
-Les enregistrements créés sans connexion appartiennent à un espace local fixe qu'aucun compte ne peut voir. Lorsque le serveur démarre avec la connexion par e-mail/mot de passe activée et trouve de tels enregistrements, il les déplace dans l'espace de l'administrateur de l'instance et consigne dans le journal le nombre de lignes déplacées. Connectez-vous en tant qu'administrateur pour les voir. Le déplacement a lieu une seule fois et ne peut pas être annulé en désactivant de nouveau la connexion ; faites d'abord une [sauvegarde](./backups.md).
+Les enregistrements créés sans connexion appartiennent à un espace local fixe qu'aucun compte ne peut voir. Lorsque le serveur démarre avec la connexion par e-mail/mot de passe activée et trouve de tels enregistrements, il les déplace dans l'espace de l'administrateur de l'instance et consigne dans le journal le nombre de lignes déplacées. Les unités et la langue choisies sans connexion deviennent les paramètres de l'administrateur. Connectez-vous en tant qu'administrateur pour les voir. Le déplacement a lieu une seule fois et ne peut pas être annulé en désactivant de nouveau la connexion ; faites d'abord une [sauvegarde](./backups.md).
 
 Deux choses à savoir :
 

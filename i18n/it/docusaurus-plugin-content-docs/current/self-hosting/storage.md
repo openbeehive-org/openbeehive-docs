@@ -5,9 +5,9 @@ title: "Archiviazione blob"
 
 # Archiviazione blob
 
-Openbeehive memorizza i tuoi registri in un database, ma le foto e gli altri
-allegati binari risiedono separatamente nell'**archiviazione blob**. Questo mantiene snello il database
-e ti permette di scalare l'archiviazione delle immagini in modo indipendente.
+Openbeehive memorizza i tuoi registri in un database, ma le immagini a piena risoluzione delle foto risiedono separatamente nell'**archiviazione blob**. Questo mantiene snello il database e ti permette di scalare l'archiviazione delle immagini in modo indipendente.
+
+Una foto ha due parti. Il suo record, con una piccola miniatura di circa 200 pixel, è memorizzato nel database e si sincronizza su ogni dispositivo come qualsiasi altro record. L'immagine a piena risoluzione (al massimo 2048 pixel sul lato più lungo e 5 MiB) è memorizzata nell'archiviazione blob sotto un prefisso per ciascuno spazio (`<workspace>/photos/...`). Il server la serve solo ai membri di quello spazio che hanno effettuato l'accesso, tramite `/photos/<id>`; l'archivio dei blob in sé non è mai esposto. Eliminare una foto ne rimuove l'immagine, ed eliminare uno spazio rimuove tutto ciò che si trova sotto il suo prefisso.
 
 Scegli un backend con la variabile d'ambiente `BEEHIVE_BLOB_BACKEND`. Ci sono due
 opzioni: il **filesystem** locale e un object store **compatibile con S3** come
@@ -43,10 +43,7 @@ BEEHIVE_BLOB_DIR=./data/blobs
 del processo del server, quindi per risultati prevedibili su un server, usa un
 percorso assoluto come `/var/lib/openbeehive/blobs`.
 
-I browser recuperano i file archiviati da `<BEEHIVE_PUBLIC_BASE_URL>/files`. Se un reverse
-proxy o una CDN serve quella directory da un altro indirizzo, imposta
-`BEEHIVE_BLOB_PUBLIC_URL` sull'URL di base che espone; il server lo usa quando consegna i
-link ai file all'app.
+Il server non serve questa directory direttamente, e non dovrebbe farlo nient'altro: le immagini raggiungono l'app solo tramite l'endpoint autenticato `/photos/`. Fino alla 0.4.x il server pubblicava la directory sotto `/files/` e leggeva `BEEHIVE_BLOB_PUBLIC_URL`; entrambi non esistono più (il server avvisa all'avvio se l'impostazione è ancora presente).
 
 Il server crea la directory se non esiste, ma assicurati che il processo
 ne sia proprietario e possa scrivervi.
@@ -58,8 +55,8 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 
 :::caution Esegui il backup
 La directory dei blob **non** è memorizzata nel tuo database. Un solo backup del database
-non salverà le tue foto. Includi `BEEHIVE_BLOB_DIR` nella tua routine di backup. Vedi
-[Backup](./backups.md) per una strategia completa.
+non salverà le tue foto. Un backup è il database più `BEEHIVE_BLOB_DIR`, e i due vanno ripristinati insieme. Vedi
+[Backup](./backups.md).
 :::
 
 ### Nota su Docker
@@ -117,8 +114,8 @@ mc mb local/openbeehive
 
 :::caution Mantieni il bucket privato
 I blob possono contenere foto identificabili dei tuoi apiari. Non rendere il bucket
-leggibile pubblicamente. Openbeehive serve le immagini tramite l'API, quindi l'object
-store non ha bisogno di accesso pubblico.
+leggibile pubblicamente. Openbeehive serve le immagini solo ai membri dello spazio
+che hanno effettuato l'accesso, quindi l'object store non ha bisogno di accesso pubblico.
 :::
 
 ## Compatibilità S3
@@ -147,6 +144,22 @@ in stile path anziché virtual-hosted. Se i caricamenti falliscono con un provid
 ricontrolla l'endpoint e che il bucket esista nella regione prevista.
 Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md) se i problemi persistono.
 :::
+
+## Manutenzione \{#upkeep}
+
+Il server tiene in ordine l'archiviazione blob da solo; non c'è nulla da pianificare:
+
+- L'immagine di una foto eliminata viene rimossa poco dopo l'eliminazione.
+- Anche le foto di una visita o di un'arnia eliminata da più di un'ora vengono eliminate.
+- All'avvio e ogni sei ore vengono rimosse le immagini a cui non punta alcun record di foto e più vecchie di un'ora (per esempio un caricamento il cui record non è mai arrivato, o le immagini di uno spazio eliminato).
+
+Questo presuppone una sola istanza del server: eseguine esattamente una per database.
+
+## Foto dalla 0.4.x \{#inline-photos}
+
+Fino alla 0.4.x l'app memorizzava le foto direttamente nel database, come data URL nelle righe delle visite e delle arnie. Al primo avvio della 0.5.0 il server converte ogni foto incorporata visibile in un record di foto con la sua immagine nell'archiviazione blob, prima di accettare richieste. Su un database con molte foto questo può richiedere alcuni minuti. Una conversione interrotta riprende all'avvio successivo.
+
+Le app 0.4.x installate continuano a funzionare: il server accetta e serve ancora per loro le foto incorporate e converte ciò che caricano. Non vedono le foto aggiunte dai dispositivi aggiornati.
 
 ## Cambiare backend in seguito
 

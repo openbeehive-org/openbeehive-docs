@@ -34,6 +34,9 @@ Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 - **OIDC.** Ein in `BEEHIVE_OIDC_PROVIDERS` aufgeführter Provider ohne Issuer und Client-ID verhindert den Start. Eine Provider-Anmeldung wird nur dann an ein bestehendes Konto angehängt, wenn beide Seiten die E-Mail-Adresse verifiziert haben.
 - **Reverse Proxy.** Setze hinter deinem Proxy `BEEHIVE_TRUST_PROXY_HEADERS=true`, sonst zählt die Drosselung der Anmeldung alle Nutzer als eine Adresse.
 - **`BEEHIVE_NODE_ID`** ist jetzt standardmäßig eine zufällige ID pro Start; entferne die Variable aus deiner Konfiguration, sofern du sie nicht bewusst gesetzt hast. Die ungenutzten Einstellungen für die Sync-Seitengröße gibt es nicht mehr.
+- **Aufbewahrung des Änderungsprotokolls.** Der Server entfernt jetzt Einträge des Änderungsprotokolls, die älter als `BEEHIVE_CHANGELOG_RETENTION_DAYS` sind (Standard 180, `0` behält alles). Mit dem Standardwert geschieht das erste Entfernen 180 Tage nach dem Upgrade.
+- **Alte Apps.** `BEEHIVE_SYNC_MIN_PROTOCOL` (Standard `0`) nimmt installierte 0.4.x-Apps weiterhin an; setze den Wert auf `1`, sobald jedes Gerät aktualisiert ist.
+- **`BEEHIVE_BLOB_PUBLIC_URL`** wird ignoriert, und der Server warnt beim Start davor; entferne die Variable.
 
 **Compose-Dateien**
 
@@ -44,7 +47,10 @@ Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 
 - **Das Einschalten der Anmeldung verschiebt Einzelnutzer-Aufzeichnungen.** Wenn die Instanz ohne Anmeldung lief und du die E-Mail-/Passwort-Anmeldung aktivierst, wandern bestehende Aufzeichnungen beim nächsten Start in den Arbeitsbereich des Instanz-Admins. Das lässt sich nicht rückgängig machen; siehe [Authentifizierung](./authentication.md#single-user-to-login).
 - **Datenbank-Migrationen.** Der erste Start baut die Tabelle der Durchsichten und den Index des Änderungsprotokolls neu auf und dauert daher bei einer großen Datenbank länger. Bei MariaDB stellt er außerdem die Tabellen auf eine binäre Kollation um, und eine Migration, die dort fehlschlägt, lässt sich nicht zurückrollen: Ein Backup ist der einzige Weg zurück.
-- **Betreibe genau eine Server-Instanz** pro Datenbank.
+- **Fotos wandern in den Blob-Speicher.** Der erste Start wandelt die direkt in der Datenbank gespeicherten Fotos in Foto-Einträge mit Bildern im Blob-Speicher um, bevor der Server Anfragen annimmt; bei vielen Fotos dauert das einige Minuten. Ab jetzt besteht ein Backup aus der Datenbank **plus** dem Blob-Verzeichnis oder Bucket. Siehe [Speicher](./storage.md#inline-photos).
+- **Ein Backup wiederherstellen** heißt: Server stoppen, Datenbank und Blobs zusammen wiederherstellen, Server starten. Aktualisierte Apps laden dann hoch, was das Backup verloren hat; 0.4.x-Apps können das nicht. Siehe [Backups](./backups.md#restoring).
+- **E-Mail-Adressen, die sich nur in der Groß- und Kleinschreibung unterscheiden.** Zwei bestehende Konten, deren Adressen sich nur in Groß- und Kleinschreibung unterscheiden, funktionieren weiter, aber die E-Mail-Anmeldung erreicht nur eines davon. Das Log nennt jedes Paar bei jedem Start; siehe [Authentifizierung](./authentication.md#accounts).
+- **Betreibe genau eine Server-Instanz** pro Datenbank. Das Verdichten des Änderungsprotokolls und die Foto-Pflege laufen im Serverprozess.
 
 **Verhalten, das Nutzer und Skripte bemerken**
 
@@ -53,8 +59,11 @@ Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 - **Limits.** Eine RPC-Nachricht darf höchstens 16 MiB groß sein, und eine Anfrage darf höchstens 2 Minuten dauern (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
 - **Geräteuhren.** Änderungen, deren Zeitstempel der Serverzeit mehr als 10 Minuten voraus ist, werden abgelehnt. Aktualisierte Apps korrigieren sich selbst; eine 0.4.x-App mit falscher Uhr verliert solche Änderungen, aktualisiere die App also auf jedem Gerät.
 - **API.** Update-Aufrufe ändern nur die gesendeten Felder; `DeleteApiary` schlägt mit `failed_precondition` fehl, solange der Bienenstand Beuten hat; persönliche Aufgaben werden nur an ihren Besitzer zurückgegeben; Messwerte einer Durchsicht, die nicht erfasst wurden, werden weggelassen, statt als `0` zurückgegeben zu werden. Die einfachen HTTP-Endpunkte unter `/auth/` und `/tenants/` akzeptieren nur die dokumentierte Methode, brauchen `Content-Type: application/json`, wenn sie einen Body entgegennehmen, und `/tenants/delete` braucht `org_id`. Siehe [REST](../using-the-api/rest.md).
+- **Fotos über HTTP.** `/files/` gibt es nicht mehr. Bilder in voller Größe werden unter `/photos/<id>` nur an Mitglieder des Arbeitsbereichs ausgeliefert, mit Sitzung oder API-Schlüssel.
+- **Browser-Links.** `/auth/verify`, `/auth/login` und `/auth/callback` leiten mit einer Fehlermeldung zur Anmeldeseite weiter, statt mit JSON zu antworten.
+- **Skripte, die `SyncService` aufrufen,** müssen den Header `Openbeehive-Sync-Protocol: 1` senden; ohne ihn bekommen sie die Daten so, wie eine 0.4.1-App sie sieht, ohne Fotos oder Snapshots. Siehe [Sync-Protokoll](../developers/sync-protocol.md#versions).
 
-Installierte 0.4.x-Apps funktionieren weiter mit einem 0.5.0-Server. Nachdem sich die App selbst aktualisiert hat, lädt jedes Gerät seine Daten einmal neu herunter.
+Installierte 0.4.x-Apps funktionieren weiter mit einem 0.5.0-Server, sehen aber keine Fotos, die aktualisierte Geräte hinzufügen. Nachdem sich die App selbst aktualisiert hat, lädt jedes Gerät den aktuellen Stand noch einmal vom Server.
 
 ### 0.4.0: Der Container läuft als unprivilegierter Benutzer
 

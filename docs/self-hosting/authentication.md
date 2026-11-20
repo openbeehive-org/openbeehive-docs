@@ -115,6 +115,15 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 Invite and verification links are never written to the server log. Without `BEEHIVE_SMTP_HOST` no invite mail is sent; the admin who created an invite copies its link from Settings → Workspaces and passes it on.
 :::
 
+### Changing and resetting passwords \{#password-reset}
+
+Signed-in users change their password under **Settings → Account → Password**; this signs them out on all their other devices. Someone who forgot the password has two ways back, depending on mail:
+
+- **With `BEEHIVE_SMTP_HOST`**, "Forgot password?" on the sign-in page emails a link that is valid for one hour and works once. The answer is the same whether or not the address has an account. Requests are throttled like sign-ins.
+- **Without mail**, the page says to ask the administrator. The instance admin creates the link under **Settings → Reset a user's password** and hands it over; workspace admins cannot.
+
+Setting a new password through a link signs the account out everywhere. The instance admin's password is the one in `BEEHIVE_ADMIN_PASSWORD`: it cannot be changed in the app or through a reset link. The demo account's password cannot be changed either.
+
 ## Mode 3: passkeys (WebAuthn)
 
 Passkeys let people sign in with a fingerprint, face scan, device PIN or a hardware security key.
@@ -187,9 +196,17 @@ https://beehive.example.com/auth/callback
 
 Common pitfalls: the scheme must match (`https` in production), no trailing slash unless your value has one, and use your public domain rather than an internal hostname. A "redirect mismatch" error means the two values differ somewhere.
 
+## Accounts \{#accounts}
+
+People delete their own account under **Settings → Delete account**. Workspaces in which they are the only member are deleted with it. While they are the only admin of a workspace that has other members, deletion is refused until they make someone else an admin or delete that workspace. Their records in shared workspaces stay, attributed to a deleted user. The deletion is confirmed with the password, a passkey, or, for accounts that sign in only through a provider, a sign-in less than 5 minutes old. The instance admin from `BEEHIVE_ADMIN_EMAIL` and the demo account cannot be deleted in the app.
+
+Email addresses are unique regardless of upper and lower case. Two accounts from earlier versions whose addresses differ only in case both keep working, but email sign-in, invites and password resets reach only one of them. The server log names each such pair at every start; decide which account keeps the address and delete the other, or give it another address.
+
+Links that a browser opens as a page (`/auth/verify` from a verification email, `/auth/login` and `/auth/callback` of a provider sign-in) send the browser to the sign-in page with a translated error message when something goes wrong, instead of showing JSON.
+
 ## Turning login on for an existing single-user instance \{#single-user-to-login}
 
-Records made without login belong to a fixed local workspace that no account can see. When the server starts with email/password login enabled and finds such records, it moves them into the instance admin's workspace and logs how many rows it moved. Sign in as the admin to see them. The move happens once and cannot be undone by turning login off again; take a [backup](./backups.md) first.
+Records made without login belong to a fixed local workspace that no account can see. When the server starts with email/password login enabled and finds such records, it moves them into the instance admin's workspace and logs how many rows it moved. Units and a language chosen without login become the admin's settings. Sign in as the admin to see them. The move happens once and cannot be undone by turning login off again; take a [backup](./backups.md) first.
 
 Two things to know:
 

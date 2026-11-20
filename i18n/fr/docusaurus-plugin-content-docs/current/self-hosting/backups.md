@@ -20,14 +20,18 @@ Il y a deux choses sur le serveur qui valent la peine d'être protégées :
 | Élément | Où il réside | Cible de sauvegarde |
 | --- | --- | --- |
 | La base de données | Fichier SQLite, ou PostgreSQL/MariaDB | Une copie cohérente ou un dump |
-| Les blobs (photos, pièces jointes) | Système de fichiers local, ou MinIO/S3 | Le répertoire de blobs ou le bucket |
+| Les blobs (images des photos en taille réelle) | Système de fichiers local, ou MinIO/S3 | Le répertoire de blobs ou le bucket |
 
 La base de données et le stockage de blobs dont vous disposez dépendent de votre profil de déploiement :
 
 - **`selfhost`** utilise un seul fichier SQLite et un répertoire de blobs local (`BEEHIVE_BLOB_DIR`, par défaut `./data/blobs`).
 - **`cloud`** utilise Postgres et un bucket MinIO/S3.
 
-Sauvegardez **à la fois** la base de données et les blobs. La base de données contient vos ruchers, ruches, reines, visites et événements ; le stockage de blobs contient les fichiers vers lesquels ces enregistrements pointent. Une sauvegarde de la base de données sans ses blobs vous laisse avec des liens d'images cassés.
+Sauvegardez **à la fois** la base de données et les blobs. La base de données contient vos ruchers, ruches, reines, visites, événements ainsi que les enregistrements de photos avec leurs miniatures ; le stockage de blobs contient les images en taille réelle. Une sauvegarde de la base de données sans ses blobs laisse des photos dont on ne voit plus que la miniature.
+
+:::tip D'abord la base de données, puis les blobs
+Si vous sauvegardez pendant que le serveur fonctionne, copiez d'abord la base de données, puis les blobs juste après. Les images sont écrites une fois et jamais modifiées, donc une copie des blobs prise plus tard contient toutes les images que connaît la copie de la base. Les images en trop, inconnues de la base restaurée, sont retirées par l'[entretien](./storage.md#upkeep) du serveur.
+:::
 
 ## Sauvegarder SQLite (selfhost)
 
@@ -84,7 +88,7 @@ Le format custom se compresse bien et se restaure avec `pg_restore`. Pour MariaD
 
 ### Système de fichiers local
 
-Copiez le répertoire de blobs. Les fichiers ici sont écrits une fois et non modifiés sur place, donc une copie récursive est sûre même pendant que le serveur fonctionne :
+Copiez le répertoire de blobs. Les fichiers ici sont écrits une fois et non modifiés sur place, donc une copie récursive est sûre même pendant que le serveur fonctionne (les photos supprimées en disparaissent, d'où `--delete`) :
 
 ```bash
 rsync -a --delete ./data/blobs/ /backups/blobs/
@@ -102,9 +106,9 @@ aws s3 sync s3://openbeehive /backups/blobs/
 
 Si vous utilisez un stockage compatible S3 managé, vous pouvez aussi compter sur ses propres politiques de versioning ou de cycle de vie comme deuxième ligne de défense.
 
-## Restaurer
+## Restaurer \{#restoring}
 
-Restaurez la base de données et les blobs ensemble, puis redémarrez le service.
+Une restauration suit toujours les trois mêmes étapes : **arrêter** le serveur, restaurer **ensemble la base de données et les blobs** à partir de la même sauvegarde, **démarrer** le serveur. Ne laissez pas le serveur répondre à des requêtes entre-temps : il doit démarrer sur la base restaurée avant qu'un appareil ne se synchronise, car c'est à ce démarrage qu'il reconnaît la restauration (voir [après une restauration](#after-a-restore)).
 
 ### SQLite
 
@@ -123,16 +127,27 @@ Supprimez tout fichier `-wal`/`-shm` obsolète avant de démarrer, afin que SQLi
 ### Postgres
 
 ```bash
+systemctl stop openbeehive
+
 pg_restore --clean --if-exists \
   --dbname="postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   /backups/openbeehive-2026-06-19.dump
+mc mirror --overwrite --remove /backups/blobs/ myminio/openbeehive   # blob directory: rsync as above
+
+systemctl start openbeehive
 ```
 
-Restaurez ensuite le bucket ou le répertoire de blobs comme ci-dessus et redémarrez le service.
+Avec Docker Compose, `docker compose stop server` et `docker compose start server` remplacent `systemctl`.
 
-:::note Les appareils se resynchronisent automatiquement
-Après une restauration, les appareils connectés se réconcilient avec le serveur en arrière-plan. Grâce aux horloges logiques hybrides (Hybrid Logical Clocks) et à la fusion sans conflit, les appareils qui détiennent des changements plus récents les resynchroniseront plutôt que de les perdre, et les événements en ajout seul n'entrent jamais en conflit. Il n'y a rien à faire à la main sur chaque appareil.
-:::
+### Ce que font les appareils après une restauration \{#after-a-restore}
+
+Une base de données restaurée est plus ancienne que ce que certains appareils ont déjà vu. Le serveur s'en aperçoit à la synchronisation suivante de chaque appareil, et l'application répare la situation d'elle-même :
+
+- **Les applications à jour (0.5.0 et ultérieures) qui s'étaient synchronisées au-delà de la sauvegarde** renvoient tous les enregistrements qu'elles détiennent, avec les images de photos qu'elles conservent encore, puis chargent les données actuelles depuis le serveur. Les changements perdus par la sauvegarde reviennent ainsi ; là où le serveur possède encore un changement, rien ne se passe. L'application affiche « Les données du serveur ont été réinitialisées ou restaurées. Cet appareil a renvoyé ses enregistrements et chargé les données actuelles. »
+- **Les appareils qui ne s'étaient pas synchronisés au-delà de la sauvegarde** continuent comme d'habitude.
+- **Les applications 0.4.x installées** ne reçoivent pas ce signal et ne renvoient rien. Celle dont la position se situe au-delà de la base restaurée relit les données depuis le début. Ce que seul un tel appareil détenait n'est pas restauré : mettez donc l'application à jour sur chaque appareil avant de compter sur ce mécanisme.
+
+Les changements faits sur un appareil pendant que le serveur était arrêté sont envoyés normalement dès son retour.
 
 ## Un planning cron simple
 
@@ -143,7 +158,11 @@ Une tâche nocturne qui prend un instantané de la base de données et mirore le
 30 2 * * * sqlite3 /srv/openbeehive/openbeehive.db ".backup '/backups/openbeehive-$(date +\%F).db'" && rsync -a --delete /srv/openbeehive/data/blobs/ /backups/blobs/
 ```
 
-Les caractères `%` doivent être échappés en `\%` dans la crontab. Pour Postgres, remplacez l'appel `sqlite3` par la commande `pg_dump` indiquée ci-dessus.
+Les caractères `%` doivent être échappés en `\%` dans la crontab. Pour Postgres, remplacez l'appel `sqlite3` par la commande `pg_dump` indiquée ci-dessus. La base de données est copiée en premier et les blobs juste après, comme recommandé plus haut.
+
+## Les exports ne sont pas des sauvegardes du serveur
+
+**Paramètres → Données & sauvegarde** dans l'application télécharge un espace en JSON, ou en ZIP avec les photos ; la copie du serveur est aussi disponible via `GET /export` (voir [Import et export](../using-the-app/import-export.md)). Un tel export est utile pour déplacer un espace ou garder votre propre copie, mais il ne contient qu'un seul espace, sans comptes, membres ni clés API. Pour une instance entière, sauvegardez la base de données et les blobs comme décrit ci-dessus.
 
 :::tip Testez vos restaurations
 Une sauvegarde que vous n'avez jamais restaurée n'est qu'un espoir. De temps en temps, restaurez dans un répertoire jetable ou une instance de test et confirmez que vous pouvez ouvrir l'application et voir vos ruches. Conservez au moins quelques jours de copies datées, et stockez-en une hors site (un disque externe ou un bucket distant).

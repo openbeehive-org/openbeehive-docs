@@ -97,8 +97,12 @@ With the defaults, a browser that opens a map requests tiles from OpenStreetMap,
 | Variable  | Default  | Description                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `BEEHIVE_NODE_ID` | random at every start | Clock id stamped on changes the server writes itself (API calls). There is normally no reason to set it. |
+| `BEEHIVE_CHANGELOG_RETENTION_DAYS` | `180` | Days the change log is kept. Once a day older entries are removed; a device that was away longer loads the current data instead of the changes it missed. `0` keeps the log forever. |
+| `BEEHIVE_SYNC_MIN_PROTOCOL` | `0` | Lowest sync protocol version the server accepts from apps. `0` also accepts installed 0.4.x apps; `1` refuses them, and they cannot sync until they have updated. |
 
-Run exactly one server instance per database. Running several replicas against one database is not supported.
+Run exactly one server instance per database. Running several replicas against one database is not supported: the daily change-log compaction and the photo upkeep run inside the server process.
+
+Entries that exist when you upgrade to 0.5.0 count as received on the day of the upgrade, so with the default retention the first entries are removed 180 days after the upgrade at the earliest. A 0.4.x app whose last sync is older than what the log still holds cannot sync until it is updated.
 
 ## Database
 
@@ -127,20 +131,19 @@ For driver choice, tuning and migration notes, see [Databases](./databases.md).
 
 ## Blob storage
 
-Photos and other attachments are stored as blobs, either on the local filesystem or in an S3-compatible object store.
+The full-size images of photos are stored as blobs, either on the local filesystem or in an S3-compatible object store. A backup is the database plus this directory or bucket.
 
 | Variable          | Default        | Description                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | from profile   | Storage backend: `fs` (local filesystem) or `minio` (MinIO / S3).       |
 | `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory for blobs when `BEEHIVE_BLOB_BACKEND=fs`.                             |
-| `BEEHIVE_BLOB_PUBLIC_URL` | `<BEEHIVE_PUBLIC_BASE_URL>/files` | Base URL under which stored files are served to browsers. Change it only if a proxy or CDN serves the blob directory from somewhere else. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host and port of the MinIO / S3 endpoint.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin`   | Access key for the object store.                                        |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin`   | Secret key for the object store.                                        |
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive`  | Bucket name where blobs are stored.                                     |
 | `BEEHIVE_MINIO_USE_SSL`   | `false`        | Set `true` to connect to the endpoint over HTTPS.                       |
 
-The `MINIO_*` variables are only used when `BEEHIVE_BLOB_BACKEND=minio`. For full guidance, see [Storage](./storage.md).
+The `MINIO_*` variables are only used when `BEEHIVE_BLOB_BACKEND=minio`. `BEEHIVE_BLOB_PUBLIC_URL` is no longer used: images are served only to signed-in members under `/photos/`, and the server warns at start when the setting is present. For full guidance, see [Storage](./storage.md).
 
 ## Session and authentication
 
@@ -166,7 +169,7 @@ to sign up. See [Authentication](./authentication.md).
 | `BEEHIVE_ADMIN_PASSWORD` | (empty) | Password of the instance admin, at least 8 characters. Authoritative on every start: the stored password is reset to this value, which doubles as password recovery. |
 | `BEEHIVE_REGISTRATION` | `true` | Open self-registration. Set to `false` for an invite-only instance: apart from the configured admin, accounts can only be created via invite links, and the sign-in screen shows an invite-only notice. |
 | `BEEHIVE_EMAIL_VERIFICATION` | `false` | Require email confirmation before a new account can sign in. Needs `BEEHIVE_SMTP_HOST`; the server refuses to start with verification on and no mail server. |
-| `BEEHIVE_SMTP_HOST` | (empty) | SMTP server for verification and invite emails. If empty, no mail is sent and the admin copies invite links from Settings. Links are never written to the log. |
+| `BEEHIVE_SMTP_HOST` | (empty) | SMTP server for verification, invite and password-reset emails. If empty, no mail is sent: the admin copies invite links from Settings, and only the instance admin can create password-reset links there. Links are never written to the log. |
 | `BEEHIVE_SMTP_PORT` | `587` | SMTP port. |
 | `BEEHIVE_SMTP_USER` | (empty) | SMTP username. |
 | `BEEHIVE_SMTP_PASS` | (empty) | SMTP password. |

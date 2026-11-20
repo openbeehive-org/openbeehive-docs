@@ -97,8 +97,12 @@ Con i valori predefiniti, un browser che apre una mappa richiede le tessere a Op
 | Variabile  | Predefinito  | Descrizione                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `BEEHIVE_NODE_ID` | casuale a ogni avvio | Id dell'orologio apposto sulle modifiche che il server scrive da sé (chiamate API). Normalmente non c'è motivo di impostarlo. |
+| `BEEHIVE_CHANGELOG_RETENTION_DAYS` | `180` | Giorni per cui viene conservato il registro delle modifiche. Una volta al giorno le voci più vecchie vengono rimosse; un dispositivo rimasto assente più a lungo carica i dati attuali invece delle modifiche che si è perso. `0` conserva il registro per sempre. |
+| `BEEHIVE_SYNC_MIN_PROTOCOL` | `0` | Versione minima del protocollo di sincronizzazione che il server accetta dalle app. `0` accetta anche le app 0.4.x installate; `1` le rifiuta, e non possono sincronizzarsi finché non sono state aggiornate. |
 
-Esegui esattamente un'istanza del server per database. L'esecuzione di più repliche sullo stesso database non è supportata.
+Esegui esattamente un'istanza del server per database. L'esecuzione di più repliche sullo stesso database non è supportata: la compattazione giornaliera del registro delle modifiche e la manutenzione delle foto girano all'interno del processo del server.
+
+Le voci presenti al momento dell'aggiornamento a 0.5.0 contano come ricevute il giorno dell'aggiornamento, quindi, con la conservazione predefinita, le prime voci vengono rimosse non prima di 180 giorni dopo l'aggiornamento. Un'app 0.4.x la cui ultima sincronizzazione è più vecchia di quanto il registro conserva ancora non può sincronizzarsi finché non viene aggiornata.
 
 ## Database
 
@@ -127,20 +131,19 @@ Per la scelta del driver, l'ottimizzazione e le note sulla migrazione, consulta 
 
 ## Archiviazione blob
 
-Le foto e gli altri allegati vengono archiviati come blob, sul filesystem locale o in un object store compatibile con S3.
+Le immagini a piena risoluzione delle foto vengono archiviate come blob, sul filesystem locale o in un object store compatibile con S3. Un backup è il database più questa directory o questo bucket.
 
 | Variabile          | Predefinito        | Descrizione                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | dal profilo   | Backend di archiviazione: `fs` (filesystem locale) o `minio` (MinIO / S3).       |
 | `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory per i blob quando `BEEHIVE_BLOB_BACKEND=fs`.                             |
-| `BEEHIVE_BLOB_PUBLIC_URL` | `<BEEHIVE_PUBLIC_BASE_URL>/files` | URL di base da cui i file archiviati vengono serviti ai browser. Cambialo solo se un proxy o una CDN serve la directory dei blob da un altro indirizzo. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host e porta dell'endpoint MinIO / S3.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Chiave di accesso per l'object store.                                        |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Chiave segreta per l'object store.                                        |
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nome del bucket in cui vengono archiviati i blob.                                     |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Imposta `true` per connetterti all'endpoint tramite HTTPS.                       |
 
-Le variabili `MINIO_*` vengono usate solo quando `BEEHIVE_BLOB_BACKEND=minio`. Per indicazioni complete, consulta [Archiviazione](./storage.md).
+Le variabili `MINIO_*` vengono usate solo quando `BEEHIVE_BLOB_BACKEND=minio`. `BEEHIVE_BLOB_PUBLIC_URL` non viene più usata: le immagini vengono servite solo ai membri che hanno effettuato l'accesso, sotto `/photos/`, e il server avvisa all'avvio quando l'impostazione è presente. Per indicazioni complete, consulta [Archiviazione](./storage.md).
 
 ## Sessione e autenticazione
 
@@ -166,7 +169,7 @@ che si registra. Consulta [Autenticazione](./authentication.md).
 | `BEEHIVE_ADMIN_PASSWORD` | (vuoto) | Password dell'amministratore dell'istanza, almeno 8 caratteri. Fa fede a ogni avvio: la password memorizzata viene reimpostata a questo valore, il che funge anche da recupero della password. |
 | `BEEHIVE_REGISTRATION` | `true` | Registrazione autonoma aperta. Imposta `false` per un'istanza solo su invito: a parte l'amministratore configurato, gli account possono essere creati solo tramite link di invito, e la schermata di accesso mostra un avviso che l'istanza è solo su invito. |
 | `BEEHIVE_EMAIL_VERIFICATION` | `false` | Richiede la conferma via email prima che un nuovo account possa accedere. Richiede `BEEHIVE_SMTP_HOST`; il server rifiuta di avviarsi con la verifica attiva e senza server di posta. |
-| `BEEHIVE_SMTP_HOST` | (vuoto) | Server SMTP per le email di verifica e di invito. Se vuoto, non viene inviata alcuna email e l'amministratore copia i link di invito dalle Impostazioni. I link non vengono mai scritti nel log. |
+| `BEEHIVE_SMTP_HOST` | (vuoto) | Server SMTP per le email di verifica, di invito e di reimpostazione della password. Se vuoto, non viene inviata alcuna email: l'amministratore copia i link di invito dalle Impostazioni, e solo l'amministratore dell'istanza può creare lì i link di reimpostazione della password. I link non vengono mai scritti nel log. |
 | `BEEHIVE_SMTP_PORT` | `587` | Porta SMTP. |
 | `BEEHIVE_SMTP_USER` | (vuoto) | Nome utente SMTP. |
 | `BEEHIVE_SMTP_PASS` | (vuoto) | Password SMTP. |

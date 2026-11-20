@@ -97,8 +97,12 @@ Avec les valeurs par défaut, un navigateur qui ouvre une carte demande les tuil
 | Variable  | Défaut   | Description                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `BEEHIVE_NODE_ID` | aléatoire à chaque démarrage | Identifiant d'horloge apposé sur les modifications que le serveur écrit lui-même (appels d'API). Il n'y a normalement aucune raison de le définir. |
+| `BEEHIVE_CHANGELOG_RETENTION_DAYS` | `180` | Nombre de jours de conservation du journal des modifications. Une fois par jour, les entrées plus anciennes sont supprimées ; un appareil absent plus longtemps charge les données actuelles au lieu des modifications qu'il a manquées. `0` conserve le journal indéfiniment. |
+| `BEEHIVE_SYNC_MIN_PROTOCOL` | `0` | Version la plus basse du protocole de synchronisation que le serveur accepte des applications. `0` accepte aussi les applications 0.4.x installées ; `1` les refuse, et elles ne peuvent plus se synchroniser tant qu'elles n'ont pas été mises à jour. |
 
-Exécutez exactement une instance du serveur par base de données. L'exécution de plusieurs réplicas sur une même base de données n'est pas prise en charge.
+Exécutez exactement une instance du serveur par base de données. L'exécution de plusieurs réplicas sur une même base de données n'est pas prise en charge : le compactage quotidien du journal des modifications et l'entretien des photos s'exécutent dans le processus du serveur.
+
+Les entrées qui existent au moment de la mise à niveau vers la 0.5.0 sont considérées comme reçues le jour de la mise à niveau ; avec la conservation par défaut, les premières entrées sont donc supprimées au plus tôt 180 jours après celle-ci. Une application 0.4.x dont la dernière synchronisation est plus ancienne que ce que le journal conserve encore ne peut plus se synchroniser tant qu'elle n'a pas été mise à jour.
 
 ## Base de données
 
@@ -127,20 +131,19 @@ Pour le choix du pilote, l'optimisation et les notes de migration, consultez [Ba
 
 ## Stockage d'objets
 
-Les photos et autres pièces jointes sont stockées sous forme de blobs, soit sur le système de fichiers local, soit dans un magasin d'objets compatible S3.
+Les images en taille réelle des photos sont stockées sous forme de blobs, soit sur le système de fichiers local, soit dans un magasin d'objets compatible S3. Une sauvegarde, c'est la base de données plus ce répertoire ou ce bucket.
 
 | Variable          | Défaut         | Description                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | selon le profil | Backend de stockage : `fs` (système de fichiers local) ou `minio` (MinIO / S3). |
 | `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Répertoire des blobs lorsque `BEEHIVE_BLOB_BACKEND=fs`.                         |
-| `BEEHIVE_BLOB_PUBLIC_URL` | `<BEEHIVE_PUBLIC_BASE_URL>/files` | URL de base sous laquelle les fichiers stockés sont servis aux navigateurs. Ne la changez que si un proxy ou un CDN sert le répertoire des blobs depuis une autre adresse. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Hôte et port du point de terminaison MinIO / S3.                       |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Clé d'accès du magasin d'objets.                                       |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Clé secrète du magasin d'objets.                                       |
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nom du bucket où sont stockés les blobs.                               |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Définissez `true` pour vous connecter au point de terminaison via HTTPS. |
 
-Les variables `MINIO_*` ne sont utilisées que lorsque `BEEHIVE_BLOB_BACKEND=minio`. Pour un accompagnement complet, consultez [Stockage](./storage.md).
+Les variables `MINIO_*` ne sont utilisées que lorsque `BEEHIVE_BLOB_BACKEND=minio`. `BEEHIVE_BLOB_PUBLIC_URL` n'est plus utilisée : les images ne sont servies qu'aux membres connectés, sous `/photos/`, et le serveur émet un avertissement au démarrage si le paramètre est présent. Pour un accompagnement complet, consultez [Stockage](./storage.md).
 
 ## Session et authentification
 
@@ -166,7 +169,7 @@ personne à s'inscrire. Consultez [Authentification](./authentication.md).
 | `BEEHIVE_ADMIN_PASSWORD` | (vide) | Mot de passe de l'administrateur de l'instance, 8 caractères au minimum. Fait foi à chaque démarrage : le mot de passe stocké est réinitialisé à cette valeur, ce qui sert aussi de récupération de mot de passe. |
 | `BEEHIVE_REGISTRATION` | `true` | Inscription libre. Réglez sur `false` pour une instance sur invitation uniquement : en dehors de l'administrateur configuré, les comptes ne peuvent être créés que via des liens d'invitation, et l'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement. |
 | `BEEHIVE_EMAIL_VERIFICATION` | `false` | Exige une confirmation par e-mail avant qu'un nouveau compte puisse se connecter. Nécessite `BEEHIVE_SMTP_HOST` ; le serveur refuse de démarrer si la vérification est activée sans serveur de messagerie. |
-| `BEEHIVE_SMTP_HOST` | (vide) | Serveur SMTP pour les e-mails de vérification et d'invitation. Si vide, aucun e-mail n'est envoyé et l'administrateur copie les liens d'invitation depuis les Paramètres. Les liens ne sont jamais écrits dans le journal. |
+| `BEEHIVE_SMTP_HOST` | (vide) | Serveur SMTP pour les e-mails de vérification, d'invitation et de réinitialisation de mot de passe. Si vide, aucun e-mail n'est envoyé : l'administrateur copie les liens d'invitation depuis les Paramètres, et seul l'administrateur de l'instance peut y créer des liens de réinitialisation de mot de passe. Les liens ne sont jamais écrits dans le journal. |
 | `BEEHIVE_SMTP_PORT` | `587` | Port SMTP. |
 | `BEEHIVE_SMTP_USER` | (vide) | Nom d'utilisateur SMTP. |
 | `BEEHIVE_SMTP_PASS` | (vide) | Mot de passe SMTP. |

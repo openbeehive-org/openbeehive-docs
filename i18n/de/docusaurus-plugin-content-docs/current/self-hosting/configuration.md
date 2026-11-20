@@ -97,8 +97,12 @@ Mit den Standardwerten fordert ein Browser, der eine Karte öffnet, Kacheln von 
 | Variable  | Standard | Beschreibung                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `BEEHIVE_NODE_ID` | bei jedem Start zufällig | Uhr-ID, mit der Änderungen gestempelt werden, die der Server selbst schreibt (API-Aufrufe). Normalerweise gibt es keinen Grund, sie zu setzen. |
+| `BEEHIVE_CHANGELOG_RETENTION_DAYS` | `180` | Tage, die das Änderungsprotokoll aufbewahrt wird. Einmal am Tag werden ältere Einträge entfernt; ein Gerät, das länger weg war, lädt den aktuellen Stand statt der verpassten Änderungen. `0` behält das Protokoll für immer. |
+| `BEEHIVE_SYNC_MIN_PROTOCOL` | `0` | Niedrigste Sync-Protokollversion, die der Server von Apps annimmt. `0` nimmt auch installierte 0.4.x-Apps an; `1` lehnt sie ab, und sie können erst synchronisieren, wenn sie aktualisiert sind. |
 
-Betreibe genau eine Server-Instanz pro Datenbank. Mehrere Replikate gegen eine Datenbank zu betreiben, wird nicht unterstützt.
+Betreibe genau eine Server-Instanz pro Datenbank. Mehrere Replikate gegen eine Datenbank zu betreiben, wird nicht unterstützt: Das tägliche Verdichten des Änderungsprotokolls und die Foto-Pflege laufen im Serverprozess.
+
+Einträge, die beim Upgrade auf 0.5.0 schon vorhanden sind, gelten als am Tag des Upgrades empfangen; mit der Standard-Aufbewahrung werden die ersten Einträge also frühestens 180 Tage nach dem Upgrade entfernt. Eine 0.4.x-App, deren letzte Synchronisierung älter ist als das, was das Protokoll noch enthält, kann erst synchronisieren, wenn sie aktualisiert ist.
 
 ## Datenbank
 
@@ -127,20 +131,19 @@ Für Treiberauswahl, Tuning und Migrationshinweise siehe [Datenbanken](./databas
 
 ## Blob-Speicher
 
-Fotos und andere Anhänge werden als Blobs gespeichert, entweder auf dem lokalen Dateisystem oder in einem S3-kompatiblen Objektspeicher.
+Die Bilder von Fotos in voller Größe werden als Blobs gespeichert, entweder auf dem lokalen Dateisystem oder in einem S3-kompatiblen Objektspeicher. Ein Backup besteht aus der Datenbank plus diesem Verzeichnis oder Bucket.
 
 | Variable          | Standard       | Beschreibung                                                            |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | aus Profil     | Speicher-Backend: `fs` (lokales Dateisystem) oder `minio` (MinIO / S3). |
 | `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Verzeichnis für Blobs, wenn `BEEHIVE_BLOB_BACKEND=fs`.                          |
-| `BEEHIVE_BLOB_PUBLIC_URL` | `<BEEHIVE_PUBLIC_BASE_URL>/files` | Basis-URL, unter der gespeicherte Dateien an Browser ausgeliefert werden. Nur ändern, wenn ein Proxy oder CDN das Blob-Verzeichnis von woanders ausliefert. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host und Port des MinIO- / S3-Endpunkts.                               |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Zugriffsschlüssel für den Objektspeicher.                              |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Geheimer Schlüssel für den Objektspeicher.                             |
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Bucket-Name, in dem Blobs gespeichert werden.                          |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Setze `true`, um über HTTPS mit dem Endpunkt zu verbinden.             |
 
-Die `MINIO_*`-Variablen werden nur verwendet, wenn `BEEHIVE_BLOB_BACKEND=minio`. Für vollständige Hinweise siehe [Speicher](./storage.md).
+Die `MINIO_*`-Variablen werden nur verwendet, wenn `BEEHIVE_BLOB_BACKEND=minio`. `BEEHIVE_BLOB_PUBLIC_URL` wird nicht mehr verwendet: Bilder werden nur angemeldeten Mitgliedern unter `/photos/` ausgeliefert, und der Server warnt beim Start, wenn die Einstellung gesetzt ist. Für vollständige Hinweise siehe [Speicher](./storage.md).
 
 ## Sitzung und Authentifizierung
 
@@ -166,7 +169,7 @@ die sich registriert. Siehe [Authentifizierung](./authentication.md).
 | `BEEHIVE_ADMIN_PASSWORD` | (leer) | Passwort des Instanz-Admins, mindestens 8 Zeichen. Bei jedem Start maßgeblich: Das gespeicherte Passwort wird auf diesen Wert zurückgesetzt – das dient zugleich als Passwort-Wiederherstellung. |
 | `BEEHIVE_REGISTRATION` | `true` | Offene Selbstregistrierung. Auf `false` setzen für eine Instanz nur auf Einladung: Abgesehen vom konfigurierten Admin können Konten nur über Einladungslinks erstellt werden, und der Anmeldebildschirm zeigt einen entsprechenden Hinweis. |
 | `BEEHIVE_EMAIL_VERIFICATION` | `false` | E-Mail-Bestätigung verlangen, bevor sich ein neues Konto anmelden kann. Braucht `BEEHIVE_SMTP_HOST`; mit aktivierter Bestätigung und ohne Mailserver startet der Server nicht. |
-| `BEEHIVE_SMTP_HOST` | (leer) | SMTP-Server für Bestätigungs- und Einladungs-E-Mails. Wenn leer, wird keine E-Mail versendet, und der Admin kopiert Einladungslinks aus den Einstellungen. Links werden nie ins Log geschrieben. |
+| `BEEHIVE_SMTP_HOST` | (leer) | SMTP-Server für Bestätigungs-, Einladungs- und Passwort-Reset-E-Mails. Wenn leer, wird keine E-Mail versendet: Der Admin kopiert Einladungslinks aus den Einstellungen, und nur der Instanz-Admin kann dort Links zum Zurücksetzen von Passwörtern erstellen. Links werden nie ins Log geschrieben. |
 | `BEEHIVE_SMTP_PORT` | `587` | SMTP-Port. |
 | `BEEHIVE_SMTP_USER` | (leer) | SMTP-Benutzername. |
 | `BEEHIVE_SMTP_PASS` | (leer) | SMTP-Passwort. |

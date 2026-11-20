@@ -115,6 +115,15 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 Los enlaces de invitación y de verificación nunca se escriben en el registro del servidor. Sin `BEEHIVE_SMTP_HOST` no se envía ningún correo de invitación; el admin que creó una invitación copia su enlace desde Ajustes → Espacios y lo hace llegar a su destinatario.
 :::
 
+### Cambiar y restablecer contraseñas \{#password-reset}
+
+Los usuarios con la sesión iniciada cambian su contraseña en **Ajustes → Cuenta → Contraseña**; esto cierra su sesión en todos sus demás dispositivos. Quien ha olvidado la contraseña tiene dos formas de recuperarla, según haya o no correo:
+
+- **Con `BEEHIVE_SMTP_HOST`**, "¿Olvidaste tu contraseña?" en la página de inicio de sesión envía por correo un enlace válido durante una hora y de un solo uso. La respuesta es la misma tenga o no cuenta la dirección. Las solicitudes se limitan igual que los inicios de sesión.
+- **Sin correo**, la página indica que hay que pedírselo al administrador. El administrador de la instancia crea el enlace en **Ajustes → Restablecer la contraseña de un usuario** y lo entrega; los admins de un espacio no pueden hacerlo.
+
+Establecer una contraseña nueva mediante un enlace cierra la sesión de la cuenta en todas partes. La contraseña del administrador de la instancia es la de `BEEHIVE_ADMIN_PASSWORD`: no se puede cambiar en la aplicación ni mediante un enlace de restablecimiento. La contraseña de la cuenta de demostración tampoco se puede cambiar.
+
 ## Modo 3: passkeys (WebAuthn)
 
 Las passkeys permiten a la gente iniciar sesión con una huella dactilar, un escaneo facial, el PIN del dispositivo o una llave de seguridad de hardware.
@@ -187,9 +196,17 @@ https://beehive.example.com/auth/callback
 
 Errores comunes: el esquema debe coincidir (`https` en producción), sin barra final a menos que tu valor la tenga, y usa tu dominio público en lugar de un nombre de host interno. Un error de "redirect mismatch" significa que los dos valores difieren en algún punto.
 
+## Cuentas \{#accounts}
+
+Cada persona elimina su propia cuenta en **Ajustes → Eliminar la cuenta**. Los espacios en los que es el único miembro se eliminan con ella. Mientras sea el único admin de un espacio que tiene otros miembros, la eliminación se rechaza hasta que nombre admin a otra persona o elimine ese espacio. Sus registros en espacios compartidos se conservan, atribuidos a un usuario eliminado. La eliminación se confirma con la contraseña, una passkey o, en las cuentas que solo inician sesión a través de un proveedor, un inicio de sesión de hace menos de 5 minutos. El administrador de la instancia de `BEEHIVE_ADMIN_EMAIL` y la cuenta de demostración no se pueden eliminar en la aplicación.
+
+Las direcciones de correo son únicas sin distinguir mayúsculas y minúsculas. Dos cuentas de versiones anteriores cuyas direcciones solo se diferencian en mayúsculas y minúsculas siguen funcionando, pero el inicio de sesión por correo, las invitaciones y los restablecimientos de contraseña solo llegan a una de ellas. El registro del servidor indica cada uno de estos pares en cada arranque; decide qué cuenta conserva la dirección y elimina la otra o asígnale otra dirección.
+
+Los enlaces que un navegador abre como página (`/auth/verify` desde un correo de verificación, `/auth/login` y `/auth/callback` de un inicio de sesión con proveedor) redirigen el navegador a la página de inicio de sesión con un mensaje de error traducido cuando algo falla, en lugar de mostrar JSON.
+
 ## Activar el inicio de sesión en una instancia existente de un solo usuario \{#single-user-to-login}
 
-Los registros creados sin inicio de sesión pertenecen a un espacio local fijo que ninguna cuenta puede ver. Cuando el servidor arranca con el inicio de sesión por correo y contraseña habilitado y encuentra registros así, los traslada al espacio del administrador de la instancia y anota en el registro del servidor cuántas filas ha movido. Inicia sesión como administrador para verlos. El traslado ocurre una sola vez y no se puede deshacer volviendo a desactivar el inicio de sesión; haz antes una [copia de seguridad](./backups.md).
+Los registros creados sin inicio de sesión pertenecen a un espacio local fijo que ninguna cuenta puede ver. Cuando el servidor arranca con el inicio de sesión por correo y contraseña habilitado y encuentra registros así, los traslada al espacio del administrador de la instancia y anota en el registro del servidor cuántas filas ha movido. Las unidades y el idioma elegidos sin inicio de sesión pasan a ser los ajustes del administrador. Inicia sesión como administrador para verlos. El traslado ocurre una sola vez y no se puede deshacer volviendo a desactivar el inicio de sesión; haz antes una [copia de seguridad](./backups.md).
 
 Dos cosas que conviene saber:
 

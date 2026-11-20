@@ -115,6 +115,15 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 Einladungs- und Verifizierungslinks werden nie in das Server-Log geschrieben. Ohne `BEEHIVE_SMTP_HOST` wird keine Einladungs-E-Mail versendet; der Admin, der eine Einladung erstellt hat, kopiert ihren Link unter Einstellungen → Arbeitsbereiche und gibt ihn weiter.
 :::
 
+### Passwörter ändern und zurücksetzen \{#password-reset}
+
+Angemeldete Nutzer ändern ihr Passwort unter **Einstellungen → Konto → Passwort**; dabei werden sie auf allen ihren anderen Geräten abgemeldet. Wer das Passwort vergessen hat, kommt je nach Mailversand auf zwei Wegen zurück:
+
+- **Mit `BEEHIVE_SMTP_HOST`** schickt "Passwort vergessen?" auf der Anmeldeseite einen Link per E-Mail, der eine Stunde gilt und einmal funktioniert. Die Antwort ist dieselbe, ob es zu der Adresse ein Konto gibt oder nicht. Anfragen werden wie Anmeldungen gedrosselt.
+- **Ohne Mailversand** sagt die Seite, man solle sich an den Administrator wenden. Der Instanz-Admin erstellt den Link unter **Einstellungen → Passwort eines Nutzers zurücksetzen** und gibt ihn weiter; Arbeitsbereichs-Admins können das nicht.
+
+Wer über einen Link ein neues Passwort festlegt, wird überall abgemeldet. Das Passwort des Instanz-Admins ist das aus `BEEHIVE_ADMIN_PASSWORD`: Es lässt sich weder in der App noch über einen Reset-Link ändern. Auch das Passwort des Demo-Kontos lässt sich nicht ändern.
+
 ## Modus 3: Passkeys (WebAuthn)
 
 Passkeys lassen Personen sich mit einem Fingerabdruck, Gesichtsscan, einer Geräte-PIN oder einem Hardware-Sicherheitsschlüssel anmelden.
@@ -187,9 +196,17 @@ https://beehive.example.com/auth/callback
 
 Häufige Stolperfallen: Das Schema muss übereinstimmen (`https` in der Produktion), kein abschließender Schrägstrich, es sei denn, dein Wert hat einen, und verwende deine öffentliche Domain statt eines internen Hostnamens. Ein "redirect mismatch"-Fehler bedeutet, dass sich die beiden Werte irgendwo unterscheiden.
 
+## Konten \{#accounts}
+
+Personen löschen ihr eigenes Konto unter **Einstellungen → Konto löschen**. Arbeitsbereiche, in denen sie das einzige Mitglied sind, werden mitgelöscht. Solange sie der einzige Admin eines Arbeitsbereichs mit weiteren Mitgliedern sind, wird das Löschen abgelehnt, bis sie jemand anderen zum Admin machen oder diesen Arbeitsbereich löschen. Ihre Aufzeichnungen in gemeinsamen Arbeitsbereichen bleiben erhalten und werden einem gelöschten Nutzer zugeschrieben. Bestätigt wird das Löschen mit dem Passwort, einem Passkey oder, bei Konten, die sich nur über einen Provider anmelden, mit einer Anmeldung, die weniger als 5 Minuten zurückliegt. Der Instanz-Admin aus `BEEHIVE_ADMIN_EMAIL` und das Demo-Konto lassen sich in der App nicht löschen.
+
+E-Mail-Adressen sind unabhängig von Groß- und Kleinschreibung eindeutig. Zwei Konten aus früheren Versionen, deren Adressen sich nur in der Groß- und Kleinschreibung unterscheiden, funktionieren beide weiter, aber E-Mail-Anmeldung, Einladungen und Passwort-Resets erreichen nur eines davon. Das Server-Log nennt jedes solche Paar bei jedem Start; entscheide, welches Konto die Adresse behält, und lösche das andere oder gib ihm eine andere Adresse.
+
+Links, die ein Browser als Seite öffnet (`/auth/verify` aus einer Verifizierungs-E-Mail, `/auth/login` und `/auth/callback` einer Provider-Anmeldung), schicken den Browser bei einem Fehler mit einer übersetzten Fehlermeldung zur Anmeldeseite, statt JSON anzuzeigen.
+
 ## Anmeldung für eine bestehende Einzelnutzer-Instanz einschalten \{#single-user-to-login}
 
-Aufzeichnungen, die ohne Anmeldung entstanden sind, gehören zu einem festen lokalen Arbeitsbereich, den kein Konto sehen kann. Wenn der Server mit aktivierter E-Mail-/Passwort-Anmeldung startet und solche Aufzeichnungen findet, verschiebt er sie in den Arbeitsbereich des Instanz-Admins und protokolliert, wie viele Zeilen er verschoben hat. Melde dich als Admin an, um sie zu sehen. Das Verschieben geschieht einmal und lässt sich nicht rückgängig machen, indem du die Anmeldung wieder ausschaltest; erstelle vorher ein [Backup](./backups.md).
+Aufzeichnungen, die ohne Anmeldung entstanden sind, gehören zu einem festen lokalen Arbeitsbereich, den kein Konto sehen kann. Wenn der Server mit aktivierter E-Mail-/Passwort-Anmeldung startet und solche Aufzeichnungen findet, verschiebt er sie in den Arbeitsbereich des Instanz-Admins und protokolliert, wie viele Zeilen er verschoben hat. Einheiten und eine Sprache, die ohne Anmeldung gewählt wurden, werden zu den Einstellungen des Admins. Melde dich als Admin an, um sie zu sehen. Das Verschieben geschieht einmal und lässt sich nicht rückgängig machen, indem du die Anmeldung wieder ausschaltest; erstelle vorher ein [Backup](./backups.md).
 
 Zwei Dinge solltest du wissen:
 

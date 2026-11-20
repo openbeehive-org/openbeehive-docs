@@ -115,6 +115,15 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 I link di invito e di verifica non vengono mai scritti nel log del server. Senza `BEEHIVE_SMTP_HOST` non viene inviata alcuna email di invito; l'amministratore che ha creato un invito ne copia il link da Impostazioni → Spazi e lo inoltra.
 :::
 
+### Cambiare e reimpostare le password \{#password-reset}
+
+Chi ha effettuato l'accesso cambia la propria password da **Impostazioni → Account → Password**; così viene disconnesso da tutti gli altri suoi dispositivi. Chi ha dimenticato la password ha due modi per rientrare, a seconda della posta:
+
+- **Con `BEEHIVE_SMTP_HOST`**, "Password dimenticata?" nella pagina di accesso invia per email un link valido per un'ora e utilizzabile una sola volta. La risposta è la stessa sia che l'indirizzo abbia un account sia che non lo abbia. Le richieste sono limitate come gli accessi.
+- **Senza posta**, la pagina invita a rivolgersi all'amministratore. L'amministratore dell'istanza crea il link da **Impostazioni → Reimposta la password di un utente** e lo consegna; gli amministratori di uno spazio non possono farlo.
+
+Impostare una nuova password tramite un link disconnette l'account ovunque. La password dell'amministratore dell'istanza è quella di `BEEHIVE_ADMIN_PASSWORD`: non può essere cambiata nell'app né con un link di reimpostazione. Nemmeno la password dell'account demo può essere cambiata.
+
 ## Modalità 3: passkey (WebAuthn)
 
 Le passkey permettono alle persone di accedere con un'impronta digitale, una scansione del volto, un PIN del dispositivo o una chiave di sicurezza hardware.
@@ -187,9 +196,17 @@ https://beehive.example.com/auth/callback
 
 Errori comuni: lo schema deve corrispondere (`https` in produzione), nessuna barra finale a meno che il tuo valore non ne abbia una, e usa il tuo dominio pubblico anziché un hostname interno. Un errore di "redirect mismatch" significa che i due valori differiscono da qualche parte.
 
+## Account \{#accounts}
+
+Ognuno elimina il proprio account da **Impostazioni → Elimina l’account**. Gli spazi di cui è l'unico membro vengono eliminati insieme all'account. Se è l'unico amministratore di uno spazio che ha altri membri, l'eliminazione viene rifiutata finché non nomina amministratore qualcun altro o non elimina quello spazio. I suoi dati negli spazi condivisi restano, attribuiti a un utente eliminato. L'eliminazione si conferma con la password, con una passkey oppure, per gli account che accedono solo tramite un provider, con un accesso avvenuto meno di 5 minuti prima. L'amministratore dell'istanza indicato in `BEEHIVE_ADMIN_EMAIL` e l'account demo non possono essere eliminati nell'app.
+
+Gli indirizzi email sono univoci indipendentemente da maiuscole e minuscole. Due account di versioni precedenti i cui indirizzi differiscono solo per maiuscole e minuscole continuano entrambi a funzionare, ma l'accesso via email, gli inviti e la reimpostazione della password raggiungono solo uno dei due. Il log del server indica ogni coppia di questo tipo a ogni avvio; decidi quale account tiene l'indirizzo ed elimina l'altro, oppure assegnagli un altro indirizzo.
+
+I link che un browser apre come pagina (`/auth/verify` da un'email di verifica, `/auth/login` e `/auth/callback` di un accesso tramite provider) in caso di problemi rimandano il browser alla pagina di accesso con un messaggio di errore tradotto, invece di mostrare JSON.
+
 ## Attivare l'accesso su un'istanza a utente singolo esistente \{#single-user-to-login}
 
-I dati creati senza accesso appartengono a uno spazio locale fisso che nessun account può vedere. Quando il server si avvia con l'accesso email/password abilitato e trova dati di questo tipo, li sposta nello spazio dell'amministratore dell'istanza e scrive nel log quante righe ha spostato. Accedi come amministratore per vederli. Lo spostamento avviene una sola volta e non può essere annullato disattivando di nuovo l'accesso; fai prima un [backup](./backups.md).
+I dati creati senza accesso appartengono a uno spazio locale fisso che nessun account può vedere. Quando il server si avvia con l'accesso email/password abilitato e trova dati di questo tipo, li sposta nello spazio dell'amministratore dell'istanza e scrive nel log quante righe ha spostato. Le unità e la lingua scelte senza accesso diventano le impostazioni dell'amministratore. Accedi come amministratore per vederli. Lo spostamento avviene una sola volta e non può essere annullato disattivando di nuovo l'accesso; fai prima un [backup](./backups.md).
 
 Due cose da sapere:
 

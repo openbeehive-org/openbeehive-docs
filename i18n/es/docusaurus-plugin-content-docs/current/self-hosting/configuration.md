@@ -97,8 +97,12 @@ Con los valores predeterminados, un navegador que abre un mapa solicita teselas 
 | Variable  | Predeterminado | Descripción                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `BEEHIVE_NODE_ID` | aleatorio en cada arranque | Id de reloj con el que se marcan los cambios que el propio servidor escribe (llamadas a la API). Normalmente no hay motivo para establecerlo. |
+| `BEEHIVE_CHANGELOG_RETENTION_DAYS` | `180` | Días que se conserva el registro de cambios. Una vez al día se eliminan las entradas más antiguas; un dispositivo que ha estado ausente más tiempo carga los datos actuales en lugar de los cambios que se perdió. `0` conserva el registro para siempre. |
+| `BEEHIVE_SYNC_MIN_PROTOCOL` | `0` | Versión más baja del protocolo de sincronización que el servidor acepta de las aplicaciones. `0` acepta también las aplicaciones 0.4.x instaladas; `1` las rechaza, y no pueden sincronizar hasta que se hayan actualizado. |
 
-Ejecuta exactamente una instancia del servidor por base de datos. No se admite ejecutar varias réplicas contra una misma base de datos.
+Ejecuta exactamente una instancia del servidor por base de datos. No se admite ejecutar varias réplicas contra una misma base de datos: la compactación diaria del registro de cambios y el mantenimiento de las fotos se ejecutan dentro del proceso del servidor.
+
+Las entradas que existen cuando actualizas a 0.5.0 cuentan como recibidas el día de la actualización, así que, con la retención por defecto, las primeras entradas se eliminan como pronto 180 días después de la actualización. Una aplicación 0.4.x cuya última sincronización sea más antigua de lo que aún conserva el registro no puede sincronizar hasta que se actualice.
 
 ## Base de datos
 
@@ -127,20 +131,19 @@ Para la elección de controlador, el ajuste fino y las notas de migración, cons
 
 ## Almacenamiento de blobs
 
-Las fotos y otros archivos adjuntos se guardan como blobs, ya sea en el sistema de archivos local o en un almacén de objetos compatible con S3.
+Las imágenes a tamaño completo de las fotos se guardan como blobs, ya sea en el sistema de archivos local o en un almacén de objetos compatible con S3. Una copia de seguridad es la base de datos más este directorio o bucket.
 
 | Variable          | Predeterminado | Descripción                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | desde el perfil | Backend de almacenamiento: `fs` (sistema de archivos local) o `minio` (MinIO / S3). |
 | `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directorio para los blobs cuando `BEEHIVE_BLOB_BACKEND=fs`.                     |
-| `BEEHIVE_BLOB_PUBLIC_URL` | `<BEEHIVE_PUBLIC_BASE_URL>/files` | URL base bajo la que se sirven a los navegadores los archivos almacenados. Cámbiala solo si un proxy o CDN sirve el directorio de blobs desde otra dirección. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host y puerto del endpoint de MinIO / S3.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Clave de acceso del almacén de objetos.                                 |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Clave secreta del almacén de objetos.                                   |
 | `BEEHIVE_MINIO_BUCKET`    | `openbeehive` | Nombre del bucket donde se guardan los blobs.                           |
 | `BEEHIVE_MINIO_USE_SSL`   | `false` | Establécelo en `true` para conectarte al endpoint mediante HTTPS.       |
 
-Las variables `MINIO_*` solo se usan cuando `BEEHIVE_BLOB_BACKEND=minio`. Para una guía completa, consulta [Almacenamiento](./storage.md).
+Las variables `MINIO_*` solo se usan cuando `BEEHIVE_BLOB_BACKEND=minio`. `BEEHIVE_BLOB_PUBLIC_URL` ya no se usa: las imágenes se sirven solo a los miembros con la sesión iniciada bajo `/photos/`, y el servidor avisa al arrancar si el ajuste está presente. Para una guía completa, consulta [Almacenamiento](./storage.md).
 
 ## Sesión y autenticación
 
@@ -166,7 +169,7 @@ persona que se registra. Consulta [Autenticación](./authentication.md).
 | `BEEHIVE_ADMIN_PASSWORD` | (vacío) | Contraseña del administrador de la instancia, de al menos 8 caracteres. Es la que manda en cada arranque: la contraseña almacenada se restablece a este valor, lo que sirve también como recuperación de contraseña. |
 | `BEEHIVE_REGISTRATION` | `true` | Registro abierto. Establécelo en `false` para una instancia solo por invitación: aparte del administrador configurado, las cuentas solo pueden crearse mediante enlaces de invitación, y la pantalla de inicio de sesión muestra un aviso de que la instancia es solo por invitación. |
 | `BEEHIVE_EMAIL_VERIFICATION` | `false` | Exige la confirmación del correo electrónico antes de que una cuenta nueva pueda iniciar sesión. Necesita `BEEHIVE_SMTP_HOST`; el servidor se niega a arrancar con la verificación activada y sin servidor de correo. |
-| `BEEHIVE_SMTP_HOST` | (vacío) | Servidor SMTP para los correos de verificación e invitación. Si está vacío, no se envía ningún correo y el administrador copia los enlaces de invitación desde Ajustes. Los enlaces nunca se escriben en el registro del servidor. |
+| `BEEHIVE_SMTP_HOST` | (vacío) | Servidor SMTP para los correos de verificación, invitación y restablecimiento de contraseña. Si está vacío, no se envía ningún correo: el administrador copia los enlaces de invitación desde Ajustes, y solo el administrador de la instancia puede crear allí enlaces de restablecimiento de contraseña. Los enlaces nunca se escriben en el registro del servidor. |
 | `BEEHIVE_SMTP_PORT` | `587` | Puerto SMTP. |
 | `BEEHIVE_SMTP_USER` | (vacío) | Nombre de usuario de SMTP. |
 | `BEEHIVE_SMTP_PASS` | (vacío) | Contraseña de SMTP. |

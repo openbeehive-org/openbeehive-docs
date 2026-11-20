@@ -5,9 +5,9 @@ title: "Almacenamiento de blobs"
 
 # Almacenamiento de blobs
 
-Openbeehive almacena tus registros en una base de datos, pero las fotos y otros
-adjuntos binarios residen por separado en el **almacenamiento de blobs**. Esto mantiene la
-base de datos ligera y te permite escalar el almacenamiento de imágenes de forma independiente.
+Openbeehive almacena tus registros en una base de datos, pero las imágenes a tamaño completo de las fotos residen por separado en el **almacenamiento de blobs**. Esto mantiene la base de datos ligera y te permite escalar el almacenamiento de imágenes de forma independiente.
+
+Una foto tiene dos partes. Su registro, con una miniatura pequeña de unos 200 píxeles, se guarda en la base de datos y se sincroniza con todos los dispositivos como cualquier otro registro. Su imagen a tamaño completo (como máximo 2048 píxeles en el lado más largo y 5 MiB) se guarda en el almacenamiento de blobs bajo un prefijo por espacio (`<workspace>/photos/...`). El servidor la sirve solo a los miembros de ese espacio con la sesión iniciada, a través de `/photos/<id>`; el almacén de blobs en sí nunca se expone. Eliminar una foto elimina su imagen, y eliminar un espacio elimina todo lo que hay bajo su prefijo.
 
 Eliges un backend con la variable de entorno `BEEHIVE_BLOB_BACKEND`. Hay dos
 opciones: el **sistema de archivos** local y un almacén de objetos
@@ -43,10 +43,7 @@ BEEHIVE_BLOB_DIR=./data/blobs
 trabajo del proceso del servidor, así que para resultados predecibles en un servidor, usa una
 ruta absoluta como `/var/lib/openbeehive/blobs`.
 
-Los navegadores obtienen los archivos almacenados desde `<BEEHIVE_PUBLIC_BASE_URL>/files`. Si
-un proxy inverso o una CDN sirve ese directorio desde otra dirección, establece
-`BEEHIVE_BLOB_PUBLIC_URL` con la URL base que expone; el servidor la usa cuando entrega los
-enlaces de archivos a la aplicación.
+El servidor no sirve este directorio por sí mismo, y nada más debería hacerlo: las imágenes llegan a la aplicación solo a través del endpoint autenticado `/photos/`. Hasta 0.4.x el servidor publicaba el directorio bajo `/files/` y leía `BEEHIVE_BLOB_PUBLIC_URL`; ambas cosas han desaparecido (el servidor avisa al arrancar si el ajuste sigue presente).
 
 El servidor crea el directorio si no existe, pero asegúrate de que el proceso
 sea su propietario y pueda escribir en él.
@@ -58,8 +55,8 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 
 :::caution Hazle copia de seguridad
 El directorio de blobs **no** se almacena en tu base de datos. Una copia de seguridad de la base de datos por sí sola
-no salvará tus fotos. Incluye `BEEHIVE_BLOB_DIR` en tu rutina de copia de seguridad. Consulta
-[Copias de seguridad](./backups.md) para una estrategia completa.
+no salvará tus fotos. Una copia de seguridad es la base de datos más `BEEHIVE_BLOB_DIR`, y ambas se restauran juntas. Consulta
+[Copias de seguridad](./backups.md).
 :::
 
 ### Nota sobre Docker
@@ -116,8 +113,8 @@ mc mb local/openbeehive
 
 :::caution Mantén el bucket privado
 Los blobs pueden contener fotos identificables de tus colmenares. No hagas el bucket
-de lectura pública. Openbeehive sirve las imágenes a través de la API, así que el almacén
-de objetos no necesita acceso público.
+de lectura pública. Openbeehive sirve las imágenes solo a los miembros del espacio con la
+sesión iniciada, así que el almacén de objetos no necesita acceso público.
 :::
 
 ## Compatibilidad con S3
@@ -146,6 +143,22 @@ de estilo de ruta frente al alojado virtualmente. Si las subidas fallan con un p
 verifica el endpoint y que el bucket exista en la región esperada.
 Consulta [Resolución de problemas](../knowledge-base/troubleshooting.md) si los problemas persisten.
 :::
+
+## Mantenimiento \{#upkeep}
+
+El servidor ordena el almacenamiento de blobs por sí mismo; no hay nada que programar:
+
+- La imagen de una foto eliminada se borra poco después de la eliminación.
+- Las fotos de una visita o colmena eliminada hace más de una hora también se eliminan.
+- Al arrancar y cada seis horas se borran las imágenes a las que no apunta ningún registro de foto y que tienen más de una hora (por ejemplo, una subida cuyo registro nunca llegó, o las imágenes de un espacio eliminado).
+
+Esto supone una única instancia del servidor: ejecuta exactamente una por base de datos.
+
+## Fotos de 0.4.x \{#inline-photos}
+
+Hasta 0.4.x la aplicación guardaba las fotos en línea en la base de datos, como data URLs en las filas de visitas y colmenas. En el primer arranque de 0.5.0, el servidor convierte cada foto en línea visible en un registro de foto con su imagen en el almacenamiento de blobs, antes de aceptar solicitudes. En una base de datos con muchas fotos esto puede tardar unos minutos. Una conversión interrumpida continúa en el siguiente arranque.
+
+Las aplicaciones 0.4.x instaladas siguen funcionando: el servidor sigue aceptando y sirviendo fotos en línea para ellas y convierte lo que suben. No ven las fotos añadidas desde dispositivos actualizados.
 
 ## Cambiar de backend más adelante
 

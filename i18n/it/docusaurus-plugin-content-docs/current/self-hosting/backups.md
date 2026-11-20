@@ -20,14 +20,18 @@ Ci sono due cose sul server che vale la pena proteggere:
 | Elemento | Dove risiede | Obiettivo del backup |
 | --- | --- | --- |
 | Il database | File SQLite, o PostgreSQL/MariaDB | Una copia coerente o un dump |
-| Blob (foto, allegati) | Filesystem locale, o MinIO/S3 | La directory dei blob o il bucket |
+| Blob (immagini delle foto a piena risoluzione) | Filesystem locale, o MinIO/S3 | La directory dei blob o il bucket |
 
 Quale database e quale archivio di blob hai dipende dal tuo profilo di deployment:
 
 - **`selfhost`** usa un singolo file SQLite e una directory di blob locale (`BEEHIVE_BLOB_DIR`, predefinito `./data/blobs`).
 - **`cloud`** usa Postgres e un bucket MinIO/S3.
 
-Esegui il backup di **entrambi** il database e i blob. Il database contiene i tuoi apiari, le arnie, le regine, le ispezioni e gli eventi; l'archivio di blob contiene i file a cui quei registri puntano. Un backup del database senza i suoi blob ti lascia con link alle immagini interrotti.
+Esegui il backup di **entrambi** il database e i blob. Il database contiene i tuoi apiari, le arnie, le regine, le ispezioni, gli eventi e i record delle foto con le loro miniature; l'archivio di blob contiene le immagini a piena risoluzione. Con un backup del database senza i suoi blob, delle foto resta solo la miniatura.
+
+:::tip Prima il database, poi i blob
+Se esegui il backup mentre il server è in funzione, copia prima il database e subito dopo i blob. Le immagini vengono scritte una sola volta e mai modificate, quindi una copia dei blob fatta dopo contiene tutte le immagini che la copia del database conosce. Le immagini in più che il database ripristinato non conosce vengono rimosse dalla [manutenzione](./storage.md#upkeep) del server.
+:::
 
 ## Backup di SQLite (selfhost)
 
@@ -84,7 +88,7 @@ Il formato custom si comprime bene e si ripristina con `pg_restore`. Per MariaDB
 
 ### Filesystem locale
 
-Copia la directory dei blob. I file qui vengono scritti una volta e non modificati sul posto, quindi una copia ricorsiva è sicura anche mentre il server è in esecuzione:
+Copia la directory dei blob. I file qui vengono scritti una volta e non modificati sul posto, quindi una copia ricorsiva è sicura anche mentre il server è in esecuzione (le foto eliminate spariscono dalla directory, da qui `--delete`):
 
 ```bash
 rsync -a --delete ./data/blobs/ /backups/blobs/
@@ -102,9 +106,9 @@ aws s3 sync s3://openbeehive /backups/blobs/
 
 Se usi un archivio compatibile con S3 gestito, puoi anche fare affidamento sul suo versioning o sulle sue policy di lifecycle come seconda linea di difesa.
 
-## Ripristino
+## Ripristino \{#restoring}
 
-Ripristina il database e i blob insieme, poi riavvia il servizio.
+Un ripristino segue sempre gli stessi tre passi: **ferma** il server, ripristina **insieme il database e i blob** dallo stesso backup, **avvia** il server. Nel frattempo non lasciare che il server risponda alle richieste: deve avviarsi sul database ripristinato prima che qualsiasi dispositivo si sincronizzi, perché è proprio da quell'avvio che riconosce il ripristino (vedi [dopo un ripristino](#after-a-restore)).
 
 ### SQLite
 
@@ -123,16 +127,27 @@ Rimuovi eventuali file `-wal`/`-shm` obsoleti prima di avviare, così SQLite si 
 ### Postgres
 
 ```bash
+systemctl stop openbeehive
+
 pg_restore --clean --if-exists \
   --dbname="postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   /backups/openbeehive-2026-06-19.dump
+mc mirror --overwrite --remove /backups/blobs/ myminio/openbeehive   # blob directory: rsync as above
+
+systemctl start openbeehive
 ```
 
-Poi ripristina il bucket o la directory dei blob come sopra e riavvia il servizio.
+Con Docker Compose, `docker compose stop server` e `docker compose start server` prendono il posto di `systemctl`.
 
-:::note I dispositivi si risincronizzano automaticamente
-Dopo un ripristino, i dispositivi connessi si riconciliano con il server in background. Grazie agli Hybrid Logical Clock e al merging conflict-free, i dispositivi che detengono modifiche più recenti le risincronizzeranno anziché perderle, e gli eventi append-only non entrano mai in conflitto. Non c'è nulla da fare a mano su ciascun dispositivo.
-:::
+### Che cosa fanno i dispositivi dopo un ripristino \{#after-a-restore}
+
+Un database ripristinato è più vecchio di ciò che alcuni dispositivi hanno già visto. Il server se ne accorge alla successiva sincronizzazione di ciascun dispositivo e l'app rimedia da sola:
+
+- **Le app aggiornate (0.5.0 e successive) che si erano sincronizzate oltre il backup** caricano di nuovo tutti i dati che hanno, insieme alle immagini delle foto che ancora conservano, e poi scaricano i dati attuali dal server. Le modifiche perse con il backup tornano così; dove il server ha ancora una modifica, non succede nulla. L'app mostra "I dati del server sono stati reimpostati o ripristinati. Questo dispositivo ha inviato di nuovo i suoi dati e ha caricato quelli attuali."
+- **I dispositivi che non si erano sincronizzati oltre il backup** continuano come al solito.
+- **Le app 0.4.x installate** non ricevono alcun segnale di questo tipo e non caricano nulla di nuovo. Quella la cui posizione va oltre il database ripristinato rilegge i dati dall'inizio. Ciò che solo un dispositivo del genere aveva non viene recuperato, quindi aggiorna l'app su ogni dispositivo prima di contare su questo meccanismo.
+
+Le modifiche fatte su un dispositivo mentre il server era fermo vengono caricate come al solito quando torna disponibile.
 
 ## Una semplice pianificazione cron
 
@@ -143,7 +158,11 @@ Un job notturno che fa un'istantanea del database e fa il mirror dei blob è suf
 30 2 * * * sqlite3 /srv/openbeehive/openbeehive.db ".backup '/backups/openbeehive-$(date +\%F).db'" && rsync -a --delete /srv/openbeehive/data/blobs/ /backups/blobs/
 ```
 
-I caratteri `%` devono essere preceduti da escape come `\%` all'interno del crontab. Per Postgres, sostituisci la chiamata `sqlite3` con il comando `pg_dump` mostrato sopra.
+I caratteri `%` devono essere preceduti da escape come `\%` all'interno del crontab. Per Postgres, sostituisci la chiamata `sqlite3` con il comando `pg_dump` mostrato sopra. Il database viene copiato per primo e i blob subito dopo, come consigliato sopra.
+
+## Le esportazioni non sono backup del server
+
+**Impostazioni → Dati e backup** nell'app scarica uno spazio come JSON, oppure come ZIP con le foto; la copia del server è disponibile anche su `GET /export` (vedi [Importazione ed esportazione](../using-the-app/import-export.md)). Un'esportazione di questo tipo è utile per spostare un singolo spazio o per tenerne una copia personale, ma contiene un solo spazio, senza account, membri né chiavi API. Per un'intera istanza, esegui il backup del database e dei blob come descritto sopra.
 
 :::tip Testa i tuoi ripristini
 Un backup che non hai mai ripristinato è solo una speranza. Di tanto in tanto, ripristina in una directory usa e getta o in un'istanza di test e conferma di poter aprire l'app e vedere le tue arnie. Conserva almeno alcuni giorni di copie datate e tienine una off-site (un disco esterno o un bucket remoto).

@@ -5,9 +5,9 @@ title: "Blob storage"
 
 # Blob storage
 
-Openbeehive stores your records in a database, but photos and other binary
-attachments live separately in **blob storage**. This keeps the database lean
-and lets you scale image storage independently.
+Openbeehive stores your records in a database, but the full-size images of photos live separately in **blob storage**. This keeps the database lean and lets you scale image storage independently.
+
+A photo has two parts. Its record, with a small thumbnail of about 200 pixels, is stored in the database and syncs to every device like any other record. Its full-size image (at most 2048 pixels on the longer edge and 5 MiB) is stored in blob storage under a prefix per workspace (`<workspace>/photos/...`). The server serves it only to signed-in members of that workspace, through `/photos/<id>`; the blob store itself is never exposed. Deleting a photo removes its image, and deleting a workspace removes everything under its prefix.
 
 You choose a backend with the `BEEHIVE_BLOB_BACKEND` environment variable. There are two
 options: the local **filesystem** and an **S3-compatible** object store such as
@@ -43,10 +43,7 @@ BEEHIVE_BLOB_DIR=./data/blobs
 directory of the server process, so for predictable results on a server, use an
 absolute path such as `/var/lib/openbeehive/blobs`.
 
-Browsers fetch stored files from `<BEEHIVE_PUBLIC_BASE_URL>/files`. If a reverse
-proxy or CDN serves that directory from another address, set
-`BEEHIVE_BLOB_PUBLIC_URL` to the base URL it exposes; the server uses it when it
-hands file links to the app.
+The server does not serve this directory itself, and nothing else should either: images reach the app only through the authenticated `/photos/` endpoint. Up to 0.4.x the server published the directory under `/files/` and read `BEEHIVE_BLOB_PUBLIC_URL`; both are gone (the server warns at start when the setting is still there).
 
 The server creates the directory if it does not exist, but make sure the process
 owns it and can write to it.
@@ -58,8 +55,8 @@ chown openbeehive:openbeehive /var/lib/openbeehive/blobs
 
 :::caution Back it up
 The blob directory is **not** stored in your database. A database backup alone
-will not save your photos. Include `BEEHIVE_BLOB_DIR` in your backup routine. See
-[Backups](./backups.md) for a full strategy.
+will not save your photos. A backup is the database plus `BEEHIVE_BLOB_DIR`, and the two are restored together. See
+[Backups](./backups.md).
 :::
 
 ### Docker note
@@ -116,8 +113,8 @@ mc mb local/openbeehive
 
 :::caution Keep the bucket private
 Blobs may contain identifying photos of your apiaries. Do not make the bucket
-publicly readable. Openbeehive serves images through the API, so the object
-store does not need public access.
+publicly readable. Openbeehive serves images only to signed-in members of the
+workspace, so the object store needs no public access.
 :::
 
 ## S3 compatibility
@@ -146,6 +143,22 @@ virtual-hosted addressing. If uploads fail with a provider other than MinIO,
 double-check the endpoint and that the bucket exists in the expected region.
 See [Troubleshooting](../knowledge-base/troubleshooting.md) if problems persist.
 :::
+
+## Upkeep \{#upkeep}
+
+The server tidies blob storage by itself; there is nothing to schedule:
+
+- The image of a deleted photo is removed shortly after the delete.
+- Photos of a visit or hive that was deleted more than an hour ago are deleted too.
+- At start and every six hours, images that no photo record points to and that are older than an hour are removed (for example an upload whose record never arrived, or the images of a deleted workspace).
+
+This assumes a single server instance: run exactly one per database.
+
+## Photos from 0.4.x \{#inline-photos}
+
+Up to 0.4.x the app stored photos inline in the database, as data URLs in the visit and hive rows. At the first start of 0.5.0 the server converts each visible inline photo into a photo record with its image in blob storage, before it accepts requests. On a database with many photos this can take a few minutes. An interrupted conversion continues at the next start.
+
+Installed 0.4.x apps keep working: the server still accepts and serves inline photos for them and converts what they upload. They do not see photos added by updated devices.
 
 ## Switching backends later
 

@@ -34,6 +34,9 @@ La 0.5.0 durcit plusieurs valeurs par défaut. Sauvegardez d'abord, puis parcour
 - **OIDC.** Un fournisseur listé dans `BEEHIVE_OIDC_PROVIDERS` sans émetteur ni identifiant client empêche le démarrage. Une connexion via un fournisseur n'est rattachée à un compte existant que lorsque les deux côtés ont vérifié l'adresse e-mail.
 - **Reverse proxy.** Réglez `BEEHIVE_TRUST_PROXY_HEADERS=true` derrière votre proxy, sinon la limitation des tentatives de connexion compte tous les utilisateurs comme une seule adresse.
 - **`BEEHIVE_NODE_ID`** vaut désormais par défaut un identifiant aléatoire à chaque démarrage ; retirez-le de votre configuration, sauf si vous le définissez à dessein. Les réglages inutilisés de taille de page de synchronisation ont disparu.
+- **Conservation du journal des modifications.** Le serveur supprime désormais les entrées du journal des modifications plus anciennes que `BEEHIVE_CHANGELOG_RETENTION_DAYS` (180 par défaut, `0` conserve tout). Avec la valeur par défaut, la première suppression a lieu 180 jours après la mise à niveau.
+- **Anciennes applications.** `BEEHIVE_SYNC_MIN_PROTOCOL` (`0` par défaut) continue d'accepter les applications 0.4.x installées ; réglez-le sur `1` une fois que tous les appareils sont à jour.
+- **`BEEHIVE_BLOB_PUBLIC_URL`** est ignorée et le serveur émet un avertissement à son sujet au démarrage ; retirez-la.
 
 **Fichiers Compose**
 
@@ -44,7 +47,10 @@ La 0.5.0 durcit plusieurs valeurs par défaut. Sauvegardez d'abord, puis parcour
 
 - **Activer la connexion déplace les enregistrements mono-utilisateur.** Si l'instance fonctionnait sans connexion et que vous activez la connexion par e-mail/mot de passe, les enregistrements existants sont déplacés dans l'espace de l'administrateur de l'instance au démarrage suivant. Cela ne peut pas être annulé ; voir [Authentification](./authentication.md#single-user-to-login).
 - **Migrations de la base de données.** Le premier démarrage reconstruit la table des visites et l'index du journal des modifications ; il prend donc plus de temps sur une grande base de données. Sur MariaDB, il convertit aussi les tables vers une collation binaire, et une migration qui y échoue ne peut pas être annulée : une sauvegarde est le seul moyen de revenir en arrière.
-- **Exécutez exactement une instance du serveur** par base de données.
+- **Les photos passent dans le stockage de blobs.** Le premier démarrage convertit les photos stockées directement dans la base de données en enregistrements de photos dont les images sont placées dans le stockage de blobs, avant que le serveur n'accepte des requêtes ; avec beaucoup de photos, cela prend quelques minutes. Désormais, une sauvegarde, c'est la base de données **plus** le répertoire ou le bucket des blobs. Voir [Stockage](./storage.md#inline-photos).
+- **Restaurer une sauvegarde** signifie : arrêter le serveur, restaurer ensemble la base de données et les blobs, le redémarrer. Les applications à jour renvoient alors ce que la sauvegarde a perdu ; les applications 0.4.x ne le peuvent pas. Voir [Sauvegardes](./backups.md#restoring).
+- **Adresses e-mail ne différant que par la casse.** Deux comptes existants dont les adresses ne diffèrent que par les majuscules et minuscules continuent de fonctionner, mais la connexion par e-mail n'atteint que l'un d'eux. Le journal nomme chaque paire à chaque démarrage ; voir [Authentification](./authentication.md#accounts).
+- **Exécutez exactement une instance du serveur** par base de données. Le compactage et l'entretien des photos s'exécutent dans le processus du serveur.
 
 **Comportements que les utilisateurs et les scripts remarqueront**
 
@@ -53,8 +59,11 @@ La 0.5.0 durcit plusieurs valeurs par défaut. Sauvegardez d'abord, puis parcour
 - **Limites.** Un message RPC peut peser au plus 16 MiB et une requête peut durer au plus 2 minutes (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
 - **Horloges des appareils.** Les modifications horodatées plus de 10 minutes en avance sur l'heure du serveur sont refusées. Les applications mises à jour se corrigent d'elles-mêmes ; une application 0.4.x dont l'horloge est fausse perd ces modifications, mettez donc l'application à jour sur chaque appareil.
 - **API.** Les appels de mise à jour ne modifient que les champs envoyés ; `DeleteApiary` échoue avec `failed_precondition` tant que le rucher contient des ruches ; les tâches personnelles ne sont renvoyées qu'à leur propriétaire ; les valeurs numériques de visite qui n'ont pas été saisies sont omises au lieu d'être renvoyées comme `0`. Les endpoints HTTP simples sous `/auth/` et `/tenants/` n'acceptent que la méthode documentée, exigent `Content-Type: application/json` lorsqu'ils prennent un corps, et `/tenants/delete` exige `org_id`. Voir [REST](../using-the-api/rest.md).
+- **Photos en HTTP.** `/files/` a disparu. Les images en taille réelle sont servies sous `/photos/<id>`, uniquement aux membres de l'espace, avec une session ou une clé API.
+- **Liens ouverts dans le navigateur.** `/auth/verify`, `/auth/login` et `/auth/callback` redirigent vers la page de connexion avec un message d'erreur au lieu de répondre en JSON.
+- **Les scripts qui appellent `SyncService`** doivent envoyer l'en-tête `Openbeehive-Sync-Protocol: 1` ; sans lui, ils reçoivent les données telles qu'une application 0.4.1 les voit, sans photos ni instantanés. Voir [Protocole de synchronisation](../developers/sync-protocol.md#versions).
 
-Les applications 0.4.x installées continuent de fonctionner avec un serveur 0.5.0. Après s'être mise à jour, l'application télécharge une nouvelle fois ses données sur chaque appareil.
+Les applications 0.4.x installées continuent de fonctionner avec un serveur 0.5.0, mais elles ne voient pas les photos ajoutées par les appareils mis à jour. Après s'être mise à jour, l'application charge une nouvelle fois les données actuelles depuis le serveur sur chaque appareil.
 
 ### 0.4.0 : le conteneur s'exécute sous un utilisateur non privilégié
 

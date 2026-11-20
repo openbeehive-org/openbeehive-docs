@@ -34,6 +34,9 @@ La 0.5.0 rende più restrittivi diversi valori predefiniti. Esegui prima un back
 - **OIDC.** Un provider elencato in `BEEHIVE_OIDC_PROVIDERS` senza issuer e client id blocca l'avvio. Un accesso tramite provider viene agganciato a un account esistente solo quando entrambe le parti hanno verificato l'indirizzo email.
 - **Reverse proxy.** Imposta `BEEHIVE_TRUST_PROXY_HEADERS=true` dietro il tuo proxy, altrimenti la limitazione dei tentativi di accesso conta tutti gli utenti come un unico indirizzo.
 - **`BEEHIVE_NODE_ID`** ora ha come valore predefinito un id casuale a ogni avvio; rimuovilo dalla tua configurazione a meno che tu non lo imposti di proposito. Le impostazioni inutilizzate della dimensione di pagina della sincronizzazione non esistono più.
+- **Conservazione del registro delle modifiche.** Il server ora rimuove le voci del registro delle modifiche più vecchie di `BEEHIVE_CHANGELOG_RETENTION_DAYS` (predefinito 180, `0` conserva tutto). Con il valore predefinito, la prima rimozione avviene 180 giorni dopo l'aggiornamento.
+- **App vecchie.** `BEEHIVE_SYNC_MIN_PROTOCOL` (predefinito `0`) continua ad accettare le app 0.4.x installate; impostalo a `1` quando tutti i dispositivi si sono aggiornati.
+- **`BEEHIVE_BLOB_PUBLIC_URL`** viene ignorata e il server lo segnala all'avvio; rimuovila.
 
 **File Compose**
 
@@ -44,7 +47,10 @@ La 0.5.0 rende più restrittivi diversi valori predefiniti. Esegui prima un back
 
 - **Attivare l'accesso sposta i dati dell'utente singolo.** Se l'istanza funzionava senza accesso e abiliti l'accesso email/password, i dati esistenti passano nello spazio dell'amministratore dell'istanza all'avvio successivo. Non può essere annullato; vedi [Autenticazione](./authentication.md#single-user-to-login).
 - **Migrazioni del database.** Il primo avvio ricostruisce la tabella delle visite e l'indice del registro delle modifiche, quindi richiede più tempo su un database grande. Su MariaDB converte inoltre le tabelle a una collation binaria, e una migrazione che lì fallisce non può essere annullata: un backup è l'unico modo per tornare indietro.
-- **Esegui esattamente un'istanza del server** per database.
+- **Le foto passano all'archiviazione blob.** Il primo avvio converte le foto memorizzate direttamente nel database in record di foto con le loro immagini nell'archiviazione blob, prima che il server accetti richieste; con molte foto richiede alcuni minuti. Da ora in poi un backup è il database **più** la directory o il bucket dei blob. Vedi [Archiviazione](./storage.md#inline-photos).
+- **Ripristinare un backup** significa: fermare il server, ripristinare insieme database e blob, avviarlo. Le app aggiornate caricano poi ciò che il backup ha perso; le app 0.4.x non possono farlo. Vedi [Backup](./backups.md#restoring).
+- **Indirizzi email che differiscono solo per maiuscole e minuscole.** Due account esistenti i cui indirizzi differiscono solo per maiuscole e minuscole continuano a funzionare, ma l'accesso via email raggiunge solo uno dei due. Il log indica ogni coppia a ogni avvio; vedi [Autenticazione](./authentication.md#accounts).
+- **Esegui esattamente un'istanza del server** per database. La compattazione e la manutenzione delle foto girano all'interno del processo del server.
 
 **Comportamenti che utenti e script noteranno**
 
@@ -53,8 +59,11 @@ La 0.5.0 rende più restrittivi diversi valori predefiniti. Esegui prima un back
 - **Limiti.** Un messaggio RPC può essere al massimo di 16 MiB e una richiesta può durare al massimo 2 minuti (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
 - **Orologi dei dispositivi.** Le modifiche con una marca temporale più di 10 minuti avanti rispetto all'ora del server vengono rifiutate. Le app aggiornate si correggono da sole; un'app 0.4.x con l'orologio sbagliato perde tali modifiche, quindi aggiorna l'app su ogni dispositivo.
 - **API.** Le chiamate di aggiornamento modificano solo i campi inviati; `DeleteApiary` fallisce con `failed_precondition` finché l'apiario ha arnie; le attività personali vengono restituite solo al loro proprietario; i valori numerici delle ispezioni che non sono stati registrati vengono omessi invece di essere restituiti come `0`. Gli endpoint HTTP semplici sotto `/auth/` e `/tenants/` accettano solo il metodo documentato, richiedono `Content-Type: application/json` quando accettano un corpo, e `/tenants/delete` richiede `org_id`. Vedi [REST](../using-the-api/rest.md).
+- **Foto via HTTP.** `/files/` non esiste più. Le immagini a piena risoluzione vengono servite su `/photos/<id>` solo ai membri dello spazio, con una sessione o una chiave API.
+- **Link aperti nel browser.** `/auth/verify`, `/auth/login` e `/auth/callback` reindirizzano alla pagina di accesso con un messaggio di errore invece di rispondere con JSON.
+- **Gli script che chiamano `SyncService`** devono inviare l'intestazione `Openbeehive-Sync-Protocol: 1`; senza di essa ricevono i dati come li vede un'app 0.4.1, senza foto né snapshot. Vedi [Protocollo di sincronizzazione](../developers/sync-protocol.md#versions).
 
-Le app 0.4.x installate continuano a funzionare con un server 0.5.0. Dopo che l'app si è aggiornata, ogni dispositivo scarica i propri dati ancora una volta.
+Le app 0.4.x installate continuano a funzionare con un server 0.5.0, ma non vedono le foto aggiunte dai dispositivi aggiornati. Dopo che l'app si è aggiornata, ogni dispositivo carica ancora una volta i dati attuali dal server.
 
 ### 0.4.0: il container viene eseguito come utente non privilegiato
 

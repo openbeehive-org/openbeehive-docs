@@ -34,6 +34,9 @@ Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](.
 - **OIDC.** Un proveedor listado en `BEEHIVE_OIDC_PROVIDERS` sin emisor ni id de cliente impide el arranque. Un inicio de sesión con proveedor se asocia a una cuenta existente solo cuando ambas partes han verificado la dirección de correo.
 - **Proxy inverso.** Establece `BEEHIVE_TRUST_PROXY_HEADERS=true` detrás de tu proxy; de lo contrario, la limitación de intentos de inicio de sesión cuenta a todos los usuarios como una sola dirección.
 - **`BEEHIVE_NODE_ID`** tiene ahora como valor predeterminado un id aleatorio en cada arranque; elimínalo de tu configuración salvo que lo establezcas a propósito. Los ajustes de tamaño de página de la sincronización, que no se usaban, han desaparecido.
+- **Retención del registro de cambios.** El servidor elimina ahora las entradas del registro de cambios con más antigüedad que `BEEHIVE_CHANGELOG_RETENTION_DAYS` (por defecto 180; `0` lo conserva todo). Con el valor por defecto, la primera eliminación se produce 180 días después de la actualización.
+- **Aplicaciones antiguas.** `BEEHIVE_SYNC_MIN_PROTOCOL` (por defecto `0`) sigue aceptando las aplicaciones 0.4.x instaladas; establécelo en `1` cuando todos los dispositivos se hayan actualizado.
+- **`BEEHIVE_BLOB_PUBLIC_URL`** se ignora y el servidor avisa de ello al arrancar; elimínalo.
 
 **Archivos Compose**
 
@@ -44,7 +47,10 @@ Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](.
 
 - **Activar el inicio de sesión traslada los registros de un solo usuario.** Si la instancia funcionaba sin inicio de sesión y habilitas el inicio de sesión con correo y contraseña, los registros existentes pasan al espacio del administrador de la instancia en el siguiente arranque. Esto no se puede deshacer; consulta [Autenticación](./authentication.md#single-user-to-login).
 - **Migraciones de la base de datos.** El primer arranque reconstruye la tabla de visitas y el índice del registro de cambios, así que tarda más en una base de datos grande. En MariaDB también convierte las tablas a una colación binaria, y una migración que falle allí no se puede revertir: una copia de seguridad es la única vuelta atrás.
-- **Ejecuta exactamente una instancia del servidor** por base de datos.
+- **Las fotos pasan al almacenamiento de blobs.** El primer arranque convierte las fotos guardadas en línea en la base de datos en registros de fotos con sus imágenes en el almacenamiento de blobs, antes de que el servidor acepte solicitudes; con muchas fotos tarda unos minutos. A partir de ahora una copia de seguridad es la base de datos **más** el directorio o bucket de blobs. Consulta [Almacenamiento](./storage.md#inline-photos).
+- **Restaurar una copia de seguridad** significa: detener el servidor, restaurar juntos la base de datos y los blobs, e iniciarlo. Las aplicaciones actualizadas suben entonces lo que la copia perdió; las aplicaciones 0.4.x no pueden. Consulta [Copias de seguridad](./backups.md#restoring).
+- **Direcciones de correo que solo se diferencian en mayúsculas y minúsculas.** Dos cuentas existentes cuyas direcciones solo se diferencian en mayúsculas y minúsculas siguen funcionando, pero el inicio de sesión por correo solo llega a una de ellas. El registro del servidor indica cada par en cada arranque; consulta [Autenticación](./authentication.md#accounts).
+- **Ejecuta exactamente una instancia del servidor** por base de datos. La compactación y el mantenimiento de las fotos se ejecutan dentro del proceso del servidor.
 
 **Comportamiento que notarán los usuarios y los scripts**
 
@@ -53,8 +59,11 @@ Haz una copia de seguridad antes de actualizar. Consulta [Copias de seguridad](.
 - **Límites.** Un mensaje RPC puede tener como máximo 16 MiB y una solicitud puede durar como máximo 2 minutos (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
 - **Relojes de los dispositivos.** Los cambios marcados con más de 10 minutos de adelanto respecto a la hora del servidor se rechazan. Las aplicaciones actualizadas se corrigen solas; una aplicación 0.4.x con el reloj mal ajustado pierde esos cambios, así que actualiza la aplicación en todos los dispositivos.
 - **API.** Las llamadas de actualización cambian solo los campos enviados; `DeleteApiary` falla con `failed_precondition` mientras el colmenar tenga colmenas; las tareas personales se devuelven solo a su propietario; los valores numéricos de inspección que no se registraron se omiten en lugar de devolverse como `0`. Los endpoints HTTP simples bajo `/auth/` y `/tenants/` aceptan solo el método documentado, necesitan `Content-Type: application/json` cuando reciben un cuerpo, y `/tenants/delete` necesita `org_id`. Consulta [REST](../using-the-api/rest.md).
+- **Fotos por HTTP.** `/files/` ha desaparecido. Las imágenes a tamaño completo se sirven en `/photos/<id>` solo a los miembros del espacio, con una sesión o una clave API.
+- **Enlaces del navegador.** `/auth/verify`, `/auth/login` y `/auth/callback` redirigen a la página de inicio de sesión con un mensaje de error en lugar de responder con JSON.
+- **Los scripts que llaman a `SyncService`** deben enviar la cabecera `Openbeehive-Sync-Protocol: 1`; sin ella reciben los datos tal como los ve una aplicación 0.4.1, sin fotos ni instantáneas. Consulta [Protocolo de sincronización](../developers/sync-protocol.md#versions).
 
-Las aplicaciones 0.4.x instaladas siguen funcionando con un servidor 0.5.0. Después de que la aplicación se actualice sola, cada dispositivo descarga sus datos una vez más.
+Las aplicaciones 0.4.x instaladas siguen funcionando con un servidor 0.5.0, pero no ven las fotos añadidas desde dispositivos actualizados. Después de que la aplicación se actualice sola, cada dispositivo vuelve a cargar una vez los datos actuales del servidor.
 
 ### 0.4.0: el contenedor se ejecuta como un usuario sin privilegios
 
