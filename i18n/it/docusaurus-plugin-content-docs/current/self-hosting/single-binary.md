@@ -19,9 +19,9 @@ Avrai bisogno di alcuni strumenti di build installati sulla macchina che compila
 
 | Strumento | Versione | Scopo |
 | --- | --- | --- |
-| Go | 1.25+ | Compila il server |
+| Go | 1.27+ | Compila il server |
 | Node.js | 24+ | Compila la web app SvelteKit |
-| buf | latest | Genera il codice Connect-RPC dalle definizioni protobuf |
+| buf | fissata da `make tools` | Genera il codice Connect-RPC dalle definizioni protobuf |
 
 Una volta compilato, il binario in sé non ha dipendenze a runtime - puoi copiarlo su un server che non ha nessuno degli strumenti sopra installato.
 
@@ -34,39 +34,29 @@ cd openbeehive-app
 
 ## Configura
 
-Copia il file d'ambiente di esempio e scegli il profilo self-host:
+Il server viene configurato tramite variabili d'ambiente e legge un file `.env` dalla directory in cui viene avviato. Le variabili già impostate nell'ambiente hanno la precedenza sul file. Copia il file di esempio:
 
 ```bash
 cp .env.example .env
 ```
 
-Per un'istanza privata a utente singolo i valori predefiniti sono quasi pronti all'uso. Apri `.env` e conferma questi valori:
+Per un'istanza privata a utente singolo i valori predefiniti integrati sono pronti all'uso; questi sono quelli che contano:
 
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
 BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 BEEHIVE_SERVE_WEB=true
-BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)
-BEEHIVE_BLOB_BACKEND=fs
-BEEHIVE_BLOB_DIR=./data/blobs
-BEEHIVE_SESSION_SECRET=
+# Defaults of the selfhost profile:
+# BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)
+# BEEHIVE_BLOB_DIR=./data/blobs
 ```
-
-Genera un secret di sessione - non lasciarlo mai vuoto se non in un test usa e getta:
-
-```bash
-openssl rand -base64 32
-```
-
-Incolla il risultato in `BEEHIVE_SESSION_SECRET=`.
 
 :::note Nessun login per impostazione predefinita
-Il profilo selfhost non abilita alcun metodo di login: `BEEHIVE_PASSWORD_AUTH` è disattivato, `BEEHIVE_OIDC_PROVIDERS` è vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`. Lasciali così per eseguire come utente singolo senza passaggio di accesso. Quando vuoi account, passkey o un provider, vedi [Autenticazione](./authentication.md).
+Il profilo selfhost non abilita alcun metodo di login: `BEEHIVE_PASSWORD_AUTH` è disattivato, `BEEHIVE_OIDC_PROVIDERS` è vuoto e `BEEHIVE_WEBAUTHN_ENABLED=false`. Chiunque possa raggiungere la porta ha allora accesso completo, e il server risponde solo a `localhost`, agli indirizzi IP e all'host di `BEEHIVE_PUBLIC_BASE_URL` (aggiungi altri nomi con `BEEHIVE_ALLOWED_HOSTS`). Quando vuoi account, passkey o un provider, vedi [Autenticazione](./authentication.md); qualsiasi metodo di login richiede un `BEEHIVE_SESSION_SECRET` di almeno 32 byte (`openssl rand -base64 32`).
 :::
 
-Se intendi raggiungere l'istanza da un altro dispositivo sulla tua rete, imposta `BEEHIVE_PUBLIC_BASE_URL` su un indirizzo che quel dispositivo possa effettivamente risolvere (ad esempio `http://192.168.1.20:8080` o il tuo dominio dietro un [reverse proxy](./reverse-proxy.md)). Le etichette QR codificano l'indirizzo con cui apri l'app, quindi usa sempre lo stesso indirizzo.
+Se intendi raggiungere l'istanza da un altro dispositivo sulla tua rete, imposta `BEEHIVE_PUBLIC_BASE_URL` sull'indirizzo che quel dispositivo apre (ad esempio `http://192.168.1.20:8080` o il tuo dominio dietro un [reverse proxy](./reverse-proxy.md)) e attiva il login. Le etichette QR codificano l'indirizzo con cui apri l'app, quindi usa sempre lo stesso indirizzo.
 
 ## Compila
 
@@ -87,7 +77,7 @@ La web app è inclusa nel binario, quindi non c'è nient'altro da distribuire in
 
 ## Esegui
 
-Dalla radice del repository (così i percorsi relativi in `.env` si risolvono come previsto):
+Dalla radice del repository, dove si trova `.env`:
 
 ```bash
 ./server/bin/openbeehive
@@ -95,6 +85,7 @@ Dalla radice del repository (così i percorsi relativi in `.env` si risolvono co
 
 Al primo avvio il server:
 
+- applica `.env` e scrive nel log il profilo, il database e se il login è richiesto,
 - crea il file di database SQLite `openbeehive.db` ed esegue le sue migrazioni,
 - crea la directory `./data/` (con `./data/blobs` per le foto),
 - serve la web app e l'API Connect-RPC su `:8080`.
@@ -102,7 +93,7 @@ Al primo avvio il server:
 Apri `http://localhost:8080` nel tuo browser. L'app si carica, costruisce il suo database locale nel browser e sei pronto ad aggiungere il tuo primo apiario.
 
 :::tip La directory di lavoro conta
-I percorsi relativi come `file:openbeehive.db` e `./data/blobs` vengono risolti rispetto alla directory da cui viene avviato il binario, non a dove risiede il binario. Scegli deliberatamente una directory di lavoro - l'unità systemd più sotto la imposta esplicitamente con `WorkingDirectory`.
+I percorsi relativi come `file:openbeehive.db` e `./data/blobs` vengono risolti rispetto alla directory da cui viene avviato il binario, non a dove risiede il binario, e `.env` viene letto da quella stessa directory. Scegli deliberatamente una directory di lavoro - l'unità systemd più sotto la imposta esplicitamente con `WorkingDirectory`.
 :::
 
 ## Esegui come servizio systemd
@@ -131,7 +122,6 @@ Type=simple
 User=openbeehive
 Group=openbeehive
 WorkingDirectory=/opt/openbeehive
-EnvironmentFile=/opt/openbeehive/.env
 ExecStart=/opt/openbeehive/openbeehive
 Restart=on-failure
 RestartSec=5
@@ -146,6 +136,8 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 ```
+
+L'unità non ha bisogno di `EnvironmentFile`: il server legge da sé `/opt/openbeehive/.env` perché quella è la sua directory di lavoro. Mantieni il file leggibile solo dall'utente `openbeehive` (`chmod 600`), dato che contiene il secret di sessione e la password dell'amministratore.
 
 Abilitalo e avvialo:
 

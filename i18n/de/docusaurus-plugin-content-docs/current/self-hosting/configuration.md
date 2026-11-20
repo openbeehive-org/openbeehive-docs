@@ -7,10 +7,10 @@ title: "Konfiguration"
 
 Openbeehive wird vollständig über Umgebungsvariablen konfiguriert. Diese Seite ist die vollständige Referenz.
 
-Du kannst diese Variablen in deiner Shell, in einer `.env`-Datei neben der Binärdatei, in deiner `docker compose`-Datei oder über den Secrets-Manager deiner Hosting-Plattform setzen. Der Server liest sie einmal beim Start, daher werden Änderungen erst nach einem Neustart wirksam.
+Du kannst diese Variablen in deiner Shell, in deiner `docker compose`-Datei, über den Secrets-Manager deiner Hosting-Plattform oder in einer `.env`-Datei setzen. Der Server liest `.env` beim Start aus seinem Arbeitsverzeichnis; Variablen, die bereits in der Umgebung gesetzt sind, haben Vorrang vor der Datei. Alles wird einmal gelesen, daher werden Änderungen erst nach einem Neustart wirksam.
 
 :::tip Klein anfangen
-Du brauchst nur eine Handvoll davon, um loszulegen. Für einen Heimserver mit einem Benutzer setzt du `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, ein `BEEHIVE_SESSION_SECRET` und lässt den Rest auf den Standardwerten. Siehe den [Schnellstart](./quick-start.md), um in wenigen Minuten loszulegen.
+Du brauchst nur eine Handvoll davon, um loszulegen. Ein Heimserver mit einem Benutzer läuft allein mit den Standardwerten. Sobald du eine Anmeldemethode einschaltest, ergänze `BEEHIVE_SESSION_SECRET` und, für die E-Mail-/Passwort-Anmeldung, das Admin-Konto. Siehe den [Schnellstart](./quick-start.md), um in wenigen Minuten loszulegen.
 :::
 
 ## Wie das Deployment-Profil funktioniert
@@ -20,7 +20,7 @@ Die mit Abstand wichtigste Einstellung ist `BEEHIVE_DEPLOYMENT_PROFILE`. Sie wä
 | Profil     | Datenbank-Standard | Blob-Speicher-Standard | Vorgesehen für                          |
 | ---------- | ------------------ | ---------------------- | --------------------------------------- |
 | `selfhost` | SQLite (Datei)     | Lokales Dateisystem    | Eine einzelne Binärdatei, kein Docker, ein Host |
-| `cloud`    | PostgreSQL         | MinIO / S3             | Das gehostete, mandantenfähige Deployment |
+| `cloud`    | PostgreSQL         | MinIO / S3             | Eine Instanz mit mehreren Benutzern     |
 
 Das Profil setzt nur *Standardwerte*. Jede Variable, die du explizit setzt, gewinnt immer. Du kannst zum Beispiel das `selfhost`-Profil verwenden, es aber auf PostgreSQL zeigen lassen, indem du `BEEHIVE_DATABASE_DRIVER` und `BEEHIVE_DATABASE_DSN` selbst setzt.
 
@@ -41,14 +41,22 @@ Die beiden Profile werden ausführlich auf ihren eigenen Seiten dokumentiert: [E
 | `BEEHIVE_ADDR`            | `:8080`                  | Adresse und Port, auf dem der Server lauscht. Verwende `127.0.0.1:8080`, um hinter einem Reverse Proxy nur an localhost zu binden. |
 | `BEEHIVE_PUBLIC_BASE_URL` | `http://localhost:8080`  | Die öffentliche URL, unter der Benutzer die App erreichen. Wird für OIDC-Weiterleitungen, Einladungs- und Bestätigungslinks sowie Passkey-Standardwerte verwendet. Setze dies in der Produktion auf deine echte Domain. |
 | `BEEHIVE_HTTP_READ_HEADER_TIMEOUT` | `10s` | Zeit zum Lesen der Header einer Anfrage. |
-| `BEEHIVE_HTTP_READ_TIMEOUT` | `0` | Lesezeitlimit für die gesamte Anfrage; `0` bedeutet keines. |
-| `BEEHIVE_HTTP_WRITE_TIMEOUT` | `0` | Schreibzeitlimit für Antworten; `0` bedeutet keines. |
+| `BEEHIVE_HTTP_READ_TIMEOUT` | `2m` | Zeit zum Lesen einer Anfrage; `0` bedeutet kein Limit. Der Live-Sync-Stream ist ausgenommen. |
+| `BEEHIVE_HTTP_WRITE_TIMEOUT` | `2m` | Zeit zum Schreiben einer Antwort; `0` bedeutet kein Limit. Der Live-Sync-Stream ist ausgenommen. |
 | `BEEHIVE_HTTP_IDLE_TIMEOUT` | `120s` | Wie lange eine ungenutzte Keep-Alive-Verbindung offen bleibt. |
 | `BEEHIVE_HTTP_SHUTDOWN_TIMEOUT` | `15s` | Gnadenfrist für laufende Anfragen beim Herunterfahren. |
+| `BEEHIVE_TRUST_PROXY_HEADERS` | `false` | Die Client-Adresse für die Drosselung der Anmeldung dem letzten `X-Forwarded-For`-Eintrag entnehmen. Setze dies nur dann auf `true`, wenn genau ein Reverse Proxy unter deiner Kontrolle davorsteht und der Server-Port auf keinem anderen Weg erreichbar ist. |
+| `BEEHIVE_ALLOWED_HOSTS` | (leer) | Nur ohne Anmeldung: weitere Hostnamen, auf die der Server antwortet, kommagetrennt. `*` schaltet die Prüfung ab. Siehe unten. |
 
 :::caution
 `BEEHIVE_PUBLIC_BASE_URL` muss mit der Adresse übereinstimmen, die Benutzer tatsächlich aufrufen. Ist sie falsch, zeigen Login-Weiterleitungen und Einladungslinks an den falschen Ort.
 :::
+
+Eine RPC-Nachricht darf höchstens 16 MiB groß sein; größere Uploads teilt die App von sich aus auf. Dieses Limit ist nicht konfigurierbar.
+
+### Hostnamen ohne Anmeldung \{#allowed-hosts}
+
+Ein Server ohne Anmeldemethode behandelt jede Anfrage als die des einen lokalen Benutzers. Damit eine Webseite, die du lediglich besuchst, ihn nicht unter einem eigenen Namen erreichen kann, antwortet ein solcher Server nur, wenn der `Host` der Anfrage `localhost`, eine IP-Adresse, der Host aus `BEEHIVE_PUBLIC_BASE_URL` oder ein in `BEEHIVE_ALLOWED_HOSTS` aufgeführter Name ist. Andere Namen erhalten eine `403`-Antwort, die die Einstellung nennt. Mit aktivierter Anmeldemethode ist die Prüfung abgeschaltet.
 
 ## Eingebettete Web-App
 
@@ -65,26 +73,38 @@ Cross-Origin-Einstellungen sind wichtig, wenn die Web-App von einem anderen Orig
 
 | Variable                 | Standard | Beschreibung                                                                 |
 | ------------------------ | -------- | --------------------------------------------------------------------------- |
-| `BEEHIVE_CORS_ALLOWED_ORIGINS`   | `*`      | Kommagetrennte Liste erlaubter Origins. Beschränke dies in der Produktion auf deine Domain. |
-| `BEEHIVE_CORS_ALLOW_CREDENTIALS` | `true`   | Ob Cross-Origin-Anfragen mit Anmeldedaten (Cookies, Auth-Header) erlaubt sind. |
+| `BEEHIVE_CORS_ALLOWED_ORIGINS`   | (leer)   | Kommagetrennte Liste anderer Origins, die die API aus einem Browser aufrufen dürfen, z. B. `https://app.example.com`. Leer bedeutet nur Same-Origin. |
+| `BEEHIVE_CORS_ALLOW_CREDENTIALS` | `true`   | Ob die aufgeführten Origins Anmeldedaten (Cookies, Auth-Header) senden dürfen. |
 
 :::caution
-Ein Platzhalter-Origin (`*`) in Kombination mit `BEEHIVE_CORS_ALLOW_CREDENTIALS=true` ist freizügig. Wenn du die App von einem einzelnen Origin auslieferst, setze `BEEHIVE_CORS_ALLOWED_ORIGINS` auf genau diesen Origin.
+Lass dies leer, wenn der Server die Web-App selbst ausliefert (der Standard). `*` erlaubt jeden Origin, aber nie mit Anmeldedaten: Der Server schaltet Anmeldedaten dann ab, sodass eine angemeldete Browser-App auf einem anderen Origin nicht mehr funktioniert. Führe die Origins stattdessen ausdrücklich auf. Mit `make dev-app` setze `http://localhost:5173`.
 :::
+
+## Karten \{#maps}
+
+Kartenkacheln und die Adresssuche sind die einzigen externen Dienste, die die App kontaktiert. Beide sind konfigurierbar und lassen sich für die gesamte Instanz abschalten.
+
+| Variable | Standard | Beschreibung |
+| --- | --- | --- |
+| `BEEHIVE_MAPS` | `on` | `off` entfernt die Karte und die Adresssuche aus der App. |
+| `BEEHIVE_MAP_TILE_URL` | `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png` | Vorlage für die Kachel-URL (Leaflet-Syntax). `{s}` darf nur im ersten Label des Hostnamens vorkommen. |
+| `BEEHIVE_GEOCODER_URL` | `https://nominatim.openstreetmap.org` | Basis-URL einer Nominatim-kompatiblen Adresssuche. |
+
+Mit den Standardwerten fordert ein Browser, der eine Karte öffnet, Kacheln von OpenStreetMap an, und wer bei einem Bienenstand eine Adresse eingibt oder den Pin verschiebt, sendet diese Adresse oder Position an Nominatim. Beide sehen die IP-Adresse des Geräts. Der Server nimmt die beiden Origins in seine Content-Security-Policy auf, sodass die App sie erreichen kann und sonst nichts.
 
 ## Synchronisierung
 
 | Variable  | Standard | Beschreibung                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
-| `BEEHIVE_NODE_ID` | `server` | Kennung für diesen Knoten im Sync-Protokoll. Wird von der Hybrid Logical Clock zur Kennzeichnung von Ereignissen verwendet. Halte sie stabil und pro Server eindeutig. |
+| `BEEHIVE_NODE_ID` | bei jedem Start zufällig | Uhr-ID, mit der Änderungen gestempelt werden, die der Server selbst schreibt (API-Aufrufe). Normalerweise gibt es keinen Grund, sie zu setzen. |
 
-Die konfliktfreie Sync-Engine (HLC plus Last-Writer-Wins pro Feld und Add-Wins-OR-Sets) benötigt für jeden Teilnehmer eine stabile Identität. Das Ändern von `BEEHIVE_NODE_ID` auf einem laufenden Server wird nicht empfohlen.
+Betreibe genau eine Server-Instanz pro Datenbank. Mehrere Replikate gegen eine Datenbank zu betreiben, wird nicht unterstützt.
 
 ## Datenbank
 
 | Variable          | Standard           | Beschreibung                                                                 |
 | ----------------- | ------------------ | --------------------------------------------------------------------------- |
-| `BEEHIVE_DATABASE_DRIVER` | aus Profil         | Datenbank-Engine: `postgres`, `mysql` oder `sqlite`.                        |
+| `BEEHIVE_DATABASE_DRIVER` | aus Profil         | Datenbank-Engine: `postgres`, `mysql` (MariaDB) oder `sqlite`.              |
 | `BEEHIVE_DATABASE_DSN`    | aus Profil         | Verbindungszeichenfolge für den gewählten Treiber (siehe unten).            |
 
 Beispiel-DSNs nach Treiber:
@@ -92,13 +112,13 @@ Beispiel-DSNs nach Treiber:
 ```bash
 # SQLite (selfhost default) — a single file with write-ahead logging
 BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN="file:openbeehive.db?_pragma=journal_mode(WAL)"
+BEEHIVE_DATABASE_DSN="file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)"
 
 # PostgreSQL (cloud default)
 BEEHIVE_DATABASE_DRIVER=postgres
 BEEHIVE_DATABASE_DSN="postgres://user:pass@host:5432/db?sslmode=disable"
 
-# MySQL
+# MariaDB (driver name: mysql)
 BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
@@ -126,11 +146,11 @@ Die `MINIO_*`-Variablen werden nur verwendet, wenn `BEEHIVE_BLOB_BACKEND=minio`.
 
 | Variable         | Standard | Beschreibung                                                                                  |
 | ---------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `BEEHIVE_SESSION_SECRET` | (leer)   | Geheimnis zum Signieren von Sitzungs-Cookies. Erzeuge eines mit `openssl rand -base64 32`. In der Produktion erforderlich. |
+| `BEEHIVE_SESSION_SECRET` | (leer)   | Geheimnis, das die Sitzungs-Tokens signiert, mindestens 32 Bytes. Erzeuge eines mit `openssl rand -base64 32`. **Erforderlich, sobald eine Anmeldemethode aktiviert ist**: Ohne es startet der Server nicht. |
 | `BEEHIVE_SESSION_TTL`    | `720h`   | Wie lange eine Sitzung dauert, bevor eine erneute Authentifizierung erforderlich ist (z. B. sind `720h` 30 Tage). |
 
 :::danger
-Setze immer ein starkes, eindeutiges `BEEHIVE_SESSION_SECRET` und halte es geheim. Wenn es durchsickert oder sich ändert, werden alle bestehenden Sitzungen ungültig.
+Halte `BEEHIVE_SESSION_SECRET` geheim und stabil. Wer es kennt, kann Sitzungen fälschen; wird es geändert, werden alle abgemeldet.
 :::
 
 ## E-Mail, Passwort & Onboarding
@@ -145,21 +165,21 @@ die sich registriert. Siehe [Authentifizierung](./authentication.md).
 | `BEEHIVE_ADMIN_EMAIL` | (leer) | E-Mail des Instanz-Admins. **Erforderlich, sobald die Passwort-Anmeldung aktiv ist.** Das Konto wird bei jedem Start sichergestellt: angelegt, falls es fehlt, und seine Rolle auf Admin gesetzt. Eine Registrierung vergibt nie die Admin-Rolle. |
 | `BEEHIVE_ADMIN_PASSWORD` | (leer) | Passwort des Instanz-Admins, mindestens 8 Zeichen. Bei jedem Start maßgeblich: Das gespeicherte Passwort wird auf diesen Wert zurückgesetzt – das dient zugleich als Passwort-Wiederherstellung. |
 | `BEEHIVE_REGISTRATION` | `true` | Offene Selbstregistrierung. Auf `false` setzen für eine Instanz nur auf Einladung: Abgesehen vom konfigurierten Admin können Konten nur über Einladungslinks erstellt werden, und der Anmeldebildschirm zeigt einen entsprechenden Hinweis. |
-| `BEEHIVE_EMAIL_VERIFICATION` | `false` | E-Mail-Bestätigung verlangen, bevor sich ein neues Konto anmelden kann. |
-| `BEEHIVE_SMTP_HOST` | (leer) | SMTP-Server für Bestätigungs-/Einladungs-E-Mails. Wenn leer, werden Links stattdessen ins Log geschrieben. |
+| `BEEHIVE_EMAIL_VERIFICATION` | `false` | E-Mail-Bestätigung verlangen, bevor sich ein neues Konto anmelden kann. Braucht `BEEHIVE_SMTP_HOST`; mit aktivierter Bestätigung und ohne Mailserver startet der Server nicht. |
+| `BEEHIVE_SMTP_HOST` | (leer) | SMTP-Server für Bestätigungs- und Einladungs-E-Mails. Wenn leer, wird keine E-Mail versendet, und der Admin kopiert Einladungslinks aus den Einstellungen. Links werden nie ins Log geschrieben. |
 | `BEEHIVE_SMTP_PORT` | `587` | SMTP-Port. |
 | `BEEHIVE_SMTP_USER` | (leer) | SMTP-Benutzername. |
 | `BEEHIVE_SMTP_PASS` | (leer) | SMTP-Passwort. |
 | `BEEHIVE_SMTP_FROM` | `Openbeehive <no-reply@openbeehive.org>` | Absenderadresse für ausgehende E-Mails. |
 
-## Demo-Mandant
+## Demo-Arbeitsbereich
 
-Installiert ein Demo-Schaukonto und einen Demo-Mandanten. Standardmäßig deaktiviert — siehe
+Installiert ein Demo-Schaukonto und einen Demo-Arbeitsbereich. Standardmäßig deaktiviert — siehe
 [Demo-Modus](./demo.md).
 
 | Variable | Standard | Beschreibung |
 | --- | --- | --- |
-| `BEEHIVE_DEMO` | `false` | Ein Demo-Konto + Mandant installieren (15 Bienenvölker auf 4 Bienenständen, stündlich zurückgesetzt). Impliziert `BEEHIVE_PASSWORD_AUTH=true`. |
+| `BEEHIVE_DEMO` | `false` | Ein Demo-Konto und einen Demo-Arbeitsbereich installieren (15 Bienenvölker auf 4 Bienenständen, stündlich zurückgesetzt). Impliziert `BEEHIVE_PASSWORD_AUTH=true`. |
 | `BEEHIVE_DEMO_AUTOLOGIN` | `false` | Anonyme Besucher direkt in die Demo anmelden, statt den Anmeldebildschirm zu zeigen. Nur für reine Schaufenster-Hosts; auf einer Instanz mit echten Nutzern aus lassen. |
 | `BEEHIVE_DEMO_EMAIL` | `demo@app.openbeehive.org` | E-Mail des Demo-Kontos. |
 | `BEEHIVE_DEMO_PASSWORD` | `demo` | Passwort des Demo-Kontos. |
@@ -181,7 +201,7 @@ Anmeldung über externe Identitätsanbieter via OpenID Connect. Mehrere Anbieter
 
 | Variable             | Standard | Beschreibung                                                            |
 | -------------------- | -------- | ----------------------------------------------------------------------- |
-| `BEEHIVE_OIDC_PROVIDERS`     | (leer)   | Kommagetrennte Liste aktivierter Anbieter, z. B. `google,keycloak`.     |
+| `BEEHIVE_OIDC_PROVIDERS`     | (leer)   | Kommagetrennte Liste aktivierter Anbieter, z. B. `google,keycloak`. Jeder aufgeführte Anbieter braucht seinen Issuer und seine Client-ID, sonst startet der Server nicht. |
 | `BEEHIVE_OIDC_REDIRECT_URL`  | `<BEEHIVE_PUBLIC_BASE_URL>/auth/callback` | Die Callback-URL, zu der Anbieter nach der Anmeldung weiterleiten.      |
 
 Jeder Anbieter hat dann seine eigenen Variablen: `BEEHIVE_OIDC_<NAME>_ISSUER`,
@@ -213,19 +233,20 @@ Für Anleitungen zur Anbietereinrichtung, Weiterleitungs-URLs und Sicherheitshin
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
-BEEHIVE_PUBLIC_BASE_URL=https://hive.example.com
-BEEHIVE_SESSION_SECRET=replace-with-openssl-rand-base64-32
+BEEHIVE_PUBLIC_BASE_URL=http://192.168.1.20:8080
 # Database and blob storage use selfhost defaults (SQLite + local files)
-# No OIDC, no WebAuthn, no password auth — single-user mode
+# No OIDC, no WebAuthn, no password auth: single-user mode, no session secret needed
 ```
 
 Wenn du für eine Familien- oder Vereinsinstanz die Passwort-Anmeldung aktivierst, ergänze
-auch den eigenen Admin:
+das Sitzungsgeheimnis und den eigenen Admin:
 
 ```bash
+BEEHIVE_PUBLIC_BASE_URL=https://hive.example.com
+BEEHIVE_SESSION_SECRET=replace-with-openssl-rand-base64-32
 BEEHIVE_PASSWORD_AUTH=true
-BEEHIVE_ADMIN_EMAIL=du@example.com
-BEEHIVE_ADMIN_PASSWORD=ein-langes-passwort-das-du-wiederherstellen-kannst
+BEEHIVE_ADMIN_EMAIL=you@example.com
+BEEHIVE_ADMIN_PASSWORD=a-long-password-you-can-recover-with
 ```
 
-Das ist alles, was ein einzelner Imker braucht. Stelle einen Reverse Proxy für HTTPS davor, und du bist bereit, Aufzeichnungen zu führen.
+Stelle einen Reverse Proxy für HTTPS davor, setze dahinter `BEEHIVE_TRUST_PROXY_HEADERS=true`, und du bist bereit, Aufzeichnungen zu führen.

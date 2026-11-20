@@ -7,35 +7,46 @@ title: "Quick start"
 
 Two routes to a running Openbeehive instance you can open in a browser:
 
-- **Option A, single binary.** Build one self-contained executable that uses SQLite and the local filesystem. No Docker, no database server, no object storage. Good for a home server, a Raspberry Pi or a small VPS.
-- **Option B, Docker.** Run the published image with one command.
+- **Option A, Docker.** Run the published image with one command.
+- **Option B, single binary.** Build one self-contained executable. No Docker, no database server, no object storage. Good for a home server, a Raspberry Pi or a small VPS.
 
-Both use the **selfhost** deployment profile, which defaults to an embedded SQLite database and filesystem blob storage. You can switch to PostgreSQL and MinIO/S3 later; see [Configuration](./configuration.md).
+Both use the **selfhost** deployment profile: an embedded SQLite database and files on the local disk. For several users on PostgreSQL and MinIO/S3, see [Docker & Compose](./docker.md#several-users).
 
-:::tip Single user? No login needed
-In the selfhost profile no login method is enabled by default: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. The app opens straight to your records. To add sign-in later, see [Authentication](./authentication.md).
+:::caution No login out of the box
+In the selfhost profile no login method is enabled by default, so the app opens straight to your records and **whoever can reach the port has full access**. That is fine on your own computer. For that reason the examples publish the port on `127.0.0.1` only, and a server without login answers only to `localhost`, IP addresses and the host of `BEEHIVE_PUBLIC_BASE_URL`. Before you open it to other devices or people, [turn login on](#turn-login-on).
 :::
 
-## The smallest working config
-
-Whichever route you choose, two settings matter to get started:
+## Option A: Docker
 
 ```bash
-BEEHIVE_DEPLOYMENT_PROFILE=selfhost
-BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
+docker run -d --name openbeehive \
+  -p 127.0.0.1:8080:8080 \
+  -v openbeehive-data:/data \
+  ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
-`BEEHIVE_PUBLIC_BASE_URL` is the address the server puts into the links it generates (OIDC redirects, invite and verification links). For local testing `http://localhost:8080` is fine. For a real deployment, set it to your public URL, for example `https://bees.example.com`.
+Open `http://localhost:8080`. The container's working directory is `/data`, so the database (`openbeehive.db`) and the uploaded files (`data/blobs`) land on the `openbeehive-data` volume and survive restarts and upgrades.
 
-Everything else has defaults for self-hosting. The full list is in [Configuration](./configuration.md).
+The repository ships the same setup as a Compose file, [`docker-compose.selfhost.yml`](https://github.com/openbeehive-org/openbeehive-app/blob/main/docker-compose.selfhost.yml), which reads its settings from an `.env` file next to it:
 
-## Option A: single binary (no Docker)
+```bash
+docker compose -f docker-compose.selfhost.yml up -d
+```
+
+To stop or remove the container (the volume stays):
+
+```bash
+docker stop openbeehive
+docker rm openbeehive
+```
+
+## Option B: single binary (no Docker)
 
 ### Prerequisites
 
 - Go 1.27 or newer
 - Node 24 or newer (the published image builds with Node 26)
-- [buf](https://buf.build/docs/installation)
+- [buf](https://buf.build/docs/installation) (`make tools` installs the pinned version)
 
 ### Build and run
 
@@ -47,55 +58,51 @@ cd openbeehive-app
 make proto
 make build
 
-# Configure
+# Configure (optional): the defaults already are the selfhost profile
 cp .env.example .env
-# Edit .env: BEEHIVE_DEPLOYMENT_PROFILE=selfhost and BEEHIVE_PUBLIC_BASE_URL
 
 # Run
 ./server/bin/openbeehive
 ```
 
-By default the binary listens on `:8080` and serves the web app itself (`BEEHIVE_SERVE_WEB=true`), so the API and the PWA come from the same origin. Open the address in `BEEHIVE_PUBLIC_BASE_URL`.
+The binary reads `.env` from the directory it is started in; variables that are already set in the environment win. By default it listens on `:8080` and serves the web app itself (`BEEHIVE_SERVE_WEB=true`), so the API and the PWA come from the same origin. Open `http://localhost:8080`.
+
+The first lines of the log say how the server is configured, including who may use it:
+
+```text
+config: applied .env from the working directory (existing environment variables win)
+Openbeehive · profile=selfhost · DB=sqlite · Blob=fs
+auth: NO LOGIN (single-user mode): every request has full access to all data
+auth: accepting requests for hosts: localhost, IP addresses (add names with BEEHIVE_ALLOWED_HOSTS)
+```
 
 :::note Where your data lives
-In selfhost mode your records go into a SQLite file (`openbeehive.db` in the working directory by default) and uploaded photos into a blob directory (`./data/blobs` by default). Back up both and you have backed up everything; see [Backups](./backups.md).
+In selfhost mode your records go into a SQLite file (`openbeehive.db` in the working directory by default) and uploaded files into a blob directory (`./data/blobs` by default). Back up both and you have backed up everything; see [Backups](./backups.md).
 :::
 
-## Option B: Docker
+## Turn login on \{#turn-login-on}
 
-The published image is `ghcr.io/openbeehive-org/openbeehive-app:latest`.
-
-```bash
-docker run -d \
-  --name openbeehive \
-  -p 8080:8080 \
-  -e BEEHIVE_DEPLOYMENT_PROFILE=selfhost \
-  -e BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080 \
-  -e 'BEEHIVE_DATABASE_DSN=file:/data/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)' \
-  -e BEEHIVE_BLOB_DIR=/data/blobs \
-  -v openbeehive-data:/data \
-  ghcr.io/openbeehive-org/openbeehive-app:latest
-```
-
-The `BEEHIVE_DATABASE_DSN` and `BEEHIVE_BLOB_DIR` lines are what put your data on the volume. Without them the container uses its defaults, `openbeehive.db` and `./data/blobs` relative to the container's root directory, which sit outside the volume and are gone after `docker rm`. With them, the `openbeehive-data` volume holds the database and the blobs, and they survive restarts and upgrades. Once it is running, open `http://localhost:8080`.
-
-To stop or remove the container (the volume stays):
+To reach the instance from other devices or share it with others, require sign-in. Put these settings in `.env` (next to the binary, or next to `docker-compose.selfhost.yml`), or pass them with `-e` to `docker run`:
 
 ```bash
-docker stop openbeehive
-docker rm openbeehive
+BEEHIVE_PUBLIC_BASE_URL=https://bees.example.org   # the address people open
+BEEHIVE_PASSWORD_AUTH=true
+BEEHIVE_ADMIN_EMAIL=you@example.org
+BEEHIVE_ADMIN_PASSWORD=change-me-please            # 8+ characters
+BEEHIVE_SESSION_SECRET=...                         # openssl rand -base64 32
+BEEHIVE_BIND=0.0.0.0                               # Compose file only: publish on the network
 ```
 
-If you turn on email/password login (`BEEHIVE_PASSWORD_AUTH=true`), the server refuses to start until `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` are set as well. See [Authentication](./authentication.md).
+- `BEEHIVE_PUBLIC_BASE_URL` is the address the server puts into the links it generates (OIDC redirects, invite and verification links).
+- `BEEHIVE_SESSION_SECRET` must be at least 32 bytes. With any login method the server refuses to start without it.
+- `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` define the instance admin; with email/password login the server refuses to start without them.
 
-:::tip Cloud stack instead?
-The command above runs the lightweight selfhost profile. For the **cloud** profile (PostgreSQL + MinIO) the repository ships Compose files; see [Docker](./docker.md).
-:::
+Records made before login was switched on move into the admin's workspace at the next start; sign in as the admin to see them. Details and the other login methods are in [Authentication](./authentication.md).
 
 ## First steps after install
 
-1. Open the app at your `BEEHIVE_PUBLIC_BASE_URL` and create your first apiary.
+1. Open the app and create your first apiary.
 2. Add a hive, edit it to set its type, and record a visit.
 3. Print a QR label for the hive so you can scan straight to it in the field.
 
-Before you expose the instance to the internet, put a TLS-terminating [reverse proxy](./reverse-proxy.md) in front of it and set `BEEHIVE_PUBLIC_BASE_URL` to the `https://` address. Then set up [backups](./backups.md).
+Before you expose the instance to the internet, put a TLS-terminating [reverse proxy](./reverse-proxy.md) in front of it, set `BEEHIVE_PUBLIC_BASE_URL` to the `https://` address and `BEEHIVE_TRUST_PROXY_HEADERS=true`. Then set up [backups](./backups.md). Run exactly one server instance per database.

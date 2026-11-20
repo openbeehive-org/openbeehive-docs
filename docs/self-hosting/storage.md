@@ -104,6 +104,7 @@ Give `BEEHIVE_MINIO_ENDPOINT` as a host, optionally with a port, for example
 `minio.example.com` or `minio.example.com:9000`. Do not include `https://`.
 Control the scheme with `BEEHIVE_MINIO_USE_SSL` instead.
 :::
+
 ### The bucket
 
 On start the server checks whether the bucket named in `BEEHIVE_MINIO_BUCKET` exists and creates it if not, so with credentials that may create buckets there is nothing to prepare. If your credentials are restricted to an existing bucket, create it first, for example with the MinIO client:

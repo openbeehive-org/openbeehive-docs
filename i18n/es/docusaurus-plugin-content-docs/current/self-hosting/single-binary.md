@@ -1,31 +1,31 @@
 ---
 sidebar_position: 2
-title: "Binario unico"
+title: "Binario único"
 ---
 
-# Binario unico
+# Binario único
 
-La forma mas sencilla de ejecutar Openbeehive en tu propia maquina es el **binario unico**. En el perfil `selfhost`, Openbeehive sirve la aplicacion web y la API desde un unico proceso, almacena sus datos en un archivo SQLite local y guarda las fotos subidas en el sistema de archivos. Sin Docker, sin Postgres, sin almacen de objetos: solo un ejecutable.
+La forma más sencilla de ejecutar Openbeehive en tu propia máquina es el **binario único**. En el perfil `selfhost`, Openbeehive sirve la aplicación web y la API desde un único proceso, almacena sus datos en un archivo SQLite local y guarda las fotos subidas en el sistema de archivos. Sin Docker, sin Postgres, sin almacén de objetos: solo un ejecutable.
 
-Esta pagina te guia a traves de la compilacion de ese binario desde el codigo fuente y su ejecucion como un servicio de larga duracion.
+Esta página te guía a través de la compilación de ese binario desde el código fuente y su ejecución como un servicio de larga duración.
 
 :::tip ¿Tienes prisa?
-Si prefieres descargar una imagen de contenedor precompilada, consulta [Docker](./docker.md). Para comparar primero ambos enfoques, empieza por la [vision general del alojamiento propio](/category/self-hosting).
+Si prefieres descargar una imagen de contenedor precompilada, consulta [Docker](./docker.md). Para comparar primero ambos enfoques, empieza por la [visión general del alojamiento propio](/category/self-hosting).
 :::
 
 ## Requisitos previos
 
-Necesitaras unas pocas herramientas de compilacion instaladas en la maquina que compile el binario:
+Necesitarás unas pocas herramientas de compilación instaladas en la máquina que compile el binario:
 
-| Herramienta | Version | Proposito |
+| Herramienta | Versión | Propósito |
 | --- | --- | --- |
-| Go | 1.25+ | Compila el servidor |
-| Node.js | 24+ | Construye la aplicacion web SvelteKit |
-| buf | mas reciente | Genera el codigo Connect-RPC a partir de las definiciones protobuf |
+| Go | 1.27+ | Compila el servidor |
+| Node.js | 24+ | Construye la aplicación web SvelteKit |
+| buf | fijada por `make tools` | Genera el código Connect-RPC a partir de las definiciones protobuf |
 
-Una vez compilado, el propio binario no tiene dependencias en tiempo de ejecucion: puedes copiarlo a un servidor que no tenga ninguna de las anteriores instaladas.
+Una vez compilado, el propio binario no tiene dependencias en tiempo de ejecución: puedes copiarlo a un servidor que no tenga ninguna de las anteriores instaladas.
 
-## Obtener el codigo
+## Obtener el código
 
 ```bash
 git clone https://github.com/openbeehive-org/openbeehive-app.git
@@ -34,60 +34,50 @@ cd openbeehive-app
 
 ## Configurar
 
-Copia el archivo de entorno de ejemplo y elige el perfil de alojamiento propio:
+El servidor se configura mediante variables de entorno y lee un archivo `.env` del directorio en el que se inicia. Las variables que ya están definidas en el entorno prevalecen sobre el archivo. Copia el archivo de ejemplo:
 
 ```bash
 cp .env.example .env
 ```
 
-Para una instancia privada de un solo usuario, los valores por defecto estan casi listos. Abre `.env` y confirma estos valores:
+Para una instancia privada de un solo usuario, los valores por defecto integrados ya están listos; estos son los que importan:
 
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
 BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 BEEHIVE_SERVE_WEB=true
-BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)
-BEEHIVE_BLOB_BACKEND=fs
-BEEHIVE_BLOB_DIR=./data/blobs
-BEEHIVE_SESSION_SECRET=
+# Defaults of the selfhost profile:
+# BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)
+# BEEHIVE_BLOB_DIR=./data/blobs
 ```
 
-Genera un secreto de sesion: nunca lo dejes en blanco salvo en una prueba desechable:
-
-```bash
-openssl rand -base64 32
-```
-
-Pega el resultado en `BEEHIVE_SESSION_SECRET=`.
-
-:::note Sin inicio de sesion por defecto
-El perfil selfhost no habilita ningún método de inicio de sesión: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. Déjalos así para ejecutar como un solo usuario sin paso de inicio de sesión. Cuando quieras cuentas, passkeys o un proveedor, consulta [Autenticación](./authentication.md).
+:::note Sin inicio de sesión por defecto
+El perfil selfhost no habilita ningún método de inicio de sesión: `BEEHIVE_PASSWORD_AUTH` está desactivado, `BEEHIVE_OIDC_PROVIDERS` está vacío y `BEEHIVE_WEBAUTHN_ENABLED=false`. Cualquiera que pueda alcanzar el puerto tiene entonces acceso completo, y el servidor solo responde a `localhost`, a direcciones IP y al host de `BEEHIVE_PUBLIC_BASE_URL` (añade más nombres con `BEEHIVE_ALLOWED_HOSTS`). Cuando quieras cuentas, passkeys o un proveedor, consulta [Autenticación](./authentication.md); cualquier método de inicio de sesión necesita un `BEEHIVE_SESSION_SECRET` de al menos 32 bytes (`openssl rand -base64 32`).
 :::
 
-Si tienes la intencion de acceder a la instancia desde otro dispositivo de tu red, configura `BEEHIVE_PUBLIC_BASE_URL` con una direccion que ese dispositivo pueda resolver realmente (por ejemplo `http://192.168.1.20:8080` o tu dominio detras de un [proxy inverso](./reverse-proxy.md)). Las etiquetas QR codifican la dirección en la que abres la aplicación, así que usa siempre esa misma dirección.
+Si tienes la intención de acceder a la instancia desde otro dispositivo de tu red, configura `BEEHIVE_PUBLIC_BASE_URL` con la dirección que abre ese dispositivo (por ejemplo `http://192.168.1.20:8080` o tu dominio detrás de un [proxy inverso](./reverse-proxy.md)) y activa el inicio de sesión. Las etiquetas QR codifican la dirección en la que abres la aplicación, así que usa siempre esa misma dirección.
 
 ## Compilar
 
-Genera el codigo protobuf y luego compila:
+Genera el código protobuf y luego compila:
 
 ```bash
 make proto
 make build
 ```
 
-Esto produce un unico ejecutable:
+Esto produce un único ejecutable:
 
 ```text
 ./server/bin/openbeehive
 ```
 
-La aplicacion web esta integrada en el binario, por lo que no hay nada mas que desplegar junto a el.
+La aplicación web está integrada en el binario, por lo que no hay nada más que desplegar junto a él.
 
 ## Ejecutar
 
-Desde la raiz del repositorio (para que las rutas relativas de `.env` se resuelvan como se espera):
+Desde la raíz del repositorio, donde está `.env`:
 
 ```bash
 ./server/bin/openbeehive
@@ -95,14 +85,15 @@ Desde la raiz del repositorio (para que las rutas relativas de `.env` se resuelv
 
 En el primer arranque, el servidor:
 
+- aplica `.env` y anota en el registro el perfil, la base de datos y si se requiere inicio de sesión,
 - crea el archivo de base de datos SQLite `openbeehive.db` y ejecuta sus migraciones,
 - crea el directorio `./data/` (con `./data/blobs` para las fotos),
-- sirve la aplicacion web y la API Connect-RPC en `:8080`.
+- sirve la aplicación web y la API Connect-RPC en `:8080`.
 
-Abre `http://localhost:8080` en tu navegador. La aplicacion se carga, construye su base de datos local en el navegador y ya estaras listo para anadir tu primer colmenar.
+Abre `http://localhost:8080` en tu navegador. La aplicación se carga, construye su base de datos local en el navegador y ya estarás listo para añadir tu primer colmenar.
 
 :::tip El directorio de trabajo importa
-Las rutas relativas como `file:openbeehive.db` y `./data/blobs` se resuelven respecto al directorio desde el que se lanza el binario, no donde reside el binario. Elige el directorio de trabajo de forma deliberada: la unidad systemd de mas abajo lo establece explicitamente con `WorkingDirectory`.
+Las rutas relativas como `file:openbeehive.db` y `./data/blobs` se resuelven respecto al directorio desde el que se lanza el binario, no donde reside el binario, y `.env` se lee de ese mismo directorio. Elige el directorio de trabajo de forma deliberada: la unidad systemd de más abajo lo establece explícitamente con `WorkingDirectory`.
 :::
 
 ## Ejecutar como servicio systemd
@@ -131,7 +122,6 @@ Type=simple
 User=openbeehive
 Group=openbeehive
 WorkingDirectory=/opt/openbeehive
-EnvironmentFile=/opt/openbeehive/.env
 ExecStart=/opt/openbeehive/openbeehive
 Restart=on-failure
 RestartSec=5
@@ -147,14 +137,16 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 
-Habilitalo e inicialo:
+La unidad no necesita `EnvironmentFile`: el propio servidor lee `/opt/openbeehive/.env` porque ese es su directorio de trabajo. Haz que el archivo solo pueda leerlo el usuario `openbeehive` (`chmod 600`), ya que contiene el secreto de sesión y la contraseña del administrador.
+
+Habilítalo e inícialo:
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now openbeehive
 ```
 
-Comprueba que esta sano y observa los registros:
+Comprueba que está sano y observa los registros:
 
 ```bash
 systemctl status openbeehive
@@ -162,34 +154,34 @@ journalctl -u openbeehive -f
 ```
 
 :::caution Enlazar al puerto 80 o 443
-El ejemplo se enlaza a `:8080`, que un usuario sin privilegios puede usar. No ejecutes el servicio como root para acceder a los puertos 80/443; en su lugar, manten Openbeehive en `:8080` y pon un [proxy inverso](./reverse-proxy.md) (como Caddy o nginx) por delante para gestionar el TLS y el puerto publico.
+El ejemplo se enlaza a `:8080`, que un usuario sin privilegios puede usar. No ejecutes el servicio como root para acceder a los puertos 80/443; en su lugar, mantén Openbeehive en `:8080` y pon un [proxy inverso](./reverse-proxy.md) (como Caddy o nginx) por delante para gestionar el TLS y el puerto público.
 :::
 
-## Donde residen tus datos
+## Dónde residen tus datos
 
 En el perfil `selfhost`, todo se almacena bajo el directorio de trabajo que elegiste (arriba, `/opt/openbeehive`):
 
-| Que | Ubicacion por defecto | Establecido por |
+| Qué | Ubicación por defecto | Establecido por |
 | --- | --- | --- |
-| Base de datos de registros | `openbeehive.db` (mas los archivos `-wal` / `-shm`) | `BEEHIVE_DATABASE_DSN` |
+| Base de datos de registros | `openbeehive.db` (más los archivos `-wal` / `-shm`) | `BEEHIVE_DATABASE_DSN` |
 | Fotos y adjuntos | `./data/blobs` | `BEEHIVE_BLOB_DIR` |
 
-Los archivos `-wal` y `-shm` junto a la base de datos son el registro de escritura anticipada (write-ahead log) de SQLite; tratalos como parte de la base de datos.
+Los archivos `-wal` y `-shm` junto a la base de datos son el registro de escritura anticipada (write-ahead log) de SQLite; trátalos como parte de la base de datos.
 
 ## Mover o respaldar tus datos
 
-Como todo el estado son archivos en un unico directorio, reubicar una instancia es en su mayoria una tarea de copiado:
+Como todo el estado son archivos en un único directorio, reubicar una instancia es en su mayoría una tarea de copiado:
 
 1. Detén el servicio para que la base de datos quede en reposo: `sudo systemctl stop openbeehive`.
-2. Copia el binario, `.env`, los archivos de base de datos y el directorio `data/` a la nueva maquina, conservando la disposicion.
+2. Copia el binario, `.env`, los archivos de base de datos y el directorio `data/` a la nueva máquina, conservando la disposición.
 3. Inicia el servicio en el nuevo host: `sudo systemctl start openbeehive`.
 
 :::danger Detén siempre el servicio primero
-Copiar `openbeehive.db` mientras el servidor esta en ejecucion puede capturar una instantanea rota e inconsistente. Detén el servicio (o usa un procedimiento de copia de seguridad adecuado) antes de copiar los archivos de base de datos.
+Copiar `openbeehive.db` mientras el servidor está en ejecución puede capturar una instantánea rota e inconsistente. Detén el servicio (o usa un procedimiento de copia de seguridad adecuado) antes de copiar los archivos de base de datos.
 :::
 
-Para copias de seguridad programadas, retencion y tecnicas seguras de copia en caliente para SQLite, consulta [Copias de seguridad](./backups.md).
+Para copias de seguridad programadas, retención y técnicas seguras de copia en caliente para SQLite, consulta [Copias de seguridad](./backups.md).
 
 ## Actualizar
 
-Para pasar a una version mas reciente, descarga el codigo mas reciente, recompila y reemplaza el binario: tu base de datos y el directorio `data/` permanecen donde estan y las migraciones se ejecutan en el siguiente arranque. El procedimiento completo, incluyendo como revertir, se cubre en [Actualizacion](./upgrading.md).
+Para pasar a una versión más reciente, descarga el código más reciente, recompila y reemplaza el binario: tu base de datos y el directorio `data/` permanecen donde están y las migraciones se ejecutan en el siguiente arranque. El procedimiento completo, incluyendo cómo revertir, se cubre en [Actualización](./upgrading.md).

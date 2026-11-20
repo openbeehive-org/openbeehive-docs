@@ -7,10 +7,10 @@ title: "Configuration"
 
 Openbeehive is configured entirely through environment variables. This page is the complete reference.
 
-You can set these variables in your shell, in a `.env` file alongside the binary, in your `docker compose` file, or through your hosting platform's secrets manager. The server reads them once at start-up, so changes take effect after a restart.
+You can set these variables in your shell, in your `docker compose` file, through your hosting platform's secrets manager, or in a `.env` file. The server reads `.env` from its working directory at start-up; variables that are already set in the environment win over the file. Everything is read once, so changes take effect after a restart.
 
 :::tip Start small
-You only need a handful of these to get going. For a single-user home server, set `BEEHIVE_DEPLOYMENT_PROFILE=selfhost`, a `BEEHIVE_SESSION_SECRET`, and leave the rest at their defaults. See the [Quick start](./quick-start.md) to be running in minutes.
+You only need a handful of these to get going. A single-user home server runs on the defaults alone. Once you turn a login method on, add `BEEHIVE_SESSION_SECRET` and, for email/password login, the admin account. See the [Quick start](./quick-start.md) to be running in minutes.
 :::
 
 ## How the deployment profile works
@@ -20,7 +20,7 @@ The single most important setting is `BEEHIVE_DEPLOYMENT_PROFILE`. It chooses se
 | Profile    | Database default | Blob storage default | Intended for                          |
 | ---------- | ---------------- | -------------------- | ------------------------------------- |
 | `selfhost` | SQLite (file)    | Local filesystem     | A single binary, no Docker, one host  |
-| `cloud`    | PostgreSQL       | MinIO / S3           | The hosted, multi-tenant deployment   |
+| `cloud`    | PostgreSQL       | MinIO / S3           | An instance with several users        |
 
 The profile only sets *defaults*. Any variable you set explicitly always wins. For example, you can run the `selfhost` profile but point it at PostgreSQL by setting `BEEHIVE_DATABASE_DRIVER` and `BEEHIVE_DATABASE_DSN` yourself.
 
@@ -41,14 +41,22 @@ The two profiles are documented in depth on their own pages: [Single binary](./s
 | `BEEHIVE_ADDR`            | `:8080`                  | Address and port the server listens on. Use `127.0.0.1:8080` to bind only to localhost behind a reverse proxy. |
 | `BEEHIVE_PUBLIC_BASE_URL` | `http://localhost:8080`  | The public URL where users reach the app. Used for OIDC redirects, invite and verification links, and passkey defaults. Set this to your real domain in production. |
 | `BEEHIVE_HTTP_READ_HEADER_TIMEOUT` | `10s` | Time allowed to read a request's headers. |
-| `BEEHIVE_HTTP_READ_TIMEOUT` | `0` | Whole-request read limit; `0` means none. |
-| `BEEHIVE_HTTP_WRITE_TIMEOUT` | `0` | Response write limit; `0` means none. |
+| `BEEHIVE_HTTP_READ_TIMEOUT` | `2m` | Time allowed to read one request; `0` means no limit. The live sync stream is exempt. |
+| `BEEHIVE_HTTP_WRITE_TIMEOUT` | `2m` | Time allowed to write one response; `0` means no limit. The live sync stream is exempt. |
 | `BEEHIVE_HTTP_IDLE_TIMEOUT` | `120s` | How long an idle keep-alive connection stays open. |
 | `BEEHIVE_HTTP_SHUTDOWN_TIMEOUT` | `15s` | Grace period for in-flight requests on shutdown. |
+| `BEEHIVE_TRUST_PROXY_HEADERS` | `false` | Take the client address for sign-in throttling from the last `X-Forwarded-For` entry. Set it to `true` only when exactly one reverse proxy you control sits in front and the server port is not reachable any other way. |
+| `BEEHIVE_ALLOWED_HOSTS` | (empty) | Only without login: further host names the server answers to, comma-separated. `*` turns the check off. See below. |
 
 :::caution
 `BEEHIVE_PUBLIC_BASE_URL` must match the address users actually visit. If it is wrong, login redirects and invite links point to the wrong place.
 :::
+
+One RPC message may be at most 16 MiB; the app splits larger uploads by itself. This limit is not configurable.
+
+### Host names without login \{#allowed-hosts}
+
+A server without a login method treats every request as the one local user. To keep a web page you merely visit from reaching it under a name of its own, such a server answers only when the `Host` of the request is `localhost`, an IP address, the host of `BEEHIVE_PUBLIC_BASE_URL` or a name listed in `BEEHIVE_ALLOWED_HOSTS`. Other names get a `403` response that names the setting. With a login method enabled the check is off.
 
 ## Embedded web app
 
@@ -65,26 +73,38 @@ Cross-origin settings matter when the web app is served from a different origin 
 
 | Variable                 | Default | Description                                                                 |
 | ------------------------ | ------- | --------------------------------------------------------------------------- |
-| `BEEHIVE_CORS_ALLOWED_ORIGINS`   | `*`     | Comma-separated list of allowed origins. Restrict this to your domain in production. |
-| `BEEHIVE_CORS_ALLOW_CREDENTIALS` | `true`  | Whether to allow credentialed cross-origin requests (cookies, auth headers). |
+| `BEEHIVE_CORS_ALLOWED_ORIGINS`   | (empty) | Comma-separated list of other origins that may call the API from a browser, e.g. `https://app.example.com`. Empty means same-origin only. |
+| `BEEHIVE_CORS_ALLOW_CREDENTIALS` | `true`  | Whether the listed origins may send credentials (cookies, auth headers). |
 
 :::caution
-A wildcard origin (`*`) combined with `BEEHIVE_CORS_ALLOW_CREDENTIALS=true` is permissive. If you serve the app from a single origin, set `BEEHIVE_CORS_ALLOWED_ORIGINS` to that exact origin.
+Leave this empty when the server serves the web app itself (the default). `*` allows any origin but never with credentials: the server then switches credentials off, so a signed-in browser app on another origin stops working. List the origins explicitly instead. With `make dev-app`, set `http://localhost:5173`.
 :::
+
+## Maps \{#maps}
+
+Map tiles and the address search are the only remote services the app contacts. Both are configurable and can be switched off for the whole instance.
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `BEEHIVE_MAPS` | `on` | `off` removes the map and the address search from the app. |
+| `BEEHIVE_MAP_TILE_URL` | `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png` | Tile URL template (Leaflet syntax). `{s}` may only appear in the first label of the host name. |
+| `BEEHIVE_GEOCODER_URL` | `https://nominatim.openstreetmap.org` | Base URL of a Nominatim-compatible address search. |
+
+With the defaults, a browser that opens a map requests tiles from OpenStreetMap, and typing an address or moving the pin on an apiary sends that address or position to Nominatim. Both see the IP address of the device. The server adds the two origins to its Content-Security-Policy, so the app can reach them and nothing else.
 
 ## Sync
 
 | Variable  | Default  | Description                                                                                          |
 | --------- | -------- | -------------------------------------------------------------------------------------------------- |
-| `BEEHIVE_NODE_ID` | `server` | Identifier for this node in the sync protocol. Used by the Hybrid Logical Clock to label events. Keep it stable and unique per server. |
+| `BEEHIVE_NODE_ID` | random at every start | Clock id stamped on changes the server writes itself (API calls). There is normally no reason to set it. |
 
-The conflict-free sync engine (HLC plus per-field last-writer-wins and add-wins OR-Sets) needs each participant to have a stable identity. Changing `BEEHIVE_NODE_ID` on a live server is not recommended.
+Run exactly one server instance per database. Running several replicas against one database is not supported.
 
 ## Database
 
 | Variable          | Default            | Description                                                                 |
 | ----------------- | ------------------ | --------------------------------------------------------------------------- |
-| `BEEHIVE_DATABASE_DRIVER` | from profile       | Database engine: `postgres`, `mysql` or `sqlite`.                           |
+| `BEEHIVE_DATABASE_DRIVER` | from profile       | Database engine: `postgres`, `mysql` (MariaDB) or `sqlite`.                 |
 | `BEEHIVE_DATABASE_DSN`    | from profile       | Connection string for the chosen driver (see below).                       |
 
 Example DSNs by driver:
@@ -92,13 +112,13 @@ Example DSNs by driver:
 ```bash
 # SQLite (selfhost default) — a single file with write-ahead logging
 BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN="file:openbeehive.db?_pragma=journal_mode(WAL)"
+BEEHIVE_DATABASE_DSN="file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)"
 
 # PostgreSQL (cloud default)
 BEEHIVE_DATABASE_DRIVER=postgres
 BEEHIVE_DATABASE_DSN="postgres://user:pass@host:5432/db?sslmode=disable"
 
-# MySQL
+# MariaDB (driver name: mysql)
 BEEHIVE_DATABASE_DRIVER=mysql
 BEEHIVE_DATABASE_DSN="user:pass@tcp(host:3306)/openbeehive?parseTime=true"
 ```
@@ -126,11 +146,11 @@ The `MINIO_*` variables are only used when `BEEHIVE_BLOB_BACKEND=minio`. For ful
 
 | Variable         | Default | Description                                                                                  |
 | ---------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `BEEHIVE_SESSION_SECRET` | (empty) | Secret used to sign session cookies. Generate one with `openssl rand -base64 32`. Required in production. |
+| `BEEHIVE_SESSION_SECRET` | (empty) | Secret that signs the session tokens, at least 32 bytes. Generate one with `openssl rand -base64 32`. **Required as soon as any login method is enabled**: the server refuses to start without it. |
 | `BEEHIVE_SESSION_TTL`    | `720h`  | How long a session lasts before re-authentication is required (e.g. `720h` is 30 days).      |
 
 :::danger
-Always set a strong, unique `BEEHIVE_SESSION_SECRET` and keep it private. If it leaks or changes, all existing sessions are invalidated.
+Keep `BEEHIVE_SESSION_SECRET` private and stable. Whoever knows it can forge sessions; changing it signs everyone out.
 :::
 
 ## Email, password & onboarding
@@ -145,21 +165,21 @@ to sign up. See [Authentication](./authentication.md).
 | `BEEHIVE_ADMIN_EMAIL` | (empty) | Email of the instance admin. **Required whenever password auth is enabled.** The account is ensured on every start: created if missing and its role forced to admin. Sign-up never grants the admin role. |
 | `BEEHIVE_ADMIN_PASSWORD` | (empty) | Password of the instance admin, at least 8 characters. Authoritative on every start: the stored password is reset to this value, which doubles as password recovery. |
 | `BEEHIVE_REGISTRATION` | `true` | Open self-registration. Set to `false` for an invite-only instance: apart from the configured admin, accounts can only be created via invite links, and the sign-in screen shows an invite-only notice. |
-| `BEEHIVE_EMAIL_VERIFICATION` | `false` | Require email confirmation before a new account can sign in. |
-| `BEEHIVE_SMTP_HOST` | (empty) | SMTP server for verification/invite emails. If empty, links are written to the log instead. |
+| `BEEHIVE_EMAIL_VERIFICATION` | `false` | Require email confirmation before a new account can sign in. Needs `BEEHIVE_SMTP_HOST`; the server refuses to start with verification on and no mail server. |
+| `BEEHIVE_SMTP_HOST` | (empty) | SMTP server for verification and invite emails. If empty, no mail is sent and the admin copies invite links from Settings. Links are never written to the log. |
 | `BEEHIVE_SMTP_PORT` | `587` | SMTP port. |
 | `BEEHIVE_SMTP_USER` | (empty) | SMTP username. |
 | `BEEHIVE_SMTP_PASS` | (empty) | SMTP password. |
 | `BEEHIVE_SMTP_FROM` | `Openbeehive <no-reply@openbeehive.org>` | From address for outgoing mail. |
 
-## Demo tenant
+## Demo workspace
 
-Installs a showcase demo account and tenant. Off by default — see
+Installs a showcase demo account and workspace. Off by default — see
 [Demo mode](./demo.md).
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `BEEHIVE_DEMO` | `false` | Install a demo account + tenant (15 hives across 4 apiaries, reset hourly). Implies `BEEHIVE_PASSWORD_AUTH=true`. |
+| `BEEHIVE_DEMO` | `false` | Install a demo account and workspace (15 hives across 4 apiaries, reset hourly). Implies `BEEHIVE_PASSWORD_AUTH=true`. |
 | `BEEHIVE_DEMO_AUTOLOGIN` | `false` | Sign anonymous visitors straight into the demo instead of showing the login screen. For pure showcase hosts only; leave it off on an instance that also serves real users. |
 | `BEEHIVE_DEMO_EMAIL` | `demo@app.openbeehive.org` | Demo account email. |
 | `BEEHIVE_DEMO_PASSWORD` | `demo` | Demo account password. |
@@ -181,7 +201,7 @@ Sign-in through external identity providers via OpenID Connect. Multiple provide
 
 | Variable             | Default | Description                                                              |
 | -------------------- | ------- | ----------------------------------------------------------------------- |
-| `BEEHIVE_OIDC_PROVIDERS`     | (empty) | Comma-separated list of enabled providers, e.g. `google,keycloak`.      |
+| `BEEHIVE_OIDC_PROVIDERS`     | (empty) | Comma-separated list of enabled providers, e.g. `google,keycloak`. Every listed provider needs its issuer and client id, or the server refuses to start. |
 | `BEEHIVE_OIDC_REDIRECT_URL`  | `<BEEHIVE_PUBLIC_BASE_URL>/auth/callback` | The callback URL providers redirect to after login.                     |
 
 Each provider then has its own variables, `BEEHIVE_OIDC_<NAME>_ISSUER`,
@@ -213,19 +233,20 @@ For provider set-up walkthroughs, redirect URLs and security advice, see [Authen
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
-BEEHIVE_PUBLIC_BASE_URL=https://hive.example.com
-BEEHIVE_SESSION_SECRET=replace-with-openssl-rand-base64-32
+BEEHIVE_PUBLIC_BASE_URL=http://192.168.1.20:8080
 # Database and blob storage use selfhost defaults (SQLite + local files)
-# No OIDC, no WebAuthn, no password auth — single-user mode
+# No OIDC, no WebAuthn, no password auth: single-user mode, no session secret needed
 ```
 
-If you enable password auth for a family or club instance, add the dedicated
-admin as well:
+If you enable password auth for a family or club instance, add the session
+secret and the dedicated admin:
 
 ```bash
+BEEHIVE_PUBLIC_BASE_URL=https://hive.example.com
+BEEHIVE_SESSION_SECRET=replace-with-openssl-rand-base64-32
 BEEHIVE_PASSWORD_AUTH=true
 BEEHIVE_ADMIN_EMAIL=you@example.com
 BEEHIVE_ADMIN_PASSWORD=a-long-password-you-can-recover-with
 ```
 
-That is all a single beekeeper needs. Add a reverse proxy in front for HTTPS and you are ready to keep records.
+Add a reverse proxy in front for HTTPS, set `BEEHIVE_TRUST_PROXY_HEADERS=true` behind it, and you are ready to keep records.

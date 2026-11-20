@@ -19,7 +19,7 @@ Ci sono due cose sul server che vale la pena proteggere:
 
 | Elemento | Dove risiede | Obiettivo del backup |
 | --- | --- | --- |
-| Il database | File SQLite, o Postgres/MySQL | Una copia coerente o un dump |
+| Il database | File SQLite, o PostgreSQL/MariaDB | Una copia coerente o un dump |
 | Blob (foto, allegati) | Filesystem locale, o MinIO/S3 | La directory dei blob o il bucket |
 
 Quale database e quale archivio di blob hai dipende dal tuo profilo di deployment:
@@ -78,7 +78,7 @@ pg_dump "postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   --file=/backups/openbeehive-$(date +%F).dump
 ```
 
-Il formato custom si comprime bene e si ripristina con `pg_restore`. Per MySQL, l'equivalente è `mysqldump --single-transaction`.
+Il formato custom si comprime bene e si ripristina con `pg_restore`. Per MariaDB, l'equivalente è `mariadb-dump --single-transaction`.
 
 ## Backup dei blob
 

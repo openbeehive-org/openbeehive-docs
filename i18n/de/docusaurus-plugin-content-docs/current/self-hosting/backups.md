@@ -19,7 +19,7 @@ Es gibt zwei Dinge auf dem Server, die es wert sind, geschützt zu werden:
 
 | Element | Wo es liegt | Backup-Ziel |
 | --- | --- | --- |
-| Die Datenbank | SQLite-Datei oder Postgres/MySQL | Eine konsistente Kopie oder ein Dump |
+| Die Datenbank | SQLite-Datei oder PostgreSQL/MariaDB | Eine konsistente Kopie oder ein Dump |
 | Blobs (Fotos, Anhänge) | Lokales Dateisystem oder MinIO/S3 | Das Blob-Verzeichnis oder der Bucket |
 
 Welche Datenbank und welchen Blob-Speicher du hast, hängt von deinem Bereitstellungsprofil ab:
@@ -78,7 +78,7 @@ pg_dump "postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   --file=/backups/openbeehive-$(date +%F).dump
 ```
 
-Das Custom-Format komprimiert gut und stellt mit `pg_restore` wieder her. Für MySQL ist das Äquivalent `mysqldump --single-transaction`.
+Das Custom-Format komprimiert gut und stellt mit `pg_restore` wieder her. Für MariaDB ist das Äquivalent `mariadb-dump --single-transaction`.
 
 ## Blobs sichern
 

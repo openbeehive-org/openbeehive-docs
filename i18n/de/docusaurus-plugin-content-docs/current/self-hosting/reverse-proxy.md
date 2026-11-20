@@ -15,9 +15,14 @@ HTTPS ist nötig für die installierbare PWA, den kamerabasierten QR-Scanner und
 | --- | --- |
 | `BEEHIVE_PUBLIC_BASE_URL` | Die öffentliche HTTPS-URL, z. B. `https://bees.example.com`. Wird für OIDC-Redirects, Einladungs- und Verifizierungslinks sowie Passkey-Standardwerte verwendet. |
 | `BEEHIVE_ADDR` | `127.0.0.1:8080` bindet nur an localhost, sodass die App ausschließlich über den Proxy erreichbar ist. |
-| `BEEHIVE_CORS_ALLOWED_ORIGINS` | Nur wenn die Web-App von einem anderen Ursprung als die API ausgeliefert wird. Andernfalls den Standard belassen. |
+| `BEEHIVE_TRUST_PROXY_HEADERS` | `true` hinter dem Proxy, damit die Drosselung der Anmeldung die echte Client-Adresse zählt (den letzten `X-Forwarded-For`-Eintrag) statt die des Proxys. Nur wenn genau ein Proxy davorsteht und der Server-Port anders nicht erreichbar ist: Ein Client, der den Port direkt erreichen kann, könnte den Header fälschen. |
+| `BEEHIVE_CORS_ALLOWED_ORIGINS` | Nur wenn die Web-App von einem anderen Ursprung als die API ausgeliefert wird. Andernfalls leer lassen (Same-Origin). |
 
-Mehr ist nicht erforderlich. Die Web-App spricht mit dem Server über gewöhnliche HTTP-Anfragen (Connect-RPC), es gibt also keinen WebSocket zum Upgraden und keinen langlebigen Stream, der offen gehalten werden muss. Die eigenen Read- und Write-Timeouts des Servers stehen standardmäßig auf `0` (kein Limit) und müssen nicht geändert werden.
+Mehr ist nicht erforderlich. Die Web-App spricht mit dem Server über gewöhnliche HTTP-Anfragen (Connect-RPC), es gibt also keinen WebSocket zum Upgraden. Der Server begrenzt jede Anfrage auf 2 Minuten (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`) und eine RPC-Nachricht auf 16 MiB; halte das Body-Limit des Proxys bei 16 MiB oder darüber (nginx: `client_max_body_size 16m;`). Die einzige langlebige Anfrage ist der optionale `Subscribe`-Stream der API, der von den Timeouts ausgenommen ist.
+
+### Header, die der Server sendet
+
+Der Server fügt jeder Antwort seine eigenen Sicherheits-Header hinzu: `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, eine `Content-Security-Policy`, die den eigenen Ursprung der App sowie die konfigurierten Ursprünge für Kartenkacheln und Adresssuche erlaubt, und `Strict-Transport-Security`, wenn `BEEHIVE_PUBLIC_BASE_URL` mit `https://` beginnt. Füge im Proxy keine zweite Content-Security-Policy hinzu; Browser wenden beide an, und die App lädt dann möglicherweise nicht mehr.
 
 ## Caddy
 
@@ -45,6 +50,7 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/bees.example.com/privkey.pem;
 
     location / {
+        client_max_body_size 16m;
         proxy_pass http://127.0.0.1:8080;
         proxy_http_version 1.1;
         proxy_set_header Host              $host;
@@ -67,7 +73,7 @@ Testen und neu laden:
 nginx -t && systemctl reload nginx
 ```
 
-`proxy_pass` spricht HTTP/1.1 mit dem Backend, was für die Web-App völlig ausreicht. gRPC-Clients brauchen HTTP/2 durchgehend; füge für sie eine separate `location` mit `grpc_pass grpc://127.0.0.1:8080;` hinzu.
+`$proxy_add_x_forwarded_for` hängt die Client-Adresse als letzten Eintrag an, und genau diesen liest der Server mit `BEEHIVE_TRUST_PROXY_HEADERS=true`. `proxy_pass` spricht HTTP/1.1 mit dem Backend, was für die Web-App völlig ausreicht. gRPC-Clients brauchen HTTP/2 durchgehend; füge für sie eine separate `location` mit `grpc_pass grpc://127.0.0.1:8080;` hinzu.
 
 ## Geteilte Ursprünge (App auf einem anderen Host)
 
@@ -79,12 +85,15 @@ BEEHIVE_CORS_ALLOWED_ORIGINS=https://app.example.com
 BEEHIVE_CORS_ALLOW_CREDENTIALS=true
 ```
 
-Liste mehrere Ursprünge kommagetrennt auf. Vermeide `*` zusammen mit `BEEHIVE_CORS_ALLOW_CREDENTIALS=true`; Browser lehnen diese Kombination für Anfragen mit Anmeldedaten ab.
+Liste mehrere Ursprünge kommagetrennt auf. `*` erlaubt jeden Ursprung, aber nie mit Anmeldedaten, und funktioniert daher nicht für eine angemeldete App.
+
+Die separate App muss außerdem von einem separaten Webserver ausgeliefert werden. Die Web-App, die dieser Server ausliefert, läuft unter einer Content-Security-Policy mit `connect-src 'self'`; ein Build, der auf eine andere API-Adresse zeigt (`BEEHIVE_API_URL` zur Build-Zeit), wird daher blockiert, wenn er von hier ausgeliefert wird.
 
 ## Checkliste
 
 - `BEEHIVE_PUBLIC_BASE_URL` ist die öffentliche `https://`-URL.
 - TLS ist eingerichtet: automatisch mit Caddy, über certbot mit nginx.
+- `BEEHIVE_TRUST_PROXY_HEADERS=true`, und der Server-Port ist nur über den Proxy erreichbar.
 - `BEEHIVE_CORS_ALLOWED_ORIGINS` ist nur gesetzt, wenn die App auf einem anderen Ursprung liegt.
 - QR-Etiketten enthalten die Adresse, von der sie gedruckt wurden; drucke sie nach einem Domainwechsel neu.
 

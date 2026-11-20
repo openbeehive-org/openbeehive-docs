@@ -104,6 +104,7 @@ Gib `BEEHIVE_MINIO_ENDPOINT` als Host an, optional mit einem Port, zum Beispiel
 `minio.example.com` oder `minio.example.com:9000`. Füge kein `https://` hinzu.
 Steuere das Schema stattdessen mit `BEEHIVE_MINIO_USE_SSL`.
 :::
+
 ### Der Bucket
 
 Beim Start prüft der Server, ob der in `BEEHIVE_MINIO_BUCKET` benannte Bucket existiert, und legt ihn andernfalls an. Mit Zugangsdaten, die Buckets erstellen dürfen, gibt es also nichts vorzubereiten. Sind deine Zugangsdaten auf einen bestehenden Bucket beschränkt, erstelle ihn vorher, zum Beispiel mit dem MinIO-Client:

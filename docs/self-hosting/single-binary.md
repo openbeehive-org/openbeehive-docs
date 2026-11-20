@@ -19,9 +19,9 @@ You will need a few build tools installed on the machine that compiles the binar
 
 | Tool | Version | Purpose |
 | --- | --- | --- |
-| Go | 1.25+ | Compiles the server |
+| Go | 1.27+ | Compiles the server |
 | Node.js | 24+ | Builds the SvelteKit web app |
-| buf | latest | Generates the Connect-RPC code from the protobuf definitions |
+| buf | pinned by `make tools` | Generates the Connect-RPC code from the protobuf definitions |
 
 Once built, the binary itself has no runtime dependencies - you can copy it to a server that has none of the above installed.
 
@@ -34,39 +34,29 @@ cd openbeehive-app
 
 ## Configure
 
-Copy the example environment file and pick the self-host profile:
+The server is configured through environment variables, and it reads a `.env` file from the directory it is started in. Variables that are already set in the environment win over the file. Copy the example file:
 
 ```bash
 cp .env.example .env
 ```
 
-For a private, single-user instance the defaults are almost ready to go. Open `.env` and confirm these values:
+For a private, single-user instance the built-in defaults are ready to go; these are the ones that matter:
 
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
 BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 BEEHIVE_SERVE_WEB=true
-BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)
-BEEHIVE_BLOB_BACKEND=fs
-BEEHIVE_BLOB_DIR=./data/blobs
-BEEHIVE_SESSION_SECRET=
+# Defaults of the selfhost profile:
+# BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)
+# BEEHIVE_BLOB_DIR=./data/blobs
 ```
-
-Generate a session secret - never leave this blank in anything but a throwaway test:
-
-```bash
-openssl rand -base64 32
-```
-
-Paste the result into `BEEHIVE_SESSION_SECRET=`.
 
 :::note No login by default
-The selfhost profile enables no login method: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. Leave them that way to run as a single user with no sign-in step. When you want accounts, passkeys or a provider, see [Authentication](./authentication.md).
+The selfhost profile enables no login method: `BEEHIVE_PASSWORD_AUTH` is off, `BEEHIVE_OIDC_PROVIDERS` is empty and `BEEHIVE_WEBAUTHN_ENABLED=false`. Everyone who can reach the port then has full access, and the server answers only to `localhost`, IP addresses and the host of `BEEHIVE_PUBLIC_BASE_URL` (add further names with `BEEHIVE_ALLOWED_HOSTS`). When you want accounts, passkeys or a provider, see [Authentication](./authentication.md); any login method needs a `BEEHIVE_SESSION_SECRET` of at least 32 bytes (`openssl rand -base64 32`).
 :::
 
-If you intend to reach the instance from another device on your network, set `BEEHIVE_PUBLIC_BASE_URL` to an address that device can actually resolve (for example `http://192.168.1.20:8080` or your domain behind a [reverse proxy](./reverse-proxy.md)). QR labels encode the address you open the app at, so use that same address consistently.
+If you intend to reach the instance from another device on your network, set `BEEHIVE_PUBLIC_BASE_URL` to the address that device opens (for example `http://192.168.1.20:8080` or your domain behind a [reverse proxy](./reverse-proxy.md)) and turn login on. QR labels encode the address you open the app at, so use that same address consistently.
 
 ## Build
 
@@ -87,7 +77,7 @@ The web app is bundled into the binary, so there is nothing else to deploy along
 
 ## Run
 
-From the repository root (so the relative paths in `.env` resolve as expected):
+From the repository root, where `.env` is:
 
 ```bash
 ./server/bin/openbeehive
@@ -95,6 +85,7 @@ From the repository root (so the relative paths in `.env` resolve as expected):
 
 On first start the server:
 
+- applies `.env` and logs the profile, the database and whether login is required,
 - creates the SQLite database file `openbeehive.db` and runs its migrations,
 - creates the `./data/` directory (with `./data/blobs` for photos),
 - serves the web app and the Connect-RPC API on `:8080`.
@@ -102,7 +93,7 @@ On first start the server:
 Open `http://localhost:8080` in your browser. The app loads, builds its local database in the browser, and you are ready to add your first apiary.
 
 :::tip Working directory matters
-Relative paths like `file:openbeehive.db` and `./data/blobs` are resolved against the directory the binary is launched from, not where the binary lives. Pick a working directory deliberately - the systemd unit below sets it explicitly with `WorkingDirectory`.
+Relative paths like `file:openbeehive.db` and `./data/blobs` are resolved against the directory the binary is launched from, not where the binary lives, and `.env` is read from that same directory. Pick a working directory deliberately - the systemd unit below sets it explicitly with `WorkingDirectory`.
 :::
 
 ## Run as a systemd service
@@ -131,7 +122,6 @@ Type=simple
 User=openbeehive
 Group=openbeehive
 WorkingDirectory=/opt/openbeehive
-EnvironmentFile=/opt/openbeehive/.env
 ExecStart=/opt/openbeehive/openbeehive
 Restart=on-failure
 RestartSec=5
@@ -146,6 +136,8 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 ```
+
+The unit needs no `EnvironmentFile`: the server reads `/opt/openbeehive/.env` itself because that is its working directory. Keep the file readable by the `openbeehive` user only (`chmod 600`), since it holds the session secret and the admin password.
 
 Enable and start it:
 

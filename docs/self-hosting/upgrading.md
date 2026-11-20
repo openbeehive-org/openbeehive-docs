@@ -20,12 +20,48 @@ Take a backup before upgrading. See [Backups](./backups.md).
 
 ## Release-specific steps
 
+### Upgrading to 0.5.0 \{#upgrading-to-050}
+
+0.5.0 tightens several defaults. Back up first, then go through this list; where a setting is missing the server stops at start and names it.
+
+**Settings**
+
+- **Session secret.** With any login method, `BEEHIVE_SESSION_SECRET` must be set and at least 32 bytes long, or the server does not start. Generate one with `openssl rand -base64 32`; a new secret signs everyone out.
+- **`.env` is read by the binary.** The server now loads `.env` from its working directory. Check that an old `.env` lying there contains what you want; real environment variables still win.
+- **CORS is same-origin by default.** If the app is served from another origin than the API, list it in `BEEHIVE_CORS_ALLOWED_ORIGINS`. `*` no longer allows credentials.
+- **No login: only known host names.** A server without login answers only to `localhost`, IP addresses and the host of `BEEHIVE_PUBLIC_BASE_URL`. Put other names in `BEEHIVE_ALLOWED_HOSTS`.
+- **Email verification needs a mail server.** `BEEHIVE_EMAIL_VERIFICATION=true` requires `BEEHIVE_SMTP_HOST`. Links are no longer written to the log; without SMTP, copy invite links from Settings.
+- **OIDC.** A provider listed in `BEEHIVE_OIDC_PROVIDERS` without issuer and client id stops the start. A provider login is attached to an existing account only when both sides have verified the email address.
+- **Reverse proxy.** Set `BEEHIVE_TRUST_PROXY_HEADERS=true` behind your proxy, otherwise sign-in throttling counts all users as one address.
+- **`BEEHIVE_NODE_ID`** now defaults to a random id per start; remove it from your configuration unless you set it on purpose. The unused sync page-size settings are gone.
+
+**Compose files**
+
+- `docker-compose.yml` is the development stack: it now requires `BEEHIVE_SESSION_SECRET` and `MINIO_ROOT_PASSWORD`, publishes PostgreSQL and MinIO on `127.0.0.1` only, and enables OIDC only when you ask for it.
+- To run Openbeehive, use the new `docker-compose.selfhost.yml` (one container, SQLite) or `docker-compose.prod.yml` (PostgreSQL and MinIO). `docker-compose.demo.yml` is the hosted demo and publishes on `127.0.0.1` unless `BEEHIVE_BIND` is set. See [Docker & Compose](./docker.md).
+
+**Data**
+
+- **Turning login on moves single-user records.** If the instance ran without login and you enable email/password login, existing records move into the instance admin's workspace at the next start. This cannot be undone; see [Authentication](./authentication.md#single-user-to-login).
+- **Database migrations.** The first start rebuilds the visits table and the change-log index, so it takes longer on a large database. On MariaDB it also converts the tables to a binary collation, and a migration that fails there cannot be rolled back: a backup is the only way back.
+- **Run exactly one server instance** per database.
+
+**Behaviour users and scripts will notice**
+
+- **Invites** expire after 7 days and work only for the invited email address. Open invites older than that must be issued again.
+- **Sign-in throttling.** After 10 failed sign-ins for an account or 30 from one address in 15 minutes the server answers `429` with `Retry-After`.
+- **Limits.** One RPC message may be at most 16 MiB and a request may take at most 2 minutes (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
+- **Device clocks.** Changes stamped more than 10 minutes ahead of the server's time are refused. Updated apps correct themselves; a 0.4.x app with a wrong clock loses such changes, so update the app on every device.
+- **API.** Update calls change only the fields sent; `DeleteApiary` fails with `failed_precondition` while the apiary has hives; personal tasks are returned only to their owner; inspection numbers that were not recorded are omitted instead of returned as `0`. The plain-HTTP endpoints under `/auth/` and `/tenants/` accept only the documented method, need `Content-Type: application/json` when they take a body, and `/tenants/delete` needs `org_id`. See [REST](../using-the-api/rest.md).
+
+Installed 0.4.x apps keep working with a 0.5.0 server. After the app updates itself, each device downloads its data once more.
+
 ### 0.4.0: the container runs as an unprivileged user
 
 Up to 0.3.1 the image ran as root, so a volume created by an older container is owned by root and the 0.4.0 server (uid `65532`) cannot open the database in it. Fix the ownership once, before you start the new image:
 
 ```bash
-# named volume from the quick start or docker-compose.demo.yml
+# named volume from the quick start
 docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
 
 # bind-mounted host directory
@@ -38,7 +74,7 @@ The cloud profile (Postgres and MinIO) is unaffected: the server container holds
 
 ## How migrations work
 
-Schema migrations run automatically when the server starts. On boot the server applies any pending migrations in order and only then begins serving requests. This works the same for PostgreSQL, MySQL and SQLite.
+Schema migrations run automatically when the server starts. On boot the server applies any pending migrations in order and only then begins serving requests. This works the same for PostgreSQL, MariaDB and SQLite.
 
 :::note
 The first launch of a new version may take a little longer while the schema is updated. Watch the logs to confirm it finishes before sending traffic to it.
@@ -75,12 +111,12 @@ This produces a fresh `./server/bin/openbeehive`. Prerequisites are in [Single b
 
 Which command you need depends on where the image comes from.
 
-**Published image** (the single-container `docker run` from the [quick start](./quick-start.md), or a Compose file with an `image:` line such as `docker-compose.demo.yml`):
+**Published image** (the single-container `docker run` from the [quick start](./quick-start.md), or a Compose file with an `image:` line such as `docker-compose.selfhost.yml` or `docker-compose.prod.yml`). The Compose files pin a release by tag and digest; change the `image:` line to the release you want (or take the file from that release), then:
 
 ```bash
-docker compose -f docker-compose.demo.yml pull
-docker compose -f docker-compose.demo.yml up -d
-docker compose -f docker-compose.demo.yml logs -f server
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml logs -f server
 ```
 
 For a plain `docker run` container: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, then `docker rm -f openbeehive` and run the same `docker run` command again. The named volume keeps your data.

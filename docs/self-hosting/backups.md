@@ -19,7 +19,7 @@ There are two things on the server worth protecting:
 
 | Item | Where it lives | Backup target |
 | --- | --- | --- |
-| The database | SQLite file, or Postgres/MySQL | A consistent copy or dump |
+| The database | SQLite file, or PostgreSQL/MariaDB | A consistent copy or dump |
 | Blobs (photos, attachments) | Local filesystem, or MinIO/S3 | The blob directory or bucket |
 
 Which database and blob store you have depends on your deployment profile:
@@ -78,7 +78,7 @@ pg_dump "postgres://user:pass@host:5432/openbeehive?sslmode=disable" \
   --file=/backups/openbeehive-$(date +%F).dump
 ```
 
-The custom format compresses well and restores with `pg_restore`. For MySQL, the equivalent is `mysqldump --single-transaction`.
+The custom format compresses well and restores with `pg_restore`. For MariaDB, the equivalent is `mariadb-dump --single-transaction`.
 
 ## Backing up blobs
 

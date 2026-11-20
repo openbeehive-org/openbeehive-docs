@@ -20,12 +20,48 @@ Erstelle vor dem Upgrade ein Backup. Siehe [Backups](./backups.md).
 
 ## Release-spezifische Schritte
 
+### Upgrade auf 0.5.0 \{#upgrading-to-050}
+
+0.5.0 verschärft mehrere Standardwerte. Sichere zuerst und geh dann diese Liste durch; wo eine Einstellung fehlt, bricht der Server beim Start ab und nennt sie.
+
+**Einstellungen**
+
+- **Session-Secret.** Mit jeder Anmeldemethode muss `BEEHIVE_SESSION_SECRET` gesetzt und mindestens 32 Bytes lang sein, sonst startet der Server nicht. Erzeuge eines mit `openssl rand -base64 32`; ein neues Secret meldet alle ab.
+- **`.env` wird von der Binärdatei gelesen.** Der Server lädt `.env` jetzt aus seinem Arbeitsverzeichnis. Prüfe, ob eine alte `.env`, die dort liegt, das enthält, was du willst; echte Umgebungsvariablen haben weiterhin Vorrang.
+- **CORS ist standardmäßig Same-Origin.** Wenn die App von einem anderen Ursprung als die API ausgeliefert wird, trage ihn in `BEEHIVE_CORS_ALLOWED_ORIGINS` ein. `*` erlaubt keine Anmeldedaten mehr.
+- **Keine Anmeldung: nur bekannte Hostnamen.** Ein Server ohne Anmeldung antwortet nur auf `localhost`, IP-Adressen und den Host aus `BEEHIVE_PUBLIC_BASE_URL`. Trage andere Namen in `BEEHIVE_ALLOWED_HOSTS` ein.
+- **E-Mail-Verifizierung braucht einen Mailserver.** `BEEHIVE_EMAIL_VERIFICATION=true` setzt `BEEHIVE_SMTP_HOST` voraus. Links werden nicht mehr ins Log geschrieben; ohne SMTP kopierst du Einladungslinks aus den Einstellungen.
+- **OIDC.** Ein in `BEEHIVE_OIDC_PROVIDERS` aufgeführter Provider ohne Issuer und Client-ID verhindert den Start. Eine Provider-Anmeldung wird nur dann an ein bestehendes Konto angehängt, wenn beide Seiten die E-Mail-Adresse verifiziert haben.
+- **Reverse Proxy.** Setze hinter deinem Proxy `BEEHIVE_TRUST_PROXY_HEADERS=true`, sonst zählt die Drosselung der Anmeldung alle Nutzer als eine Adresse.
+- **`BEEHIVE_NODE_ID`** ist jetzt standardmäßig eine zufällige ID pro Start; entferne die Variable aus deiner Konfiguration, sofern du sie nicht bewusst gesetzt hast. Die ungenutzten Einstellungen für die Sync-Seitengröße gibt es nicht mehr.
+
+**Compose-Dateien**
+
+- `docker-compose.yml` ist der Entwicklungs-Stack: Sie verlangt jetzt `BEEHIVE_SESSION_SECRET` und `MINIO_ROOT_PASSWORD`, veröffentlicht PostgreSQL und MinIO nur auf `127.0.0.1` und aktiviert OIDC nur, wenn du es verlangst.
+- Um Openbeehive zu betreiben, verwende die neue `docker-compose.selfhost.yml` (ein Container, SQLite) oder `docker-compose.prod.yml` (PostgreSQL und MinIO). `docker-compose.demo.yml` ist die gehostete Demo und veröffentlicht auf `127.0.0.1`, solange `BEEHIVE_BIND` nicht gesetzt ist. Siehe [Docker & Compose](./docker.md).
+
+**Daten**
+
+- **Das Einschalten der Anmeldung verschiebt Einzelnutzer-Aufzeichnungen.** Wenn die Instanz ohne Anmeldung lief und du die E-Mail-/Passwort-Anmeldung aktivierst, wandern bestehende Aufzeichnungen beim nächsten Start in den Arbeitsbereich des Instanz-Admins. Das lässt sich nicht rückgängig machen; siehe [Authentifizierung](./authentication.md#single-user-to-login).
+- **Datenbank-Migrationen.** Der erste Start baut die Tabelle der Durchsichten und den Index des Änderungsprotokolls neu auf und dauert daher bei einer großen Datenbank länger. Bei MariaDB stellt er außerdem die Tabellen auf eine binäre Kollation um, und eine Migration, die dort fehlschlägt, lässt sich nicht zurückrollen: Ein Backup ist der einzige Weg zurück.
+- **Betreibe genau eine Server-Instanz** pro Datenbank.
+
+**Verhalten, das Nutzer und Skripte bemerken**
+
+- **Einladungen** laufen nach 7 Tagen ab und funktionieren nur für die eingeladene E-Mail-Adresse. Offene Einladungen, die älter sind, müssen neu ausgestellt werden.
+- **Drosselung der Anmeldung.** Nach 10 fehlgeschlagenen Anmeldungen für ein Konto oder 30 von einer Adresse innerhalb von 15 Minuten antwortet der Server mit `429` und `Retry-After`.
+- **Limits.** Eine RPC-Nachricht darf höchstens 16 MiB groß sein, und eine Anfrage darf höchstens 2 Minuten dauern (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
+- **Geräteuhren.** Änderungen, deren Zeitstempel der Serverzeit mehr als 10 Minuten voraus ist, werden abgelehnt. Aktualisierte Apps korrigieren sich selbst; eine 0.4.x-App mit falscher Uhr verliert solche Änderungen, aktualisiere die App also auf jedem Gerät.
+- **API.** Update-Aufrufe ändern nur die gesendeten Felder; `DeleteApiary` schlägt mit `failed_precondition` fehl, solange der Bienenstand Beuten hat; persönliche Aufgaben werden nur an ihren Besitzer zurückgegeben; Messwerte einer Durchsicht, die nicht erfasst wurden, werden weggelassen, statt als `0` zurückgegeben zu werden. Die einfachen HTTP-Endpunkte unter `/auth/` und `/tenants/` akzeptieren nur die dokumentierte Methode, brauchen `Content-Type: application/json`, wenn sie einen Body entgegennehmen, und `/tenants/delete` braucht `org_id`. Siehe [REST](../using-the-api/rest.md).
+
+Installierte 0.4.x-Apps funktionieren weiter mit einem 0.5.0-Server. Nachdem sich die App selbst aktualisiert hat, lädt jedes Gerät seine Daten einmal neu herunter.
+
 ### 0.4.0: Der Container läuft als unprivilegierter Benutzer
 
 Bis 0.3.1 lief das Image als root, daher gehört ein von einem älteren Container angelegtes Volume root, und der 0.4.0-Server (uid `65532`) kann die Datenbank darin nicht öffnen. Korrigiere die Besitzrechte einmalig, bevor du das neue Image startest:
 
 ```bash
-# named volume from the quick start or docker-compose.demo.yml
+# named volume from the quick start
 docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
 
 # bind-mounted host directory
@@ -38,7 +74,7 @@ Das Cloud-Profil (Postgres und MinIO) ist nicht betroffen: Der Server-Container 
 
 ## Wie Migrationen funktionieren
 
-Schema-Migrationen laufen automatisch, wenn der Server startet. Beim Booten wendet der Server ausstehende Migrationen der Reihe nach an und beginnt erst dann, Anfragen zu bedienen. Das funktioniert für PostgreSQL, MySQL und SQLite gleich.
+Schema-Migrationen laufen automatisch, wenn der Server startet. Beim Booten wendet der Server ausstehende Migrationen der Reihe nach an und beginnt erst dann, Anfragen zu bedienen. Das funktioniert für PostgreSQL, MariaDB und SQLite gleich.
 
 :::note
 Der erste Start einer neuen Version kann etwas länger dauern, während das Schema aktualisiert wird. Beobachte die Logs, um zu bestätigen, dass er abschließt, bevor du Verkehr darauf sendest.
@@ -75,12 +111,12 @@ Das erzeugt eine frische `./server/bin/openbeehive`. Die Voraussetzungen stehen 
 
 Welchen Befehl du brauchst, hängt davon ab, woher das Image kommt.
 
-**Veröffentlichtes Image** (der Einzel-Container per `docker run` aus dem [Schnelleinstieg](./quick-start.md) oder eine Compose-Datei mit einer `image:`-Zeile wie `docker-compose.demo.yml`):
+**Veröffentlichtes Image** (der Einzel-Container per `docker run` aus dem [Schnelleinstieg](./quick-start.md) oder eine Compose-Datei mit einer `image:`-Zeile wie `docker-compose.selfhost.yml` oder `docker-compose.prod.yml`). Die Compose-Dateien legen ein Release per Tag und Digest fest; ändere die `image:`-Zeile auf das gewünschte Release (oder nimm die Datei aus diesem Release), dann:
 
 ```bash
-docker compose -f docker-compose.demo.yml pull
-docker compose -f docker-compose.demo.yml up -d
-docker compose -f docker-compose.demo.yml logs -f server
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml logs -f server
 ```
 
 Für einen einfachen `docker run`-Container: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, dann `docker rm -f openbeehive` und denselben `docker run`-Befehl erneut ausführen. Das benannte Volume behält deine Daten.

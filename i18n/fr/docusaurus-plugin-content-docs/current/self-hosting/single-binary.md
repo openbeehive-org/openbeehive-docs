@@ -19,9 +19,9 @@ Vous aurez besoin de quelques outils de compilation installés sur la machine qu
 
 | Outil | Version | Rôle |
 | --- | --- | --- |
-| Go | 1.25+ | Compile le serveur |
+| Go | 1.27+ | Compile le serveur |
 | Node.js | 24+ | Construit l'application web SvelteKit |
-| buf | latest | Génère le code Connect-RPC à partir des définitions protobuf |
+| buf | épinglée par `make tools` | Génère le code Connect-RPC à partir des définitions protobuf |
 
 Une fois compilé, le binaire lui-même n'a aucune dépendance d'exécution : vous pouvez le copier sur un serveur qui n'a aucun des outils ci-dessus installé.
 
@@ -34,39 +34,29 @@ cd openbeehive-app
 
 ## Configurer
 
-Copiez le fichier d'environnement d'exemple et choisissez le profil d'auto-hébergement :
+Le serveur se configure au moyen de variables d'environnement, et il lit un fichier `.env` dans le répertoire depuis lequel il est lancé. Les variables déjà définies dans l'environnement l'emportent sur le fichier. Copiez le fichier d'exemple :
 
 ```bash
 cp .env.example .env
 ```
 
-Pour une instance privée mono-utilisateur, les valeurs par défaut sont presque prêtes à l'emploi. Ouvrez `.env` et confirmez ces valeurs :
+Pour une instance privée mono-utilisateur, les valeurs par défaut intégrées sont prêtes à l'emploi ; voici celles qui comptent :
 
 ```bash
 BEEHIVE_DEPLOYMENT_PROFILE=selfhost
 BEEHIVE_ADDR=:8080
 BEEHIVE_PUBLIC_BASE_URL=http://localhost:8080
 BEEHIVE_SERVE_WEB=true
-BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)
-BEEHIVE_BLOB_BACKEND=fs
-BEEHIVE_BLOB_DIR=./data/blobs
-BEEHIVE_SESSION_SECRET=
+# Defaults of the selfhost profile:
+# BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)
+# BEEHIVE_BLOB_DIR=./data/blobs
 ```
-
-Générez un secret de session, ne le laissez jamais vide ailleurs que dans un test jetable :
-
-```bash
-openssl rand -base64 32
-```
-
-Collez le résultat dans `BEEHIVE_SESSION_SECRET=`.
 
 :::note Aucune connexion par défaut
-Le profil selfhost n'active aucune méthode de connexion : `BEEHIVE_PASSWORD_AUTH` est désactivé, `BEEHIVE_OIDC_PROVIDERS` est vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. Laissez-les ainsi pour fonctionner en mono-utilisateur sans étape de connexion. Lorsque vous voudrez des comptes, des passkeys ou un fournisseur, voir [Authentification](./authentication.md).
+Le profil selfhost n'active aucune méthode de connexion : `BEEHIVE_PASSWORD_AUTH` est désactivé, `BEEHIVE_OIDC_PROVIDERS` est vide et `BEEHIVE_WEBAUTHN_ENABLED=false`. Toute personne pouvant atteindre le port dispose alors d'un accès complet, et le serveur ne répond qu'à `localhost`, aux adresses IP et à l'hôte de `BEEHIVE_PUBLIC_BASE_URL` (ajoutez d'autres noms avec `BEEHIVE_ALLOWED_HOSTS`). Lorsque vous voudrez des comptes, des passkeys ou un fournisseur, voir [Authentification](./authentication.md) ; toute méthode de connexion nécessite un `BEEHIVE_SESSION_SECRET` d'au moins 32 octets (`openssl rand -base64 32`).
 :::
 
-Si vous comptez accéder à l'instance depuis un autre appareil de votre réseau, définissez `BEEHIVE_PUBLIC_BASE_URL` sur une adresse que cet appareil peut réellement résoudre (par exemple `http://192.168.1.20:8080` ou votre domaine derrière un [reverse proxy](./reverse-proxy.md)). Les étiquettes QR encodent l'adresse à laquelle vous ouvrez l'application, utilisez donc cette même adresse de manière cohérente.
+Si vous comptez accéder à l'instance depuis un autre appareil de votre réseau, définissez `BEEHIVE_PUBLIC_BASE_URL` sur l'adresse que cet appareil ouvre (par exemple `http://192.168.1.20:8080` ou votre domaine derrière un [reverse proxy](./reverse-proxy.md)) et activez la connexion. Les étiquettes QR encodent l'adresse à laquelle vous ouvrez l'application, utilisez donc cette même adresse de manière cohérente.
 
 ## Compiler
 
@@ -87,7 +77,7 @@ L'application web est intégrée au binaire, il n'y a donc rien d'autre à dépl
 
 ## Lancer
 
-Depuis la racine du dépôt (afin que les chemins relatifs de `.env` se résolvent comme attendu) :
+Depuis la racine du dépôt, là où se trouve `.env` :
 
 ```bash
 ./server/bin/openbeehive
@@ -95,6 +85,7 @@ Depuis la racine du dépôt (afin que les chemins relatifs de `.env` se résolve
 
 Au premier démarrage, le serveur :
 
+- applique `.env` et consigne dans le journal le profil, la base de données et si une connexion est requise,
 - crée le fichier de base de données SQLite `openbeehive.db` et exécute ses migrations,
 - crée le répertoire `./data/` (avec `./data/blobs` pour les photos),
 - sert l'application web et l'API Connect-RPC sur `:8080`.
@@ -102,7 +93,7 @@ Au premier démarrage, le serveur :
 Ouvrez `http://localhost:8080` dans votre navigateur. L'application se charge, construit sa base de données locale dans le navigateur, et vous êtes prêt à ajouter votre premier rucher.
 
 :::tip Le répertoire de travail compte
-Les chemins relatifs comme `file:openbeehive.db` et `./data/blobs` sont résolus par rapport au répertoire depuis lequel le binaire est lancé, et non par rapport à l'emplacement du binaire. Choisissez délibérément un répertoire de travail : l'unité systemd ci-dessous le définit explicitement avec `WorkingDirectory`.
+Les chemins relatifs comme `file:openbeehive.db` et `./data/blobs` sont résolus par rapport au répertoire depuis lequel le binaire est lancé, et non par rapport à l'emplacement du binaire, et `.env` est lu dans ce même répertoire. Choisissez délibérément un répertoire de travail : l'unité systemd ci-dessous le définit explicitement avec `WorkingDirectory`.
 :::
 
 ## Exécuter en tant que service systemd
@@ -131,7 +122,6 @@ Type=simple
 User=openbeehive
 Group=openbeehive
 WorkingDirectory=/opt/openbeehive
-EnvironmentFile=/opt/openbeehive/.env
 ExecStart=/opt/openbeehive/openbeehive
 Restart=on-failure
 RestartSec=5
@@ -146,6 +136,8 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 ```
+
+L'unité n'a pas besoin de `EnvironmentFile` : le serveur lit lui-même `/opt/openbeehive/.env` car c'est son répertoire de travail. Gardez le fichier lisible par le seul utilisateur `openbeehive` (`chmod 600`), puisqu'il contient le secret de session et le mot de passe de l'administrateur.
 
 Activez-le et démarrez-le :
 

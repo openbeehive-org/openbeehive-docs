@@ -5,10 +5,17 @@ title: "Modo demo"
 
 # Modo demo
 
-El modo demo instala una **cuenta y un espacio (tenant) de demostración** ya preparados
+El modo demo instala una **cuenta y un espacio de demostración** ya preparados
 para que los visitantes puedan probar Openbeehive con datos realistas, sin tocar
 los registros reales de nadie. Está **desactivado de forma predeterminada** y
 pensado para exhibiciones públicas y pruebas.
+
+:::note ¿Buscas la demo pública?
+La demo del propio proyecto es el botón **Probar la demo** en
+[app.openbeehive.org/login](https://app.openbeehive.org/login). No hay un sitio
+de demostración aparte. Esta página trata de cómo activar la demo en tu propia
+instancia.
+:::
 
 ## Qué configura
 
@@ -22,8 +29,12 @@ Cuando se activa, Openbeehive crea:
   una cosecha de miel y dos tratamientos contra la varroa por colmena.
 
 Los datos se **vuelven a sembrar cada hora**, de modo que la exhibición siempre
-luce igual: un visitante puede editar libremente y todo vuelve al conjunto
-canónico en el siguiente reinicio.
+luce igual. Las sesiones de demostración son de solo lectura en el servidor: lo
+que un visitante cambia se queda en su propio navegador y nunca llega al servidor
+ni a otros visitantes.
+
+La pantalla de inicio de sesión recibe un botón **Probar la demo** junto al
+inicio de sesión normal; inicia la sesión del visitante sin contraseña.
 
 Cuando alguien ha iniciado sesión en la cuenta de demostración, la aplicación
 muestra un **banner** que le recuerda que está en la demo y que los datos se
@@ -50,7 +61,14 @@ instaló, y la cuenta de demostración podrá iniciar sesión de inmediato. Como
 implica la autenticación por contraseña, la instancia también necesita su administrador
 dedicado (`BEEHIVE_ADMIN_EMAIL` y `BEEHIVE_ADMIN_PASSWORD`, consulta
 [Autenticación](./authentication.md)), y el correo del administrador debe ser
-distinto del correo de la demo.
+distinto del correo de la demo. Como todo método de inicio de sesión, necesita
+`BEEHIVE_SESSION_SECRET`.
+
+`docker-compose.demo.yml` en el repositorio es el despliegue que hay detrás de
+`app.openbeehive.org` (registro solo por invitación más la demo con inicio de
+sesión automático). No es una plantilla para tu propio servidor; parte de
+[`docker-compose.prod.yml`](./docker.md#several-users) y añade `BEEHIVE_DEMO: "true"`
+al entorno de su servicio `server` si quieres una demo.
 
 ### Hosts de demostración: saltarse la pantalla de inicio de sesión
 
@@ -84,5 +102,5 @@ cómodo compartiendo, y no la reutilices en ningún otro lugar. Deja
 Establece `BEEHIVE_DEMO=false` (o elimínalo) y reinicia. Los nuevos inicios de
 sesión en la cuenta de demostración dejan de funcionar; los datos de demostración
 existentes permanecen hasta que los elimines. La cuenta y el espacio de
-demostración se llaman internamente `demo-user` / `demo-tenant` por si quieres
+demostración tienen los id internos `demo-user` / `demo-tenant` por si quieres
 eliminarlos de la base de datos.

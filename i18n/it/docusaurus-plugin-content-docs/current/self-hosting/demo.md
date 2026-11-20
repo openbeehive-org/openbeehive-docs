@@ -5,24 +5,34 @@ title: "Modalità demo"
 
 # Modalità demo
 
-La modalità demo installa un **account e tenant demo** già pronti, così i
+La modalità demo installa un **account e uno spazio demo** già pronti, così i
 visitatori possono provare Openbeehive con dati realistici, senza toccare i dati
 reali di nessuno. È **disattivata per impostazione predefinita** ed è pensata per
 vetrine pubbliche e test.
+
+:::note Cerchi la demo pubblica?
+La demo del progetto è il pulsante **Prova la demo** su
+[app.openbeehive.org/login](https://app.openbeehive.org/login). Non esiste un
+sito demo separato. Questa pagina spiega come attivare la demo sulla tua
+istanza.
+:::
 
 ## Cosa configura
 
 Quando è abilitata, Openbeehive crea:
 
 - un account demo (`demo@app.openbeehive.org` / `demo` per impostazione predefinita),
-- un **tenant** demo con **15 arnie distribuite in 4 apiari**,
+- uno **spazio** demo con **15 arnie distribuite in 4 apiari**,
 - una stagione di dati: regine, 105 ispezioni (7 per arnia, distribuite sugli
   ultimi dieci mesi, con temperatura, umidità, varroa, peso e altro), un raccolto
   di miele e due trattamenti contro la varroa per arnia.
 
-I dati vengono **rigenerati ogni ora**, così la vetrina appare sempre uguale: un
-visitatore può modificare liberamente e tutto torna all'insieme canonico al
-successivo ripristino.
+I dati vengono **rigenerati ogni ora**, così la vetrina appare sempre uguale.
+Le sessioni demo sono in sola lettura sul server: ciò che un visitatore modifica
+resta nel suo browser e non raggiunge mai il server né gli altri visitatori.
+
+La schermata di accesso riceve un pulsante **Prova la demo** accanto al normale
+accesso; fa accedere il visitatore senza password.
 
 Quando qualcuno ha effettuato l'accesso con l'account demo, l'app mostra un
 **banner** che ricorda di trovarsi nella demo e che i dati vengono ripristinati
@@ -48,7 +58,14 @@ e l'account demo potrà effettuare l'accesso immediatamente. Poiché la modalit�
 l'autenticazione con password, l'istanza ha bisogno anche del suo amministratore dedicato
 (`BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD`, vedi
 [Autenticazione](./authentication.md)), e l'email dell'amministratore deve essere
-diversa da quella della demo.
+diversa da quella della demo. Come ogni metodo di accesso, richiede
+`BEEHIVE_SESSION_SECRET`.
+
+`docker-compose.demo.yml` nel repository è il deployment dietro
+`app.openbeehive.org` (registrazione solo su invito più la demo con accesso
+automatico). Non è un modello per il tuo server; parti da
+[`docker-compose.prod.yml`](./docker.md#several-users) e aggiungi `BEEHIVE_DEMO: "true"`
+all'ambiente del suo servizio `server` se vuoi una demo.
 
 ### Host dimostrativi: saltare la schermata di accesso
 
@@ -59,16 +76,16 @@ automaticamente:
 BEEHIVE_DEMO_AUTOLOGIN=true
 ```
 
-I visitatori anonimi arrivano direttamente nel tenant demo invece che sulla schermata di
+I visitatori anonimi arrivano direttamente nello spazio demo invece che sulla schermata di
 accesso. Lascialo disattivato su un'istanza che serve anche utenti reali, così ottengono la
 normale pagina di accesso con il pulsante della demo.
 
 ## Come è isolata
 
-- La demo risiede nel **proprio tenant**; il ripristino orario elimina e
-  ricostruisce solo i dati **demo**, mai gli altri tenant.
+- La demo risiede nel **proprio spazio**; il ripristino orario elimina e
+  ricostruisce solo i dati **demo**, mai gli altri spazi.
 - Gli utenti reali sulla stessa istanza non vengono interessati: hanno i propri
-  tenant.
+  spazi.
 
 :::caution
 L'account demo è un account reale con cui si può effettuare l'accesso. Su
@@ -81,5 +98,5 @@ non necessitano di una vetrina.
 
 Imposta `BEEHIVE_DEMO=false` (o rimuovilo) e riavvia. I nuovi accessi all'account
 demo smetteranno di funzionare; i dati demo esistenti restano finché non li
-rimuovi. L'account e il tenant demo sono denominati internamente `demo-user` /
+rimuovi. L'account e lo spazio demo hanno gli id interni `demo-user` /
 `demo-tenant` se vuoi eliminarli dal database.

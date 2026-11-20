@@ -5,7 +5,14 @@ title: "Docker & Compose"
 
 # Docker & Compose
 
-Betreibe Openbeehive als einzelnen Container für ein Self-Host-Setup oder fahre den vollständigen Cloud-Stack (Postgres und MinIO) mit Docker Compose hoch.
+Betreibe Openbeehive als einzelnen Container für ein Self-Host-Setup oder fahre PostgreSQL, MinIO und den Server zusammen mit Docker Compose hoch. Das Repository liefert für jeden Fall eine Compose-Datei mit:
+
+| Datei | Was sie betreibt | Wofür |
+| --- | --- | --- |
+| `docker-compose.selfhost.yml` | Ein Container, SQLite und Dateien auf einem benannten Volume | Ein Imker oder ein Haushalt auf einer Maschine |
+| `docker-compose.prod.yml` | Das veröffentlichte Image mit PostgreSQL und MinIO, Anmeldung immer aktiv | Eine Instanz mit mehreren Nutzern |
+| `docker-compose.yml` | PostgreSQL, MinIO und ein aus dem Checkout gebauter Server | Entwicklung. Keine Vorlage für die Produktion |
+| `docker-compose.demo.yml` | Wie die Produktionsdatei plus die öffentliche, schreibgeschützte Demo | Die gehostete Instanz unter `app.openbeehive.org`. Keine Vorlage für deinen eigenen Server |
 
 Das Image wird bei jedem Release-Tag in der GitHub Container Registry veröffentlicht:
 
@@ -32,116 +39,97 @@ gh attestation verify oci://ghcr.io/openbeehive-org/openbeehive-app:X.Y.Z --owne
 Beide Befehle geben die Signatur-Identität und den Commit aus, aus dem das Image gebaut wurde. Images, die vor 0.4.0 veröffentlicht wurden, sind nicht signiert.
 
 :::tip
-Für eine Einzelnutzer-Instanz auf einer Maschine ist die [einzelne Binärdatei](./single-binary.md) sogar noch einfacher als Docker. Greife zu Compose, wenn du Postgres und Speicher im S3-Stil möchtest.
+Für eine Einzelnutzer-Instanz auf einer Maschine ist die [einzelne Binärdatei](./single-binary.md) sogar noch einfacher als Docker. Greife zur Compose-Datei für die Produktion, wenn mehrere Personen die Instanz nutzen.
 :::
 
 ## Den einzelnen Container ausführen
 
-Ein Container mit dem `selfhost`-Profil hält eine SQLite-Datenbank und die hochgeladenen Blobs auf einem einzigen eingehängten Volume. Mehr ist nicht erforderlich.
+Ein Container mit dem `selfhost`-Profil hält eine SQLite-Datenbank und die hochgeladenen Dateien auf einem einzigen eingehängten Volume. Mehr ist nicht erforderlich.
 
 ```bash
-docker run -d \
-  --name openbeehive \
-  -p 8080:8080 \
+docker run -d --name openbeehive \
+  -p 127.0.0.1:8080:8080 \
   -v openbeehive-data:/data \
-  -e BEEHIVE_DEPLOYMENT_PROFILE=selfhost \
-  -e BEEHIVE_PUBLIC_BASE_URL=https://bees.example.com \
-  -e 'BEEHIVE_DATABASE_DSN=file:/data/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)' \
-  -e BEEHIVE_BLOB_DIR=/data/blobs \
   ghcr.io/openbeehive-org/openbeehive-app:latest
 ```
 
-- `-p 8080:8080` bildet den Listen-Port des Containers (`BEEHIVE_ADDR=:8080`) auf den Host ab.
-- `-v openbeehive-data:/data` hält deine Daten auf einem benannten Volume. Docker legt das Volume mit den Besitzrechten von `/data` aus dem Image an, sodass der unprivilegierte Server-Benutzer darauf schreiben kann. Wenn du stattdessen ein Host-Verzeichnis per Bind-Mount einhängst (`-v /srv/openbeehive:/data`), muss es der uid `65532` gehören: `sudo chown -R 65532:65532 /srv/openbeehive`.
-- Die Zeilen `BEEHIVE_DATABASE_DSN` und `BEEHIVE_BLOB_DIR` zeigen die Datenbank und die hochgeladenen Fotos explizit auf das Volume. Die Standardwerte (`openbeehive.db`, `./data/blobs`) sind relativ zum Arbeitsverzeichnis, das seit 0.4.0 `/data` ist; die Pfade auszuschreiben hält den Befehl aber eindeutig und passt zur Backup-Anleitung.
-- `BEEHIVE_PUBLIC_BASE_URL` muss die Adresse sein, die Nutzer erreichen, einschließlich Schema. Der Server verwendet sie für OIDC-Redirect-URLs sowie für Einladungs- und Verifizierungslinks.
+- `-p 127.0.0.1:8080:8080` veröffentlicht den Port nur auf dieser Maschine. Ohne Anmeldung hat jeder, der den Port erreichen kann, vollen Zugriff; veröffentliche ihn deshalb erst im Netzwerk (`-p 8080:8080`), nachdem du die [Anmeldung eingeschaltet](./quick-start.md#turn-login-on) hast.
+- `-v openbeehive-data:/data` hält deine Daten auf einem benannten Volume. `/data` ist das Arbeitsverzeichnis, sodass die Standardwerte (`openbeehive.db`, `./data/blobs`) auf dem Volume landen. Docker legt das Volume mit den Besitzrechten von `/data` aus dem Image an, sodass der unprivilegierte Server-Benutzer darauf schreiben kann. Wenn du stattdessen ein Host-Verzeichnis per Bind-Mount einhängst (`-v /srv/openbeehive:/data`), muss es der uid `65532` gehören: `sudo chown -R 65532:65532 /srv/openbeehive`.
+- Ein Server ohne Anmeldung antwortet nur auf `localhost`, IP-Adressen und den Host aus `BEEHIVE_PUBLIC_BASE_URL`. Wenn du ihn unter einem anderen Namen öffnest (zum Beispiel `http://nas.local:8080`), setze `BEEHIVE_PUBLIC_BASE_URL` auf diese Adresse oder trage den Namen in `BEEHIVE_ALLOWED_HOSTS` ein.
 
-Ohne aktivierte Anmeldemethode (der selfhost-Standard) läuft die Instanz im Einzelnutzer-Modus. Um Authentifizierung hinzuzufügen, setze `BEEHIVE_SESSION_SECRET` (einmal mit `openssl rand -base64 32` generieren und stabil halten; eine Änderung meldet alle ab) plus die Variablen für die gewünschte Methode. Die E-Mail-/Passwort-Anmeldung braucht außerdem `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD`, sonst startet der Server nicht. Siehe [Authentifizierung](./authentication.md).
+### Dasselbe als Compose-Datei
 
-### Eine env-Datei verwenden
-
-```bash
-docker run -d \
-  --name openbeehive \
-  -p 8080:8080 \
-  -v openbeehive-data:/data \
-  --env-file openbeehive.env \
-  ghcr.io/openbeehive-org/openbeehive-app:latest
-```
-
-## Das Cloud-Profil mit Compose
-
-Das `cloud`-Profil koppelt den Server mit PostgreSQL und MinIO. Die `docker-compose.yml` des Repositorys ist ein Entwicklungs-Stack: Sie baut den Server aus dem Quellcode und veröffentlicht die Datenbank- und MinIO-Ports auf dem Host.
+`docker-compose.selfhost.yml` ist der Befehl von oben mit einer Restart-Policy und einem Healthcheck. Sie bezieht ihre Einstellungen aus einer `.env`-Datei neben ihr:
 
 ```bash
-git clone https://github.com/openbeehive-org/openbeehive-app.git
-cd openbeehive-app
-cp .env.example .env   # then edit .env (see below)
-docker compose up -d --build
+# .env (all optional; without it the instance has no login and is published on 127.0.0.1)
+BEEHIVE_BIND=0.0.0.0                              # publish on the network
+BEEHIVE_PUBLIC_BASE_URL=https://bees.example.org  # the address people open
+BEEHIVE_PASSWORD_AUTH=true                        # require sign-in
+BEEHIVE_ADMIN_EMAIL=you@example.org
+BEEHIVE_ADMIN_PASSWORD=change-me-please           # 8+ characters
+BEEHIVE_SESSION_SECRET=...                        # openssl rand -base64 32
+BEEHIVE_TRUST_PROXY_HEADERS=true                  # only behind a reverse proxy
 ```
+
+```bash
+docker compose -f docker-compose.selfhost.yml up -d
+```
+
+Mit einfachem `docker run` übergibst du dieselben Variablen mit `-e` oder `--env-file openbeehive.env`. Jede Anmeldemethode braucht `BEEHIVE_SESSION_SECRET` (32 Bytes oder mehr; einmal generieren und stabil halten, eine Änderung meldet alle ab). Siehe [Authentifizierung](./authentication.md).
+
+## Mehrere Nutzer: PostgreSQL und MinIO \{#several-users}
+
+`docker-compose.prod.yml` betreibt das veröffentlichte Image im `cloud`-Profil mit PostgreSQL und MinIO. Die Anmeldung ist immer aktiv (E-Mail und Passwort), die Registrierung ist geschlossen, solange du sie nicht öffnest, und nur der App-Port wird veröffentlicht, auf `127.0.0.1`, für deinen [Reverse Proxy](./reverse-proxy.md). PostgreSQL und MinIO werden überhaupt nicht veröffentlicht.
+
+Die Datei startet erst, wenn jedes Secret gesetzt ist. Trage sie in eine `.env`-Datei neben ihr ein:
+
+```bash
+BEEHIVE_PUBLIC_BASE_URL=https://bees.example.org
+BEEHIVE_SESSION_SECRET=...      # openssl rand -base64 32
+POSTGRES_PASSWORD=...           # openssl rand -hex 24
+MINIO_ROOT_PASSWORD=...         # openssl rand -hex 24
+BEEHIVE_ADMIN_EMAIL=you@example.org
+BEEHIVE_ADMIN_PASSWORD=...      # 8+ characters; applied again on every start
+```
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Optionale Einstellungen, die die Datei durchreicht: `BEEHIVE_REGISTRATION` (Standard `false`, nur auf Einladung), die `BEEHIVE_SMTP_*`-Variablen für Einladungs- und Verifizierungs-E-Mails sowie `BEEHIVE_BIND` (setze es nur dann auf `0.0.0.0`, wenn der Reverse Proxy auf einer anderen Maschine läuft, und stelle sicher, dass sonst nichts den Port erreichen kann).
+
+Die Datei setzt `BEEHIVE_TRUST_PROXY_HEADERS=true`, weil sie genau einen Reverse Proxy davor erwartet. Betreibe genau eine Server-Instanz pro Datenbank.
 
 ### Die Dienste
 
 | Dienst | Image | Rolle |
 | --- | --- | --- |
-| `server` | gebaut aus dem `Dockerfile` des Repositorys | Backend und Web-App auf `:8080` |
-| `postgres` | `postgres:18-alpine` | Datenbank; `5432` auf dem Host veröffentlicht |
-| `minio` | `minio/minio:latest` | S3-kompatibler Blob-Speicher; `9000` (API) und `9001` (Konsole) auf dem Host veröffentlicht |
+| `server` | `ghcr.io/openbeehive-org/openbeehive-app` (festgelegtes Release) | Backend und Web-App auf `:8080` |
+| `postgres` | `postgres:18-alpine` | Datenbank |
+| `minio` | `minio/minio` | S3-kompatibler Blob-Speicher |
 
-`server` hängt von `postgres` und `minio` ab, daher startet Compose diese zuerst.
-
-### Was die Compose-Datei setzt
-
-Diese Werte sind in `docker-compose.yml` fest eingetragen und werden nicht aus `.env` gelesen; ändere sie, indem du die Datei bearbeitest (und ändere die Postgres- und MinIO-Zugangsdaten an derselben Stelle):
-
-| Einstellung | Wert in der Compose-Datei |
-| --- | --- |
-| `BEEHIVE_DEPLOYMENT_PROFILE` | `cloud` |
-| `BEEHIVE_DATABASE_DSN` | `postgres://openbeehive:openbeehive@postgres:5432/openbeehive?sslmode=disable` |
-| `BEEHIVE_MINIO_ENDPOINT` | `minio:9000` |
-| `BEEHIVE_MINIO_ACCESS_KEY` / `BEEHIVE_MINIO_SECRET_KEY` | `minioadmin` / `minioadmin` |
-| `BEEHIVE_OIDC_PROVIDERS` | `google` |
-
-Diese kommen aus deiner Shell oder `.env`:
-
-```bash
-# Required: the cloud profile enables password auth, which needs the instance admin.
-# docker compose up fails immediately if either is missing.
-BEEHIVE_ADMIN_EMAIL=you@example.com
-BEEHIVE_ADMIN_PASSWORD=at-least-eight-characters
-
-# Sessions; generate with: openssl rand -base64 32
-BEEHIVE_SESSION_SECRET=
-
-# Defaults to http://localhost:8080
-BEEHIVE_PUBLIC_BASE_URL=https://bees.example.com
-
-# Google is enabled as an OIDC provider in the compose file, so these are
-# required too; without a client ID the server exits with
-# "OIDC provider google: issuer/client id missing". Remove the BEEHIVE_OIDC_*
-# lines from docker-compose.yml if you do not want Google sign-in.
-BEEHIVE_OIDC_GOOGLE_CLIENT_ID=...
-BEEHIVE_OIDC_GOOGLE_CLIENT_SECRET=...
-```
+`server` wartet, bis `postgres` und `minio` sich als gesund melden.
 
 :::note Dienstnamen sind Hostnamen
 Innerhalb des Compose-Netzwerks erreichen Container einander über den Dienstnamen. Deshalb zeigt der DSN auf `postgres` und der MinIO-Endpunkt auf `minio`.
 :::
 
-### Eine produktionsnahe Datei
+### Der Entwicklungs-Stack
 
-`docker-compose.demo.yml` im Repository ist die Datei hinter der gehosteten Instanz: Sie verwendet das veröffentlichte Image statt zu bauen, veröffentlicht keine Datenbank- oder MinIO-Ports, ergänzt Restart-Policies und Healthchecks, bezieht jedes Secret aus `.env`, schließt die Registrierung (nur auf Einladung) und aktiviert den [Demo-Mandanten](./demo.md). Ihr Kopfkommentar listet die benötigten Variablen auf. Nutze sie als Ausgangspunkt für deinen eigenen Produktions-Stack:
+`docker-compose.yml` baut den Server aus dem Checkout und veröffentlicht PostgreSQL (`5432`) und MinIO (`9000`, `9001`) auf `127.0.0.1` für lokale Werkzeuge. Sie braucht `BEEHIVE_SESSION_SECRET`, `MINIO_ROOT_PASSWORD`, `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` in `.env`. OIDC ist optional: Setze `BEEHIVE_OIDC_PROVIDERS` zusammen mit dem Issuer und der Client-ID des Providers. Sie ist dafür gedacht, an Openbeehive zu arbeiten, nicht dafür, es zu betreiben.
 
 ```bash
-docker compose -f docker-compose.demo.yml up -d
+cp .env.example .env   # then add the four values above
+docker compose up -d --build
 ```
 
 Die vollständige Liste der Variablen findest du unter [Konfiguration](./configuration.md).
 
 ## Deine Daten persistieren
 
-- **Einzelner Container (`selfhost`):** Alles liegt unter `/data` auf dem Volume `openbeehive-data`, solange DSN und Blob-Verzeichnis dorthin zeigen.
-- **Cloud-Profil:** Aufzeichnungen liegen im Volume `pg` (Postgres) und hochgeladene Dateien im Volume `minio`. Der Server-Container ist zustandslos und kann frei ersetzt werden.
+- **Einzelner Container (`selfhost`):** Alles liegt unter `/data` auf dem Volume `openbeehive-data`.
+- **PostgreSQL und MinIO:** Aufzeichnungen liegen im Volume `pg` und hochgeladene Dateien im Volume `minio`. Der Server-Container ist zustandslos und kann frei ersetzt werden.
 
 :::danger Vor dem Upgrade sichern
 Benannte Volumes überstehen `docker compose up` und Image-Upgrades, aber nicht `docker compose down -v` oder ein entferntes Volume. Erstelle vor jedem Upgrade oder destruktiven Befehl ein Backup. Siehe [Backups](./backups.md).
@@ -151,15 +139,17 @@ Benannte Volumes überstehen `docker compose up` und Image-Upgrades, aber nicht 
 
 ```bash
 # Follow the server logs
-docker compose logs -f server
+docker compose -f docker-compose.prod.yml logs -f server
 
-# Rebuild from updated source and recreate (docker-compose.yml builds the image)
+# Pull the image named in the Compose file and recreate
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+
+# Rebuild the development stack from updated source
 git pull && docker compose up -d --build
 
-# Pull a newer published image and recreate (docker-compose.demo.yml or your own file)
-docker compose -f docker-compose.demo.yml pull
-docker compose -f docker-compose.demo.yml up -d
-
 # Stop everything (volumes are kept)
-docker compose down
+docker compose -f docker-compose.prod.yml down
 ```
+
+Die Compose-Dateien legen ein Release per Tag und Digest fest. Um auf ein neueres Release zu wechseln, aktualisiere die Datei aus dem Repository (oder ändere den Tag) und folge [Aktualisieren](./upgrading.md).

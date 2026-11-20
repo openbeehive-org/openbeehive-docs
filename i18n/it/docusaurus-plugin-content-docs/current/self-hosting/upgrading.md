@@ -20,12 +20,48 @@ Esegui un backup prima di aggiornare. Vedi [Backup](./backups.md).
 
 ## Passaggi specifici per release
 
+### Aggiornamento alla 0.5.0 \{#upgrading-to-050}
+
+La 0.5.0 rende più restrittivi diversi valori predefiniti. Esegui prima un backup, poi scorri questo elenco; dove manca un'impostazione il server si ferma all'avvio e la indica.
+
+**Impostazioni**
+
+- **Segreto di sessione.** Con qualsiasi metodo di accesso, `BEEHIVE_SESSION_SECRET` deve essere impostato e lungo almeno 32 byte, altrimenti il server non si avvia. Generane uno con `openssl rand -base64 32`; un nuovo segreto disconnette tutti.
+- **`.env` viene letto dal binario.** Il server ora carica `.env` dalla sua directory di lavoro. Controlla che un vecchio `.env` rimasto lì contenga ciò che vuoi; le vere variabili d'ambiente hanno comunque la precedenza.
+- **CORS è limitato alla stessa origine per impostazione predefinita.** Se l'app è servita da un'origine diversa da quella dell'API, elencala in `BEEHIVE_CORS_ALLOWED_ORIGINS`. `*` non consente più le credenziali.
+- **Senza accesso: solo nomi host noti.** Un server senza accesso risponde solo a `localhost`, agli indirizzi IP e all'host di `BEEHIVE_PUBLIC_BASE_URL`. Metti gli altri nomi in `BEEHIVE_ALLOWED_HOSTS`.
+- **La verifica email richiede un server di posta.** `BEEHIVE_EMAIL_VERIFICATION=true` richiede `BEEHIVE_SMTP_HOST`. I link non vengono più scritti nel log; senza SMTP, copia i link di invito dalle Impostazioni.
+- **OIDC.** Un provider elencato in `BEEHIVE_OIDC_PROVIDERS` senza issuer e client id blocca l'avvio. Un accesso tramite provider viene agganciato a un account esistente solo quando entrambe le parti hanno verificato l'indirizzo email.
+- **Reverse proxy.** Imposta `BEEHIVE_TRUST_PROXY_HEADERS=true` dietro il tuo proxy, altrimenti la limitazione dei tentativi di accesso conta tutti gli utenti come un unico indirizzo.
+- **`BEEHIVE_NODE_ID`** ora ha come valore predefinito un id casuale a ogni avvio; rimuovilo dalla tua configurazione a meno che tu non lo imposti di proposito. Le impostazioni inutilizzate della dimensione di pagina della sincronizzazione non esistono più.
+
+**File Compose**
+
+- `docker-compose.yml` è lo stack di sviluppo: ora richiede `BEEHIVE_SESSION_SECRET` e `MINIO_ROOT_PASSWORD`, pubblica PostgreSQL e MinIO solo su `127.0.0.1` e abilita OIDC solo quando lo chiedi.
+- Per eseguire Openbeehive, usa il nuovo `docker-compose.selfhost.yml` (un container, SQLite) oppure `docker-compose.prod.yml` (PostgreSQL e MinIO). `docker-compose.demo.yml` è la demo ospitata e pubblica su `127.0.0.1` a meno che `BEEHIVE_BIND` non sia impostato. Vedi [Docker e Compose](./docker.md).
+
+**Dati**
+
+- **Attivare l'accesso sposta i dati dell'utente singolo.** Se l'istanza funzionava senza accesso e abiliti l'accesso email/password, i dati esistenti passano nello spazio dell'amministratore dell'istanza all'avvio successivo. Non può essere annullato; vedi [Autenticazione](./authentication.md#single-user-to-login).
+- **Migrazioni del database.** Il primo avvio ricostruisce la tabella delle visite e l'indice del registro delle modifiche, quindi richiede più tempo su un database grande. Su MariaDB converte inoltre le tabelle a una collation binaria, e una migrazione che lì fallisce non può essere annullata: un backup è l'unico modo per tornare indietro.
+- **Esegui esattamente un'istanza del server** per database.
+
+**Comportamenti che utenti e script noteranno**
+
+- **Gli inviti** scadono dopo 7 giorni e funzionano solo per l'indirizzo email invitato. Gli inviti aperti più vecchi devono essere emessi di nuovo.
+- **Limitazione dei tentativi di accesso.** Dopo 10 accessi falliti per un account o 30 da un indirizzo in 15 minuti il server risponde `429` con `Retry-After`.
+- **Limiti.** Un messaggio RPC può essere al massimo di 16 MiB e una richiesta può durare al massimo 2 minuti (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
+- **Orologi dei dispositivi.** Le modifiche con una marca temporale più di 10 minuti avanti rispetto all'ora del server vengono rifiutate. Le app aggiornate si correggono da sole; un'app 0.4.x con l'orologio sbagliato perde tali modifiche, quindi aggiorna l'app su ogni dispositivo.
+- **API.** Le chiamate di aggiornamento modificano solo i campi inviati; `DeleteApiary` fallisce con `failed_precondition` finché l'apiario ha arnie; le attività personali vengono restituite solo al loro proprietario; i valori numerici delle ispezioni che non sono stati registrati vengono omessi invece di essere restituiti come `0`. Gli endpoint HTTP semplici sotto `/auth/` e `/tenants/` accettano solo il metodo documentato, richiedono `Content-Type: application/json` quando accettano un corpo, e `/tenants/delete` richiede `org_id`. Vedi [REST](../using-the-api/rest.md).
+
+Le app 0.4.x installate continuano a funzionare con un server 0.5.0. Dopo che l'app si è aggiornata, ogni dispositivo scarica i propri dati ancora una volta.
+
 ### 0.4.0: il container viene eseguito come utente non privilegiato
 
 Fino alla 0.3.1 l'immagine veniva eseguita come root, quindi un volume creato da un container più vecchio appartiene a root e il server 0.4.0 (uid `65532`) non riesce ad aprire il database al suo interno. Correggi la proprietà una volta sola, prima di avviare la nuova immagine:
 
 ```bash
-# named volume from the quick start or docker-compose.demo.yml
+# named volume from the quick start
 docker run --rm -v openbeehive-data:/data docker.io/library/alpine:3.23 chown -R 65532:65532 /data
 
 # bind-mounted host directory
@@ -38,7 +74,7 @@ Il profilo cloud (Postgres e MinIO) non è interessato: il container del server 
 
 ## Come funzionano le migrazioni
 
-Le migrazioni dello schema vengono eseguite automaticamente all'avvio del server. All'avvio il server applica in ordine eventuali migrazioni in sospeso e solo allora inizia a servire le richieste. Funziona allo stesso modo per PostgreSQL, MySQL e SQLite.
+Le migrazioni dello schema vengono eseguite automaticamente all'avvio del server. All'avvio il server applica in ordine eventuali migrazioni in sospeso e solo allora inizia a servire le richieste. Funziona allo stesso modo per PostgreSQL, MariaDB e SQLite.
 
 :::note
 Il primo avvio di una nuova versione potrebbe richiedere un po' più del solito mentre lo schema viene aggiornato. Osserva i log per confermare che termini prima di inviarvi traffico.
@@ -75,12 +111,12 @@ Questo produce un nuovo `./server/bin/openbeehive`. I prerequisiti sono in [Bina
 
 Il comando necessario dipende da dove proviene l'immagine.
 
-**Immagine pubblicata** (il `docker run` a singolo container dell'[avvio rapido](./quick-start.md), oppure un file Compose con una riga `image:` come `docker-compose.demo.yml`):
+**Immagine pubblicata** (il `docker run` a singolo container dell'[avvio rapido](./quick-start.md), oppure un file Compose con una riga `image:` come `docker-compose.selfhost.yml` o `docker-compose.prod.yml`). I file Compose fissano una release tramite tag e digest; cambia la riga `image:` con la release che vuoi (o prendi il file da quella release), poi:
 
 ```bash
-docker compose -f docker-compose.demo.yml pull
-docker compose -f docker-compose.demo.yml up -d
-docker compose -f docker-compose.demo.yml logs -f server
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml logs -f server
 ```
 
 Per un container avviato con un semplice `docker run`: `docker pull ghcr.io/openbeehive-org/openbeehive-app:latest`, poi `docker rm -f openbeehive` ed esegui di nuovo lo stesso comando `docker run`. Il volume con nome conserva i tuoi dati.

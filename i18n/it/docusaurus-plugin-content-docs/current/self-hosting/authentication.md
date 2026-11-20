@@ -11,14 +11,16 @@ Openbeehive ti permette di scegliere quanta autenticazione ti serve. Un apicolto
 
 | Modalità | Quando usarla | Impostazioni chiave |
 | --- | --- | --- |
-| Nessun accesso (utente singolo) | Una persona, un server, sulla tua rete o dietro un reverse proxy fidato | `BEEHIVE_PASSWORD_AUTH` disattivato (predefinito di selfhost), `BEEHIVE_OIDC_PROVIDERS` vuoto, `BEEHIVE_WEBAUTHN_ENABLED=false` |
+| Nessun accesso (utente singolo) | Una persona, un server, sul tuo computer o su una rete di cui ti fidi | `BEEHIVE_PASSWORD_AUTH` disattivato (predefinito di selfhost), `BEEHIVE_OIDC_PROVIDERS` vuoto, `BEEHIVE_WEBAUTHN_ENABLED=false` |
 | Email e password (account in-app) | Un'istanza condivisa senza un provider di identità esterno | `BEEHIVE_PASSWORD_AUTH=true` (predefinito per il profilo `cloud`) più `BEEHIVE_ADMIN_EMAIL` / `BEEHIVE_ADMIN_PASSWORD` |
 | Passkey (WebAuthn) | Accesso senza password con dati biometrici del dispositivo o chiavi di sicurezza, aggiunto sopra un altro metodo | `BEEHIVE_WEBAUTHN_ENABLED=true` più `BEEHIVE_WEBAUTHN_RP_*` |
 | Provider OIDC | Hai già Google, Keycloak, Authentik o simili, oppure vuoi un controllo centralizzato degli account | `BEEHIVE_OIDC_PROVIDERS` più le impostazioni per ciascun provider |
 
-I metodi di accesso si combinano. La schermata di accesso offre quelli abilitati, e un unico account funziona con tutti: accedere con un provider si collega a un account email/password esistente con la stessa email.
+I metodi di accesso si combinano. La schermata di accesso offre quelli abilitati, e un unico account funziona con tutti: accedere con un provider si aggancia a un account esistente con lo stesso indirizzo email quando entrambe le parti hanno verificato quell'indirizzo (vedi [Modalità 4](#oidc-linking)).
 
-Abilitare un qualsiasi metodo di accesso abilita anche i tenant e gli inviti (Impostazioni → Spazi); vedi [Account e tenant](../using-the-app/accounts-tenants.md).
+Le prime righe del log del server indicano la modalità in vigore: `auth: NO LOGIN (single-user mode): every request has full access to all data` oppure `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
+
+Abilitare un qualsiasi metodo di accesso abilita anche gli spazi e gli inviti (Impostazioni → Spazi); vedi [Account e spazi](../using-the-app/accounts-tenants.md).
 
 ## Modalità 1: utente singolo, nessun accesso
 
@@ -32,13 +34,15 @@ BEEHIVE_WEBAUTHN_ENABLED=false
 
 Senza alcun metodo di accesso abilitato, Openbeehive funziona come istanza a utente singolo con un'identità locale fissa e non mostra mai una schermata di accesso.
 
+Un server di questo tipo risponde solo alle richieste indirizzate a `localhost`, a un indirizzo IP o all'host di `BEEHIVE_PUBLIC_BASE_URL`. Se lo apri con un altro nome, elenca quel nome in [`BEEHIVE_ALLOWED_HOSTS`](./configuration.md#allowed-hosts); la pagina `403` che ottieni altrimenti lo indica.
+
 :::caution
-"Nessun accesso" significa che chiunque possa raggiungere il server può leggere e modificare i tuoi dati. Usalo solo su una rete fidata, su `localhost`, o dietro un reverse proxy che gestisce esso stesso l'accesso. Se la tua istanza è raggiungibile da internet, abilita un metodo di accesso.
+"Nessun accesso" significa che chiunque possa raggiungere il server può leggere e modificare i tuoi dati. Usalo solo su `localhost` o su una rete fidata. Se la tua istanza è raggiungibile da internet, abilita un metodo di accesso. All'avvio il server scrive un avviso nel log quando non c'è alcun accesso e `BEEHIVE_PUBLIC_BASE_URL` non è un indirizzo locale.
 :::
 
 ## Impostazioni di sessione (richieste una volta abilitato un qualsiasi accesso)
 
-Non appena un metodo di accesso è attivo, il server emette token di sessione firmati e ha bisogno di un segreto:
+Non appena un metodo di accesso è attivo, il server emette token di sessione firmati e ha bisogno di un segreto di almeno 32 byte. Senza di esso, o con uno più corto, il server rifiuta di avviarsi e indica l'impostazione:
 
 ```bash
 # Generate a strong random secret
@@ -52,8 +56,10 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` accetta una durata in formato Go (`720h` sono 30 giorni, `24h` un giorno). Alla scadenza, gli utenti accedono di nuovo.
 
+Le sessioni possono essere terminate prima della scadenza. `POST /auth/logout-all` termina ogni altra sessione dell'account chiamante e restituisce un nuovo token al chiamante. Inoltre, a ogni richiesta il server verifica che l'account sia ancora membro dello spazio in cui lavora. Entrambe le cose hanno effetto entro circa 10 secondi.
+
 :::danger
-Mantieni `BEEHIVE_SESSION_SECRET` segreto e stabile. Chiunque lo scopra può falsificare le sessioni. Se lo cambi, tutte le sessioni esistenti vengono invalidate. Non inserirlo mai nel controllo di versione.
+Mantieni `BEEHIVE_SESSION_SECRET` segreto e stabile. Chiunque lo scopra può falsificare le sessioni. Se lo cambi, tutti vengono disconnessi. Non inserirlo mai nel controllo di versione.
 :::
 
 Se servi l'app tramite HTTPS attraverso un reverse proxy, assicurati che `BEEHIVE_PUBLIC_BASE_URL` usi `https://` in modo che i link di reindirizzamento e di invito siano corretti. Vedi [Reverse proxy](./reverse-proxy.md).
@@ -75,11 +81,17 @@ BEEHIVE_ADMIN_PASSWORD=at-least-eight-characters
 
 Il server garantisce questo account a ogni avvio: viene creato se manca, il ruolo viene forzato ad amministratore, la password viene reimpostata al valore configurato. Quest'ultimo punto funge anche da recupero della password per l'amministratore: cambia la variabile e riavvia. La registrazione non concede mai il ruolo di amministratore, e l'email dell'amministratore deve essere diversa da quella dell'account demo.
 
+### Limitazione dei tentativi di accesso
+
+Gli accessi falliti vengono contati per account e per indirizzo del client: dopo 10 tentativi falliti per un account o 30 da un indirizzo nell'arco di 15 minuti, gli ulteriori tentativi ricevono HTTP `429` con un'intestazione `Retry-After` finché i 15 minuti non sono trascorsi. L'accesso con passkey viene limitato per indirizzo allo stesso modo.
+
+Dietro un reverse proxy ogni richiesta sembra provenire dal proxy. Imposta lì `BEEHIVE_TRUST_PROXY_HEADERS=true` in modo che il server conti il vero indirizzo del client, preso dall'ultima voce di `X-Forwarded-For`. Fallo solo con esattamente un proxy davanti e con la porta del server non raggiungibile in altro modo; vedi [Reverse proxy](./reverse-proxy.md).
+
 ### Istanze solo su invito
 
-Per impedire a estranei di creare account, imposta `BEEHIVE_REGISTRATION=false`. L'amministratore viene dall'ambiente, quindi un'istanza nuova ne ha sempre uno. Tutti gli altri si uniscono tramite link di invito, che un amministratore del tenant emette da Impostazioni → Spazi. La registrazione tramite un link di invito deve usare l'indirizzo email invitato. La schermata di accesso mostra un avviso che l'istanza è solo su invito; gli account esistenti accedono normalmente.
+Per impedire a estranei di creare account, imposta `BEEHIVE_REGISTRATION=false`. L'amministratore viene dall'ambiente, quindi un'istanza nuova ne ha sempre uno. Tutti gli altri si uniscono tramite link di invito, che un amministratore dello spazio emette da Impostazioni → Spazi. Un invito è valido per 7 giorni e funziona solo per l'indirizzo email per cui è stato emesso. La schermata di accesso mostra un avviso che l'istanza è solo su invito; gli account esistenti accedono normalmente.
 
-Ogni nuovo account inizia con il proprio [tenant](../using-the-app/accounts-tenants.md) personale. Solo l'account amministratore configurato porta il ruolo di amministratore dell'istanza.
+Ogni nuovo account inizia con il proprio [spazio](../using-the-app/accounts-tenants.md) personale. Solo l'account amministratore configurato porta il ruolo di amministratore dell'istanza.
 
 ### Verifica email facoltativa
 
@@ -89,7 +101,7 @@ Per impostazione predefinita un nuovo account può accedere immediatamente. Per 
 BEEHIVE_EMAIL_VERIFICATION=true
 ```
 
-Configura SMTP affinché le email di verifica e di invito vengano inviate:
+La verifica richiede un server di posta: con `BEEHIVE_EMAIL_VERIFICATION=true` e senza `BEEHIVE_SMTP_HOST` il server rifiuta di avviarsi. Configura SMTP affinché le email di verifica e di invito vengano inviate:
 
 ```bash
 BEEHIVE_SMTP_HOST=smtp.example.com
@@ -100,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Se `BEEHIVE_SMTP_HOST` è vuoto, Openbeehive scrive i link di verifica e di invito nel log del server invece di inviarli via email. I link di invito vengono mostrati nell'app anche all'amministratore che li ha creati.
+I link di invito e di verifica non vengono mai scritti nel log del server. Senza `BEEHIVE_SMTP_HOST` non viene inviata alcuna email di invito; l'amministratore che ha creato un invito ne copia il link da Impostazioni → Spazi e lo inoltra.
 :::
 
 ## Modalità 3: passkey (WebAuthn)
@@ -135,9 +147,11 @@ BEEHIVE_OIDC_REDIRECT_URL=https://beehive.example.com/auth/callback
 
 `BEEHIVE_OIDC_REDIRECT_URL` (predefinito `<BEEHIVE_PUBLIC_BASE_URL>/auth/callback`) è l'indirizzo a cui il provider rimanda gli utenti. Deve corrispondere esattamente a quello che registri presso il provider. Ogni provider elencato ha bisogno di un issuer e di un client ID, altrimenti il server rifiuta di avviarsi.
 
-:::note Gli account si collegano automaticamente
-Quando qualcuno accede tramite un provider, Openbeehive confronta prima l'identità del provider, poi l'indirizzo email (collegando un account email/password esistente), e altrimenti crea un nuovo account. L'amministratore dell'istanza resta l'account indicato in `BEEHIVE_ADMIN_EMAIL`, in qualunque modo acceda.
-:::
+### Come gli accessi tramite provider vengono associati agli account \{#oidc-linking}
+
+Quando qualcuno accede tramite un provider, Openbeehive cerca un account già collegato a quell'identità del provider. In mancanza, cerca un account con lo stesso indirizzo email e vi aggancia l'accesso tramite provider, ma solo quando il provider segnala l'indirizzo come verificato **e** l'indirizzo dell'account esistente è verificato. Altrimenti l'accesso viene rifiutato e la persona continua ad accedere come faceva prima. Se non esiste un account simile, ne viene creato uno nuovo, a meno che la registrazione non sia chiusa (`BEEHIVE_REGISTRATION=false`): le istanze solo su invito non creano account tramite un provider.
+
+L'amministratore dell'istanza resta l'account indicato in `BEEHIVE_ADMIN_EMAIL`, in qualunque modo acceda.
 
 ### Google
 
@@ -173,12 +187,21 @@ https://beehive.example.com/auth/callback
 
 Errori comuni: lo schema deve corrispondere (`https` in produzione), nessuna barra finale a meno che il tuo valore non ne abbia una, e usa il tuo dominio pubblico anziché un hostname interno. Un errore di "redirect mismatch" significa che i due valori differiscono da qualche parte.
 
+## Attivare l'accesso su un'istanza a utente singolo esistente \{#single-user-to-login}
+
+I dati creati senza accesso appartengono a uno spazio locale fisso che nessun account può vedere. Quando il server si avvia con l'accesso email/password abilitato e trova dati di questo tipo, li sposta nello spazio dell'amministratore dell'istanza e scrive nel log quante righe ha spostato. Accedi come amministratore per vederli. Lo spostamento avviene una sola volta e non può essere annullato disattivando di nuovo l'accesso; fai prima un [backup](./backups.md).
+
+Due cose da sapere:
+
+- Le modifiche che un dispositivo non aveva sincronizzato prima del passaggio restano nei vecchi dati locali di quel dispositivo e non vengono caricate. Sincronizza ogni dispositivo prima di attivare l'accesso.
+- Con solo OIDC o passkey non esiste un amministratore dell'istanza. I dati restano allora dove sono e il log dice di impostare `BEEHIVE_PASSWORD_AUTH=true` con `BEEHIVE_ADMIN_EMAIL` e `BEEHIVE_ADMIN_PASSWORD` per adottarli.
+
 ## Verificare la configurazione
 
 Riavvia il server e carica l'app in un browser:
 
 1. Con **nessun accesso**, la Panoramica si apre direttamente.
-2. Con un metodo di accesso abilitato, la schermata di accesso offre ciascun metodo abilitato (e "Esplora la demo" se la demo è attiva).
+2. Con un metodo di accesso abilitato, la schermata di accesso offre ciascun metodo abilitato (e "Prova la demo" se la demo è attiva).
 3. Completa un accesso e verifica di raggiungere la Panoramica e che i dati si sincronizzino.
 
 Se qualcosa non funziona, controlla i log del server e la [Risoluzione dei problemi](../knowledge-base/troubleshooting.md).

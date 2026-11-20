@@ -11,14 +11,16 @@ Openbeehive vous laisse choisir le niveau d'authentification dont vous avez beso
 
 | Mode | Quand l'utiliser | Paramètres clés |
 | --- | --- | --- |
-| Sans connexion (utilisateur unique) | Une seule personne, un seul serveur, sur votre propre réseau ou derrière un reverse proxy de confiance | `BEEHIVE_PASSWORD_AUTH` désactivé (valeur par défaut de selfhost), `BEEHIVE_OIDC_PROVIDERS` vide, `BEEHIVE_WEBAUTHN_ENABLED=false` |
+| Sans connexion (utilisateur unique) | Une seule personne, un seul serveur, sur votre propre ordinateur ou sur un réseau de confiance | `BEEHIVE_PASSWORD_AUTH` désactivé (valeur par défaut de selfhost), `BEEHIVE_OIDC_PROVIDERS` vide, `BEEHIVE_WEBAUTHN_ENABLED=false` |
 | E-mail et mot de passe (comptes intégrés) | Une instance partagée sans fournisseur d'identité externe | `BEEHIVE_PASSWORD_AUTH=true` (valeur par défaut du profil `cloud`) plus `BEEHIVE_ADMIN_EMAIL` / `BEEHIVE_ADMIN_PASSWORD` |
 | Passkeys (WebAuthn) | Connexion sans mot de passe avec la biométrie de l'appareil ou des clés de sécurité, ajoutée par-dessus une autre méthode | `BEEHIVE_WEBAUTHN_ENABLED=true` plus `BEEHIVE_WEBAUTHN_RP_*` |
 | Fournisseurs OIDC | Vous disposez déjà de Google, Keycloak, Authentik ou similaire, ou vous souhaitez un contrôle centralisé des comptes | `BEEHIVE_OIDC_PROVIDERS` plus les paramètres propres à chaque fournisseur |
 
-Les méthodes de connexion se combinent. L'écran de connexion propose celles qui sont activées, et un même compte fonctionne avec toutes : se connecter avec un fournisseur lie le compte à un compte e-mail/mot de passe existant ayant la même adresse e-mail.
+Les méthodes de connexion se combinent. L'écran de connexion propose celles qui sont activées, et un même compte fonctionne avec toutes : une connexion via un fournisseur est rattachée à un compte existant ayant la même adresse e-mail lorsque les deux côtés ont vérifié cette adresse (voir [Mode 4](#oidc-linking)).
 
-Activer une méthode de connexion active aussi les espaces (tenants) et les invitations (Paramètres → Espaces) ; voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
+Les premières lignes du journal du serveur indiquent le mode en vigueur : soit `auth: NO LOGIN (single-user mode): every request has full access to all data`, soit `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
+
+Activer une méthode de connexion active aussi les espaces et les invitations (Paramètres → Espaces) ; voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
 
 ## Mode 1 : utilisateur unique, sans connexion
 
@@ -32,13 +34,15 @@ BEEHIVE_WEBAUTHN_ENABLED=false
 
 Sans aucune méthode de connexion activée, Openbeehive fonctionne comme une instance mono-utilisateur sous une identité locale fixe et n'affiche jamais d'écran de connexion.
 
+Un tel serveur ne répond qu'aux requêtes adressées à `localhost`, à une adresse IP ou à l'hôte de `BEEHIVE_PUBLIC_BASE_URL`. Si vous l'ouvrez sous un autre nom, ajoutez ce nom à [`BEEHIVE_ALLOWED_HOSTS`](./configuration.md#allowed-hosts) ; la page `403` que vous obtenez sinon l'indique.
+
 :::caution
-« Sans connexion » signifie que toute personne pouvant atteindre le serveur peut lire et modifier vos enregistrements. Utilisez ce mode uniquement sur un réseau de confiance, sur `localhost`, ou derrière un reverse proxy qui gère lui-même l'accès. Si votre instance est accessible depuis Internet, activez une méthode de connexion.
+« Sans connexion » signifie que toute personne pouvant atteindre le serveur peut lire et modifier vos enregistrements. Utilisez ce mode uniquement sur `localhost` ou sur un réseau de confiance. Si votre instance est accessible depuis Internet, activez une méthode de connexion. Le serveur écrit un avertissement dans le journal au démarrage lorsqu'il n'y a pas de connexion et que `BEEHIVE_PUBLIC_BASE_URL` n'est pas une adresse locale.
 :::
 
 ## Paramètres de session (requis dès qu'une connexion est activée)
 
-Dès qu'une méthode de connexion est activée, le serveur émet des jetons de session signés et a besoin d'un secret :
+Dès qu'une méthode de connexion est activée, le serveur émet des jetons de session signés et a besoin d'un secret d'au moins 32 octets. Sans ce secret, ou avec un secret plus court, le serveur refuse de démarrer et nomme le paramètre :
 
 ```bash
 # Generate a strong random secret
@@ -52,8 +56,10 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` accepte une durée Go (`720h` correspond à 30 jours, `24h` à un jour). À son expiration, les utilisateurs se reconnectent.
 
+Les sessions peuvent être terminées avant leur expiration. `POST /auth/logout-all` met fin à toutes les autres sessions du compte appelant et renvoie un nouveau jeton à l'appelant. Le serveur vérifie aussi à chaque requête que le compte est toujours membre de l'espace dans lequel il travaille. Les deux prennent effet en 10 secondes environ.
+
 :::danger
-Gardez `BEEHIVE_SESSION_SECRET` secret et stable. Quiconque en prend connaissance peut falsifier des sessions. Si vous le modifiez, toutes les sessions existantes sont invalidées. Ne le validez jamais dans un système de gestion de versions.
+Gardez `BEEHIVE_SESSION_SECRET` secret et stable. Quiconque en prend connaissance peut falsifier des sessions. Si vous le modifiez, tout le monde est déconnecté. Ne le validez jamais dans un système de gestion de versions.
 :::
 
 Si vous servez l'application via HTTPS à travers un reverse proxy, assurez-vous que `BEEHIVE_PUBLIC_BASE_URL` utilise `https://` afin que les liens de redirection et d'invitation soient corrects. Voir [Reverse proxy](./reverse-proxy.md).
@@ -75,9 +81,15 @@ BEEHIVE_ADMIN_PASSWORD=at-least-eight-characters
 
 Le serveur garantit ce compte à chaque démarrage : il est créé s'il manque, son rôle est forcé à administrateur et son mot de passe est réinitialisé à la valeur configurée. Ce dernier point sert aussi de récupération de mot de passe pour l'administrateur : changez la variable et redémarrez. L'inscription n'accorde jamais le rôle d'administrateur, et l'e-mail de l'administrateur doit différer de celui du compte de démonstration.
 
+### Limitation des tentatives de connexion
+
+Les connexions échouées sont comptées par compte et par adresse client : après 10 échecs pour un même compte ou 30 depuis une même adresse en 15 minutes, les tentatives suivantes reçoivent une réponse HTTP `429` avec un en-tête `Retry-After` jusqu'à la fin des 15 minutes. La connexion par passkey est limitée par adresse de la même manière.
+
+Derrière un reverse proxy, toutes les requêtes semblent venir du proxy. Réglez-y `BEEHIVE_TRUST_PROXY_HEADERS=true` pour que le serveur compte la véritable adresse du client, prise dans la dernière entrée de `X-Forwarded-For`. Ne le faites qu'avec exactement un proxy en amont et un port du serveur inaccessible autrement ; voir [Reverse proxy](./reverse-proxy.md).
+
 ### Instances sur invitation uniquement
 
-Pour empêcher des inconnus de créer des comptes, réglez `BEEHIVE_REGISTRATION=false`. L'administrateur vient de l'environnement, donc une instance neuve en a toujours un. Toutes les autres personnes rejoignent l'instance via des liens d'invitation, qu'un administrateur d'espace émet depuis Paramètres → Espaces. L'inscription via un lien d'invitation doit utiliser l'adresse e-mail invitée. L'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement ; les comptes existants se connectent normalement.
+Pour empêcher des inconnus de créer des comptes, réglez `BEEHIVE_REGISTRATION=false`. L'administrateur vient de l'environnement, donc une instance neuve en a toujours un. Toutes les autres personnes rejoignent l'instance via des liens d'invitation, qu'un administrateur d'espace émet depuis Paramètres → Espaces. Une invitation est valable 7 jours et ne fonctionne que pour l'adresse e-mail pour laquelle elle a été émise. L'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement ; les comptes existants se connectent normalement.
 
 Chaque nouveau compte démarre avec son propre [espace](../using-the-app/accounts-tenants.md) personnel. Seul le compte administrateur configuré porte le rôle d'administrateur de l'instance.
 
@@ -89,7 +101,7 @@ Par défaut, un nouveau compte peut se connecter immédiatement. Pour exiger des
 BEEHIVE_EMAIL_VERIFICATION=true
 ```
 
-Configurez le SMTP pour que les e-mails de vérification et d'invitation soient envoyés :
+La vérification nécessite un serveur de messagerie : avec `BEEHIVE_EMAIL_VERIFICATION=true` et sans `BEEHIVE_SMTP_HOST`, le serveur refuse de démarrer. Configurez le SMTP pour que les e-mails de vérification et d'invitation soient envoyés :
 
 ```bash
 BEEHIVE_SMTP_HOST=smtp.example.com
@@ -100,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Si `BEEHIVE_SMTP_HOST` est vide, Openbeehive écrit les liens de vérification et d'invitation dans le journal du serveur au lieu de les envoyer par e-mail. Les liens d'invitation sont aussi affichés dans l'application à l'administrateur qui les a créés.
+Les liens d'invitation et de vérification ne sont jamais écrits dans le journal du serveur. Sans `BEEHIVE_SMTP_HOST`, aucun e-mail d'invitation n'est envoyé ; l'administrateur qui a créé une invitation copie son lien depuis Paramètres → Espaces et le transmet.
 :::
 
 ## Mode 3 : passkeys (WebAuthn)
@@ -135,9 +147,11 @@ BEEHIVE_OIDC_REDIRECT_URL=https://beehive.example.com/auth/callback
 
 `BEEHIVE_OIDC_REDIRECT_URL` (par défaut `<BEEHIVE_PUBLIC_BASE_URL>/auth/callback`) est l'adresse vers laquelle le fournisseur renvoie les utilisateurs. Elle doit correspondre exactement à ce que vous enregistrez auprès du fournisseur. Chaque fournisseur listé a besoin d'un émetteur et d'un identifiant client, sinon le serveur refuse de démarrer.
 
-:::note Les comptes se lient automatiquement
-Lorsqu'une personne se connecte via un fournisseur, Openbeehive fait d'abord correspondre l'identité du fournisseur, puis l'adresse e-mail (en liant un compte e-mail/mot de passe existant), et sinon crée un nouveau compte. L'administrateur de l'instance reste le compte nommé dans `BEEHIVE_ADMIN_EMAIL`, quelle que soit sa façon de se connecter.
-:::
+### Comment les connexions via un fournisseur sont associées aux comptes \{#oidc-linking}
+
+Lorsqu'une personne se connecte via un fournisseur, Openbeehive cherche un compte déjà lié à cette identité du fournisseur. À défaut, il cherche un compte ayant la même adresse e-mail et y rattache la connexion via le fournisseur, mais seulement lorsque le fournisseur déclare l'adresse comme vérifiée **et** que l'adresse du compte existant est vérifiée. Sinon, la connexion est refusée et la personne continue de se connecter comme elle le faisait auparavant. S'il n'existe aucun compte de ce type, un nouveau compte est créé, sauf si l'inscription est fermée (`BEEHIVE_REGISTRATION=false`) : les instances sur invitation uniquement ne créent aucun compte via un fournisseur.
+
+L'administrateur de l'instance reste le compte nommé dans `BEEHIVE_ADMIN_EMAIL`, quelle que soit sa façon de se connecter.
 
 ### Google
 
@@ -173,12 +187,21 @@ https://beehive.example.com/auth/callback
 
 Pièges courants : le schéma doit correspondre (`https` en production), pas de barre oblique finale sauf si votre valeur en comporte une, et utilisez votre domaine public plutôt qu'un nom d'hôte interne. Une erreur « redirect mismatch » signifie que les deux valeurs diffèrent quelque part.
 
+## Activer la connexion sur une instance mono-utilisateur existante \{#single-user-to-login}
+
+Les enregistrements créés sans connexion appartiennent à un espace local fixe qu'aucun compte ne peut voir. Lorsque le serveur démarre avec la connexion par e-mail/mot de passe activée et trouve de tels enregistrements, il les déplace dans l'espace de l'administrateur de l'instance et consigne dans le journal le nombre de lignes déplacées. Connectez-vous en tant qu'administrateur pour les voir. Le déplacement a lieu une seule fois et ne peut pas être annulé en désactivant de nouveau la connexion ; faites d'abord une [sauvegarde](./backups.md).
+
+Deux choses à savoir :
+
+- Les modifications qu'un appareil n'avait pas synchronisées avant le changement restent dans les anciennes données locales de cet appareil et ne sont pas envoyées. Synchronisez chaque appareil avant d'activer la connexion.
+- Avec seulement OIDC ou des passkeys, il n'y a pas d'administrateur d'instance. Les enregistrements restent alors où ils sont et le journal indique de régler `BEEHIVE_PASSWORD_AUTH=true` avec `BEEHIVE_ADMIN_EMAIL` et `BEEHIVE_ADMIN_PASSWORD` pour les reprendre.
+
 ## Vérifier votre configuration
 
 Redémarrez le serveur et chargez l'application dans un navigateur :
 
 1. **Sans connexion**, la Vue d'ensemble s'ouvre directement.
-2. Avec une méthode de connexion activée, l'écran de connexion propose chaque méthode activée (et « Découvrir la démo » si la démo est activée).
+2. Avec une méthode de connexion activée, l'écran de connexion propose chaque méthode activée (et « Essayer la démo » si la démo est activée).
 3. Effectuez une connexion et confirmez que vous accédez à la Vue d'ensemble et que les enregistrements se synchronisent.
 
 Si quelque chose ne fonctionne pas, consultez les journaux du serveur et le [Dépannage](../knowledge-base/troubleshooting.md).

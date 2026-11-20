@@ -11,14 +11,16 @@ Mit Openbeehive entscheidest du selbst, wie viel Authentifizierung du brauchst. 
 
 | Modus | Wann verwenden | Wichtige Einstellungen |
 | --- | --- | --- |
-| Keine Anmeldung (Einzelnutzer) | Eine Person, ein Server, im eigenen Netzwerk oder hinter einem vertrauenswürdigen Reverse Proxy | `BEEHIVE_PASSWORD_AUTH` aus (Standard für selfhost), `BEEHIVE_OIDC_PROVIDERS` leer, `BEEHIVE_WEBAUTHN_ENABLED=false` |
+| Keine Anmeldung (Einzelnutzer) | Eine Person, ein Server, auf dem eigenen Rechner oder in einem Netzwerk, dem du vertraust | `BEEHIVE_PASSWORD_AUTH` aus (Standard für selfhost), `BEEHIVE_OIDC_PROVIDERS` leer, `BEEHIVE_WEBAUTHN_ENABLED=false` |
 | E-Mail & Passwort (App-interne Konten) | Eine gemeinsam genutzte Instanz ohne externen Identity-Provider | `BEEHIVE_PASSWORD_AUTH=true` (Standard für das `cloud`-Profil) plus `BEEHIVE_ADMIN_EMAIL` / `BEEHIVE_ADMIN_PASSWORD` |
 | Passkeys (WebAuthn) | Passwortlose Anmeldung mit Gerätebiometrie oder Sicherheitsschlüsseln, zusätzlich zu einer anderen Methode | `BEEHIVE_WEBAUTHN_ENABLED=true` plus `BEEHIVE_WEBAUTHN_RP_*` |
 | OIDC-Provider | Du betreibst bereits Google, Keycloak, Authentik oder Ähnliches oder möchtest zentrale Kontoverwaltung | `BEEHIVE_OIDC_PROVIDERS` plus provider-spezifische Einstellungen |
 
-Die Anmeldemethoden lassen sich kombinieren. Der Anmeldebildschirm bietet die jeweils aktivierten Methoden an, und ein Konto funktioniert über alle hinweg: Die Anmeldung über einen Provider wird mit einem bestehenden E-Mail-/Passwort-Konto mit derselben E-Mail-Adresse verknüpft.
+Die Anmeldemethoden lassen sich kombinieren. Der Anmeldebildschirm bietet die jeweils aktivierten Methoden an, und ein Konto funktioniert über alle hinweg: Die Anmeldung über einen Provider wird an ein bestehendes Konto mit derselben E-Mail-Adresse angehängt, wenn beide Seiten diese Adresse verifiziert haben (siehe [Modus 4](#oidc-linking)).
 
-Sobald eine Anmeldemethode aktiviert ist, sind auch Mandanten und Einladungen verfügbar (Einstellungen → Mandanten); siehe [Konten & Mandanten](../using-the-app/accounts-tenants.md).
+Die ersten Zeilen des Server-Logs nennen den geltenden Modus, entweder `auth: NO LOGIN (single-user mode): every request has full access to all data` oder `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
+
+Sobald eine Anmeldemethode aktiviert ist, sind auch Arbeitsbereiche und Einladungen verfügbar (Einstellungen → Arbeitsbereiche); siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md).
 
 ## Modus 1: Einzelnutzer, keine Anmeldung
 
@@ -32,13 +34,15 @@ BEEHIVE_WEBAUTHN_ENABLED=false
 
 Ohne aktivierte Anmeldemethode läuft Openbeehive als Einzelnutzer-Instanz unter einer festen lokalen Identität und zeigt nie einen Anmeldebildschirm.
 
+Ein solcher Server antwortet nur auf Anfragen, die an `localhost`, eine IP-Adresse oder den Host aus `BEEHIVE_PUBLIC_BASE_URL` gerichtet sind. Wenn du ihn unter einem anderen Namen öffnest, trage diesen Namen in [`BEEHIVE_ALLOWED_HOSTS`](./configuration.md#allowed-hosts) ein; die `403`-Seite, die du sonst erhältst, weist darauf hin.
+
 :::caution
-"Keine Anmeldung" bedeutet, dass jeder, der den Server erreichen kann, deine Aufzeichnungen lesen und bearbeiten kann. Verwende es nur in einem vertrauenswürdigen Netzwerk, auf `localhost` oder hinter einem Reverse Proxy, der den Zugriff selbst regelt. Wenn deine Instanz aus dem Internet erreichbar ist, aktiviere eine Anmeldemethode.
+"Keine Anmeldung" bedeutet, dass jeder, der den Server erreichen kann, deine Aufzeichnungen lesen und bearbeiten kann. Verwende es nur auf `localhost` oder in einem vertrauenswürdigen Netzwerk. Wenn deine Instanz aus dem Internet erreichbar ist, aktiviere eine Anmeldemethode. Der Server schreibt beim Start eine Warnung ins Log, wenn es keine Anmeldung gibt und `BEEHIVE_PUBLIC_BASE_URL` keine lokale Adresse ist.
 :::
 
 ## Session-Einstellungen (erforderlich, sobald eine Anmeldung aktiviert ist)
 
-Sobald eine Anmeldemethode eingeschaltet ist, gibt der Server signierte Session-Tokens aus und braucht dafür ein Secret:
+Sobald eine Anmeldemethode eingeschaltet ist, gibt der Server signierte Session-Tokens aus und braucht dafür ein Secret von mindestens 32 Bytes. Ohne dieses Secret oder mit einem kürzeren startet der Server nicht und nennt die Einstellung:
 
 ```bash
 # Generate a strong random secret
@@ -52,8 +56,10 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` akzeptiert eine Go-Dauer (`720h` sind 30 Tage, `24h` ein Tag). Wenn sie abläuft, melden sich Nutzer erneut an.
 
+Sessions lassen sich vor ihrem Ablauf beenden. `POST /auth/logout-all` beendet alle anderen Sessions des aufrufenden Kontos und gibt dem Aufrufer ein frisches Token zurück. Außerdem prüft der Server bei jeder Anfrage, ob das Konto noch Mitglied des Arbeitsbereichs ist, in dem es arbeitet. Beides wirkt innerhalb von etwa 10 Sekunden.
+
 :::danger
-Halte `BEEHIVE_SESSION_SECRET` geheim und stabil. Jeder, der es erfährt, kann Sessions fälschen. Wenn du es änderst, werden alle bestehenden Sessions ungültig. Committe es niemals in die Versionsverwaltung.
+Halte `BEEHIVE_SESSION_SECRET` geheim und stabil. Jeder, der es erfährt, kann Sessions fälschen. Wenn du es änderst, werden alle abgemeldet. Committe es niemals in die Versionsverwaltung.
 :::
 
 Wenn du die App über HTTPS durch einen Reverse Proxy ausliefern lässt, stelle sicher, dass `BEEHIVE_PUBLIC_BASE_URL` `https://` verwendet, damit Redirect- und Einladungslinks korrekt sind. Siehe [Reverse Proxy](./reverse-proxy.md).
@@ -75,11 +81,17 @@ BEEHIVE_ADMIN_PASSWORD=at-least-eight-characters
 
 Der Server stellt dieses Konto bei jedem Start sicher: Es wird angelegt, falls es fehlt, seine Rolle wird auf Admin gesetzt und sein Passwort auf den konfigurierten Wert zurückgesetzt. Letzteres dient zugleich als Passwort-Wiederherstellung für den Admin: Variable ändern und neu starten. Eine Registrierung vergibt nie die Admin-Rolle, und die Admin-E-Mail darf nicht die des Demo-Kontos sein.
 
+### Drosselung der Anmeldung
+
+Fehlgeschlagene Anmeldungen werden pro Konto und pro Client-Adresse gezählt: Nach 10 Fehlversuchen für ein Konto oder 30 von einer Adresse innerhalb von 15 Minuten erhalten weitere Versuche HTTP `429` mit einem `Retry-After`-Header, bis die 15 Minuten vorbei sind. Die Passkey-Anmeldung wird auf dieselbe Weise pro Adresse gedrosselt.
+
+Hinter einem Reverse Proxy scheint jede Anfrage vom Proxy zu kommen. Setze dort `BEEHIVE_TRUST_PROXY_HEADERS=true`, damit der Server die echte Client-Adresse zählt, die er dem letzten `X-Forwarded-For`-Eintrag entnimmt. Tu das nur, wenn genau ein Proxy davorsteht und der Server-Port anders nicht erreichbar ist; siehe [Reverse Proxy](./reverse-proxy.md).
+
 ### Instanzen nur auf Einladung
 
-Damit Fremde keine Konten erstellen können, setze `BEEHIVE_REGISTRATION=false`. Der Admin kommt aus der Umgebung, sodass eine frische Instanz immer einen hat. Alle anderen treten über Einladungslinks bei, die ein Mandanten-Admin unter Einstellungen → Mandanten ausstellt. Die Registrierung über einen Einladungslink muss die eingeladene E-Mail-Adresse verwenden. Der Anmeldebildschirm zeigt einen Hinweis, dass die Instanz nur auf Einladung zugänglich ist; bestehende Konten melden sich normal an.
+Damit Fremde keine Konten erstellen können, setze `BEEHIVE_REGISTRATION=false`. Der Admin kommt aus der Umgebung, sodass eine frische Instanz immer einen hat. Alle anderen treten über Einladungslinks bei, die ein Arbeitsbereichs-Admin unter Einstellungen → Arbeitsbereiche ausstellt. Eine Einladung ist 7 Tage gültig und funktioniert nur für die E-Mail-Adresse, für die sie ausgestellt wurde. Der Anmeldebildschirm zeigt einen Hinweis, dass die Instanz nur auf Einladung zugänglich ist; bestehende Konten melden sich normal an.
 
-Jedes neue Konto startet mit seinem eigenen persönlichen [Mandanten](../using-the-app/accounts-tenants.md). Nur das konfigurierte Admin-Konto trägt die Admin-Rolle der Instanz.
+Jedes neue Konto startet mit seinem eigenen persönlichen [Arbeitsbereich](../using-the-app/accounts-tenants.md). Nur das konfigurierte Admin-Konto trägt die Admin-Rolle der Instanz.
 
 ### Optionale E-Mail-Verifizierung
 
@@ -89,7 +101,7 @@ Standardmäßig kann sich ein neues Konto sofort anmelden. Damit Personen zuerst
 BEEHIVE_EMAIL_VERIFICATION=true
 ```
 
-Konfiguriere SMTP, damit Verifizierungs- und Einladungs-E-Mails versendet werden:
+Die Verifizierung braucht einen Mailserver: Mit `BEEHIVE_EMAIL_VERIFICATION=true` und ohne `BEEHIVE_SMTP_HOST` startet der Server nicht. Konfiguriere SMTP, damit Verifizierungs- und Einladungs-E-Mails versendet werden:
 
 ```bash
 BEEHIVE_SMTP_HOST=smtp.example.com
@@ -100,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Wenn `BEEHIVE_SMTP_HOST` leer ist, schreibt Openbeehive Verifizierungs- und Einladungslinks in das Server-Log, statt sie per E-Mail zu versenden. Einladungslinks werden außerdem dem Admin, der sie erstellt hat, in der App angezeigt.
+Einladungs- und Verifizierungslinks werden nie in das Server-Log geschrieben. Ohne `BEEHIVE_SMTP_HOST` wird keine Einladungs-E-Mail versendet; der Admin, der eine Einladung erstellt hat, kopiert ihren Link unter Einstellungen → Arbeitsbereiche und gibt ihn weiter.
 :::
 
 ## Modus 3: Passkeys (WebAuthn)
@@ -135,9 +147,11 @@ BEEHIVE_OIDC_REDIRECT_URL=https://beehive.example.com/auth/callback
 
 `BEEHIVE_OIDC_REDIRECT_URL` (Standard `<BEEHIVE_PUBLIC_BASE_URL>/auth/callback`) ist die Adresse, an die der Provider Nutzer zurückschickt. Sie muss exakt mit dem übereinstimmen, was du beim Provider registrierst. Jeder aufgeführte Provider braucht einen Issuer und eine Client-ID, sonst startet der Server nicht.
 
-:::note Konten werden automatisch verknüpft
-Wenn sich jemand über einen Provider anmeldet, gleicht Openbeehive zuerst die Provider-Identität ab, dann die E-Mail-Adresse (wodurch ein bestehendes E-Mail-/Passwort-Konto verknüpft wird), und legt andernfalls ein neues Konto an. Instanz-Admin bleibt das in `BEEHIVE_ADMIN_EMAIL` genannte Konto, egal auf welchem Weg es sich anmeldet.
-:::
+### Wie Provider-Anmeldungen Konten zugeordnet werden \{#oidc-linking}
+
+Wenn sich jemand über einen Provider anmeldet, sucht Openbeehive nach einem Konto, das bereits mit dieser Provider-Identität verknüpft ist. Gibt es keines, sucht es nach einem Konto mit derselben E-Mail-Adresse und hängt die Provider-Anmeldung daran an, aber nur, wenn der Provider die Adresse als verifiziert meldet **und** die Adresse des bestehenden Kontos verifiziert ist. Andernfalls wird die Anmeldung abgelehnt, und die Person meldet sich weiter so an wie bisher. Gibt es kein solches Konto, wird ein neues angelegt, außer die Registrierung ist geschlossen (`BEEHIVE_REGISTRATION=false`): Instanzen nur auf Einladung legen über einen Provider keine Konten an.
+
+Instanz-Admin bleibt das in `BEEHIVE_ADMIN_EMAIL` genannte Konto, egal auf welchem Weg es sich anmeldet.
 
 ### Google
 
@@ -173,12 +187,21 @@ https://beehive.example.com/auth/callback
 
 Häufige Stolperfallen: Das Schema muss übereinstimmen (`https` in der Produktion), kein abschließender Schrägstrich, es sei denn, dein Wert hat einen, und verwende deine öffentliche Domain statt eines internen Hostnamens. Ein "redirect mismatch"-Fehler bedeutet, dass sich die beiden Werte irgendwo unterscheiden.
 
+## Anmeldung für eine bestehende Einzelnutzer-Instanz einschalten \{#single-user-to-login}
+
+Aufzeichnungen, die ohne Anmeldung entstanden sind, gehören zu einem festen lokalen Arbeitsbereich, den kein Konto sehen kann. Wenn der Server mit aktivierter E-Mail-/Passwort-Anmeldung startet und solche Aufzeichnungen findet, verschiebt er sie in den Arbeitsbereich des Instanz-Admins und protokolliert, wie viele Zeilen er verschoben hat. Melde dich als Admin an, um sie zu sehen. Das Verschieben geschieht einmal und lässt sich nicht rückgängig machen, indem du die Anmeldung wieder ausschaltest; erstelle vorher ein [Backup](./backups.md).
+
+Zwei Dinge solltest du wissen:
+
+- Änderungen, die ein Gerät vor der Umstellung noch nicht synchronisiert hatte, bleiben in den alten lokalen Daten dieses Geräts und werden nicht hochgeladen. Synchronisiere jedes Gerät, bevor du die Anmeldung einschaltest.
+- Nur mit OIDC oder Passkeys gibt es keinen Instanz-Admin. Die Aufzeichnungen bleiben dann, wo sie sind, und das Log fordert dazu auf, `BEEHIVE_PASSWORD_AUTH=true` mit `BEEHIVE_ADMIN_EMAIL` und `BEEHIVE_ADMIN_PASSWORD` zu setzen, um sie zu übernehmen.
+
 ## Dein Setup überprüfen
 
 Starte den Server neu und lade die App in einem Browser:
 
 1. Bei **keiner Anmeldung** öffnet sich direkt die Übersicht.
-2. Bei aktivierter Anmeldemethode bietet der Anmeldebildschirm jede aktivierte Methode an (und "Demo erkunden", wenn die Demo aktiv ist).
+2. Bei aktivierter Anmeldemethode bietet der Anmeldebildschirm jede aktivierte Methode an (und "Demo ausprobieren", wenn die Demo aktiv ist).
 3. Führe eine Anmeldung durch und bestätige, dass du die Übersicht erreichst und dass Aufzeichnungen synchronisieren.
 
 Wenn etwas nicht funktioniert, prüfe die Server-Logs und die [Fehlerbehebung](../knowledge-base/troubleshooting.md).

@@ -5,7 +5,9 @@ title: "Datenbanken"
 
 # Datenbanken
 
-Openbeehive speichert all seine serverseitigen Daten in einer relationalen Datenbank. Das Backend ist datenbankagnostisch: Es spricht mit einer austauschbaren Speicherschicht und liefert Treiber für **SQLite**, **PostgreSQL** und **MySQL** mit. Du wählst mit zwei Umgebungsvariablen, welche verwendet wird.
+Openbeehive speichert all seine serverseitigen Daten in einer relationalen Datenbank. Das Backend ist datenbankagnostisch: Es spricht mit einer austauschbaren Speicherschicht und liefert Treiber für **SQLite**, **PostgreSQL** und **MariaDB** mit. Du wählst mit zwei Umgebungsvariablen, welche verwendet wird.
+
+Alle drei werden bei jeder Änderung getestet: SQLite, PostgreSQL 18 und MariaDB 13.0.2. Der Treiber `mysql` meint MariaDB; Oracle MySQL 8 sollte funktionieren, ist aber nicht Teil der Tests.
 
 Diese Seite erklärt, wie du die richtige Datenbank für deine Situation auswählst und sie korrekt konfigurierst.
 
@@ -19,7 +21,7 @@ Jede Datenbank wird über dasselbe Variablenpaar konfiguriert:
 
 | Variable | Zweck |
 | --- | --- |
-| `BEEHIVE_DATABASE_DRIVER` | Welche Engine verwendet werden soll: `sqlite`, `postgres` oder `mysql`. |
+| `BEEHIVE_DATABASE_DRIVER` | Welche Engine verwendet werden soll: `sqlite`, `postgres` oder `mysql` (MariaDB). |
 | `BEEHIVE_DATABASE_DSN` | Die Verbindungszeichenfolge (Data Source Name) für diese Engine. |
 
 Das `selfhost`-Bereitstellungsprofil nutzt standardmäßig SQLite, und das `cloud`-Profil nutzt standardmäßig PostgreSQL. Du kannst beide überschreiben, indem du diese zwei Variablen explizit setzt. Siehe [Konfiguration](./configuration.md) für die vollständige Liste der Umgebungsvariablen.
@@ -31,7 +33,7 @@ Das `selfhost`-Bereitstellungsprofil nutzt standardmäßig SQLite, und das `clou
 | Einzelner Imker, ein Server, einfachstmögliches Setup | **SQLite** |
 | Einige Haushaltsmitglieder, die Bienenstände teilen | SQLite oder PostgreSQL |
 | Viele Nutzer, hohe gleichzeitige Synchronisation oder gehostete/Cloud-Bereitstellung | **PostgreSQL** |
-| Du betreibst bereits MySQL/MariaDB und möchtest eine Sache weniger zu betreiben haben | **MySQL** |
+| Du betreibst bereits MariaDB und möchtest eine Sache weniger zu betreiben haben | **MariaDB** |
 
 :::tip Kurz gesagt
 Im Zweifel nutze SQLite. Es braucht keinen separaten Dienst, lebt in einer einzigen Datei und ist vollkommen in der Lage, eine persönliche oder Familien-Imkerei zu betreiben. Wechsle zu PostgreSQL, wenn du echte Mehrbenutzer-Gleichzeitigkeit hast oder verwaltetes Cloud-Hosting möchtest.
@@ -43,21 +45,17 @@ SQLite ist die Wahl ohne Abhängigkeiten. Es gibt keinen Datenbankserver zu inst
 
 ```bash
 BEEHIVE_DATABASE_DRIVER=sqlite
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)
+BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)
 ```
 
-Der Teil `_pragma=journal_mode(WAL)` aktiviert **Write-Ahead Logging**. WAL lässt Leser und einen Schreiber gleichzeitig arbeiten, ohne sich gegenseitig zu blockieren, was das Verhalten merklich verbessert, wenn mehrere Geräte gleichzeitig synchronisieren. Wir empfehlen dringend, es eingeschaltet zu lassen.
+Das ist der Standard des `selfhost`-Profils. Der Teil `_pragma=journal_mode(WAL)` aktiviert **Write-Ahead Logging**. WAL lässt Leser und einen Schreiber gleichzeitig arbeiten, ohne sich gegenseitig zu blockieren, was das Verhalten merklich verbessert, wenn mehrere Geräte gleichzeitig synchronisieren. Wir empfehlen dringend, es eingeschaltet zu lassen.
 
-Ein paar nützliche Pragmas, die du hinzufügen kannst (trenne sie mit `&`):
-
-```bash
-BEEHIVE_DATABASE_DSN=file:openbeehive.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)
-```
+Die beiden Pragmas (mit `&` getrennt):
 
 - `journal_mode(WAL)` — gleichzeitige Lesevorgänge neben einem Schreiber.
 - `busy_timeout(5000)` — warte bis zu 5 Sekunden auf eine Sperre, statt sofort fehlzuschlagen.
 
-Du kannst einen relativen Pfad (aufgelöst relativ zum Arbeitsverzeichnis des Servers) oder einen absoluten Pfad wie `file:/var/lib/openbeehive/openbeehive.db?_pragma=journal_mode(WAL)` verwenden.
+Du kannst einen relativen Pfad (aufgelöst relativ zum Arbeitsverzeichnis des Servers) oder einen absoluten Pfad wie `file:/var/lib/openbeehive/openbeehive.db?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)` verwenden.
 
 :::caution WAL erzeugt zusätzliche Dateien
 Im WAL-Modus hält SQLite Begleitdateien neben der Hauptdatenbank (`openbeehive.db-wal` und `openbeehive.db-shm`). Wenn du per Dateikopie sicherst, stoppe zuerst den Server oder verwende SQLites eigenes Backup-Werkzeug, damit du einen konsistenten Snapshot erfasst. Siehe [Backups](./backups.md).
@@ -99,38 +97,37 @@ CREATE USER openbeehive WITH PASSWORD 'secret';
 GRANT ALL PRIVILEGES ON DATABASE openbeehive TO openbeehive;
 ```
 
-## MySQL
+## MariaDB
 
-MySQL (und MariaDB) werden für diejenigen unterstützt, die bereits eines betreiben. Das DSN-Format unterscheidet sich von PostgreSQL: Es verwendet die Syntax des Go-MySQL-Treibers.
-
-```bash
-BEEHIVE_DATABASE_DRIVER=mysql
-BEEHIVE_DATABASE_DSN=user:pass@tcp(host:3306)/openbeehive?parseTime=true
-```
-
-Der Parameter `parseTime=true` ist **erforderlich**. Er weist den Treiber an, `DATE`- und `DATETIME`-Spalten als ordentliche Zeitwerte statt als rohe Bytes zurückzugeben, worauf sich Openbeehive für Zeitstempel und die Behandlung der Hybrid Logical Clock stützt. Lässt du ihn weg, kommt es zu Fehlern.
-
-Ein vollständigeres Beispiel mit UTF-8 und einem sinnvollen Standardstandort:
+MariaDB wird für diejenigen unterstützt, die bereits eine betreiben. Wähle es mit dem Treiber `mysql` aus. Das DSN-Format unterscheidet sich von PostgreSQL: Es verwendet die Syntax des Go-MySQL-Treibers.
 
 ```bash
 BEEHIVE_DATABASE_DRIVER=mysql
-BEEHIVE_DATABASE_DSN=openbeehive:secret@tcp(db.example.com:3306)/openbeehive?parseTime=true&charset=utf8mb4&loc=UTC
+BEEHIVE_DATABASE_DSN=openbeehive:secret@tcp(db.example.com:3306)/openbeehive
 ```
 
-Erstelle zuerst die Datenbank und den Benutzer:
+Der Server schaltet `parseTime` von sich aus ein, es muss also nicht in der DSN stehen.
+
+Gib Openbeehive eine eigene Datenbank und einen Benutzer, der ihre Tabellen ändern darf:
 
 ```sql
-CREATE DATABASE openbeehive CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE openbeehive CHARACTER SET utf8mb4;
 CREATE USER 'openbeehive'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON openbeehive.* TO 'openbeehive'@'%';
 FLUSH PRIVILEGES;
 ```
+
+- **Der Benutzer braucht `ALTER`** (in `ALL PRIVILEGES` enthalten). Migrationen ändern Tabellen, und beim ersten Start stellt der Server seine Tabellen auf eine binäre `utf8mb4`-Kollation um, damit Text Byte für Byte verglichen wird, so wie bei SQLite und PostgreSQL.
+- **Verwende eine eigene Datenbank.** Teile sie nicht mit einer anderen Anwendung.
+- **Lass `max_allowed_packet` bei 16 MiB oder mehr** (der MariaDB-Standard). Der Server nimmt Anfragen bis 16 MiB an.
 
 ## Migrationen laufen automatisch
 
 Du führst Migrationen nicht von Hand aus. Bei jedem Start prüft der Server das Schema und wendet ausstehende Migrationen an, bevor er beginnt, Anfragen zu bedienen. Eine frische, leere Datenbank wird beim ersten Start automatisch eingerichtet.
 
 Das SQL ist portabel geschrieben, sodass dasselbe Schema über alle drei Engines hinweg funktioniert; es gibt kein engine-spezifisches Setup über das oben gezeigte Erstellen von Datenbank und Benutzer hinaus.
+
+Bei MariaDB lässt sich eine Migration, die auf halbem Weg fehlschlägt, nicht zurückrollen, weil MariaDB jede Schemaänderung sofort festschreibt. Stelle das Backup wieder her, bevor du es erneut versuchst.
 
 :::tip Vor dem Upgrade immer sichern
 Da eine neue Version Migrationen enthalten kann, die das Schema ändern, erstelle ein Backup, bevor du aktualisierst. Siehe [Aktualisieren](./upgrading.md) und [Backups](./backups.md).
