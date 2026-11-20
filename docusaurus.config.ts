@@ -24,6 +24,12 @@ const config: Config = {
   onBrokenAnchors: 'throw',
 
   markdown: {
+    // The frozen version snapshots use the old `:::caution Title` admonition
+    // syntax; keep rendering it (future.v4 turns this off by default). New
+    // pages use `:::caution[Title]`.
+    mdx1Compat: {
+      admonitions: true,
+    },
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },
