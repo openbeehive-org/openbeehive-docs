@@ -32,16 +32,20 @@ Sul server sono registrati dieci servizi (`server/cmd/server/main.go`):
 | `ApiaryService` | `CreateApiary`, `GetApiary`, `ListApiaries`, `UpdateApiary`, `DeleteApiary` |
 | `HiveService` | `CreateHive`, `GetHive`, `ListHives`, `UpdateHive`, `DeleteHive`, `RelocateHive` |
 | `QueenService` | `CreateQueen`, `ListQueens`, `UpdateQueen`, `DeleteQueen` |
-| `InspectionService` | `CreateInspection`, `ListInspections`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
-| `TaskService` | `CreateTask`, `ListTasks`, `SetTaskDone`, `DeleteTask` |
-| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `DeleteTreatment` |
-| `HarvestService` | `CreateHarvest`, `ListHarvests`, `DeleteHarvest` |
+| `InspectionService` | `CreateInspection`, `ListInspections`, `UpdateInspection`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
+| `TaskService` | `CreateTask`, `ListTasks`, `UpdateTask`, `SetTaskDone`, `DeleteTask` |
+| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `UpdateTreatment`, `DeleteTreatment` |
+| `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
 | `SyncService` | `Pull`, `Push`, `Subscribe` (stream lato server) |
 
-Ogni RPC è limitato al tenant attivo del chiamante. Gli id di un altro tenant
+Ogni RPC è limitato allo spazio attivo del chiamante (chiamato `tenant` o
+`organization` nei percorsi e nei nomi dei campi). Gli id di un altro spazio
 si comportano come id sconosciuti (`not_found`).
+
+Un messaggio RPC può essere al massimo di 16 MiB, e una richiesta diversa
+dallo stream `Subscribe` può durare al massimo 2 minuti.
 
 ### Le scritture passano dalla sincronizzazione \{#writes-go-through-sync}
 
@@ -80,8 +84,40 @@ la stessa sia che un record sia stato inserito nell'app sia tramite l'API:
   `amountKg` deve essere maggiore di `0`.
 - Un'attività con `hiveId` o `apiaryId` si sincronizza sotto quell'apiario ed
   è condivisa con tutti coloro che lo vedono; un'attività senza nessuno dei
-  due vive nello scope personale del chiamante e raggiunge solo i dispositivi
-  di quell'utente.
+  due vive nello scope personale del chiamante: raggiunge solo i dispositivi
+  di quell'utente e `ListTasks` la restituisce solo al suo proprietario.
+- `CreateInspection` con `source: INSPECTION_SOURCE_SENSOR` memorizza una
+  lettura di un sensore invece di una visita; vedi
+  [Tracker automatici](./automated-trackers.md).
+
+Le correzioni e le cancellazioni mantengono coerente la storia:
+
+- `UpdateInspection`, `UpdateTreatment` e `UpdateHarvest` correggono un record
+  salvato. Il loro evento della cronologia segue la modifica, e quando `date`
+  cambia l'apiario e la regina vengono risolti di nuovo per la nuova data.
+  Trattamenti e raccolti ricevono `amendedAt` impostato all'ora della modifica.
+- `DeleteInspection`, `DeleteTreatment`, `DeleteHarvest` e `DeleteQueen`
+  rimuovono anche gli eventi della cronologia del record, quindi un raccolto
+  eliminato non conta più nelle cifre sul miele.
+- `DeleteHive` elimina anche le attività aperte dell'arnia. `DeleteApiary`
+  fallisce con `failed_precondition` finché l'apiario ha ancora arnie:
+  spostale con `RelocateHive` oppure eliminale prima.
+
+### Gli aggiornamenti cambiano solo ciò che invii \{#partial-updates}
+
+Ogni RPC `Update*` è un aggiornamento parziale con le stesse due modalità:
+
+- **Senza `updateMask`:** ogni campo che lasci al suo valore zero (`""`, `0`,
+  `false`, non impostato) mantiene il valore memorizzato. Invia solo ciò che
+  cambia.
+- **Con `updateMask`:** vengono scritti esattamente i campi elencati, anche al
+  loro valore zero. È così che svuoti una nota, rimuovi una scadenza o riapri
+  un'attività. In JSON la maschera è una stringa di nomi di campo separati da
+  virgola: `"updateMask": "note,dueAt"`.
+
+Una richiesta che non cambierebbe nulla viene rifiutata con `invalid_argument`.
+I campi che identificano il record (`id`, `hiveId`, lo spazio) non possono
+essere modificati; un'arnia cambia apiario solo tramite `RelocateHive`.
 
 Le letture (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`)
 interrogano direttamente le tabelle del server. Mostrano subito le scritture
@@ -89,9 +125,6 @@ dell'API e quelle dei dispositivi non appena il dispositivo le ha inviate.
 
 ### Non ancora nell'API
 
-- **Nessun RPC di modifica dei raccolti.** `HarvestService` ha solo
-  `CreateHarvest`, `ListHarvests` e `DeleteHarvest`. Per correggere un
-  raccolto, eliminalo e crealo di nuovo, oppure modificalo nell'app.
 - **Nessun RPC per le collocazioni.** Le collocazioni vengono scritte da
   `CreateHive` e `RelocateHive` e compaiono solo nel feed di sincronizzazione.
 - `EventService` è in sola lettura. Gli eventi vengono scritti dai flussi qui
@@ -109,16 +142,30 @@ Accanto ai servizi RPC ci sono alcuni endpoint HTTP semplici:
 | --- | --- |
 | `GET /healthz` | Restituisce `ok` |
 | `GET /files/<key>` | File archiviati, solo con il backend blob su filesystem (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /auth/instance` | Ciò che l'istanza offre (metodi di login, demo, registrazione, impostazioni della mappa); sempre presente, non servono credenziali |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | Account con e-mail/password (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` impostata) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkey (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `/auth/logout`, `/auth/me`, `/auth/instance`, `/auth/switch`, `/auth/accept-invite` | Helper per sessione e tenant, presenti quando è abilitato un qualsiasi metodo di login |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Helper per sessione e spazio, presenti quando è abilitato un qualsiasi metodo di login |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestione delle chiavi API (elenco, creazione, rimozione), presente quando è abilitato un qualsiasi metodo di login; solo con sessione, una chiave non può chiamarli |
-| `/tenants/create`, `/tenants/invite`, `/tenants/invites`, `/tenants/invite/revoke`, `/tenants/delete` | Amministrazione dei tenant, presente quando è abilitato un qualsiasi metodo di login |
+| `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Amministrazione degli spazi, presente quando è abilitato un qualsiasi metodo di login |
 | `POST /auth/demo-login` | Solo con `BEEHIVE_DEMO=true` |
 
 Questi endpoint sono usati dalle schermate di login e impostazioni dell'app. Non
-fanno parte del contratto proto.
+fanno parte del contratto proto. Seguono tutti le stesse regole:
+
+- Ogni endpoint accetta solo il metodo indicato; qualsiasi altro risponde
+  `405` con un'intestazione `Allow`.
+- Gli endpoint `POST` che accettano un corpo richiedono
+  `Content-Type: application/json` (altrimenti `415`), e il corpo può essere
+  al massimo di 64 KiB.
+- Le richieste `POST` provenienti da una pagina del browser su un altro sito
+  vengono rifiutate con `403` (`cross_site_request`). Gli script, che non
+  inviano alcuna intestazione `Origin`, non sono interessati.
+- `/tenants/delete` richiede `{"org_id": "..."}`; non esiste un valore
+  predefinito.
+- Gli errori sono JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
+  I codici sono elencati nella [pagina REST](./rest.md#http-error-codes).
 
 ## Autenticazione \{#authentication}
 
@@ -138,9 +185,9 @@ abbia o meno un metodo di login:
 
 Una chiave API è la credenziale consigliata per script, sensori e
 integrazioni. Le chiavi si gestiscono nell'app in **Impostazioni → Chiavi API**
-(vedi [Account e tenant](../using-the-app/accounts-tenants.md#api-keys)):
+(vedi [Account e spazi](../using-the-app/accounts-tenants.md#api-keys)):
 
-1. Accedi, passa al tenant in cui lo script deve scrivere e apri
+1. Accedi, passa allo spazio in cui lo script deve scrivere e apri
    **Impostazioni → Chiavi API**.
 2. Digita un nome (per esempio `hive scale`), scegli i permessi (**Lettura e
    scrittura** o **Sola lettura**) e una scadenza (**Non scade**, **30 giorni**,
@@ -156,8 +203,8 @@ Authorization: Bearer obhk_...
 Cosa una chiave può e non può fare:
 
 - Agisce come il suo proprietario, con il ruolo del proprietario, all'interno
-  del tenant che era attivo quando la chiave è stata creata. Non può cambiare
-  tenant; crea una chiave per ogni tenant se uno script ne ha bisogno di più
+  dello spazio che era attivo quando la chiave è stata creata. Non può cambiare
+  spazio; crea una chiave per ogni spazio se uno script ne ha bisogno di più
   di uno.
 - Funziona solo sugli RPC. Gli endpoint `/auth/*` e `/tenants/*`, compresa la
   gestione delle chiavi stessa, richiedono una sessione vera: una chiave non
@@ -172,7 +219,7 @@ Cosa una chiave può e non può fare:
   `unauthenticated` (HTTP 401) con il messaggio `API key expired`. Le chiavi
   scadute restano nell'elenco finché non le rimuovi.
 - Smette di funzionare nel momento in cui viene rimossa nelle Impostazioni, e
-  muore con l'appartenenza: quando il proprietario lascia il tenant o ne viene
+  muore con l'appartenenza: quando il proprietario lascia lo spazio o ne viene
   rimosso, la chiave viene rifiutata.
 - Ogni utilizzo aggiorna `last_used_at`, mostrato come **Ultimo utilizzo**
   nelle Impostazioni.
@@ -182,14 +229,14 @@ Gli stessi endpoint usati dall'app sono aperti a uno script autenticato con
 sessione:
 
 - `GET /auth/api-keys` restituisce `{"keys": [{id, name, prefix, scope,
-  created_at, expires_at, last_used_at, mine}]}`, solo le tue chiavi nel
-  tenant attivo. `scope` è `"write"` o `"read"`; `expires_at` e
+  created_at, expires_at, last_used_at, mine}]}`, solo le tue chiavi nello
+  spazio attivo. `scope` è `"write"` o `"read"`; `expires_at` e
   `last_used_at` sono timestamp RFC 3339 oppure `null`; `mine` qui è sempre
   `true`.
-- `GET /auth/api-keys?tenant=1` restituisce ogni chiave del tenant attivo,
+- `GET /auth/api-keys?tenant=1` restituisce ogni chiave dello spazio attivo,
   con ogni riga che porta in più `user_id`, `user_email` e un flag `mine`
-  che è `true` sulle tue chiavi. Possono chiamarlo solo il proprietario del
-  tenant (il ruolo che l'app chiama **Admin**) e l'admin dell'istanza; tutti
+  che è `true` sulle tue chiavi. Possono chiamarlo solo il proprietario dello
+  spazio (il ruolo che l'app chiama **Admin**) e l'admin dell'istanza; tutti
   gli altri ricevono HTTP 403.
 - `POST /auth/api-keys` con `{"name": "...", "scope": "write",
   "expires_in_days": 0}` restituisce `{id, name, prefix, scope, created_at,
@@ -198,9 +245,9 @@ sessione:
   superiore a `3650`, risponde HTTP 400.
 - `POST /auth/api-keys/delete` con `{"id": "..."}` risponde `204`. Un membro
   può rimuovere solo le proprie chiavi; l'id di qualcun altro risponde 404.
-  Il proprietario del tenant e l'admin dell'istanza possono rimuovere
-  qualsiasi chiave del tenant attivo. L'override non attraversa mai i
-  tenant: il proprietario di un altro tenant riceve 404 per le chiavi che
+  Il proprietario dello spazio e l'admin dell'istanza possono rimuovere
+  qualsiasi chiave dello spazio attivo. L'override non attraversa mai gli
+  spazi: il proprietario di un altro spazio riceve 404 per le chiavi che
   non sono sue.
 
 ### Accesso con sessione
@@ -218,11 +265,19 @@ curl -s -X POST https://bees.example.com/auth/signin \
 
 La risposta JSON contiene `token`; lo stesso valore viene impostato anche come
 cookie `obh_session`. Il token scade dopo `BEEHIVE_SESSION_TTL`.
+Gli accessi falliti vengono limitati: dopo 10 tentativi falliti per un account
+o 30 da un indirizzo nell'arco di 15 minuti l'endpoint risponde `429`
+(`rate_limited`) con un'intestazione `Retry-After`.
 
-Il token porta con sé il tenant attivo dell'account. `GET /auth/me` elenca i
-tenant a cui appartieni (`tenants`) e quello attivo (`active_org`);
+Il token porta con sé lo spazio attivo dell'account. `GET /auth/me` elenca gli
+spazi a cui appartieni (`tenants`) e quello attivo (`active_org`);
 `POST /auth/switch` con `{"org_id": "..."}` restituisce un nuovo `token` per
-un altro tenant.
+un altro spazio.
+
+`POST /auth/logout-all` termina ogni altra sessione dell'account e restituisce
+un nuovo `token` al chiamante. Inoltre, a ogni richiesta il server verifica
+che l'account sia ancora membro dello spazio; una sessione revocata o
+un'appartenenza persa viene rifiutata entro circa 10 secondi.
 
 Con `BEEHIVE_DEMO=true` le sessioni demo sono in sola lettura: l'account demo
 può chiamare solo gli RPC il cui nome inizia con `Get`, `List`, `Pull` o

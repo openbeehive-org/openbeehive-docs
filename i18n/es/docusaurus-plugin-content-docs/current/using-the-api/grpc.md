@@ -26,6 +26,7 @@ plugins que necesites.
 ```go
 import (
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/proto"
     obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
     "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
@@ -45,7 +46,12 @@ Una báscula de colmena, por ejemplo, publica a través de `InspectionService`:
 
 ```go
 insp := openbeehivev1connect.NewInspectionServiceClient(http.DefaultClient, "https://bees.example.com")
-req := connect.NewRequest(&obv1.CreateInspectionRequest{HiveId: hiveID, WeightKg: 42.5, TempHive: 34.2})
+req := connect.NewRequest(&obv1.CreateInspectionRequest{
+    HiveId:   hiveID,
+    Source:   obv1.InspectionSource_INSPECTION_SOURCE_SENSOR,
+    WeightKg: proto.Float64(42.5), // optional fields are pointers: unset means "not recorded"
+    TempHive: proto.Float64(34.2),
+})
 req.Header().Set("Authorization", "Bearer "+token)
 res, err := insp.CreateInspection(ctx, req)
 ```
@@ -103,12 +109,17 @@ message SubscribeRequest { string cursor = 1; }
 message SubscribeEvent { string server_cursor = 1; }
 ```
 
-El servidor sondea su contador global de cambios cada dos segundos y envía un
-`SubscribeEvent` cada vez que el contador ha avanzado más allá del cursor que
-enviaste (y del último valor que envió). El evento no lleva datos; llama a
-`Pull` con tu cursor almacenado cuando recibas uno. Las filas fuera de tus
-ámbitos también hacen avanzar el contador, así que un `Pull` tras un evento
-puede volver vacío.
+El servidor comprueba cada dos segundos cuál es el cambio más reciente que el llamante
+puede descargar (el espacio activo, más las filas personales del llamante) y envía un
+`SubscribeEvent` cada vez que este ha avanzado más allá del cursor que enviaste (y
+del último valor que envió). El evento no lleva datos; llama a `Pull` con tu
+cursor almacenado cuando recibas uno. La actividad en otros espacios no
+despierta el stream.
+
+Un usuario puede mantener como máximo 4 streams `Subscribe` abiertos; un quinto se rechaza con
+`resource_exhausted`. El stream queda exento del límite de 2 minutos por solicitud del
+servidor, pero un proxy inverso intermedio puede cerrar las conexiones inactivas, así que
+prepárate para reconectar.
 
 La aplicación no usa `Subscribe`. Hace push y pull cada 15 segundos, tras cada
 escritura local y en el evento `online` del navegador.

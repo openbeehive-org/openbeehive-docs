@@ -27,6 +27,7 @@ aus, die du brauchst.
 ```go
 import (
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/proto"
     obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
     "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
@@ -46,7 +47,12 @@ Beispiel sendet über den `InspectionService`:
 
 ```go
 insp := openbeehivev1connect.NewInspectionServiceClient(http.DefaultClient, "https://bees.example.com")
-req := connect.NewRequest(&obv1.CreateInspectionRequest{HiveId: hiveID, WeightKg: 42.5, TempHive: 34.2})
+req := connect.NewRequest(&obv1.CreateInspectionRequest{
+    HiveId:   hiveID,
+    Source:   obv1.InspectionSource_INSPECTION_SOURCE_SENSOR,
+    WeightKg: proto.Float64(42.5), // optional fields are pointers: unset means "not recorded"
+    TempHive: proto.Float64(34.2),
+})
 req.Header().Set("Authorization", "Bearer "+token)
 res, err := insp.CreateInspection(ctx, req)
 ```
@@ -105,12 +111,19 @@ message SubscribeRequest { string cursor = 1; }
 message SubscribeEvent { string server_cursor = 1; }
 ```
 
-Der Server fragt alle zwei Sekunden seinen globalen Änderungszähler ab und
-sendet ein `SubscribeEvent`, sobald der Zähler über den von dir gesendeten
-Cursor hinausgegangen ist (und über den zuletzt gesendeten Wert). Das Ereignis
-trägt keine Daten; rufe `Pull` mit deinem gespeicherten Cursor auf, wenn du
-eines empfängst. Auch Zeilen außerhalb deiner Scopes erhöhen den Zähler, ein
-`Pull` nach einem Ereignis kann also leer zurückkommen.
+Der Server prüft alle zwei Sekunden, welche die neueste Änderung ist, die der
+Aufrufer pullen kann (der aktive Arbeitsbereich plus die persönlichen Zeilen
+des Aufrufers), und sendet ein `SubscribeEvent`, sobald sie über den von dir
+gesendeten Cursor hinausgegangen ist (und über den zuletzt gesendeten Wert).
+Das Ereignis trägt keine Daten; rufe `Pull` mit deinem gespeicherten Cursor
+auf, wenn du eines empfängst. Aktivität in anderen Arbeitsbereichen weckt den
+Stream nicht.
+
+Ein Nutzer darf höchstens 4 offene `Subscribe`-Streams halten; ein fünfter
+wird mit `resource_exhausted` abgelehnt. Der Stream ist vom 2-Minuten-Timeout
+des Servers für Anfragen ausgenommen, aber ein Reverse Proxy dazwischen kann
+ungenutzte Verbindungen schließen, sei also darauf vorbereitet, dich neu zu
+verbinden.
 
 Die App nutzt `Subscribe` nicht; sie pusht und pullt alle 15 Sekunden, nach
 jedem lokalen Schreibvorgang und beim `online`-Ereignis des Browsers.

@@ -7,19 +7,20 @@ title: "Rastreadores automáticos"
 
 Una báscula de colmena, una sonda de temperatura del nido de cría o un sensor
 de humedad pueden publicar sus lecturas en Openbeehive a través de
-`InspectionService.CreateInspection`. Cada lectura se convierte en una fila de
-inspección de la colmena, se sincroniza con todos los dispositivos como una
-visita introducida a mano y alimenta los gráficos de **Evolución** de la
-colmena. Esta página describe qué hace realmente el servidor con esas lecturas
-y cómo publicarlas desde un script.
+`InspectionService.CreateInspection` con `source` establecido en
+`INSPECTION_SOURCE_SENSOR`. Cada lectura se almacena en la colmena, se sincroniza
+con todos los dispositivos y alimenta los gráficos de **Evolución** de la
+colmena, sin confundirse con una visita hecha por una persona. Esta página describe
+qué hace el servidor con esas lecturas y cómo publicarlas desde un script.
 
 ## Qué es una lectura
 
-No hay una tabla de sensores aparte. Una lectura es una inspección con solo los
-campos de medición rellenados:
+No hay una tabla de sensores aparte. Una lectura es una inspección marcada como
+lectura de sensor, con solo los campos de medición rellenados:
 
 | Campo JSON | Significado | Unidad |
 | --- | --- | --- |
+| `source` | Siempre `"INSPECTION_SOURCE_SENSOR"` para un dispositivo | |
 | `weightKg` | Peso de la colmena | kg |
 | `tempHive` | Temperatura dentro de la colmena | °C |
 | `tempOutside` | Temperatura exterior | °C |
@@ -27,11 +28,13 @@ campos de medición rellenados:
 | `humidityOutside` | Humedad relativa exterior | % |
 | `note` | Texto libre, por ejemplo el nombre del dispositivo | |
 
-Envía solo lo que mide tu dispositivo. El servidor almacena los campos que
-omites como `0`; los gráficos de Evolución solo dibujan valores por encima de
-cero, pero el resumen de la visita en la aplicación muestra una temperatura de
-`0` como un `0 °C` medido, así que no envíes un campo de temperatura que no
-hayas medido.
+Envía solo lo que mide tu dispositivo. Un campo que omites se almacena como
+"no registrado"; un campo que envías como `0` se almacena como un cero medido, y
+las temperaturas bajo cero son válidas y se grafican. Así que no envíes `0` para un
+valor que no hayas medido.
+
+Si omites `source`, la entrada cuenta como una visita manual
+(`INSPECTION_SOURCE_MANUAL`), con los efectos descritos más abajo.
 
 En el servidor la lectura sigue el mismo camino que una visita registrada en la
 aplicación: la fila se marca con el colmenar y la reina reinante en su `date`,
@@ -41,22 +44,27 @@ sincronización con tu cuenta como autor. Consulta la
 
 ## Qué hace la aplicación con ella
 
-- La lectura aparece en el registro de visitas y en los gráficos de la colmena
+- Una lectura de sensor aparece en los gráficos de **Evolución** de la colmena
   tras la siguiente sincronización del dispositivo (la aplicación sincroniza
   cada 15 segundos mientras está abierta, y tras cada escritura local).
-- Cuenta como la última inspección de la colmena. El panel **Inspecciones
-  pendientes** del resumen y `StatsService.GetDashboard` calculan los "días
-  desde la última visita" a partir de la fila de inspección más reciente, así
-  que una colmena que informa a diario nunca aparece como pendiente, aunque
-  nadie la haya abierto en semanas.
-- Cada lectura es una visita en el registro. Una lectura cada minuto produce
-  1440 visitas al día y deja fuera de la vista las entradas escritas a mano.
+- No cuenta como inspección. La "última inspección", la lista de colmenas, el
+  panel **Inspecciones pendientes** del resumen y `StatsService.GetDashboard`
+  ignoran las lecturas de sensor, así que una colmena que informa a diario sigue
+  apareciendo como pendiente cuando nadie la ha abierto en semanas.
+- Queda oculta en las listas de visitas. La página de la colmena lista solo las visitas
+  hechas por una persona; el registro completo de visitas muestra las lecturas cuando
+  se marca **Mostrar lecturas de sensor**.
+- `ListInspections` devuelve ambos tipos salvo que filtres con `source`.
 
-Publica como mucho unas pocas lecturas al día, o agrega en el dispositivo y
-publica un valor diario. Pon el nombre del dispositivo en `note` para que las
-lecturas de máquina se distingan fácilmente de tus propias visitas. Las
-cadencias de 15 minutos o más finas pertenecen a tu propio almacén de series
-temporales, no al registro de visitas.
+Una entrada publicada sin `source` se trata como una visita manual: aparece en
+el registro de visitas y reinicia la "última inspección". Las lecturas publicadas así por
+scripts escritos para versiones anteriores siguen siendo visitas manuales; establece `source` en
+el script de ahora en adelante.
+
+Cada lectura sigue siendo una fila que se sincroniza con todos los dispositivos. Publica
+como mucho unas pocas lecturas al día, o agrega en el dispositivo y publica un valor diario. Pon
+el nombre del dispositivo en `note`. Las cadencias de 15 minutos o más finas pertenecen a tu
+propio almacén de series temporales.
 
 ## Autenticarse desde un script
 
@@ -128,7 +136,7 @@ HIVE="c41a..."
 # The API key from Settings -> API keys, stored once on the device.
 TOKEN=$(cat /etc/openbeehive-key)
 
-body=$(printf '{"hiveId":"%s","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
+body=$(printf '{"hiveId":"%s","source":"INSPECTION_SOURCE_SENSOR","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
   "$HIVE" "$(read_sensor weight)" "$(read_sensor brood_temp)" "$(read_sensor brood_rh)")
 
 curl -fsS -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
@@ -149,7 +157,7 @@ OB = "https://bees.example.com"
 TOKEN = open("/etc/openbeehive-key").read().strip()  # obhk_...
 
 def create_inspection(hive_id, **fields):
-    body = json.dumps({"hiveId": hive_id, **fields}).encode()
+    body = json.dumps({"hiveId": hive_id, "source": "INSPECTION_SOURCE_SENSOR", **fields}).encode()
     req = urllib.request.Request(
         f"{OB}/openbeehive.v1.InspectionService/CreateInspection", data=body,
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"})
@@ -171,5 +179,8 @@ RFC 3339. El servidor resuelve el colmenar y la reina para esa fecha.
 - **Una colmena por sensor.** No publiques la misma lectura en varias colmenas.
 - **Cuida las unidades.** Temperatura en °C, humedad de 0 a 100, peso en kg.
 - **Limpia los datos de prueba.** `ListInspections` con tu `hiveId` y
-  `DeleteInspection` eliminan lecturas; la eliminación también se sincroniza
+  `"source": "INSPECTION_SOURCE_SENSOR"` encuentra las lecturas y
+  `DeleteInspection` las elimina; la eliminación también se sincroniza
   con los dispositivos.
+- **Corrige en lugar de volver a publicar.** `UpdateInspection` cambia una lectura
+  almacenada; consulta [Actualizar un registro](./rest.md#update-a-record).

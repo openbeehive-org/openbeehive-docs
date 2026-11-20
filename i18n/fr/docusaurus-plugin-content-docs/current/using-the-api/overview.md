@@ -32,16 +32,20 @@ Dix services sont enregistrés sur le serveur (`server/cmd/server/main.go`) :
 | `ApiaryService` | `CreateApiary`, `GetApiary`, `ListApiaries`, `UpdateApiary`, `DeleteApiary` |
 | `HiveService` | `CreateHive`, `GetHive`, `ListHives`, `UpdateHive`, `DeleteHive`, `RelocateHive` |
 | `QueenService` | `CreateQueen`, `ListQueens`, `UpdateQueen`, `DeleteQueen` |
-| `InspectionService` | `CreateInspection`, `ListInspections`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
-| `TaskService` | `CreateTask`, `ListTasks`, `SetTaskDone`, `DeleteTask` |
-| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `DeleteTreatment` |
-| `HarvestService` | `CreateHarvest`, `ListHarvests`, `DeleteHarvest` |
+| `InspectionService` | `CreateInspection`, `ListInspections`, `UpdateInspection`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
+| `TaskService` | `CreateTask`, `ListTasks`, `UpdateTask`, `SetTaskDone`, `DeleteTask` |
+| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `UpdateTreatment`, `DeleteTreatment` |
+| `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
 | `SyncService` | `Pull`, `Push`, `Subscribe` (flux serveur) |
 
-Chaque RPC est limité à l'espace (tenant) actif de l'appelant. Les ids d'un
-autre espace se comportent comme des ids inconnus (`not_found`).
+Chaque RPC est limité à l'espace actif de l'appelant (appelé `tenant` ou
+`organization` dans les chemins et les noms de champs). Les ids d'un autre
+espace se comportent comme des ids inconnus (`not_found`).
+
+Un message RPC peut peser au plus 16 MiB, et une requête autre que le flux
+`Subscribe` peut durer au plus 2 minutes.
 
 ### Les écritures passent par la synchronisation \{#writes-go-through-sync}
 
@@ -83,8 +87,42 @@ via l'API :
   chiffres de miel. `amountKg` doit être supérieur à `0`.
 - Une tâche avec un `hiveId` ou un `apiaryId` se synchronise sous ce rucher et
   est partagée avec toutes les personnes qui le voient ; une tâche sans l'un ni
-  l'autre vit dans le scope personnel de l'appelant et n'atteint que les
-  appareils de cet utilisateur.
+  l'autre vit dans le scope personnel de l'appelant : elle n'atteint que les
+  appareils de cet utilisateur et `ListTasks` ne la renvoie qu'à son
+  propriétaire.
+- `CreateInspection` avec `source: INSPECTION_SOURCE_SENSOR` stocke un relevé
+  de capteur au lieu d'une visite ; voir
+  [Trackers automatisés](./automated-trackers.md).
+
+Les corrections et les suppressions gardent l'historique cohérent :
+
+- `UpdateInspection`, `UpdateTreatment` et `UpdateHarvest` corrigent un
+  enregistrement sauvegardé. Leur événement de chronologie suit la
+  modification, et lorsque `date` change, le rucher et la reine sont résolus
+  de nouveau pour la nouvelle date. Les traitements et les récoltes reçoivent
+  `amendedAt`, réglé sur l'heure de la modification.
+- `DeleteInspection`, `DeleteTreatment`, `DeleteHarvest` et `DeleteQueen`
+  retirent aussi les événements de chronologie de l'enregistrement, de sorte
+  qu'une récolte supprimée ne compte plus dans les chiffres de miel.
+- `DeleteHive` supprime aussi les tâches ouvertes de la ruche. `DeleteApiary`
+  échoue avec `failed_precondition` tant que le rucher contient des ruches :
+  déplacez-les avec `RelocateHive` ou supprimez-les d'abord.
+
+### Les mises à jour ne changent que ce que vous envoyez \{#partial-updates}
+
+Chaque RPC `Update*` est une mise à jour partielle avec les deux mêmes modes :
+
+- **Sans `updateMask` :** chaque champ que vous laissez à sa valeur zéro (`""`,
+  `0`, `false`, non défini) conserve sa valeur stockée. N'envoyez que ce qui
+  change.
+- **Avec `updateMask` :** exactement les champs listés sont écrits, y compris
+  à leur valeur zéro. C'est ainsi que vous videz une note, retirez une échéance
+  ou rouvrez une tâche. En JSON, le masque est une chaîne de noms de champs
+  séparés par des virgules : `"updateMask": "note,dueAt"`.
+
+Une requête qui ne changerait rien est rejetée avec `invalid_argument`. Les
+champs qui identifient l'enregistrement (`id`, `hiveId`, l'espace) ne peuvent
+pas être modifiés ; une ruche ne change de rucher que par `RelocateHive`.
 
 Les lectures (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`)
 interrogent directement les tables du serveur. Elles montrent immédiatement les
@@ -93,9 +131,6 @@ les a poussées.
 
 ### Pas encore dans l'API
 
-- **Pas de RPC de modification de récolte.** `HarvestService` n'a que
-  `CreateHarvest`, `ListHarvests` et `DeleteHarvest`. Pour corriger une
-  récolte, supprimez-la et recréez-la, ou modifiez-la dans l'application.
 - **Pas de RPC de placement.** Les placements sont écrits par `CreateHive` et
   `RelocateHive` et n'apparaissent que dans le flux de synchronisation.
 - `EventService` est en lecture seule. Les événements sont écrits par les flux
@@ -113,16 +148,31 @@ Quelques endpoints HTTP simples se trouvent à côté des services RPC :
 | --- | --- |
 | `GET /healthz` | Renvoie `ok` |
 | `GET /files/<key>` | Fichiers stockés, uniquement avec le backend de blobs sur système de fichiers (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /auth/instance` | Ce que l'instance propose (méthodes de connexion, démo, inscription, réglages de carte) ; toujours présent, aucun identifiant requis |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | Comptes e-mail/mot de passe (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` défini) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `/auth/logout`, `/auth/me`, `/auth/instance`, `/auth/switch`, `/auth/accept-invite` | Utilitaires de session et d'espace (tenant), présents dès qu'une méthode de connexion est activée |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Utilitaires de session et d'espace, présents dès qu'une méthode de connexion est activée |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestion des clés API (lister, créer, supprimer), présente dès qu'une méthode de connexion est activée ; session uniquement, une clé ne peut pas les appeler |
-| `/tenants/create`, `/tenants/invite`, `/tenants/invites`, `/tenants/invite/revoke`, `/tenants/delete` | Administration des espaces, présente dès qu'une méthode de connexion est activée |
+| `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Administration des espaces, présente dès qu'une méthode de connexion est activée |
 | `POST /auth/demo-login` | Uniquement avec `BEEHIVE_DEMO=true` |
 
 Ils sont utilisés par les écrans de connexion et de paramètres de
-l'application. Ils ne font pas partie du contrat proto.
+l'application. Ils ne font pas partie du contrat proto. Tous suivent les mêmes
+règles :
+
+- Chaque endpoint n'accepte que la méthode indiquée ; toute autre répond `405`
+  avec un en-tête `Allow`.
+- Les endpoints `POST` qui prennent un corps exigent
+  `Content-Type: application/json` (`415` sinon), et le corps peut peser au
+  plus 64 KiB.
+- Les requêtes `POST` venant d'une page de navigateur d'un autre site sont
+  refusées avec `403` (`cross_site_request`). Les scripts, qui n'envoient pas
+  d'en-tête `Origin`, ne sont pas concernés.
+- `/tenants/delete` exige `{"org_id": "..."}` ; il n'y a pas de valeur par
+  défaut.
+- Les erreurs sont en JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
+  Les codes sont listés sur la [page REST](./rest.md#http-error-codes).
 
 ## Authentification \{#authentication}
 
@@ -226,11 +276,19 @@ curl -s -X POST https://bees.example.com/auth/signin \
 
 La réponse JSON contient `token` ; la même valeur est aussi définie dans le
 cookie `obh_session`. Le jeton expire après `BEEHIVE_SESSION_TTL`.
+Les connexions échouées sont limitées : après 10 échecs pour un même compte ou
+30 depuis une même adresse en 15 minutes, l'endpoint répond `429`
+(`rate_limited`) avec un en-tête `Retry-After`.
 
 Le jeton porte l'espace actif du compte. `GET /auth/me` liste les espaces
 auxquels vous appartenez (`tenants`) et l'espace actif (`active_org`) ;
 `POST /auth/switch` avec `{"org_id": "..."}` renvoie un nouveau `token` pour
 un autre espace.
+
+`POST /auth/logout-all` met fin à toutes les autres sessions du compte et
+renvoie un nouveau `token` à l'appelant. Le serveur vérifie aussi à chaque
+requête que le compte est toujours membre de l'espace ; une session révoquée ou
+une appartenance perdue est refusée en 10 secondes environ.
 
 Avec `BEEHIVE_DEMO=true`, les sessions de démonstration sont en lecture seule :
 le compte de démonstration ne peut appeler que les RPC dont le nom commence par

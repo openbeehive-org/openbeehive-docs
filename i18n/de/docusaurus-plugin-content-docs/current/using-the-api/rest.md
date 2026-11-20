@@ -74,8 +74,9 @@ curl -s -X POST "$OB/openbeehive.v1.ApiaryService/CreateApiary" \
 ```
 
 `name` darf nicht leer sein (sonst `invalid_argument`). Die Antwort ist
-`{"apiary": {...}}`. `UpdateApiary` erwartet `id` plus dieselben Felder und
-überschreibt sie alle.
+`{"apiary": {...}}`. `UpdateApiary` erwartet `id` plus die zu ändernden Felder;
+siehe [Einen Datensatz aktualisieren](#update-a-record). `DeleteApiary`
+schlägt mit `failed_precondition` fehl, solange der Standort noch Beuten hat.
 
 ## Beuten anlegen und auflisten
 
@@ -91,16 +92,19 @@ curl -s -X POST "$OB/openbeehive.v1.HiveService/ListHives" \
   -d '{"apiaryId":"2b1f6c0e-..."}'
 ```
 
-`ListHives` ohne `apiaryId` listet jede Beute des Mandanten. `CreateHive`
+`ListHives` ohne `apiaryId` listet jede Beute des Arbeitsbereichs und ist
+wie die anderen Listen paginiert (`total` ist die tatsächliche Anzahl der
+passenden Beuten). `CreateHive`
 braucht `apiaryId` und `name`; die neue Beute bekommt den Status
 `HIVE_STATUS_ACTIVE`, ein offenes Placement-Intervall und ein
-`CREATED`-Ereignis. `UpdateHive` erwartet die gesamte `hive`-Nachricht und
-überschreibt `name`, `type`, `status`, `boxes`, `colonyOrigin`, `note` und
-`qrCode`; `apiaryId` und das Foto lässt es unangetastet. `RelocateHive`
+`CREATED`-Ereignis. `UpdateHive` erwartet eine `hive`-Nachricht mit `id` und
+den zu ändernden Feldern (`name`, `type`, `status`, `boxes`, `colonyOrigin`,
+`note`, `qrCode`); `apiaryId` und das Foto ändert es nie. `RelocateHive`
 erwartet `{"id": ..., "targetApiaryId": ..., "date": ...}` (`date` optional,
 Vorgabe jetzt), schließt das aktuelle Placement, eröffnet ein neues und
 zeichnet ein `MOVED`-Ereignis auf. `DeleteApiary` und `DeleteHive` schreiben
 einen Tombstone, sodass die Löschung die Geräte über Sync erreicht.
+`DeleteHive` löscht auch die offenen Aufgaben der Beute.
 
 ## Eine Durchsicht erfassen
 
@@ -150,7 +154,7 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
     "temperament": "TEMPERAMENT_GENTLE",
     "calmness": 3,
     "queenCells": 0,
-    "varroa": "2 mites/day",
+    "varroa": "2",
     "superAdded": true,
     "note": "strong, added second super"
   }'
@@ -161,8 +165,22 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
 `TEMPERAMENT_GENTLE`, `TEMPERAMENT_NORMAL`, `TEMPERAMENT_NERVOUS`,
 `TEMPERAMENT_AGGRESSIVE`. Der Server speichert den Standort und die
 regierende Königin zum Zeitpunkt `date` und zeichnet ein
-`INSPECTION`-Ereignis auf. Felder, die du weglässt, werden als `0`, `false`
-oder `""` gespeichert.
+`INSPECTION`-Ereignis auf.
+
+Die Zahlen einer Durchsicht (`frames`, `broodFrames`, `queenCells`,
+`youngestLarva`, `framesAdded`, `framesRemoved`, `fedKg`, `honeyKg`,
+`weightKg` und die vier Klimafelder) sind optional: Ein Feld, das
+du weglässt, wird als „nicht erfasst“ gespeichert und fehlt in Antworten,
+während eine ausdrückliche `0` als beobachtete Null gespeichert und
+zurückgegeben wird. `honeyKg` bleibt für alte Datensätze erhalten; erfasse
+Honig mit `HarvestService`.
+
+`source` sagt, wer den Eintrag gemacht hat: `INSPECTION_SOURCE_MANUAL` (die
+Vorgabe, wenn du nichts sendest) für eine Durchsicht durch eine Person,
+`INSPECTION_SOURCE_SENSOR` für eine automatische Messung. Sensormessungen
+erscheinen in den Diagrammen, zählen aber nicht als „Letzte Durchsicht“ und
+fehlen in der Liste der fälligen Durchsichten und in den letzten Durchsichten
+des Dashboards; siehe [Automatische Tracker](./automated-trackers.md).
 
 Fotos werden nachträglich mit `AddInspectionPhoto` hinzugefügt:
 
@@ -210,7 +228,49 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/ListInspections" \
 ```
 
 Die letzte Seite hat kein `nextPageToken`. `ListInspections` ohne `hiveId`
-listet jede Durchsicht des Mandanten.
+listet jede Durchsicht des Arbeitsbereichs. `source` filtert danach, wer den
+Eintrag erfasst hat: Lass es weg für alles, `"INSPECTION_SOURCE_MANUAL"` nur
+für Durchsichten durch eine Person, `"INSPECTION_SOURCE_SENSOR"` nur für
+Messwerte.
+
+## Einen Datensatz aktualisieren \{#update-a-record}
+
+`UpdateApiary`, `UpdateHive`, `UpdateQueen`, `UpdateInspection`,
+`UpdateTask`, `UpdateTreatment` und `UpdateHarvest` ändern nur die Felder,
+die du sendest. So korrigierst du das Gewicht einer Durchsicht:
+
+```bash
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e...","weightKg":41.9}}'
+```
+
+Alles andere am Datensatz bleibt, wie es ist. Um ein Feld auf seinen Nullwert
+zu setzen oder eine optionale Zahl wieder auf „nicht erfasst“ zu leeren,
+nenne es in `updateMask`:
+
+```bash
+# clear the note and remove the recorded weight
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
+```
+
+Mit einer Maske werden genau die aufgeführten Felder geschrieben und sonst
+nichts. Eine Anfrage, die nichts ändern würde, antwortet mit
+`invalid_argument`. Die Regeln pro Aufruf:
+
+| Aufruf | Anfrage | Hinweise |
+| --- | --- | --- |
+| `UpdateApiary` | `id` und die Felder auf oberster Ebene, plus `updateMask` | `name` darf nicht leer werden |
+| `UpdateHive` | `hive`, `updateMask` | `apiaryId` wird ignoriert (nutze `RelocateHive`); `status` kann nicht auf „nicht angegeben“ gesetzt werden |
+| `UpdateQueen` | `queen`, `updateMask` | Ohne Maske beendet das alleinige Senden von `replacedAt` die Regentschaft (`active` wird `false`), und das Senden von `active: true` leert `replacedAt` |
+| `UpdateInspection` | `inspection`, `updateMask` | Fotos ändern sich über die Foto-Aufrufe; das `INSPECTION`-Ereignis folgt einem geänderten `date` |
+| `UpdateTask` | `task`, `updateMask` | `hiveId` und `apiaryId` können sich nicht ändern; nutze eine Maske, um `dueAt` zu entfernen oder eine Aufgabe wieder zu öffnen |
+| `UpdateTreatment` | `treatment`, `updateMask` | Setzt `amendedAt`; Standort und Königin werden neu aufgelöst, wenn sich `date` verschiebt |
+| `UpdateHarvest` | `harvest`, `updateMask` | Setzt `amendedAt`; `amountKg` muss über `0` bleiben; die Honigzahlen folgen der Bearbeitung |
 
 ## Eine Königin anlegen
 
@@ -246,9 +306,11 @@ ist standardmäßig jetzt. Das Anlegen einer Königin beendet immer die
 Regentschaft der aktuell aktiven Königin der Beute (`active: false`,
 `replacedAt` gesetzt) und zeichnet die Ereignisse `QUEEN_REPLACED` und
 `QUEEN_INTRODUCED` auf. `ListQueens` erwartet `hiveId` und `onlyActive`;
-`UpdateQueen` erwartet die gesamte `queen`-Nachricht und aktualisiert `year`,
-`marking`, `origin`, `breederNumber`, `introducedAt`, `replacedAt`, `active`
-und `note` (`hiveId` kann sich nicht ändern).
+`UpdateQueen` korrigiert `year`, `marking`, `origin`, `breederNumber`,
+`introducedAt`, `replacedAt`, `active` und `note` (`hiveId` kann sich nicht
+ändern; siehe [Einen Datensatz aktualisieren](#update-a-record)).
+`DeleteQueen` entfernt auch ihre Ereignisse `QUEEN_INTRODUCED` und
+`QUEEN_REPLACED`.
 
 ## Aufgaben
 
@@ -275,9 +337,10 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/CreateTask" \
 ```
 
 `title` ist Pflicht. Eine Aufgabe mit `hiveId` erbt die `apiaryId` der
-Beute, wenn du keine sendest; `apiaryId` muss in deinem Mandanten
-existieren. Eine Aufgabe ohne beides ist persönlich und synchronisiert nur
-auf deine eigenen Geräte. Abhaken geht so:
+Beute, wenn du keine sendest; `apiaryId` muss in deinem Arbeitsbereich
+existieren. Eine Aufgabe ohne beides ist persönlich: Sie synchronisiert nur
+auf deine eigenen Geräte, und `ListTasks` gibt sie nur an dich zurück.
+Abhaken geht so:
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
@@ -288,7 +351,8 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
 
 Die Antwort ist `{"task": {...}}` mit `"done": true`. `ListTasks` erwartet
 `onlyOpen` und `hiveId` und liefert offene Aufgaben zuerst, sortiert nach
-`dueAt`.
+`dueAt`. `UpdateTask` ändert `title`, `dueAt`, `done`, `priority`, `note`,
+`recurrence` und `assignedTo`.
 
 ## Behandlungen
 
@@ -302,7 +366,9 @@ curl -s -X POST "$OB/openbeehive.v1.TreatmentService/CreateTreatment" \
 `hiveId` und `product` sind Pflicht; `reason` hat die Vorgabe `"varroa"`.
 Das `treatment` in der Antwort trägt die zum Zeitpunkt `date` eingefrorenen
 `apiaryId` und `queenId`. `ListTreatments` erwartet `hiveId` und liefert die
-neuesten zuerst.
+neuesten zuerst. `UpdateTreatment` korrigiert eine Behandlung und setzt
+`amendedAt`, das die App als „Geändert am“ anzeigt und im Bestandsbuch
+druckt; `DeleteTreatment` entfernt auch ihr `TREATMENT`-Ereignis.
 
 ## Ernten
 
@@ -347,9 +413,10 @@ curl -s -X POST "$OB/openbeehive.v1.HarvestService/ListHarvests" \
 ```
 
 `ListHarvests` filtert nach `hiveId` oder `apiaryId` (beide optional) und
-liefert `{"harvests": [...], "page": {...}}`, neueste zuerst. `DeleteHarvest`
-erwartet `{"id": ...}` und schreibt einen Tombstone; einen Update-RPC gibt es
-nicht.
+liefert `{"harvests": [...], "page": {...}}`, neueste zuerst. `UpdateHarvest`
+korrigiert eine Ernte und setzt `amendedAt`; `DeleteHarvest` erwartet
+`{"id": ...}`, schreibt einen Tombstone und entfernt das `HARVEST`-Ereignis,
+sodass die Honigzahlen sie nicht mehr mitzählen.
 
 ## Ereignisse
 
@@ -396,7 +463,9 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 
 `thresholdDays` (Vorgabe 21) legt fest, wann eine Beute als fällig zählt:
 Beuten, deren letzte Durchsicht mindestens so viele Tage zurückliegt, plus
-nie durchgesehene Beuten (`daysSinceLast: -1`, zuerst gelistet). `nextTasks`
+nie durchgesehene Beuten (`daysSinceLast: -1`, zuerst gelistet).
+Sensormessungen (`INSPECTION_SOURCE_SENSOR`) zählen hier nicht als
+Durchsichten und werden in `recentInspections` nicht aufgeführt. `nextTasks`
 enthält die nächsten fünf offenen Aufgaben, `recentInspections` die letzten
 zehn Durchsichten. Honigzahlen stammen aus den `HARVEST`-Ereignissen;
 `honeyKgSeason` ist das laufende Kalenderjahr. `GetHoneyStats` erwartet
@@ -421,17 +490,21 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
       "scopeId": "2b1f6c0e-...",
       "op": "CHANGE_OP_UPSERT",
       "payloadJson": "{\"hive_id\":\"c41a...\",\"date\":\"2026-06-19T04:00:11.204Z\",\"weight_kg\":42.5}",
-      "hlc": "001781234567890:00000:server",
+      "hlc": "001781234567890:00000:srv-3fa91c0b77d2",
       "authorId": "u-…"
     }
   ],
   "nextCursor": "48213",
-  "hasMore": false
+  "hasMore": false,
+  "serverTimeMs": "1781234569120"
 }
 ```
 
 `payloadJson` ist ein JSON-String, dessen Schlüssel die `snake_case`-Spaltennamen
-der Tabelle sind. Gib `nextCursor` als `cursor` zurück, um fortzufahren. Der
+der Tabelle sind. Gib `nextCursor` als `cursor` zurück, um fortzufahren. `limit`
+hat die Vorgabe 200 und ist auf 500 begrenzt. Der Feed umfasst den
+Arbeitsbereich des Aufrufers; persönliche Zeilen (Scope `user:<id>`) werden
+nur an ihren Besitzer zurückgegeben. Der
 Feed enthält jede Änderung, egal ob ein Gerät sie gepusht oder ein Dienst-RPC
 sie geschrieben hat; Placements tauchen nur hier auf, da sie keinen eigenen
 Dienst haben. Wie du Änderungen mit `Push` schreibst, steht
@@ -465,12 +538,37 @@ Fehler kommen als JSON-Body mit einem Connect-Code zurück:
 | --- | --- | --- |
 | `invalid_argument` | 400 | Leerer `name`; fehlende `hiveId` (Durchsicht, Königin, Behandlung, Ernte), `year` (Königin), `title` (Aufgabe), `product` (Behandlung); `amountKg` nicht über `0` (Ernte); eine `apiaryId`, die es bei `CreateTask` nicht gibt; ein Foto, das keine `data:image/`-URL ist oder 512 KiB überschreitet; fehlendes `hive` / `queen` bei den Update-Aufrufen |
 | `unauthenticated` | 401 | Fehlendes, abgelaufenes oder entferntes Token: ein unbekannter oder zurückgezogener API-Schlüssel oder ein Sitzungstoken, das älter ist als `BEEHIVE_SESSION_TTL` |
-| `permission_denied` | 403 | Demo-Sitzung ruft einen schreibenden RPC auf; `Push` in einen Scope, den du nicht schreiben darfst |
-| `not_found` | 404 | Unbekannte Id oder eine Id aus einem anderen Mandanten bei jedem `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, den Foto-Aufrufen und jedem `Create*`, das auf eine Beute oder einen Standort verweist |
-| `internal` | 500 | Datenbankfehler |
+| `permission_denied` | 403 | Demo-Sitzung oder API-Schlüssel mit Nur-Lese-Recht ruft einen schreibenden RPC auf |
+| `failed_precondition` | 400 | `DeleteApiary`, solange der Standort noch Beuten hat |
+| `resource_exhausted` | 429 | Mehr als 4 offene `Subscribe`-Streams für einen Nutzer |
+| `not_found` | 404 | Unbekannte Id oder eine Id aus einem anderen Arbeitsbereich bei jedem `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, den Foto-Aufrufen und jedem `Create*`, das auf eine Beute oder einen Standort verweist |
+| `internal` | 500 | Serverseitige Fehler. Die Meldung ist immer `internal error`; Einzelheiten stehen nur im Server-Log |
 
-Die vollständige Liste der Codes findest du in der
+Ein Update, das nichts ändern würde, und ein `Push` mit mehr als 2000
+Änderungen antworten ebenfalls mit `invalid_argument`. Die vollständige Liste
+der Codes findest du in der
 [Connect-Fehlerreferenz](https://connectrpc.com/docs/protocol/#error-codes).
+
+### Fehlercodes der einfachen HTTP-Endpunkte \{#http-error-codes}
+
+Die Endpunkte unter `/auth/*` und `/tenants/*` sind keine RPCs. Ihre Fehler
+sind `{"error": "<plain English>", "code": "<snake_case>"}` mit passendem
+HTTP-Status. Clients sollten sich nach `code` richten; der Text kann sich
+ändern.
+
+| HTTP | Codes |
+| --- | --- |
+| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `id_required`, `name_required`, `org_id_required`, `invite_invalid`, `invite_expired`, `verification_invalid`, `unknown_provider`, `oidc_state_missing`, `oidc_state_invalid`, `oidc_no_email`, `passkey_no_ceremony`, `passkey_failed` |
+| 401 | `not_signed_in`, `invalid_credentials`, `oidc_failed`, `passkey_failed` |
+| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `passkey_session_mismatch` |
+| 404 | `not_found`, `invite_not_found`, `key_not_found`, `passkey_not_found` |
+| 405 | `method_not_allowed` |
+| 409 | `account_exists` |
+| 413 | `body_too_large` |
+| 415 | `unsupported_media_type` |
+| 429 | `rate_limited` (mit `Retry-After`) |
+| 500 | `internal` |
+| 503 | `demo_unavailable`, `unavailable` |
 
 ## Hinweise
 

@@ -32,16 +32,20 @@ Ten services are registered on the server (`server/cmd/server/main.go`):
 | `ApiaryService` | `CreateApiary`, `GetApiary`, `ListApiaries`, `UpdateApiary`, `DeleteApiary` |
 | `HiveService` | `CreateHive`, `GetHive`, `ListHives`, `UpdateHive`, `DeleteHive`, `RelocateHive` |
 | `QueenService` | `CreateQueen`, `ListQueens`, `UpdateQueen`, `DeleteQueen` |
-| `InspectionService` | `CreateInspection`, `ListInspections`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
-| `TaskService` | `CreateTask`, `ListTasks`, `SetTaskDone`, `DeleteTask` |
-| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `DeleteTreatment` |
-| `HarvestService` | `CreateHarvest`, `ListHarvests`, `DeleteHarvest` |
+| `InspectionService` | `CreateInspection`, `ListInspections`, `UpdateInspection`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
+| `TaskService` | `CreateTask`, `ListTasks`, `UpdateTask`, `SetTaskDone`, `DeleteTask` |
+| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `UpdateTreatment`, `DeleteTreatment` |
+| `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
 | `SyncService` | `Pull`, `Push`, `Subscribe` (server stream) |
 
-Every RPC is scoped to the caller's active tenant. Ids from another tenant
-behave like unknown ids (`not_found`).
+Every RPC is scoped to the caller's active workspace (called `tenant` or
+`organization` in paths and field names). Ids from another workspace behave
+like unknown ids (`not_found`).
+
+One RPC message may be at most 16 MiB, and a request other than the
+`Subscribe` stream may take at most 2 minutes.
 
 ### Writes go through sync
 
@@ -79,7 +83,39 @@ whether a record was entered in the app or through the API:
   be greater than `0`.
 - A task with a `hiveId` or `apiaryId` syncs under that apiary and is shared
   with everyone who sees it; a task with neither lives in the caller's
-  personal scope and reaches only that user's devices.
+  personal scope: it reaches only that user's devices and `ListTasks`
+  returns it only to its owner.
+- `CreateInspection` with `source: INSPECTION_SOURCE_SENSOR` stores a sensor
+  reading instead of a visit; see
+  [Automated trackers](./automated-trackers.md).
+
+Corrections and deletes keep the history consistent:
+
+- `UpdateInspection`, `UpdateTreatment` and `UpdateHarvest` correct a saved
+  record. Their timeline event follows the edit, and when `date` changes the
+  apiary and queen are resolved again for the new date. Treatments and
+  harvests get `amendedAt` set to the time of the edit.
+- `DeleteInspection`, `DeleteTreatment`, `DeleteHarvest` and `DeleteQueen`
+  also remove the record's timeline events, so a deleted harvest no longer
+  counts in the honey figures.
+- `DeleteHive` also deletes the hive's open tasks. `DeleteApiary` fails with
+  `failed_precondition` while the apiary still has hives: move them with
+  `RelocateHive` or delete them first.
+
+### Updates change only what you send \{#partial-updates}
+
+Every `Update*` RPC is a partial update with the same two modes:
+
+- **Without `updateMask`:** every field you leave at its zero value (`""`,
+  `0`, `false`, unset) keeps its stored value. Send only what changes.
+- **With `updateMask`:** exactly the listed fields are written, including to
+  their zero value. That is how you clear a note, remove a due date or reopen
+  a task. In JSON the mask is a comma-separated string of field names:
+  `"updateMask": "note,dueAt"`.
+
+A request that would change nothing is rejected with `invalid_argument`.
+Fields that identify the record (`id`, `hiveId`, the workspace) cannot be
+changed; a hive changes its apiary through `RelocateHive` only.
 
 Reads (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`) query
 the server tables directly. They show API writes at once and device writes
@@ -87,9 +123,6 @@ as soon as the device has pushed them.
 
 ### Not in the API yet
 
-- **No harvest edit RPC.** `HarvestService` has `CreateHarvest`,
-  `ListHarvests` and `DeleteHarvest` only. To correct a harvest, delete it and
-  create it again, or edit it in the app.
 - **No placement RPC.** Placements are written by `CreateHive` and
   `RelocateHive` and appear only in the sync feed.
 - `EventService` is read-only. Events are written by the flows above and by
@@ -106,16 +139,28 @@ A few plain HTTP endpoints sit next to the RPC services:
 | --- | --- |
 | `GET /healthz` | Returns `ok` |
 | `GET /files/<key>` | Stored files, only with the filesystem blob backend (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /auth/instance` | What the instance offers (login methods, demo, registration, map settings); always present, no credentials needed |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | Email/password accounts (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` set) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `/auth/logout`, `/auth/me`, `/auth/instance`, `/auth/switch`, `/auth/accept-invite` | Session and tenant helpers, present whenever any login method is enabled |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Session and workspace helpers, present whenever any login method is enabled |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | API key management (list, create, remove), present whenever any login method is enabled; session only, a key cannot call them |
-| `/tenants/create`, `/tenants/invite`, `/tenants/invites`, `/tenants/invite/revoke`, `/tenants/delete` | Tenant administration, present whenever any login method is enabled |
+| `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Workspace administration, present whenever any login method is enabled |
 | `POST /auth/demo-login` | Only with `BEEHIVE_DEMO=true` |
 
 These are used by the app's login and settings screens. They are not part of
-the proto contract.
+the proto contract. All of them follow the same rules:
+
+- Each endpoint accepts only the method shown; anything else answers `405`
+  with an `Allow` header.
+- `POST` endpoints that take a body need `Content-Type: application/json`
+  (`415` otherwise), and the body may be at most 64 KiB.
+- `POST` requests from a browser page on another site are refused with `403`
+  (`cross_site_request`). Scripts, which send no `Origin` header, are not
+  affected.
+- `/tenants/delete` needs `{"org_id": "..."}`; there is no default.
+- Errors are JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
+  The codes are listed on the [REST page](./rest.md#http-error-codes).
 
 ## Authentication
 
@@ -135,9 +180,9 @@ method:
 
 An API key is the recommended credential for scripts, sensors and
 integrations. Keys are managed in the app under **Settings → API keys**
-(see [Accounts & tenants](../using-the-app/accounts-tenants.md#api-keys)):
+(see [Accounts & workspaces](../using-the-app/accounts-tenants.md#api-keys)):
 
-1. Sign in, switch to the tenant the script should write to, and open
+1. Sign in, switch to the workspace the script should write to, and open
    **Settings → API keys**.
 2. Type a name (for example `hive scale`), pick the permissions (**Read and
    write** or **Read-only**) and an expiry (**Never expires**, **30 days**,
@@ -152,9 +197,9 @@ Authorization: Bearer obhk_...
 
 What a key can and cannot do:
 
-- It acts as its owner, with the owner's role, inside the tenant that was
-  active when the key was created. It cannot switch tenants; create one key
-  per tenant if a script needs several.
+- It acts as its owner, with the owner's role, inside the workspace that was
+  active when the key was created. It cannot switch workspaces; create one key
+  per workspace if a script needs several.
 - It works on RPCs only. The `/auth/*` and `/tenants/*` endpoints, including
   key management itself, need a real session: a key cannot list, create or
   remove keys.
@@ -168,7 +213,7 @@ What a key can and cannot do:
   `unauthenticated` (HTTP 401) with the message `API key expired`. Expired
   keys stay in the list until you remove them.
 - It stops working the moment it is removed in Settings, and it dies with
-  the membership: when the owner leaves or is removed from the tenant, the
+  the membership: when the owner leaves or is removed from the workspace, the
   key is refused.
 - Every use stamps `last_used_at`, shown as **Last used** in Settings.
 - The demo account cannot create keys.
@@ -177,12 +222,12 @@ The same endpoints the app uses are open to a session-authenticated script:
 
 - `GET /auth/api-keys` returns `{"keys": [{id, name, prefix, scope,
   created_at, expires_at, last_used_at, mine}]}`, your own keys in the
-  active tenant only. `scope` is `"write"` or `"read"`; `expires_at` and
+  active workspace only. `scope` is `"write"` or `"read"`; `expires_at` and
   `last_used_at` are RFC 3339 timestamps or `null`; `mine` is always
   `true` here.
-- `GET /auth/api-keys?tenant=1` returns every key of the active tenant,
+- `GET /auth/api-keys?tenant=1` returns every key of the active workspace,
   each row additionally carrying `user_id`, `user_email` and a `mine`
-  flag that is `true` on your own keys. Only the tenant owner (the role
+  flag that is `true` on your own keys. Only the workspace owner (the role
   the app calls **Admin**) and the instance admin may call it; everyone
   else gets HTTP 403.
 - `POST /auth/api-keys` with `{"name": "...", "scope": "write",
@@ -192,9 +237,9 @@ The same endpoints the app uses are open to a session-authenticated script:
   above `3650`, answers HTTP 400.
 - `POST /auth/api-keys/delete` with `{"id": "..."}` answers `204`. A
   member can remove only their own keys; someone else's id answers 404.
-  The tenant owner and the instance admin can remove any key of the
-  active tenant. The override never reaches across tenants: an owner of
-  another tenant gets 404 for keys that are not theirs.
+  The workspace owner and the instance admin can remove any key of the
+  active workspace. The override never reaches across workspaces: an owner of
+  another workspace gets 404 for keys that are not theirs.
 
 ### Session sign-in
 
@@ -210,11 +255,19 @@ curl -s -X POST https://bees.example.com/auth/signin \
 
 The JSON response contains `token`; the same value is also set as the
 `obh_session` cookie. The token expires after `BEEHIVE_SESSION_TTL`.
+Failed sign-ins are throttled: after 10 failures for one account or 30 from
+one address within 15 minutes the endpoint answers `429` (`rate_limited`)
+with a `Retry-After` header.
 
-The token carries the account's active tenant. `GET /auth/me` lists the
-tenants you belong to (`tenants`) and the active one (`active_org`);
+The token carries the account's active workspace. `GET /auth/me` lists the
+workspaces you belong to (`tenants`) and the active one (`active_org`);
 `POST /auth/switch` with `{"org_id": "..."}` returns a new `token` for
-another tenant.
+another workspace.
+
+`POST /auth/logout-all` ends every other session of the account and returns
+a fresh `token` for the caller. The server also checks on every request that
+the account is still a member of the workspace; a revoked session or a lost
+membership is refused within about 10 seconds.
 
 With `BEEHIVE_DEMO=true`, demo sessions are read-only: the demo account can
 call only RPCs whose names start with `Get`, `List`, `Pull` or `Subscribe`.

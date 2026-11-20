@@ -7,19 +7,21 @@ title: "Tracker automatici"
 
 Una bilancia per arnie, una sonda di temperatura del nido di covata o un
 sensore di umidità possono inviare le proprie letture a Openbeehive tramite
-`InspectionService.CreateInspection`. Ogni lettura diventa una riga di
-ispezione sull'arnia, si sincronizza su ogni dispositivo come una visita
-inserita a mano e alimenta i grafici **Andamento** dell'arnia. Questa pagina
-descrive cosa fa davvero il server con queste letture e come inviarle da uno
-script.
+`InspectionService.CreateInspection` con `source` impostato a
+`INSPECTION_SOURCE_SENSOR`. Ogni lettura viene memorizzata sull'arnia, si
+sincronizza su ogni dispositivo e alimenta i grafici **Andamento** dell'arnia,
+senza essere scambiata per una visita fatta da una persona. Questa pagina
+descrive cosa fa il server con queste letture e come inviarle da uno script.
 
 ## Cos'è una lettura
 
-Non esiste una tabella separata per i sensori. Una lettura è un'ispezione con
-compilati solo i campi di misurazione:
+Non esiste una tabella separata per i sensori. Una lettura è un'ispezione
+contrassegnata come lettura di un sensore, con compilati solo i campi di
+misurazione:
 
 | Campo JSON | Significato | Unità |
 | --- | --- | --- |
+| `source` | Sempre `"INSPECTION_SOURCE_SENSOR"` per un dispositivo | |
 | `weightKg` | Peso dell'arnia | kg |
 | `tempHive` | Temperatura all'interno dell'arnia | °C |
 | `tempOutside` | Temperatura esterna | °C |
@@ -27,11 +29,14 @@ compilati solo i campi di misurazione:
 | `humidityOutside` | Umidità relativa esterna | % |
 | `note` | Testo libero, per esempio il nome del dispositivo | |
 
-Invia solo ciò che il tuo dispositivo misura. Il server memorizza i campi che
-ometti come `0`; i grafici Andamento tracciano solo i valori sopra lo zero,
-ma il riepilogo della visita nell'app mostra una temperatura `0` come uno
-`0 °C` misurato, quindi non inviare un campo di temperatura che non hai
+Invia solo ciò che il tuo dispositivo misura. Un campo che ometti viene
+memorizzato come "non registrato"; un campo che invii come `0` viene
+memorizzato come uno zero misurato, e le temperature sotto zero sono valide e
+compaiono nei grafici. Quindi non inviare `0` per un valore che non hai
 misurato.
+
+Se ometti `source`, la voce conta come visita manuale
+(`INSPECTION_SOURCE_MANUAL`), con gli effetti descritti più sotto.
 
 Sul server la lettura segue lo stesso percorso di una visita registrata
 nell'app: la riga viene marcata con l'apiario e la regina regnante alla sua
@@ -41,29 +46,36 @@ registro di sincronizzazione con il tuo account come autore. Vedi la
 
 ## Cosa ne fa l'app
 
-- La lettura compare nel diario delle visite e nei grafici dell'arnia dopo la
-  sincronizzazione successiva del dispositivo (l'app si sincronizza ogni 15
+- Una lettura di un sensore compare nei grafici **Andamento** dell'arnia dopo
+  la sincronizzazione successiva del dispositivo (l'app si sincronizza ogni 15
   secondi mentre è aperta e dopo ogni scrittura locale).
-- Conta come ultima ispezione dell'arnia. Il pannello **Visite in scadenza**
-  della panoramica e `StatsService.GetDashboard` calcolano i "giorni
-  dall'ultima visita" dalla riga di ispezione più recente, quindi un'arnia che
-  riporta dati ogni giorno non compare mai come in scadenza, anche se nessuno
-  l'ha aperta da settimane.
-- Ogni lettura è una visita nel diario. Una lettura al minuto produce 1.440
-  visite al giorno e spinge fuori vista le voci scritte a mano.
+- Non conta come ispezione. "Ultima visita", l'elenco delle arnie, il pannello
+  **Visite in scadenza** della panoramica e `StatsService.GetDashboard`
+  ignorano le letture dei sensori, quindi un'arnia che riporta dati ogni
+  giorno compare comunque come in scadenza quando nessuno l'ha aperta da
+  settimane.
+- È nascosta dagli elenchi delle visite. La pagina dell'arnia elenca solo le
+  visite fatte da una persona; il diario completo delle visite mostra le
+  letture quando è spuntato **Mostra le letture dei sensori**.
+- `ListInspections` restituisce entrambi i tipi a meno che tu non filtri con
+  `source`.
 
-Invia al massimo poche letture al giorno, oppure aggrega sul dispositivo e
-invia un solo valore giornaliero. Metti il nome del dispositivo in `note` così
-le letture automatiche si distinguono facilmente dalle tue visite. Cadenze di
-15 minuti o più fitte appartengono al tuo archivio di serie temporali, non al
-diario delle visite.
+Una voce inviata senza `source` viene trattata come visita manuale: compare
+nel diario delle visite e azzera "ultima visita". Le letture inviate in quel
+modo da script scritti per versioni precedenti restano visite manuali; d'ora
+in poi imposta `source` nello script.
+
+Ogni lettura è comunque una riga che si sincronizza su ogni dispositivo. Invia
+al massimo poche letture al giorno, oppure aggrega sul dispositivo e invia un
+solo valore giornaliero. Metti il nome del dispositivo in `note`. Cadenze di
+15 minuti o più fitte appartengono al tuo archivio di serie temporali.
 
 ## Autenticarsi da uno script
 
 Assegna a ogni dispositivo la propria chiave API (vedi
 [Autenticazione](./overview.md#authentication)):
 
-1. Nell'app, passa al tenant a cui appartiene l'arnia e apri
+1. Nell'app, passa allo spazio a cui appartiene l'arnia e apri
    **Impostazioni → Chiavi API**.
 2. Dai alla chiave il nome del dispositivo (per esempio `scale-01`), lascia i
    permessi su **Lettura e scrittura** (un sensore crea ispezioni, cosa che una
@@ -72,14 +84,14 @@ Assegna a ogni dispositivo la propria chiave API (vedi
 3. Conservalo sul dispositivo e invialo come `Authorization: Bearer obhk_...`
    a ogni chiamata.
 
-La chiave agisce a tuo nome all'interno di quel tenant e funziona con
+La chiave agisce a tuo nome all'interno di quello spazio e funziona con
 qualsiasi metodo di login (password, OIDC o passkey). Scade solo se hai scelto
 una scadenza (**30 giorni**, **90 giorni** o **1 anno**); una chiave scaduta
 riceve `unauthenticated` (HTTP 401) a ogni chiamata finché non ne crei una
 nuova. Le Impostazioni mostrano quando ogni chiave è stata usata l'ultima
 volta. Quando il dispositivo viene dismesso, tocca **Rimuovi** accanto alla sua
 chiave; la chiamata successiva da quel dispositivo restituisce
-`unauthenticated`. La chiave smette di funzionare anche se lasci il tenant. Usa
+`unauthenticated`. La chiave smette di funzionare anche se lasci lo spazio. Usa
 una chiave in **Sola lettura** per tutto ciò che si limita a leggere, come una
 dashboard o uno script di esportazione; riceve `permission_denied` su
 `CreateInspection` e su ogni altra scrittura.
@@ -128,7 +140,7 @@ HIVE="c41a..."
 # The API key from Settings -> API keys, stored once on the device.
 TOKEN=$(cat /etc/openbeehive-key)
 
-body=$(printf '{"hiveId":"%s","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
+body=$(printf '{"hiveId":"%s","source":"INSPECTION_SOURCE_SENSOR","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
   "$HIVE" "$(read_sensor weight)" "$(read_sensor brood_temp)" "$(read_sensor brood_rh)")
 
 curl -fsS -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
@@ -148,7 +160,7 @@ OB = "https://bees.example.com"
 TOKEN = open("/etc/openbeehive-key").read().strip()  # obhk_...
 
 def create_inspection(hive_id, **fields):
-    body = json.dumps({"hiveId": hive_id, **fields}).encode()
+    body = json.dumps({"hiveId": hive_id, "source": "INSPECTION_SOURCE_SENSOR", **fields}).encode()
     req = urllib.request.Request(
         f"{OB}/openbeehive.v1.InspectionService/CreateInspection", data=body,
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"})
@@ -170,5 +182,8 @@ risolve l'apiario e la regina per quella data.
 - **Attenzione alle unità.** Temperatura in °C, umidità da 0 a 100, peso in
   kg.
 - **Ripulisci i dati di prova.** `ListInspections` con il tuo `hiveId` e
-  `DeleteInspection` rimuovono le letture; anche la cancellazione si
-  sincronizza sui dispositivi.
+  `"source": "INSPECTION_SOURCE_SENSOR"` trova le letture e
+  `DeleteInspection` le rimuove; anche la cancellazione si sincronizza sui
+  dispositivi.
+- **Correggi invece di inviare di nuovo.** `UpdateInspection` modifica una
+  lettura memorizzata; vedi [Aggiornare un record](./rest.md#update-a-record).

@@ -26,6 +26,7 @@ tuo `buf.gen.yaml` ai plugin di cui hai bisogno.
 ```go
 import (
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/proto"
     obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
     "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
@@ -45,7 +46,12 @@ Una bilancia per arnie, per esempio, invia tramite `InspectionService`:
 
 ```go
 insp := openbeehivev1connect.NewInspectionServiceClient(http.DefaultClient, "https://bees.example.com")
-req := connect.NewRequest(&obv1.CreateInspectionRequest{HiveId: hiveID, WeightKg: 42.5, TempHive: 34.2})
+req := connect.NewRequest(&obv1.CreateInspectionRequest{
+    HiveId:   hiveID,
+    Source:   obv1.InspectionSource_INSPECTION_SOURCE_SENSOR,
+    WeightKg: proto.Float64(42.5), // optional fields are pointers: unset means "not recorded"
+    TempHive: proto.Float64(34.2),
+})
 req.Header().Set("Authorization", "Bearer "+token)
 res, err := insp.CreateInspection(ctx, req)
 ```
@@ -102,12 +108,17 @@ message SubscribeRequest { string cursor = 1; }
 message SubscribeEvent { string server_cursor = 1; }
 ```
 
-Il server interroga il proprio contatore globale delle modifiche ogni due
-secondi e invia un `SubscribeEvent` ogni volta che il contatore ha superato il
+Il server controlla ogni due secondi la modifica più recente che il chiamante
+può scaricare con un pull (lo spazio attivo, più le righe personali del
+chiamante) e invia un `SubscribeEvent` ogni volta che questa ha superato il
 cursore che hai inviato (e l'ultimo valore che ha inviato). L'evento non
 trasporta dati; chiama `Pull` con il cursore che hai salvato quando ne ricevi
-uno. Anche le righe fuori dai tuoi scope fanno avanzare il contatore, quindi
-una `Pull` dopo un evento può tornare vuota.
+uno. L'attività in altri spazi non risveglia lo stream.
+
+Un utente può tenere aperti al massimo 4 stream `Subscribe`; un quinto viene
+rifiutato con `resource_exhausted`. Lo stream è escluso dal timeout di 2
+minuti del server per le richieste, ma un reverse proxy interposto può
+chiudere le connessioni inattive, quindi preparati a riconnetterti.
 
 L'app non usa `Subscribe`. Esegue push e pull ogni 15 secondi, dopo ogni
 scrittura locale e all'evento `online` del browser.

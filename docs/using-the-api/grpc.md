@@ -26,6 +26,7 @@ plugins you need.
 ```go
 import (
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/proto"
     obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
     "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
@@ -45,7 +46,12 @@ A hive scale, for example, posts through `InspectionService`:
 
 ```go
 insp := openbeehivev1connect.NewInspectionServiceClient(http.DefaultClient, "https://bees.example.com")
-req := connect.NewRequest(&obv1.CreateInspectionRequest{HiveId: hiveID, WeightKg: 42.5, TempHive: 34.2})
+req := connect.NewRequest(&obv1.CreateInspectionRequest{
+    HiveId:   hiveID,
+    Source:   obv1.InspectionSource_INSPECTION_SOURCE_SENSOR,
+    WeightKg: proto.Float64(42.5), // optional fields are pointers: unset means "not recorded"
+    TempHive: proto.Float64(34.2),
+})
 req.Header().Set("Authorization", "Bearer "+token)
 res, err := insp.CreateInspection(ctx, req)
 ```
@@ -102,11 +108,17 @@ message SubscribeRequest { string cursor = 1; }
 message SubscribeEvent { string server_cursor = 1; }
 ```
 
-The server polls its global change counter every two seconds and sends a
-`SubscribeEvent` whenever the counter has moved past the cursor you sent (and
-past the last value it sent). The event carries no data; call `Pull` with your
-stored cursor when you receive one. Rows outside your scopes also advance the
-counter, so a `Pull` after an event can come back empty.
+The server checks every two seconds for the newest change the caller can
+pull (the active workspace, plus the caller's personal rows) and sends a
+`SubscribeEvent` whenever that has moved past the cursor you sent (and past
+the last value it sent). The event carries no data; call `Pull` with your
+stored cursor when you receive one. Activity in other workspaces does not
+wake the stream.
+
+One user may hold at most 4 open `Subscribe` streams; a fifth is refused with
+`resource_exhausted`. The stream is exempt from the server's 2-minute request
+timeout, but a reverse proxy in between may close idle connections, so be
+ready to reconnect.
 
 The app does not use `Subscribe`. It pushes and pulls every 15 seconds, after
 every local write, and on the browser's `online` event.

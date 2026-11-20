@@ -73,8 +73,9 @@ curl -s -X POST "$OB/openbeehive.v1.ApiaryService/CreateApiary" \
 ```
 
 `name` no puede estar vacío (`invalid_argument` en caso contrario). La
-respuesta es `{"apiary": {...}}`. `UpdateApiary` recibe `id` más los mismos
-campos y los sobrescribe todos.
+respuesta es `{"apiary": {...}}`. `UpdateApiary` recibe `id` más los campos que hay que cambiar; consulta
+[Actualizar un registro](#update-a-record). `DeleteApiary` falla con
+`failed_precondition` mientras el colmenar aún tenga colmenas.
 
 ## Crear y listar colmenas
 
@@ -90,16 +91,18 @@ curl -s -X POST "$OB/openbeehive.v1.HiveService/ListHives" \
   -d '{"apiaryId":"2b1f6c0e-..."}'
 ```
 
-`ListHives` sin `apiaryId` lista todas las colmenas del espacio. `CreateHive`
+`ListHives` sin `apiaryId` lista todas las colmenas del espacio y está
+paginado como las demás listas (`total` es el número real de colmenas
+coincidentes). `CreateHive`
 necesita `apiaryId` y `name`; la nueva colmena recibe el estado
 `HIVE_STATUS_ACTIVE`, un intervalo de ubicación abierto y un evento `CREATED`.
-`UpdateHive` recibe el mensaje `hive` completo y sobrescribe `name`, `type`,
-`status`, `boxes`, `colonyOrigin`, `note` y `qrCode`; deja intactos `apiaryId`
-y la foto. `RelocateHive` recibe `{"id": ..., "targetApiaryId": ..., "date": ...}`
+`UpdateHive` recibe un mensaje `hive` con `id` y los campos que hay que cambiar (`name`, `type`,
+`status`, `boxes`, `colonyOrigin`, `note`, `qrCode`); nunca cambia `apiaryId`
+ni la foto. `RelocateHive` recibe `{"id": ..., "targetApiaryId": ..., "date": ...}`
 (`date` opcional, por defecto el momento actual), cierra la ubicación actual,
 abre una nueva y registra un evento `MOVED`. `DeleteApiary` y `DeleteHive`
 escriben una lápida, así que la eliminación llega a los dispositivos mediante
-la sincronización.
+la sincronización. `DeleteHive` elimina también las tareas abiertas de la colmena.
 
 ## Registrar una inspección
 
@@ -149,7 +152,7 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
     "temperament": "TEMPERAMENT_GENTLE",
     "calmness": 3,
     "queenCells": 0,
-    "varroa": "2 mites/day",
+    "varroa": "2",
     "superAdded": true,
     "note": "strong, added second super"
   }'
@@ -159,8 +162,20 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
 `STORES_NONE`; `temperament` uno de `TEMPERAMENT_VERY_GENTLE`,
 `TEMPERAMENT_GENTLE`, `TEMPERAMENT_NORMAL`, `TEMPERAMENT_NERVOUS`,
 `TEMPERAMENT_AGGRESSIVE`. El servidor almacena el colmenar y la reina
-reinante en la `date` indicada y registra un evento `INSPECTION`. Los campos
-que omites se almacenan como `0`, `false` o `""`.
+reinante en la `date` indicada y registra un evento `INSPECTION`.
+
+Los números de una inspección (`frames`, `broodFrames`, `queenCells`,
+`youngestLarva`, `framesAdded`, `framesRemoved`, `fedKg`, `honeyKg`,
+`weightKg` y los cuatro campos de clima) son opcionales: un campo
+que omites se almacena como "no registrado" y no aparece en las respuestas, mientras que
+un `0` explícito se almacena y se devuelve como un cero observado. `honeyKg` se conserva
+para los registros antiguos; registra la miel con `HarvestService`.
+
+`source` indica quién hizo la entrada: `INSPECTION_SOURCE_MANUAL` (el valor por defecto
+cuando no envías ninguno) para una visita hecha por una persona, `INSPECTION_SOURCE_SENSOR` para
+una lectura automática. Las lecturas de sensor aparecen en los gráficos, pero no cuentan
+como "última inspección" y quedan fuera de la lista de pendientes y de las inspecciones
+recientes del panel; consulta [Rastreadores automáticos](./automated-trackers.md).
 
 Las fotos se añaden después con `AddInspectionPhoto`:
 
@@ -208,7 +223,48 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/ListInspections" \
 ```
 
 La última página no tiene `nextPageToken`. `ListInspections` sin `hiveId`
-lista todas las inspecciones del espacio.
+lista todas las inspecciones del espacio. `source` filtra según quién registró
+la entrada: omítelo para obtener todo, `"INSPECTION_SOURCE_MANUAL"` solo para
+visitas hechas por una persona, `"INSPECTION_SOURCE_SENSOR"` solo para lecturas.
+
+## Actualizar un registro \{#update-a-record}
+
+`UpdateApiary`, `UpdateHive`, `UpdateQueen`, `UpdateInspection`,
+`UpdateTask`, `UpdateTreatment` y `UpdateHarvest` cambian solo los campos
+que envías. Corregir el peso de una inspección:
+
+```bash
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e...","weightKg":41.9}}'
+```
+
+Todo lo demás del registro se queda como está. Para poner un campo en su valor
+cero, o para devolver un número opcional a "no registrado", nómbralo en
+`updateMask`:
+
+```bash
+# clear the note and remove the recorded weight
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
+```
+
+Con una máscara se escriben exactamente los campos listados y nada más. Una
+solicitud que no cambiaría nada responde `invalid_argument`. Las reglas por
+llamada:
+
+| Llamada | Solicitud | Notas |
+| --- | --- | --- |
+| `UpdateApiary` | `id` y los campos en el nivel superior, más `updateMask` | `name` no puede quedar vacío |
+| `UpdateHive` | `hive`, `updateMask` | `apiaryId` se ignora (usa `RelocateHive`); `status` no se puede poner en sin especificar |
+| `UpdateQueen` | `queen`, `updateMask` | Sin máscara, enviar solo `replacedAt` termina el reinado (`active` pasa a `false`) y enviar `active: true` vacía `replacedAt` |
+| `UpdateInspection` | `inspection`, `updateMask` | Las fotos cambian mediante las llamadas de foto; el evento `INSPECTION` sigue a una `date` cambiada |
+| `UpdateTask` | `task`, `updateMask` | `hiveId` y `apiaryId` no pueden cambiar; usa una máscara para quitar `dueAt` o reabrir una tarea |
+| `UpdateTreatment` | `treatment`, `updateMask` | Establece `amendedAt`; el colmenar y la reina se resuelven de nuevo cuando `date` se mueve |
+| `UpdateHarvest` | `harvest`, `updateMask` | Establece `amendedAt`; `amountKg` debe seguir por encima de `0`; las cifras de miel siguen a la edición |
 
 ## Crear una reina
 
@@ -243,9 +299,10 @@ internacional del año (`MARKING_COLOR_WHITE` para años terminados en 1 o 6,
 defecto el momento actual. Crear una reina termina siempre el reinado de la
 reina activa actual de la colmena (`active: false`, `replacedAt` establecido)
 y registra los eventos `QUEEN_REPLACED` y `QUEEN_INTRODUCED`. `ListQueens`
-recibe `hiveId` y `onlyActive`; `UpdateQueen` recibe el mensaje `queen`
-completo y actualiza `year`, `marking`, `origin`, `breederNumber`,
-`introducedAt`, `replacedAt`, `active` y `note` (`hiveId` no puede cambiar).
+recibe `hiveId` y `onlyActive`; `UpdateQueen` corrige `year`, `marking`, `origin`, `breederNumber`,
+`introducedAt`, `replacedAt`, `active` y `note` (`hiveId` no puede cambiar;
+consulta [Actualizar un registro](#update-a-record)). `DeleteQueen` elimina también sus
+eventos `QUEEN_INTRODUCED` y `QUEEN_REPLACED`.
 
 ## Tareas
 
@@ -273,8 +330,8 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/CreateTask" \
 
 `title` es obligatorio. Una tarea con `hiveId` hereda el `apiaryId` de la
 colmena cuando no envías ninguno; `apiaryId` debe existir en tu espacio. Una
-tarea sin ninguno de los dos es personal y se sincroniza solo con tus propios
-dispositivos. Márcala como hecha con:
+tarea sin ninguno de los dos es personal: se sincroniza solo con tus propios
+dispositivos y `ListTasks` la devuelve solo a ti. Márcala como hecha con:
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
@@ -285,7 +342,8 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
 
 La respuesta es `{"task": {...}}` con `"done": true`. `ListTasks` recibe
 `onlyOpen` y `hiveId` y devuelve primero las tareas abiertas, ordenadas por
-`dueAt`.
+`dueAt`. `UpdateTask` cambia `title`, `dueAt`, `done`, `priority`, `note`,
+`recurrence` y `assignedTo`.
 
 ## Tratamientos
 
@@ -299,7 +357,9 @@ curl -s -X POST "$OB/openbeehive.v1.TreatmentService/CreateTreatment" \
 `hiveId` y `product` son obligatorios; `reason` toma por defecto `"varroa"`.
 El `treatment` de la respuesta lleva los `apiaryId` y `queenId` congelados en
 la `date` indicada. `ListTreatments` recibe `hiveId` y devuelve los más
-recientes primero.
+recientes primero. `UpdateTreatment` corrige un tratamiento y marca `amendedAt`, que la aplicación
+muestra como "Modificado el" e imprime en el registro de tratamientos;
+`DeleteTreatment` elimina también su evento `TREATMENT`.
 
 ## Cosechas
 
@@ -345,8 +405,9 @@ curl -s -X POST "$OB/openbeehive.v1.HarvestService/ListHarvests" \
 
 `ListHarvests` filtra por `hiveId` o `apiaryId` (ambos opcionales) y devuelve
 `{"harvests": [...], "page": {...}}`, de más reciente a más antiguo.
-`DeleteHarvest` recibe `{"id": ...}` y escribe una lápida; no hay RPC de
-actualización.
+`UpdateHarvest` corrige una cosecha y marca `amendedAt`; `DeleteHarvest` recibe `{"id": ...}`, escribe
+una lápida y elimina el evento `HARVEST`, de modo que las cifras de miel ya no
+la cuentan.
 
 ## Eventos
 
@@ -394,7 +455,8 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 `thresholdDays` (por defecto 21) define cuándo una colmena cuenta como
 pendiente: las colmenas cuya última inspección tiene al menos esa cantidad de
 días, más las colmenas nunca inspeccionadas (`daysSinceLast: -1`, listadas
-primero). `nextTasks` contiene las siguientes cinco tareas abiertas,
+primero). Las lecturas de sensor (`INSPECTION_SOURCE_SENSOR`) no cuentan aquí como
+inspecciones y no se listan en `recentInspections`. `nextTasks` contiene las siguientes cinco tareas abiertas,
 `recentInspections` las últimas diez visitas. Las cifras de miel provienen de
 los eventos `HARVEST`; `honeyKgSeason` es el año natural en curso.
 `GetHoneyStats` recibe `year` (0 = todos los años) y devuelve las sumas
@@ -418,18 +480,20 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
       "scopeId": "2b1f6c0e-...",
       "op": "CHANGE_OP_UPSERT",
       "payloadJson": "{\"hive_id\":\"c41a...\",\"date\":\"2026-06-19T04:00:11.204Z\",\"weight_kg\":42.5}",
-      "hlc": "001781234567890:00000:server",
+      "hlc": "001781234567890:00000:srv-3fa91c0b77d2",
       "authorId": "u-…"
     }
   ],
   "nextCursor": "48213",
-  "hasMore": false
+  "hasMore": false,
+  "serverTimeMs": "1781234569120"
 }
 ```
 
 `payloadJson` es una cadena JSON cuyas claves son los nombres de columna de
-la tabla en `snake_case`. Devuelve `nextCursor` como `cursor` para continuar.
-El feed contiene todos los cambios, tanto si los envió un dispositivo como si
+la tabla en `snake_case`. Devuelve `nextCursor` como `cursor` para continuar. `limit` es por defecto
+200 y tiene un tope de 500. El feed abarca el espacio del llamante; las filas
+personales (ámbito `user:<id>`) se devuelven solo a su propietario. El feed contiene todos los cambios, tanto si los envió un dispositivo como si
 los escribió un RPC de servicio; las ubicaciones aparecen solo aquí, ya que
 no tienen servicio propio. Consulta el
 [protocolo de sincronización](../developers/sync-protocol.md) para saber cómo
@@ -463,12 +527,36 @@ Los errores vuelven como un cuerpo JSON con un código Connect:
 | --- | --- | --- |
 | `invalid_argument` | 400 | `name` vacío; falta `hiveId` (inspección, reina, tratamiento, cosecha), `year` (reina), `title` (tarea), `product` (tratamiento); `amountKg` no mayor que `0` (cosecha); un `apiaryId` que no existe en `CreateTask`; una foto que no es una URL `data:image/` o supera 512 KiB; falta `hive` / `queen` en las llamadas de actualización |
 | `unauthenticated` | 401 | Token ausente, caducado o eliminado: una clave API desconocida o revocada, o un token de sesión que ha superado `BEEHIVE_SESSION_TTL` |
-| `permission_denied` | 403 | Sesión de demostración llamando a un RPC de escritura; `Push` a un ámbito en el que no puedes escribir |
+| `permission_denied` | 403 | Sesión de demostración o clave API de solo lectura llamando a un RPC de escritura |
+| `failed_precondition` | 400 | `DeleteApiary` mientras el colmenar aún tiene colmenas |
+| `resource_exhausted` | 429 | Más de 4 streams `Subscribe` abiertos para un usuario |
 | `not_found` | 404 | Id desconocido, o un id que pertenece a otro espacio, en cualquier `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, las llamadas de foto y cada `Create*` que referencia una colmena o un colmenar |
-| `internal` | 500 | Errores de base de datos |
+| `internal` | 500 | Fallos del lado del servidor. El mensaje es siempre `internal error`; los detalles están solo en el registro del servidor |
 
-Consulta la [referencia de errores de Connect](https://connectrpc.com/docs/protocol/#error-codes)
+Una actualización que no cambiaría nada, y un `Push` con más de 2000
+cambios, responden también `invalid_argument`. Consulta la
+[referencia de errores de Connect](https://connectrpc.com/docs/protocol/#error-codes)
 para la lista completa de códigos.
+
+### Códigos de error de los endpoints HTTP planos \{#http-error-codes}
+
+Los endpoints `/auth/*` y `/tenants/*` no son RPC. Sus errores son
+`{"error": "<plain English>", "code": "<snake_case>"}` con un estado HTTP
+acorde. Los clientes deben actuar según `code`; el texto puede cambiar.
+
+| HTTP | Códigos |
+| --- | --- |
+| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `id_required`, `name_required`, `org_id_required`, `invite_invalid`, `invite_expired`, `verification_invalid`, `unknown_provider`, `oidc_state_missing`, `oidc_state_invalid`, `oidc_no_email`, `passkey_no_ceremony`, `passkey_failed` |
+| 401 | `not_signed_in`, `invalid_credentials`, `oidc_failed`, `passkey_failed` |
+| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `passkey_session_mismatch` |
+| 404 | `not_found`, `invite_not_found`, `key_not_found`, `passkey_not_found` |
+| 405 | `method_not_allowed` |
+| 409 | `account_exists` |
+| 413 | `body_too_large` |
+| 415 | `unsupported_media_type` |
+| 429 | `rate_limited` (con `Retry-After`) |
+| 500 | `internal` |
+| 503 | `demo_unavailable`, `unavailable` |
 
 ## Notas
 

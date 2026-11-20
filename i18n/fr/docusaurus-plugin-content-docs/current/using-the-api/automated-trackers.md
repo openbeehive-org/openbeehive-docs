@@ -7,19 +7,21 @@ title: "Trackers automatisés"
 
 Une balance de ruche, une sonde de température du nid à couvain ou un capteur
 d'humidité peut envoyer ses relevés dans Openbeehive via
-`InspectionService.CreateInspection`. Chaque relevé devient une ligne de
-visite sur la ruche, se synchronise vers chaque appareil comme une visite
-saisie à la main, et alimente les graphiques **Évolution** de la ruche. Cette
-page décrit ce que le serveur fait réellement de ces relevés et comment les
-envoyer depuis un script.
+`InspectionService.CreateInspection` avec `source` réglé sur
+`INSPECTION_SOURCE_SENSOR`. Chaque relevé est stocké sur la ruche, se
+synchronise vers chaque appareil et alimente les graphiques **Évolution** de la
+ruche, sans être confondu avec une visite faite par une personne. Cette page
+décrit ce que le serveur fait de ces relevés et comment les envoyer depuis un
+script.
 
 ## Ce qu'est un relevé
 
-Il n'y a pas de table de capteurs séparée. Un relevé est une visite dont seuls
-les champs de mesure sont remplis :
+Il n'y a pas de table de capteurs séparée. Un relevé est une visite marquée
+comme relevé de capteur, dont seuls les champs de mesure sont remplis :
 
 | Champ JSON | Signification | Unité |
 | --- | --- | --- |
+| `source` | Toujours `"INSPECTION_SOURCE_SENSOR"` pour un appareil | |
 | `weightKg` | Poids de la ruche | kg |
 | `tempHive` | Température à l'intérieur de la ruche | °C |
 | `tempOutside` | Température extérieure | °C |
@@ -27,11 +29,13 @@ les champs de mesure sont remplis :
 | `humidityOutside` | Humidité relative extérieure | % |
 | `note` | Texte libre, par exemple le nom de l'appareil | |
 
-N'envoyez que ce que votre appareil mesure. Le serveur stocke les champs que
-vous omettez comme `0` ; les graphiques Évolution ne tracent que les valeurs
-supérieures à zéro, mais le résumé de visite dans l'application affiche une
-température de `0` comme un `0 °C` mesuré, n'envoyez donc pas un champ de
-température que vous n'avez pas mesuré.
+N'envoyez que ce que votre appareil mesure. Un champ que vous omettez est stocké
+comme « non enregistré » ; un champ que vous envoyez à `0` est stocké comme un
+zéro mesuré, et les températures négatives sont valides et tracées. N'envoyez
+donc pas `0` pour une valeur que vous n'avez pas mesurée.
+
+Si vous omettez `source`, l'entrée compte comme une visite manuelle
+(`INSPECTION_SOURCE_MANUAL`), avec les effets décrits ci-dessous.
 
 Sur le serveur, le relevé suit le même chemin qu'une visite enregistrée dans
 l'application : la ligne est estampillée avec le rucher et la reine régnante à
@@ -41,24 +45,31 @@ journal de synchronisation avec votre compte comme auteur. Voir la
 
 ## Ce que l'application en fait
 
-- Le relevé apparaît dans le journal des visites et les graphiques de la ruche
+- Un relevé de capteur apparaît dans les graphiques **Évolution** de la ruche
   après la prochaine synchronisation de l'appareil (l'application se
   synchronise toutes les 15 secondes lorsqu'elle est ouverte, et après chaque
   écriture locale).
-- Il compte comme la dernière visite de la ruche. Le panneau **Visites à
-  effectuer** du tableau de bord et `StatsService.GetDashboard` calculent les
-  « jours depuis la dernière visite » à partir de la ligne de visite la plus
-  récente, de sorte qu'une ruche qui envoie un relevé quotidien n'apparaît
-  jamais comme à visiter, même si personne ne l'a ouverte depuis des semaines.
-- Chaque relevé est une visite dans le journal. Un relevé par minute produit
-  1 440 visites par jour et repousse les entrées saisies à la main hors de
-  vue.
+- Il ne compte pas comme une visite. La « dernière visite », la liste des
+  ruches, le panneau **Visites à effectuer** du tableau de bord et
+  `StatsService.GetDashboard` ignorent les relevés de capteur, de sorte qu'une
+  ruche qui envoie un relevé quotidien apparaît quand même comme à visiter
+  lorsque personne ne l'a ouverte depuis des semaines.
+- Il est masqué dans les listes de visites. La page de la ruche ne liste que
+  les visites faites par une personne ; le journal complet des visites montre
+  les relevés lorsque **Afficher les relevés de capteur** est coché.
+- `ListInspections` renvoie les deux sortes, sauf si vous filtrez avec
+  `source`.
 
-Envoyez au plus quelques relevés par jour, ou agrégez sur l'appareil et
-envoyez une valeur quotidienne. Mettez le nom de l'appareil dans `note` pour
-distinguer facilement les relevés automatiques de vos propres visites. Les
-cadences de 15 minutes et plus fines relèvent de votre propre base de séries
-temporelles, pas du journal des visites.
+Une entrée envoyée sans `source` est traitée comme une visite manuelle : elle
+apparaît dans le journal des visites et réinitialise la « dernière visite ».
+Les relevés envoyés de cette façon par des scripts écrits pour des versions
+antérieures restent des visites manuelles ; définissez désormais `source` dans
+le script.
+
+Chaque relevé reste une ligne qui se synchronise vers chaque appareil. Envoyez
+au plus quelques relevés par jour, ou agrégez sur l'appareil et envoyez une
+valeur quotidienne. Mettez le nom de l'appareil dans `note`. Les cadences de
+15 minutes et plus fines relèvent de votre propre base de séries temporelles.
 
 ## S'authentifier depuis un script
 
@@ -131,7 +142,7 @@ HIVE="c41a..."
 # The API key from Settings -> API keys, stored once on the device.
 TOKEN=$(cat /etc/openbeehive-key)
 
-body=$(printf '{"hiveId":"%s","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
+body=$(printf '{"hiveId":"%s","source":"INSPECTION_SOURCE_SENSOR","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
   "$HIVE" "$(read_sensor weight)" "$(read_sensor brood_temp)" "$(read_sensor brood_rh)")
 
 curl -fsS -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
@@ -151,7 +162,7 @@ OB = "https://bees.example.com"
 TOKEN = open("/etc/openbeehive-key").read().strip()  # obhk_...
 
 def create_inspection(hive_id, **fields):
-    body = json.dumps({"hiveId": hive_id, **fields}).encode()
+    body = json.dumps({"hiveId": hive_id, "source": "INSPECTION_SOURCE_SENSOR", **fields}).encode()
     req = urllib.request.Request(
         f"{OB}/openbeehive.v1.InspectionService/CreateInspection", data=body,
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"})
@@ -174,5 +185,8 @@ résout le rucher et la reine pour cette date.
 - **Attention aux unités.** Température en °C, humidité de 0 à 100, poids en
   kg.
 - **Nettoyez les données de test.** `ListInspections` avec votre `hiveId` et
-  `DeleteInspection` suppriment les relevés ; la suppression se synchronise
-  aussi vers les appareils.
+  `"source": "INSPECTION_SOURCE_SENSOR"` trouve les relevés et
+  `DeleteInspection` les supprime ; la suppression se synchronise aussi vers
+  les appareils.
+- **Corrigez au lieu de renvoyer.** `UpdateInspection` modifie un relevé
+  stocké ; voir [Mettre à jour un enregistrement](./rest.md#update-a-record).

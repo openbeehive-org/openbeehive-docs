@@ -6,19 +6,20 @@ title: "Automated trackers"
 # Automated trackers and sensors
 
 A hive scale, a brood-nest temperature probe or a humidity sensor can post
-its readings into Openbeehive through `InspectionService.CreateInspection`.
-Each reading becomes an inspection row on the hive, syncs to every device
-like a visit entered by hand, and feeds the hive's **Development** charts.
-This page describes what the server actually does with such readings and
-how to post them from a script.
+its readings into Openbeehive through `InspectionService.CreateInspection`
+with `source` set to `INSPECTION_SOURCE_SENSOR`. Each reading is stored on
+the hive, syncs to every device and feeds the hive's **Development** charts,
+without being mistaken for a visit by a person. This page describes what the
+server does with such readings and how to post them from a script.
 
 ## What a reading is
 
-There is no separate sensor table. A reading is an inspection with only the
-measurement fields filled in:
+There is no separate sensor table. A reading is an inspection marked as a
+sensor reading, with only the measurement fields filled in:
 
 | JSON field | Meaning | Unit |
 | --- | --- | --- |
+| `source` | Always `"INSPECTION_SOURCE_SENSOR"` for a device | |
 | `weightKg` | Hive weight | kg |
 | `tempHive` | Temperature inside the hive | °C |
 | `tempOutside` | Outside temperature | °C |
@@ -26,10 +27,13 @@ measurement fields filled in:
 | `humidityOutside` | Outside relative humidity | % |
 | `note` | Free text, for example the device name | |
 
-Send only what your device measures. The server stores fields you leave out
-as `0`; the Development charts plot only values above zero, but the visit
-summary in the app shows a temperature of `0` as a measured `0 °C`, so do not
-send a temperature field you did not measure.
+Send only what your device measures. A field you leave out is stored as
+"not recorded"; a field you send as `0` is stored as a measured zero, and
+temperatures below zero are valid and charted. So do not send `0` for a
+value you did not measure.
+
+If you leave `source` out, the entry counts as a manual visit
+(`INSPECTION_SOURCE_MANUAL`), with the effects described below.
 
 On the server the reading goes through the same path as a visit recorded in
 the app: the row is stamped with the apiary and reigning queen as of its
@@ -39,27 +43,34 @@ sync log with your account as author. See the
 
 ## What the app makes of it
 
-- The reading appears in the hive's visit log and charts after the device's
-  next sync (the app syncs every 15 seconds while open, and after every
-  local write).
-- It counts as the hive's last inspection. The dashboard's **Due
-  inspections** panel and `StatsService.GetDashboard` compute "days since
-  last visit" from the newest inspection row, so a hive that reports daily
-  never shows up as due, even if nobody has opened it in weeks.
-- Each reading is one visit in the log. A reading every minute produces
-  1,440 visits a day and pushes the hand-written entries out of sight.
+- A sensor reading appears in the hive's **Development** charts after the
+  device's next sync (the app syncs every 15 seconds while open, and after
+  every local write).
+- It does not count as an inspection. "Last inspected", the hives list, the
+  dashboard's **Due inspections** panel and `StatsService.GetDashboard`
+  ignore sensor readings, so a hive that reports daily still shows up as due
+  when nobody has opened it for weeks.
+- It is hidden from the visit lists. The hive page lists only visits by a
+  person; the full visit log shows readings when **Show sensor readings** is
+  ticked.
+- `ListInspections` returns both kinds unless you filter with `source`.
 
-Post a few readings a day at most, or aggregate on the device and post one
-daily value. Put the device name in `note` so machine readings are easy to
-tell apart from your own visits. Cadences of 15 minutes and finer belong in
-your own time-series store, not in the visit log.
+An entry posted without `source` is treated as a manual visit: it shows in
+the visit log and resets "last inspected". Readings posted that way by
+scripts written for earlier versions stay manual visits; set `source` in the
+script from now on.
+
+Every reading is still a row that syncs to every device. Post a few readings
+a day at most, or aggregate on the device and post one daily value. Put the
+device name in `note`. Cadences of 15 minutes and finer belong in your own
+time-series store.
 
 ## Authenticate from a script
 
 Give each device its own API key (see
 [Authentication](./overview.md#authentication)):
 
-1. In the app, switch to the tenant the hive belongs to and open
+1. In the app, switch to the workspace the hive belongs to and open
    **Settings → API keys**.
 2. Name the key after the device (for example `scale-01`), leave the
    permissions at **Read and write** (a sensor creates inspections, which a
@@ -68,13 +79,13 @@ Give each device its own API key (see
 3. Store it on the device and send it as `Authorization: Bearer obhk_...`
    on every call.
 
-The key acts as you inside that tenant and works with any login method
+The key acts as you inside that workspace and works with any login method
 (password, OIDC or passkeys). It expires only if you picked an expiry
 (**30 days**, **90 days** or **1 year**); an expired key gets
 `unauthenticated` (HTTP 401) on every call until you create a new one.
 Settings shows when each key was last used. When the device is retired, tap
 **Remove** next to its key; the next call from it returns `unauthenticated`.
-The key also stops working if you leave the tenant. Use a **Read-only** key
+The key also stops working if you leave the workspace. Use a **Read-only** key
 for anything that only reads, such as a dashboard or an export script; it
 gets `permission_denied` on `CreateInspection` and every other write.
 
@@ -121,7 +132,7 @@ HIVE="c41a..."
 # The API key from Settings -> API keys, stored once on the device.
 TOKEN=$(cat /etc/openbeehive-key)
 
-body=$(printf '{"hiveId":"%s","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
+body=$(printf '{"hiveId":"%s","source":"INSPECTION_SOURCE_SENSOR","weightKg":%s,"tempHive":%s,"humidityHive":%s,"note":"scale-01"}' \
   "$HIVE" "$(read_sensor weight)" "$(read_sensor brood_temp)" "$(read_sensor brood_rh)")
 
 curl -fsS -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
@@ -141,7 +152,7 @@ OB = "https://bees.example.com"
 TOKEN = open("/etc/openbeehive-key").read().strip()  # obhk_...
 
 def create_inspection(hive_id, **fields):
-    body = json.dumps({"hiveId": hive_id, **fields}).encode()
+    body = json.dumps({"hiveId": hive_id, "source": "INSPECTION_SOURCE_SENSOR", **fields}).encode()
     req = urllib.request.Request(
         f"{OB}/openbeehive.v1.InspectionService/CreateInspection", data=body,
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"})
@@ -162,4 +173,7 @@ for that date.
 - **One hive per sensor.** Do not post the same reading to several hives.
 - **Mind the units.** Temperature in °C, humidity in 0 to 100, weight in kg.
 - **Clean up test data.** `ListInspections` with your `hiveId` and
-  `DeleteInspection` remove readings; the delete syncs to devices too.
+  `"source": "INSPECTION_SOURCE_SENSOR"` finds readings and
+  `DeleteInspection` removes them; the delete syncs to devices too.
+- **Correct instead of reposting.** `UpdateInspection` changes a stored
+  reading; see [Update a record](./rest.md#update-a-record).

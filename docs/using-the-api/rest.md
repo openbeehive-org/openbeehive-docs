@@ -72,8 +72,9 @@ curl -s -X POST "$OB/openbeehive.v1.ApiaryService/CreateApiary" \
 ```
 
 `name` must not be empty (`invalid_argument` otherwise). The response is
-`{"apiary": {...}}`. `UpdateApiary` takes `id` plus the same fields and
-overwrites all of them.
+`{"apiary": {...}}`. `UpdateApiary` takes `id` plus the fields to change; see
+[Update a record](#update-a-record). `DeleteApiary` fails with
+`failed_precondition` while the apiary still has hives.
 
 ## Create and list hives
 
@@ -89,15 +90,18 @@ curl -s -X POST "$OB/openbeehive.v1.HiveService/ListHives" \
   -d '{"apiaryId":"2b1f6c0e-..."}'
 ```
 
-`ListHives` without `apiaryId` lists every hive of the tenant. `CreateHive`
+`ListHives` without `apiaryId` lists every hive of the workspace and is
+paginated like the other lists (`total` is the real number of matching
+hives). `CreateHive`
 needs `apiaryId` and `name`; the new hive gets status `HIVE_STATUS_ACTIVE`,
-an open placement interval and a `CREATED` event. `UpdateHive` takes the
-whole `hive` message and overwrites `name`, `type`, `status`, `boxes`,
-`colonyOrigin`, `note` and `qrCode`; it leaves `apiaryId` and the photo
-untouched. `RelocateHive` takes `{"id": ..., "targetApiaryId": ..., "date": ...}`
+an open placement interval and a `CREATED` event. `UpdateHive` takes a
+`hive` message with `id` and the fields to change (`name`, `type`, `status`,
+`boxes`, `colonyOrigin`, `note`, `qrCode`); it never changes `apiaryId` or
+the photo. `RelocateHive` takes `{"id": ..., "targetApiaryId": ..., "date": ...}`
 (`date` optional, defaults to now), closes the current placement, opens a new
 one and records a `MOVED` event. `DeleteApiary` and `DeleteHive` write a
-tombstone, so the deletion reaches devices through sync.
+tombstone, so the deletion reaches devices through sync. `DeleteHive` also
+deletes the hive's open tasks.
 
 ## Record an inspection
 
@@ -127,7 +131,7 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
 }
 ```
 
-A full visit uses the same call with the stock-card fields:
+A full visit uses the same call with the fields of the hive record card:
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
@@ -146,7 +150,7 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
     "temperament": "TEMPERAMENT_GENTLE",
     "calmness": 3,
     "queenCells": 0,
-    "varroa": "2 mites/day",
+    "varroa": "2",
     "superAdded": true,
     "note": "strong, added second super"
   }'
@@ -156,8 +160,20 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/CreateInspection" \
 `STORES_NONE`; `temperament` one of `TEMPERAMENT_VERY_GENTLE`,
 `TEMPERAMENT_GENTLE`, `TEMPERAMENT_NORMAL`, `TEMPERAMENT_NERVOUS`,
 `TEMPERAMENT_AGGRESSIVE`. The server stores the apiary and the reigning
-queen as of `date` and records an `INSPECTION` event. Fields you leave out
-are stored as `0`, `false` or `""`.
+queen as of `date` and records an `INSPECTION` event.
+
+The numbers of an inspection (`frames`, `broodFrames`, `queenCells`,
+`youngestLarva`, `framesAdded`, `framesRemoved`, `fedKg`, `honeyKg`,
+`weightKg` and the four climate fields) are optional: a field
+you leave out is stored as "not recorded" and is absent from responses, while
+an explicit `0` is stored and returned as an observed zero. `honeyKg` is kept
+for old records; record honey with `HarvestService`.
+
+`source` says who made the entry: `INSPECTION_SOURCE_MANUAL` (the default
+when you send none) for a visit by a person, `INSPECTION_SOURCE_SENSOR` for
+an automated reading. Sensor readings appear in the charts but do not count
+as "last inspected" and are left out of the due list and of the dashboard's
+recent inspections; see [Automated trackers](./automated-trackers.md).
 
 Photos are added afterwards with `AddInspectionPhoto`:
 
@@ -204,7 +220,48 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/ListInspections" \
 ```
 
 The last page has no `nextPageToken`. `ListInspections` without `hiveId`
-lists every inspection of the tenant.
+lists every inspection of the workspace. `source` filters by who recorded
+the entry: leave it out for everything, `"INSPECTION_SOURCE_MANUAL"` for
+visits by a person only, `"INSPECTION_SOURCE_SENSOR"` for readings only.
+
+## Update a record \{#update-a-record}
+
+`UpdateApiary`, `UpdateHive`, `UpdateQueen`, `UpdateInspection`,
+`UpdateTask`, `UpdateTreatment` and `UpdateHarvest` change only the fields
+you send. Correct the weight of one inspection:
+
+```bash
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e...","weightKg":41.9}}'
+```
+
+Everything else on the record stays as it is. To set a field to its zero
+value, or to clear an optional number back to "not recorded", name it in
+`updateMask`:
+
+```bash
+# clear the note and remove the recorded weight
+curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
+```
+
+With a mask, exactly the listed fields are written and nothing else. A
+request that would change nothing answers `invalid_argument`. The rules per
+call:
+
+| Call | Request | Notes |
+| --- | --- | --- |
+| `UpdateApiary` | `id` and the fields at the top level, plus `updateMask` | `name` must not become empty |
+| `UpdateHive` | `hive`, `updateMask` | `apiaryId` is ignored (use `RelocateHive`); `status` cannot be set to unspecified |
+| `UpdateQueen` | `queen`, `updateMask` | Without a mask, sending `replacedAt` alone ends the reign (`active` becomes `false`) and sending `active: true` clears `replacedAt` |
+| `UpdateInspection` | `inspection`, `updateMask` | Photos change through the photo calls; the `INSPECTION` event follows a changed `date` |
+| `UpdateTask` | `task`, `updateMask` | `hiveId` and `apiaryId` cannot change; use a mask to remove `dueAt` or reopen a task |
+| `UpdateTreatment` | `treatment`, `updateMask` | Sets `amendedAt`; the apiary and queen are resolved again when `date` moves |
+| `UpdateHarvest` | `harvest`, `updateMask` | Sets `amendedAt`; `amountKg` must stay above `0`; the honey figures follow the edit |
 
 ## Create a queen
 
@@ -239,9 +296,10 @@ colour for the year (`MARKING_COLOR_WHITE` for years ending in 1 or 6,
 now. Creating a queen always ends the reign of the hive's current active
 queen (`active: false`, `replacedAt` set) and records `QUEEN_REPLACED` and
 `QUEEN_INTRODUCED` events. `ListQueens` takes `hiveId` and `onlyActive`;
-`UpdateQueen` takes the whole `queen` message and updates `year`, `marking`,
-`origin`, `breederNumber`, `introducedAt`, `replacedAt`, `active` and `note`
-(`hiveId` cannot change).
+`UpdateQueen` corrects `year`, `marking`, `origin`, `breederNumber`,
+`introducedAt`, `replacedAt`, `active` and `note` (`hiveId` cannot change;
+see [Update a record](#update-a-record)). `DeleteQueen` also removes her
+`QUEEN_INTRODUCED` and `QUEEN_REPLACED` events.
 
 ## Tasks
 
@@ -268,8 +326,9 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/CreateTask" \
 ```
 
 `title` is required. A task with `hiveId` inherits the hive's `apiaryId`
-when you send none; `apiaryId` must exist in your tenant. A task with
-neither is personal and syncs only to your own devices. Tick it off with:
+when you send none; `apiaryId` must exist in your workspace. A task with
+neither is personal: it syncs only to your own devices and `ListTasks`
+returns it only to you. Tick it off with:
 
 ```bash
 curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
@@ -280,6 +339,8 @@ curl -s -X POST "$OB/openbeehive.v1.TaskService/SetTaskDone" \
 
 The response is `{"task": {...}}` with `"done": true`. `ListTasks` takes
 `onlyOpen` and `hiveId` and returns open tasks first, ordered by `dueAt`.
+`UpdateTask` changes `title`, `dueAt`, `done`, `priority`, `note`,
+`recurrence` and `assignedTo`.
 
 ## Treatments
 
@@ -293,6 +354,9 @@ curl -s -X POST "$OB/openbeehive.v1.TreatmentService/CreateTreatment" \
 `hiveId` and `product` are required; `reason` defaults to `"varroa"`. The
 response `treatment` carries the frozen `apiaryId` and `queenId` as of
 `date`. `ListTreatments` takes `hiveId` and returns newest first.
+`UpdateTreatment` corrects a treatment and stamps `amendedAt`, which the app
+shows as "Amended on" and prints in the treatment register;
+`DeleteTreatment` also removes its `TREATMENT` event.
 
 ## Harvests
 
@@ -337,8 +401,10 @@ curl -s -X POST "$OB/openbeehive.v1.HarvestService/ListHarvests" \
 ```
 
 `ListHarvests` filters by `hiveId` or `apiaryId` (both optional) and returns
-`{"harvests": [...], "page": {...}}`, newest first. `DeleteHarvest` takes
-`{"id": ...}` and writes a tombstone; there is no update RPC.
+`{"harvests": [...], "page": {...}}`, newest first. `UpdateHarvest` corrects
+a harvest and stamps `amendedAt`; `DeleteHarvest` takes `{"id": ...}`, writes
+a tombstone and removes the `HARVEST` event, so the honey figures no longer
+count it.
 
 ## Events
 
@@ -384,7 +450,9 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 
 `thresholdDays` (default 21) sets when a hive counts as due: hives whose last
 inspection is at least that many days old, plus hives never inspected
-(`daysSinceLast: -1`, listed first). `nextTasks` holds the next five open
+(`daysSinceLast: -1`, listed first). Sensor readings
+(`INSPECTION_SOURCE_SENSOR`) do not count as inspections here and are not
+listed in `recentInspections`. `nextTasks` holds the next five open
 tasks, `recentInspections` the last ten visits. Honey figures come from the
 `HARVEST` events; `honeyKgSeason` is the current calendar year.
 `GetHoneyStats` takes `year` (0 = all years) and returns `perQueen`,
@@ -408,17 +476,20 @@ curl -s -X POST "$OB/openbeehive.v1.SyncService/Pull" \
       "scopeId": "2b1f6c0e-...",
       "op": "CHANGE_OP_UPSERT",
       "payloadJson": "{\"hive_id\":\"c41a...\",\"date\":\"2026-06-19T04:00:11.204Z\",\"weight_kg\":42.5}",
-      "hlc": "001781234567890:00000:server",
+      "hlc": "001781234567890:00000:srv-3fa91c0b77d2",
       "authorId": "u-…"
     }
   ],
   "nextCursor": "48213",
-  "hasMore": false
+  "hasMore": false,
+  "serverTimeMs": "1781234569120"
 }
 ```
 
 `payloadJson` is a JSON string whose keys are the table's `snake_case` column
-names. Pass `nextCursor` back as `cursor` to continue. The feed contains
+names. Pass `nextCursor` back as `cursor` to continue. `limit` defaults to
+200 and is capped at 500. The feed covers the caller's workspace; personal
+rows (scope `user:<id>`) are returned only to their owner. The feed contains
 every change, whether a device pushed it or a service RPC wrote it;
 placements appear only here, since they have no service of their own. See
 the [sync protocol](../developers/sync-protocol.md) for how to write changes with
@@ -452,12 +523,36 @@ Errors come back as a JSON body with a Connect code:
 | --- | --- | --- |
 | `invalid_argument` | 400 | Empty `name`; missing `hiveId` (inspection, queen, treatment, harvest), `year` (queen), `title` (task), `product` (treatment); `amountKg` not above `0` (harvest); `apiaryId` that does not exist on `CreateTask`; a photo that is not a `data:image/` URL or exceeds 512 KiB; missing `hive` / `queen` on the update calls |
 | `unauthenticated` | 401 | Missing, expired or removed token: an unknown or revoked API key, or a session token past `BEEHIVE_SESSION_TTL` |
-| `permission_denied` | 403 | Demo session calling a write RPC; `Push` into a scope you cannot write |
-| `not_found` | 404 | Unknown id, or an id that belongs to another tenant, on any `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, the photo calls and every `Create*` that references a hive or apiary |
-| `internal` | 500 | Database errors |
+| `permission_denied` | 403 | Demo session or read-only API key calling a write RPC |
+| `failed_precondition` | 400 | `DeleteApiary` while the apiary still has hives |
+| `resource_exhausted` | 429 | More than 4 open `Subscribe` streams for one user |
+| `not_found` | 404 | Unknown id, or an id that belongs to another workspace, on any `Get*`, `Update*`, `Delete*`, `RelocateHive`, `SetTaskDone`, the photo calls and every `Create*` that references a hive or apiary |
+| `internal` | 500 | Server-side failures. The message is always `internal error`; details are in the server log only |
 
-See the [Connect error reference](https://connectrpc.com/docs/protocol/#error-codes)
+An update that would change nothing, and a `Push` with more than 2000
+changes, also answer `invalid_argument`. See the
+[Connect error reference](https://connectrpc.com/docs/protocol/#error-codes)
 for the full code list.
+
+### Error codes of the plain-HTTP endpoints \{#http-error-codes}
+
+The `/auth/*` and `/tenants/*` endpoints are not RPCs. Their errors are
+`{"error": "<plain English>", "code": "<snake_case>"}` with a matching HTTP
+status. Clients should act on `code`; the text may change.
+
+| HTTP | Codes |
+| --- | --- |
+| 400 | `invalid_body`, `invalid_email`, `invalid_scope`, `invalid_expiry`, `id_required`, `name_required`, `org_id_required`, `invite_invalid`, `invite_expired`, `verification_invalid`, `unknown_provider`, `oidc_state_missing`, `oidc_state_invalid`, `oidc_no_email`, `passkey_no_ceremony`, `passkey_failed` |
+| 401 | `not_signed_in`, `invalid_credentials`, `oidc_failed`, `passkey_failed` |
+| 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `passkey_session_mismatch` |
+| 404 | `not_found`, `invite_not_found`, `key_not_found`, `passkey_not_found` |
+| 405 | `method_not_allowed` |
+| 409 | `account_exists` |
+| 413 | `body_too_large` |
+| 415 | `unsupported_media_type` |
+| 429 | `rate_limited` (with `Retry-After`) |
+| 500 | `internal` |
+| 503 | `demo_unavailable`, `unavailable` |
 
 ## Notes
 

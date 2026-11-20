@@ -32,16 +32,20 @@ Hay diez servicios registrados en el servidor (`server/cmd/server/main.go`):
 | `ApiaryService` | `CreateApiary`, `GetApiary`, `ListApiaries`, `UpdateApiary`, `DeleteApiary` |
 | `HiveService` | `CreateHive`, `GetHive`, `ListHives`, `UpdateHive`, `DeleteHive`, `RelocateHive` |
 | `QueenService` | `CreateQueen`, `ListQueens`, `UpdateQueen`, `DeleteQueen` |
-| `InspectionService` | `CreateInspection`, `ListInspections`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
-| `TaskService` | `CreateTask`, `ListTasks`, `SetTaskDone`, `DeleteTask` |
-| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `DeleteTreatment` |
-| `HarvestService` | `CreateHarvest`, `ListHarvests`, `DeleteHarvest` |
+| `InspectionService` | `CreateInspection`, `ListInspections`, `UpdateInspection`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
+| `TaskService` | `CreateTask`, `ListTasks`, `UpdateTask`, `SetTaskDone`, `DeleteTask` |
+| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `UpdateTreatment`, `DeleteTreatment` |
+| `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
 | `EventService` | `ListEvents` |
 | `StatsService` | `GetDashboard`, `GetHoneyStats` |
 | `SyncService` | `Pull`, `Push`, `Subscribe` (stream desde el servidor) |
 
-Cada RPC está acotado al espacio (tenant) activo del llamante. Los id de otro
-espacio se comportan como id desconocidos (`not_found`).
+Cada RPC está acotado al espacio activo del llamante (llamado `tenant` u
+`organization` en las rutas y en los nombres de campo). Los id de otro espacio se comportan
+como id desconocidos (`not_found`).
+
+Un mensaje RPC puede tener como máximo 16 MiB, y una solicitud que no sea el
+stream `Subscribe` puede durar como máximo 2 minutos.
 
 ### Las escrituras pasan por la sincronización \{#writes-go-through-sync}
 
@@ -81,8 +85,39 @@ como a través de la API:
   instante en las cifras de miel. `amountKg` debe ser mayor que `0`.
 - Una tarea con `hiveId` o `apiaryId` se sincroniza bajo ese colmenar y se
   comparte con todos los que lo ven; una tarea sin ninguno de los dos vive en
-  el ámbito personal del llamante y llega solo a los dispositivos de ese
-  usuario.
+  el ámbito personal del llamante: llega solo a los dispositivos de ese
+  usuario y `ListTasks` la devuelve solo a su propietario.
+- `CreateInspection` con `source: INSPECTION_SOURCE_SENSOR` almacena una lectura
+  de sensor en lugar de una visita; consulta
+  [Rastreadores automáticos](./automated-trackers.md).
+
+Las correcciones y las eliminaciones mantienen coherente el historial:
+
+- `UpdateInspection`, `UpdateTreatment` y `UpdateHarvest` corrigen un registro
+  guardado. Su evento de la línea de tiempo sigue a la edición, y cuando cambia `date` el
+  colmenar y la reina se resuelven de nuevo para la nueva fecha. Los tratamientos y las
+  cosechas reciben `amendedAt` con la hora de la edición.
+- `DeleteInspection`, `DeleteTreatment`, `DeleteHarvest` y `DeleteQueen`
+  eliminan también los eventos de la línea de tiempo del registro, así que una cosecha eliminada ya no
+  cuenta en las cifras de miel.
+- `DeleteHive` elimina también las tareas abiertas de la colmena. `DeleteApiary` falla con
+  `failed_precondition` mientras el colmenar aún tenga colmenas: muévelas con
+  `RelocateHive` o elimínalas primero.
+
+### Las actualizaciones cambian solo lo que envías \{#partial-updates}
+
+Cada RPC `Update*` es una actualización parcial con los mismos dos modos:
+
+- **Sin `updateMask`:** cada campo que dejas en su valor cero (`""`,
+  `0`, `false`, sin establecer) conserva su valor almacenado. Envía solo lo que cambia.
+- **Con `updateMask`:** se escriben exactamente los campos listados, también con
+  su valor cero. Así es como se vacía una nota, se quita una fecha de vencimiento o se reabre
+  una tarea. En JSON la máscara es una cadena de nombres de campo separados por comas:
+  `"updateMask": "note,dueAt"`.
+
+Una solicitud que no cambiaría nada se rechaza con `invalid_argument`.
+Los campos que identifican el registro (`id`, `hiveId`, el espacio) no se pueden
+cambiar; una colmena cambia de colmenar solo mediante `RelocateHive`.
 
 Las lecturas (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`)
 consultan directamente las tablas del servidor. Muestran las escrituras de la
@@ -91,9 +126,6 @@ las ha enviado.
 
 ### Todavía no en la API
 
-- **No hay RPC para editar cosechas.** `HarvestService` solo tiene
-  `CreateHarvest`, `ListHarvests` y `DeleteHarvest`. Para corregir una
-  cosecha, elimínala y créala de nuevo, o edítala en la aplicación.
 - **No hay RPC de ubicaciones.** Las ubicaciones las escriben `CreateHive` y
   `RelocateHive` y aparecen solo en el feed de sincronización.
 - `EventService` es de solo lectura. Los eventos los escriben los flujos
@@ -111,16 +143,28 @@ Junto a los servicios RPC hay unos cuantos endpoints HTTP planos:
 | --- | --- |
 | `GET /healthz` | Devuelve `ok` |
 | `GET /files/<key>` | Archivos almacenados, solo con el backend de blobs de sistema de archivos (`BEEHIVE_BLOB_BACKEND=fs`) |
+| `GET /auth/instance` | Lo que ofrece la instancia (métodos de inicio de sesión, demo, registro, ajustes del mapa); siempre presente, no necesita credenciales |
 | `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | Cuentas de correo y contraseña (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` definido) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `/auth/logout`, `/auth/me`, `/auth/instance`, `/auth/switch`, `/auth/accept-invite` | Auxiliares de sesión y de espacio (tenant), presentes siempre que haya algún método de inicio de sesión habilitado |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite` | Auxiliares de sesión y de espacio, presentes siempre que haya algún método de inicio de sesión habilitado |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestión de claves API (listar, crear, eliminar), presente siempre que haya algún método de inicio de sesión habilitado; solo con sesión, una clave no puede llamarlos |
-| `/tenants/create`, `/tenants/invite`, `/tenants/invites`, `/tenants/invite/revoke`, `/tenants/delete` | Administración de espacios, presente siempre que haya algún método de inicio de sesión habilitado |
+| `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Administración de espacios, presente siempre que haya algún método de inicio de sesión habilitado |
 | `POST /auth/demo-login` | Solo con `BEEHIVE_DEMO=true` |
 
 Los usan las pantallas de inicio de sesión y ajustes de la aplicación. No forman
-parte del contrato proto.
+parte del contrato proto. Todos siguen las mismas reglas:
+
+- Cada endpoint acepta solo el método indicado; cualquier otro responde `405`
+  con una cabecera `Allow`.
+- Los endpoints `POST` que reciben un cuerpo necesitan `Content-Type: application/json`
+  (`415` en caso contrario), y el cuerpo puede tener como máximo 64 KiB.
+- Las solicitudes `POST` desde una página de navegador de otro sitio se rechazan con `403`
+  (`cross_site_request`). Los scripts, que no envían cabecera `Origin`, no se ven
+  afectados.
+- `/tenants/delete` necesita `{"org_id": "..."}`; no hay valor predeterminado.
+- Los errores son JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
+  Los códigos se listan en la [página de REST](./rest.md#http-error-codes).
 
 ## Autenticación \{#authentication}
 
@@ -222,11 +266,19 @@ curl -s -X POST https://bees.example.com/auth/signin \
 
 La respuesta JSON contiene `token`; el mismo valor se establece también como
 cookie `obh_session`. El token expira tras `BEEHIVE_SESSION_TTL`.
+Los inicios de sesión fallidos se limitan: tras 10 fallos para una cuenta o 30 desde
+una misma dirección en 15 minutos, el endpoint responde `429` (`rate_limited`)
+con una cabecera `Retry-After`.
 
 El token lleva el espacio activo de la cuenta. `GET /auth/me` lista los
 espacios a los que perteneces (`tenants`) y el activo (`active_org`);
 `POST /auth/switch` con `{"org_id": "..."}` devuelve un nuevo `token` para
 otro espacio.
+
+`POST /auth/logout-all` termina todas las demás sesiones de la cuenta y devuelve
+un `token` nuevo para el llamante. El servidor también comprueba en cada solicitud que
+la cuenta sigue siendo miembro del espacio; una sesión revocada o una pertenencia
+perdida se rechazan en unos 10 segundos.
 
 Con `BEEHIVE_DEMO=true`, las sesiones de demostración son de solo lectura: la
 cuenta de demostración solo puede llamar a los RPC cuyo nombre empiece por

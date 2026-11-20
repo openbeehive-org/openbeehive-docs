@@ -26,6 +26,7 @@ vers les plugins dont vous avez besoin.
 ```go
 import (
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/proto"
     obv1 "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1"
     "github.com/openbeehive-org/openbeehive-app/server/internal/gen/openbeehive/v1/openbeehivev1connect"
 )
@@ -45,7 +46,12 @@ exemple, envoie ses relevés via `InspectionService` :
 
 ```go
 insp := openbeehivev1connect.NewInspectionServiceClient(http.DefaultClient, "https://bees.example.com")
-req := connect.NewRequest(&obv1.CreateInspectionRequest{HiveId: hiveID, WeightKg: 42.5, TempHive: 34.2})
+req := connect.NewRequest(&obv1.CreateInspectionRequest{
+    HiveId:   hiveID,
+    Source:   obv1.InspectionSource_INSPECTION_SOURCE_SENSOR,
+    WeightKg: proto.Float64(42.5), // optional fields are pointers: unset means "not recorded"
+    TempHive: proto.Float64(34.2),
+})
 req.Header().Set("Authorization", "Bearer "+token)
 res, err := insp.CreateInspection(ctx, req)
 ```
@@ -103,12 +109,17 @@ message SubscribeRequest { string cursor = 1; }
 message SubscribeEvent { string server_cursor = 1; }
 ```
 
-Le serveur interroge son compteur global de changements toutes les deux secondes et
-envoie un `SubscribeEvent` chaque fois que le compteur a dépassé le curseur que vous
+Le serveur recherche toutes les deux secondes le changement le plus récent que
+l'appelant peut tirer (l'espace actif, plus les lignes personnelles de l'appelant) et
+envoie un `SubscribeEvent` chaque fois que celui-ci a dépassé le curseur que vous
 avez envoyé (et la dernière valeur qu'il a envoyée). L'événement ne transporte aucune
-donnée ; appelez `Pull` avec votre curseur stocké lorsque vous en recevez un. Les
-lignes hors de vos portées font aussi avancer le compteur, donc un `Pull` après un
-événement peut revenir vide.
+donnée ; appelez `Pull` avec votre curseur stocké lorsque vous en recevez un.
+L'activité dans d'autres espaces ne réveille pas le flux.
+
+Un utilisateur peut tenir au plus 4 flux `Subscribe` ouverts ; un cinquième est refusé
+avec `resource_exhausted`. Le flux est exempté du délai de requête de 2 minutes du
+serveur, mais un reverse proxy intermédiaire peut fermer les connexions inactives ;
+soyez donc prêt à vous reconnecter.
 
 L'application n'utilise pas `Subscribe`. Elle pousse et tire toutes les 15 secondes,
 après chaque écriture locale, et lors de l'événement `online` du navigateur.
