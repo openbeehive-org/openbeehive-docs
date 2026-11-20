@@ -15,13 +15,15 @@ Wire-Vertrag aus `proto/openbeehive/v1/sync.proto` und die Merge-Regeln in
 ```protobuf
 service SyncService {
   rpc Pull(PullRequest) returns (PullResponse);
+  rpc Snapshot(SnapshotRequest) returns (SnapshotResponse);
   rpc Push(PushRequest) returns (PushResponse);
   rpc Subscribe(SubscribeRequest) returns (stream SubscribeEvent);
 }
 ```
 
 Die Client-Schleife (`app/src/lib/local/sync.ts`, `syncOnce`): die Outbox
-pushen, dann pullen, bis `has_more` false ist. Die Schleife läuft alle 15 Sekunden,
+pushen, dann pullen, bis `has_more` false ist. Ein Gerät ohne Cursor lädt
+zuerst einen [Snapshot](#snapshot). Die Schleife läuft alle 15 Sekunden,
 nach jedem lokalen Schreibvorgang und beim `online`-Event des Browsers. Läufe
 werden serialisiert; ein Aufruf, der eintrifft, während einer läuft, plant
 einen weiteren Durchgang. Der Client ruft `Subscribe` nicht auf.
@@ -29,6 +31,34 @@ einen weiteren Durchgang. Der Client ruft `Subscribe` nicht auf.
 Die Outbox wird in Stapeln von höchstens 200 Änderungen und etwa 4 MiB
 Payload gepusht; ein Stapel, den der Server als Ganzes ablehnt, wird halbiert
 und erneut gesendet.
+
+## Protokollversionen \{#versions}
+
+Ein Client sagt mit zwei Request-Headern bei jedem `SyncService`-Aufruf,
+welche Version des Protokolls er spricht:
+
+```text
+Openbeehive-Sync-Protocol: 1
+Openbeehive-App-Version: 0.5.0
+```
+
+Die aktuelle Version ist 1; die App-Version ist Freitext für das Server-Log.
+Eine Anfrage ohne `Openbeehive-Sync-Protocol` kommt von einer installierten
+0.4.x-App (Version 0). Ein solcher Client wird bedient wie von Release 0.4.1:
+`Pull` liefert nur die Entitäten und Spalten, die dieses Release kannte
+(`legacyCols` in `server/internal/service/sync_legacy.go`, eine Liste, die nie
+wächst), Cursor sind reine Sequenznummern, und es gibt weder Snapshots noch
+[Statussignale](#pull-status). Eine 0.4.x-App schreibt jeden Schlüssel einer
+gepullten Änderung in eine gleichnamige Spalte und hört beim ersten Schlüssel,
+den sie nicht kennt, auf zu synchronisieren; deshalb erreichen neue Spalten
+und Tabellen nur Clients, die eine Version ankündigen. **Skripte, die
+`SyncService` aufrufen, müssen den Header senden**, um alles zu bekommen.
+
+`BEEHIVE_SYNC_MIN_PROTOCOL` (Vorgabe `0`) ist die niedrigste Version, die der
+Server annimmt. Darunter schlägt jeder Aufruf mit `failed_precondition` und
+einem `UpgradeRequired`-Fehlerdetail (`min_protocol`) fehl; die App zeigt dann
+„App veraltet · zum Synchronisieren aktualisieren“ und hört auf, es erneut zu
+versuchen.
 
 ## Change
 
@@ -43,7 +73,8 @@ enum ChangeOp {
 
 message Change {
   string entity = 1;       // table name: apiary, hive, queen, inspection, task,
-                           // placement, harvest, treatment, event
+                           // placement, harvest, treatment, event, photo,
+                           // user_settings
   string entity_id = 2;    // row id (UUID minted on the device)
   string scope_id = 3;     // apiary id, or "user:<id>"
   ChangeOp op = 4;
@@ -69,8 +100,8 @@ kennen. `author_id` wird immer vom Server aus dem authentifizierten Aufrufer
 gesetzt; was ein Client dort sendet, wird ignoriert. Ein Payload darf
 höchstens 4 MiB groß sein und eine Entitäts-Id höchstens 255 Zeichen lang.
 
-Mengenspalten (derzeit nur `inspection.photo_keys`) verwenden eine andere
-Payload-Form:
+Mengenspalten (nur `inspection.photo_keys`, das die eingebetteten Fotos von
+0.4.x-Apps enthält) verwenden eine andere Payload-Form:
 
 ```json
 { "photo_keys": { "add": ["k1"] } }
@@ -121,11 +152,16 @@ message PullResponse {
   string next_cursor = 2;
   bool has_more = 3;
   int64 server_time_ms = 4; // server wall clock, unix ms
+  PullStatus status = 5;
 }
 ```
 
-Der Cursor ist der Dezimal-String der Empfangssequenz des Servers
-(`change_log.seq`), keine HLC. `Pull` ist auf den Arbeitsbereich begrenzt: Der
+Der Cursor ist opak: Speichere `next_cursor` und sende ihn unverändert zurück.
+Bei Protokoll 1 lautet er `<epoch>:<seq>:<mark>`. `epoch` ist eine
+Zufallszahl, die die Datenbank kennzeichnet (`sync_state`), `seq` ist die
+Empfangssequenz des Servers (`change_log.seq`, keine HLC), und `mark` ist die
+Marke des letzten Serverstarts vor dieser Position (`sync_boot`).
+0.4.x-Clients behalten die reine Sequenznummer. `Pull` ist auf den Arbeitsbereich begrenzt: Der
 Server liefert die Zeilen mit `seq > cursor`, die zum aktiven Arbeitsbereich
 des Aufrufers gehören, sortiert nach `seq`. Die eine Ausnahme sind persönliche
 Zeilen (Scope `user:<id>`), die nur an ihren Besitzer zurückgegeben werden und
@@ -138,9 +174,90 @@ abgeschnitten wurde; pulle sofort erneut.
 Zeilen anderer Arbeitsbereiche verbrauchen trotzdem Sequenznummern, die Werte,
 die du siehst, haben also Lücken.
 
-**Der Cursor rückt immer nur durch `Pull` vor.** Ein Gerät darf ihn aus nichts
-anderem ableiten, insbesondere nicht aus einer `Push`-Antwort: Änderungen
-anderer Geräte mit niedrigeren Sequenznummern würden endgültig übersprungen.
+**Der Cursor rückt immer nur durch `Pull` und `Snapshot` vor.** Ein Gerät
+darf ihn aus nichts anderem ableiten, insbesondere nicht aus einer
+`Push`-Antwort: Änderungen anderer Geräte mit niedrigeren Sequenznummern
+würden endgültig übersprungen.
+
+### Pull-Status \{#pull-status}
+
+`status` sagt, was der Server mit dem Cursor anfangen konnte. Nur Clients, die
+eine Protokollversion ankündigen, bekommen einen anderen Wert als
+`PULL_STATUS_UNSPECIFIED` (der Cursor wurde angenommen). Bei den beiden
+anderen ist `changes` leer:
+
+| Status | Wann | Was der Client tut |
+| --- | --- | --- |
+| `PULL_STATUS_SNAPSHOT_REQUIRED` | Der Cursor ist älter als der älteste Eintrag, den der Server noch hat (siehe [Verdichtung](#compaction)), oder er ist eine reine Sequenznummer aus der Zeit vor Protokoll 1. | Einen [Snapshot](#snapshot) laden und ab dessen Cursor weitermachen. Die Outbox bleibt unberührt. |
+| `PULL_STATUS_RESET_REQUIRED` | Der Cursor gehört nicht zur Historie dieser Datenbank: eine andere Epoch, eine Position hinter dem Ende des Logs oder eine Marke, die nicht passt. So sieht ein wiederhergestelltes Backup aus. | Jede lokale Zeile erneut zum Hochladen einreihen, einen Snapshot laden, ab dessen Cursor weitermachen. |
+
+Eine wiederhergestellte Datenbank hat dieselbe Epoch, aber der Serverstart
+auf ihr hinterlässt eine neue Marke an der Position, an der das Backup endet;
+jeder vor der Wiederherstellung ausgegebene Cursor jenseits dieser Position
+trägt daher die falsche Marke. Die Prüfung setzt voraus, dass der Server auf
+der wiederhergestellten Datenbank gestartet wird, bevor er Anfragen bedient;
+sie hängt nicht von Log-Einträgen ab, sodass weder Verdichtung noch ein
+gelöschter Arbeitsbereich eine Wiederherstellung verdecken können.
+
+Nach `RESET_REQUIRED` reiht die App jede lokale Zeile erneut als gewöhnliche
+Änderungen ein, gruppiert nach den Stempeln, die ihre Spalten bereits tragen;
+die älteste Änderung einer Zeile trägt alle ihre Spalten, sodass sie eine
+Zeile neu anlegen kann, die der Server nicht mehr hat. Wo der Server eine
+Änderung noch hat, bewirkt der Merge nichts. Danach lädt die App die Bilder
+der Fotos hoch, die sie vorhält, nach deren Einträgen. 0.4.x-Apps bekommen
+keinen der beiden Status; eine, deren Cursor hinter dem wiederhergestellten
+Log liegt, liest das Log noch einmal von vorn.
+
+## Snapshot \{#snapshot}
+
+```protobuf
+message SnapshotRequest { string page_token = 1; }
+message SnapshotRow {
+  string entity = 1;
+  string entity_id = 2;
+  string payload_json = 3;   // every synced column of the row
+  string field_hlc_json = 4; // column -> stamp of its last write
+}
+message SnapshotResponse {
+  repeated SnapshotRow rows = 1;
+  string next_page_token = 2; // "" on the last page
+  string cursor = 3;          // where Pull continues; the same on every page
+  int64 server_time_ms = 4;
+}
+```
+
+`Snapshot` liefert die aktuellen Zeilen des Arbeitsbereichs des Aufrufers,
+einschließlich gelöschter Zeilen (Tombstones) und von den persönlichen Zeilen
+nur die eigenen, Seite für Seite; eine Seite wird bei etwa 4 MiB abgeschnitten.
+Der Aufruf verlangt eine Protokollversion: Ohne den Header schlägt er mit
+`failed_precondition` und `UpgradeRequired` fehl. Eine Mengenspalte trägt
+ihren ganzen OR-Set-Zustand statt eines Deltas. Der Client führt jede Zeile
+Spalte für Spalte wie eine Änderung zusammen, sodass lokale Bearbeitungen mit
+neueren Stempeln überleben und die Outbox unberührt bleibt; eine Spalte ohne
+Stempel wird nur übernommen, wo auch die lokale Zeile keinen hat. Der Cursor
+wird genommen, bevor die erste Zeile gelesen wird, sodass eine Zeile, die sich
+ändert, während die Seiten abgerufen werden, noch einmal über `Pull` kommt.
+Die App speichert den Cursor erst nach der letzten Seite; ein unterbrochener
+Snapshot beginnt von vorn.
+
+Ein Gerät nutzt einen Snapshot, wenn es keinen Cursor hat (ein neues Gerät
+oder nach einem Update von 0.4.x), nach `SNAPSHOT_REQUIRED` und nach
+`RESET_REQUIRED`. Foto-Einträge kommen mit ihren Vorschaubildern, nie mit den
+Bildern in voller Größe.
+
+## Verdichtung \{#compaction}
+
+Einmal am Tag löscht der Server Einträge des Änderungsprotokolls, die er vor
+mehr als `BEEHIVE_CHANGELOG_RETENTION_DAYS` empfangen hat (Vorgabe 180; `0`
+behält alles; `change_log.logged_at` ist der Empfangszeitpunkt), und hält die
+Sequenznummer fest, bis zu der er das getan hat (den Horizont, in
+`sync_state`). Ein Cursor unterhalb des Horizonts bekommt
+`SNAPSHOT_REQUIRED`; eine 0.4.x-App mit einem solchen Cursor bekommt den
+`UpgradeRequired`-Fehler und kann erst synchronisieren, wenn sie aktualisiert
+ist. Die Zeilen selbst bleiben. Nichts anderes liest alte Log-Einträge: Der
+Besitzer einer persönlichen Aufgabe zum Beispiel ist an der Aufgabe
+gespeichert (`task.owner_id`). Der Job läuft im Serverprozess und geht davon
+aus, dass er der einzige ist: Betreibe genau eine Instanz pro Datenbank.
 
 ## Push
 
@@ -205,8 +322,13 @@ Outbox. Abgelehnte werden in eine Liste abgelehnter Änderungen verschoben, die
 der Nutzer als **Sync-Probleme** sieht, mit erneutem Versuch und Verwerfen; die
 Zeilen bleiben in den lokalen Tabellen. `clock_ahead` wird durch erneutes
 Stempeln behandelt, wie oben beschrieben. Ein Push, der als schreibgeschützt
-abgelehnt wird, entfernt den Stapel aus der Outbox und behält die Zeilen
-lokal. Jeder andere Fehler behält die Outbox für den nächsten Lauf.
+abgelehnt wird (`permission_denied`, das Demo-Konto), kann nie gelingen: Die
+App verwirft den Stapel, vergisst die Zeilen, die er berührt hat, und löscht
+ihren Cursor, sodass der Pull desselben Laufs die Zeilen des Servers erneut
+aus einem Snapshot lädt, und sagt dem Nutzer, dass die Änderung nicht
+gespeichert wurde. Eine Anfrage, die als zu groß oder fehlerhaft abgelehnt
+wird, wird halbiert, bis die fehlerhafte Änderung allein steht. Jeder andere
+Fehler behält die Outbox für den nächsten Lauf.
 
 ## Merge-Regeln
 
@@ -252,12 +374,46 @@ Arbeitsbereichs trägt sie eine `scope_id`:
 - die Id des Standorts, zu dem sie gehört (Standorte verwenden ihre eigene Id;
   Beuten, Königinnen, Durchsichten, Placements, Ernten, Behandlungen,
   Ereignisse und Aufgaben mit einem Standort tragen die Standort-Id), oder
-- `user:<user id>` für persönliche Zeilen, etwa eine Aufgabe ohne Standort.
+- `user:<user id>` für persönliche Zeilen, etwa eine Aufgabe ohne Standort,
+  und die Kontoeinstellungen.
 
 Ein Aufrufer darf in seinen eigenen persönlichen Scope und in die Standorte
 seines aktiven Arbeitsbereichs schreiben. Er liest jede Änderung des aktiven
 Arbeitsbereichs außer den persönlichen Zeilen anderer Mitglieder. Ein Teilen
 einzelner Standorte gibt es nicht.
+
+### Kontoeinstellungen \{#account-settings}
+
+`user_settings` (Einheiten und Sprache) ist die eine synchronisierte Tabelle,
+deren Zeilen zu einem Konto statt zu einem Arbeitsbereich gehören: eine Zeile
+pro Konto, mit der Konto-Id als Zeilen-Id, geschrieben nur im persönlichen
+Scope des Kontos. Ihre Log-Einträge werden unter dem Konto abgelegt (`org_id`
+`user:<id>`), sodass `Pull`, `Subscribe` und `Snapshot` sie in jedem
+Arbeitsbereich des Kontos ausliefern und zwei Geräte, die sie offline anlegen,
+dieselbe Zeile schreiben. Das Verlassen eines Arbeitsbereichs behält sie; das
+Löschen des Kontos entfernt sie. Die Werte ändern nur, was die App anzeigt;
+Datensätze, Payloads, Exporte und die API bleiben metrisch. Das Farbschema
+gehört nicht dazu.
+
+### Fotos \{#photos}
+
+Ein Foto ist eine `photo`-Zeile (`owner_entity` `inspection` oder `hive`,
+`owner_id`, `thumb` als Data-URL von etwa 200 px, `content_type`,
+`size_bytes`), die wie jede andere Zeile synchronisiert. Das Bild in voller
+Größe gelangt nie in den Feed: Das Gerät, das das Foto aufgenommen hat, lädt
+es mit `POST /photos/<id>` hoch, sobald der Eintrag gepusht ist, und andere
+Geräte holen es mit `GET /photos/<id>`, wenn es zum ersten Mal geöffnet wird.
+Beides braucht die Sitzung oder einen API-Schlüssel und die Mitgliedschaft im
+Arbeitsbereich des Fotos. Ein Upload wird pro Foto einmal angenommen, das Bild
+hinter einer Id ändert sich also nie. Das Löschen eines Fotos ist endgültig:
+Der Server löscht das Vorschaubild aus der Zeile und aus dem Log und entfernt
+das Bild.
+
+0.4.x-Apps behalten ihre eingebetteten Fotos (`inspection.photo_keys`,
+`hive.photo`). Der Server nimmt dieses Format von ihnen an, liefert es ihnen
+aus und wandelt es in Foto-Einträge um. Clients, die eine Protokollversion
+ankündigen, bekommen die Foto-Einträge und nie die eingebetteten Kopien;
+0.4.x-Apps bekommen die eingebetteten Kopien und nie `photo`-Zeilen.
 
 ## Subscribe
 
@@ -272,13 +428,16 @@ die neueste Änderung nach, die der Aufrufer pullen kann, und sendet
 gesendeten Wert hinaus vorgerückt ist. Er trägt keine Änderungen; ein
 Empfänger ruft `Pull` auf. Aktivität in anderen Arbeitsbereichen weckt den
 Stream nicht. Ein Nutzer darf höchstens 4 offene Streams halten; ein weiterer
-wird mit `resource_exhausted` abgelehnt. Die App nutzt ihn nicht.
+wird mit `resource_exhausted` abgelehnt. Die Mindest-Protokollversion gilt
+für ihn wie für die anderen Aufrufe. Die App nutzt ihn nicht.
 
 ## Serverseitige Tabellen
 
 `change_log` ist der Feed: `seq`, `scope_id`, `entity`, `entity_id`, `op`,
-`payload`, `hlc`, `author_id`, `org_id`, für `Pull` über `(org_id, seq)`
-indiziert. `seq_counter` hält die einzelne Zählerzeile (`name = 'change'`),
+`payload`, `hlc`, `author_id`, `org_id`, `logged_at`, für `Pull` über
+`(org_id, seq)` und für die Verdichtung über `logged_at` indiziert.
+`sync_state` hält die `epoch` der Datenbank und den `horizon` der
+Verdichtung; `sync_boot` hält eine Marke pro Serverstart. `seq_counter` hält die einzelne Zählerzeile (`name = 'change'`),
 die pro angenommener Änderung erhöht wird; jeder Schreiber sperrt sie zuerst,
 Merges sind also serialisiert. Auf dem Client hält `outbox` noch nicht
 gepushte Änderungen in derselben Form, und `sync_meta` speichert den Cursor

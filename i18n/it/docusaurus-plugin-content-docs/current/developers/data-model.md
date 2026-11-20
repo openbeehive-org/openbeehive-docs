@@ -30,7 +30,10 @@ apiary
        ├── harvest
        ├── treatment
        ├── placement   (which apiary the hive lived in, and when)
+       ├── photo       (the hive's picture, and the photos of its inspections)
        └── event       (append-only history with frozen apiary/hive/queen)
+
+user_settings          (one row per account, in every workspace)
 ```
 
 Lo spazio (`organization_id`) è l'unità di condivisione: ogni membro di uno
@@ -64,7 +67,7 @@ viene trasportato nel messaggio `Change`.
 | `colony_origin` | text | es. "sciame 2024" |
 | `note` | text | |
 | `qr_code` | text | riservato; il codice stampato è derivato da `id` da `shortCode()` in `app/src/lib/qr.ts` |
-| `photo` | text | data URL o chiave blob |
+| `photo` | text | immagine incorporata scritta dalle app 0.4.x; le app aggiornate conservano l'immagine dell'arnia come riga `photo` |
 | `created_at`, `updated_at` | timestamp | |
 
 `HiveType`: 0 Non specificato, 1 Zander, 2 Dadant, 3 Deutsch Normal, 4 Langstroth,
@@ -117,7 +120,7 @@ di regina viene eliminata solo se è stata registrata per errore.
 | `temp_hive`, `temp_outside` | real | °C |
 | `humidity_hive`, `humidity_outside` | real | % |
 | `note` | text | |
-| `photo_keys` | text | JSON OR-Set, l'unica colonna insieme |
+| `photo_keys` | text | JSON OR-Set, l'unica colonna insieme; foto incorporate scritte dalle app 0.4.x (vedi `photo`) |
 | `created_at` | timestamp | |
 
 I conteggi, le quantità e le letture climatiche (`frames`, `brood_frames`,
@@ -138,6 +141,11 @@ significa uno zero osservato. L'API rispecchia questo con campi opzionali.
 | `priority` | int | `TaskPriority`: 1 Bassa, 2 Normale, 3 Alta; la colonna del server ha 2 come predefinito, l'app scrive 0 |
 | `note`, `recurrence`, `assigned_to` | text | presenti nello schema; il modulo attività compila solo `title` e `due_at` |
 | `created_at` | timestamp | |
+
+Sul server, `task.owner_id` registra l'account nel cui scope personale è stata
+scritta un'attività senza apiario. Non viene sincronizzato; il server lo usa
+per servire l'attività solo al suo proprietario e per eliminarla quando il
+proprietario lascia lo spazio.
 
 ## placement
 
@@ -183,6 +191,47 @@ Un'attività senza `apiary_id` si sincronizza sotto lo scope personale
 | `note` | text | |
 | `amended_at` | timestamp | null finché il trattamento non viene modificato dopo la creazione, poi l'ora dell'ultima modifica; mostrato come "Modificato il" e stampato nel registro dei trattamenti |
 
+## photo
+
+Una foto di un'ispezione, oppure l'immagine di un'arnia. La riga si
+sincronizza con una piccola miniatura; l'immagine a piena risoluzione è
+conservata nell'archiviazione blob e trasferita tramite `/photos/<id>` (vedi il
+[protocollo di sincronizzazione](./sync-protocol.md#photos)).
+
+| Colonna | Tipo | Note |
+| --- | --- | --- |
+| `id` | text | |
+| `owner_entity` | text | `inspection` o `hive` |
+| `owner_id` | text | id di quell'ispezione o arnia |
+| `thumb` | text | miniatura come data URL, circa 200 px sul lato più lungo |
+| `content_type` | text | dell'immagine a piena risoluzione: `image/jpeg`, `image/png` o `image/webp` |
+| `size_bytes` | int | dell'immagine a piena risoluzione, al massimo 5 MiB |
+| `created_at` | timestamp | |
+
+Una foto eliminata conserva la propria riga come tombstone, ma la miniatura e
+l'immagine vengono cancellate. Sul server la riga indica anche il proprio blob
+(`blob_key`, `blob_type`, `blob_size`) e, per le foto convertite dalla 0.4.x,
+il valore incorporato da cui provengono (`legacy_key`); queste colonne non
+vengono sincronizzate.
+
+## user_settings
+
+Le preferenze di visualizzazione dell'account. Una riga per account, con l'id
+dell'account come id; viene scritta nello scope personale e servita in ogni
+spazio dell'account (vedi il
+[protocollo di sincronizzazione](./sync-protocol.md#account-settings)). Non
+porta `organization_id`.
+
+| Colonna | Tipo | Note |
+| --- | --- | --- |
+| `id` | text | l'id dell'account |
+| `weight_unit` | text | `kg` o `lb`; vuoto significa non scelto, e il dispositivo usa il valore predefinito della regione del browser |
+| `temp_unit` | text | `c` o `f`; vuoto come sopra |
+| `language` | text | `en`, `de`, `fr`, `es` o `it` |
+
+I dati sono memorizzati in chilogrammi e gradi Celsius qualunque sia la scelta
+fatta qui.
+
 ## event
 
 | Colonna | Tipo | Note |
@@ -206,11 +255,22 @@ tipi da 1 a 7 (`app/src/lib/local/history.ts`). Vedi
 ## Tabelle solo server
 
 `organization`, `users`, `member`, `invite`, `user_passkey`, `api_key`,
-`change_log` e `seq_counter` esistono solo sul server.
+`password_reset`, `change_log`, `seq_counter`, `sync_state`, `sync_boot` e
+`photo_migration` esistono solo sul server.
 `member.role` è `owner` o `member`; `users.role` è `admin` o `user`.
 `users.sessions_valid_after` è il contrassegno che termina tutte le sessioni
-precedenti di un account; `invite.expires_at` indica quando un invito smette
-di funzionare (7 giorni dopo la creazione). La precedente tabella
+precedenti di un account; `users.email_key` è l'indirizzo email in minuscolo
+e univoco, così due account non possono condividere un indirizzo che
+differisce solo per maiuscole e minuscole; `invite.expires_at` indica quando
+un invito smette di funzionare (7 giorni dopo la creazione).
+`password_reset` contiene l'hash del token di ogni link di reimpostazione,
+valido per un'ora ed eliminato quando viene usato. `sync_state` contiene
+l'`epoch` casuale del database e l'`horizon` della compattazione del registro
+delle modifiche; `sync_boot` contiene un contrassegno per ogni avvio del
+server (vedi il [protocollo di sincronizzazione](./sync-protocol.md#pull-status));
+`change_log.logged_at` è l'ora in cui il server ha ricevuto una voce.
+`photo_migration` registra che la conversione una tantum delle foto
+incorporate della 0.4.x è terminata. La precedente tabella
 `apiary_share` non esiste più: non c'è condivisione per apiario. Il client
 aggiunge `outbox` e `sync_meta` per il
 motore di sincronizzazione.
@@ -228,7 +288,7 @@ Chiavi a lunga durata per script e integrazioni (migrazione `0014_api_keys.sql`,
 | `name` | text | etichetta mostrata nelle Impostazioni |
 | `key_prefix` | text | i primi 12 caratteri del testo in chiaro, per la visualizzazione |
 | `key_hash` | varchar(64) | SHA-256 in esadecimale del token `obhk_...` in chiaro, univoco; il testo in chiaro non viene mai memorizzato |
-| `scope` | text | `write` (predefinito) o `read`; una chiave `read` può chiamare solo `Get*`, `List*`, `Pull` e `Subscribe` |
+| `scope` | text | `write` (predefinito) o `read`; una chiave `read` può chiamare solo `Get*`, `List*`, `Pull`, `Snapshot` e `Subscribe` |
 | `created_at` | timestamp | |
 | `expires_at` | timestamp | null per le chiavi che non scadono mai; una chiave oltre questo istante viene rifiutata |
 | `last_used_at` | timestamp | aggiornato a ogni utilizzo verificato, null fino ad allora |

@@ -15,19 +15,48 @@ the server through `SyncService`. This page documents the wire contract from
 ```protobuf
 service SyncService {
   rpc Pull(PullRequest) returns (PullResponse);
+  rpc Snapshot(SnapshotRequest) returns (SnapshotResponse);
   rpc Push(PushRequest) returns (PushResponse);
   rpc Subscribe(SubscribeRequest) returns (stream SubscribeEvent);
 }
 ```
 
 The client loop (`app/src/lib/local/sync.ts`, `syncOnce`): push the outbox,
-then pull until `has_more` is false. It runs every 15 seconds, after every
+then pull until `has_more` is false. A device without a cursor first loads a
+[snapshot](#snapshot). It runs every 15 seconds, after every
 local write, and on the browser's `online` event. Runs are serialised; a call
 that arrives while one is in flight schedules one more pass. The client does
 not call `Subscribe`.
 
 The outbox is pushed in batches of at most 200 changes and about 4 MiB of
 payload; a batch the server refuses as a whole is halved and sent again.
+
+## Protocol versions \{#versions}
+
+A client says which version of the protocol it speaks with two request
+headers on every `SyncService` call:
+
+```text
+Openbeehive-Sync-Protocol: 1
+Openbeehive-App-Version: 0.5.0
+```
+
+The current version is 1; the app version is free text for the server log.
+A request without `Openbeehive-Sync-Protocol` comes from an installed 0.4.x
+app (version 0). Such a client is served as release 0.4.1 was: `Pull`
+returns only the entities and columns that release knew (`legacyCols` in
+`server/internal/service/sync_legacy.go`, a list that never grows), cursors
+are plain sequence numbers, and there are neither snapshots nor
+[status signals](#pull-status). A 0.4.x app writes every key of a pulled
+change into a column of that name and stops syncing at the first key it
+does not know, which is why new columns and tables reach only clients that
+announce a version. **Scripts that call `SyncService` must send the header**
+to receive everything.
+
+`BEEHIVE_SYNC_MIN_PROTOCOL` (default `0`) is the lowest version the server
+accepts. Below it every call fails with `failed_precondition` and an
+`UpgradeRequired` error detail (`min_protocol`); the app then shows "App out
+of date · update to sync" and stops retrying.
 
 ## Change
 
@@ -42,7 +71,8 @@ enum ChangeOp {
 
 message Change {
   string entity = 1;       // table name: apiary, hive, queen, inspection, task,
-                           // placement, harvest, treatment, event
+                           // placement, harvest, treatment, event, photo,
+                           // user_settings
   string entity_id = 2;    // row id (UUID minted on the device)
   string scope_id = 3;     // apiary id, or "user:<id>"
   ChangeOp op = 4;
@@ -66,8 +96,8 @@ must ignore keys they do not know. `author_id` is always set by the server
 from the authenticated caller; what a client sends there is ignored. One
 payload may be at most 4 MiB and an entity id at most 255 characters.
 
-Set columns (currently only `inspection.photo_keys`) use a different payload
-shape:
+Set columns (only `inspection.photo_keys`, which holds the inline photos of
+0.4.x apps) use a different payload shape:
 
 ```json
 { "photo_keys": { "add": ["k1"] } }
@@ -114,11 +144,16 @@ message PullResponse {
   string next_cursor = 2;
   bool has_more = 3;
   int64 server_time_ms = 4; // server wall clock, unix ms
+  PullStatus status = 5;
 }
 ```
 
-The cursor is the decimal string of the server's receive sequence
-(`change_log.seq`), not an HLC. `Pull` is scoped by workspace: the server
+The cursor is opaque: store `next_cursor` and send it back unchanged. For
+protocol 1 it reads `<epoch>:<seq>:<mark>`. `epoch` is a random number that
+identifies the database (`sync_state`), `seq` is the server's receive
+sequence (`change_log.seq`, not an HLC), and `mark` is the tag of the last
+server start before that position (`sync_boot`). 0.4.x clients keep the bare
+sequence number. `Pull` is scoped by workspace: the server
 returns the rows with `seq > cursor` that belong to the caller's active
 workspace, ordered by `seq`. The one exception are personal rows (scope
 `user:<id>`), which are returned only to their owner, and only inside the
@@ -130,9 +165,83 @@ again immediately.
 Rows of other workspaces still consume sequence numbers, so the values you
 see have gaps.
 
-**The cursor only ever advances through `Pull`.** A device must not derive it
-from anything else, in particular not from a `Push` response: other devices'
-changes with lower sequence numbers would be skipped for good.
+**The cursor only ever advances through `Pull` and `Snapshot`.** A device
+must not derive it from anything else, in particular not from a `Push`
+response: other devices' changes with lower sequence numbers would be
+skipped for good.
+
+### Pull status \{#pull-status}
+
+`status` says what the server made of the cursor. Only clients that announce
+a protocol version get a value other than `PULL_STATUS_UNSPECIFIED` (the
+cursor was accepted). With either of the other two, `changes` is empty:
+
+| Status | When | What the client does |
+| --- | --- | --- |
+| `PULL_STATUS_SNAPSHOT_REQUIRED` | The cursor is older than the oldest entry the server still keeps (see [compaction](#compaction)), or it is a bare sequence number from before protocol 1. | Load a [snapshot](#snapshot) and continue from its cursor. The outbox is not touched. |
+| `PULL_STATUS_RESET_REQUIRED` | The cursor does not belong to this database's history: another epoch, a position beyond the end of the log, or a mark that does not match. This is what a restored backup looks like. | Queue every local row for upload again, load a snapshot, continue from its cursor. |
+
+A restored database has the same epoch, but the server's start on it leaves
+a new mark at the position where the backup ends, so every cursor issued
+before the restore beyond that position carries the wrong mark. The check
+depends on the server being started on the restored database before it
+serves requests; it does not depend on log entries, so compaction or a
+deleted workspace cannot hide a restore.
+
+After `RESET_REQUIRED` the app queues each local row again as ordinary
+changes grouped by the stamps its columns already carry; the oldest change
+of a row carries all its columns, so it can recreate a row the server no
+longer has. Where the server still has a change the merge does nothing.
+Afterwards it uploads the photo images it keeps, after their records. 0.4.x
+apps get neither status; one whose cursor lies beyond the restored log reads
+the log again from the start.
+
+## Snapshot \{#snapshot}
+
+```protobuf
+message SnapshotRequest { string page_token = 1; }
+message SnapshotRow {
+  string entity = 1;
+  string entity_id = 2;
+  string payload_json = 3;   // every synced column of the row
+  string field_hlc_json = 4; // column -> stamp of its last write
+}
+message SnapshotResponse {
+  repeated SnapshotRow rows = 1;
+  string next_page_token = 2; // "" on the last page
+  string cursor = 3;          // where Pull continues; the same on every page
+  int64 server_time_ms = 4;
+}
+```
+
+`Snapshot` returns the current rows of the caller's workspace, deleted rows
+(tombstones) included and of the personal rows only the caller's own, page
+by page; a page is cut at about 4 MiB. It requires a protocol version: a call
+without the header fails with `failed_precondition` and `UpgradeRequired`.
+A set column carries its whole OR-Set state instead of a
+delta. The client merges each row column by column like a change, so local
+edits with newer stamps survive and the outbox is untouched; a column
+without a stamp is taken only where the local row has none either. The
+cursor is taken before the first row is read, so a row that changes while
+the pages are fetched comes again through `Pull`. The app stores the cursor
+only after the last page; an interrupted snapshot starts over.
+
+A device uses a snapshot when it has no cursor (a new device, or after an
+update from 0.4.x), after `SNAPSHOT_REQUIRED` and after `RESET_REQUIRED`.
+Photo records come with their thumbnails, never with the full images.
+
+## Compaction \{#compaction}
+
+Once a day the server deletes change-log entries it received more than
+`BEEHIVE_CHANGELOG_RETENTION_DAYS` ago (default 180; `0` keeps everything;
+`change_log.logged_at` is the receive time) and records the sequence number
+up to which it did (the horizon, in `sync_state`). A cursor below the horizon
+gets `SNAPSHOT_REQUIRED`; a 0.4.x app with such a cursor gets the
+`UpgradeRequired` failure and cannot sync until it is updated. The rows
+themselves stay. Nothing else reads old log entries: the owner of a personal
+task, for example, is stored on the task (`task.owner_id`). The job runs in
+the server process and assumes it is the only one: run exactly one instance
+per database.
 
 ## Push
 
@@ -193,8 +302,12 @@ What the app does with the answer: accepted changes leave the outbox.
 Rejected ones are moved to a list of refused changes that the user sees as
 **Sync problems**, with retry and discard; the rows stay in the local tables.
 `clock_ahead` is handled by stamping again as described above. A push refused
-as read-only drops the batch from the outbox and keeps the rows locally. Any
-other error keeps the outbox for the next run.
+as read-only (`permission_denied`, the demo account) can never succeed: the
+app drops the batch, forgets the rows it touched and clears its cursor, so
+the pull of the same run loads the server's rows again from a snapshot, and
+it tells the user that the change was not saved. A request refused as too
+large or malformed is halved until the faulty change stands alone. Any other
+error keeps the outbox for the next run.
 
 ## Merge rules
 
@@ -238,11 +351,43 @@ of the caller that wrote it, and inside the workspace it carries a `scope_id`:
 - the id of the apiary it belongs to (apiaries use their own id; hives,
   queens, inspections, placements, harvests, treatments, events and tasks
   with an apiary carry the apiary id), or
-- `user:<user id>` for personal rows, such as a task without an apiary.
+- `user:<user id>` for personal rows, such as a task without an apiary, and
+  the account settings.
 
 A caller may write to its own personal scope and to the apiaries of its
 active workspace. It reads every change of the active workspace except other
 members' personal rows. There is no per-apiary sharing.
+
+### Account settings \{#account-settings}
+
+`user_settings` (units and language) is the one synced table whose rows
+belong to an account instead of a workspace: one row per account, with the
+account id as row id, written only in the account's personal scope. Its log
+entries are filed under the account (`org_id` `user:<id>`), so `Pull`,
+`Subscribe` and `Snapshot` serve it in every workspace of the account, and
+two devices that create it offline write the same row. Leaving a workspace
+keeps it; deleting the account removes it. The values change only what the
+app displays; records, payloads, exports and the API stay metric. The colour
+theme is not part of it.
+
+### Photos \{#photos}
+
+A photo is a `photo` row (`owner_entity` `inspection` or `hive`, `owner_id`,
+`thumb` as a data URL of about 200 px, `content_type`, `size_bytes`) that
+syncs like any other row. The full-size image never enters the feed: the
+device that took the photo uploads it with `POST /photos/<id>` once the
+record has been pushed, and other devices fetch it with `GET /photos/<id>`
+the first time it is opened. Both need the session or an API key and
+membership of the photo's workspace. An upload is accepted once per photo,
+so the image behind an id never changes. Deleting a photo is final: the
+server erases the thumbnail from the row and from the log and removes the
+image.
+
+0.4.x apps keep their inline photos (`inspection.photo_keys`, `hive.photo`).
+The server accepts that format from them, serves it to them and converts it
+to photo records. Clients that announce a protocol version get the photo
+records and never the inline copies; 0.4.x apps get the inline copies and
+never `photo` rows.
 
 ## Subscribe
 
@@ -256,13 +401,15 @@ newest change the caller can pull and sends `server_cursor` when it has
 advanced past the request cursor and past the last value sent. It carries no
 changes; a receiver calls `Pull`. Activity in other workspaces does not wake
 the stream. One user may hold at most 4 open streams; a further one is
-refused with `resource_exhausted`. The app does not use it.
+refused with `resource_exhausted`. The minimum protocol version applies to it as to the other calls. The app does not use it.
 
 ## Server-side tables
 
 `change_log` is the feed: `seq`, `scope_id`, `entity`, `entity_id`, `op`,
-`payload`, `hlc`, `author_id`, `org_id`, indexed by `(org_id, seq)` for
-`Pull`. `seq_counter` holds the single counter row (`name = 'change'`) that is
+`payload`, `hlc`, `author_id`, `org_id`, `logged_at`, indexed by
+`(org_id, seq)` for `Pull` and by `logged_at` for compaction. `sync_state`
+holds the database's `epoch` and the compaction `horizon`; `sync_boot` holds
+one mark per server start. `seq_counter` holds the single counter row (`name = 'change'`) that is
 incremented per accepted change; every writer locks it first, so merges are
 serialised. On the client, `outbox` holds not-yet-pushed changes in the same
 shape and `sync_meta` stores the cursor under key `cursor`.

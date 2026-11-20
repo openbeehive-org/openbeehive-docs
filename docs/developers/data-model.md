@@ -28,7 +28,10 @@ apiary
        ├── harvest
        ├── treatment
        ├── placement   (which apiary the hive lived in, and when)
+       ├── photo       (the hive's picture, and the photos of its inspections)
        └── event       (append-only history with frozen apiary/hive/queen)
+
+user_settings          (one row per account, in every workspace)
 ```
 
 The workspace (`organization_id`) is the sharing unit: every member of a
@@ -62,7 +65,7 @@ stores `scope_id` as a column; for the other tables it is carried on the
 | `colony_origin` | text | e.g. "swarm 2024" |
 | `note` | text | |
 | `qr_code` | text | reserved; the printed code is derived from `id` by `shortCode()` in `app/src/lib/qr.ts` |
-| `photo` | text | data URL or blob key |
+| `photo` | text | inline picture written by 0.4.x apps; updated apps keep the hive's picture as a `photo` row instead |
 | `created_at`, `updated_at` | timestamp | |
 
 `HiveType`: 0 Unspecified, 1 Zander, 2 Dadant, 3 Deutsch Normal, 4 Langstroth,
@@ -115,7 +118,7 @@ when she was recorded by mistake.
 | `temp_hive`, `temp_outside` | real | °C |
 | `humidity_hive`, `humidity_outside` | real | % |
 | `note` | text | |
-| `photo_keys` | text | OR-Set JSON, the only set column |
+| `photo_keys` | text | OR-Set JSON, the only set column; inline photos written by 0.4.x apps (see `photo`) |
 | `created_at` | timestamp | |
 
 The counts, amounts and climate readings (`frames`, `brood_frames`,
@@ -136,6 +139,11 @@ observed zero. The API mirrors this with optional fields.
 | `priority` | int | `TaskPriority`: 1 Low, 2 Normal, 3 High; the server column defaults to 2, the app writes 0 |
 | `note`, `recurrence`, `assigned_to` | text | present in the schema; the task form only fills `title` and `due_at` |
 | `created_at` | timestamp | |
+
+On the server, `task.owner_id` records the account in whose personal scope a
+task without an apiary was written. It is not synced; the server uses it to
+serve the task only to its owner and to delete it when the owner leaves the
+workspace.
 
 ## placement
 
@@ -181,6 +189,44 @@ A task without `apiary_id` syncs under the personal scope
 | `note` | text | |
 | `amended_at` | timestamp | null until the treatment is edited after creation, then the time of the last edit; shown as "Amended on" and printed in the treatment register |
 
+## photo
+
+A photo of an inspection, or the picture of a hive. The row syncs with a
+small thumbnail; the full-size image is kept in blob storage and moved over
+`/photos/<id>` (see the [sync protocol](./sync-protocol.md#photos)).
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `id` | text | |
+| `owner_entity` | text | `inspection` or `hive` |
+| `owner_id` | text | id of that inspection or hive |
+| `thumb` | text | thumbnail as a data URL, about 200 px on the longer edge |
+| `content_type` | text | of the full-size image: `image/jpeg`, `image/png` or `image/webp` |
+| `size_bytes` | int | of the full-size image, at most 5 MiB |
+| `created_at` | timestamp | |
+
+A deleted photo keeps its row as a tombstone, but its thumbnail and image are
+erased. On the server the row also names its blob (`blob_key`, `blob_type`,
+`blob_size`) and, for photos converted from 0.4.x, the inline value they came
+from (`legacy_key`); these columns are not synced.
+
+## user_settings
+
+The account's display preferences. One row per account, its id is the
+account id; it is written in the personal scope and served in every
+workspace of the account (see the
+[sync protocol](./sync-protocol.md#account-settings)). It does not carry
+`organization_id`.
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `id` | text | the account id |
+| `weight_unit` | text | `kg` or `lb`; empty means not chosen, the device then uses the default of the browser's region |
+| `temp_unit` | text | `c` or `f`; empty as above |
+| `language` | text | `en`, `de`, `fr`, `es` or `it` |
+
+Records are stored in kilograms and degrees Celsius whatever is chosen here.
+
 ## event
 
 | Column | Type | Notes |
@@ -204,11 +250,20 @@ types 1 to 7 (`app/src/lib/local/history.ts`). See
 ## Server-only tables
 
 `organization`, `users`, `member`, `invite`, `user_passkey`, `api_key`,
-`change_log` and `seq_counter` exist only on the server.
+`password_reset`, `change_log`, `seq_counter`, `sync_state`, `sync_boot` and
+`photo_migration` exist only on the server.
 `member.role` is `owner` or `member`; `users.role` is `admin` or `user`.
 `users.sessions_valid_after` is the mark that ends all earlier sessions of an
-account; `invite.expires_at` is when an invite stops working (7 days after
-creation). The former `apiary_share` table is gone: there is no per-apiary
+account; `users.email_key` is the email address in lower case and unique,
+so two accounts cannot share an address that differs only in case;
+`invite.expires_at` is when an invite stops working (7 days after creation).
+`password_reset` holds the hash of each reset link's token, valid for one
+hour and deleted when used. `sync_state` holds the database's random `epoch`
+and the change-log compaction `horizon`; `sync_boot` holds one mark per
+server start (see the [sync protocol](./sync-protocol.md#pull-status));
+`change_log.logged_at` is the time the server received an entry.
+`photo_migration` records that the one-time conversion of 0.4.x inline
+photos has finished. The former `apiary_share` table is gone: there is no per-apiary
 sharing. The client adds `outbox` and `sync_meta` for the sync engine.
 
 ### api_key
@@ -224,7 +279,7 @@ Long-lived keys for scripts and integrations (migration `0014_api_keys.sql`,
 | `name` | text | label shown in Settings |
 | `key_prefix` | text | first 12 characters of the plaintext, for display |
 | `key_hash` | varchar(64) | hex SHA-256 of the plaintext `obhk_...` token, unique; the plaintext is never stored |
-| `scope` | text | `write` (default) or `read`; a `read` key may call only `Get*`, `List*`, `Pull` and `Subscribe` |
+| `scope` | text | `write` (default) or `read`; a `read` key may call only `Get*`, `List*`, `Pull`, `Snapshot` and `Subscribe` |
 | `created_at` | timestamp | |
 | `expires_at` | timestamp | null for keys that never expire; a key past this time is refused |
 | `last_used_at` | timestamp | updated on every verified use, null until then |

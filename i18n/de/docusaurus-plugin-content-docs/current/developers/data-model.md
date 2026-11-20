@@ -30,7 +30,10 @@ apiary
        ├── harvest
        ├── treatment
        ├── placement   (which apiary the hive lived in, and when)
+       ├── photo       (the hive's picture, and the photos of its inspections)
        └── event       (append-only history with frozen apiary/hive/queen)
+
+user_settings          (one row per account, in every workspace)
 ```
 
 Der Arbeitsbereich (`organization_id`) ist die Einheit des Teilens: Jedes
@@ -64,7 +67,7 @@ anderen Tabellen wird sie in der `Change`-Message mitgeführt.
 | `colony_origin` | text | z. B. "Schwarm 2024" |
 | `note` | text | |
 | `qr_code` | text | reserviert; der gedruckte Code wird von `shortCode()` in `app/src/lib/qr.ts` aus `id` abgeleitet |
-| `photo` | text | Data-URL oder Blob-Schlüssel |
+| `photo` | text | eingebettetes Bild, geschrieben von 0.4.x-Apps; aktualisierte Apps halten das Bild der Beute stattdessen als `photo`-Zeile |
 | `created_at`, `updated_at` | timestamp | |
 
 `HiveType`: 0 Unbestimmt, 1 Zander, 2 Dadant, 3 Deutsch Normal, 4 Langstroth,
@@ -117,7 +120,7 @@ Königinnen-Zeile wird nur gelöscht, wenn sie irrtümlich erfasst wurde.
 | `temp_hive`, `temp_outside` | real | °C |
 | `humidity_hive`, `humidity_outside` | real | % |
 | `note` | text | |
-| `photo_keys` | text | OR-Set-JSON, die einzige Mengenspalte |
+| `photo_keys` | text | OR-Set-JSON, die einzige Mengenspalte; eingebettete Fotos, geschrieben von 0.4.x-Apps (siehe `photo`) |
 | `created_at` | timestamp | |
 
 Die Zählwerte, Mengen und Klimawerte (`frames`, `brood_frames`,
@@ -138,6 +141,12 @@ bedeutet eine beobachtete Null. Die API bildet das mit optionalen Feldern ab.
 | `priority` | int | `TaskPriority`: 1 Niedrig, 2 Normal, 3 Hoch; die Server-Spalte hat Vorgabe 2, die App schreibt 0 |
 | `note`, `recurrence`, `assigned_to` | text | im Schema vorhanden; das Aufgabenformular füllt nur `title` und `due_at` |
 | `created_at` | timestamp | |
+
+Auf dem Server hält `task.owner_id` das Konto fest, in dessen persönlichem
+Scope eine Aufgabe ohne Standort geschrieben wurde. Die Spalte wird nicht
+synchronisiert; der Server nutzt sie, um die Aufgabe nur ihrem Besitzer
+auszuliefern und sie zu löschen, wenn der Besitzer den Arbeitsbereich
+verlässt.
 
 ## placement
 
@@ -183,6 +192,47 @@ Eine Aufgabe ohne `apiary_id` synchronisiert unter dem persönlichen Scope
 | `note` | text | |
 | `amended_at` | timestamp | null, bis die Behandlung nach dem Anlegen bearbeitet wird, danach der Zeitpunkt der letzten Bearbeitung; wird als „Geändert am“ angezeigt und im Bestandsbuch gedruckt |
 
+## photo
+
+Ein Foto einer Durchsicht oder das Bild einer Beute. Die Zeile synchronisiert
+mit einem kleinen Vorschaubild; das Bild in voller Größe liegt im
+Blob-Speicher und wird über `/photos/<id>` übertragen (siehe das
+[Sync-Protokoll](./sync-protocol.md#photos)).
+
+| Spalte | Typ | Hinweise |
+| --- | --- | --- |
+| `id` | text | |
+| `owner_entity` | text | `inspection` oder `hive` |
+| `owner_id` | text | Id dieser Durchsicht oder Beute |
+| `thumb` | text | Vorschaubild als Data-URL, etwa 200 px an der längeren Kante |
+| `content_type` | text | des Bilds in voller Größe: `image/jpeg`, `image/png` oder `image/webp` |
+| `size_bytes` | int | des Bilds in voller Größe, höchstens 5 MiB |
+| `created_at` | timestamp | |
+
+Ein gelöschtes Foto behält seine Zeile als Tombstone, aber Vorschaubild und
+Bild werden gelöscht. Auf dem Server nennt die Zeile außerdem ihren Blob
+(`blob_key`, `blob_type`, `blob_size`) und, bei aus 0.4.x umgewandelten Fotos,
+den eingebetteten Wert, aus dem sie stammen (`legacy_key`); diese Spalten
+werden nicht synchronisiert.
+
+## user_settings
+
+Die Anzeigeeinstellungen des Kontos. Eine Zeile pro Konto, ihre Id ist die
+Konto-Id; sie wird im persönlichen Scope geschrieben und in jedem
+Arbeitsbereich des Kontos ausgeliefert (siehe das
+[Sync-Protokoll](./sync-protocol.md#account-settings)). Sie trägt kein
+`organization_id`.
+
+| Spalte | Typ | Hinweise |
+| --- | --- | --- |
+| `id` | text | die Konto-Id |
+| `weight_unit` | text | `kg` oder `lb`; leer heißt nicht gewählt, das Gerät nutzt dann die Vorgabe der Browser-Region |
+| `temp_unit` | text | `c` oder `f`; leer wie oben |
+| `language` | text | `en`, `de`, `fr`, `es` oder `it` |
+
+Aufzeichnungen werden in Kilogramm und Grad Celsius gespeichert, egal was hier
+gewählt ist.
+
 ## event
 
 | Spalte | Typ | Hinweise |
@@ -206,11 +256,22 @@ die Typen 1 bis 7 (`app/src/lib/local/history.ts`). Siehe
 ## Tabellen nur auf dem Server
 
 `organization`, `users`, `member`, `invite`, `user_passkey`, `api_key`,
-`change_log` und `seq_counter` existieren nur auf dem Server.
+`password_reset`, `change_log`, `seq_counter`, `sync_state`, `sync_boot` und
+`photo_migration` existieren nur auf dem Server.
 `member.role` ist `owner` oder `member`; `users.role` ist `admin` oder `user`.
 `users.sessions_valid_after` ist die Marke, die alle früheren Sitzungen eines
-Kontos beendet; `invite.expires_at` ist der Zeitpunkt, ab dem eine Einladung
-nicht mehr funktioniert (7 Tage nach dem Erstellen). Die frühere Tabelle
+Kontos beendet; `users.email_key` ist die E-Mail-Adresse in Kleinbuchstaben und
+eindeutig, sodass sich zwei Konten keine Adresse teilen können, die sich nur
+in der Groß- und Kleinschreibung unterscheidet; `invite.expires_at` ist der
+Zeitpunkt, ab dem eine Einladung nicht mehr funktioniert (7 Tage nach dem
+Erstellen). `password_reset` hält den Hash des Tokens jedes Reset-Links, gültig
+für eine Stunde und gelöscht, sobald er benutzt wurde. `sync_state` hält die
+zufällige `epoch` der Datenbank und den `horizon` der
+Änderungsprotokoll-Verdichtung; `sync_boot` hält eine Marke pro Serverstart
+(siehe das [Sync-Protokoll](./sync-protocol.md#pull-status));
+`change_log.logged_at` ist der Zeitpunkt, zu dem der Server einen Eintrag
+empfangen hat. `photo_migration` hält fest, dass die einmalige Umwandlung der
+eingebetteten Fotos aus 0.4.x abgeschlossen ist. Die frühere Tabelle
 `apiary_share` gibt es nicht mehr: Ein Teilen einzelner Standorte gibt es nicht.
 Der Client ergänzt `outbox` und `sync_meta` für die Sync-Engine.
 
@@ -227,7 +288,7 @@ Langlebige Schlüssel für Skripte und Integrationen (Migration
 | `name` | text | Bezeichnung, die in den Einstellungen angezeigt wird |
 | `key_prefix` | text | die ersten 12 Zeichen des Klartexts, für die Anzeige |
 | `key_hash` | varchar(64) | hex-SHA-256 des Klartext-Tokens `obhk_...`, eindeutig; der Klartext wird nie gespeichert |
-| `scope` | text | `write` (Vorgabe) oder `read`; ein `read`-Schlüssel darf nur `Get*`, `List*`, `Pull` und `Subscribe` aufrufen |
+| `scope` | text | `write` (Vorgabe) oder `read`; ein `read`-Schlüssel darf nur `Get*`, `List*`, `Pull`, `Snapshot` und `Subscribe` aufrufen |
 | `created_at` | timestamp | |
 | `expires_at` | timestamp | null für Schlüssel, die nie ablaufen; ein Schlüssel nach diesem Zeitpunkt wird abgelehnt |
 | `last_used_at` | timestamp | bei jeder erfolgreich geprüften Verwendung aktualisiert, bis dahin null |

@@ -15,19 +15,49 @@ red de `proto/openbeehive/v1/sync.proto` y las reglas de fusión de
 ```protobuf
 service SyncService {
   rpc Pull(PullRequest) returns (PullResponse);
+  rpc Snapshot(SnapshotRequest) returns (SnapshotResponse);
   rpc Push(PushRequest) returns (PushResponse);
   rpc Subscribe(SubscribeRequest) returns (stream SubscribeEvent);
 }
 ```
 
 El bucle del cliente (`app/src/lib/local/sync.ts`, `syncOnce`): envía el
-outbox y luego hace pull hasta que `has_more` es false. Se ejecuta cada 15
+outbox y luego hace pull hasta que `has_more` es false. Un dispositivo sin
+cursor carga primero una [instantánea](#snapshot). Se ejecuta cada 15
 segundos, tras cada escritura local y en el evento `online` del navegador. Las
 ejecuciones se serializan; una llamada que llega mientras hay una en curso
 programa una pasada más. El cliente no llama a `Subscribe`.
 
 El outbox se envía en lotes de como máximo 200 cambios y unos 4 MiB de
 carga; un lote que el servidor rechaza en su totalidad se divide por la mitad y se envía de nuevo.
+
+## Versiones del protocolo \{#versions}
+
+Un cliente indica qué versión del protocolo habla con dos cabeceras de
+solicitud en cada llamada a `SyncService`:
+
+```text
+Openbeehive-Sync-Protocol: 1
+Openbeehive-App-Version: 0.5.0
+```
+
+La versión actual es 1; la versión de la aplicación es texto libre para el
+registro del servidor. Una solicitud sin `Openbeehive-Sync-Protocol` procede de una
+aplicación 0.4.x instalada (versión 0). A un cliente así se le sirve como lo
+hacía la versión 0.4.1: `Pull` devuelve solo las entidades y columnas que esa
+versión conocía (`legacyCols` en `server/internal/service/sync_legacy.go`, una
+lista que nunca crece), los cursores son números de secuencia simples, y no hay
+instantáneas ni [señales de estado](#pull-status). Una aplicación 0.4.x escribe
+cada clave de un cambio descargado en una columna con ese nombre y deja de
+sincronizar con la primera clave que no conoce; por eso las columnas y tablas
+nuevas solo llegan a los clientes que anuncian una versión. **Los scripts que
+llaman a `SyncService` deben enviar la cabecera** para recibirlo todo.
+
+`BEEHIVE_SYNC_MIN_PROTOCOL` (por defecto `0`) es la versión más baja que acepta
+el servidor. Por debajo de ella, cada llamada falla con `failed_precondition` y
+un detalle de error `UpgradeRequired` (`min_protocol`); la aplicación muestra
+entonces "Aplicación desactualizada · actualízala para sincronizar" y deja de
+reintentar.
 
 ## Change
 
@@ -42,7 +72,8 @@ enum ChangeOp {
 
 message Change {
   string entity = 1;       // table name: apiary, hive, queen, inspection, task,
-                           // placement, harvest, treatment, event
+                           // placement, harvest, treatment, event, photo,
+                           // user_settings
   string entity_id = 2;    // row id (UUID minted on the device)
   string scope_id = 3;     // apiary id, or "user:<id>"
   ChangeOp op = 4;
@@ -67,8 +98,8 @@ deben ignorar las claves que no conocen. `author_id` lo establece siempre el ser
 a partir del llamante autenticado; lo que un cliente envíe ahí se ignora. Una
 carga puede tener como máximo 4 MiB y un id de entidad como máximo 255 caracteres.
 
-Las columnas de conjunto (actualmente solo `inspection.photo_keys`) usan una
-forma de carga distinta:
+Las columnas de conjunto (solo `inspection.photo_keys`, que contiene las fotos
+en línea de las aplicaciones 0.4.x) usan una forma de carga distinta:
 
 ```json
 { "photo_keys": { "add": ["k1"] } }
@@ -115,11 +146,16 @@ message PullResponse {
   string next_cursor = 2;
   bool has_more = 3;
   int64 server_time_ms = 4; // server wall clock, unix ms
+  PullStatus status = 5;
 }
 ```
 
-El cursor es la cadena decimal de la secuencia de recepción del servidor
-(`change_log.seq`), no un HLC. `Pull` se acota por espacio: el servidor
+El cursor es opaco: guarda `next_cursor` y devuélvelo sin cambios. Para el
+protocolo 1 tiene la forma `<epoch>:<seq>:<mark>`. `epoch` es un número
+aleatorio que identifica la base de datos (`sync_state`), `seq` es la secuencia
+de recepción del servidor (`change_log.seq`, no un HLC) y `mark` es la etiqueta
+del último arranque del servidor anterior a esa posición (`sync_boot`). Los
+clientes 0.4.x conservan el número de secuencia simple. `Pull` se acota por espacio: el servidor
 devuelve las filas con `seq > cursor` que pertenecen al espacio activo del
 llamante, ordenadas por `seq`. La única excepción son las filas personales (ámbito
 `user:<id>`), que se devuelven solo a su propietario, y solo dentro del
@@ -131,9 +167,89 @@ a hacer pull de inmediato.
 Las filas de otros espacios siguen consumiendo números de secuencia, así que los valores
 que ves tienen huecos.
 
-**El cursor solo avanza mediante `Pull`.** Un dispositivo no debe derivarlo
-de ninguna otra cosa, en particular no de una respuesta de `Push`: los cambios de otros
-dispositivos con números de secuencia más bajos se saltarían para siempre.
+**El cursor solo avanza mediante `Pull` y `Snapshot`.** Un dispositivo no debe
+derivarlo de ninguna otra cosa, en particular no de una respuesta de `Push`: los
+cambios de otros dispositivos con números de secuencia más bajos se saltarían
+para siempre.
+
+### Estado del pull \{#pull-status}
+
+`status` indica qué ha hecho el servidor con el cursor. Solo los clientes que
+anuncian una versión del protocolo reciben un valor distinto de
+`PULL_STATUS_UNSPECIFIED` (el cursor se aceptó). Con cualquiera de los otros
+dos, `changes` está vacío:
+
+| Estado | Cuándo | Qué hace el cliente |
+| --- | --- | --- |
+| `PULL_STATUS_SNAPSHOT_REQUIRED` | El cursor es anterior a la entrada más antigua que el servidor aún conserva (consulta [compactación](#compaction)), o es un número de secuencia simple de antes del protocolo 1. | Carga una [instantánea](#snapshot) y continúa desde su cursor. El outbox no se toca. |
+| `PULL_STATUS_RESET_REQUIRED` | El cursor no pertenece al historial de esta base de datos: otro epoch, una posición más allá del final del registro, o una marca que no coincide. Así es como se ve una copia de seguridad restaurada. | Vuelve a poner en cola todas las filas locales para subirlas, carga una instantánea y continúa desde su cursor. |
+
+Una base de datos restaurada tiene el mismo epoch, pero el arranque del
+servidor sobre ella deja una marca nueva en la posición donde termina la copia,
+de modo que todo cursor emitido antes de la restauración más allá de esa
+posición lleva la marca equivocada. La comprobación depende de que el servidor
+arranque sobre la base de datos restaurada antes de atender solicitudes; no
+depende de las entradas del registro, así que ni la compactación ni un espacio
+eliminado pueden ocultar una restauración.
+
+Tras `RESET_REQUIRED`, la aplicación vuelve a poner en cola cada fila local como
+cambios normales, agrupados por las marcas que ya llevan sus columnas; el cambio
+más antiguo de una fila lleva todas sus columnas, de modo que puede recrear una
+fila que el servidor ya no tiene. Donde el servidor aún tiene un cambio, la
+fusión no hace nada. Después sube las imágenes de fotos que conserva, tras sus
+registros. Las aplicaciones 0.4.x no reciben ninguno de los dos estados; una
+cuyo cursor esté más allá del registro restaurado vuelve a leer el registro
+desde el principio.
+
+## Snapshot \{#snapshot}
+
+```protobuf
+message SnapshotRequest { string page_token = 1; }
+message SnapshotRow {
+  string entity = 1;
+  string entity_id = 2;
+  string payload_json = 3;   // every synced column of the row
+  string field_hlc_json = 4; // column -> stamp of its last write
+}
+message SnapshotResponse {
+  repeated SnapshotRow rows = 1;
+  string next_page_token = 2; // "" on the last page
+  string cursor = 3;          // where Pull continues; the same on every page
+  int64 server_time_ms = 4;
+}
+```
+
+`Snapshot` devuelve, página a página, las filas actuales del espacio del
+llamante, incluidas las filas eliminadas (lápidas) y, de las filas personales,
+solo las del propio llamante; una página se corta en unos 4 MiB. Requiere una
+versión del protocolo: una llamada sin la cabecera falla con
+`failed_precondition` y `UpgradeRequired`. Una columna de conjunto lleva todo su
+estado OR-Set en lugar de un delta. El cliente fusiona cada fila columna a
+columna como un cambio, así que las ediciones locales con marcas más nuevas
+sobreviven y el outbox no se toca; una columna sin marca solo se adopta donde la
+fila local tampoco tiene ninguna. El cursor se toma antes de leer la primera
+fila, así que una fila que cambia mientras se descargan las páginas vuelve a
+llegar a través de `Pull`. La aplicación guarda el cursor solo después de la
+última página; una instantánea interrumpida empieza de nuevo.
+
+Un dispositivo usa una instantánea cuando no tiene cursor (un dispositivo nuevo,
+o tras actualizar desde 0.4.x), tras `SNAPSHOT_REQUIRED` y tras
+`RESET_REQUIRED`. Los registros de fotos llegan con sus miniaturas, nunca con
+las imágenes completas.
+
+## Compactación \{#compaction}
+
+Una vez al día el servidor elimina las entradas del registro de cambios que
+recibió hace más de `BEEHIVE_CHANGELOG_RETENTION_DAYS` días (por defecto 180;
+`0` lo conserva todo; `change_log.logged_at` es el momento de recepción) y
+registra el número de secuencia hasta el que lo hizo (el horizonte, en
+`sync_state`). Un cursor por debajo del horizonte recibe `SNAPSHOT_REQUIRED`;
+una aplicación 0.4.x con un cursor así recibe el fallo `UpgradeRequired` y no
+puede sincronizar hasta que se actualice. Las filas en sí se conservan. Nada más
+lee entradas antiguas del registro: el propietario de una tarea personal, por
+ejemplo, se guarda en la propia tarea (`task.owner_id`). El trabajo se ejecuta
+en el proceso del servidor y supone que es el único: ejecuta exactamente una
+instancia por base de datos.
 
 ## Push
 
@@ -194,8 +310,13 @@ Lo que la aplicación hace con la respuesta: los cambios aceptados salen del out
 Los rechazados pasan a una lista de cambios rechazados que el usuario ve como
 **Problemas de sincronización**, con reintentar y descartar; las filas permanecen en las tablas locales.
 `clock_ahead` se trata volviendo a marcar como se describe arriba. Un push rechazado
-por ser de solo lectura saca el lote del outbox y conserva las filas localmente. Cualquier
-otro error conserva el outbox para la siguiente ejecución.
+por ser de solo lectura (`permission_denied`, la cuenta de demostración) nunca
+puede tener éxito: la aplicación descarta el lote, olvida las filas que tocaba y
+borra su cursor, de modo que el pull de la misma ejecución vuelve a cargar las
+filas del servidor desde una instantánea, y avisa al usuario de que el cambio no
+se ha guardado. Una solicitud rechazada por demasiado grande o mal formada se
+divide por la mitad hasta que el cambio defectuoso queda solo. Cualquier otro
+error conserva el outbox para la siguiente ejecución.
 
 ## Reglas de fusión
 
@@ -239,11 +360,44 @@ del llamante que lo escribió, y dentro del espacio lleva un `scope_id`:
 - el id del colmenar al que pertenece (los colmenares usan su propio id; las colmenas,
   reinas, inspecciones, ubicaciones, cosechas, tratamientos, eventos y tareas
   con colmenar llevan el id del colmenar), o
-- `user:<user id>` para las filas personales, como una tarea sin colmenar.
+- `user:<user id>` para las filas personales, como una tarea sin colmenar, y
+  los ajustes de la cuenta.
 
 Un llamante puede escribir en su propio ámbito personal y en los colmenares de su
 espacio activo. Lee todos los cambios del espacio activo salvo las filas personales de
 otros miembros. No hay compartición por colmenar.
+
+### Ajustes de la cuenta \{#account-settings}
+
+`user_settings` (unidades e idioma) es la única tabla sincronizada cuyas filas
+pertenecen a una cuenta en lugar de a un espacio: una fila por cuenta, con el id
+de la cuenta como id de fila, escrita solo en el ámbito personal de la cuenta.
+Sus entradas del registro se archivan bajo la cuenta (`org_id` `user:<id>`), de
+modo que `Pull`, `Subscribe` y `Snapshot` la sirven en todos los espacios de la
+cuenta, y dos dispositivos que la crean sin conexión escriben la misma fila.
+Abandonar un espacio la conserva; eliminar la cuenta la borra. Los valores solo
+cambian lo que muestra la aplicación; los registros, las cargas, las
+exportaciones y la API siguen en el sistema métrico. El tema de color no forma
+parte de ella.
+
+### Fotos \{#photos}
+
+Una foto es una fila de `photo` (`owner_entity` `inspection` o `hive`,
+`owner_id`, `thumb` como data URL de unos 200 px, `content_type`,
+`size_bytes`) que se sincroniza como cualquier otra fila. La imagen a tamaño
+completo nunca entra en el feed: el dispositivo que tomó la foto la sube con
+`POST /photos/<id>` una vez enviado el registro, y los demás dispositivos la
+obtienen con `GET /photos/<id>` la primera vez que se abre. Ambas llamadas
+necesitan la sesión o una clave API y ser miembro del espacio de la foto. Una
+subida se acepta una sola vez por foto, así que la imagen detrás de un id nunca
+cambia. Eliminar una foto es definitivo: el servidor borra la miniatura de la
+fila y del registro y elimina la imagen.
+
+Las aplicaciones 0.4.x conservan sus fotos en línea (`inspection.photo_keys`,
+`hive.photo`). El servidor acepta ese formato de ellas, se lo sirve y lo
+convierte en registros de fotos. Los clientes que anuncian una versión del
+protocolo reciben los registros de fotos y nunca las copias en línea; las
+aplicaciones 0.4.x reciben las copias en línea y nunca filas de `photo`.
 
 ## Subscribe
 
@@ -257,13 +411,17 @@ cambio más reciente que el llamante puede descargar y envía `server_cursor` cu
 avanzado más allá del cursor de la solicitud y del último valor enviado. No lleva
 cambios; el receptor llama a `Pull`. La actividad en otros espacios no despierta
 el stream. Un usuario puede mantener como máximo 4 streams abiertos; uno más se
-rechaza con `resource_exhausted`. La aplicación no lo usa.
+rechaza con `resource_exhausted`. La versión mínima del protocolo se le aplica
+igual que a las demás llamadas. La aplicación no lo usa.
 
 ## Tablas del lado del servidor
 
 `change_log` es el feed: `seq`, `scope_id`, `entity`, `entity_id`, `op`,
-`payload`, `hlc`, `author_id`, `org_id`, indexado por `(org_id, seq)` para
-`Pull`. `seq_counter` contiene la única fila de contador (`name = 'change'`) que se
+`payload`, `hlc`, `author_id`, `org_id`, `logged_at`, indexado por
+`(org_id, seq)` para `Pull` y por `logged_at` para la compactación.
+`sync_state` contiene el `epoch` de la base de datos y el `horizon` de
+compactación; `sync_boot` contiene una marca por cada arranque del servidor.
+`seq_counter` contiene la única fila de contador (`name = 'change'`) que se
 incrementa por cada cambio aceptado; cada escritor la bloquea primero, de modo que las fusiones
 se serializan. En el cliente, `outbox` contiene los cambios aún no enviados con la misma forma y
 `sync_meta` almacena el cursor bajo la clave `cursor`.
