@@ -25,7 +25,7 @@ Keep one apiary per physical location. It keeps visits, harvests and treatments 
 
 ## Creating an apiary
 
-From the **Apiaries** list (or the **+ New** button on the Overview) choose **New apiary**. Only a name is required.
+From the **Apiaries** list (or **+ New → New apiary** on the Overview) choose **New apiary**. Only a name is required.
 
 | Field | Required | What it is for |
 | --- | --- | --- |
@@ -57,6 +57,8 @@ A status line under the map reports what the lookup is doing:
 - **No match for this address**: drop the pin on the map instead.
 - **Address search is unavailable**: the lookup service cannot be reached (you may be offline). The pin and manual coordinates keep working.
 
+Map tiles and the address lookup come from OpenStreetMap services unless the operator of your instance configured others. They are the only outside services the app contacts: showing a map loads tiles for the area you look at, and typing an address or moving the pin sends that address or position to the lookup service. An operator can switch the map off for the whole instance; the form then has the coordinate fields only. See [Configuration](../self-hosting/configuration.md#maps).
+
 ## Adding and viewing hives
 
 Open an apiary to see its hives with the date of each one's last inspection. From here you can:
@@ -68,7 +70,11 @@ See [Hives](./hives.md) and [Queens](./queens.md).
 
 ## Printing QR labels for the apiary
 
-The **QR labels** button on the apiary page prints an A4 sheet with one label per hive in the apiary. Each label encodes a deep link to that hive; scanning it opens Openbeehive at the hive. See [QR labels](./qr-labels.md).
+The **QR labels** button on the apiary page prints an A4 sheet with one label per hive in the apiary, straight from the page. Each label encodes a deep link to that hive; scanning it opens Openbeehive at the hive. See [QR labels](./qr-labels.md).
+
+## Printing the treatment register
+
+When hives of the apiary have treatments recorded, the **Treatment register** button prints the register for all of them in one document. See [Treatments](./treatments.md#treatment-register).
 
 ## Editing and reorganising
 
@@ -76,6 +82,10 @@ Rename an apiary, or update its address, note and coordinates, with **Edit apiar
 
 If a hive moves to a different location, use **Move** on the hive to reassign it to the matching apiary. Migratory beekeepers can keep an apiary per site and move hives as they travel.
 
+## Deleting an apiary
+
+**Delete apiary** works only for an apiary without hives. While it still has hives, the app names how many there are and asks you to move or delete them first.
+
 ## Sharing
 
-Apiaries are not shared individually. Everything in a tenant is visible to every member of that tenant, so to work on an apiary with someone, invite them to the tenant that holds it (Settings → Tenants → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate tenant for the club. See [Accounts & tenants](./accounts-tenants.md).
+Apiaries are not shared individually. Everything in a workspace is visible to every member of that workspace, so to work on an apiary with someone, invite them to the workspace that holds it (Settings → Workspaces → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate workspace for the club. See [Accounts & workspaces](./accounts-tenants.md).

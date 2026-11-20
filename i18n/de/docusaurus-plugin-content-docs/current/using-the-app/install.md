@@ -99,12 +99,19 @@ dafür, wie du TLS vor deinen Server setzt.
 Wenn du selbst hostest, führt dich der Abschnitt [Selbst-Hosting](/category/self-hosting)
 durch Bereitstellung, Konfiguration und Backups.
 
+## Die App offline öffnen
+
+Nachdem du die App einmal online geöffnet hast, startet sie auch ohne Verbindung, auch
+bei einem Kaltstart (nachdem das Telefon neu gestartet oder die App geschlossen wurde). Siehe
+[Offline und Synchronisation](./offline-and-sync.md).
+
 ## Die App aktualisieren
 
-Die PWA aktualisiert sich selbst. Wenn eine neue Version veröffentlicht wird, holt die App
-sie im Hintergrund und wendet sie beim nächsten Start oder Neuladen an. Du musst nichts neu
-installieren. Wenn du jemals sichergehen willst, dass du die neueste Version hast, schließe
-die App vollständig und öffne sie wieder.
+Die PWA aktualisiert sich selbst. Wenn eine neue Version im Hintergrund heruntergeladen
+wurde, meldet eine Leiste am oberen Rand **„Eine neue Version ist verfügbar.“** mit zwei
+Buttons: **Neu laden** wechselt sofort zur neuen Version, **Später** blendet die Leiste aus.
+Wenn du „Später“ wählst, wird das Update angewendet, wenn die App das nächste Mal startet,
+nachdem alle ihre Tabs und Fenster geschlossen wurden. Du musst nichts neu installieren.
 
 ## Die App entfernen
 

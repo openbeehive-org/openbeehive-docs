@@ -25,7 +25,7 @@ Crea un apiario per ogni posizione fisica. Mantiene visite, raccolti e trattamen
 
 ## Creare un apiario
 
-Dall'elenco **Apiari** (o dal pulsante **+ Nuovo** nella Panoramica) scegli **Nuovo apiario**. È richiesto solo un nome.
+Dall'elenco **Apiari** (o da **+ Nuovo → Nuovo apiario** nella Panoramica) scegli **Nuovo apiario**. È richiesto solo un nome.
 
 | Campo | Obbligatorio | A cosa serve |
 | --- | --- | --- |
@@ -57,6 +57,8 @@ Una riga di stato sotto la mappa indica cosa sta facendo la ricerca:
 - **Nessuna corrispondenza per questo indirizzo**: posiziona invece il segnaposto sulla mappa.
 - **La ricerca dell'indirizzo non è al momento disponibile**: il servizio non è raggiungibile (forse sei offline). Il segnaposto e le coordinate manuali continuano a funzionare.
 
+Le tessere della mappa e la ricerca dell'indirizzo provengono dai servizi di OpenStreetMap, a meno che l'operatore della tua istanza non ne abbia configurati altri. Sono gli unici servizi esterni che l'app contatta: mostrare una mappa carica le tessere dell'area che stai guardando, e digitare un indirizzo o spostare il segnaposto invia quell'indirizzo o quella posizione al servizio di ricerca. Un operatore può disattivare la mappa per l'intera istanza; il modulo ha allora solo i campi delle coordinate. Vedi [Configurazione](../self-hosting/configuration.md#maps).
+
 ## Aggiungere e visualizzare le arnie
 
 Apri un apiario per vedere le sue arnie con la data dell'ultima visita di ciascuna. Da qui puoi:
@@ -68,7 +70,11 @@ Vedi [Arnie](./hives.md) e [Regine](./queens.md).
 
 ## Stampare le etichette QR per l'apiario
 
-Il pulsante **Etichette QR** nella pagina dell'apiario stampa un foglio A4 con un'etichetta per ogni arnia dell'apiario. Ogni etichetta codifica un deep link a quell'arnia; scansionandola si apre Openbeehive direttamente sull'arnia. Vedi [Etichette QR](./qr-labels.md).
+Il pulsante **Etichette QR** nella pagina dell'apiario stampa un foglio A4 con un'etichetta per ogni arnia dell'apiario, direttamente dalla pagina. Ogni etichetta codifica un deep link a quell'arnia; scansionandola si apre Openbeehive direttamente sull'arnia. Vedi [Etichette QR](./qr-labels.md).
+
+## Stampare il registro dei trattamenti
+
+Quando le arnie dell'apiario hanno trattamenti registrati, il pulsante **Registro dei trattamenti** stampa il registro di tutte in un unico documento. Vedi [Trattamenti](./treatments.md#treatment-register).
 
 ## Modificare e riorganizzare
 
@@ -76,6 +82,10 @@ Rinomina un apiario, o aggiornane indirizzo, nota e coordinate, con **Modifica a
 
 Se un'arnia si sposta in un'altra posizione, usa **Sposta** sull'arnia per riassegnarla all'apiario corrispondente. Gli apicoltori nomadi possono mantenere un apiario per sito e spostare le arnie man mano che si spostano.
 
+## Eliminare un apiario
+
+**Elimina apiario** funziona solo per un apiario senza arnie. Finché ne contiene ancora, l'app indica quante sono e ti chiede di spostarle o eliminarle prima.
+
 ## Condivisione
 
-Gli apiari non si condividono singolarmente. Tutto ciò che sta in un tenant è visibile a ogni membro di quel tenant, quindi per lavorare su un apiario con qualcuno invitalo nel tenant che lo contiene (Impostazioni → Spazi → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea un tenant separato per il club. Vedi [Account e tenant](./accounts-tenants.md).
+Gli apiari non si condividono singolarmente. Tutto ciò che sta in uno spazio è visibile a ogni membro di quello spazio, quindi per lavorare su un apiario con qualcuno invitalo nello spazio che lo contiene (Impostazioni → Spazi → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea uno spazio separato per il club. Vedi [Account e spazi](./accounts-tenants.md).

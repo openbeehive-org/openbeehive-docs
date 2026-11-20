@@ -9,7 +9,7 @@ La apicultura está llena de pequeños trabajos que es fácil olvidar: añadir u
 
 ## Crear una tarea
 
-Abre **Tareas**. En la parte superior, escribe qué hay que hacer, elige opcionalmente una fecha de vencimiento y toca **Añadir**.
+Abre **Tareas** (o elige **+ Nuevo → Nueva tarea** en el Resumen). En la parte superior, escribe qué hay que hacer, elige opcionalmente una fecha de vencimiento y toca **Añadir**.
 
 | Campo | Notas |
 | --- | --- |
@@ -22,21 +22,22 @@ Eso es toda la tarea. No hay notas, ni enlace a una colmena o colmenar, ni repet
 Crea una tarea sin fecha de vencimiento para trabajos de "algún día", como "Construir dos cajas de núcleo más durante el invierno".
 :::
 
-Las tareas pertenecen al espacio activo, así que todos los miembros de un espacio compartido ven la misma lista. Eso las convierte en una forma sencilla de coordinarse dentro de un club o entre dos apicultores.
+Las tareas que creas en la aplicación son **personales**: solo las ves tú, en todos tus dispositivos, y solo en el espacio en el que las creaste. Los demás miembros de un espacio compartido no ven tu lista, y después de cambiar de espacio ves las tareas que creaste allí.
 
 ## Abierta frente a hecha
 
 Cada tarea está **abierta** o **hecha**.
 
-- Toca el círculo a la izquierda de una tarea para marcarla como hecha. Las tareas hechas permanecen en la lista, tachadas, y no cuentan como abiertas.
-- Toca el círculo de nuevo para reabrir una tarea que marcaste por error.
-- El lápiz edita el título o la fecha de vencimiento; la cruz elimina la tarea.
+- Toca la casilla a la izquierda de una tarea para marcarla como hecha. Las tareas hechas pasan a la sección **Completadas (n)**, debajo de las abiertas, que empieza plegada, y no cuentan como abiertas.
+- Toca la casilla de nuevo para reabrir una tarea que marcaste por error.
+- El lápiz edita el título o la fecha de vencimiento; la papelera elimina la tarea. Tras una eliminación, una barra ofrece **Deshacer** durante unos segundos.
+- Una tarea cuya fecha de vencimiento ya ha pasado se marca como **Vencida**.
 
-Si tú y un coapicultor marcáis ambos la misma tarea en distintos dispositivos, la tarea acaba como hecha.
+Si marcas la misma tarea en dos de tus dispositivos, la tarea acaba como hecha.
 
 ## Las tareas en el Resumen
 
-El mosaico **Tareas abiertas** cuenta las tareas que no están hechas. **Próximas tareas** lista hasta cinco tareas abiertas con sus fechas de vencimiento; las tareas cuya fecha ya ha pasado se marcan con **!**. Consulta [El panel de control](./dashboard.md).
+El mosaico **Tareas abiertas** cuenta las tareas que no están hechas. **Próximas tareas** lista hasta cinco tareas abiertas con sus fechas de vencimiento; las tareas cuya fecha ya ha pasado se marcan como **Vencida**, y al tocar una tarea se abre en la vista Tareas. Consulta [El panel de control](./dashboard.md).
 
 :::tip
 Para los trabajos recurrentes, añade la siguiente tarea cuando marques la actual como hecha. Tras una revisión de enjambrazón de siete días, añade "Revisión de enjambrazón" para la semana siguiente.

@@ -9,7 +9,7 @@ Die Imkerei ist voller kleiner Arbeiten, die leicht zu vergessen sind: einen Hon
 
 ## Eine Aufgabe erstellen
 
-Öffne **Aufgaben**. Gib oben ein, was zu tun ist, wähle optional ein Fälligkeitsdatum und tippe auf **Hinzufügen**.
+Öffne **Aufgaben** (oder wähle **+ Neu → Neue Aufgabe** auf der Übersicht). Gib oben ein, was zu tun ist, wähle optional ein Fälligkeitsdatum und tippe auf **Hinzufügen**.
 
 | Feld | Hinweise |
 | --- | --- |
@@ -22,21 +22,22 @@ Das ist die ganze Aufgabe. Es gibt keine Notizen, keine Verknüpfung mit einer B
 Erstelle eine Aufgabe ohne Fälligkeitsdatum für „irgendwann"-Arbeiten, etwa „Über den Winter zwei weitere Ablegerkästen bauen".
 :::
 
-Aufgaben gehören zum aktiven Mandanten, alle in einem gemeinsamen Mandanten sehen also dieselbe Liste. Das macht sie zu einer einfachen Möglichkeit, sich innerhalb eines Vereins oder zwischen zwei Imkern abzustimmen.
+Aufgaben, die du in der App erstellst, sind **persönlich**: Nur du siehst sie, auf allen deinen Geräten, und nur in dem Arbeitsbereich, in dem du sie erstellt hast. Andere Mitglieder eines gemeinsamen Arbeitsbereichs sehen deine Liste nicht, und nach dem Wechsel des Arbeitsbereichs siehst du die Aufgaben, die du dort erstellt hast.
 
 ## Offen vs. erledigt
 
 Jede Aufgabe ist entweder **offen** oder **erledigt**.
 
-- Tippe auf den Kreis links neben einer Aufgabe, um sie abzuhaken. Erledigte Aufgaben bleiben durchgestrichen in der Liste und zählen nicht als offen.
-- Tippe erneut auf den Kreis, um eine versehentlich abgehakte Aufgabe wieder zu öffnen.
-- Der Stift bearbeitet Titel oder Fälligkeitsdatum; das Kreuz löscht die Aufgabe.
+- Tippe auf das Kästchen links neben einer Aufgabe, um sie abzuhaken. Erledigte Aufgaben wandern in den Abschnitt **Erledigt (n)** unter den offenen, der anfangs eingeklappt ist, und zählen nicht als offen.
+- Tippe erneut auf das Kästchen, um eine versehentlich abgehakte Aufgabe wieder zu öffnen.
+- Der Stift bearbeitet Titel oder Fälligkeitsdatum; der Papierkorb löscht die Aufgabe. Nach dem Löschen bietet eine Leiste ein paar Sekunden lang **Rückgängig** an.
+- Eine Aufgabe, deren Fälligkeit verstrichen ist, ist mit **Überfällig** markiert.
 
-Wenn du und ein Mitimker dieselbe Aufgabe auf verschiedenen Geräten abhakt, endet die Aufgabe als erledigt.
+Wenn du dieselbe Aufgabe auf zwei deiner Geräte abhakst, endet die Aufgabe als erledigt.
 
 ## Aufgaben auf der Übersicht
 
-Die Kachel **Offene Aufgaben** zählt Aufgaben, die nicht erledigt sind. **Anstehende Aufgaben** listet bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum; Aufgaben, deren Fälligkeit verstrichen ist, sind mit **!** markiert. Siehe [Das Dashboard](./dashboard.md).
+Die Kachel **Offene Aufgaben** zählt Aufgaben, die nicht erledigt sind. **Anstehende Aufgaben** listet bis zu fünf offene Aufgaben mit ihrem Fälligkeitsdatum; Aufgaben, deren Fälligkeit verstrichen ist, sind mit **Überfällig** markiert, und ein Tipp auf eine Aufgabe öffnet sie in der Ansicht Aufgaben. Siehe [Das Dashboard](./dashboard.md).
 
 :::tip
 Für wiederkehrende Arbeiten legst du die nächste Aufgabe an, wenn du die aktuelle abhakst. Nach einer 7-Tage-Schwarmkontrolle fügst du „Schwarmkontrolle" für die folgende Woche hinzu.

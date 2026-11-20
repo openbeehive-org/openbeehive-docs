@@ -9,17 +9,19 @@ Most issues with Openbeehive fall into a handful of categories: sync, local stor
 
 Your records live in a local database on your device, so almost nothing here can lose data that has already synced to the server.
 
-## Data not syncing
+## Data not syncing \{#data-not-syncing}
 
 Your changes save instantly to the device. Syncing to the server happens quietly in the background, so a delay is normal and rarely a cause for concern. If changes you made on one device are not appearing on another, work through this list.
 
-**1. Check you are online.** The sidebar shows **Online** or **Offline** next to your account. If you have been working in the field with no signal, your edits are queued and send as soon as you reconnect.
+**1. Read the sync status.** The chip at the top of the page says what is going on: **Offline**, **Waiting to upload**, **Sync failed · retrying**, **Signed out** or **Sync problems**. See [the sync status](../using-the-app/offline-and-sync.md#sync-status). If you have been working in the field with no signal, your edits are queued and send as soon as you reconnect.
 
-**2. Check you are signed in.** Sync requires a session. If it has expired you can still read and edit locally, but nothing syncs until you sign in again. **Settings → Account** shows who you are signed in as.
+**2. Check you are signed in.** Sync requires a session. If it has expired the chip reads **Signed out · sign in to sync**; you can still read and edit locally, but nothing syncs until you sign in again. **Settings → Account** shows who you are signed in as.
 
-**3. Check the active tenant.** Records belong to a tenant. If a hive is missing on another device, open **Settings → Tenants** there and make sure the same tenant is active. If it is missing for another person, they are not a member of that tenant; a tenant admin can invite them.
+**3. Check the active workspace.** Records belong to a workspace. If a hive is missing on another device, open **Settings → Workspaces** there and make sure the same workspace is active. If it is missing for another person, they are not a member of that workspace; a workspace admin can invite them.
 
-**4. Give it a moment, then reopen.** Background sync runs periodically. Closing and reopening the app, or switching to it from the background, prompts a fresh sync attempt.
+**4. Sync now.** Background sync runs at short intervals; tapping the status chip starts a sync at once.
+
+**5. Look for refused changes.** If the chip reads **Sync problems**, the server did not accept some changes. They are still on the device. The **Sync problems** list names each one with the reason and lets you try again or discard it; see [Sync problems](../using-the-app/offline-and-sync.md#sync-problems). A device clock that is far ahead is one cause; the app corrects for it and resends by itself, but setting the device to automatic time avoids it.
 
 :::note
 Sync is conflict-free by design. The most recent edit to a field wins, additions (photos, visits, harvests, treatments) are kept, and you will not lose work because two devices edited at once.
@@ -45,21 +47,23 @@ Browser tools that "clear site data", "clear cookies and storage", or private/in
 
 App versions before 0.2.2 could run out of reserved local-storage slots, after which every save failed with `SQLITE_CANTOPEN: unable to open database file` — visible as a button that seemed to do nothing. Since 0.2.2 the app reserves enough slots up front and repairs the storage pool automatically when it runs low. If you still see this error, reload the app twice (so the new version takes over) and try again; records you saved earlier are unaffected.
 
-### "Storage is unavailable — changes will not persist on this device" \{#storage-is-unavailable}
+### "This browser is not saving data on this device" \{#storage-is-unavailable}
 
 The app keeps its database in the browser's private storage. When it cannot
-open that storage, it falls back to an in-memory database and shows this toast
-so you know the situation. Edits still work and still sync to the server while
-you are signed in, but the local copy disappears when the tab closes.
+open that storage, it keeps the records in memory and shows this banner so you
+know the situation. Edits still work and still sync to the server while you
+are signed in, but the local copy disappears when the tab closes.
 
-The two common causes:
+The common causes are **private or incognito browsing** (browsers give such
+windows no persistent storage) and storage that is blocked in the browser
+settings. Use a normal window, or install the app.
 
-- **Private or incognito browsing.** Browsers give such windows no persistent
-  storage. Use a normal window, or install the app.
-- **A second tab of the app is open.** The storage can be held by only one
-  page at a time. Since app version 0.2.3 the app retries briefly, which
-  usually clears a page refresh racing its own predecessor; if the toast stays,
-  close the other tab and reload.
+### "Openbeehive is open in another tab"
+
+Only one tab or window can work with the records on a device at a time. A
+second tab shows this notice instead of the app. Continue in the first tab, or
+tap **Use it here** to move the app to this tab. See
+[One tab at a time](../using-the-app/offline-and-sync.md#one-tab).
 
 ### The app shows "Syncing your data…" instead of my apiaries
 
@@ -69,11 +73,19 @@ known to be complete, and they fill up progressively as batches arrive. Stay
 online and give it a moment; on a large dataset the lists grow while you watch.
 If the hint never goes away, work through [Data not syncing](#data-not-syncing).
 
+### The app does not answer under my host name (self-host, no login)
+
+A server without login answers only to `localhost`, IP addresses and the host
+of `BEEHIVE_PUBLIC_BASE_URL`. Opened under another name it replies with a
+plain `403` page that names the fix: list the name in `BEEHIVE_ALLOWED_HOSTS`
+or set `BEEHIVE_PUBLIC_BASE_URL` to the address you use. See
+[Configuration](../self-hosting/configuration.md#allowed-hosts).
+
 ## Clearing or reinstalling the app
 
 Sometimes a fresh start fixes odd behaviour after an update. As long as you are signed in to an account that syncs, this is non-destructive: your synced records come back from the server.
 
-1. Confirm you are **online and signed in**, and that the sync indicator shows everything is up to date.
+1. Confirm you are **online and signed in**, and that the status chip reads **Synced**.
 2. Uninstall or remove the PWA from your home screen, or clear the site's storage in your browser settings.
 3. Reopen Openbeehive and sign in.
 4. Wait for the initial sync to download your apiaries, hives and history.
@@ -90,14 +102,16 @@ Each hive can carry a printable QR label that deep-links to that hive (see [QR l
 - **Use HTTPS.** Browsers only allow camera access on secure origins. The hosted app is served over HTTPS; self-hosters must serve over HTTPS too (or `localhost` for testing). See [Reverse proxy](../self-hosting/reverse-proxy.md).
 - **Check it is not in use.** Close other apps or tabs that may be holding the camera.
 
-:::tip iOS Safari
-On iPhone and iPad the in-app scanner can be restricted. If scanning does not work, open the built-in **Camera app** and point it at the QR code. iOS recognises the encoded link and offers to open it; tapping the link launches Openbeehive at the right hive. The label encodes a plain web link, so any QR reader works as a fallback.
+:::tip No camera, or a worn label
+The in-app scanner works in every current browser, including Safari on iPhone and iPad and Firefox. If the camera cannot be used or the label is hard to read, type the six characters printed under the QR code into **Label code** on the Scan screen. If you use the installed app, scan inside it rather than with the phone's camera app, which opens the link in the browser with its own separate data.
 :::
 
 ## Login problems
 
 - **Stuck on the sign-in screen.** Confirm you are reaching the correct address (the hosted app is at app.openbeehive.org). After signing in with your provider you should be redirected back automatically; if not, reload the page.
 - **Redirect fails or "invalid redirect" errors (self-host).** This almost always means the OIDC redirect URL or `BEEHIVE_PUBLIC_BASE_URL` is misconfigured. See [Authentication and configuration](../self-hosting/authentication.md).
+- **"Too many attempts."** After 10 failed sign-ins for an account, or 30 from one network address, further attempts are blocked for up to 15 minutes. Wait and try again.
+- **Server refuses to start after enabling login (self-host).** The log names the missing setting, usually `BEEHIVE_SESSION_SECRET` (at least 32 bytes) or the admin account. See [Authentication](../self-hosting/authentication.md).
 - **Passkey not offered.** Passkeys must be enabled on the server and you must have added one under Settings → Passkeys. Otherwise sign in with another method.
 - **Single-user self-host with no login.** With password auth off, no OIDC providers and WebAuthn disabled, there is no sign-in step at all. If you unexpectedly see a login screen, check your server configuration.
 

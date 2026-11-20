@@ -27,12 +27,16 @@ Puedes anotar más de una cosecha por colmena y año, por ejemplo una cosecha de
 La miel debería estar generalmente por debajo de alrededor del 18 % de agua antes de venderse o almacenarse a largo plazo; por encima de aproximadamente el 20 % corre el riesgo de fermentar. Registrar aquí la lectura te permite detectar un lote húmedo antes de que se estropee. Los umbrales y las normas de etiquetado varían según el país, así que consulta los requisitos locales.
 :::
 
+## Corregir o eliminar una cosecha \{#correcting}
+
+Cada cosecha de la lista tiene una acción de edición y otra de eliminación. Edítala para corregir una cantidad, una fecha o un número de lote; una cosecha que se cambió después de guardarse por primera vez muestra **Modificada el** con la fecha del último cambio. Eliminar pide confirmación y ofrece **Deshacer** durante unos segundos; una cosecha eliminada también desaparece de los totales y de los gráficos.
+
 ## Dónde aparecen las cosechas
 
 - La sección **Miel** de la página de la colmena lista cada cosecha y muestra el total de la colmena en su encabezado.
 - **Evolución**, en la página de la colmena, representa las cosechas a lo largo del tiempo.
 - El mosaico **Miel esta temporada** del Resumen suma las cosechas registradas en el año en curso.
 
-Una cosecha guarda la colmena, el colmenar y la reina cuyo reinado cubría la fecha de la cosecha. Cambiar la reina o mover la colmena más tarde no cambia a qué se atribuye una cosecha anterior.
+Una cosecha guarda la colmena, el colmenar y la reina cuyo reinado cubría la fecha de la cosecha. Cambiar la reina o mover la colmena más tarde no cambia a qué se atribuye una cosecha anterior. Si corriges la fecha de una cosecha, el colmenar y la reina se vuelven a determinar para la nueva fecha.
 
 Funciona sin conexión; consulta [Sin conexión y sincronización](./offline-and-sync.md). Para retirar y procesar la miel, consulta la guía apícola sobre [Cosecha de miel](../beekeeping/honey-harvest.md).

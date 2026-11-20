@@ -9,7 +9,7 @@ Un'arnia in Openbeehive è una singola colonia in una cassetta fisica. Quasi tut
 
 ## Creare un'arnia
 
-Apri un apiario, digita un nome sotto **Aggiungi arnia** e aggiungila (l'elenco **Arnie** ha lo stesso modulo con un selettore dell'apiario). Una nuova arnia parte con stato **Attiva** e senza tipo. Apri l'arnia e tocca l'azione **Modifica** (matita) per impostare:
+Apri un apiario, digita un nome sotto **Aggiungi arnia** e aggiungila. L'elenco **Arnie** ha lo stesso modulo con un selettore dell'apiario dietro il suo pulsante **+ Nuovo**, e **+ Nuovo → Nuova arnia** nella Panoramica porta lì. Una nuova arnia parte con stato **Attiva** e senza tipo. Apri l'arnia e scegli **Altro → Modifica arnia** per impostare:
 
 | Campo | Cos'è |
 | --- | --- |
@@ -49,9 +49,19 @@ Per una descrizione più completa di ciascuno standard, vedi [Tipi di arnia](../
 
 Lo stato è un'etichetta che imposti modificando l'arnia; nulla lo cambia automaticamente. Impostare un'arnia su **Persa** o **Sciolta** ne conserva l'intero registro.
 
+## L'elenco delle arnie
+
+**Arnie** elenca tutte le arnie dello spazio con il loro apiario e il tempo trascorso dall'ultima visita. Sopra l'elenco:
+
+- **Cerca** trova le arnie per nome, per nome dell'apiario o per i primi caratteri del codice dell'etichetta stampato sull'[etichetta QR](./qr-labels.md).
+- **Stato** e **Apiario** filtrano l'elenco; **Rimuovi filtri** li azzera.
+- **Ordina per** ordina per **Nome**, **Apiario** o **Da più tempo senza visita**.
+
+I nomi vengono ordinati come li leggi: "Arnia 2" viene prima di "Arnia 10". Una riga sotto gli strumenti indica quante arnie sono mostrate.
+
 ## Spostare un'arnia tra apiari
 
-Per ricollocare un'arnia, aprila, tocca l'azione **Sposta** e scegli l'apiario di destinazione. L'arnia mantiene nome, regina, foto e registro completo; cambia solo il suo apiario.
+Per ricollocare un'arnia, aprila, tocca **Sposta** nell'intestazione e scegli l'apiario di destinazione. L'arnia mantiene nome, regina, foto e registro completo; cambia solo il suo apiario.
 
 ### Cronologia posizioni
 
@@ -67,28 +77,28 @@ Aprire un'arnia ti offre un'unica schermata con tutto ciò che riguarda quella c
 
 ### Intestazione e azioni
 
-L'intestazione mostra la foto, il nome, lo stato e il tipo. Le icone delle azioni accanto:
+L'intestazione mostra la foto, il nome, lo stato e il tipo. Accanto ci sono le due cose che fai più spesso sul campo, **Registra visita** e **Sposta**, e un menu **Altro** con:
 
 - **Scheda dell'arnia**: una tabella stampabile di tutte le visite (con un pulsante **Stampa**).
-- **Andamento**: grafici delle rilevazioni registrate nelle visite (telaini occupati, telaini di covata, scorte di cibo, celle reali di sciamatura, docilità, calma, varroa, peso dell'arnia, nutrizione, larva più giovane, temperatura e umidità) più le smielature nel tempo.
-- **Modifica arnia**, **Sposta**, **QR** (mostra l'etichetta dell'arnia con i pulsanti **Stampa** e **SVG**; vedi [Etichette QR](./qr-labels.md)) ed **Elimina**.
+- **Andamento**: grafici delle rilevazioni registrate nelle visite (telaini occupati, telaini di covata, scorte di cibo, celle reali di sciamatura, docilità, calma, varroa, peso dell'arnia, nutrizione, larva più giovane, temperatura e umidità) più le smielature nel tempo. Le valutazioni come le scorte di cibo e la docilità sono disegnate come livelli con un nome, con il migliore in alto, le temperature sotto zero vengono tracciate, e la varroa compare nel grafico solo dove la voce è un numero semplice.
+- **Modifica arnia**, **Codice QR** (mostra l'etichetta dell'arnia con i pulsanti **Stampa** e **SVG**; vedi [Etichette QR](./qr-labels.md)) ed **Elimina arnia**.
 
 ### Ultime rilevazioni
 
-Sotto l'intestazione, delle pillole mostrano i valori diversi da zero della visita più recente: telaini occupati, telaini di covata, celle reali di sciamatura, peso dell'arnia e varroa. Toccando una pillola si apre il grafico corrispondente in **Andamento**.
+Sotto l'intestazione, delle pillole mostrano i valori registrati nella visita più recente: telaini occupati, telaini di covata, celle reali di sciamatura, peso dell'arnia e varroa. Toccando una pillola si apre il grafico corrispondente in **Andamento**.
 
 ### Regina
 
-La scheda **Regina attuale** mostra anno, numero, colore di marcatura, origine e commento, con **Sostituisci regina** (o **Imposta regina** se non ce n'è nessuna registrata). **Cronologia regine** elenca le regine precedenti con le date di introduzione e sostituzione. Vedi [Regine](./queens.md).
+La scheda **Regina** mostra anno, numero, colore di marcatura, origine e commento, con **Sostituisci regina** (o **Imposta regina** se non ce n'è nessuna registrata) e azioni per modificare o eliminare la sua registrazione. **Cronologia regine** elenca le regine precedenti con le date di introduzione e sostituzione. Vedi [Regine](./queens.md).
 
 ### Diario delle visite
 
-**Registra visita** apre il modulo della visita. Sotto sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
+**Registra visita** apre il modulo della visita. Sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto. Ogni visita ha azioni per modificarla ed eliminarla. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
 
 ### Miele e Trattamenti
 
-**Miele** mostra il totale delle smielature dell'arnia nell'intestazione ed elenca ogni smielatura (**Registra raccolto**). **Trattamenti** elenca ogni trattamento (**Registra trattamento**). Vedi [Smielature](./harvests.md) e [Trattamenti](./treatments.md).
+**Miele** mostra il totale delle smielature dell'arnia nell'intestazione ed elenca ogni smielatura (**Registra raccolto**). **Trattamenti** elenca ogni trattamento (**Registra trattamento**) e stampa il registro dei trattamenti (**Stampa registro**). Smielature e trattamenti possono essere modificati ed eliminati come le visite. Vedi [Smielature](./harvests.md) e [Trattamenti](./treatments.md).
 
 ## Eliminare contro ritirare un'arnia
 
-Cambia lo **stato** di un'arnia anziché eliminarla. Impostare una colonia su **Persa** o **Sciolta** ne conserva la cronologia per i confronti anno su anno e la tracciabilità. Elimina un'arnia solo se è stata creata per errore; l'app chiede conferma.
+Cambia lo **stato** di un'arnia anziché eliminarla. Impostare una colonia su **Persa** o **Sciolta** ne conserva la cronologia per i confronti anno su anno e la tracciabilità. Elimina un'arnia solo se è stata creata per errore; l'app chiede conferma, e l'arnia scompare con tutte le sue registrazioni.

@@ -77,7 +77,7 @@ di riferimento e verifica le norme nazionali.
 | **Etichetta QR** | Un codice stampabile su un alveare che codifica un deep link; scansionandolo si apre l'app direttamente su quell'alveare. Vedi [etichette QR](../using-the-app/qr-labels.md). |
 | **Sincronizzazione** | La fusione in background, senza conflitti, delle tue modifiche locali con il server e i tuoi altri dispositivi. Vedi [offline e sincronizzazione](../using-the-app/offline-and-sync.md). |
 | **Attività** | Un promemoria con un titolo e una scadenza facoltativa, per esempio "aggiungere un melario" o "trattare contro la varroa". Vedi [attività](../using-the-app/tasks.md). |
-| **Tenant** | Una raccolta di apiari, alveari e registri condivisa dai suoi membri. Ogni account ha un tenant personale e può essere invitato in altri; non esiste una condivisione più granulare. Vedi [account e tenant](../using-the-app/accounts-tenants.md). |
+| **Spazio** | Una raccolta di apiari, alveari e registri condivisa dai suoi membri. Ogni account ha uno spazio personale e può essere invitato in altri; non esiste una condivisione più granulare. Chiamato "tenant" nell'API, nelle impostazioni del server e nelle versioni precedenti dell'app. Vedi [account e spazi](../using-the-app/accounts-tenants.md). |
 
 :::note
 I meccanismi più approfonditi di HLC, OR-Set ed eventi di sola aggiunta sono

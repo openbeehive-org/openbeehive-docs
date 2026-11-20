@@ -9,7 +9,7 @@ L'apicoltura è piena di piccoli lavori facili da dimenticare: aggiungere un mel
 
 ## Creare un'attività
 
-Apri **Attività**. In alto, digita cosa c'è da fare, scegli facoltativamente una scadenza e tocca **Aggiungi**.
+Apri **Attività** (oppure scegli **+ Nuovo → Nuova attività** nella Panoramica). In alto, digita cosa c'è da fare, scegli facoltativamente una scadenza e tocca **Aggiungi**.
 
 | Campo | Note |
 | --- | --- |
@@ -22,21 +22,22 @@ Questa è tutta l'attività. Non ci sono note, nessun collegamento a un'arnia o 
 Crea un'attività senza scadenza per i lavori "un giorno o l'altro", come "Costruire altre due cassette nucleo durante l'inverno".
 :::
 
-Le attività appartengono al tenant attivo, quindi tutti in un tenant condiviso vedono lo stesso elenco. Questo le rende un modo semplice per coordinarsi all'interno di un club o tra due apicoltori.
+Le attività che crei nell'app sono **personali**: le vedi solo tu, su tutti i tuoi dispositivi, e solo nello spazio in cui le hai create. Gli altri membri di uno spazio condiviso non vedono il tuo elenco, e dopo aver cambiato spazio vedi le attività che hai creato lì.
 
 ## Aperte contro completate
 
 Ogni attività è **aperta** oppure **completata**.
 
-- Tocca il cerchio a sinistra di un'attività per spuntarla. Le attività completate restano nell'elenco, barrate, e non vengono conteggiate come aperte.
-- Tocca di nuovo il cerchio per riaprire un'attività spuntata per errore.
-- La matita modifica il titolo o la scadenza; la croce elimina l'attività.
+- Tocca la casella a sinistra di un'attività per spuntarla. Le attività completate passano nella sezione **Completate (n)** sotto quelle aperte, che parte compressa, e non vengono conteggiate come aperte.
+- Tocca di nuovo la casella per riaprire un'attività spuntata per errore.
+- La matita modifica il titolo o la scadenza; il cestino elimina l'attività. Dopo un'eliminazione, una barra offre **Annulla** per alcuni secondi.
+- Un'attività la cui scadenza è passata è contrassegnata come **Scaduta**.
 
-Se tu e un co-apicoltore spuntate entrambi la stessa attività su dispositivi diversi, l'attività risulta completata.
+Se spunti la stessa attività su due dei tuoi dispositivi, l'attività risulta completata.
 
 ## Le attività nella Panoramica
 
-Il riquadro **Attività aperte** conta le attività non completate. **Prossime attività** elenca fino a cinque attività aperte con le loro scadenze; le attività la cui scadenza è passata sono contrassegnate con **!**. Vedi [La dashboard](./dashboard.md).
+Il riquadro **Attività aperte** conta le attività non completate. **Prossime attività** elenca fino a cinque attività aperte con le loro scadenze; le attività la cui scadenza è passata sono contrassegnate come **Scaduta**, e toccando un'attività la si apre nella vista Attività. Vedi [La dashboard](./dashboard.md).
 
 :::tip
 Per i lavori ricorrenti, aggiungi l'attività successiva quando spunti quella attuale. Dopo un controllo sciamatura a sette giorni, aggiungi "Controllo sciamatura" per la settimana seguente.

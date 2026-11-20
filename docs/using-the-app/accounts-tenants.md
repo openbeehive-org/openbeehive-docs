@@ -1,11 +1,11 @@
 ---
 sidebar_position: 13
-title: "Accounts & tenants"
+title: "Accounts & workspaces"
 ---
 
-# Accounts & tenants
+# Accounts & workspaces
 
-How you sign in depends on how the instance is set up. A solo self-hosted instance may need no login at all; a shared instance (like the hosted service) gives everyone an account and organises apiaries into **tenants** you can switch between.
+How you sign in depends on how the instance is set up. A solo self-hosted instance may need no login at all; a shared instance (like the hosted service) gives everyone an account and organises apiaries into **workspaces** you can switch between.
 
 ## Signing in
 
@@ -14,11 +14,13 @@ Depending on the instance, the sign-in screen offers one or more of:
 - **Email & password**: "Create account" with your name, email and password, then "Sign in".
 - **A provider** (Google, Keycloak, ...): "Continue with ...".
 - **A passkey**: "Sign in with a passkey" using your fingerprint, face, device PIN or a security key. You add passkeys under **Settings → Passkeys** once signed in.
-- **The demo**: "Explore the demo" on instances that run one.
+- **The demo**: "Try the demo" on instances that run one. It needs no account.
 
 On a single-user instance with no login configured, the app opens straight to your records.
 
-The methods are tied to one account: if you registered with email and password and later sign in with a provider that reports the same email, the two are linked.
+The methods are tied to one account: if you registered with email and password and later sign in with a provider that reports the same email, the two are linked, provided the provider confirms the address as verified and the address of your account is verified too. Otherwise the provider sign-in is refused and you keep signing in the way you did before.
+
+After too many failed attempts the sign-in screen says "Too many attempts. Please wait a few minutes and try again." The block lifts by itself after at most 15 minutes.
 
 If the instance requires email verification, you get a confirmation link by email after signing up. Open it before your first sign-in.
 
@@ -26,47 +28,49 @@ If the instance requires email verification, you get a confirmation link by emai
 The instance admin is not the first person to sign up. On a self-hosted instance it is the account the operator configures with `BEEHIVE_ADMIN_EMAIL` and `BEEHIVE_ADMIN_PASSWORD` (see [Authentication](../self-hosting/authentication.md)); on the hosted service it is the operator. Sign-up never grants that role.
 :::
 
-## What a tenant is
+## What a workspace is
 
-A **tenant** is a collection of apiaries, hives and records that belong together. Every account starts with a **personal tenant**. You can also belong to shared tenants, for example a club apiary that several beekeepers tend, a teaching apiary, or a second operation you keep separate from your private hives.
+A **workspace** is a collection of apiaries, hives and records that belong together. Every account starts with a **personal workspace**. You can also belong to shared workspaces, for example a club apiary that several beekeepers tend, a teaching apiary, or a second operation you keep separate from your private hives.
 
-Everything you record lives in the **active tenant**, and every member of a tenant sees all of it. Switching tenants changes which apiaries, hives and visits you see. There is no finer-grained sharing: to share some hives but not others, put them in separate tenants.
+Everything you record lives in the **active workspace**, and every member of a workspace sees all of it. Switching workspaces changes which apiaries, hives and visits you see. There is no finer-grained sharing: to share some hives but not others, put them in separate workspaces.
 
-## Switching tenants
+## Switching workspaces
 
-Open **Settings → Tenants**. Every tenant you belong to is listed with your role in it; the active one is marked. Tap another to switch; the app reloads with that tenant's records.
+Open **Settings → Workspaces**. Every workspace you belong to is listed with your role in it; the active one is marked. Tap another to switch; the app reloads with that workspace's records.
 
-## Creating a tenant
+## Creating a workspace
 
-In **Settings → Tenants**, type a name (for example "Beekeeping Club") and tap **Create tenant**. You become its **Admin** and it becomes your active tenant.
+In **Settings → Workspaces**, type a name (for example "Beekeeping Club") and tap **Create workspace**. You become its **Admin** and it becomes your active workspace.
 
 ## Roles
 
 | Role | Can do |
 | --- | --- |
-| **Admin** (tenant owner) | Everything a member can, plus invite people, revoke open invites, remove members' API keys and delete the tenant. Whoever creates a tenant is its admin. |
-| **Member** | Work with all of the tenant's apiaries, hives and records. |
+| **Admin** (workspace owner) | Everything a member can, plus invite people, revoke open invites, remove members' API keys and delete the workspace. Whoever creates a workspace is its admin. |
+| **Member** | Work with all of the workspace's apiaries, hives and records. |
 
-The instance admin role from the server configuration is separate from these: inside a tenant, the instance admin is an admin or member like anyone else.
+The instance admin role from the server configuration is separate from these: inside a workspace, the instance admin is an admin or member like anyone else.
 
 ## Inviting beekeepers
 
-As a tenant admin, open **Settings → Tenants → Invite a beekeeper**, enter the person's email address and tap **Send invite**. The app shows the invite link with a **Copy link** button; share it with them directly. If the server has SMTP configured, the same link is also emailed. Invitees join as members.
+As a workspace admin, open **Settings → Workspaces → Invite a beekeeper**, enter the person's email address and tap **Send invite**. The app shows the invite link with a **Copy link** button; share it with them directly. If the server has SMTP configured, the same link is also emailed. Invitees join as members.
 
-Open invites are listed under **Open invites** with their own **Copy link** and **Revoke** buttons. An invite disappears from the list once it is accepted.
+An invite is valid for 7 days and works only for the email address it was issued for. Open invites are listed under **Open invites** with their own **Copy link** and **Revoke** buttons. An invite disappears from the list once it is accepted.
 
 ## Accepting an invite
 
 The invite link opens the sign-in screen with a "You've been invited" notice.
 
-- If you have no account yet, create one. On an invite-only instance the email address must be the one the invite was sent to.
-- If you already have an account, sign in.
+- If you have no account yet, create one with the email address the invite was sent to.
+- If you already have an account with that address, sign in.
 
-As soon as you are signed in, the app joins you to the tenant and switches you into it. From then on it appears in your own **Settings → Tenants**.
+An invite cannot be used with a different email address ("This invite was issued for a different email address."), and it stops working 7 days after it was created ("This invite is invalid or has expired."). Ask the workspace admin for a new one.
 
-## Deleting a tenant
+As soon as you are signed in, the app joins you to the workspace and switches you into it. From then on it appears in your own **Settings → Workspaces**.
 
-A tenant admin can delete the tenant under **Settings → Tenants → Danger zone**. This removes the tenant with all its apiaries, hives and records for every member and cannot be undone.
+## Deleting a workspace
+
+A workspace admin can delete the workspace under **Settings → Workspaces → Danger zone**. This removes the workspace with all its apiaries, hives and records for every member and cannot be undone.
 
 ## API keys \{#api-keys}
 
@@ -76,10 +80,10 @@ A tenant admin can delete the tenant under **Settings → Tenants → Danger zon
 - Each key is listed with its name (**Unnamed key** if you left the field empty), its first characters, a **Read and write** or **Read-only** badge, **Created**, then **Expires** and the date when you set a lifetime (**Expired** and the date, in red, once that day has passed) and, once a script has used it, **Last used**. Expired keys stay in the list until you remove them.
 - **Remove** revokes a key after a confirmation ("Remove this key? Scripts using it stop working immediately.").
 
-As a tenant admin you also see **Keys of other members** below your own keys, with the note "As tenant admin you can remove any member's key, for example when someone leaves or a device is lost." Each row shows the key's name, its first characters, its **Read and write** or **Read-only** badge, the owner's email and **Last used** once a script has used it. **Remove** there asks "Remove this member's key? Their scripts using it stop working immediately." The list covers the active tenant only and appears only when other members have keys; members cannot see or remove each other's keys.
+As a workspace admin you also see **Keys of other members** below your own keys, with the note "As workspace admin you can remove any member's key, for example when someone leaves or a device is lost." Each row shows the key's name, its first characters, its **Read and write** or **Read-only** badge, the owner's email and **Last used** once a script has used it. **Remove** there asks "Remove this member's key? Their scripts using it stop working immediately." The list covers the active workspace only and appears only when other members have keys; members cannot see or remove each other's keys.
 
-A key acts as you in the tenant that was active when you created it, so switch tenants first when a device belongs to a shared apiary. A **Read-only** key can only read; scripts that write need **Read and write**. A key expires only if you set a lifetime; it stops working when it expires, when you remove it or when you leave that tenant. The demo account cannot create keys. See [Authentication](../using-the-api/overview.md#authentication) for how a script sends the key.
+A key acts as you in the workspace that was active when you created it, so switch workspaces first when a device belongs to a shared apiary. A **Read-only** key can only read; scripts that write need **Read and write**. A key expires only if you set a lifetime; it stops working when it expires, when you remove it or when you leave that workspace. The demo account cannot create keys. See [Authentication](../using-the-api/overview.md#authentication) for how a script sends the key.
 
 ## The demo
 
-Some instances run a **demo account**. While you are signed in to it, a banner reminds you that the data resets every hour. The server rejects changes from the demo account, so anything you enter stays on your device only. Operators can enable it via [Demo mode](../self-hosting/demo.md).
+Some instances run a **demo account**. While you are signed in to it, a banner reminds you that the data resets every hour. The server rejects changes from the demo account, so anything you enter stays on your device only. The public demo of the project is the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login). Operators can enable it via [Demo mode](../self-hosting/demo.md).

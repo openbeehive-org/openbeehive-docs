@@ -5,14 +5,15 @@ title: "Reines"
 
 # Reines
 
-Openbeehive enregistre qui est la reine, d'où elle vient, comment elle est marquée, et quand son règne a commencé et pris fin. Chaque reine reste dans l'enregistrement, de sorte que chaque ruche construit un historique de son cheptel au fil des saisons.
+Openbeehive enregistre qui est la reine, d'où elle vient, comment elle est marquée, et quand son règne a commencé et pris fin. Les anciennes reines restent dans l'enregistrement, de sorte que chaque ruche construit un historique de son cheptel au fil des saisons.
 
 ## Ce que contient la fiche d'une reine
 
-Définissez ou remplacez la reine depuis la page de la ruche. Le formulaire comporte :
+Définissez, remplacez ou corrigez la reine depuis la page de la ruche. Le formulaire comporte :
 
 | Champ | Ce qu'il signifie |
 | --- | --- |
+| Introduite le | Le jour où elle a pris la tête de la colonie. Par défaut aujourd'hui. |
 | Année | L'année d'élevage de la reine. Détermine sa couleur de marquage. |
 | Numéro | Un numéro d'éleveur ou de séquence facultatif, par exemple « 12 ». |
 | Origine | D'où elle vient : élevage personnel, Buckfast, un essaim, une supersédure, etc. |
@@ -48,6 +49,14 @@ Une colonie n'a qu'une reine régnante à la fois, mais elle en aura beaucoup au
 :::tip Remérage
 Notez *pourquoi* vous avez remété dans le commentaire de la nouvelle reine : ponte médiocre, abeilles défensives, âge, amélioration planifiée de la lignée. Les tendances sur plusieurs ruches en révèlent souvent plus qu'une colonie seule.
 :::
+
+## Corriger les informations d'une reine \{#correcting}
+
+**Remplacer la reine** sert à un véritable remérage. Pour corriger une faute de frappe, une année erronée ou une date erronée, utilisez plutôt l'action **Modifier** de la reine : elle modifie sa fiche et laisse l'historique des règnes intact. Le formulaire le dit aussi : « Corrigez ici ses informations. Pour une nouvelle reine, utilisez « Remplacer la reine ». » Les anciennes reines sous **Historique des reines** se corrigent de la même manière.
+
+## Supprimer une reine
+
+**Supprimer** n'est destiné qu'à une reine enregistrée par erreur. Si c'est la reine actuelle, la précédente redevient la reine actuelle. L'application demande confirmation et propose ensuite **Annuler** pendant quelques secondes.
 
 ## Entrées antidatées
 

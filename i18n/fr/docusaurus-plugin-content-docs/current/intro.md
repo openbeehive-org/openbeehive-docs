@@ -12,8 +12,8 @@ pour les apiculteurs amateurs comme professionnels. L'application stocke tout su
 l'appareil et se synchronise avec le serveur, de sorte qu'elle fonctionne au
 rucher avec ou sans signal.
 
-- Utiliser l'application : [app.openbeehive.org](https://app.openbeehive.org)
-- Essayer la démo : [demo.openbeehive.org](https://demo.openbeehive.org)
+- Utiliser l'application : [app.openbeehive.org](https://app.openbeehive.org). Le service hébergé est sur invitation uniquement ; écrivez à [contact@openbeehive.org](mailto:contact@openbeehive.org) pour recevoir une invitation.
+- Essayer la démo : le bouton **Essayer la démo** sur [app.openbeehive.org/login](https://app.openbeehive.org/login), sans compte.
 - Site du projet : [openbeehive.org](https://openbeehive.org)
 - Code source : [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 

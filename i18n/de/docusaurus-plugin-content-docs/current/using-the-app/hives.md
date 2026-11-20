@@ -9,7 +9,7 @@ Eine Beute in Openbeehive ist ein einzelnes Volk in einer physischen Zarge. Fast
 
 ## Eine Beute anlegen
 
-Öffne einen Bienenstand, gib unter **Beute hinzufügen** einen Namen ein und füge sie hinzu (die Liste **Beuten** hat dasselbe Formular mit einer Standortauswahl). Eine neue Beute startet mit dem Status **Aktiv** und ohne Typ. Öffne die Beute und tippe auf die Aktion **Bearbeiten** (Stift), um Folgendes festzulegen:
+Öffne einen Bienenstand, gib unter **Beute hinzufügen** einen Namen ein und füge sie hinzu. Die Liste **Beuten** hat dasselbe Formular mit einer Standortauswahl hinter ihrem Button **+ Neu**, und **+ Neu → Neue Beute** auf der Übersicht führt dorthin. Eine neue Beute startet mit dem Status **Aktiv** und ohne Typ. Öffne die Beute und wähle **Mehr → Beute bearbeiten**, um Folgendes festzulegen:
 
 | Feld | Was es ist |
 | --- | --- |
@@ -49,9 +49,19 @@ Für eine ausführlichere Beschreibung jedes Standards siehe [Beutentypen](../kn
 
 Der Status ist eine Markierung, die du durch Bearbeiten der Beute setzt; nichts ändert ihn automatisch. Eine Beute auf **Verloren** oder **Aufgelöst** zu setzen bewahrt ihre gesamte Aufzeichnung.
 
+## Die Beutenliste
+
+**Beuten** listet jede Beute des Arbeitsbereichs mit ihrem Bienenstand und der Zeit seit ihrer letzten Durchsicht. Über der Liste:
+
+- **Suche** findet Beuten nach Name, nach dem Namen des Bienenstands oder nach den ersten Zeichen des Etikettencodes, der auf dem [QR-Etikett](./qr-labels.md) steht.
+- **Status** und **Standort** filtern die Liste; **Filter zurücksetzen** setzt sie zurück.
+- **Sortieren nach** ordnet nach **Name**, **Standort** oder **Am längsten ohne Durchsicht**.
+
+Namen werden so sortiert, wie du sie liest: „Beute 2“ kommt vor „Beute 10“. Eine Zeile unter den Werkzeugen sagt, wie viele Beuten angezeigt werden.
+
 ## Eine Beute zwischen Bienenständen verschieben
 
-Um eine Beute umzusiedeln, öffne sie, tippe auf die Aktion **Wandern** und wähle den Ziel-Bienenstand. Die Beute behält ihren Namen, ihre Königin, ihr Foto und ihre vollständige Aufzeichnung; nur ihr Bienenstand ändert sich.
+Um eine Beute umzusiedeln, öffne sie, tippe im Kopfbereich auf **Wandern** und wähle den Ziel-Bienenstand. Die Beute behält ihren Namen, ihre Königin, ihr Foto und ihre vollständige Aufzeichnung; nur ihr Bienenstand ändert sich.
 
 ### Standort-Historie
 
@@ -67,28 +77,28 @@ Eine Beute zu öffnen gibt dir einen Bildschirm mit allem über dieses Volk.
 
 ### Kopfbereich und Aktionen
 
-Der Kopfbereich zeigt das Foto, den Namen sowie Status und Typ. Die Aktionssymbole daneben:
+Der Kopfbereich zeigt das Foto, den Namen sowie Status und Typ. Daneben stehen die beiden Dinge, die du im Feld am häufigsten tust, **Durchsicht erfassen** und **Wandern**, sowie ein Menü **Mehr** mit:
 
 - **Stockkarte**: eine druckbare Tabelle aller Durchsichten (mit einem Button **Drucken**).
-- **Entwicklung**: Diagramme der bei Durchsichten erfassten Werte (besetzte Waben, Brutwaben, Futtervorrat, Schwarmzellen, Sanftmut, Wabensitz, Varroa, Stockgewicht, Fütterung, jüngste Larve, Temperatur und Luftfeuchte) plus Honigernten im Zeitverlauf.
-- **Beute bearbeiten**, **Wandern**, **QR** (zeigt das Etikett der Beute mit den Buttons **Drucken** und **SVG**; siehe [QR-Etiketten](./qr-labels.md)) und **Löschen**.
+- **Entwicklung**: Diagramme der bei Durchsichten erfassten Werte (besetzte Waben, Brutwaben, Futtervorrat, Schwarmzellen, Sanftmut, Wabensitz, Varroa, Stockgewicht, Fütterung, jüngste Larve, Temperatur und Luftfeuchte) plus Honigernten im Zeitverlauf. Bewertungen wie Futtervorrat und Sanftmut werden als benannte Stufen gezeichnet, mit der besten oben, Temperaturen unter null werden dargestellt, und Varroa erscheint nur dort im Diagramm, wo der Eintrag eine reine Zahl ist.
+- **Beute bearbeiten**, **QR-Code** (zeigt das Etikett der Beute mit den Buttons **Drucken** und **SVG**; siehe [QR-Etiketten](./qr-labels.md)) und **Beute löschen**.
 
 ### Letzte Werte
 
-Unter dem Kopfbereich zeigen Pills die Werte ungleich null aus der jüngsten Durchsicht: besetzte Waben, Brutwaben, Schwarmzellen, Stockgewicht und Varroa. Ein Tipp auf eine Pill öffnet das passende Diagramm unter **Entwicklung**.
+Unter dem Kopfbereich zeigen Pills die bei der jüngsten Durchsicht erfassten Werte: besetzte Waben, Brutwaben, Schwarmzellen, Stockgewicht und Varroa. Ein Tipp auf eine Pill öffnet das passende Diagramm unter **Entwicklung**.
 
 ### Königin
 
-Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommentar, mit **Königin ersetzen** (oder **Königin einsetzen**, wenn keine erfasst ist). **Königinnen-Historie** listet frühere Königinnen mit Einsetz- und Ersetzungsdatum. Siehe [Königinnen](./queens.md).
+Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommentar, mit **Königin ersetzen** (oder **Königin einsetzen**, wenn keine erfasst ist) sowie Aktionen, um ihren Eintrag zu bearbeiten oder zu löschen. **Königinnen-Historie** listet frühere Königinnen mit Einsetz- und Ersetzungsdatum. Siehe [Königinnen](./queens.md).
 
 ### Durchsichten
 
-**Durchsicht erfassen** öffnet das Durchsichtsformular. Darunter sind die fünf jüngsten Durchsichten aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
+**Durchsicht erfassen** öffnet das Durchsichtsformular. Die fünf jüngsten Durchsichten sind aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos. Jede Durchsicht hat Aktionen zum Bearbeiten und Löschen. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
 
 ### Honig und Behandlungen
 
-**Honig** zeigt die Erntesumme der Beute in seiner Überschrift und listet jede Ernte (**Ernte erfassen**). **Behandlungen** listet jede Behandlung (**Behandlung erfassen**). Siehe [Ernten](./harvests.md) und [Behandlungen](./treatments.md).
+**Honig** zeigt die Erntesumme der Beute in seiner Überschrift und listet jede Ernte (**Ernte erfassen**). **Behandlungen** listet jede Behandlung (**Behandlung erfassen**) und druckt das Bestandsbuch (**Bestandsbuch drucken**). Ernten und Behandlungen lassen sich wie Durchsichten bearbeiten und löschen. Siehe [Ernten](./harvests.md) und [Behandlungen](./treatments.md).
 
 ## Löschen gegenüber Stilllegen einer Beute
 
-Ändere den **Status** einer Beute, statt sie zu löschen. Ein Volk auf **Verloren** oder **Aufgelöst** zu setzen bewahrt seine Historie für Jahresvergleiche und Rückverfolgbarkeit. Lösche eine Beute nur, wenn sie versehentlich angelegt wurde; die App fragt nach einer Bestätigung.
+Ändere den **Status** einer Beute, statt sie zu löschen. Ein Volk auf **Verloren** oder **Aufgelöst** zu setzen bewahrt seine Historie für Jahresvergleiche und Rückverfolgbarkeit. Lösche eine Beute nur, wenn sie versehentlich angelegt wurde; die App fragt nach einer Bestätigung, und die Beute verschwindet mit allen ihren Aufzeichnungen.

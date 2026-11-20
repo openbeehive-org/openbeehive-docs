@@ -12,8 +12,8 @@ für Hobby- und Berufsimker. Die App speichert alles auf dem Gerät und
 synchronisiert mit dem Server, sodass sie am Bienenstand mit oder ohne Signal
 funktioniert.
 
-- App nutzen: [app.openbeehive.org](https://app.openbeehive.org)
-- Demo ausprobieren: [demo.openbeehive.org](https://demo.openbeehive.org)
+- App nutzen: [app.openbeehive.org](https://app.openbeehive.org). Der gehostete Dienst ist nur mit Einladung zugänglich; schreibe an [contact@openbeehive.org](mailto:contact@openbeehive.org), um eine Einladung zu erhalten.
+- Demo ausprobieren: die Schaltfläche **Demo ausprobieren** auf [app.openbeehive.org/login](https://app.openbeehive.org/login), kein Konto nötig.
 - Projekt-Website: [openbeehive.org](https://openbeehive.org)
 - Quellcode: [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 

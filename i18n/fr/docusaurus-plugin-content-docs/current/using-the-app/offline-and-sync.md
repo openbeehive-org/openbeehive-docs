@@ -21,15 +21,35 @@ Openbeehive conserve une copie complète de vos enregistrements dans une petite 
 Comme les enregistrements sont stockés sur l'appareil, installez Openbeehive comme une application plutôt que de l'utiliser dans un onglet de navigateur. Voir [Installer Openbeehive](./install.md).
 :::
 
-## L'indicateur hors ligne
+## L'état de synchronisation \{#sync-status}
 
-Lorsque l'appareil n'a pas de connexion, le bloc de compte dans la barre latérale passe de **En ligne** à **Hors ligne** et une barre en haut de la page indique « Hors ligne : les modifications sont enregistrées et synchronisées plus tard. » C'est purement informatif ; continuez exactement comme avant.
+Une petite pastille d'état en haut de chaque page (et sous votre adresse e-mail dans la barre latérale) indique si les modifications de cet appareil ont atteint le serveur :
 
-Lorsque l'appareil est de nouveau en ligne, la barre disparaît et les modifications faites hors ligne sont envoyées automatiquement. Il n'y a pas de bouton « synchroniser maintenant ».
+| La pastille affiche | Signification |
+| --- | --- |
+| **Synchronisé** et une heure | Tout ce qui se trouve sur cet appareil est sur le serveur. |
+| **Synchronisation…** | Un échange avec le serveur est en cours. |
+| **En attente d'envoi : 3** | Trois modifications sont enregistrées sur l'appareil et pas encore envoyées. |
+| **Hors ligne** ou **Hors ligne · 3 en attente** | Pas de connexion. Les modifications attendent sur l'appareil. |
+| **Échec de la synchronisation · nouvel essai** | Le serveur n'a pas pu être joint ou a répondu par une erreur. L'application continue d'essayer. |
+| **Déconnecté · connectez-vous pour synchroniser** | Votre session a pris fin. Touchez la pastille pour vous connecter ; rien n'est perdu. |
+| **Problèmes de synchronisation : 2** | Le serveur a refusé deux modifications ; voir ci-dessous. |
+
+Touchez la pastille pour synchroniser aussitôt. Sans cela, l'application synchronise après chaque modification, à intervalles rapprochés tant qu'elle est ouverte, et dès que la connexion revient.
+
+Tant que l'appareil n'a pas de connexion, une barre en haut de la page indique aussi « Hors ligne : les modifications sont enregistrées et synchronisées plus tard. » C'est purement informatif ; continuez exactement comme avant.
 
 :::note
 Un indicateur hors ligne persistant signifie généralement une couverture faible au rucher. S'il reste affiché même avec une bonne connexion à la maison, consultez [Dépannage](../knowledge-base/troubleshooting.md).
 :::
+
+### Problèmes de synchronisation \{#sync-problems}
+
+De temps à autre, le serveur n'accepte pas une modification, par exemple parce que l'enregistrement appartient à un autre espace ou parce que l'horloge de l'appareil avançait beaucoup. Une telle modification n'est pas jetée : elle reste sur l'appareil, et la pastille affiche **Problèmes de synchronisation** avec le nombre de modifications refusées. La liste **Problèmes de synchronisation** nomme chacune avec le motif et propose **Réessayer** et **Abandonner**. Abandonner arrête l'envoi ; l'enregistrement reste tel quel sur cet appareil mais n'atteint jamais le serveur, vos autres appareils ni les autres membres.
+
+### Horloges des appareils
+
+Chaque modification porte l'heure de l'appareil qui l'a faite. Le serveur refuse les modifications horodatées plus de 10 minutes en avance sur sa propre heure. L'application apprend l'heure du serveur à chaque synchronisation, compense une horloge d'appareil fausse, puis horodate et renvoie d'elle-même ces modifications.
 
 ## Votre première synchronisation sur un nouvel appareil
 
@@ -41,6 +61,8 @@ Se connecter sur un nouvel appareil, ou rouvrir l'application après l'effacemen
 
 Ce n'est qu'une fois que l'application sait que les données sont complètes qu'elle affiche un véritable état vide. Si l'appareil est hors ligne ou que le serveur est injoignable, l'indication cède la place à ce qui est stocké localement.
 
+Après la mise à jour de l'application vers la version 0.5.0, chaque appareil télécharge une nouvelle fois ses enregistrements depuis le début. Cela comble les lacunes que des versions antérieures pouvaient laisser et ne demande aucune action de votre part.
+
 ## Synchroniser entre vos appareils
 
 Utilisez Openbeehive sur plusieurs appareils, un téléphone sur le terrain et un ordinateur portable à la maison, et ils restent en phase. Chaque appareil conserve sa propre copie locale et échange les modifications avec le serveur en arrière-plan. Enregistrez une visite sur votre téléphone aux ruches, et le temps de vous asseoir devant votre ordinateur portable, elle y est. Tant que chaque appareil se connecte au même compte, ils voient tous les mêmes enregistrements.
@@ -51,7 +73,7 @@ Openbeehive résout les modifications qui se chevauchent **automatiquement**, sa
 
 - **Vous modifiez la note d'un rucher sur votre téléphone, votre coapiculteur modifie la même note sur le sien.** La modification la plus récente de ce champ l'emporte.
 - **Vous ajoutez tous les deux des photos à la même visite hors ligne.** Les deux séries de photos sont conservées.
-- **Vous consignez chacun une visite distincte.** Les visites, récoltes et traitements ne font que s'ajouter ; les deux sont donc conservées côte à côte.
+- **Vous consignez chacun une visite distincte.** Chaque visite, récolte et traitement est un enregistrement à part entière ; les deux sont donc conservées côte à côte.
 
 Chaque appareil converge vers le même état une fois que tous ont synchronisé.
 
@@ -61,12 +83,12 @@ En bref : ajoutez librement, modifiez en confiance. Le fonctionnement sous le ca
 
 ## Partage
 
-Les enregistrements se partagent via les **espaces** (tenants). Chaque membre d'un espace voit et modifie tous ses ruchers, ruches et enregistrements ; il n'y a pas de partage par rucher ou par ruche.
+Les enregistrements se partagent via les **espaces**. Chaque membre d'un espace voit et modifie tous ses ruchers, ruches et enregistrements ; il n'y a pas de partage par rucher ou par ruche. Les [tâches](./tasks.md) font exception : elles sont personnelles.
 
 | Rôle | Ce qu'il peut faire |
 | --- | --- |
 | **Admin** (propriétaire de l'espace) | Tout ce qu'un membre peut faire, plus inviter et révoquer, et supprimer l'espace. |
-| **Membre** | Ajouter et modifier des ruchers, ruches, visites, tâches, récoltes et traitements dans l'espace. |
+| **Membre** | Ajouter et modifier des ruchers, ruches, visites, récoltes et traitements dans l'espace. |
 
 Pour partager un emplacement avec un mentor tout en gardant les autres privés, placez cet emplacement dans son propre espace et invitez-y le mentor. Les enregistrements partagés se synchronisent et résolvent les conflits exactement comme les vôtres. Voir [Comptes et espaces](./accounts-tenants.md).
 
@@ -76,7 +98,11 @@ L'enregistrement se fait sur votre appareil, il n'échoue donc pratiquement jama
 
 Sur le **compte de démonstration** public, le serveur rejette les modifications (la démo se réinitialise toutes les heures). Vos modifications sont enregistrées sur votre appareil et y restent simplement au lieu de se synchroniser.
 
-Il existe une situation où l'enregistrement fonctionne mais ne dure pas : si le navigateur ne peut pas donner à l'application son stockage privé, l'application se rabat sur une base de données en mémoire et affiche le message **« Le stockage est indisponible : les modifications ne seront pas conservées sur cet appareil. »** Tout continue de fonctionner pendant la session, et les modifications se synchronisent toujours avec le serveur si vous êtes connecté, mais la copie locale disparaît à la fermeture de l'onglet. Cela se produit dans les fenêtres de navigation privée et lorsqu'un second onglet de l'application détient encore le stockage ; voir [Dépannage](../knowledge-base/troubleshooting.md#storage-is-unavailable).
+Il existe une situation où l'enregistrement fonctionne mais ne dure pas : si le navigateur ne peut pas donner à l'application son stockage privé (une fenêtre de navigation privée, ou un stockage bloqué dans les réglages du navigateur), l'application garde les enregistrements en mémoire et affiche un bandeau : **« Ce navigateur n'enregistre aucune donnée sur cet appareil (fenêtre privée ou stockage bloqué). Tout ce qui n'est pas synchronisé est perdu à la fermeture de cet onglet. »** Tout continue de fonctionner pendant la session, et les modifications se synchronisent toujours avec le serveur si vous êtes connecté, mais la copie locale disparaît à la fermeture de l'onglet. Voir [Dépannage](../knowledge-base/troubleshooting.md#storage-is-unavailable).
+
+## Un seul onglet à la fois \{#one-tab}
+
+Un seul onglet ou une seule fenêtre peut travailler à la fois avec les enregistrements d'un appareil. Si vous ouvrez Openbeehive dans un second onglet, celui-ci affiche **« Openbeehive est ouvert dans un autre onglet »**. Continuez dans le premier onglet, ou touchez **Utiliser ici** pour déplacer l'application dans le nouvel onglet ; l'autre affiche alors l'avis.
 
 ## Vais-je perdre des données ?
 

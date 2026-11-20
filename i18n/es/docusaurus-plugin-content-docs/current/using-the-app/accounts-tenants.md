@@ -5,7 +5,7 @@ title: "Cuentas y espacios"
 
 # Cuentas y espacios
 
-La forma en que inicias sesión depende de cómo esté configurada la instancia. Una instancia autoalojada para una sola persona puede no necesitar inicio de sesión alguno; una instancia compartida (como el servicio alojado) da a cada persona una cuenta y organiza los colmenares en **espacios** (tenants) entre los que puedes alternar.
+La forma en que inicias sesión depende de cómo esté configurada la instancia. Una instancia autoalojada para una sola persona puede no necesitar inicio de sesión alguno; una instancia compartida (como el servicio alojado) da a cada persona una cuenta y organiza los colmenares en **espacios** entre los que puedes alternar.
 
 ## Iniciar sesión
 
@@ -14,11 +14,13 @@ Según la instancia, la pantalla de inicio de sesión ofrece una o varias de est
 - **Correo y contraseña**: "Crear cuenta" con tu nombre, correo y contraseña, y después "Iniciar sesión".
 - **Un proveedor** (Google, Keycloak, ...): "Continuar con ...".
 - **Una passkey**: "Iniciar sesión con passkey" usando tu huella dactilar, tu rostro, el PIN del dispositivo o una llave de seguridad. Las passkeys se añaden en **Ajustes → Passkeys** una vez iniciada la sesión.
-- **La demo**: "Explorar la demo" en las instancias que la ejecutan.
+- **La demo**: "Probar la demo" en las instancias que la ejecutan. No necesita cuenta.
 
 En una instancia de un solo usuario sin inicio de sesión configurado, la aplicación abre directamente tus registros.
 
-Los métodos están vinculados a una sola cuenta: si te registraste con correo y contraseña y más tarde inicias sesión con un proveedor que informa del mismo correo, ambos se enlazan.
+Los métodos están vinculados a una sola cuenta: si te registraste con correo y contraseña y más tarde inicias sesión con un proveedor que informa del mismo correo, ambos se enlazan, siempre que el proveedor confirme la dirección como verificada y la dirección de tu cuenta también esté verificada. En caso contrario, el inicio de sesión con el proveedor se rechaza y sigues iniciando sesión como lo hacías antes.
+
+Tras demasiados intentos fallidos, la pantalla de inicio de sesión dice "Demasiados intentos. Espera unos minutos y vuelve a intentarlo." El bloqueo se levanta solo al cabo de 15 minutos como máximo.
 
 Si la instancia requiere verificación de correo, recibirás un enlace de confirmación por correo después de registrarte. Ábrelo antes de tu primer inicio de sesión.
 
@@ -53,14 +55,16 @@ El rol de administrador de la instancia definido en la configuración del servid
 
 Como admin de un espacio, abre **Ajustes → Espacios → Invitar a un apicultor**, introduce la dirección de correo de la persona y toca **Enviar invitación**. La aplicación muestra el enlace de invitación con un botón **Copiar enlace**; compártelo directamente con ella. Si el servidor tiene SMTP configurado, el mismo enlace también se envía por correo. Las personas invitadas se unen como miembros.
 
-Las invitaciones pendientes se listan en **Invitaciones pendientes**, cada una con sus propios botones **Copiar enlace** y **Revocar**. Una invitación desaparece de la lista en cuanto se acepta.
+Una invitación es válida durante 7 días y solo funciona para la dirección de correo para la que se emitió. Las invitaciones pendientes se listan en **Invitaciones pendientes**, cada una con sus propios botones **Copiar enlace** y **Revocar**. Una invitación desaparece de la lista en cuanto se acepta.
 
 ## Aceptar una invitación
 
 El enlace de invitación abre la pantalla de inicio de sesión con un aviso de "Has recibido una invitación".
 
-- Si aún no tienes cuenta, crea una. En una instancia solo por invitación, la dirección de correo debe ser aquella a la que se envió la invitación.
-- Si ya tienes cuenta, inicia sesión.
+- Si aún no tienes cuenta, crea una con la dirección de correo a la que se envió la invitación.
+- Si ya tienes una cuenta con esa dirección, inicia sesión.
+
+Una invitación no se puede usar con otra dirección de correo ("Esta invitación se emitió para otra dirección de correo."), y deja de funcionar 7 días después de su creación ("Esta invitación no es válida o ha caducado."). Pide una nueva al admin del espacio.
 
 En cuanto inicias sesión, la aplicación te une al espacio y lo activa. A partir de entonces aparece en tus propios **Ajustes → Espacios**.
 
@@ -82,4 +86,4 @@ Una clave actúa como tú en el espacio que estaba activo cuando la creaste, as�
 
 ## La demo
 
-Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso te recuerda que los datos se restablecen cada hora. El servidor rechaza los cambios de la cuenta de demostración, así que todo lo que introduzcas se queda solo en tu dispositivo. Los operadores pueden habilitarla mediante el [Modo demostración](../self-hosting/demo.md).
+Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso te recuerda que los datos se restablecen cada hora. El servidor rechaza los cambios de la cuenta de demostración, así que todo lo que introduzcas se queda solo en tu dispositivo. La demo pública del proyecto es el botón **Probar la demo** en [app.openbeehive.org/login](https://app.openbeehive.org/login). Los operadores pueden habilitarla mediante el [Modo demo](../self-hosting/demo.md).

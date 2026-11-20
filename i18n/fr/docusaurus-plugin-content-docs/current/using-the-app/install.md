@@ -105,12 +105,20 @@ votre serveur.
 Si vous auto-hébergez, la section [Auto-hébergement](/category/self-hosting) parcourt
 le déploiement, la configuration et les sauvegardes.
 
+## Ouvrir l'application hors ligne
+
+Une fois que vous avez ouvert l'application en ligne, elle démarre sans connexion,
+y compris à froid (après un redémarrage du téléphone ou la fermeture de
+l'application). Consultez [Hors ligne et synchronisation](./offline-and-sync.md).
+
 ## Mettre à jour l'application
 
-La PWA se met à jour d'elle-même. Lorsqu'une nouvelle version est publiée,
-l'application la récupère en arrière-plan et l'applique au prochain lancement ou
-rechargement. Vous n'avez pas besoin de réinstaller. Si vous voulez vous assurer
-que vous êtes sur la dernière version, fermez complètement l'application et rouvrez-la.
+La PWA se met à jour d'elle-même. Lorsqu'une nouvelle version a été téléchargée en
+arrière-plan, une barre en haut indique **« Une nouvelle version est disponible. »**
+avec deux boutons : **Recharger** passe aussitôt à la nouvelle version, **Plus tard**
+masque la barre. Si vous choisissez Plus tard, la mise à jour est appliquée au
+prochain démarrage de l'application, après la fermeture de tous ses onglets et
+fenêtres. Vous n'avez pas besoin de réinstaller.
 
 ## Supprimer l'application
 

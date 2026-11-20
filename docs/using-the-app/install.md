@@ -98,12 +98,19 @@ TLS in front of your server.
 If you self-host, the [Self-hosting](/category/self-hosting) section walks through
 deployment, configuration and backups.
 
+## Opening the app offline
+
+After you have opened the app online once, it starts without a connection, also
+from a cold start (after the phone was restarted or the app was closed). See
+[Offline and sync](./offline-and-sync.md).
+
 ## Updating the app
 
-The PWA updates itself. When a new version is published, the app fetches it in
-the background and applies it the next time you launch or reload. You do not
-need to reinstall. If you ever want to be sure you are on the latest version,
-fully close the app and open it again.
+The PWA updates itself. When a new version has been downloaded in the
+background, a bar at the top says **"A new version is available."** with two
+buttons: **Reload** switches to the new version at once, **Later** hides the bar.
+If you choose Later, the update is applied the next time the app starts after
+all of its tabs and windows were closed. You do not need to reinstall.
 
 ## Removing the app
 

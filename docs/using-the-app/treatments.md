@@ -51,9 +51,17 @@ Record the batch number straight from the packaging at the time you treat. It is
 
 Works offline; see [Offline & sync](./offline-and-sync.md).
 
+## Correcting or deleting a treatment \{#correcting}
+
+Each treatment in the list has an edit and a delete action. A treatment that was changed after it was first saved shows **Amended on** with the date of the last change, on screen and in the printed register, so a reader can see that the entry is not in its original form. The app keeps no earlier versions. Delete asks for confirmation and offers **Undo** for a few seconds.
+
+## The treatment register \{#treatment-register}
+
+**Print register** under **Treatments** prints the hive's treatment register: a table of every treatment with date, product, active ingredient, dose, method, batch number, withdrawal date and the amended mark, plus the day it was printed. The **Treatment register** button on an [apiary](./apiaries.md) page prints the same for all hives of that apiary in one document. The register opens in a new window; if nothing happens, allow pop-ups for the site.
+
 ## Withdrawal periods and harvesting
 
-When you set a **withdrawal until** date, Openbeehive records when honey from that hive is safe to harvest again.
+When you set a **withdrawal until** date, Openbeehive records when honey from that hive is safe to harvest again. The treatment shows the date as a chip that is highlighted as a warning while the period is running, its last day included, and turns neutral afterwards.
 
 Make a habit of checking treatment dates before you pull supers. If a colony is still inside its withdrawal window, hold off on harvesting from it, or keep that honey separate and clearly out of the food chain until the period has passed.
 
@@ -67,10 +75,10 @@ A few habits keep your records trustworthy.
 
 - **Log as you go.** Record the treatment the day you apply it, not from memory weeks later.
 - **Be specific.** "Treated for varroa" is far less useful than the product, dose and batch.
-- **Don't edit history to tidy it.** If something changed, add a follow-up rather than rewriting the past.
+- **Correct mistakes, don't tidy history.** Fix a wrong dose or batch number by editing the entry; it is then marked as amended. If the treatment itself changed, add a follow-up entry rather than rewriting the past.
 - **Treat every hive individually.** Even when you apply the same product across an apiary, log it per hive so doses and withdrawal windows are accurate for each colony.
 
-Because treatment entries sync across your devices, the log you build in the field is the same one you review at home, and the one other members of your tenant see.
+Because treatment entries sync across your devices, the log you build in the field is the same one you review at home, and the one other members of your workspace see.
 
 ## Treatments and varroa
 

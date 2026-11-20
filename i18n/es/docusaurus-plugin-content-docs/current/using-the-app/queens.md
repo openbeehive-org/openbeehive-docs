@@ -5,14 +5,15 @@ title: "Reinas"
 
 # Reinas
 
-Openbeehive registra quién es la reina, de dónde vino, cómo está marcada y cuándo empezó y terminó su reinado. Cada reina se conserva en el registro, así que cada colmena va construyendo un historial de su material genético a lo largo de las temporadas.
+Openbeehive registra quién es la reina, de dónde vino, cómo está marcada y cuándo empezó y terminó su reinado. Las reinas anteriores se conservan en el registro, así que cada colmena va construyendo un historial de su material genético a lo largo de las temporadas.
 
 ## Qué contiene la ficha de una reina
 
-Define o reemplaza la reina desde la página de la colmena. El formulario tiene:
+Define, reemplaza o corrige la reina desde la página de la colmena. El formulario tiene:
 
 | Campo | Qué significa |
 | --- | --- |
+| Introducida el | El día en que se hizo cargo de la colonia. Por defecto, hoy. |
 | Año | El año en que la reina fue criada. Determina su color de marcado. |
 | Número | Un número opcional de criador o de secuencia, p. ej. "12". |
 | Origen | De dónde vino: cría propia, Buckfast, un enjambre, una sustitución natural, etc. |
@@ -48,6 +49,14 @@ Una colonia tiene una sola reina reinante a la vez, pero a lo largo de su vida t
 :::tip Cambio de reina
 Anota *por qué* cambiaste de reina en el comentario de la nueva: mala puesta, abejas defensivas, edad, mejora planificada de la línea. Los patrones en varias colmenas a menudo revelan más que cualquier colonia individual.
 :::
+
+## Corregir los datos de una reina \{#correcting}
+
+**Reemplazar reina** es para un cambio de reina real. Para corregir una errata, un año equivocado o una fecha equivocada, usa en su lugar la acción **Editar** de la reina: cambia su ficha y deja intacto el historial de reinados. El formulario también lo dice: "Corrige aquí sus datos. Para una reina nueva, usa «Reemplazar reina»." Las reinas anteriores de **Historial de reinas** se pueden corregir del mismo modo.
+
+## Eliminar una reina
+
+**Eliminar** es solo para una reina registrada por error. Si es la reina actual, su predecesora vuelve a ser la reina actual. La aplicación pide confirmación y después ofrece **Deshacer** durante unos segundos.
 
 ## Entradas retroactivas
 

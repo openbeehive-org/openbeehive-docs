@@ -9,17 +9,19 @@ Die meisten Probleme mit Openbeehive fallen in eine Handvoll Kategorien: Synchro
 
 Deine Aufzeichnungen liegen in einer lokalen Datenbank auf deinem Gerät, sodass fast nichts hier Daten verlieren kann, die bereits zum Server synchronisiert wurden.
 
-## Daten synchronisieren nicht
+## Daten synchronisieren nicht \{#data-not-syncing}
 
 Deine Änderungen werden sofort auf dem Gerät gespeichert. Die Synchronisierung mit dem Server geschieht still im Hintergrund, sodass eine Verzögerung normal und selten ein Grund zur Sorge ist. Wenn Änderungen, die du auf einem Gerät vorgenommen hast, auf einem anderen nicht erscheinen, arbeite diese Liste durch.
 
-**1. Prüfe, ob du online bist.** Die Seitenleiste zeigt neben deinem Konto **Online** oder **Offline** an. Wenn du im Feld ohne Empfang gearbeitet hast, sind deine Bearbeitungen in der Warteschlange und werden gesendet, sobald du wieder verbunden bist.
+**1. Lies den Synchronisierungsstatus.** Der Chip oben auf der Seite sagt, was los ist: **Offline**, **Warten auf Upload**, **Synchronisierung fehlgeschlagen · neuer Versuch**, **Abgemeldet** oder **Sync-Probleme**. Siehe [den Synchronisierungsstatus](../using-the-app/offline-and-sync.md#sync-status). Wenn du im Feld ohne Empfang gearbeitet hast, sind deine Bearbeitungen in der Warteschlange und werden gesendet, sobald du wieder verbunden bist.
 
-**2. Prüfe, ob du angemeldet bist.** Die Synchronisierung erfordert eine Sitzung. Wenn sie abgelaufen ist, kannst du weiterhin lokal lesen und bearbeiten, aber nichts wird synchronisiert, bis du dich erneut anmeldest. **Einstellungen → Konto** zeigt, als wer du angemeldet bist.
+**2. Prüfe, ob du angemeldet bist.** Die Synchronisierung erfordert eine Sitzung. Wenn sie abgelaufen ist, zeigt der Chip **Abgemeldet · zum Synchronisieren anmelden**; du kannst weiterhin lokal lesen und bearbeiten, aber nichts wird synchronisiert, bis du dich erneut anmeldest. **Einstellungen → Konto** zeigt, als wer du angemeldet bist.
 
-**3. Prüfe den aktiven Mandanten.** Aufzeichnungen gehören zu einem Mandanten. Wenn ein Bienenstock auf einem anderen Gerät fehlt, öffne dort **Einstellungen → Mandanten** und stelle sicher, dass derselbe Mandant aktiv ist. Fehlt er bei einer anderen Person, ist sie kein Mitglied dieses Mandanten; ein Mandanten-Admin kann sie einladen.
+**3. Prüfe den aktiven Arbeitsbereich.** Aufzeichnungen gehören zu einem Arbeitsbereich. Wenn ein Bienenstock auf einem anderen Gerät fehlt, öffne dort **Einstellungen → Arbeitsbereiche** und stelle sicher, dass derselbe Arbeitsbereich aktiv ist. Fehlt er bei einer anderen Person, ist sie kein Mitglied dieses Arbeitsbereichs; ein Arbeitsbereichs-Admin kann sie einladen.
 
-**4. Gib ihm einen Moment, dann öffne es erneut.** Die Hintergrundsynchronisierung läuft periodisch. Das Schließen und erneute Öffnen der App oder das Wechseln zu ihr aus dem Hintergrund stößt einen neuen Synchronisierungsversuch an.
+**4. Synchronisiere jetzt.** Die Hintergrundsynchronisierung läuft in kurzen Abständen; ein Tippen auf den Status-Chip startet sofort eine Synchronisierung.
+
+**5. Suche nach abgelehnten Änderungen.** Wenn der Chip **Sync-Probleme** zeigt, hat der Server einige Änderungen nicht angenommen. Sie sind weiterhin auf dem Gerät. Die Liste **Sync-Probleme** nennt jede davon mit dem Grund und lässt dich es erneut versuchen oder sie verwerfen; siehe [Sync-Probleme](../using-the-app/offline-and-sync.md#sync-problems). Eine Geräteuhr, die weit vorgeht, ist eine Ursache; die App gleicht das aus und sendet von sich aus erneut, aber wenn du das Gerät auf automatische Uhrzeit stellst, kommt es gar nicht erst dazu.
 
 :::note
 Die Synchronisierung ist konzeptbedingt konfliktfrei. Die jüngste Bearbeitung eines Feldes gewinnt, Hinzufügungen (Fotos, Durchsichten, Ernten, Behandlungen) bleiben erhalten, und du verlierst keine Arbeit, weil zwei Geräte gleichzeitig bearbeitet haben.
@@ -45,22 +47,24 @@ Browser-Werkzeuge, die „Websitedaten löschen“, „Cookies und Speicher lös
 
 App-Versionen vor 0.2.2 konnten die reservierten lokalen Speicher-Slots aufbrauchen; danach schlug jedes Speichern mit `SQLITE_CANTOPEN: unable to open database file` fehl — sichtbar als Knopf, der scheinbar nichts tat. Seit 0.2.2 reserviert die App von vornherein genug Slots und repariert den Speicherpool automatisch, wenn er knapp wird. Siehst du den Fehler weiterhin, lade die App zweimal neu (damit die neue Version übernimmt) und versuche es erneut; früher gespeicherte Einträge sind nicht betroffen.
 
-### „Speicher nicht verfügbar — Änderungen bleiben auf diesem Gerät nicht erhalten“ \{#storage-is-unavailable}
+### „Dieser Browser speichert keine Daten auf diesem Gerät“ \{#storage-is-unavailable}
 
 Die App hält ihre Datenbank im privaten Speicher des Browsers. Kann sie diesen Speicher
-nicht öffnen, weicht sie auf eine Datenbank im Arbeitsspeicher aus und zeigt diesen Hinweis,
+nicht öffnen, hält sie die Aufzeichnungen im Arbeitsspeicher und zeigt dieses Banner,
 damit du Bescheid weißt. Änderungen funktionieren weiterhin und werden weiterhin mit dem
 Server synchronisiert, solange du angemeldet bist, aber die lokale Kopie verschwindet, wenn
 der Tab geschlossen wird.
 
-Die zwei häufigen Ursachen:
+Die häufigen Ursachen sind **privates oder Inkognito-Browsen** (Browser geben solchen
+Fenstern keinen dauerhaften Speicher) und Speicher, der in den Browsereinstellungen
+blockiert ist. Nutze ein normales Fenster oder installiere die App.
 
-- **Privates oder Inkognito-Browsen.** Browser geben solchen Fenstern keinen dauerhaften
-  Speicher. Nutze ein normales Fenster oder installiere die App.
-- **Ein zweiter Tab der App ist offen.** Den Speicher kann nur eine Seite gleichzeitig
-  halten. Seit App-Version 0.2.3 versucht es die App kurz erneut, was meist reicht, wenn ein
-  Neuladen mit seinem eigenen Vorgänger konkurriert; bleibt der Hinweis, schließe den anderen
-  Tab und lade neu.
+### „Openbeehive ist in einem anderen Tab geöffnet“
+
+Nur ein Tab oder Fenster kann gleichzeitig mit den Aufzeichnungen auf einem Gerät
+arbeiten. Ein zweiter Tab zeigt statt der App diesen Hinweis. Mach im ersten Tab weiter
+oder tippe auf **Hier verwenden**, um die App in diesen Tab zu holen. Siehe
+[Nur ein Tab gleichzeitig](../using-the-app/offline-and-sync.md#one-tab).
 
 ### Die App zeigt „Daten werden synchronisiert…“ statt meiner Bienenstände
 
@@ -68,13 +72,21 @@ Das ist die erste Synchronisation auf diesem Gerät, die noch lädt. Seit App-Ve
 zeigen das Dashboard und die Listen Platzhalter und diesen Hinweis, bis die Daten
 vollständig sind, und füllen sich schrittweise, sobald Pakete eintreffen. Bleib online und
 gib ihr einen Moment; bei großen Datenbeständen wachsen die Listen, während du zusiehst.
-Verschwindet der Hinweis nie, geh [Daten synchronisieren nicht](#daten-synchronisieren-nicht) durch.
+Verschwindet der Hinweis nie, geh [Daten synchronisieren nicht](#data-not-syncing) durch.
+
+### Die App antwortet nicht unter meinem Hostnamen (Selbst-Hosting, ohne Anmeldung)
+
+Ein Server ohne Anmeldung antwortet nur auf `localhost`, IP-Adressen und den Host
+aus `BEEHIVE_PUBLIC_BASE_URL`. Unter einem anderen Namen geöffnet, antwortet er mit einer
+schlichten `403`-Seite, die die Abhilfe nennt: Trage den Namen in `BEEHIVE_ALLOWED_HOSTS`
+ein oder setze `BEEHIVE_PUBLIC_BASE_URL` auf die Adresse, die du verwendest. Siehe
+[Konfiguration](../self-hosting/configuration.md#allowed-hosts).
 
 ## Die App leeren oder neu installieren
 
 Manchmal behebt ein Neustart seltsames Verhalten nach einer Aktualisierung. Solange du in einem Konto angemeldet bist, das synchronisiert, ist dies nicht destruktiv: Deine synchronisierten Aufzeichnungen kommen vom Server zurück.
 
-1. Bestätige, dass du **online und angemeldet** bist und dass die Synchronisierungsanzeige zeigt, dass alles auf dem neuesten Stand ist.
+1. Bestätige, dass du **online und angemeldet** bist und dass der Status-Chip **Synchronisiert** zeigt.
 2. Deinstalliere oder entferne die PWA von deinem Startbildschirm oder leere den Speicher der Website in deinen Browsereinstellungen.
 3. Öffne Openbeehive erneut und melde dich an.
 4. Warte, bis die erste Synchronisierung deine Bienenstände, Bienenstöcke und die Historie heruntergeladen hat.
@@ -91,14 +103,16 @@ Jeder Bienenstock kann ein druckbares QR-Etikett tragen, das per Deep Link zu di
 - **Verwende HTTPS.** Browser erlauben Kamerazugriff nur auf sicheren Origins. Die gehostete App wird über HTTPS ausgeliefert; Selbst-Hoster müssen ebenfalls über HTTPS ausliefern (oder `localhost` zum Testen). Siehe [Reverse Proxy](../self-hosting/reverse-proxy.md).
 - **Prüfe, ob sie nicht in Verwendung ist.** Schließe andere Apps oder Tabs, die die Kamera möglicherweise belegen.
 
-:::tip iOS Safari
-Auf iPhone und iPad kann der App-interne Scanner eingeschränkt sein. Wenn das Scannen nicht funktioniert, öffne die integrierte **Kamera-App** und richte sie auf den QR-Code. iOS erkennt den codierten Link und bietet an, ihn zu öffnen; ein Tippen auf den Link startet Openbeehive beim richtigen Bienenstock. Das Etikett codiert einen einfachen Weblink, sodass jeder QR-Leser als Ausweichlösung funktioniert.
+:::tip Keine Kamera oder ein abgenutztes Etikett
+Der App-interne Scanner funktioniert in jedem aktuellen Browser, auch in Safari auf iPhone und iPad und in Firefox. Wenn die Kamera nicht genutzt werden kann oder das Etikett schwer lesbar ist, tippe die sechs Zeichen, die unter dem QR-Code stehen, auf dem Bildschirm „Scannen“ in **Etikettencode** ein. Wenn du die installierte App nutzt, scanne in ihr und nicht mit der Kamera-App des Telefons, die den Link im Browser mit dessen eigenen, getrennten Daten öffnet.
 :::
 
 ## Anmeldeprobleme
 
 - **Beim Anmeldebildschirm hängengeblieben.** Bestätige, dass du die richtige Adresse erreichst (die gehostete App ist unter app.openbeehive.org). Nach der Anmeldung bei deinem Anbieter solltest du automatisch zurückgeleitet werden; falls nicht, lade die Seite neu.
 - **Weiterleitung schlägt fehl oder „ungültige Weiterleitung“-Fehler (Selbst-Hosting).** Das bedeutet fast immer, dass die OIDC-Weiterleitungs-URL oder `BEEHIVE_PUBLIC_BASE_URL` falsch konfiguriert ist. Siehe [Authentifizierung und Konfiguration](../self-hosting/authentication.md).
+- **„Zu viele Versuche.“** Nach 10 fehlgeschlagenen Anmeldungen für ein Konto oder 30 von einer Netzwerkadresse werden weitere Versuche bis zu 15 Minuten lang blockiert. Warte und versuche es erneut.
+- **Der Server startet nach dem Aktivieren der Anmeldung nicht (Selbst-Hosting).** Das Log nennt die fehlende Einstellung, meist `BEEHIVE_SESSION_SECRET` (mindestens 32 Bytes) oder das Admin-Konto. Siehe [Authentifizierung](../self-hosting/authentication.md).
 - **Passkey nicht angeboten.** Passkeys müssen auf dem Server aktiviert sein, und du musst unter Einstellungen → Passkeys einen hinzugefügt haben. Andernfalls melde dich mit einer anderen Methode an.
 - **Einzelnutzer-Selbst-Hosting ohne Anmeldung.** Mit ausgeschalteter Passwort-Anmeldung, ohne OIDC-Anbieter und mit deaktiviertem WebAuthn gibt es überhaupt keinen Anmeldeschritt. Wenn du unerwartet einen Anmeldebildschirm siehst, prüfe deine Serverkonfiguration.
 

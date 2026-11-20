@@ -17,14 +17,14 @@ Each hive's code encodes a single deep link to that hive:
 
 `<base>` is the address you are using the app at (`https://app.openbeehive.org` on the hosted service, your own URL on a self-hosted instance) and `<hiveId>` is the hive's identifier. The label also prints a six-character short code derived from the id, for telling labels apart by eye.
 
-The code contains no bee data and no personal information; it is just a link. Someone who scans it without access is asked to sign in and only sees the hive if they are a member of the tenant that holds it.
+The code contains no bee data and no personal information; it is just a link. Someone who scans it without access is asked to sign in and only sees the hive if they are a member of the workspace that holds it.
 
 Once the app is installed, the link opens the hive from your local database, so it works with no signal.
 
 ## Printing a label for one hive
 
 1. Open the hive.
-2. Tap the **QR** action (the dotted-square icon next to Edit and Move). A card appears with the code, the hive name and the short code.
+2. Choose **More → QR code**. A card appears with the code, the hive name and the short code.
 3. Tap **Print**. A clean label opens in a new window and the print dialog follows. **SVG** downloads the code as a file instead, for your own label layouts.
 4. Print onto label stock or plain paper and fix it to the hive.
 
@@ -36,14 +36,18 @@ Print on weatherproof or vinyl label stock, or cover a paper label with clear pa
 
 1. Open the apiary.
 2. Tap **QR labels**.
-3. An A4 sheet opens with one labelled code per hive in that apiary, followed by the print dialog.
+3. The print dialog opens with an A4 sheet of one labelled code per hive in that apiary.
 4. Print, cut and apply.
 
 ## Scanning a label
 
 ### With your phone's camera
 
-Most phones recognise QR codes in the built-in camera app. Point the camera at the label, tap the link that appears, and Openbeehive opens at the hive. This works for anyone with access, without opening the app first.
+Most phones recognise QR codes in the built-in camera app. Point the camera at the label, tap the link that appears, and Openbeehive opens at the hive in the browser. This works for anyone with access, without opening the app first.
+
+:::caution If you installed the app, scan inside it
+The phone's camera opens the link in the browser, and the browser keeps its own data, separate from the installed app: you may have to sign in again and wait for a download there. If you use the installed app, open it from the home screen and use **Scan**.
+:::
 
 ### With the in-app scanner
 
@@ -52,18 +56,25 @@ Most phones recognise QR codes in the built-in camera app. Point the camera at t
 1. Open **Scan** and grant camera permission the first time.
 2. Aim at the hive's QR code; the hive opens as soon as it is recognised.
 
-On devices whose browser does not support the in-app scanner, the screen says so and suggests the normal camera app instead.
+The scanner works in every current browser, including Safari on iPhone and iPad and Firefox. If a label is hard to read, move closer, hold steady and avoid glare.
+
+### By typing the code
+
+Under the camera picture, **Label code** takes the six characters printed under the QR code. Type them and tap **Open hive**. This also works when the label is too worn to scan, when the device has no camera or when camera access is blocked. The code is looked up among the hives on the device.
 
 ## If a scan doesn't open the right hive
 
 | Symptom | Likely cause | What to do |
 | --- | --- | --- |
 | Camera won't focus on the code | Wet, faded or curled label | Wipe it dry; reprint if worn |
-| Link opens but says "Hive not found" | Hive was deleted, or belongs to a different tenant | Check the hive still exists and that the right tenant is active |
-| Asks you to sign in | You are not signed in on this device, or the hive is in a tenant you are not a member of | Sign in; ask the tenant admin to invite you |
-| Nothing happens on tap | The phone did not recognise the code as a link | Use the in-app scanner or another QR reader |
+| "This hive is not in your data" | The hive was deleted, or belongs to a different workspace | Check the hive still exists and that the right workspace is active (Settings → Workspaces) |
+| "You are offline" | The hive has not been downloaded to this device yet | Connect; the hive opens once your data has synced |
+| "Sign in to open this hive" | This browser is not signed in. Typical after scanning with the camera app while you normally use the installed app | Sign in, or scan inside the installed app |
+| "Server not reachable" | The hive is not on the device and the server did not answer | Check your connection and tap **Try again** |
+| "That is not an Openbeehive hive label." | The scanned code is some other QR code | Scan the hive label |
+| Nothing happens on tap | The phone did not recognise the code as a link | Use the in-app scanner or type the label code |
 
-Access follows tenant membership; see [Accounts & tenants](./accounts-tenants.md).
+Access follows workspace membership; see [Accounts & workspaces](./accounts-tenants.md).
 
 ## Reprinting and changing labels
 

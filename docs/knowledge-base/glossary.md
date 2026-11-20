@@ -76,7 +76,7 @@ national rules.
 | **QR label** | A printable code on a hive that encodes a deep link; scanning it opens the app straight at that hive. See [QR labels](../using-the-app/qr-labels.md). |
 | **Sync** | The background, conflict-free merging of your local changes with the server and your other devices. See [offline and sync](../using-the-app/offline-and-sync.md). |
 | **Task** | A reminder with a title and an optional due date, for example "add a super" or "treat for varroa". See [tasks](../using-the-app/tasks.md). |
-| **Tenant** | A collection of apiaries, hives and records shared by its members. Every account has a personal tenant and can be invited into others; there is no finer-grained sharing. See [accounts and tenants](../using-the-app/accounts-tenants.md). |
+| **Workspace** | A collection of apiaries, hives and records shared by its members. Every account has a personal workspace and can be invited into others; there is no finer-grained sharing. Called "tenant" in the API, in the server settings and in earlier versions of the app. See [accounts and workspaces](../using-the-app/accounts-tenants.md). |
 
 :::note
 The deeper mechanics of HLCs, OR-Sets and append-only events are covered in the

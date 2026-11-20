@@ -11,13 +11,15 @@ Risposte rapide alle domande che sentiamo più spesso. Se manca qualcosa, consul
 
 Sì. Openbeehive è open source con licenza **AGPL-3.0**, quindi sei libero di usarlo, studiarlo, modificarlo e ospitarlo autonomamente.
 
-Il servizio ospitato su [app.openbeehive.org](https://app.openbeehive.org) è gratuito per ora, finché il progetto è giovane. Se ciò dovesse mai cambiare, potrai sempre esportare i tuoi dati ed eseguire invece la tua istanza.
+Il servizio ospitato su [app.openbeehive.org](https://app.openbeehive.org) è gratuito per ora, finché il progetto è giovane, e attualmente solo su invito: scrivi a [contact@openbeehive.org](mailto:contact@openbeehive.org) per ricevere un invito, oppure dai prima un'occhiata con il pulsante **Prova la demo** nella sua pagina di accesso. Se le condizioni dovessero mai cambiare, potrai sempre esportare i tuoi dati ed eseguire invece la tua istanza.
 
 ## I miei dati sono privati?
 
 I tuoi registri risiedono prima di tutto sul tuo dispositivo: l'app memorizza tutto in un database locale sul tuo telefono, tablet o computer e si sincronizza con il server in background.
 
 Se ospiti autonomamente, i tuoi dati non lasciano mai la tua infrastruttura. Sul servizio ospitato, i tuoi registri sono memorizzati sui nostri server così da poter sincronizzare tra i tuoi dispositivi, ma restano tuoi.
+
+Gli unici servizi esterni che l'app contatta riguardano la mappa: le tessere e la ricerca dell'indirizzo nel modulo dell'apiario provengono da OpenStreetMap, a meno che l'operatore non ne abbia configurati altri o non abbia disattivato la mappa.
 
 :::tip
 Vuoi il pieno controllo? Vedi [Self-hosting](/category/self-hosting) per eseguire Openbeehive sul tuo hardware.
@@ -48,17 +50,17 @@ Assolutamente, ed è progettato per essere facile. Ci sono due profili di distri
 | Profilo | Ideale per | Stack |
 | --- | --- | --- |
 | `selfhost` | Hobbisti, utente singolo | Un unico binario, SQLite + file locali, nessun Docker necessario |
-| `cloud` | Multiutente, configurazioni più grandi | Docker, PostgreSQL + archiviazione S3/MinIO |
+| `cloud` | Più utenti, configurazioni più grandi | Docker, PostgreSQL + archiviazione S3/MinIO |
 
-Inizia con la [Guida rapida](../self-hosting/quick-start.md), oppure salta alla [guida al binario singolo](../self-hosting/single-binary.md).
+Inizia con l'[Avvio rapido](../self-hosting/quick-start.md), oppure salta alla [guida al binario singolo](../self-hosting/single-binary.md).
 
 :::note
-Per un'istanza privata a utente singolo puoi disabilitare del tutto il login. Vedi [Autenticazione](../self-hosting/authentication.md).
+Un'istanza privata a utente singolo funziona senza login per impostazione predefinita; attiva il login prima di condividerla. Vedi [Autenticazione](../self-hosting/authentication.md).
 :::
 
 ## Come funziona la condivisione?
 
-I registri si condividono tramite i **tenant**. Ogni account ha un tenant personale e può essere invitato in altri, per esempio quello di un club. Tutti i membri di un tenant vedono e modificano tutti i suoi apiari, alveari e registri; non esiste una condivisione per singolo apiario. La sincronizzazione è priva di conflitti, quindi due persone che modificano nello stesso tenant su dispositivi diversi non sovrascrivono il lavoro l'una dell'altra. Vedi [Account e tenant](../using-the-app/accounts-tenants.md).
+I registri si condividono tramite gli **spazi**. Ogni account ha uno spazio personale e può essere invitato in altri, per esempio quello di un club. Tutti i membri di uno spazio vedono e modificano tutti i suoi apiari, alveari e registri; non esiste una condivisione per singolo apiario. Fanno eccezione le attività: sono personali. La sincronizzazione è priva di conflitti, quindi due persone che modificano nello stesso spazio su dispositivi diversi non sovrascrivono il lavoro l'una dell'altra. Vedi [Account e spazi](../using-the-app/accounts-tenants.md).
 
 ## Quali tipi di alveare sono supportati?
 
@@ -100,12 +102,12 @@ L'app include cinque lingue: inglese, tedesco, francese, spagnolo e italiano. Ca
 
 In self-hosting, il backend è modulare:
 
-- **Database:** PostgreSQL, MySQL o SQLite. Vedi [Database](../self-hosting/databases.md).
+- **Database:** PostgreSQL, MariaDB o SQLite. Vedi [Database](../self-hosting/databases.md).
 - **Archiviazione blob:** archiviazione di oggetti compatibile con MinIO/S3, o il filesystem locale. Vedi [Archiviazione](../self-hosting/storage.md).
 
 ## Come accedo?
 
-Il servizio ospitato usa account con e-mail e password. Chi ospita autonomamente può abilitare gli account con e-mail e password, aggiungere provider OIDC (Google, Keycloak, Authentik e simili), abilitare le passkey o disattivare del tutto il login per una configurazione a utente singolo. Vedi [Autenticazione](../self-hosting/authentication.md).
+Il servizio ospitato usa account con e-mail e password ed è solo su invito. Chi ospita autonomamente può abilitare gli account con e-mail e password, aggiungere provider OIDC (Google, Keycloak, Authentik e simili), abilitare le passkey o disattivare del tutto il login per una configurazione a utente singolo. Vedi [Autenticazione](../self-hosting/authentication.md).
 
 ## Come segnalo un bug o richiedo una funzionalità?
 

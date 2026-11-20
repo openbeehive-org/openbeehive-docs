@@ -11,8 +11,8 @@ servizio ospitato gratuito e un software auto-ospitabile, per apicoltori hobbist
 e professionisti. L'app memorizza tutto sul dispositivo e si sincronizza con il
 server, così funziona in apiario con o senza segnale.
 
-- Usa l'app: [app.openbeehive.org](https://app.openbeehive.org)
-- Prova la demo: [demo.openbeehive.org](https://demo.openbeehive.org)
+- Usa l'app: [app.openbeehive.org](https://app.openbeehive.org). Il servizio ospitato è solo su invito; scrivi a [contact@openbeehive.org](mailto:contact@openbeehive.org) per ricevere un invito.
+- Prova la demo: il pulsante **Prova la demo** su [app.openbeehive.org/login](https://app.openbeehive.org/login), senza bisogno di un account.
 - Home del progetto: [openbeehive.org](https://openbeehive.org)
 - Codice sorgente: [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 

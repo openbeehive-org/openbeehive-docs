@@ -27,12 +27,16 @@ Puoi registrare più di una smielatura per arnia all'anno, ad esempio un raccolt
 Il miele dovrebbe in genere essere sotto il 18% circa di acqua prima di essere venduto o conservato a lungo termine; sopra il 20% circa rischia di fermentare. Registrare qui la lettura ti permette di individuare un lotto umido prima che si guasti. Le soglie e le norme di etichettatura variano da paese a paese, quindi verifica i requisiti locali.
 :::
 
+## Correggere o eliminare una smielatura \{#correcting}
+
+Ogni smielatura nell'elenco ha un'azione di modifica e una di eliminazione. Modificala per correggere una quantità, una data o un numero di lotto; una smielatura modificata dopo il primo salvataggio mostra **Modificato il** con la data dell'ultima modifica. L'eliminazione chiede conferma e offre **Annulla** per alcuni secondi; una smielatura eliminata scompare anche dai totali e dai grafici.
+
 ## Dove compaiono le smielature
 
 - La sezione **Miele** nella pagina dell'arnia elenca ogni smielatura e mostra il totale dell'arnia nell'intestazione.
 - **Andamento** nella pagina dell'arnia mostra i grafici delle smielature nel tempo.
 - Il riquadro **Miele in questa stagione** nella Panoramica somma le smielature registrate nell'anno corrente.
 
-Una smielatura memorizza l'arnia, l'apiario e la regina il cui regno copriva la data del raccolto. Sostituire la regina o spostare l'arnia in seguito non cambia a cosa è attribuita una smielatura precedente.
+Una smielatura memorizza l'arnia, l'apiario e la regina il cui regno copriva la data del raccolto. Sostituire la regina o spostare l'arnia in seguito non cambia a cosa è attribuita una smielatura precedente. Se correggi la data di una smielatura, l'apiario e la regina vengono cercati di nuovo per la nuova data.
 
 Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md). Per il prelievo e la lavorazione del miele, vedi la guida apistica sul [Raccolto del miele](../beekeeping/honey-harvest.md).

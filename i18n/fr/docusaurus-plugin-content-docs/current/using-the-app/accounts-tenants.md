@@ -5,7 +5,7 @@ title: "Comptes et espaces"
 
 # Comptes et espaces
 
-La façon dont vous vous connectez dépend de la configuration de l'instance. Une instance auto-hébergée individuelle peut ne nécessiter aucune connexion ; une instance partagée (comme le service hébergé) donne un compte à chacun et organise les ruchers en **espaces** (tenants) entre lesquels vous pouvez basculer.
+La façon dont vous vous connectez dépend de la configuration de l'instance. Une instance auto-hébergée individuelle peut ne nécessiter aucune connexion ; une instance partagée (comme le service hébergé) donne un compte à chacun et organise les ruchers en **espaces** entre lesquels vous pouvez basculer.
 
 ## Se connecter
 
@@ -14,11 +14,13 @@ Selon l'instance, l'écran de connexion propose une ou plusieurs des options sui
 - **E-mail et mot de passe** : « Créer un compte » avec votre nom, votre e-mail et un mot de passe, puis « Se connecter ».
 - **Un fournisseur** (Google, Keycloak, ...) : « Continuer avec ... ».
 - **Une passkey** : « Se connecter avec une passkey » avec votre empreinte digitale, votre visage, le code PIN de votre appareil ou une clé de sécurité. Vous ajoutez des passkeys sous **Paramètres → Passkeys** une fois connecté.
-- **La démo** : « Découvrir la démo » sur les instances qui en proposent une.
+- **La démo** : « Essayer la démo » sur les instances qui en proposent une. Elle ne nécessite aucun compte.
 
 Sur une instance mono-utilisateur sans connexion configurée, l'application s'ouvre directement sur vos enregistrements.
 
-Les méthodes sont liées à un seul compte : si vous vous êtes inscrit avec un e-mail et un mot de passe puis que vous vous connectez plus tard avec un fournisseur qui rapporte le même e-mail, les deux sont liés.
+Les méthodes sont liées à un seul compte : si vous vous êtes inscrit avec un e-mail et un mot de passe puis que vous vous connectez plus tard avec un fournisseur qui rapporte le même e-mail, les deux sont liés, à condition que le fournisseur confirme l'adresse comme vérifiée et que l'adresse de votre compte soit vérifiée elle aussi. Sinon, la connexion via le fournisseur est refusée et vous continuez de vous connecter comme auparavant.
+
+Après trop de tentatives échouées, l'écran de connexion indique « Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer. » Le blocage se lève de lui-même au bout de 15 minutes au plus.
 
 Si l'instance exige la vérification de l'e-mail, vous recevez un lien de confirmation par e-mail après l'inscription. Ouvrez-le avant votre première connexion.
 
@@ -53,14 +55,16 @@ Le rôle d'administrateur de l'instance issu de la configuration du serveur est 
 
 En tant qu'admin d'un espace, ouvrez **Paramètres → Espaces → Inviter un·e apiculteur·rice**, saisissez l'adresse e-mail de la personne et touchez **Envoyer l'invitation**. L'application affiche le lien d'invitation avec un bouton **Copier le lien** ; partagez-le directement avec elle. Si le serveur a une configuration SMTP, le même lien est aussi envoyé par e-mail. Les personnes invitées rejoignent l'espace comme membres.
 
-Les invitations en attente sont listées sous **Invitations en attente** avec leurs propres boutons **Copier le lien** et **Révoquer**. Une invitation disparaît de la liste une fois acceptée.
+Une invitation est valable 7 jours et ne fonctionne que pour l'adresse e-mail pour laquelle elle a été émise. Les invitations en attente sont listées sous **Invitations en attente** avec leurs propres boutons **Copier le lien** et **Révoquer**. Une invitation disparaît de la liste une fois acceptée.
 
 ## Accepter une invitation
 
 Le lien d'invitation ouvre l'écran de connexion avec un avis « Vous avez reçu une invitation ».
 
-- Si vous n'avez pas encore de compte, créez-en un. Sur une instance accessible sur invitation uniquement, l'adresse e-mail doit être celle à laquelle l'invitation a été envoyée.
-- Si vous avez déjà un compte, connectez-vous.
+- Si vous n'avez pas encore de compte, créez-en un avec l'adresse e-mail à laquelle l'invitation a été envoyée.
+- Si vous avez déjà un compte avec cette adresse, connectez-vous.
+
+Une invitation ne peut pas être utilisée avec une autre adresse e-mail (« Cette invitation a été émise pour une autre adresse e-mail. »), et elle cesse de fonctionner 7 jours après sa création (« Cette invitation n'est pas valide ou a expiré. »). Demandez-en une nouvelle à l'admin de l'espace.
 
 Dès que vous êtes connecté, l'application vous ajoute à l'espace et vous y bascule. Il apparaît ensuite dans vos propres **Paramètres → Espaces**.
 
@@ -82,4 +86,4 @@ Une clé agit en votre nom dans l'espace qui était actif lorsque vous l'avez cr
 
 ## La démo
 
-Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière vous rappelle que les données sont réinitialisées chaque heure. Le serveur rejette les modifications venant du compte de démonstration, donc tout ce que vous saisissez reste uniquement sur votre appareil. Les opérateurs peuvent l'activer via le [Mode démo](../self-hosting/demo.md).
+Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière vous rappelle que les données sont réinitialisées chaque heure. Le serveur rejette les modifications venant du compte de démonstration, donc tout ce que vous saisissez reste uniquement sur votre appareil. La démo publique du projet est le bouton **Essayer la démo** sur [app.openbeehive.org/login](https://app.openbeehive.org/login). Les opérateurs peuvent l'activer via le [Mode démo](../self-hosting/demo.md).

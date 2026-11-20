@@ -5,14 +5,15 @@ title: "Queens"
 
 # Queens
 
-Openbeehive records who the queen is, where she came from, how she is marked, and when her reign began and ended. Every queen stays in the record, so each hive builds a history of its stock over the seasons.
+Openbeehive records who the queen is, where she came from, how she is marked, and when her reign began and ended. Former queens stay in the record, so each hive builds a history of its stock over the seasons.
 
 ## What a queen record holds
 
-Set or replace the queen from the hive page. The form has:
+Set, replace or correct the queen from the hive page. The form has:
 
 | Field | What it means |
 | --- | --- |
+| Introduced on | The day she took over the colony. Defaults to today. |
 | Year | The year the queen was bred. Drives her marking colour. |
 | Number | An optional breeder or sequence number, e.g. "12". |
 | Origin | Where she came from: own breeding, Buckfast, a swarm, a supersedure, and so on. |
@@ -48,6 +49,14 @@ A colony has one reigning queen at a time, but over its life it will have many. 
 :::tip Requeening
 Note *why* you requeened in the new queen's comment: poor laying, defensive bees, age, planned line improvement. Patterns across several hives often reveal more than any single colony does.
 :::
+
+## Correcting a queen's details \{#correcting}
+
+**Replace queen** is for a real requeening. To fix a typo, a wrong year or a wrong date, use the **Edit** action on the queen instead: it changes her record and leaves the reign history alone. The form says so too: "Correct her details here. For a new queen, use “Replace queen” instead." Former queens under **Queen history** can be corrected the same way.
+
+## Deleting a queen
+
+**Delete** is only for a queen recorded by mistake. If she is the current queen, her predecessor becomes the current queen again. The app asks for confirmation and offers **Undo** for a few seconds afterwards.
 
 ## Back-dated entries
 

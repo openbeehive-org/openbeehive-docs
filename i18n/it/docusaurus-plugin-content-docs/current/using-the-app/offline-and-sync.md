@@ -21,15 +21,35 @@ Openbeehive mantiene una copia completa dei tuoi registri in un piccolo database
 Poiché i registri sono memorizzati sul dispositivo, installa Openbeehive come app anziché usarla in una scheda del browser. Vedi [Installare Openbeehive](./install.md).
 :::
 
-## L'indicatore offline
+## Lo stato della sincronizzazione \{#sync-status}
 
-Quando il dispositivo non ha connessione, il blocco account nella barra laterale passa da **Online** a **Offline** e una barra in cima alla pagina dice "Offline: le modifiche vengono salvate e sincronizzate più tardi". È puramente informativo; continua esattamente come prima.
+Un piccolo chip di stato in cima a ogni pagina (e sotto il tuo indirizzo e-mail nella barra laterale) dice se le modifiche di questo dispositivo hanno raggiunto il server:
 
-Quando il dispositivo torna online la barra scompare e tutte le modifiche fatte offline vengono inviate automaticamente. Non c'è alcun pulsante "sincronizza ora".
+| Il chip dice | Significato |
+| --- | --- |
+| **Sincronizzato** e un orario | Tutto ciò che è su questo dispositivo è sul server. |
+| **Sincronizzazione…** | È in corso uno scambio con il server. |
+| **In attesa di invio: 3** | Tre modifiche sono salvate sul dispositivo e non ancora inviate. |
+| **Offline** oppure **Offline · 3 in attesa** | Nessuna connessione. Le modifiche attendono sul dispositivo. |
+| **Sincronizzazione non riuscita · nuovo tentativo** | Il server non è stato raggiunto o ha risposto con un errore. L'app continua a riprovare. |
+| **Disconnesso · accedi per sincronizzare** | La tua sessione è terminata. Tocca il chip per accedere; non si perde nulla. |
+| **Problemi di sincronizzazione: 2** | Il server ha rifiutato due modifiche; vedi sotto. |
+
+Tocca il chip per sincronizzare subito. Anche senza toccarlo, l'app sincronizza dopo ogni modifica, a brevi intervalli mentre è aperta, e non appena torna la connessione.
+
+Mentre il dispositivo non ha connessione, una barra in cima alla pagina dice inoltre "Offline: le modifiche vengono salvate e sincronizzate in seguito." È puramente informativo; continua esattamente come prima.
 
 :::note
 Un indicatore offline persistente di solito significa copertura debole in apiario. Se resta attivo anche con una buona connessione a casa, vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md).
 :::
+
+### Problemi di sincronizzazione \{#sync-problems}
+
+Di tanto in tanto il server non accetta una modifica, per esempio perché il dato appartiene a un altro spazio o perché l'orologio del dispositivo era molto avanti. Una modifica del genere non viene buttata via: resta sul dispositivo, e il chip mostra **Problemi di sincronizzazione** con il numero di modifiche rifiutate. L'elenco **Problemi di sincronizzazione** le indica una per una con il motivo e offre **Riprova** e **Scarta**. Scarta interrompe l'invio; il dato resta su questo dispositivo così com'è ma non raggiunge mai il server, gli altri tuoi dispositivi o gli altri membri.
+
+### Orologi dei dispositivi
+
+Ogni modifica porta l'ora del dispositivo che l'ha fatta. Il server rifiuta le modifiche con una marca temporale più di 10 minuti avanti rispetto alla propria ora. L'app apprende l'ora del server a ogni sincronizzazione, compensa un orologio del dispositivo sbagliato, e marca e invia di nuovo da sola tali modifiche.
 
 ## La prima sincronizzazione su un nuovo dispositivo
 
@@ -41,6 +61,8 @@ Accedere su un nuovo dispositivo, o riaprire l'app dopo che la sua archiviazione
 
 Solo quando l'app sa che i dati sono completi mostra un vero stato vuoto. Se il dispositivo è offline o il server non è raggiungibile, l'indicazione lascia il posto a ciò che è archiviato localmente.
 
+Dopo che l'app si è aggiornata alla versione 0.5.0, ogni dispositivo scarica i propri registri ancora una volta dall'inizio. Questo ripara le lacune che le versioni precedenti potevano lasciare e non richiede alcuna azione da parte tua.
+
 ## Sincronizzazione tra i tuoi dispositivi
 
 Usa Openbeehive su più dispositivi, un telefono sul campo e un portatile a casa, e restano allineati. Ogni dispositivo mantiene la propria copia locale e scambia le modifiche con il server in background. Registra una visita sul telefono in apiario e, quando ti siedi al portatile, è già lì. Finché ogni dispositivo accede allo stesso account, vedono tutti gli stessi registri.
@@ -51,7 +73,7 @@ Openbeehive risolve le modifiche sovrapposte **automaticamente**, senza richiest
 
 - **Tu modifichi la nota di un apiario sul telefono, il tuo co-apicoltore modifica la stessa nota sul suo.** La modifica più recente a quel campo prevale.
 - **Aggiungete entrambi foto alla stessa visita mentre siete offline.** Entrambi i gruppi di foto vengono conservati.
-- **Ciascuno di voi registra una visita separata.** Visite, smielature e trattamenti vengono solo aggiunti, quindi entrambi vengono mantenuti affiancati.
+- **Ciascuno di voi registra una visita separata.** Ogni visita, smielatura e trattamento è una registrazione a sé, quindi entrambe vengono mantenute affiancate.
 
 Ogni dispositivo converge sullo stesso stato una volta che tutti si sono sincronizzati.
 
@@ -61,14 +83,14 @@ In breve: aggiungi liberamente, modifica con sicurezza. Come funziona sotto il c
 
 ## Condivisione
 
-I registri si condividono tramite i **tenant**. Ogni membro di un tenant vede e modifica tutti i suoi apiari, arnie e registri; non esiste una condivisione per apiario o per arnia.
+I registri si condividono tramite gli **spazi**. Ogni membro di uno spazio vede e modifica tutti i suoi apiari, arnie e registri; non esiste una condivisione per apiario o per arnia. Fanno eccezione le [attività](./tasks.md), che sono personali.
 
 | Ruolo | Cosa può fare |
 | --- | --- |
-| **Admin** (proprietario del tenant) | Tutto ciò che può fare un membro, più invitare e revocare, ed eliminare il tenant. |
-| **Membro** | Aggiungere e modificare apiari, arnie, visite, attività, smielature e trattamenti nel tenant. |
+| **Admin** (proprietario dello spazio) | Tutto ciò che può fare un membro, più invitare e revocare, ed eliminare lo spazio. |
+| **Membro** | Aggiungere e modificare apiari, arnie, visite, smielature e trattamenti nello spazio. |
 
-Per condividere una postazione con un mentore mantenendo private le altre, metti quella postazione in un tenant a sé e invita lì il mentore. I registri condivisi si sincronizzano e risolvono i conflitti esattamente come i tuoi. Vedi [Account e tenant](./accounts-tenants.md).
+Per condividere una postazione con un mentore mantenendo private le altre, metti quella postazione in uno spazio a sé e invita lì il mentore. I registri condivisi si sincronizzano e risolvono i conflitti esattamente come i tuoi. Vedi [Account e spazi](./accounts-tenants.md).
 
 ## Se qualcosa non può essere salvato
 
@@ -76,7 +98,11 @@ Il salvataggio avviene sul tuo dispositivo, quindi in pratica non fallisce mai. 
 
 Con l'**account demo** pubblico il server rifiuta le modifiche (la demo si azzera ogni ora). Le tue modifiche vengono salvate sul dispositivo e semplicemente restano lì invece di sincronizzarsi.
 
-C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata, l'app ripiega su un database in memoria e mostra l'avviso **"Archiviazione non disponibile: le modifiche non verranno conservate su questo dispositivo."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Succede nelle finestre di navigazione privata e quando una seconda scheda dell'app sta ancora trattenendo l'archiviazione; vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
+C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata (una finestra di navigazione privata, o l'archiviazione bloccata nelle impostazioni del browser), l'app tiene i registri in memoria e mostra un banner: **"Questo browser non salva dati su questo dispositivo (finestra privata o archiviazione bloccata). Ciò che non è stato sincronizzato va perso alla chiusura di questa scheda."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
+
+## Una scheda alla volta \{#one-tab}
+
+Solo una scheda o finestra alla volta può lavorare con i registri su un dispositivo. Se apri Openbeehive in una seconda scheda, questa mostra **"Openbeehive è aperto in un'altra scheda"**. Continua nella prima scheda, oppure tocca **Usa qui** per spostare l'app nella nuova scheda; sarà allora l'altra a mostrare l'avviso.
 
 ## Perderò mai dei dati?
 

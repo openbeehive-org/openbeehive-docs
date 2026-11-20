@@ -51,9 +51,17 @@ Notez le numéro de lot directement depuis l'emballage au moment où vous traite
 
 Fonctionne hors ligne ; consultez [Hors ligne et synchronisation](./offline-and-sync.md).
 
+## Corriger ou supprimer un traitement \{#correcting}
+
+Chaque traitement de la liste dispose d'une action de modification et d'une action de suppression. Un traitement modifié après son premier enregistrement affiche **Modifié le** avec la date de la dernière modification, à l'écran et dans le registre imprimé, afin qu'un lecteur voie que l'entrée n'est plus dans sa forme d'origine. L'application ne conserve aucune version antérieure. La suppression demande confirmation et propose **Annuler** pendant quelques secondes.
+
+## Le registre des traitements \{#treatment-register}
+
+**Imprimer le registre** sous **Traitements** imprime le registre des traitements de la ruche : un tableau de tous les traitements avec la date, le produit, la substance active, la dose, la méthode, le numéro de lot, la date de fin du délai d'attente et la mention de modification, ainsi que le jour de l'impression. Le bouton **Registre des traitements** de la page d'un [rucher](./apiaries.md) imprime la même chose pour toutes les ruches de ce rucher en un seul document. Le registre s'ouvre dans une nouvelle fenêtre ; si rien ne se passe, autorisez les fenêtres pop-up pour le site.
+
 ## Délais d'attente et récolte
 
-Lorsque vous définissez une date de **délai d'attente jusqu'au**, Openbeehive enregistre à partir de quand le miel de cette ruche peut de nouveau être récolté sans risque.
+Lorsque vous définissez une date de **délai d'attente jusqu'au**, Openbeehive enregistre à partir de quand le miel de cette ruche peut de nouveau être récolté sans risque. Le traitement affiche la date sous forme de pastille, mise en évidence comme un avertissement tant que le délai court, dernier jour compris, et neutre ensuite.
 
 Prenez l'habitude de vérifier les dates de traitement avant de retirer les hausses. Si une colonie est encore dans sa période de délai d'attente, ne récoltez pas son miel, ou bien gardez ce miel à part et clairement hors de la chaîne alimentaire jusqu'à ce que le délai soit écoulé.
 
@@ -67,10 +75,10 @@ Quelques habitudes permettent de garder vos enregistrements dignes de confiance.
 
 - **Consignez au fur et à mesure.** Notez le traitement le jour où vous l'appliquez, et non de mémoire des semaines plus tard.
 - **Soyez précis.** « Traité contre le varroa » est bien moins utile que le produit, la dose et le lot.
-- **Ne réécrivez pas l'historique pour le faire paraître plus propre.** Si quelque chose a changé, ajoutez un suivi plutôt que de réécrire le passé.
+- **Corrigez les erreurs, n'embellissez pas l'historique.** Corrigez une dose ou un numéro de lot erronés en modifiant l'entrée ; elle est alors marquée comme modifiée. Si le traitement lui-même a changé, ajoutez une entrée de suivi plutôt que de réécrire le passé.
 - **Traitez chaque ruche individuellement.** Même lorsque vous appliquez le même produit à tout un rucher, consignez-le ruche par ruche afin que les doses et les délais d'attente soient exacts pour chaque colonie.
 
-Comme les entrées de traitement se synchronisent sur tous vos appareils, le registre que vous constituez sur le terrain est le même que celui que vous consultez chez vous, et celui que voient les autres membres de votre espace (tenant).
+Comme les entrées de traitement se synchronisent sur tous vos appareils, le registre que vous constituez sur le terrain est le même que celui que vous consultez chez vous, et celui que voient les autres membres de votre espace.
 
 ## Traitements et varroa
 

@@ -5,14 +5,15 @@ title: "Königinnen"
 
 # Königinnen
 
-Openbeehive erfasst, wer die Königin ist, woher sie stammt, wie sie markiert ist und wann ihre Regentschaft begann und endete. Jede Königin bleibt in der Aufzeichnung, sodass jede Beute über die Saisons eine Historie ihrer Zucht aufbaut.
+Openbeehive erfasst, wer die Königin ist, woher sie stammt, wie sie markiert ist und wann ihre Regentschaft begann und endete. Frühere Königinnen bleiben in der Aufzeichnung, sodass jede Beute über die Saisons eine Historie ihrer Zucht aufbaut.
 
 ## Was eine Königinnen-Aufzeichnung enthält
 
-Setze oder ersetze die Königin von der Beutenseite aus. Das Formular hat:
+Setze, ersetze oder korrigiere die Königin von der Beutenseite aus. Das Formular hat:
 
 | Feld | Was es bedeutet |
 | --- | --- |
+| Eingesetzt am | Der Tag, an dem sie das Volk übernommen hat. Standardmäßig heute. |
 | Jahr | Das Jahr, in dem die Königin gezüchtet wurde. Bestimmt ihre Markierungsfarbe. |
 | Nummer | Eine optionale Züchter- oder laufende Nummer, z. B. „12". |
 | Herkunft | Woher sie stammt: Eigenzucht, Buckfast, ein Schwarm, eine Nachschaffung und so weiter. |
@@ -48,6 +49,14 @@ Ein Volk hat immer nur eine regierende Königin zur selben Zeit, aber über sein
 :::tip Umweiseln
 Notiere im Kommentar der neuen Königin, *warum* du umgeweiselt hast: schlechtes Legen, stechlustige Bienen, Alter, geplante Linienverbesserung. Muster über mehrere Beuten hinweg verraten oft mehr als jedes einzelne Volk.
 :::
+
+## Die Angaben einer Königin korrigieren \{#correcting}
+
+**Königin ersetzen** ist für eine echte Umweiselung gedacht. Um einen Tippfehler, ein falsches Jahr oder ein falsches Datum zu beheben, nutze stattdessen die Aktion **Bearbeiten** an der Königin: Sie ändert ihren Eintrag und lässt die Historie der Regentschaften unberührt. Das Formular sagt es auch: „Hier korrigierst du ihre Angaben. Für eine neue Königin nimm „Königin ersetzen“.“ Frühere Königinnen unter **Königinnen-Historie** lassen sich genauso korrigieren.
+
+## Eine Königin löschen
+
+**Löschen** ist nur für eine versehentlich erfasste Königin gedacht. Ist sie die aktuelle Königin, wird ihre Vorgängerin wieder zur aktuellen Königin. Die App fragt nach einer Bestätigung und bietet danach ein paar Sekunden lang **Rückgängig** an.
 
 ## Rückdatierte Einträge
 

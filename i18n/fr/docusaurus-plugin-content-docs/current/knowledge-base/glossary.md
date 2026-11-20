@@ -78,7 +78,7 @@ référence et vérifiez les règles en vigueur dans votre pays.
 | **Étiquette QR** | Un code imprimable sur une ruche qui encode un lien profond ; le scanner ouvre l'application directement sur cette ruche. Voir [étiquettes QR](../using-the-app/qr-labels.md). |
 | **Synchronisation** | La fusion en arrière-plan, sans conflit, de vos modifications locales avec le serveur et vos autres appareils. Voir [hors ligne et synchronisation](../using-the-app/offline-and-sync.md). |
 | **Tâche** | Un rappel avec un titre et une date d'échéance facultative, par exemple « ajouter une hausse » ou « traiter contre le varroa ». Voir [tâches](../using-the-app/tasks.md). |
-| **Espace (tenant)** | Un ensemble de ruchers, de ruches et d'archives partagé par ses membres. Chaque compte possède un espace personnel et peut être invité dans d'autres ; il n'existe pas de partage plus fin. Voir [comptes et espaces](../using-the-app/accounts-tenants.md). |
+| **Espace** | Un ensemble de ruchers, de ruches et d'archives partagé par ses membres. Chaque compte possède un espace personnel et peut être invité dans d'autres ; il n'existe pas de partage plus fin. Appelé « tenant » dans l'API, dans les réglages du serveur et dans les versions antérieures de l'application. Voir [comptes et espaces](../using-the-app/accounts-tenants.md). |
 
 :::note
 Les mécanismes plus profonds des HLC, des OR-Sets et des événements en ajout seul

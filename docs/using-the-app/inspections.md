@@ -13,15 +13,23 @@ For what to look for during a visit and how often to inspect, read [Inspecting a
 
 ## Starting a visit
 
-Open a hive (or scan its [QR label](./qr-labels.md)) and tap **Record visit** above the visit log. The form opens with today's date.
+Open a hive (or scan its [QR label](./qr-labels.md)) and tap **Record visit** in the header. The form opens with today's date, and **Save** stays within reach at the bottom of the screen while you scroll.
 
 Every field is optional. A quick "all fine" with nothing else filled in is a valid entry.
+
+### Empty is not zero
+
+Number fields start empty. Leave a field empty when you did not look; enter `0` when you looked and found none. "Swarm cells: 0" is an observation, an empty field is not. The counts have **−** and **+** buttons, so you can enter them with gloves on.
+
+### Start from last visit
+
+If the hive has an earlier visit, **Start from last visit** (with that visit's date) fills in what usually changes little: occupied frames, brood frames, food stores, gentleness and calmness. Adjust what is different today. Fields the last visit left empty stay empty.
 
 ## Date and weather
 
 | Field | Notes |
 | --- | --- |
-| Date | Defaults to today; change it to log a past visit. |
+| Date | Defaults to today; change it to log a past visit. Future dates are not accepted. |
 | Weather | Free text, e.g. "sunny, 22°C". |
 
 ## Colony & behaviour
@@ -38,7 +46,7 @@ Every field is optional. A quick "all fine" with nothing else filled in is a val
 | Swarm cells | How many queen cells you found. |
 | Gentleness | Very gentle, Gentle, Normal, Nervous or Aggressive. |
 | Calmness on comb | Runs off comb, Restless, Calm or Very calm. |
-| Varroa | Free text for your count, e.g. "3 mites/day". |
+| Varroa | Mites per day. Enter a plain number such as `3` if you want it in the charts; other text is kept but not charted. |
 | Hive weight | In kg, if you weigh the hive. |
 
 :::note
@@ -47,17 +55,22 @@ The "eggs seen / youngest larva / capped brood" trio usually confirms a healthy 
 
 ## Activities on this visit
 
+This section starts collapsed; tap its heading to open it.
+
 | Activity | Records |
 | --- | --- |
 | Fed | Amount fed, in kg. |
-| Honey harvested | Honey taken on this visit, in kg. |
 | Frames added / removed | Frames you put in or took out. |
 | Drone frame cut | Whether you cut out a drone brood frame (a varroa control measure). |
 | Super added | Whether you added a super. |
 
-For the bigger picture on mite management and harvesting, see [Varroa](../beekeeping/varroa.md) and [Honey harvest](../beekeeping/honey-harvest.md). Honey you take off for jarring is recorded separately as a [harvest](./harvests.md), with variety, water content and batch number.
+Honey is not recorded on the visit form any more. Record it as a [harvest](./harvests.md), with variety, water content and batch number. "Honey harvested" amounts entered on visits by earlier versions are still shown.
+
+For the bigger picture on mite management and harvesting, see [Varroa](../beekeeping/varroa.md) and [Honey harvest](../beekeeping/honey-harvest.md).
 
 ## Climate
+
+This section starts collapsed as well.
 
 | Field | Unit |
 | --- | --- |
@@ -69,7 +82,7 @@ For the bigger picture on mite management and harvesting, see [Varroa](../beekee
 All four are optional. Over time they appear in the hive's **Development** charts alongside weight and colony strength.
 
 :::tip
-A hive scale or climate sensor can post these fields through the API; each reading becomes a visit on the hive and syncs to your devices. See [Automated trackers](../using-the-api/automated-trackers.md).
+A hive scale or climate sensor can post these fields through the API. Such readings are marked as sensor readings; see [Sensor readings](#sensor-readings) below and [Automated trackers](../using-the-api/automated-trackers.md).
 :::
 
 ## Note and photos
@@ -80,9 +93,24 @@ Add a free-text **note** for anything the structured fields do not cover: a mark
 
 ## The visit log
 
-Every visit is kept. The hive page shows the five most recent visits, newest first, each summarised as chips; **See all N visits** opens the full log, and **Stock card** prints all visits as a table.
+The hive page shows the five most recent visits, newest first, each summarised as chips; **See all N visits** opens the full log, and **More → Hive record card** prints all visits as a table.
 
-The log lets you spot trends: brood building up in spring, stores running down before winter, a rising varroa count. Visits are only ever added, so syncing across devices never overwrites one.
+The log lets you spot trends: brood building up in spring, stores running down before winter, a rising varroa count.
+
+## Correcting or deleting a visit \{#correcting}
+
+Every visit in the log has an edit and a delete action.
+
+- **Edit visit** opens the form with the saved values. Change what was wrong, including the date, and save. If two devices correct the same visit, the most recent change to each field wins.
+- **Delete** asks for confirmation naming the visit's date. Afterwards a bar offers **Undo** for a few seconds. Deleting a visit also removes it from the hive's history and charts.
+
+## Sensor readings \{#sensor-readings}
+
+Readings that a scale or sensor posts through the API are stored as visits marked **Sensor reading**. They would drown the visits you made yourself, so:
+
+- the hive page lists only visits recorded by a person, and so does the full log until you tick **Show sensor readings** there (the label says how many there are),
+- "last inspected", the hives list and the Overview's due list ignore them,
+- the **Development** charts include them.
 
 ## Tips for fast field entry
 

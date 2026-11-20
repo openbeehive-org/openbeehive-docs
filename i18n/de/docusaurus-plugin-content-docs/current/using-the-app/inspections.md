@@ -13,15 +13,23 @@ Wonach du bei einem Besuch suchen solltest und wie oft du durchsehen solltest, l
 
 ## Eine Durchsicht beginnen
 
-Öffne eine Beute (oder scanne ihr [QR-Etikett](./qr-labels.md)) und tippe über der Durchsichtenliste auf **Durchsicht erfassen**. Das Formular öffnet sich mit dem heutigen Datum.
+Öffne eine Beute (oder scanne ihr [QR-Etikett](./qr-labels.md)) und tippe im Kopfbereich auf **Durchsicht erfassen**. Das Formular öffnet sich mit dem heutigen Datum, und **Speichern** bleibt beim Scrollen am unteren Bildschirmrand in Reichweite.
 
 Jedes Feld ist optional. Ein schnelles „alles in Ordnung" ohne weitere Angaben ist ein gültiger Eintrag.
+
+### Leer ist nicht null
+
+Zahlenfelder sind anfangs leer. Lass ein Feld leer, wenn du nicht nachgesehen hast; gib `0` ein, wenn du nachgesehen und nichts gefunden hast. „Schwarmzellen: 0“ ist eine Beobachtung, ein leeres Feld ist keine. Die Zählfelder haben die Buttons **−** und **+**, sodass du sie auch mit Handschuhen eingeben kannst.
+
+### Von letzter Durchsicht ausgehen
+
+Hat die Beute eine frühere Durchsicht, füllt **Von letzter Durchsicht ausgehen** (mit dem Datum dieser Durchsicht) aus, was sich meist wenig ändert: besetzte Waben, Brutwaben, Futtervorrat, Sanftmut und Wabensitz. Passe an, was heute anders ist. Felder, die die letzte Durchsicht leer gelassen hat, bleiben leer.
 
 ## Datum und Wetter
 
 | Feld | Hinweise |
 | --- | --- |
-| Datum | Standardmäßig heute; ändere es, um einen vergangenen Besuch zu erfassen. |
+| Datum | Standardmäßig heute; ändere es, um einen vergangenen Besuch zu erfassen. Zukünftige Daten werden nicht angenommen. |
 | Wetter | Freitext, z. B. „sonnig, 22 °C". |
 
 ## Volk & Verhalten
@@ -38,7 +46,7 @@ Jedes Feld ist optional. Ein schnelles „alles in Ordnung" ohne weitere Angaben
 | Schwarmzellen | Wie viele Weiselzellen du gefunden hast. |
 | Sanftmut | Sehr sanft, Sanft, Normal, Nervös oder Aggressiv. |
 | Wabensitz | Läuft ab, Unruhig, Ruhig oder Sehr ruhig. |
-| Varroa | Freitext für deine Zählung, z. B. „3 Milben/Tag". |
+| Varroa | Milben pro Tag. Gib eine reine Zahl wie `3` ein, wenn du sie in den Diagrammen haben möchtest; anderer Text bleibt erhalten, erscheint aber nicht im Diagramm. |
 | Stockgewicht | In kg, falls du die Beute wiegst. |
 
 :::note
@@ -47,17 +55,22 @@ Das Trio „Stifte gesehen / jüngste Larve / verdeckelte Brut" bestätigt meist
 
 ## Tätigkeiten bei dieser Durchsicht
 
+Dieser Abschnitt ist anfangs eingeklappt; tippe auf seine Überschrift, um ihn zu öffnen.
+
 | Tätigkeit | Erfasst |
 | --- | --- |
 | Gefüttert | Gefütterte Menge, in kg. |
-| Honig geerntet | Bei diesem Besuch entnommener Honig, in kg. |
 | Waben gegeben / entnommen | Waben, die du eingesetzt oder entnommen hast. |
 | Drohnenrahmen geschnitten | Ob du eine Drohnenbrutwabe ausgeschnitten hast (eine Maßnahme zur Varroa-Kontrolle). |
 | Honigraum gegeben | Ob du einen Honigraum aufgesetzt hast. |
 
-Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](../beekeeping/varroa.md) und [Honigernte](../beekeeping/honey-harvest.md). Honig, den du zum Abfüllen abnimmst, wird separat als [Ernte](./harvests.md) erfasst, mit Sorte, Wassergehalt und Chargennummer.
+Honig wird nicht mehr im Durchsichtsformular erfasst. Erfasse ihn als [Ernte](./harvests.md), mit Sorte, Wassergehalt und Chargennummer. Mengen unter „Honig geerntet“, die frühere Versionen bei Durchsichten eingetragen haben, werden weiterhin angezeigt.
+
+Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](../beekeeping/varroa.md) und [Honigernte](../beekeeping/honey-harvest.md).
 
 ## Klima
+
+Auch dieser Abschnitt ist anfangs eingeklappt.
 
 | Feld | Einheit |
 | --- | --- |
@@ -69,7 +82,7 @@ Für das größere Bild zum Milbenmanagement und zur Ernte siehe [Varroa](../bee
 Alle vier sind optional. Mit der Zeit erscheinen sie in den Diagrammen unter **Entwicklung** der Beute zusammen mit Gewicht und Volksstärke.
 
 :::tip
-Eine Stockwaage oder ein Klimasensor kann diese Felder über die API senden; jeder Messwert wird zu einer Durchsicht an der Beute und synchronisiert auf deine Geräte. Siehe [Automatische Tracker](../using-the-api/automated-trackers.md).
+Eine Stockwaage oder ein Klimasensor kann diese Felder über die API senden. Solche Messwerte werden als Sensormessungen gekennzeichnet; siehe [Sensormessungen](#sensor-readings) unten und [Automatische Tracker](../using-the-api/automated-trackers.md).
 :::
 
 ## Notiz und Fotos
@@ -80,9 +93,24 @@ Füge eine **Notiz** als Freitext für alles hinzu, was die strukturierten Felde
 
 ## Die Durchsichtenliste
 
-Jeder Besuch wird aufbewahrt. Die Beutenseite zeigt die fünf jüngsten Durchsichten, die neueste zuerst, jeweils als Chips zusammengefasst; **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll, und **Stockkarte** druckt alle Durchsichten als Tabelle.
+Die Beutenseite zeigt die fünf jüngsten Durchsichten, die neueste zuerst, jeweils als Chips zusammengefasst; **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll, und **Mehr → Stockkarte** druckt alle Durchsichten als Tabelle.
 
-Das Protokoll lässt dich Trends erkennen: Brut, die sich im Frühjahr aufbaut, Vorräte, die vor dem Winter zur Neige gehen, eine steigende Varroa-Zahl. Durchsichten werden immer nur hinzugefügt, die Synchronisation über Geräte hinweg überschreibt also nie eine.
+Das Protokoll lässt dich Trends erkennen: Brut, die sich im Frühjahr aufbaut, Vorräte, die vor dem Winter zur Neige gehen, eine steigende Varroa-Zahl.
+
+## Eine Durchsicht korrigieren oder löschen \{#correcting}
+
+Jede Durchsicht im Protokoll hat eine Aktion zum Bearbeiten und eine zum Löschen.
+
+- **Durchsicht bearbeiten** öffnet das Formular mit den gespeicherten Werten. Ändere, was falsch war, auch das Datum, und speichere. Korrigieren zwei Geräte dieselbe Durchsicht, gewinnt je Feld die jüngste Änderung.
+- **Löschen** fragt nach einer Bestätigung, die das Datum der Durchsicht nennt. Danach bietet eine Leiste ein paar Sekunden lang **Rückgängig** an. Das Löschen einer Durchsicht entfernt sie auch aus der Historie und den Diagrammen der Beute.
+
+## Sensormessungen \{#sensor-readings}
+
+Messwerte, die eine Waage oder ein Sensor über die API sendet, werden als Durchsichten gespeichert, die als **Sensormessung** gekennzeichnet sind. Sie würden die Durchsichten, die du selbst gemacht hast, überschwemmen, deshalb:
+
+- listet die Beutenseite nur Durchsichten, die eine Person erfasst hat, ebenso das vollständige Protokoll, bis du dort **Sensormessungen anzeigen** anhakst (die Beschriftung nennt ihre Anzahl),
+- ignorieren „Letzte Durchsicht“, die Beutenliste und die Liste der fälligen Durchsichten auf der Übersicht sie,
+- beziehen die Diagramme unter **Entwicklung** sie ein.
 
 ## Tipps für schnelle Feldeingabe
 

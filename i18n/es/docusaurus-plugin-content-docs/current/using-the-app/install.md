@@ -100,12 +100,19 @@ TLS delante de tu servidor.
 Si te autoalojas, la sección [Autoalojamiento](/category/self-hosting) recorre el
 despliegue, la configuración y las copias de seguridad.
 
+## Abrir la aplicación sin conexión
+
+Después de haber abierto la aplicación en línea una vez, arranca sin conexión, también
+en un arranque en frío (tras reiniciar el teléfono o cerrar la aplicación). Consulta
+[Sin conexión y sincronización](./offline-and-sync.md).
+
 ## Actualizar la aplicación
 
-La PWA se actualiza sola. Cuando se publica una nueva versión, la aplicación la descarga en
-segundo plano y la aplica la próxima vez que la inicias o la recargas. No necesitas
-reinstalar. Si alguna vez quieres asegurarte de que estás en la última versión, cierra del
-todo la aplicación y vuelve a abrirla.
+La PWA se actualiza sola. Cuando se ha descargado una nueva versión en
+segundo plano, una barra en la parte superior dice **"Hay una nueva versión disponible."** con dos
+botones: **Recargar** cambia a la nueva versión de inmediato, **Más tarde** oculta la barra.
+Si eliges Más tarde, la actualización se aplica la próxima vez que la aplicación se inicie después
+de haber cerrado todas sus pestañas y ventanas. No necesitas reinstalar.
 
 ## Eliminar la aplicación
 

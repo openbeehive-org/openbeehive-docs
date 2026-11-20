@@ -78,7 +78,7 @@ y consulta las normas de tu país.
 | **Etiqueta QR** | Un código imprimible en una colmena que codifica un enlace profundo; al escanearlo se abre la aplicación directamente en esa colmena. Consulta [etiquetas QR](../using-the-app/qr-labels.md). |
 | **Sincronización** | La fusión en segundo plano y sin conflictos de tus cambios locales con el servidor y tus otros dispositivos. Consulta [sin conexión y sincronización](../using-the-app/offline-and-sync.md). |
 | **Tarea** | Un recordatorio con un título y una fecha de vencimiento opcional; por ejemplo "añadir un alza" o "tratar contra varroa". Consulta [tareas](../using-the-app/tasks.md). |
-| **Espacio (tenant)** | Una colección de colmenares, colmenas y registros compartida por sus miembros. Cada cuenta tiene un espacio personal y puede ser invitada a otros; no hay compartición más fina. Consulta [cuentas y espacios](../using-the-app/accounts-tenants.md). |
+| **Espacio** | Una colección de colmenares, colmenas y registros compartida por sus miembros. Cada cuenta tiene un espacio personal y puede ser invitada a otros; no hay compartición más fina. Se llama "tenant" en la API, en los ajustes del servidor y en versiones anteriores de la aplicación. Consulta [cuentas y espacios](../using-the-app/accounts-tenants.md). |
 
 :::note
 Los mecanismos más profundos de los HLC, los OR-Sets y los eventos de solo

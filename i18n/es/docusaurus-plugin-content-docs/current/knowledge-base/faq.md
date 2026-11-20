@@ -11,13 +11,15 @@ Respuestas rápidas a las preguntas que oímos con más frecuencia. Si falta alg
 
 Sí. Openbeehive es de código abierto bajo la licencia **AGPL-3.0**, así que eres libre de usarlo, estudiarlo, modificarlo y autoalojarlo.
 
-El servicio alojado en [app.openbeehive.org](https://app.openbeehive.org) es gratuito por ahora, mientras el proyecto es joven. Si eso cambiara alguna vez, siempre podrás exportar tus datos y ejecutar tu propia instancia en su lugar.
+El servicio alojado en [app.openbeehive.org](https://app.openbeehive.org) es gratuito por ahora, mientras el proyecto es joven, y actualmente funciona solo por invitación: escribe a [contact@openbeehive.org](mailto:contact@openbeehive.org) para pedir una, o echa antes un vistazo con el botón **Probar la demo** de su página de inicio de sesión. Si las condiciones cambiaran alguna vez, siempre podrás exportar tus datos y ejecutar tu propia instancia en su lugar.
 
 ## ¿Son privados mis datos?
 
 Tus registros viven primero en tu propio dispositivo: la aplicación almacena todo en una base de datos local en tu teléfono, tableta u ordenador y sincroniza con el servidor en segundo plano.
 
 Si te autoalojas, tus datos nunca salen de tu propia infraestructura. En el servicio alojado, tus registros se almacenan en nuestros servidores para que puedan sincronizarse entre tus dispositivos, pero siguen siendo tuyos.
+
+Los únicos servicios externos con los que contacta la aplicación son los del mapa: las teselas y la búsqueda de direcciones del formulario del colmenar provienen de OpenStreetMap, salvo que el operador haya configurado otros o haya desactivado el mapa.
 
 :::tip
 ¿Quieres control total? Consulta [Autoalojamiento](/category/self-hosting) para ejecutar Openbeehive en tu propio hardware.
@@ -48,17 +50,17 @@ Por supuesto, y está diseñado para ser fácil. Hay dos perfiles de despliegue:
 | Perfil | Mejor para | Pila tecnológica |
 | --- | --- | --- |
 | `selfhost` | Aficionados, un solo usuario | Un único binario, SQLite + archivos locales, sin necesidad de Docker |
-| `cloud` | Multiusuario, instalaciones mayores | Docker, PostgreSQL + almacenamiento S3/MinIO |
+| `cloud` | Varios usuarios, instalaciones mayores | Docker, PostgreSQL + almacenamiento S3/MinIO |
 
 Empieza con la [Guía de inicio rápido](../self-hosting/quick-start.md), o ve directamente a la [guía del binario único](../self-hosting/single-binary.md).
 
 :::note
-Para una instancia privada de un solo usuario puedes desactivar el inicio de sesión por completo. Consulta [Autenticación](../self-hosting/authentication.md).
+Una instancia privada de un solo usuario funciona sin inicio de sesión de forma predeterminada; activa el inicio de sesión antes de compartirla. Consulta [Autenticación](../self-hosting/authentication.md).
 :::
 
 ## ¿Cómo funciona la compartición?
 
-Los registros se comparten mediante **espacios** (tenants). Cada cuenta tiene un espacio personal y puede ser invitada a otros, por ejemplo el de un club. Todos los miembros de un espacio ven y editan todos sus colmenares, colmenas y registros; no hay compartición por colmenar. La sincronización está libre de conflictos, así que dos personas editando en el mismo espacio desde distintos dispositivos no se sobrescriben el trabajo. Consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md).
+Los registros se comparten mediante **espacios**. Cada cuenta tiene un espacio personal y puede ser invitada a otros, por ejemplo el de un club. Todos los miembros de un espacio ven y editan todos sus colmenares, colmenas y registros; no hay compartición por colmenar. Las tareas son la excepción: son personales. La sincronización está libre de conflictos, así que dos personas editando en el mismo espacio desde distintos dispositivos no se sobrescriben el trabajo. Consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md).
 
 ## ¿Qué tipos de colmena se admiten?
 
@@ -100,12 +102,12 @@ La aplicación incluye cinco idiomas: inglés, alemán, francés, español e ita
 
 Al autoalojar, el backend es modular:
 
-- **Bases de datos:** PostgreSQL, MySQL o SQLite. Consulta [Bases de datos](../self-hosting/databases.md).
+- **Bases de datos:** PostgreSQL, MariaDB o SQLite. Consulta [Bases de datos](../self-hosting/databases.md).
 - **Almacenamiento de blobs:** almacenamiento de objetos compatible con MinIO/S3, o el sistema de archivos local. Consulta [Almacenamiento](../self-hosting/storage.md).
 
 ## ¿Cómo inicio sesión?
 
-El servicio alojado usa cuentas con correo electrónico y contraseña. Quienes se autoalojan pueden habilitar cuentas con correo y contraseña, añadir proveedores OIDC (Google, Keycloak, Authentik y similares), habilitar passkeys o desactivar el inicio de sesión por completo para una instalación de un solo usuario. Consulta [Autenticación](../self-hosting/authentication.md).
+El servicio alojado usa cuentas con correo electrónico y contraseña y funciona solo por invitación. Quienes se autoalojan pueden habilitar cuentas con correo y contraseña, añadir proveedores OIDC (Google, Keycloak, Authentik y similares), habilitar passkeys o desactivar el inicio de sesión por completo para una instalación de un solo usuario. Consulta [Autenticación](../self-hosting/authentication.md).
 
 ## ¿Cómo informo de un error o solicito una funcionalidad?
 

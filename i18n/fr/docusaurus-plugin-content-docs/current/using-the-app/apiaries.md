@@ -25,7 +25,7 @@ Créez un rucher par emplacement physique. Cela regroupe les visites, les récol
 
 ## Créer un rucher
 
-Depuis la liste **Ruchers** (ou le bouton **+ Nouveau** de la Vue d'ensemble), choisissez **Nouveau rucher**. Seul un nom est requis.
+Depuis la liste **Ruchers** (ou **+ Nouveau → Nouveau rucher** dans la Vue d'ensemble), choisissez **Nouveau rucher**. Seul un nom est requis.
 
 | Champ | Requis | À quoi il sert |
 | --- | --- | --- |
@@ -57,6 +57,8 @@ Une ligne d'état sous la carte indique ce que fait la recherche :
 - **Aucun résultat pour cette adresse** : placez plutôt le repère sur la carte.
 - **La recherche d'adresse est indisponible** : le service de recherche est injoignable (vous êtes peut-être hors ligne). Le repère et les coordonnées manuelles continuent de fonctionner.
 
+Les tuiles de carte et la recherche d'adresse proviennent des services d'OpenStreetMap, sauf si l'exploitant de votre instance en a configuré d'autres. Ce sont les seuls services externes que l'application contacte : afficher une carte charge les tuiles de la zone que vous regardez, et saisir une adresse ou déplacer le repère envoie cette adresse ou cette position au service de recherche. Un exploitant peut désactiver la carte pour toute l'instance ; le formulaire ne comporte alors que les champs de coordonnées. Voir [Configuration](../self-hosting/configuration.md#maps).
+
 ## Ajouter et consulter des ruches
 
 Ouvrez un rucher pour voir ses ruches avec la date de la dernière visite de chacune. À partir de là, vous pouvez :
@@ -68,7 +70,11 @@ Voir [Ruches](./hives.md) et [Reines](./queens.md).
 
 ## Imprimer les étiquettes QR du rucher
 
-Le bouton **Étiquettes QR** de la page du rucher imprime une feuille A4 avec une étiquette par ruche du rucher. Chaque étiquette encode un lien profond vers cette ruche ; la scanner ouvre Openbeehive sur la ruche. Voir [Étiquettes QR](./qr-labels.md).
+Le bouton **Étiquettes QR** de la page du rucher imprime une feuille A4 avec une étiquette par ruche du rucher, directement depuis la page. Chaque étiquette encode un lien profond vers cette ruche ; la scanner ouvre Openbeehive sur la ruche. Voir [Étiquettes QR](./qr-labels.md).
+
+## Imprimer le registre des traitements
+
+Lorsque des ruches du rucher ont des traitements enregistrés, le bouton **Registre des traitements** imprime le registre de toutes ces ruches en un seul document. Voir [Traitements](./treatments.md#treatment-register).
 
 ## Modifier et réorganiser
 
@@ -76,6 +82,10 @@ Renommez un rucher, ou mettez à jour son adresse, sa note et ses coordonnées, 
 
 Si une ruche change d'emplacement, utilisez **Déplacer** sur la ruche pour la réaffecter au rucher correspondant. Les apiculteurs transhumants peuvent conserver un rucher par site et déplacer les ruches au fil de leurs déplacements.
 
+## Supprimer un rucher
+
+**Supprimer le rucher** ne fonctionne que pour un rucher sans ruches. Tant qu'il en contient, l'application indique combien il y en a et vous demande de les déplacer ou de les supprimer d'abord.
+
 ## Partage
 
-Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace (tenant) est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espaces → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](./accounts-tenants.md).
+Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espaces → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](./accounts-tenants.md).

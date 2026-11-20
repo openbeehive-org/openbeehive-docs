@@ -11,13 +11,15 @@ Quick answers to the questions we hear most often. If something is missing, chec
 
 Yes. Openbeehive is open source under the **AGPL-3.0** licence, so you are free to use, study, modify and self-host it.
 
-The hosted service at [app.openbeehive.org](https://app.openbeehive.org) is free to use for now while the project is young. If that ever changes, you will always be able to export your data and run your own instance instead.
+The hosted service at [app.openbeehive.org](https://app.openbeehive.org) is free to use for now while the project is young, and currently invite-only: write to [contact@openbeehive.org](mailto:contact@openbeehive.org) for an invite, or look around first with the **Try the demo** button on its sign-in page. If the terms ever change, you will always be able to export your data and run your own instance instead.
 
 ## Is my data private?
 
 Your records live on your own device first: the app stores everything in a local database on your phone, tablet or computer and syncs to the server in the background.
 
 If you self-host, your data never leaves your own infrastructure. On the hosted service, your records are stored on our servers so they can sync between your devices, but they remain yours.
+
+The only outside services the app contacts are the map: tiles and the address lookup on the apiary form come from OpenStreetMap unless the operator configured others or switched the map off.
 
 :::tip
 Want full control? See [Self-hosting](/category/self-hosting) to run Openbeehive on your own hardware.
@@ -48,17 +50,17 @@ Absolutely, and it is designed to be easy. There are two deployment profiles:
 | Profile | Best for | Stack |
 | --- | --- | --- |
 | `selfhost` | Hobbyists, single user | A single binary, SQLite + local files, no Docker needed |
-| `cloud` | Multi-user, larger setups | Docker, PostgreSQL + S3/MinIO storage |
+| `cloud` | Several users, larger setups | Docker, PostgreSQL + S3/MinIO storage |
 
 Start with the [Quick start](../self-hosting/quick-start.md), or jump to the [single binary guide](../self-hosting/single-binary.md).
 
 :::note
-For a private single-user instance you can disable login entirely. See [Authentication](../self-hosting/authentication.md).
+A private single-user instance runs without login by default; turn login on before you share it. See [Authentication](../self-hosting/authentication.md).
 :::
 
 ## How does sharing work?
 
-Records are shared through **tenants**. Every account has a personal tenant and can be invited into others, for example a club's. Everyone in a tenant sees and edits all of its apiaries, hives and records; there is no per-apiary sharing. Sync is conflict-free, so two people editing in the same tenant on different devices do not overwrite each other's work. See [Accounts & tenants](../using-the-app/accounts-tenants.md).
+Records are shared through **workspaces**. Every account has a personal workspace and can be invited into others, for example a club's. Everyone in a workspace sees and edits all of its apiaries, hives and records; there is no per-apiary sharing. Tasks are the exception: they are personal. Sync is conflict-free, so two people editing in the same workspace on different devices do not overwrite each other's work. See [Accounts & workspaces](../using-the-app/accounts-tenants.md).
 
 ## What hive types are supported?
 
@@ -100,12 +102,12 @@ Five languages ship in the app: English, German, French, Spanish and Italian. Sw
 
 When self-hosting, the backend is pluggable:
 
-- **Databases:** PostgreSQL, MySQL or SQLite. See [Databases](../self-hosting/databases.md).
+- **Databases:** PostgreSQL, MariaDB or SQLite. See [Databases](../self-hosting/databases.md).
 - **Blob storage:** MinIO/S3-compatible object storage, or the local filesystem. See [Storage](../self-hosting/storage.md).
 
 ## How do I sign in?
 
-The hosted service uses email and password accounts. Self-hosters can enable email/password accounts, add OIDC providers (Google, Keycloak, Authentik and similar), enable passkeys, or turn login off entirely for a single-user setup. See [Authentication](../self-hosting/authentication.md).
+The hosted service uses email and password accounts and is invite-only. Self-hosters can enable email/password accounts, add OIDC providers (Google, Keycloak, Authentik and similar), enable passkeys, or turn login off entirely for a single-user setup. See [Authentication](../self-hosting/authentication.md).
 
 ## How do I report a bug or request a feature?
 

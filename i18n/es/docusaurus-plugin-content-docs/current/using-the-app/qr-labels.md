@@ -17,14 +17,14 @@ El código de cada colmena codifica un único enlace profundo a esa colmena:
 
 `<base>` es la dirección en la que usas la aplicación (`https://app.openbeehive.org` en el servicio alojado, tu propia URL en una instancia autoalojada) y `<hiveId>` es el identificador de la colmena. La etiqueta también imprime un código corto de seis caracteres derivado del id, para distinguir las etiquetas a simple vista.
 
-El código no contiene datos de abejas ni información personal; es solo un enlace. A quien lo escanee sin acceso se le pide que inicie sesión, y solo ve la colmena si es miembro del espacio (tenant) que la contiene.
+El código no contiene datos de abejas ni información personal; es solo un enlace. A quien lo escanee sin acceso se le pide que inicie sesión, y solo ve la colmena si es miembro del espacio que la contiene.
 
 Una vez instalada la aplicación, el enlace abre la colmena desde tu base de datos local, así que funciona sin cobertura.
 
 ## Imprimir una etiqueta para una colmena
 
 1. Abre la colmena.
-2. Toca la acción **QR** (el icono de cuadrado punteado junto a Editar y Mover). Aparece una tarjeta con el código, el nombre de la colmena y el código corto.
+2. Elige **Más → Código QR**. Aparece una tarjeta con el código, el nombre de la colmena y el código corto.
 3. Toca **Imprimir**. Se abre una etiqueta limpia en una ventana nueva, seguida del diálogo de impresión. **SVG** descarga el código como archivo, para tus propios diseños de etiqueta.
 4. Imprime en papel de etiquetas o papel normal y fíjala a la colmena.
 
@@ -36,14 +36,18 @@ Imprime en papel de etiqueta resistente a la intemperie o de vinilo, o cubre una
 
 1. Abre el colmenar.
 2. Toca **Etiquetas QR**.
-3. Se abre una hoja A4 con un código etiquetado por cada colmena de ese colmenar, seguida del diálogo de impresión.
+3. Se abre el diálogo de impresión con una hoja A4 que lleva un código etiquetado por cada colmena de ese colmenar.
 4. Imprime, recorta y aplica.
 
 ## Escanear una etiqueta
 
 ### Con la cámara de tu teléfono
 
-La mayoría de los teléfonos reconocen los códigos QR en la aplicación de cámara integrada. Apunta la cámara a la etiqueta, toca el enlace que aparece y Openbeehive se abre en la colmena. Esto funciona para cualquiera con acceso, sin abrir antes la aplicación.
+La mayoría de los teléfonos reconocen los códigos QR en la aplicación de cámara integrada. Apunta la cámara a la etiqueta, toca el enlace que aparece y Openbeehive se abre en la colmena en el navegador. Esto funciona para cualquiera con acceso, sin abrir antes la aplicación.
+
+:::caution Si instalaste la aplicación, escanea dentro de ella
+La cámara del teléfono abre el enlace en el navegador, y el navegador guarda sus propios datos, separados de los de la aplicación instalada: puede que allí tengas que volver a iniciar sesión y esperar una descarga. Si usas la aplicación instalada, ábrela desde la pantalla de inicio y usa **Escanear**.
+:::
 
 ### Con el escáner integrado en la aplicación
 
@@ -52,16 +56,23 @@ La mayoría de los teléfonos reconocen los códigos QR en la aplicación de cá
 1. Abre **Escanear** y concede permiso de cámara la primera vez.
 2. Apunta al código QR de la colmena; la colmena se abre en cuanto se reconoce.
 
-En dispositivos cuyo navegador no admite el escáner integrado, la pantalla lo indica y sugiere usar la aplicación de cámara habitual.
+El escáner funciona en todos los navegadores actuales, incluidos Safari en iPhone y iPad y Firefox. Si una etiqueta se lee mal, acércate, mantén el pulso y evita los reflejos.
+
+### Escribiendo el código
+
+Bajo la imagen de la cámara, **Código de la etiqueta** admite los seis caracteres impresos bajo el código QR. Escríbelos y toca **Abrir colmena**. Esto también funciona cuando la etiqueta está demasiado desgastada para escanearla, cuando el dispositivo no tiene cámara o cuando el acceso a la cámara está bloqueado. El código se busca entre las colmenas que hay en el dispositivo.
 
 ## Si un escaneo no abre la colmena correcta
 
 | Síntoma | Causa probable | Qué hacer |
 | --- | --- | --- |
 | La cámara no enfoca el código | Etiqueta húmeda, descolorida o curvada | Sécala; reimprímela si está desgastada |
-| El enlace abre pero dice "Colmena no encontrada" | La colmena se eliminó, o pertenece a otro espacio | Comprueba que la colmena sigue existiendo y que está activo el espacio correcto |
-| Te pide iniciar sesión | No has iniciado sesión en este dispositivo, o la colmena está en un espacio del que no eres miembro | Inicia sesión; pide al admin del espacio que te invite |
-| No pasa nada al tocar | El teléfono no reconoció el código como un enlace | Usa el escáner integrado u otro lector de QR |
+| "Esta colmena no está en tus datos" | La colmena se eliminó, o pertenece a otro espacio | Comprueba que la colmena sigue existiendo y que está activo el espacio correcto (Ajustes → Espacios) |
+| "Estás sin conexión" | La colmena aún no se ha descargado en este dispositivo | Conéctate; la colmena se abre en cuanto tus datos se hayan sincronizado |
+| "Inicia sesión para abrir esta colmena" | Este navegador no ha iniciado sesión. Es típico tras escanear con la aplicación de cámara cuando normalmente usas la aplicación instalada | Inicia sesión, o escanea dentro de la aplicación instalada |
+| "No se puede contactar con el servidor" | La colmena no está en el dispositivo y el servidor no respondió | Comprueba tu conexión y toca **Reintentar** |
+| "Eso no es una etiqueta de colmena de Openbeehive." | El código escaneado es otro código QR cualquiera | Escanea la etiqueta de la colmena |
+| No pasa nada al tocar | El teléfono no reconoció el código como un enlace | Usa el escáner integrado o escribe el código de la etiqueta |
 
 El acceso sigue la pertenencia al espacio; consulta [Cuentas y espacios](./accounts-tenants.md).
 

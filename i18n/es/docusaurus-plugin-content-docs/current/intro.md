@@ -11,8 +11,8 @@ servicio alojado gratuito y un software autoalojable, para apicultores
 aficionados y profesionales. La aplicación lo guarda todo en el dispositivo y
 sincroniza con el servidor, de modo que funciona en el colmenar con o sin señal.
 
-- Usa la aplicación: [app.openbeehive.org](https://app.openbeehive.org)
-- Prueba la demo: [demo.openbeehive.org](https://demo.openbeehive.org)
+- Usa la aplicación: [app.openbeehive.org](https://app.openbeehive.org). El servicio alojado funciona solo por invitación; escribe a [contact@openbeehive.org](mailto:contact@openbeehive.org) para pedir una.
+- Prueba la demo: el botón **Probar la demo** en [app.openbeehive.org/login](https://app.openbeehive.org/login), sin necesidad de cuenta.
 - Sitio del proyecto: [openbeehive.org](https://openbeehive.org)
 - Código fuente: [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 

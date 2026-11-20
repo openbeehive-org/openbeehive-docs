@@ -9,7 +9,7 @@ Beekeeping is full of small jobs that are easy to forget: add a super before the
 
 ## Creating a task
 
-Open **Tasks**. At the top, type what needs doing, optionally pick a due date, and tap **Add**.
+Open **Tasks** (or choose **+ New → New task** on the Overview). At the top, type what needs doing, optionally pick a due date, and tap **Add**.
 
 | Field | Notes |
 | --- | --- |
@@ -22,21 +22,22 @@ That is the whole task. There are no notes, no link to a hive or apiary, and no 
 Create a task without a due date for "someday" jobs, such as "Build two more nuc boxes over winter".
 :::
 
-Tasks belong to the active tenant, so everyone in a shared tenant sees the same list. That makes them a simple way to coordinate within a club or between two beekeepers.
+Tasks you create in the app are **personal**: only you see them, on all your devices, and only in the workspace you created them in. Other members of a shared workspace do not see your list, and after switching workspaces you see the tasks you created there.
 
 ## Open vs done
 
 Every task is either **open** or **done**.
 
-- Tap the circle on the left of a task to tick it off. Done tasks stay in the list, struck through, and are not counted as open.
-- Tap the circle again to reopen a task you ticked off by mistake.
-- The pencil edits the title or due date; the cross deletes the task.
+- Tap the box on the left of a task to tick it off. Done tasks move into the **Completed (n)** section below the open ones, which starts collapsed, and are not counted as open.
+- Tap the box again to reopen a task you ticked off by mistake.
+- The pencil edits the title or due date; the bin deletes the task. After a delete, a bar offers **Undo** for a few seconds.
+- A task whose due date has passed is marked **Overdue**.
 
-If you and a co-beekeeper both tick off the same task on different devices, the task ends up done.
+If you tick off the same task on two of your devices, the task ends up done.
 
 ## Tasks on the Overview
 
-The **Open tasks** tile counts tasks that are not done. **Upcoming tasks** lists up to five open tasks with their due dates; tasks whose due date has passed are flagged with **!**. See [The dashboard](./dashboard.md).
+The **Open tasks** tile counts tasks that are not done. **Upcoming tasks** lists up to five open tasks with their due dates; tasks whose due date has passed are marked **Overdue**, and tapping a task opens it in the Tasks view. See [The dashboard](./dashboard.md).
 
 :::tip
 For recurring jobs, add the next task when you tick off the current one. After a seven-day swarm check, add "Swarm check" for the following week.

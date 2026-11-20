@@ -11,13 +11,15 @@ Schnelle Antworten auf die Fragen, die wir am häufigsten hören. Wenn etwas feh
 
 Ja. Openbeehive ist Open Source unter der **AGPL-3.0**-Lizenz, sodass es dir freisteht, es zu nutzen, zu studieren, zu verändern und selbst zu hosten.
 
-Der gehostete Dienst unter [app.openbeehive.org](https://app.openbeehive.org) ist vorerst kostenlos nutzbar, solange das Projekt noch jung ist. Sollte sich das jemals ändern, kannst du jederzeit deine Daten exportieren und stattdessen deine eigene Instanz betreiben.
+Der gehostete Dienst unter [app.openbeehive.org](https://app.openbeehive.org) ist vorerst kostenlos nutzbar, solange das Projekt noch jung ist, und derzeit nur mit Einladung zugänglich: Schreibe an [contact@openbeehive.org](mailto:contact@openbeehive.org), um eine Einladung zu erhalten, oder sieh dich zuerst mit der Schaltfläche **Demo ausprobieren** auf der Anmeldeseite um. Sollten sich die Bedingungen jemals ändern, kannst du jederzeit deine Daten exportieren und stattdessen deine eigene Instanz betreiben.
 
 ## Sind meine Daten privat?
 
 Deine Aufzeichnungen liegen zuerst auf deinem eigenen Gerät: Die App speichert alles in einer lokalen Datenbank auf deinem Smartphone, Tablet oder Computer und synchronisiert im Hintergrund mit dem Server.
 
 Wenn du selbst hostest, verlassen deine Daten niemals deine eigene Infrastruktur. Beim gehosteten Dienst werden deine Aufzeichnungen auf unseren Servern gespeichert, damit sie zwischen deinen Geräten synchronisieren können, aber sie bleiben deine.
+
+Die einzigen externen Dienste, die die App kontaktiert, betreffen die Karte: Kacheln und die Adresssuche im Bienenstand-Formular kommen von OpenStreetMap, sofern der Betreiber keine anderen konfiguriert oder die Karte abgeschaltet hat.
 
 :::tip
 Möchtest du die volle Kontrolle? Siehe [Selbst-Hosting](/category/self-hosting), um Openbeehive auf deiner eigenen Hardware zu betreiben.
@@ -48,17 +50,17 @@ Absolut, und es ist auf einfache Bedienung ausgelegt. Es gibt zwei Bereitstellun
 | Profil | Am besten geeignet für | Stack |
 | --- | --- | --- |
 | `selfhost` | Hobbyisten, Einzelnutzer | Eine einzige Binärdatei, SQLite + lokale Dateien, kein Docker nötig |
-| `cloud` | Mehrbenutzer, größere Installationen | Docker, PostgreSQL + S3/MinIO-Speicher |
+| `cloud` | Mehrere Nutzer, größere Installationen | Docker, PostgreSQL + S3/MinIO-Speicher |
 
 Beginne mit dem [Schnellstart](../self-hosting/quick-start.md) oder springe direkt zum [Leitfaden für die einzelne Binärdatei](../self-hosting/single-binary.md).
 
 :::note
-Für eine private Einzelnutzer-Instanz kannst du die Anmeldung vollständig deaktivieren. Siehe [Authentifizierung](../self-hosting/authentication.md).
+Eine private Einzelnutzer-Instanz läuft standardmäßig ohne Anmeldung; schalte die Anmeldung ein, bevor du sie mit anderen teilst. Siehe [Authentifizierung](../self-hosting/authentication.md).
 :::
 
 ## Wie funktioniert das Teilen?
 
-Aufzeichnungen werden über **Mandanten** geteilt. Jedes Konto hat einen persönlichen Mandanten und kann in weitere eingeladen werden, zum Beispiel den eines Vereins. Alle in einem Mandanten sehen und bearbeiten sämtliche seiner Bienenstände, Bienenstöcke und Aufzeichnungen; ein Teilen einzelner Bienenstände gibt es nicht. Die Synchronisierung ist konfliktfrei, sodass zwei Personen, die im selben Mandanten auf verschiedenen Geräten arbeiten, sich nicht gegenseitig überschreiben. Siehe [Konten & Mandanten](../using-the-app/accounts-tenants.md).
+Aufzeichnungen werden über **Arbeitsbereiche** geteilt. Jedes Konto hat einen persönlichen Arbeitsbereich und kann in weitere eingeladen werden, zum Beispiel den eines Vereins. Alle in einem Arbeitsbereich sehen und bearbeiten sämtliche seiner Bienenstände, Bienenstöcke und Aufzeichnungen; ein Teilen einzelner Bienenstände gibt es nicht. Aufgaben sind die Ausnahme: Sie sind persönlich. Die Synchronisierung ist konfliktfrei, sodass zwei Personen, die im selben Arbeitsbereich auf verschiedenen Geräten arbeiten, sich nicht gegenseitig überschreiben. Siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md).
 
 ## Welche Beutentypen werden unterstützt?
 
@@ -100,12 +102,12 @@ Die App wird in fünf Sprachen ausgeliefert: Englisch, Deutsch, Französisch, Sp
 
 Beim Selbst-Hosting ist das Backend austauschbar:
 
-- **Datenbanken:** PostgreSQL, MySQL oder SQLite. Siehe [Datenbanken](../self-hosting/databases.md).
+- **Datenbanken:** PostgreSQL, MariaDB oder SQLite. Siehe [Datenbanken](../self-hosting/databases.md).
 - **Blob-Speicher:** MinIO/S3-kompatibler Objektspeicher oder das lokale Dateisystem. Siehe [Speicher](../self-hosting/storage.md).
 
 ## Wie melde ich mich an?
 
-Der gehostete Dienst verwendet Konten mit E-Mail und Passwort. Selbst-Hoster können E-Mail/Passwort-Konten aktivieren, OIDC-Anbieter hinzufügen (Google, Keycloak, Authentik und ähnliche), Passkeys aktivieren oder die Anmeldung für eine Einzelnutzer-Installation vollständig abschalten. Siehe [Authentifizierung](../self-hosting/authentication.md).
+Der gehostete Dienst verwendet Konten mit E-Mail und Passwort und ist nur mit Einladung zugänglich. Selbst-Hoster können E-Mail/Passwort-Konten aktivieren, OIDC-Anbieter hinzufügen (Google, Keycloak, Authentik und ähnliche), Passkeys aktivieren oder die Anmeldung für eine Einzelnutzer-Installation vollständig abschalten. Siehe [Authentifizierung](../self-hosting/authentication.md).
 
 ## Wie melde ich einen Fehler oder schlage eine Funktion vor?
 

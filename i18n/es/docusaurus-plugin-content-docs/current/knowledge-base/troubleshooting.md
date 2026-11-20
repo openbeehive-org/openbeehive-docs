@@ -9,17 +9,19 @@ La mayoría de los problemas con Openbeehive entran en un puñado de categorías
 
 Tus registros viven en una base de datos local en tu dispositivo, así que casi nada de lo que hagas aquí puede perder datos que ya se hayan sincronizado con el servidor.
 
-## Los datos no se sincronizan
+## Los datos no se sincronizan \{#data-not-syncing}
 
 Tus cambios se guardan al instante en el dispositivo. La sincronización con el servidor ocurre discretamente en segundo plano, así que un retraso es normal y rara vez es motivo de preocupación. Si los cambios que hiciste en un dispositivo no aparecen en otro, repasa esta lista.
 
-**1. Comprueba que estás en línea.** La barra lateral muestra **En línea** o **Sin conexión** junto a tu cuenta. Si has estado trabajando en el campo sin señal, tus ediciones quedan en cola y se envían en cuanto vuelvas a conectarte.
+**1. Lee el estado de sincronización.** El indicador de la parte superior de la página dice qué está pasando: **Sin conexión**, **Pendientes de subir**, **Falló la sincronización · reintentando**, **Sesión cerrada** o **Problemas de sincronización**. Consulta [el estado de sincronización](../using-the-app/offline-and-sync.md#sync-status). Si has estado trabajando en el campo sin señal, tus ediciones quedan en cola y se envían en cuanto vuelvas a conectarte.
 
-**2. Comprueba que has iniciado sesión.** La sincronización requiere una sesión. Si ha caducado, aún puedes leer y editar localmente, pero nada se sincroniza hasta que vuelvas a iniciar sesión. **Ajustes → Cuenta** muestra con qué cuenta has iniciado sesión.
+**2. Comprueba que has iniciado sesión.** La sincronización requiere una sesión. Si ha caducado, el indicador muestra **Sesión cerrada · inicia sesión para sincronizar**; aún puedes leer y editar localmente, pero nada se sincroniza hasta que vuelvas a iniciar sesión. **Ajustes → Cuenta** muestra con qué cuenta has iniciado sesión.
 
-**3. Comprueba el espacio activo.** Los registros pertenecen a un espacio (tenant). Si falta una colmena en otro dispositivo, abre allí **Ajustes → Espacios** y asegúrate de que está activo el mismo espacio. Si le falta a otra persona, es que no es miembro de ese espacio; un administrador del espacio puede invitarla.
+**3. Comprueba el espacio activo.** Los registros pertenecen a un espacio. Si falta una colmena en otro dispositivo, abre allí **Ajustes → Espacios** y asegúrate de que está activo el mismo espacio. Si le falta a otra persona, es que no es miembro de ese espacio; un administrador del espacio puede invitarla.
 
-**4. Dale un momento y vuelve a abrirla.** La sincronización en segundo plano se ejecuta periódicamente. Cerrar y volver a abrir la aplicación, o cambiar a ella desde segundo plano, provoca un nuevo intento de sincronización.
+**4. Sincroniza ahora.** La sincronización en segundo plano se ejecuta a intervalos cortos; al tocar el indicador de estado se inicia una sincronización de inmediato.
+
+**5. Busca cambios rechazados.** Si el indicador muestra **Problemas de sincronización**, el servidor no aceptó algunos cambios. Siguen en el dispositivo. La lista **Problemas de sincronización** nombra cada uno con el motivo y te permite reintentarlo o descartarlo; consulta [Problemas de sincronización](../using-the-app/offline-and-sync.md#sync-problems). Un reloj del dispositivo muy adelantado es una de las causas; la aplicación lo compensa y reenvía los cambios por sí sola, pero poner el dispositivo en hora automática lo evita.
 
 :::note
 La sincronización está libre de conflictos por diseño. La edición más reciente de un campo gana, las adiciones (fotos, visitas, cosechas, tratamientos) se conservan y no perderás trabajo porque dos dispositivos editaran a la vez.
@@ -45,22 +47,24 @@ Las herramientas del navegador que "borran los datos del sitio", "borran cookies
 
 Las versiones anteriores a la 0.2.2 podían agotar las ranuras reservadas del almacenamiento local; a partir de ahí cada guardado fallaba con `SQLITE_CANTOPEN: unable to open database file` — visible como un botón que parecía no hacer nada. Desde la 0.2.2 la aplicación reserva suficientes ranuras de antemano y repara el almacenamiento automáticamente cuando escasea. Si sigues viendo este error, recarga la aplicación dos veces (para que la nueva versión tome el control) e inténtalo de nuevo; los registros guardados antes no se ven afectados.
 
-### «El almacenamiento no está disponible: los cambios no se conservarán en este dispositivo» \{#storage-is-unavailable}
+### «Este navegador no guarda datos en este dispositivo» \{#storage-is-unavailable}
 
 La aplicación guarda su base de datos en el almacenamiento privado del navegador. Cuando no
-puede abrir ese almacenamiento, recurre a una base de datos en memoria y muestra este aviso
+puede abrir ese almacenamiento, mantiene los registros en memoria y muestra este aviso
 para que conozcas la situación. Los cambios siguen funcionando y siguen sincronizándose con el
 servidor mientras tengas la sesión iniciada, pero la copia local desaparece al cerrar la
 pestaña.
 
-Las dos causas habituales:
+Las causas habituales son la **navegación privada o de incógnito** (los navegadores no dan
+almacenamiento persistente a esas ventanas) y un almacenamiento bloqueado en los ajustes del
+navegador. Usa una ventana normal o instala la aplicación.
 
-- **Navegación privada o de incógnito.** Los navegadores no dan almacenamiento persistente a
-  esas ventanas. Usa una ventana normal o instala la aplicación.
-- **Hay una segunda pestaña de la aplicación abierta.** Solo una página puede retener el
-  almacenamiento a la vez. Desde la versión 0.2.3 de la aplicación, esta reintenta brevemente,
-  lo que suele bastar cuando una recarga de página compite con su predecesora; si el aviso
-  persiste, cierra la otra pestaña y recarga.
+### «Openbeehive está abierto en otra pestaña»
+
+Solo una pestaña o ventana puede trabajar a la vez con los registros de un dispositivo. Una
+segunda pestaña muestra este aviso en lugar de la aplicación. Continúa en la primera pestaña, o
+toca **Usar aquí** para pasar la aplicación a esta pestaña. Consulta
+[Una sola pestaña a la vez](../using-the-app/offline-and-sync.md#one-tab).
 
 ### La aplicación muestra «Sincronizando tus datos…» en lugar de mis colmenares
 
@@ -69,13 +73,21 @@ versión 0.2.3 de la aplicación, el panel y las listas muestran marcadores de p
 aviso hasta que se sabe que los datos están completos, y se van llenando progresivamente a
 medida que llegan los lotes. Mantente en línea y dale un momento; con un conjunto de datos
 grande, las listas crecen mientras miras. Si el aviso nunca desaparece, repasa
-[Los datos no se sincronizan](#los-datos-no-se-sincronizan).
+[Los datos no se sincronizan](#data-not-syncing).
+
+### La aplicación no responde bajo mi nombre de host (autoalojamiento, sin inicio de sesión)
+
+Un servidor sin inicio de sesión solo responde a `localhost`, a direcciones IP y al host
+de `BEEHIVE_PUBLIC_BASE_URL`. Si se abre con otro nombre, responde con una
+página `403` sencilla que indica la solución: añade el nombre a `BEEHIVE_ALLOWED_HOSTS`
+o establece `BEEHIVE_PUBLIC_BASE_URL` con la dirección que usas. Consulta
+[Configuración](../self-hosting/configuration.md#allowed-hosts).
 
 ## Borrar o reinstalar la aplicación
 
 A veces un comienzo desde cero arregla comportamientos extraños tras una actualización. Mientras hayas iniciado sesión en una cuenta que sincroniza, esto no es destructivo: tus registros sincronizados vuelven desde el servidor.
 
-1. Confirma que estás **en línea y con sesión iniciada**, y que el indicador de sincronización muestra que todo está al día.
+1. Confirma que estás **en línea y con sesión iniciada**, y que el indicador de estado muestra **Sincronizado**.
 2. Desinstala o quita la PWA de tu pantalla de inicio, o borra el almacenamiento del sitio en la configuración de tu navegador.
 3. Vuelve a abrir Openbeehive e inicia sesión.
 4. Espera a que la sincronización inicial descargue tus colmenares, colmenas e historial.
@@ -92,14 +104,16 @@ Cada colmena puede llevar una etiqueta QR imprimible que enlaza directamente a e
 - **Usa HTTPS.** Los navegadores solo permiten el acceso a la cámara en orígenes seguros. La aplicación alojada se sirve por HTTPS; quienes se autoalojan deben servir también por HTTPS (o `localhost` para pruebas). Consulta [Proxy inverso](../self-hosting/reverse-proxy.md).
 - **Comprueba que no esté en uso.** Cierra otras aplicaciones o pestañas que puedan estar ocupando la cámara.
 
-:::tip iOS Safari
-En iPhone y iPad el escáner integrado en la aplicación puede estar restringido. Si el escaneo no funciona, abre la **app Cámara** integrada y apúntala al código QR. iOS reconoce el enlace codificado y ofrece abrirlo; al tocar el enlace se inicia Openbeehive en la colmena correcta. La etiqueta codifica un enlace web sencillo, así que cualquier lector de QR sirve como alternativa.
+:::tip Sin cámara, o con una etiqueta desgastada
+El escáner integrado funciona en todos los navegadores actuales, incluidos Safari en iPhone y iPad y Firefox. Si no se puede usar la cámara o la etiqueta se lee mal, escribe los seis caracteres impresos bajo el código QR en **Código de la etiqueta**, en la pantalla Escanear. Si usas la aplicación instalada, escanea dentro de ella y no con la app de cámara del teléfono, que abre el enlace en el navegador, con sus propios datos separados.
 :::
 
 ## Problemas de inicio de sesión
 
 - **Atascado en la pantalla de inicio de sesión.** Confirma que estás llegando a la dirección correcta (la aplicación alojada está en app.openbeehive.org). Tras iniciar sesión con tu proveedor deberías ser redirigido de vuelta automáticamente; si no, recarga la página.
 - **La redirección falla o errores de "redirección no válida" (autoalojamiento).** Esto casi siempre significa que la URL de redirección OIDC o `BEEHIVE_PUBLIC_BASE_URL` está mal configurada. Consulta [Autenticación y configuración](../self-hosting/authentication.md).
+- **«Demasiados intentos.»** Tras 10 inicios de sesión fallidos para una cuenta, o 30 desde una misma dirección de red, los intentos siguientes se bloquean durante un máximo de 15 minutos. Espera y vuelve a intentarlo.
+- **El servidor se niega a arrancar tras habilitar el inicio de sesión (autoalojamiento).** El registro del servidor indica el ajuste que falta, normalmente `BEEHIVE_SESSION_SECRET` (al menos 32 bytes) o la cuenta de administrador. Consulta [Autenticación](../self-hosting/authentication.md).
 - **No se ofrece la passkey.** Las passkeys deben estar habilitadas en el servidor y debes haber añadido una en Ajustes → Passkeys. Si no, inicia sesión con otro método.
 - **Autoalojamiento de un solo usuario sin inicio de sesión.** Con la autenticación por contraseña desactivada, sin proveedores OIDC y con WebAuthn desactivado, no hay ningún paso de inicio de sesión. Si ves inesperadamente una pantalla de inicio de sesión, revisa la configuración de tu servidor.
 

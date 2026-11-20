@@ -103,12 +103,20 @@ tuo server.
 Se fai self-hosting, la sezione [Self-hosting](/category/self-hosting) illustra
 deployment, configurazione e backup.
 
+## Aprire l'app offline
+
+Dopo aver aperto l'app online una volta, questa si avvia senza connessione, anche
+con un avvio a freddo (dopo il riavvio del telefono o la chiusura dell'app). Vedi
+[Offline e sincronizzazione](./offline-and-sync.md).
+
 ## Aggiornare l'app
 
-La PWA si aggiorna da sola. Quando viene pubblicata una nuova versione, l'app la
-scarica in background e la applica al successivo avvio o ricaricamento. Non hai
-bisogno di reinstallarla. Se vuoi mai essere sicuro di avere l'ultima versione,
-chiudi completamente l'app e riaprila.
+La PWA si aggiorna da sola. Quando una nuova versione è stata scaricata in
+background, una barra in alto dice **"È disponibile una nuova versione."** con due
+pulsanti: **Ricarica** passa subito alla nuova versione, **Più tardi** nasconde la
+barra. Se scegli Più tardi, l'aggiornamento viene applicato al successivo avvio
+dell'app dopo che tutte le sue schede e finestre sono state chiuse. Non hai bisogno
+di reinstallarla.
 
 ## Rimuovere l'app
 

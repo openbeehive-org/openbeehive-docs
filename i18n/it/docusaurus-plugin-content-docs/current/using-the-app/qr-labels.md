@@ -17,14 +17,14 @@ Il codice di ogni arnia codifica un singolo deep link a quell'arnia:
 
 `<base>` è l'indirizzo a cui usi l'app (`https://app.openbeehive.org` sul servizio ospitato, il tuo URL su un'istanza self-hosted) e `<hiveId>` è l'identificatore dell'arnia. L'etichetta stampa anche un codice breve di sei caratteri ricavato dall'id, per distinguere le etichette a occhio.
 
-Il codice non contiene dati sulle api né informazioni personali; è solo un link. Chi lo scansiona senza avere accesso deve accedere e vede l'arnia solo se è membro del tenant che la contiene.
+Il codice non contiene dati sulle api né informazioni personali; è solo un link. Chi lo scansiona senza avere accesso deve accedere e vede l'arnia solo se è membro dello spazio che la contiene.
 
 Una volta installata l'app, il link apre l'arnia dal tuo database locale, quindi funziona senza segnale.
 
 ## Stampare un'etichetta per una singola arnia
 
 1. Apri l'arnia.
-2. Tocca l'azione **QR** (l'icona con il quadrato punteggiato accanto a Modifica e Sposta). Compare una scheda con il codice, il nome dell'arnia e il codice breve.
+2. Scegli **Altro → Codice QR**. Compare una scheda con il codice, il nome dell'arnia e il codice breve.
 3. Tocca **Stampa**. Un'etichetta pulita si apre in una nuova finestra e segue la finestra di stampa. **SVG** scarica invece il codice come file, per i tuoi layout di etichette.
 4. Stampa su un foglio di etichette o su carta semplice e fissala all'arnia.
 
@@ -36,14 +36,18 @@ Stampa su supporti di etichette resistenti alle intemperie o in vinile, oppure c
 
 1. Apri l'apiario.
 2. Tocca **Etichette QR**.
-3. Si apre un foglio A4 con un codice etichettato per ogni arnia di quell'apiario, seguito dalla finestra di stampa.
+3. Si apre la finestra di stampa con un foglio A4 che contiene un codice etichettato per ogni arnia di quell'apiario.
 4. Stampa, ritaglia e applica.
 
 ## Scansionare un'etichetta
 
 ### Con la fotocamera del telefono
 
-La maggior parte dei telefoni riconosce i codici QR nell'app fotocamera integrata. Punta la fotocamera verso l'etichetta, tocca il link che compare e Openbeehive si apre sull'arnia. Funziona per chiunque abbia accesso, senza aprire prima l'app.
+La maggior parte dei telefoni riconosce i codici QR nell'app fotocamera integrata. Punta la fotocamera verso l'etichetta, tocca il link che compare e Openbeehive si apre sull'arnia nel browser. Funziona per chiunque abbia accesso, senza aprire prima l'app.
+
+:::caution Se hai installato l'app, scansiona al suo interno
+La fotocamera del telefono apre il link nel browser, e il browser conserva dati propri, separati dall'app installata: lì potresti dover accedere di nuovo e attendere un download. Se usi l'app installata, aprila dalla schermata Home e usa **Scansiona**.
+:::
 
 ### Con lo scanner integrato nell'app
 
@@ -52,18 +56,25 @@ La maggior parte dei telefoni riconosce i codici QR nell'app fotocamera integrat
 1. Apri **Scansiona** e concedi l'autorizzazione alla fotocamera la prima volta.
 2. Inquadra il codice QR dell'arnia; l'arnia si apre non appena viene riconosciuto.
 
-Sui dispositivi il cui browser non supporta lo scanner integrato, la schermata lo segnala e suggerisce di usare la normale app fotocamera.
+Lo scanner funziona in tutti i browser attuali, compresi Safari su iPhone e iPad e Firefox. Se un'etichetta è difficile da leggere, avvicinati, tieni fermo il telefono ed evita i riflessi.
+
+### Digitando il codice
+
+Sotto l'immagine della fotocamera, **Codice dell'etichetta** accetta i sei caratteri stampati sotto il codice QR. Digitali e tocca **Apri arnia**. Funziona anche quando l'etichetta è troppo consumata per essere scansionata, quando il dispositivo non ha una fotocamera o quando l'accesso alla fotocamera è bloccato. Il codice viene cercato tra le arnie presenti sul dispositivo.
 
 ## Se una scansione non apre l'arnia giusta
 
 | Sintomo | Causa probabile | Cosa fare |
 | --- | --- | --- |
 | La fotocamera non mette a fuoco il codice | Etichetta bagnata, sbiadita o arricciata | Asciugala; ristampala se è consumata |
-| Il link si apre ma dice "Arnia non trovata" | L'arnia è stata eliminata, o appartiene a un altro tenant | Verifica che l'arnia esista ancora e che sia attivo il tenant giusto |
-| Ti chiede di accedere | Non hai effettuato l'accesso su questo dispositivo, oppure l'arnia è in un tenant di cui non sei membro | Accedi; chiedi all'admin del tenant di invitarti |
-| Non succede nulla al tocco | Il telefono non ha riconosciuto il codice come link | Usa lo scanner integrato o un altro lettore QR |
+| "Questa arnia non è tra i tuoi dati" | L'arnia è stata eliminata, o appartiene a un altro spazio | Verifica che l'arnia esista ancora e che sia attivo lo spazio giusto (Impostazioni → Spazi) |
+| "Sei offline" | L'arnia non è ancora stata scaricata su questo dispositivo | Connettiti; l'arnia si apre quando i tuoi dati sono sincronizzati |
+| "Accedi per aprire questa arnia" | Questo browser non ha effettuato l'accesso. Tipico dopo una scansione con l'app fotocamera quando di solito usi l'app installata | Accedi, oppure scansiona all'interno dell'app installata |
+| "Server non raggiungibile" | L'arnia non è sul dispositivo e il server non ha risposto | Controlla la connessione e tocca **Riprova** |
+| "Questa non è un'etichetta di arnia Openbeehive." | Il codice scansionato è un altro codice QR | Scansiona l'etichetta dell'arnia |
+| Non succede nulla al tocco | Il telefono non ha riconosciuto il codice come link | Usa lo scanner integrato o digita il codice dell'etichetta |
 
-L'accesso segue l'appartenenza al tenant; vedi [Account e tenant](./accounts-tenants.md).
+L'accesso segue l'appartenenza allo spazio; vedi [Account e spazi](./accounts-tenants.md).
 
 ## Ristampare e cambiare le etichette
 

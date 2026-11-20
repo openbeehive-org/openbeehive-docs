@@ -11,13 +11,15 @@ Des réponses rapides aux questions que l'on nous pose le plus souvent. S'il man
 
 Oui. Openbeehive est open source sous licence **AGPL-3.0**, vous êtes donc libre de l'utiliser, de l'étudier, de le modifier et de l'héberger vous-même.
 
-Le service hébergé sur [app.openbeehive.org](https://app.openbeehive.org) est gratuit pour le moment, tant que le projet est jeune. Si cela venait à changer, vous pourrez toujours exporter vos données et faire tourner votre propre instance à la place.
+Le service hébergé sur [app.openbeehive.org](https://app.openbeehive.org) est gratuit pour le moment, tant que le projet est jeune, et actuellement sur invitation uniquement : écrivez à [contact@openbeehive.org](mailto:contact@openbeehive.org) pour recevoir une invitation, ou faites d'abord un tour avec le bouton **Essayer la démo** de sa page de connexion. Si les conditions venaient à changer, vous pourrez toujours exporter vos données et faire tourner votre propre instance à la place.
 
 ## Mes données sont-elles privées ?
 
 Vos archives résident d'abord sur votre propre appareil : l'application stocke tout dans une base de données locale sur votre téléphone, tablette ou ordinateur et se synchronise au serveur en arrière-plan.
 
 Si vous l'hébergez vous-même, vos données ne quittent jamais votre propre infrastructure. Sur le service hébergé, vos archives sont stockées sur nos serveurs afin de pouvoir se synchroniser entre vos appareils, mais elles restent les vôtres.
+
+Les seuls services externes que l'application contacte sont ceux de la carte : les tuiles et la recherche d'adresse du formulaire de rucher proviennent d'OpenStreetMap, sauf si l'exploitant en a configuré d'autres ou a désactivé la carte.
 
 :::tip
 Vous voulez un contrôle total ? Voir [Auto-hébergement](/category/self-hosting) pour faire tourner Openbeehive sur votre propre matériel.
@@ -48,17 +50,17 @@ Absolument, et il est conçu pour être facile à héberger. Il existe deux prof
 | Profil | Idéal pour | Pile technique |
 | --- | --- | --- |
 | `selfhost` | Amateurs, utilisateur unique | Un binaire unique, SQLite + fichiers locaux, sans Docker |
-| `cloud` | Multi-utilisateurs, installations plus grandes | Docker, PostgreSQL + stockage S3/MinIO |
+| `cloud` | Plusieurs utilisateurs, installations plus grandes | Docker, PostgreSQL + stockage S3/MinIO |
 
 Commencez par le [Démarrage rapide](../self-hosting/quick-start.md), ou passez directement au [guide du binaire unique](../self-hosting/single-binary.md).
 
 :::note
-Pour une instance privée à utilisateur unique, vous pouvez désactiver entièrement la connexion. Voir [Authentification](../self-hosting/authentication.md).
+Une instance privée à utilisateur unique fonctionne sans connexion par défaut ; activez la connexion avant de la partager. Voir [Authentification](../self-hosting/authentication.md).
 :::
 
 ## Comment fonctionne le partage ?
 
-Les archives sont partagées par l'intermédiaire des **espaces** (tenants). Chaque compte possède un espace personnel et peut être invité dans d'autres, par exemple celui d'un club. Tous les membres d'un espace voient et modifient l'ensemble de ses ruchers, ruches et archives ; il n'y a pas de partage par rucher. La synchronisation est sans conflit, si bien que deux personnes modifiant le même espace sur des appareils différents n'écrasent pas le travail l'une de l'autre. Voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
+Les archives sont partagées par l'intermédiaire des **espaces**. Chaque compte possède un espace personnel et peut être invité dans d'autres, par exemple celui d'un club. Tous les membres d'un espace voient et modifient l'ensemble de ses ruchers, ruches et archives ; il n'y a pas de partage par rucher. Les tâches font exception : elles sont personnelles. La synchronisation est sans conflit, si bien que deux personnes modifiant le même espace sur des appareils différents n'écrasent pas le travail l'une de l'autre. Voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
 
 ## Quels types de ruches sont pris en charge ?
 
@@ -100,12 +102,12 @@ Cinq langues sont livrées dans l'application : anglais, allemand, français, es
 
 En auto-hébergement, le backend est modulaire :
 
-- **Bases de données :** PostgreSQL, MySQL ou SQLite. Voir [Bases de données](../self-hosting/databases.md).
+- **Bases de données :** PostgreSQL, MariaDB ou SQLite. Voir [Bases de données](../self-hosting/databases.md).
 - **Stockage d'objets :** stockage d'objets compatible MinIO/S3, ou le système de fichiers local. Voir [Stockage](../self-hosting/storage.md).
 
 ## Comment me connecter ?
 
-Le service hébergé utilise des comptes avec e-mail et mot de passe. Les auto-hébergeurs peuvent activer les comptes e-mail/mot de passe, ajouter des fournisseurs OIDC (Google, Keycloak, Authentik et similaires), activer les passkeys, ou désactiver entièrement la connexion pour une installation à utilisateur unique. Voir [Authentification](../self-hosting/authentication.md).
+Le service hébergé utilise des comptes avec e-mail et mot de passe et est sur invitation uniquement. Les auto-hébergeurs peuvent activer les comptes e-mail/mot de passe, ajouter des fournisseurs OIDC (Google, Keycloak, Authentik et similaires), activer les passkeys, ou désactiver entièrement la connexion pour une installation à utilisateur unique. Voir [Authentification](../self-hosting/authentication.md).
 
 ## Comment signaler un bug ou demander une fonctionnalité ?
 

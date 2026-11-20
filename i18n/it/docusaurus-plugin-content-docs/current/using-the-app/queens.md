@@ -5,14 +5,15 @@ title: "Regine"
 
 # Regine
 
-Openbeehive registra chi è la regina, da dove proviene, come è marcata e quando il suo regno è iniziato e finito. Ogni regina resta nel registro, così ogni arnia costruisce una storia del suo ceppo nel corso delle stagioni.
+Openbeehive registra chi è la regina, da dove proviene, come è marcata e quando il suo regno è iniziato e finito. Le regine precedenti restano nel registro, così ogni arnia costruisce una storia del suo ceppo nel corso delle stagioni.
 
 ## Cosa contiene una scheda di una regina
 
-Imposta o sostituisci la regina dalla pagina dell'arnia. Il modulo contiene:
+Imposta, sostituisci o correggi la regina dalla pagina dell'arnia. Il modulo contiene:
 
 | Campo | Cosa significa |
 | --- | --- |
+| Introdotta il | Il giorno in cui ha preso in carico la colonia. Per impostazione predefinita è oggi. |
 | Anno | L'anno in cui la regina è stata allevata. Determina il suo colore di marcatura. |
 | Numero | Un numero opzionale di allevamento o di sequenza, ad es. "12". |
 | Origine | Da dove proviene: allevamento proprio, Buckfast, uno sciame, una sostituzione naturale, e così via. |
@@ -48,6 +49,14 @@ Una colonia ha una sola regina regnante alla volta, ma nel corso della sua vita 
 :::tip Sostituzione della regina
 Annota *perché* hai sostituito la regina nel commento della nuova: scarsa ovideposizione, api aggressive, età, miglioramento pianificato della linea. Gli schemi su più arnie spesso rivelano più di quanto faccia una singola colonia.
 :::
+
+## Correggere i dati di una regina \{#correcting}
+
+**Sostituisci regina** serve per una vera sostituzione della regina. Per correggere un errore di battitura, un anno sbagliato o una data sbagliata, usa invece l'azione **Modifica** sulla regina: cambia la sua scheda e lascia intatta la cronologia dei regni. Lo dice anche il modulo: "Correggi qui i suoi dati. Per una nuova regina usa «Sostituisci regina»." Le regine precedenti sotto **Cronologia regine** si possono correggere allo stesso modo.
+
+## Eliminare una regina
+
+**Elimina** serve solo per una regina registrata per errore. Se è la regina attuale, la regina precedente torna a essere quella attuale. L'app chiede conferma e subito dopo offre **Annulla** per alcuni secondi.
 
 ## Voci retrodatate
 

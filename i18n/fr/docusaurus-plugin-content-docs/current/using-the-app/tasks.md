@@ -9,7 +9,7 @@ L'apiculture est pleine de petits travaux faciles à oublier : ajouter une hauss
 
 ## Créer une tâche
 
-Ouvrez **Tâches**. En haut, saisissez ce qu'il faut faire, choisissez éventuellement une échéance et touchez **Ajouter**.
+Ouvrez **Tâches** (ou choisissez **+ Nouveau → Nouvelle tâche** dans la Vue d'ensemble). En haut, saisissez ce qu'il faut faire, choisissez éventuellement une échéance et touchez **Ajouter**.
 
 | Champ | Notes |
 | --- | --- |
@@ -22,21 +22,22 @@ C'est toute la tâche. Il n'y a ni notes, ni lien vers une ruche ou un rucher, n
 Créez une tâche sans échéance pour les travaux « un jour », comme « Construire deux ruchettes de plus pendant l'hiver ».
 :::
 
-Les tâches appartiennent à l'espace actif ; tout le monde dans un espace partagé voit donc la même liste. C'est un moyen simple de se coordonner au sein d'un club ou entre deux apiculteurs.
+Les tâches que vous créez dans l'application sont **personnelles** : vous seul les voyez, sur tous vos appareils, et uniquement dans l'espace où vous les avez créées. Les autres membres d'un espace partagé ne voient pas votre liste, et après un changement d'espace vous voyez les tâches que vous y avez créées.
 
 ## Ouverte ou terminée
 
 Chaque tâche est soit **ouverte**, soit **terminée**.
 
-- Touchez le cercle à gauche d'une tâche pour la cocher. Les tâches terminées restent dans la liste, barrées, et ne sont pas comptées comme ouvertes.
-- Touchez à nouveau le cercle pour rouvrir une tâche cochée par erreur.
-- Le crayon modifie le titre ou l'échéance ; la croix supprime la tâche.
+- Touchez la case à gauche d'une tâche pour la cocher. Les tâches terminées passent dans la section **Terminées (n)** sous les tâches ouvertes, repliée au départ, et ne sont pas comptées comme ouvertes.
+- Touchez à nouveau la case pour rouvrir une tâche cochée par erreur.
+- Le crayon modifie le titre ou l'échéance ; la corbeille supprime la tâche. Après une suppression, une barre propose **Annuler** pendant quelques secondes.
+- Une tâche dont l'échéance est dépassée est marquée **En retard**.
 
-Si vous et un coapiculteur cochez tous les deux la même tâche sur des appareils différents, la tâche finit terminée.
+Si vous cochez la même tâche sur deux de vos appareils, la tâche finit terminée.
 
 ## Les tâches dans la Vue d'ensemble
 
-La tuile **Tâches ouvertes** compte les tâches non terminées. **Tâches à venir** liste jusqu'à cinq tâches ouvertes avec leur échéance ; les tâches dont l'échéance est dépassée sont signalées par un **!**. Voir [Le tableau de bord](./dashboard.md).
+La tuile **Tâches ouvertes** compte les tâches non terminées. **Tâches à venir** liste jusqu'à cinq tâches ouvertes avec leur échéance ; les tâches dont l'échéance est dépassée sont marquées **En retard**, et toucher une tâche l'ouvre dans la vue Tâches. Voir [Le tableau de bord](./dashboard.md).
 
 :::tip
 Pour les travaux récurrents, ajoutez la tâche suivante au moment où vous cochez la tâche en cours. Après un contrôle d'essaimage à sept jours, ajoutez « Contrôle d'essaimage » pour la semaine suivante.

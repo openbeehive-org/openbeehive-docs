@@ -51,9 +51,17 @@ Erfasse die Chargennummer direkt von der Verpackung zum Zeitpunkt der Behandlung
 
 Funktioniert offline; siehe [Offline & Synchronisation](./offline-and-sync.md).
 
+## Eine Behandlung korrigieren oder löschen \{#correcting}
+
+Jede Behandlung in der Liste hat eine Aktion zum Bearbeiten und eine zum Löschen. Eine Behandlung, die nach dem ersten Speichern geändert wurde, zeigt **Geändert am** mit dem Datum der letzten Änderung, auf dem Bildschirm und im gedruckten Bestandsbuch, sodass ein Leser erkennt, dass der Eintrag nicht mehr in seiner ursprünglichen Form vorliegt. Die App bewahrt keine früheren Fassungen auf. Löschen fragt nach einer Bestätigung und bietet ein paar Sekunden lang **Rückgängig** an.
+
+## Das Bestandsbuch \{#treatment-register}
+
+**Bestandsbuch drucken** unter **Behandlungen** druckt das Bestandsbuch der Beute: eine Tabelle aller Behandlungen mit Datum, Mittel, Wirkstoff, Dosis, Methode, Chargennummer, Wartezeit-Datum und dem Änderungsvermerk, dazu der Tag des Drucks. Der Button **Bestandsbuch** auf der Seite eines [Bienenstands](./apiaries.md) druckt dasselbe für alle Beuten dieses Bienenstands in einem Dokument. Das Bestandsbuch öffnet sich in einem neuen Fenster; passiert nichts, erlaube Pop-ups für die Seite.
+
 ## Wartezeiten und Ernte
 
-Wenn du ein Datum **Wartezeit bis** festlegst, hält Openbeehive fest, ab wann Honig aus dieser Beute wieder unbedenklich geerntet werden kann.
+Wenn du ein Datum **Wartezeit bis** festlegst, hält Openbeehive fest, ab wann Honig aus dieser Beute wieder unbedenklich geerntet werden kann. Die Behandlung zeigt das Datum als Chip, der als Warnung hervorgehoben ist, solange die Frist läuft, ihren letzten Tag eingeschlossen, und danach neutral wird.
 
 Mach es dir zur Gewohnheit, die Behandlungsdaten zu prüfen, bevor du Honigräume abziehst. Wenn ein Volk sich noch innerhalb seines Wartezeitfensters befindet, sieh von der Ernte daraus ab oder halte diesen Honig getrennt und deutlich aus der Lebensmittelkette heraus, bis die Frist verstrichen ist.
 
@@ -67,10 +75,10 @@ Ein paar Gewohnheiten halten deine Aufzeichnungen vertrauenswürdig.
 
 - **Erfasse unterwegs.** Erfasse die Behandlung an dem Tag, an dem du sie anwendest, nicht Wochen später aus dem Gedächtnis.
 - **Sei genau.** „Gegen Varroa behandelt" ist weit weniger nützlich als das Mittel, die Dosis und die Charge.
-- **Bearbeite die Historie nicht, um sie aufzuräumen.** Wenn sich etwas geändert hat, füge eine Folgeaufzeichnung hinzu, statt die Vergangenheit umzuschreiben.
+- **Korrigiere Fehler, aber räume die Historie nicht auf.** Behebe eine falsche Dosis oder Chargennummer, indem du den Eintrag bearbeitest; er wird dann als geändert gekennzeichnet. Wenn sich die Behandlung selbst geändert hat, füge einen Folgeeintrag hinzu, statt die Vergangenheit umzuschreiben.
 - **Behandle jede Beute einzeln.** Selbst wenn du dasselbe Mittel über einen ganzen Bienenstand hinweg anwendest, erfasse es pro Beute, damit Dosen und Wartezeitfenster für jedes Volk korrekt sind.
 
-Da Behandlungseinträge über deine Geräte hinweg synchronisieren, ist das Protokoll, das du im Feld aufbaust, dasselbe, das du zu Hause überprüfst, und dasselbe, das die anderen Mitglieder deines Mandanten sehen.
+Da Behandlungseinträge über deine Geräte hinweg synchronisieren, ist das Protokoll, das du im Feld aufbaust, dasselbe, das du zu Hause überprüfst, und dasselbe, das die anderen Mitglieder deines Arbeitsbereichs sehen.
 
 ## Behandlungen und Varroa
 

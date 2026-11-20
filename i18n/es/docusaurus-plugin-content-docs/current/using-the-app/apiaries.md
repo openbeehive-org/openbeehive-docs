@@ -25,7 +25,7 @@ Mantén un colmenar por cada ubicación física. Así las visitas, cosechas y tr
 
 ## Crear un colmenar
 
-Desde la lista de **Colmenares** (o el botón **+ Nuevo** del Resumen) elige **Nuevo colmenar**. Solo se requiere un nombre.
+Desde la lista de **Colmenares** (o **+ Nuevo → Nuevo colmenar** en el Resumen) elige **Nuevo colmenar**. Solo se requiere un nombre.
 
 | Campo | Obligatorio | Para qué sirve |
 | --- | --- | --- |
@@ -57,6 +57,8 @@ Una línea de estado bajo el mapa indica qué está haciendo la búsqueda:
 - **Sin coincidencias para esta dirección**: coloca el marcador en el mapa.
 - **La búsqueda de direcciones no está disponible**: no se puede contactar con el servicio (quizá estés sin conexión). El marcador y las coordenadas manuales siguen funcionando.
 
+Las teselas del mapa y la búsqueda de direcciones provienen de servicios de OpenStreetMap, salvo que el operador de tu instancia haya configurado otros. Son los únicos servicios externos con los que contacta la aplicación: mostrar un mapa carga las teselas de la zona que miras, y escribir una dirección o mover el marcador envía esa dirección o posición al servicio de búsqueda. Un operador puede desactivar el mapa para toda la instancia; el formulario tiene entonces solo los campos de coordenadas. Consulta [Configuración](../self-hosting/configuration.md#maps).
+
 ## Añadir y ver colmenas
 
 Abre un colmenar para ver sus colmenas con la fecha de la última inspección de cada una. Desde aquí puedes:
@@ -68,7 +70,11 @@ Consulta [Colmenas](./hives.md) y [Reinas](./queens.md).
 
 ## Imprimir etiquetas QR para el colmenar
 
-El botón **Etiquetas QR** de la página del colmenar imprime una hoja A4 con una etiqueta por cada colmena del colmenar. Cada etiqueta codifica un enlace profundo a esa colmena; al escanearla se abre Openbeehive en la colmena. Consulta [Etiquetas QR](./qr-labels.md).
+El botón **Etiquetas QR** de la página del colmenar imprime una hoja A4 con una etiqueta por cada colmena del colmenar, directamente desde la página. Cada etiqueta codifica un enlace profundo a esa colmena; al escanearla se abre Openbeehive en la colmena. Consulta [Etiquetas QR](./qr-labels.md).
+
+## Imprimir el registro de tratamientos
+
+Cuando hay colmenas del colmenar con tratamientos registrados, el botón **Registro de tratamientos** imprime el registro de todas ellas en un solo documento. Consulta [Tratamientos](./treatments.md#treatment-register).
 
 ## Editar y reorganizar
 
@@ -76,6 +82,10 @@ Renombra un colmenar, o actualiza su dirección, nota y coordenadas, con **Edita
 
 Si una colmena se traslada a otra ubicación, usa **Mover** en la colmena para reasignarla al colmenar correspondiente. Los apicultores trashumantes pueden mantener un colmenar por emplazamiento y mover las colmenas conforme se desplazan.
 
+## Eliminar un colmenar
+
+**Eliminar colmenar** solo funciona con un colmenar sin colmenas. Mientras aún tenga colmenas, la aplicación indica cuántas hay y te pide que primero las muevas o las elimines.
+
 ## Compartir
 
-Los colmenares no se comparten individualmente. Todo lo que hay en un espacio (tenant) es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacios → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](./accounts-tenants.md).
+Los colmenares no se comparten individualmente. Todo lo que hay en un espacio es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacios → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](./accounts-tenants.md).

@@ -11,8 +11,8 @@ service and self-hostable software, for hobby and professional beekeepers.
 The app stores everything on the device and syncs to the server, so it works
 in the bee yard with or without a signal.
 
-- Use the app: [app.openbeehive.org](https://app.openbeehive.org)
-- Try the demo: [demo.openbeehive.org](https://demo.openbeehive.org)
+- Use the app: [app.openbeehive.org](https://app.openbeehive.org). The hosted service is invite-only; write to [contact@openbeehive.org](mailto:contact@openbeehive.org) for an invite.
+- Try the demo: the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login), no account needed.
 - Project home: [openbeehive.org](https://openbeehive.org)
 - Source code: [github.com/openbeehive-org/openbeehive-app](https://github.com/openbeehive-org/openbeehive-app)
 

@@ -33,7 +33,7 @@ Quando aggiungi un trattamento a un'arnia, annota quanto più possibile di quant
 | Dose / quantità | La quantità applicata per arnia. |
 | Numero di lotto / partita | Spesso richiesto per legge; lega la dose a una confezione specifica. |
 | Data di applicazione | Quando hai trattato la colonia. |
-| Sospensione fino al | La data in cui il miele di quest'arnia è di nuovo sicuro da raccogliere. |
+| Tempo di attesa fino al | La data in cui il miele di quest'arnia è di nuovo sicuro da raccogliere. |
 | Motivo | Per cosa hai trattato (ad es. varroa). |
 | Nota | Meteo, stato della covata, risultati osservati o qualsiasi altra cosa valga la pena ricordare. |
 
@@ -46,14 +46,22 @@ Registra il numero di lotto direttamente dalla confezione nel momento in cui tra
 1. Apri l'arnia che hai trattato.
 2. Tocca **Registra trattamento** sotto **Trattamenti**.
 3. Inserisci data, prodotto, principio attivo, metodo, dose, numero di lotto e motivo.
-4. Imposta la data di **sospensione fino al** se il prodotto specifica un tempo di sospensione.
+4. Imposta la data di **tempo di attesa fino al** se il prodotto specifica un tempo di sospensione.
 5. Salva.
 
 Funziona offline; vedi [Offline e sincronizzazione](./offline-and-sync.md).
 
+## Correggere o eliminare un trattamento \{#correcting}
+
+Ogni trattamento nell'elenco ha un'azione di modifica e una di eliminazione. Un trattamento modificato dopo il primo salvataggio mostra **Modificato il** con la data dell'ultima modifica, sullo schermo e nel registro stampato, così chi legge può vedere che la voce non è nella sua forma originale. L'app non conserva versioni precedenti. L'eliminazione chiede conferma e offre **Annulla** per alcuni secondi.
+
+## Il registro dei trattamenti \{#treatment-register}
+
+**Stampa registro** sotto **Trattamenti** stampa il registro dei trattamenti dell'arnia: una tabella di tutti i trattamenti con data, prodotto, principio attivo, dose, metodo, numero di lotto, data di fine sospensione e l'indicazione di modifica, più il giorno in cui è stato stampato. Il pulsante **Registro dei trattamenti** nella pagina di un [apiario](./apiaries.md) stampa lo stesso per tutte le arnie di quell'apiario in un unico documento. Il registro si apre in una nuova finestra; se non succede nulla, consenti i pop-up per il sito.
+
 ## Tempi di sospensione e raccolta
 
-Quando imposti una data di **sospensione fino al**, Openbeehive registra quando il miele di quell'arnia è di nuovo sicuro da raccogliere.
+Quando imposti una data di **tempo di attesa fino al**, Openbeehive registra quando il miele di quell'arnia è di nuovo sicuro da raccogliere. Il trattamento mostra la data come un chip evidenziato come avviso mentre il periodo è in corso, ultimo giorno compreso, e che diventa neutro in seguito.
 
 Prendi l'abitudine di controllare le date dei trattamenti prima di togliere i melari. Se una colonia è ancora all'interno della sua finestra di sospensione, rinvia la raccolta da essa, oppure tieni quel miele separato e chiaramente fuori dalla catena alimentare finché il periodo non è trascorso.
 
@@ -67,10 +75,10 @@ Alcune abitudini mantengono affidabili i tuoi registri.
 
 - **Registra man mano.** Annota il trattamento il giorno in cui lo applichi, non a memoria settimane dopo.
 - **Sii specifico.** "Trattato contro la varroa" è molto meno utile del prodotto, della dose e del lotto.
-- **Non modificare la cronologia per fare ordine.** Se qualcosa è cambiato, aggiungi un seguito anziché riscrivere il passato.
+- **Correggi gli errori, non riordinare la cronologia.** Correggi una dose o un numero di lotto sbagliati modificando la voce; questa viene allora contrassegnata come modificata. Se è cambiato il trattamento stesso, aggiungi una voce di seguito anziché riscrivere il passato.
 - **Tratta ogni arnia individualmente.** Anche quando applichi lo stesso prodotto su tutto un apiario, registralo per arnia, così le dosi e le finestre di sospensione sono accurate per ciascuna colonia.
 
-Poiché le voci dei trattamenti si sincronizzano tra i tuoi dispositivi, il registro che costruisci sul campo è lo stesso che rivedi a casa, e lo stesso che vedono gli altri membri del tuo tenant.
+Poiché le voci dei trattamenti si sincronizzano tra i tuoi dispositivi, il registro che costruisci sul campo è lo stesso che rivedi a casa, e lo stesso che vedono gli altri membri del tuo spazio.
 
 ## Trattamenti e varroa
 

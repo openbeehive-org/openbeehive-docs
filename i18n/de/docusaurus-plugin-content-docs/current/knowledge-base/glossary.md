@@ -78,7 +78,7 @@ maßgeblich und prüfe deine nationalen Vorschriften.
 | **QR-Etikett** | Ein druckbarer Code an einem Bienenstock, der einen Deep Link enthält; durch das Scannen öffnet sich die App direkt bei diesem Bienenstock. Siehe [QR-Etiketten](../using-the-app/qr-labels.md). |
 | **Synchronisierung (Sync)** | Das konfliktfreie Zusammenführen deiner lokalen Änderungen mit dem Server und deinen anderen Geräten im Hintergrund. Siehe [Offline und Synchronisierung](../using-the-app/offline-and-sync.md). |
 | **Aufgabe (Task)** | Eine Erinnerung mit Titel und optionalem Fälligkeitsdatum, zum Beispiel „Honigraum aufsetzen“ oder „gegen Varroa behandeln“. Siehe [Aufgaben](../using-the-app/tasks.md). |
-| **Mandant (Tenant)** | Eine Sammlung von Bienenständen, Bienenstöcken und Aufzeichnungen, die von ihren Mitgliedern gemeinsam genutzt wird. Jedes Konto hat einen persönlichen Mandanten und kann in weitere eingeladen werden; eine feinere Freigabe gibt es nicht. Siehe [Konten und Mandanten](../using-the-app/accounts-tenants.md). |
+| **Arbeitsbereich (Workspace)** | Eine Sammlung von Bienenständen, Bienenstöcken und Aufzeichnungen, die von ihren Mitgliedern gemeinsam genutzt wird. Jedes Konto hat einen persönlichen Arbeitsbereich und kann in weitere eingeladen werden; eine feinere Freigabe gibt es nicht. In der API und in den Servereinstellungen „tenant“ genannt, in früheren Versionen der App „Mandant“. Siehe [Konten und Arbeitsbereiche](../using-the-app/accounts-tenants.md). |
 
 :::note
 Die tiefergehende Mechanik von HLCs, OR-Sets und nur anfügbaren Events wird im
