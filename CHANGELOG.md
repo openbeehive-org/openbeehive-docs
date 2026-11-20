@@ -122,6 +122,14 @@ snapshots and the export/import changes.
   `account_exists` for sign-up, which is `email_taken`.
 - Small mistranslations on the German, French, Spanish and Italian "Diseases
   & pests" pages; missing accents on four Spanish self-hosting pages.
+- Titled notes and warnings (such as "Back up first") showed as raw
+  `:::caution` text, in every version; the build now fails on such a page.
+- Links in running text are underlined, not set apart by colour alone.
+- **Self-hosting:** the session secret example in Configuration was long
+  enough to be accepted if copied; the demo page described changes as kept
+  in the browser and the hosted demo as signing in automatically; the
+  reverse proxy page missed the long-running `GET /export`; Quick start now
+  says how `docker run` users publish the port once login is on.
 
 ## [0.4.0] - 2026-10-19
 
