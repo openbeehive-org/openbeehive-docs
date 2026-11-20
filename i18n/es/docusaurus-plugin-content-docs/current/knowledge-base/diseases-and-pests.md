@@ -31,7 +31,7 @@ Consulta la guía completa: [Varroa](../beekeeping/varroa.md).
 
 Una grave enfermedad bacteriana de la cría causada por *Paenibacillus larvae*. Sus esporas sobreviven durante décadas y se propagan fácilmente en el equipo, lo que la convierte en la enfermedad más temida del colmenar.
 
-**Señales:** opérculos de cría hundidos, grasientos y perforados; un patrón de cría irregular "en salpicadero"; un olor fétido; larvas muertas que se estiran formando un hilo marrón y viscoso (la prueba del "palillo" o de viscosidad); escamas duras y oscuras pegadas planas a la base de la celda.
+**Señales:** opérculos de cría hundidos, grasientos y perforados; un patrón de cría irregular, "salteado"; un olor fétido; larvas muertas que se estiran formando un hilo marrón y viscoso (la prueba del "palillo" o de viscosidad); escamas duras y oscuras pegadas planas a la base de la celda.
 
 **Manejo:** **la loque americana es de declaración obligatoria en la mayoría de los países.** No hay cura segura para el aficionado; el tratamiento suele consistir en la destrucción de la colonia y el equipo contaminado mediante quema, bajo la supervisión de tu inspector apícola. No intentes tratarla por tu cuenta ni mover colmenas sospechosas.
 
@@ -45,7 +45,7 @@ Una enfermedad bacteriana de la cría causada por *Melissococcus plutonius* que 
 
 **Señales:** larvas que mueren antes de la operculación; larvas retorcidas, descoloridas (de amarillo a marrón) tendidas de forma antinatural en sus celdas; un olor agrio; un patrón de cría irregular. A diferencia de la loque americana, los restos normalmente no son viscosos.
 
-**Manejo:** **la loque europea es de declaración obligatoria en muchos países.** Las colonias fuertes y bien alimentadas a menudo se recuperan, y puede aconsejarse un cambio de panal ("enjambre artificial" o shook swarm). En algunas regiones los antibióticos solo se permiten bajo dirección oficial. Sigue siempre las indicaciones de tu inspector en lugar de automedicar.
+**Manejo:** **la loque europea es de declaración obligatoria en muchos países.** Las colonias fuertes y bien alimentadas a menudo se recuperan, y puede aconsejarse un cambio de panal ("enjambre sacudido" o shook swarm). En algunas regiones los antibióticos solo se permiten bajo dirección oficial. Sigue siempre las indicaciones de tu inspector en lugar de tratar por tu cuenta.
 
 ## Ascosferosis (cría yesificada)
 
@@ -53,7 +53,7 @@ Una enfermedad fúngica (*Ascosphaera apis*) que mata a las larvas, que luego se
 
 **Señales:** larvas momificadas blancas, grises o negras en las celdas, en el fondo de la colmena o arrastradas hasta la tabla de vuelo.
 
-**Manejo:** suele ser señal de estrés, humedad o una colonia débil. Mejora la ventilación, mantén las colonias fuertes, repón la reina con material higiénico si persiste y sustituye los panales muy afectados. Normalmente no es de declaración obligatoria, y rara vez es mortal por sí sola.
+**Manejo:** suele ser señal de estrés, humedad o una colonia débil. Mejora la ventilación, mantén las colonias fuertes, repón la reina con una de estirpe higiénica si persiste y sustituye los panales muy afectados. Normalmente no es de declaración obligatoria, y rara vez es mortal por sí sola.
 
 ## Nosemosis
 
@@ -73,7 +73,7 @@ Dos polillas (la mayor y la menor de la cera) cuyas larvas excavan galerías a t
 
 ## Pequeño escarabajo de la colmena (Aethina tumida)
 
-Un escarabajo invasor cuyas larvas excavan galerías a través del panal y la cría, ensuciando las reservas hasta que fermentan y se "babean".
+Un escarabajo invasor cuyas larvas excavan galerías a través del panal y la cría, ensuciando las reservas de modo que fermentan y se vuelven "babosas".
 
 **Señales:** pequeños escarabajos oscuros corriendo por los panales cuando abres la colmena; larvas en el panal; cuadros fermentados y babosos con olor a naranjas podridas.
 
@@ -91,7 +91,7 @@ Otro ácaro invasor que se alimenta de la cría, actualmente restringido a parte
 
 Las abejas portan muchos virus, entre ellos el virus de las alas deformadas (DWV), la parálisis crónica y aguda de la abeja, el virus de la cría ensacada y el virus de la celda real negra. La mayoría se mantienen a raya hasta que algo, normalmente la varroa, les permite proliferar.
 
-**Señales:** alas deformadas o arrugadas, abejas temblorosas, abejas negras sin pelo y "grasientas", abejas que se arrastran en la entrada y mortalidad inusual de la cría.
+**Señales:** alas deformadas o arrugadas, abejas que se sacuden o tiemblan, abejas negras sin pelo y "grasientas", abejas que se arrastran en la entrada y mortalidad inusual de la cría.
 
 **Manejo:** no hay tratamiento directo. El control más eficaz es mantener la varroa baja, ya que el ácaro propaga y amplifica estos virus. Las colonias fuertes, sanas y bien nutridas son mucho más resistentes.
 

@@ -65,7 +65,7 @@ Una malattia intestinale causata da parassiti microsporidi (*Nosema apis* e *Nos
 
 ## Tarma della cera
 
-Due tarme (tarma maggiore e minore della cera) le cui larve scavano gallerie nel favo, lasciando ragnatele setose e frass.
+Due tarme (tarma maggiore e minore della cera) le cui larve scavano gallerie nel favo, lasciando ragnatele setose ed escrementi.
 
 **Segni:** ragnatele e gallerie nel favo immagazzinato o trascurato; telaini rovinati; detriti sul fondo dell'alveare.
 

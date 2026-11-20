@@ -51,17 +51,17 @@ Eine bakterielle Brutkrankheit, verursacht durch *Melissococcus plutonius*, die 
 
 Eine Pilzkrankheit (*Ascosphaera apis*), die Larven tötet, welche dann zu harten, kalkartigen „Mumien“ eintrocknen.
 
-**Anzeichen:** weiße, graue oder schwarze mumifizierte Larven in den Zellen, auf dem Bodenbrett oder vor das Flugloch gezerrt.
+**Anzeichen:** weiße, graue oder schwarze mumifizierte Larven in den Zellen, auf dem Bodenbrett oder auf das Flugbrett hinausgezerrt.
 
 **Bekämpfung:** in der Regel ein Zeichen von Stress, Feuchtigkeit oder einem schwachen Volk. Verbessere die Belüftung, halte die Völker stark, weisle bei Fortbestehen aus hygienischer Zucht um und ersetze stark befallene Waben. Normalerweise nicht anzeigepflichtig und für sich genommen selten tödlich.
 
 ## Nosema
 
-Eine Darmkrankheit, verursacht durch mikrosporidienartige Parasiten (*Nosema apis* und *Nosema ceranae*), die das Leben der Bienen verkürzt.
+Eine Darmkrankheit, verursacht durch parasitische Mikrosporidien (*Nosema apis* und *Nosema ceranae*), die das Leben der Bienen verkürzt.
 
 **Anzeichen:** oft keine offensichtlichen; möglicherweise Ruhr (braune Verkotungen an der Stockvorderseite, bei *N. apis*), kriechende Bienen, langsame Frühjahrsentwicklung und Abnahme. Eine Bestätigung erfordert Mikroskopie.
 
-**Bekämpfung:** reduziere Stress, sorge für gute Vorräte und einen trockenen, gut belüfteten Bienenstock, erneuere altes Wabenwerk regelmäßig und weisle schwache Völker um. Gute Stockhygiene ist die wichtigste Abwehr.
+**Bekämpfung:** reduziere Stress, sorge für gute Vorräte und einen trockenen, gut belüfteten Bienenstock, erneuere altes Wabenwerk regelmäßig und weisle schwache Völker um. Gute Hygiene am Bienenstand ist die wichtigste Abwehr.
 
 ## Wachsmotte
 

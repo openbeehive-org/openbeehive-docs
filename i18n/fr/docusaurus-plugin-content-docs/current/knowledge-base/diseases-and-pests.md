@@ -59,7 +59,7 @@ Une maladie fongique (*Ascosphaera apis*) qui tue les larves, lesquelles se dess
 
 Une maladie de l'intestin causée par des parasites microsporidies (*Nosema apis* et *Nosema ceranae*) qui raccourcit la vie des abeilles.
 
-**Signes :** souvent aucun signe évident ; éventuellement une diarrhée (traînées brunes sur la façade de la ruche, avec *N. apis*), des abeilles rampantes, un développement printanier lent et un dépérissement. La confirmation nécessite un examen microscopique.
+**Signes :** souvent aucun signe évident ; éventuellement une dysenterie (traînées brunes sur la façade de la ruche, avec *N. apis*), des abeilles rampantes, un développement printanier lent et un dépérissement. La confirmation nécessite un examen microscopique.
 
 **Gestion :** réduisez le stress, assurez de bonnes réserves et une ruche sèche et bien ventilée, remplacez régulièrement les vieux rayons et remérez les colonies faibles. Une bonne hygiène du rucher est la principale défense.
 
