@@ -54,5 +54,21 @@
   "theme.docs.versions.latestVersionLinkLabel": {
     "message": "versione più recente",
     "description": "Link text inside the version banner pointing at the newest release"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Cambia tema: sistema, chiaro, scuro (attualmente {mode})",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "tema di sistema",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "tema chiaro",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "tema scuro",
+    "description": "The name for the dark color mode"
   }
 }

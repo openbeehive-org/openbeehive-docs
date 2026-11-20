@@ -1,6 +1,6 @@
-import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import {darkCodeTheme, lightCodeTheme} from './src/prismThemes';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -68,7 +68,12 @@ const config: Config = {
 
   themeConfig: {
     image: 'img/openbeehive-social-card.svg',
+    // Follows the system colour scheme until the reader picks one: with
+    // respectPrefersColorScheme the navbar switch cycles System, Light, Dark,
+    // and the choice is kept in the browser's localStorage, per device.
     colorMode: {
+      defaultMode: 'light',
+      disableSwitch: false,
       respectPrefersColorScheme: true,
     },
     navbar: {
@@ -158,8 +163,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Openbeehive · Licensed under AGPL-3.0`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
       additionalLanguages: ['bash', 'json', 'go', 'sql', 'nginx', 'docker'],
     },
   } satisfies Preset.ThemeConfig,

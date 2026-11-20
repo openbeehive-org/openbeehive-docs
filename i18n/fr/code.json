@@ -50,5 +50,21 @@
   "versions.link.notes": {
     "message": "Notes de version",
     "description": "Link to a version's release notes"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Changer de thème : système, clair, sombre (actuellement {mode})",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "thème du système",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "thème clair",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "thème sombre",
+    "description": "The name for the dark color mode"
   }
 }

@@ -59,26 +59,38 @@
     format('woff2');
 }
 
-/* ---- Light mode (the brand default) ---- */
+/* ---- Colours ----
+   The same palette as the app and openbeehive.org. Text reaches a contrast of
+   at least 4.5:1 and the borders of controls at least 3:1 on the page and
+   surface backgrounds of both themes (WCAG AA). Honey #c77f22 is the brand
+   colour; as text on cream it only reaches 3:1, so text and links use the
+   darker #8a5210 in the light theme. */
+
+/* ---- Light theme ---- */
 :root {
-  --ifm-color-primary: #c77f22;
-  --ifm-color-primary-dark: #b3721e;
-  --ifm-color-primary-darker: #a4641a;
-  --ifm-color-primary-darkest: #874f15;
-  --ifm-color-primary-light: #d28f3c;
-  --ifm-color-primary-lighter: #d99b52;
-  --ifm-color-primary-lightest: #e3b27c;
+  --ifm-color-primary: #8a5210;
+  --ifm-color-primary-dark: #7c4a0e;
+  --ifm-color-primary-darker: #75460e;
+  --ifm-color-primary-darkest: #60390b;
+  --ifm-color-primary-light: #a4641a;
+  --ifm-color-primary-lighter: #b3721e;
+  --ifm-color-primary-lightest: #c77f22;
 
   --ifm-background-color: #fbf6ea;
   --ifm-background-surface-color: #fffdf7;
   --ifm-navbar-background-color: rgba(255, 253, 247, 0.92);
-  --ifm-footer-background-color: #2c2316;
 
   --ifm-color-content: #2c2316;
   --ifm-color-content-secondary: #6b5e48;
+  --ifm-menu-color: #6b5e48;
   --ifm-toc-border-color: #e5dcc6;
   --ifm-hr-background-color: #e5dcc6;
   --ifm-table-border-color: #e5dcc6;
+  --ifm-link-color: #8a5210;
+
+  /* Borders of things you can click (version switch, page navigation). */
+  --obh-control-border: #8f8270;
+  --obh-footer-background: #2c2316;
 
   --ifm-font-family-base:
     'Hanken Grotesk', system-ui, -apple-system, sans-serif;
@@ -88,11 +100,10 @@
 
   --ifm-code-font-size: 92%;
   --ifm-code-background: rgba(199, 127, 34, 0.1);
-  --ifm-link-color: #a4641a;
   --docusaurus-highlighted-code-line-bg: rgba(199, 127, 34, 0.14);
 }
 
-/* ---- Dark mode (lighter honey for contrast) ---- */
+/* ---- Dark theme ---- */
 [data-theme='dark'] {
   --ifm-color-primary: #e9a744;
   --ifm-color-primary-dark: #e59a2a;
@@ -102,16 +113,41 @@
   --ifm-color-primary-lighter: #f0bd71;
   --ifm-color-primary-lightest: #f5d29b;
 
-  --ifm-background-color: #211a10;
-  --ifm-background-surface-color: #2c2316;
-  --ifm-navbar-background-color: rgba(33, 26, 16, 0.92);
-  --ifm-footer-background-color: #1a140c;
+  --ifm-background-color: #1b160e;
+  --ifm-background-surface-color: #261f14;
+  --ifm-navbar-background-color: rgba(38, 31, 20, 0.92);
 
-  --ifm-color-content: #f3ecda;
-  --ifm-color-content-secondary: #c9bda1;
-  --ifm-toc-border-color: #463a25;
+  --ifm-color-content: #f5ecda;
+  --ifm-color-content-secondary: #c9bca3;
+  --ifm-menu-color: #c9bca3;
+  --ifm-toc-border-color: #3d3222;
+  --ifm-hr-background-color: #3d3222;
+  --ifm-table-border-color: #3d3222;
+  --ifm-table-stripe-background: rgba(245, 236, 218, 0.04);
   --ifm-link-color: #edb45e;
+
+  --obh-control-border: #8c7d68;
+  --obh-footer-background: #14100a;
+
+  --ifm-code-background: rgba(233, 167, 68, 0.12);
   --docusaurus-highlighted-code-line-bg: rgba(233, 167, 68, 0.16);
+}
+
+/* The footer keeps a dark band in both themes. Infima sets its colours on
+   the element itself, so they are overridden there, not on :root. */
+.footer--dark {
+  --ifm-footer-background-color: var(--obh-footer-background);
+  --ifm-footer-color: #f5ecda;
+  --ifm-footer-title-color: #f5ecda;
+  --ifm-footer-link-color: #c9bca3;
+  --ifm-footer-link-hover-color: #edb45e;
+}
+
+/* Previous / next page cards and the cards of a section index are links:
+   give their outline 3:1. */
+.pagination-nav__link,
+a.card {
+  border-color: var(--obh-control-border);
 }
 
 .navbar {

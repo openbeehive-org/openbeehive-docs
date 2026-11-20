@@ -15,8 +15,9 @@ site; nothing runs server-side.
 - **`i18n/<locale>/`** — German, French, Spanish and Italian translations of
   every page (`current/` and one folder per snapshot) plus the UI labels.
   English in `docs/` is the source of truth.
-- **`src/`** — site code: the theme colours (`src/css/custom.css`) and the
-  `/versions` page (`src/pages/versions.tsx`).
+- **`src/`** — site code: the theme colours (`src/css/custom.css`), the code
+  block colours (`src/prismThemes.ts`) and the `/versions` page
+  (`src/pages/versions.tsx`).
 - **`docusaurus.config.ts`** — site metadata, locales, navbar with the version
   and language switches, footer, and version labels.
 - **`static/`** — files copied verbatim (logo, favicon, social card).
@@ -42,5 +43,9 @@ pipelines use it:
 - **Static output, own hosting.** No server, no analytics; the host only serves
   files, so the attack surface is the build toolchain, which `npm run audit`
   watches.
+- **One palette, checked for contrast.** Light and dark theme share the
+  palette of the app and the website. Text reaches 4.5:1 and the borders of
+  controls 3:1 (WCAG AA); keep that when a colour changes. The site follows
+  the system colour scheme until the reader picks one with the navbar switch.
 - **Prose is not machine-formatted.** Prettier covers code and config; MDX and
   the generated i18n files are left as written so diffs stay reviewable.

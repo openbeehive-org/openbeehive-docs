@@ -54,5 +54,21 @@
   "theme.docs.versions.latestVersionLinkLabel": {
     "message": "neueste Dokumentation",
     "description": "Link text inside the version banner pointing at the newest release"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Farbschema wechseln: System, Hell, Dunkel (aktuell {mode})",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "Systemeinstellung",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "helles Design",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "dunkles Design",
+    "description": "The name for the dark color mode"
   }
 }
