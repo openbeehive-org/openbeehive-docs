@@ -6,6 +6,87 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Documentation content is also versioned in-site via Docusaurus (see
 `versions.json`).
 
+## [Unreleased]
+
+Documents the upcoming app release 0.5.0 in all five languages. Every page
+of the app, API, self-hosting and developer sections was checked against the
+app's code. Photo storage, account management, change-log snapshots and the
+export/import changes are not covered yet.
+
+### Added
+
+- **Self-hosting -> Upgrading:** "Upgrading to 0.5.0", one or two sentences
+  per breaking change: session secret, `.env` loading, same-origin CORS, the
+  host check without login, mail for verification, OIDC, the Compose files,
+  the move of single-user records, migrations, invites, throttling, limits,
+  device clocks and the API.
+- **Self-hosting -> Configuration:** `BEEHIVE_ALLOWED_HOSTS`,
+  `BEEHIVE_TRUST_PROXY_HEADERS`, the map settings (`BEEHIVE_MAPS`,
+  `BEEHIVE_MAP_TILE_URL`, `BEEHIVE_GEOCODER_URL`) with what is sent to the
+  map services, and the 16 MiB message limit.
+- **Self-hosting -> Authentication:** sign-in throttling, ending sessions
+  (`POST /auth/logout-all`), how provider logins map to accounts, and what
+  happens to single-user records when login is switched on.
+- **Using the app:** the sync status chip and sync problems, device clocks,
+  one tab at a time, the update prompt, the first-run checklist, the hives
+  list with search and filters, "Start from last visit", empty versus zero,
+  sensor readings, correcting and deleting visits, harvests, treatments and
+  queens, the treatment register, typing a label code, Settings ->
+  Appearance.
+- **Using the API:** the update RPCs for inspections, tasks, treatments and
+  harvests, partial updates with `updateMask`, `InspectionSource` and the
+  `source` filter, optional inspection numbers, the rules and error codes of
+  the plain-HTTP endpoints.
+- **Developers -> Sync protocol:** per-change push results (`rejected` and
+  its codes), `server_time_ms`, the stamp format and the 10-minute limit,
+  payload normalisation, the `removed_tags` rule, limits of Push and
+  Subscribe.
+- The colour switch is labelled in German, French, Spanish and Italian.
+
+### Changed
+
+- **Self-hosting -> Quick start / Docker / Single binary:** rewritten around
+  the published image with a volume, `docker-compose.selfhost.yml` and
+  `docker-compose.prod.yml`, "no login out of the box" and how to turn login
+  on. The binary reads `.env` itself; the boot log states the login mode.
+- **Self-hosting -> Reverse proxy:** `BEEHIVE_TRUST_PROXY_HEADERS`, the
+  headers and Content-Security-Policy the server sends, timeouts and body
+  size.
+- **Self-hosting -> Databases:** MariaDB is the tested target of the `mysql`
+  driver, next to SQLite and PostgreSQL; requirements for the MariaDB user
+  and database.
+- **Wording:** "workspace" replaces "tenant" in prose in every language
+  (German "Arbeitsbereich", French "espace", Spanish "espacio", Italian
+  "spazio"); `tenant` stays where it is an API path, a field or an
+  identifier.
+- **Using the app -> Tasks:** tasks created in the app are personal, not
+  shared with the workspace.
+- **Using the API -> Automated trackers:** readings are posted with
+  `source` set to sensor and no longer count as inspections.
+- **Developers:** sharing is the workspace on the architecture, data model
+  and sync protocol pages; the cursor only advances through Pull; events
+  follow corrections and deletes of their record; the in-app scanner works
+  in every browser.
+- **Colours:** the dark theme uses the palette of the app and the website;
+  the light theme uses a darker honey for text and links. Text reaches a
+  contrast of 4.5:1 and the borders of controls 3:1 in both themes, code
+  blocks included (own code themes replace "github" and "dracula"). The
+  site follows the system colour scheme until a reader picks System, Light
+  or Dark with the switch in the navbar.
+
+### Removed
+
+- The demo Compose file as a production template, `demo.openbeehive.org`,
+  per-apiary sharing and the `apiary_share` table, "Honey harvested" on the
+  visit form, the statement that harvests cannot be edited through the API.
+
+### Fixed
+
+- Links between pages of the unreleased docs opened the newest release
+  instead of staying in the version being read; they are file links now.
+- Small mistranslations on the German, French, Spanish and Italian "Diseases
+  & pests" pages; missing accents on four Spanish self-hosting pages.
+
 ## [0.4.0] - 2026-10-19
 
 Documents app release 0.4.0 (unprivileged container, signed images, Go 1.27
