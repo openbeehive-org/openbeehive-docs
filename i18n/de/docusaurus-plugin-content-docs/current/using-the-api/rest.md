@@ -32,7 +32,7 @@ Authorization: Bearer <token>      # only when login is configured
   werden in Antworten weggelassen.
 
 Die Beispiele unten verwenden `$OB` für den Origin und `$TOKEN` für einen
-API-Schlüssel (`obhk_...`, erstellt unter **Einstellungen → API-Schlüssel**)
+API-Schlüssel (`obhk_...`, erstellt unter **Einstellungen → Arbeitsbereich → API-Schlüssel**)
 oder ein Sitzungstoken, wie im [Überblick](./overview.md#authentication)
 beschrieben. Auf einer Instanz ohne Login lässt du den
 `Authorization`-Header weg.
@@ -182,6 +182,9 @@ erscheinen in den Diagrammen, zählen aber nicht als „Letzte Durchsicht“ und
 fehlen in der Liste der fälligen Durchsichten und in den letzten Durchsichten
 des Dashboards; siehe [Automatische Tracker](./automated-trackers.md).
 
+`CreateInspection` und `UpdateInspection` lehnen ein `date`, das mehr als einen
+Tag in der Zukunft liegt, ab (`invalid_argument`).
+
 ### Fotos \{#photos}
 
 Fotos werden nachträglich mit `AddInspectionPhoto` hinzugefügt:
@@ -279,7 +282,9 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
 ```
 
 Mit einer Maske werden genau die aufgeführten Felder geschrieben und sonst
-nichts. Eine Anfrage, die nichts ändern würde, antwortet mit
+nichts. Masken-Pfade dürfen in `lowerCamelCase` oder `snake_case`
+geschrieben sein; ein unbekannter Pfad antwortet mit `invalid_argument` und der
+Liste der Felder, die der Aufruf ändern kann. Eine Anfrage, die nichts ändern würde, antwortet mit
 `invalid_argument`. Die Regeln pro Aufruf:
 
 | Aufruf | Anfrage | Hinweise |
@@ -481,7 +486,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (Vorgabe 21) legt fest, wann eine Beute als fällig zählt:
+`thresholdDays` (Vorgabe 10, wie in der App) legt fest, wann eine Beute als fällig zählt:
 Beuten, deren letzte Durchsicht mindestens so viele Tage zurückliegt, plus
 nie durchgesehene Beuten (`daysSinceLast: -1`, zuerst gelistet).
 Sensormessungen (`INSPECTION_SOURCE_SENSOR`) zählen hier nicht als
@@ -608,7 +613,7 @@ HTTP-Status. Clients sollten sich nach `code` richten; der Text kann sich
 | 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
 | 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
+| 409 | `email_taken`, `already_member`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (mit `Retry-After`) |
@@ -632,6 +637,7 @@ Codes sind `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 
 - Sende `{}` für eine Anfrage ohne Felder.
 - `Content-Type: application/json` wählt das Connect-JSON-Protokoll aus.
-  `application/proto` sendet binäres Protobuf über dieselbe URL.
+  `application/proto` sendet binäres Protobuf über dieselbe URL. Eine Anfrage
+  ohne `Content-Type` antwortet mit `415` und einem JSON-Fehler, der das sagt.
 - `SyncService.Subscribe` ist ein Server-Stream und braucht einen
   Streaming-Client; siehe [gRPC](./grpc.md).

@@ -95,7 +95,7 @@ Mit `--protocol grpc` erzwingst du gRPC statt Connect.
 ## Authentifizierung
 
 Sende einen API-Schlüssel (`obhk_...`, erstellt unter
-**Einstellungen → API-Schlüssel**) oder ein Sitzungstoken als Header
+**Einstellungen → Arbeitsbereich → API-Schlüssel**) oder ein Sitzungstoken als Header
 `Authorization: Bearer <token>` (gRPC-Metadaten); `token` in den Snippets
 oben ist eines von beiden. Für Sitzungstokens wird auch das Cookie
 `obh_session` akzeptiert. Derselbe Interceptor prüft beide Arten und deckt

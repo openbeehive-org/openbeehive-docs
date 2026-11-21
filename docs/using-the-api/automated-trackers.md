@@ -71,7 +71,7 @@ Give each device its own API key (see
 [Authentication](./overview.md#authentication)):
 
 1. In the app, switch to the workspace the hive belongs to and open
-   **Settings → API keys**.
+   **Settings → Workspace → API keys**.
 2. Name the key after the device (for example `scale-01`), leave the
    permissions at **Read and write** (a sensor creates inspections, which a
    **Read-only** key cannot) and choose whether it expires, then tap

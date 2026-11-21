@@ -92,7 +92,7 @@ Add `--protocol grpc` to force gRPC instead of Connect.
 
 ## Authentication
 
-Send an API key (`obhk_...`, created under **Settings → API keys**) or a
+Send an API key (`obhk_...`, created under **Settings → Workspace → API keys**) or a
 session token as the `Authorization: Bearer <token>` header (gRPC
 metadata); `token` in the snippets above is either. The `obh_session`
 cookie is accepted for session tokens too. The same interceptor verifies

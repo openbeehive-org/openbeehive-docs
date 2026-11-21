@@ -76,7 +76,7 @@ Assegna a ogni dispositivo la propria chiave API (vedi
 [Autenticazione](./overview.md#authentication)):
 
 1. Nell'app, passa allo spazio a cui appartiene l'arnia e apri
-   **Impostazioni → Chiavi API**.
+   **Impostazioni → Spazio → Chiavi API**.
 2. Dai alla chiave il nome del dispositivo (per esempio `scale-01`), lascia i
    permessi su **Lettura e scrittura** (un sensore crea ispezioni, cosa che una
    chiave in **Sola lettura** non può fare) e scegli se deve scadere, poi tocca

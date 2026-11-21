@@ -154,7 +154,7 @@ Accanto ai servizi RPC ci sono alcuni endpoint HTTP semplici:
 
 | Percorso | Scopo |
 | --- | --- |
-| `GET /healthz` | Restituisce `ok` |
+| `GET /healthz` | Restituisce `ok` una volta che il server è in ascolto (il primo avvio della 0.5.0 converte prima le foto incorporate) |
 | `GET /photos/<id>`, `POST /photos/<id>` | Immagini delle foto a piena risoluzione: lettura, oppure caricamento dell'immagine di un record di foto già sincronizzato; sessione o chiave API, solo per i membri dello spazio. Vedi [REST](./rest.md#photos) |
 | `GET /export`, `GET /export?photos=1` | Lo spazio attivo come JSON, oppure come ZIP con le foto; sessione o chiave API di scrittura. Vedi [REST](./rest.md#export) |
 | `GET /auth/instance` | Ciò che l'istanza offre (metodi di login, demo, registrazione, impostazioni della mappa); sempre presente, non servono credenziali |
@@ -163,6 +163,7 @@ Accanto ai servizi RPC ci sono alcuni endpoint HTTP semplici:
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` impostata) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkey (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
 | `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Helper per sessione e spazio, presenti quando è abilitato un qualsiasi metodo di login |
+| `GET /auth/invite?token=...` | Il nome dello spazio, l'indirizzo email mascherato (`j…@e….org`) e la scadenza di un invito, senza credenziali; gli inviti sconosciuti, usati o revocati rispondono `400` `invite_invalid`, quelli scaduti `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Che cosa comporterebbe eliminare l'account, ed eliminarlo |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestione delle chiavi API (elenco, creazione, rimozione), presente quando è abilitato un qualsiasi metodo di login; solo con sessione, una chiave non può chiamarli |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Amministrazione degli spazi, presente quando è abilitato un qualsiasi metodo di login |
@@ -183,6 +184,10 @@ seguono tutti le stesse regole:
   inviano alcuna intestazione `Origin`, non sono interessati.
 - `/tenants/delete` e `/tenants/leave` richiedono `{"org_id": "..."}`; non
   esiste un valore predefinito.
+- `POST /tenants/invite` risponde `409` `already_member` per chi è già
+  nello spazio. Invitare un indirizzo con un invito aperto sostituisce
+  quell'invito (il vecchio link smette di funzionare) e la risposta contiene
+  `"renewed": true`.
 - Le pagine che un browser apre direttamente (`/auth/verify`, `/auth/login`,
   `/auth/callback`) rispondono a un errore con un reindirizzamento a
   `/login?error=<code>` invece che con JSON.
@@ -206,11 +211,11 @@ abbia o meno un metodo di login:
 ### Chiavi API
 
 Una chiave API è la credenziale consigliata per script, sensori e
-integrazioni. Le chiavi si gestiscono nell'app in **Impostazioni → Chiavi API**
+integrazioni. Le chiavi si gestiscono nell'app in **Impostazioni → Spazio → Chiavi API**
 (vedi [Account e spazi](../using-the-app/accounts-tenants.md#api-keys)):
 
 1. Accedi, passa allo spazio in cui lo script deve scrivere e apri
-   **Impostazioni → Chiavi API**.
+   **Impostazioni → Spazio → Chiavi API**.
 2. Digita un nome (per esempio `hive scale`), scegli i permessi (**Lettura e
    scrittura** o **Sola lettura**) e una scadenza (**Non scade**, **30 giorni**,
    **90 giorni** o **1 anno**), poi tocca **Crea chiave**. La chiave inizia con

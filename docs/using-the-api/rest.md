@@ -31,7 +31,7 @@ Authorization: Bearer <token>      # only when login is configured
   omitted from responses.
 
 The examples below use `$OB` for the origin and `$TOKEN` for an API key
-(`obhk_...`, created under **Settings → API keys**) or a session token, as
+(`obhk_...`, created under **Settings → Workspace → API keys**) or a session token, as
 described in the [overview](./overview.md#authentication). Drop the
 `Authorization` header on an instance without login.
 
@@ -175,6 +175,9 @@ an automated reading. Sensor readings appear in the charts but do not count
 as "last inspected" and are left out of the due list and of the dashboard's
 recent inspections; see [Automated trackers](./automated-trackers.md).
 
+`CreateInspection` and `UpdateInspection` refuse a `date` more than a day in
+the future (`invalid_argument`).
+
 ### Photos \{#photos}
 
 Photos are added afterwards with `AddInspectionPhoto`:
@@ -267,7 +270,9 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
   -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
 ```
 
-With a mask, exactly the listed fields are written and nothing else. A
+With a mask, exactly the listed fields are written and nothing else. Mask
+paths may be written in `lowerCamelCase` or `snake_case`; an unknown path
+answers `invalid_argument` with the list of fields the call can update. A
 request that would change nothing answers `invalid_argument`. The rules per
 call:
 
@@ -466,7 +471,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (default 21) sets when a hive counts as due: hives whose last
+`thresholdDays` (default 10, as in the app) sets when a hive counts as due: hives whose last
 inspection is at least that many days old, plus hives never inspected
 (`daysSinceLast: -1`, listed first). Sensor readings
 (`INSPECTION_SOURCE_SENSOR`) do not count as inspections here and are not
@@ -588,7 +593,7 @@ status. Clients should act on `code`; the text may change.
 | 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
 | 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
+| 409 | `email_taken`, `already_member`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (with `Retry-After`) |
@@ -612,6 +617,7 @@ are `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 
 - Send `{}` for a request with no fields.
 - `Content-Type: application/json` selects the Connect JSON protocol.
-  `application/proto` sends binary protobuf over the same URL.
+  `application/proto` sends binary protobuf over the same URL. A request
+  without `Content-Type` answers `415` with a JSON error that says so.
 - `SyncService.Subscribe` is a server stream and needs a streaming client; see
   [gRPC](./grpc.md).

@@ -160,7 +160,7 @@ Quelques endpoints HTTP simples se trouvent à côté des services RPC :
 
 | Chemin | Rôle |
 | --- | --- |
-| `GET /healthz` | Renvoie `ok` |
+| `GET /healthz` | Renvoie `ok` dès que le serveur écoute (le premier démarrage de la 0.5.0 convertit auparavant les photos intégrées) |
 | `GET /photos/<id>`, `POST /photos/<id>` | Images des photos en taille réelle : lire, ou envoyer l'image d'un enregistrement de photo déjà synchronisé ; session ou clé API, membres de l'espace uniquement. Voir [REST](./rest.md#photos) |
 | `GET /export`, `GET /export?photos=1` | L'espace actif en JSON, ou en ZIP avec les photos ; session ou clé API en écriture. Voir [REST](./rest.md#export) |
 | `GET /auth/instance` | Ce que l'instance propose (méthodes de connexion, démo, inscription, réglages de carte) ; toujours présent, aucun identifiant requis |
@@ -169,6 +169,7 @@ Quelques endpoints HTTP simples se trouvent à côté des services RPC :
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` défini) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
 | `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Utilitaires de session et d'espace, présents dès qu'une méthode de connexion est activée |
+| `GET /auth/invite?token=...` | Le nom de l'espace, l'adresse e-mail masquée (`j…@e….org`) et l'expiration d'une invitation, sans identifiants ; les invitations inconnues, utilisées ou révoquées répondent `400` `invite_invalid`, les invitations expirées `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Ce qu'entraînerait la suppression du compte, et sa suppression |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestion des clés API (lister, créer, supprimer), présente dès qu'une méthode de connexion est activée ; session uniquement, une clé ne peut pas les appeler |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Administration des espaces, présente dès qu'une méthode de connexion est activée |
@@ -189,6 +190,10 @@ l'application. Ils ne font pas partie du contrat proto. Les endpoints `/auth/*` 
   d'en-tête `Origin`, ne sont pas concernés.
 - `/tenants/delete` et `/tenants/leave` exigent `{"org_id": "..."}` ; il n'y a
   pas de valeur par défaut.
+- `POST /tenants/invite` répond `409` `already_member` pour une personne qui
+  fait déjà partie de l'espace. Inviter une adresse qui a une invitation
+  ouverte remplace cette invitation (l'ancien lien cesse de fonctionner) et la
+  réponse contient `"renewed": true`.
 - Les pages qu'un navigateur ouvre directement (`/auth/verify`, `/auth/login`,
   `/auth/callback`) répondent à une erreur par une redirection vers
   `/login?error=<code>` au lieu de JSON.
@@ -214,11 +219,11 @@ de connexion sur l'instance :
 
 Une clé API est l'identifiant recommandé pour les scripts, les capteurs et les
 intégrations. Les clés se gèrent dans l'application sous
-**Paramètres → Clés API** (voir
+**Paramètres → Espace → Clés API** (voir
 [Comptes et espaces](../using-the-app/accounts-tenants.md#api-keys)) :
 
 1. Connectez-vous, basculez vers l'espace dans lequel le script doit écrire et
-   ouvrez **Paramètres → Clés API**.
+   ouvrez **Paramètres → Espace → Clés API**.
 2. Saisissez un nom (par exemple `hive scale`), choisissez les permissions
    (**Lecture et écriture** ou **Lecture seule**) et une expiration
    (**N'expire jamais**, **30 jours**, **90 jours** ou **1 an**), puis touchez

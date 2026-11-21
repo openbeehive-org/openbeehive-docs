@@ -92,7 +92,7 @@ Añade `--protocol grpc` para forzar gRPC en lugar de Connect.
 
 ## Autenticación
 
-Envía una clave API (`obhk_...`, creada en **Ajustes → Claves API**) o un
+Envía una clave API (`obhk_...`, creada en **Ajustes → Espacio → Claves API**) o un
 token de sesión como cabecera `Authorization: Bearer <token>` (metadatos
 gRPC); `token` en los fragmentos anteriores es cualquiera de los dos. La
 cookie `obh_session` también se acepta para los tokens de sesión. El mismo

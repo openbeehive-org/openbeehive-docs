@@ -150,7 +150,7 @@ A few plain HTTP endpoints sit next to the RPC services:
 
 | Path | Purpose |
 | --- | --- |
-| `GET /healthz` | Returns `ok` |
+| `GET /healthz` | Returns `ok` once the server listens (the first start of 0.5.0 converts inline photos before that) |
 | `GET /photos/<id>`, `POST /photos/<id>` | Full-size photo images: read, or upload the image of a photo record that has already been synced; session or API key, members of the workspace only. See [REST](./rest.md#photos) |
 | `GET /export`, `GET /export?photos=1` | The active workspace as JSON, or as a ZIP with photos; session or write API key. See [REST](./rest.md#export) |
 | `GET /auth/instance` | What the instance offers (login methods, demo, registration, map settings); always present, no credentials needed |
@@ -159,6 +159,7 @@ A few plain HTTP endpoints sit next to the RPC services:
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` set) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
 | `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Session and workspace helpers, present whenever any login method is enabled |
+| `GET /auth/invite?token=...` | The workspace name, the masked email address (`j…@e….org`) and the expiry of an invite, without credentials; unknown, used or revoked invites answer `400` `invite_invalid`, expired ones `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | What deleting the account would do, and deleting it |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | API key management (list, create, remove), present whenever any login method is enabled; session only, a key cannot call them |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Workspace administration, present whenever any login method is enabled |
@@ -178,6 +179,10 @@ rules:
   affected.
 - `/tenants/delete` and `/tenants/leave` need `{"org_id": "..."}`; there is
   no default.
+- `POST /tenants/invite` answers `409` `already_member` for someone who is
+  already in the workspace. Inviting an address with an open invite replaces
+  that invite (the old link stops working) and the answer has
+  `"renewed": true`.
 - Pages a browser opens directly (`/auth/verify`, `/auth/login`,
   `/auth/callback`) answer an error with a redirect to `/login?error=<code>`
   instead of JSON.
@@ -201,11 +206,11 @@ method:
 ### API keys
 
 An API key is the recommended credential for scripts, sensors and
-integrations. Keys are managed in the app under **Settings → API keys**
+integrations. Keys are managed in the app under **Settings → Workspace → API keys**
 (see [Accounts & workspaces](../using-the-app/accounts-tenants.md#api-keys)):
 
 1. Sign in, switch to the workspace the script should write to, and open
-   **Settings → API keys**.
+   **Settings → Workspace → API keys**.
 2. Type a name (for example `hive scale`), pick the permissions (**Read and
    write** or **Read-only**) and an expiry (**Never expires**, **30 days**,
    **90 days** or **1 year**), then tap **Create key**. The key starts with

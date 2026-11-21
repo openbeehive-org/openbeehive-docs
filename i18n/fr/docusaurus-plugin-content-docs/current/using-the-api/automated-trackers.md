@@ -77,7 +77,7 @@ Donnez à chaque appareil sa propre clé API (voir
 [Authentification](./overview.md#authentication)) :
 
 1. Dans l'application, basculez vers l'espace auquel la ruche appartient et
-   ouvrez **Paramètres → Clés API**.
+   ouvrez **Paramètres → Espace → Clés API**.
 2. Nommez la clé d'après l'appareil (par exemple `scale-01`), laissez les
    permissions sur **Lecture et écriture** (un capteur crée des visites, ce
    qu'une clé **Lecture seule** ne peut pas faire) et choisissez si elle

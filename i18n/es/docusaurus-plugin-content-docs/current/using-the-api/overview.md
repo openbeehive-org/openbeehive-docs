@@ -155,7 +155,7 @@ Junto a los servicios RPC hay unos cuantos endpoints HTTP planos:
 
 | Ruta | Propósito |
 | --- | --- |
-| `GET /healthz` | Devuelve `ok` |
+| `GET /healthz` | Devuelve `ok` en cuanto el servidor escucha (el primer arranque de 0.5.0 convierte antes las fotos en línea) |
 | `GET /photos/<id>`, `POST /photos/<id>` | Imágenes de fotos a tamaño completo: leerlas, o subir la imagen de un registro de foto ya sincronizado; sesión o clave API, solo miembros del espacio. Consulta [REST](./rest.md#photos) |
 | `GET /export`, `GET /export?photos=1` | El espacio activo como JSON, o como ZIP con fotos; sesión o clave API de escritura. Consulta [REST](./rest.md#export) |
 | `GET /auth/instance` | Lo que ofrece la instancia (métodos de inicio de sesión, demo, registro, ajustes del mapa); siempre presente, no necesita credenciales |
@@ -164,6 +164,7 @@ Junto a los servicios RPC hay unos cuantos endpoints HTTP planos:
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` definido) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
 | `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Auxiliares de sesión y de espacio, presentes siempre que haya algún método de inicio de sesión habilitado |
+| `GET /auth/invite?token=...` | El nombre del espacio, la dirección de correo enmascarada (`j…@e….org`) y la caducidad de una invitación, sin credenciales; las invitaciones desconocidas, usadas o revocadas responden `400` `invite_invalid`, las caducadas `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Qué haría la eliminación de la cuenta, y eliminarla |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestión de claves API (listar, crear, eliminar), presente siempre que haya algún método de inicio de sesión habilitado; solo con sesión, una clave no puede llamarlos |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Administración de espacios, presente siempre que haya algún método de inicio de sesión habilitado |
@@ -183,6 +184,10 @@ mismas reglas:
   afectados.
 - `/tenants/delete` y `/tenants/leave` necesitan `{"org_id": "..."}`; no hay
   valor predeterminado.
+- `POST /tenants/invite` responde `409` `already_member` para alguien que
+  ya está en el espacio. Invitar a una dirección con una invitación abierta sustituye
+  esa invitación (el enlace antiguo deja de funcionar) y la respuesta lleva
+  `"renewed": true`.
 - Las páginas que un navegador abre directamente (`/auth/verify`, `/auth/login`,
   `/auth/callback`) responden a un error con una redirección a
   `/login?error=<code>` en lugar de JSON.
@@ -207,11 +212,11 @@ inicio de sesión:
 
 Una clave API es la credencial recomendada para scripts, sensores e
 integraciones. Las claves se gestionan en la aplicación en
-**Ajustes → Claves API** (consulta
+**Ajustes → Espacio → Claves API** (consulta
 [Cuentas y espacios](../using-the-app/accounts-tenants.md#api-keys)):
 
 1. Inicia sesión, cambia al espacio en el que el script debe escribir y abre
-   **Ajustes → Claves API**.
+   **Ajustes → Espacio → Claves API**.
 2. Escribe un nombre (por ejemplo `hive scale`), elige los permisos
    (**Lectura y escritura** o **Solo lectura**) y una caducidad (**No
    caduca**, **30 días**, **90 días** o **1 año**), y después toca

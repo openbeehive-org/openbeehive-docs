@@ -32,7 +32,7 @@ Authorization: Bearer <token>      # only when login is configured
   vacía) se omiten en las respuestas.
 
 Los ejemplos siguientes usan `$OB` para el origen y `$TOKEN` para una clave
-API (`obhk_...`, creada en **Ajustes → Claves API**) o un token de sesión,
+API (`obhk_...`, creada en **Ajustes → Espacio → Claves API**) o un token de sesión,
 como se describe en la [visión general](./overview.md#authentication). Quita
 la cabecera `Authorization` en una instancia sin inicio de sesión.
 
@@ -177,6 +177,9 @@ una lectura automática. Las lecturas de sensor aparecen en los gráficos, pero 
 como "última inspección" y quedan fuera de la lista de pendientes y de las inspecciones
 recientes del panel; consulta [Rastreadores automáticos](./automated-trackers.md).
 
+`CreateInspection` y `UpdateInspection` rechazan una `date` con más de un día
+de adelanto (`invalid_argument`).
+
 ### Fotos \{#photos}
 
 Las fotos se añaden después con `AddInspectionPhoto`:
@@ -272,7 +275,9 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
   -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
 ```
 
-Con una máscara se escriben exactamente los campos listados y nada más. Una
+Con una máscara se escriben exactamente los campos listados y nada más. Las rutas
+de la máscara pueden escribirse en `lowerCamelCase` o en `snake_case`; una ruta desconocida
+responde `invalid_argument` con la lista de campos que la llamada puede actualizar. Una
 solicitud que no cambiaría nada responde `invalid_argument`. Las reglas por
 llamada:
 
@@ -472,7 +477,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (por defecto 21) define cuándo una colmena cuenta como
+`thresholdDays` (por defecto 10, como en la aplicación) define cuándo una colmena cuenta como
 pendiente: las colmenas cuya última inspección tiene al menos esa cantidad de
 días, más las colmenas nunca inspeccionadas (`daysSinceLast: -1`, listadas
 primero). Las lecturas de sensor (`INSPECTION_SOURCE_SENSOR`) no cuentan aquí como
@@ -596,7 +601,7 @@ acorde. Los clientes deben actuar según `code`; el texto puede cambiar.
 | 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
 | 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
+| 409 | `email_taken`, `already_member`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (con `Retry-After`) |
@@ -620,6 +625,7 @@ donde la aplicación muestra un mensaje traducido. Sus códigos son
 
 - Envía `{}` para una solicitud sin campos.
 - `Content-Type: application/json` selecciona el protocolo JSON de Connect.
-  `application/proto` envía protobuf binario por la misma URL.
+  `application/proto` envía protobuf binario por la misma URL. Una solicitud
+  sin `Content-Type` responde `415` con un error JSON que lo indica.
 - `SyncService.Subscribe` es un stream desde el servidor y necesita un cliente
   de streaming; consulta [gRPC](./grpc.md).

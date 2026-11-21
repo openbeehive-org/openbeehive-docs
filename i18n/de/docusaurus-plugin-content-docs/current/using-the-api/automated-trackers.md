@@ -77,7 +77,7 @@ Gib jedem Gerät seinen eigenen API-Schlüssel (siehe
 [Authentifizierung](./overview.md#authentication)):
 
 1. Wechsle in der App in den Arbeitsbereich, zu dem die Beute gehört, und öffne
-   **Einstellungen → API-Schlüssel**.
+   **Einstellungen → Arbeitsbereich → API-Schlüssel**.
 2. Benenne den Schlüssel nach dem Gerät (zum Beispiel `scale-01`), lass die
    Berechtigungen auf **Lesen und Schreiben** (ein Sensor legt Durchsichten
    an, was ein Schlüssel mit **Nur Lesen** nicht kann), wähle, ob er

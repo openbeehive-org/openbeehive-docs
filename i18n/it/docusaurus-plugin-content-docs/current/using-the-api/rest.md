@@ -32,7 +32,7 @@ Authorization: Bearer <token>      # only when login is configured
   vengono omessi dalle risposte.
 
 Gli esempi qui sotto usano `$OB` per l'origine e `$TOKEN` per una chiave API
-(`obhk_...`, creata in **Impostazioni → Chiavi API**) o per un token di
+(`obhk_...`, creata in **Impostazioni → Spazio → Chiavi API**) o per un token di
 sessione, come descritto nella [panoramica](./overview.md#authentication).
 Ometti l'header `Authorization` su un'istanza senza login.
 
@@ -180,6 +180,9 @@ compaiono nei grafici ma non contano come "ultima visita" e sono escluse
 dall'elenco delle visite in scadenza e dalle ispezioni recenti della
 dashboard; vedi [Tracker automatici](./automated-trackers.md).
 
+`CreateInspection` e `UpdateInspection` rifiutano una `date` più di un giorno
+nel futuro (`invalid_argument`).
+
 ### Foto \{#photos}
 
 Le foto si aggiungono in seguito con `AddInspectionPhoto`:
@@ -277,6 +280,9 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
 ```
 
 Con una maschera vengono scritti esattamente i campi elencati e nient'altro.
+I percorsi della maschera possono essere scritti in `lowerCamelCase` o in
+`snake_case`; un percorso sconosciuto risponde `invalid_argument` con l'elenco
+dei campi che la chiamata può aggiornare.
 Una richiesta che non cambierebbe nulla risponde `invalid_argument`. Le regole
 per ciascuna chiamata:
 
@@ -478,7 +484,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (predefinito 21) stabilisce quando un'arnia conta come in
+`thresholdDays` (predefinito 10, come nell'app) stabilisce quando un'arnia conta come in
 scadenza: le arnie la cui ultima ispezione ha almeno quel numero di giorni,
 più le arnie mai ispezionate (`daysSinceLast: -1`, elencate per prime).
 Le letture dei sensori (`INSPECTION_SOURCE_SENSOR`) qui non contano come
@@ -601,7 +607,7 @@ corrispondente. I client dovrebbero basarsi su `code`; il testo può cambiare.
 | 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
 | 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
+| 409 | `email_taken`, `already_member`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (con `Retry-After`) |
@@ -625,6 +631,7 @@ sono `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 
 - Invia `{}` per una richiesta senza campi.
 - `Content-Type: application/json` seleziona il protocollo Connect JSON.
-  `application/proto` invia protobuf binario sullo stesso URL.
+  `application/proto` invia protobuf binario sullo stesso URL. Una richiesta
+  senza `Content-Type` risponde `415` con un errore JSON che lo segnala.
 - `SyncService.Subscribe` è uno stream lato server e richiede un client di
   streaming; vedi [gRPC](./grpc.md).

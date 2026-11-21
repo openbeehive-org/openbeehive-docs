@@ -32,7 +32,7 @@ Authorization: Bearer <token>      # only when login is configured
   sont omis des réponses.
 
 Les exemples ci-dessous utilisent `$OB` pour l'origine et `$TOKEN` pour une
-clé API (`obhk_...`, créée sous **Paramètres → Clés API**) ou un jeton de
+clé API (`obhk_...`, créée sous **Paramètres → Espace → Clés API**) ou un jeton de
 session, comme décrit dans la [présentation](./overview.md#authentication).
 Supprimez l'en-tête `Authorization` sur une instance sans connexion.
 
@@ -179,6 +179,9 @@ apparaissent dans les graphiques mais ne comptent pas comme « dernière visite 
 et sont exclus de la liste des visites à effectuer et des visites récentes du
 tableau de bord ; voir [Trackers automatisés](./automated-trackers.md).
 
+`CreateInspection` et `UpdateInspection` refusent une `date` située plus d'un
+jour dans le futur (`invalid_argument`).
+
 ### Photos \{#photos}
 
 Les photos sont ajoutées ensuite avec `AddInspectionPhoto` :
@@ -276,8 +279,10 @@ curl -s -X POST "$OB/openbeehive.v1.InspectionService/UpdateInspection" \
   -d '{"inspection":{"id":"7f0e..."},"updateMask":"note,weightKg"}'
 ```
 
-Avec un masque, exactement les champs listés sont écrits, et rien d'autre. Une
-requête qui ne changerait rien répond `invalid_argument`. Les règles par
+Avec un masque, exactement les champs listés sont écrits, et rien d'autre. Les
+chemins du masque peuvent s'écrire en `lowerCamelCase` ou en `snake_case` ; un
+chemin inconnu répond `invalid_argument` avec la liste des champs que l'appel
+peut mettre à jour. Une requête qui ne changerait rien répond `invalid_argument`. Les règles par
 appel :
 
 | Appel | Requête | Notes |
@@ -479,7 +484,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (21 par défaut) définit à partir de quand une ruche est
+`thresholdDays` (10 par défaut, comme dans l'application) définit à partir de quand une ruche est
 considérée comme à visiter : les ruches dont la dernière visite date d'au moins
 ce nombre de jours, plus les ruches jamais visitées (`daysSinceLast: -1`,
 listées en premier). Les relevés de capteur (`INSPECTION_SOURCE_SENSOR`) ne
@@ -606,7 +611,7 @@ changer.
 | 403 | `cross_site_request`, `demo_read_only`, `invite_only`, `invite_email_mismatch`, `not_a_member`, `owner_only`, `admin_only`, `account_protected`, `password_managed`, `wrong_password`, `reauth_required`, `login_required`, `passkey_failed`, `passkey_session_mismatch` |
 | 404 | `not_found`, `invite_not_found`, `key_not_found`, `member_not_found`, `account_not_found`, `passkey_not_found` |
 | 405 | `method_not_allowed` |
-| 409 | `email_taken`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
+| 409 | `email_taken`, `already_member`, `last_owner`, `no_password`, `passkey_none`, `reset_needs_admin` |
 | 413 | `body_too_large` |
 | 415 | `unsupported_media_type` |
 | 429 | `rate_limited` (avec `Retry-After`) |
@@ -630,6 +635,7 @@ sont `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 
 - Envoyez `{}` pour une requête sans champs.
 - `Content-Type: application/json` sélectionne le protocole JSON de Connect.
-  `application/proto` envoie du protobuf binaire sur la même URL.
+  `application/proto` envoie du protobuf binaire sur la même URL. Une requête
+  sans `Content-Type` répond `415` avec une erreur JSON qui le signale.
 - `SyncService.Subscribe` est un flux serveur et nécessite un client de
   streaming ; voir [gRPC](./grpc.md).

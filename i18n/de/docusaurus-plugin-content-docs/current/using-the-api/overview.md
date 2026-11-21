@@ -161,7 +161,7 @@ Neben den RPC-Diensten gibt es ein paar einfache HTTP-Endpunkte:
 
 | Pfad | Zweck |
 | --- | --- |
-| `GET /healthz` | Liefert `ok` |
+| `GET /healthz` | Liefert `ok`, sobald der Server lauscht (der erste Start von 0.5.0 wandelt vorher eingebettete Fotos um) |
 | `GET /photos/<id>`, `POST /photos/<id>` | Fotos in voller Größe: lesen oder das Bild eines bereits synchronisierten Foto-Eintrags hochladen; Sitzung oder API-Schlüssel, nur für Mitglieder des Arbeitsbereichs. Siehe [REST](./rest.md#photos) |
 | `GET /export`, `GET /export?photos=1` | Der aktive Arbeitsbereich als JSON oder als ZIP mit Fotos; Sitzung oder API-Schlüssel mit Schreibrecht. Siehe [REST](./rest.md#export) |
 | `GET /auth/instance` | Was die Instanz anbietet (Anmeldemethoden, Demo, Registrierung, Karteneinstellungen); immer vorhanden, keine Anmeldedaten nötig |
@@ -170,6 +170,7 @@ Neben den RPC-Diensten gibt es ein paar einfache HTTP-Endpunkte:
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` gesetzt) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
 | `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `GET /auth/invite?token=...` | Der Name des Arbeitsbereichs, die maskierte E-Mail-Adresse (`j…@e….org`) und das Ablaufdatum einer Einladung, ohne Anmeldedaten; unbekannte, verwendete oder zurückgezogene Einladungen antworten mit `400` `invite_invalid`, abgelaufene mit `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Was das Löschen des Kontos bewirken würde, und das Löschen selbst |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Verwaltung der API-Schlüssel (auflisten, erstellen, entfernen), vorhanden sobald irgendeine Anmeldemethode aktiviert ist; nur per Sitzung, ein Schlüssel kann sie nicht aufrufen |
 | `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Verwaltung der Arbeitsbereiche, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
@@ -190,6 +191,10 @@ nicht Teil des Proto-Vertrags. Für die Endpunkte unter `/auth/*` und
   senden, sind nicht betroffen.
 - `/tenants/delete` und `/tenants/leave` brauchen `{"org_id": "..."}`; eine
   Vorgabe gibt es nicht.
+- `POST /tenants/invite` antwortet mit `409` `already_member` für jemanden,
+  der schon im Arbeitsbereich ist. Eine Einladung an eine Adresse mit offener
+  Einladung ersetzt diese (der alte Link funktioniert nicht mehr), und die
+  Antwort enthält `"renewed": true`.
 - Seiten, die ein Browser direkt öffnet (`/auth/verify`, `/auth/login`,
   `/auth/callback`), beantworten einen Fehler mit einer Weiterleitung auf
   `/login?error=<code>` statt mit JSON.
@@ -214,11 +219,11 @@ Anmeldemethode hat:
 
 Ein API-Schlüssel ist die empfohlene Anmeldung für Skripte, Sensoren und
 Integrationen. Schlüssel verwaltest du in der App unter
-**Einstellungen → API-Schlüssel** (siehe
+**Einstellungen → Arbeitsbereich → API-Schlüssel** (siehe
 [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md#api-keys)):
 
 1. Melde dich an, wechsle in den Arbeitsbereich, in den das Skript schreiben soll,
-   und öffne **Einstellungen → API-Schlüssel**.
+   und öffne **Einstellungen → Arbeitsbereich → API-Schlüssel**.
 2. Gib einen Namen ein (zum Beispiel `hive scale`), wähle die
    Berechtigungen (**Lesen und Schreiben** oder **Nur Lesen**) und ein
    Ablaufdatum (**Läuft nie ab**, **30 Tagen**, **90 Tagen** oder

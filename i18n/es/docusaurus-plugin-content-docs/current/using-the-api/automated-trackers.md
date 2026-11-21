@@ -72,7 +72,7 @@ Da a cada dispositivo su propia clave API (consulta
 [Autenticación](./overview.md#authentication)):
 
 1. En la aplicación, cambia al espacio al que pertenece la colmena y abre
-   **Ajustes → Claves API**.
+   **Ajustes → Espacio → Claves API**.
 2. Nombra la clave según el dispositivo (por ejemplo `scale-01`), deja los
    permisos en **Lectura y escritura** (un sensor crea inspecciones, algo
    que una clave de **Solo lectura** no puede hacer) y elige si caduca, y
