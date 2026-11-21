@@ -57,7 +57,7 @@ Jede Behandlung in der Liste hat eine Aktion zum Bearbeiten und eine zum Lösche
 
 ## Das Bestandsbuch \{#treatment-register}
 
-**Bestandsbuch drucken** unter **Behandlungen** druckt das Bestandsbuch der Beute: eine Tabelle aller Behandlungen mit Datum, Mittel, Wirkstoff, Dosis, Methode, Chargennummer, Wartezeit-Datum und dem Änderungsvermerk, dazu der Tag des Drucks. Der Button **Bestandsbuch** auf der Seite eines [Bienenstands](./apiaries.md) druckt dasselbe für alle Beuten dieses Bienenstands in einem Dokument. Das Bestandsbuch öffnet sich in einem neuen Fenster; passiert nichts, erlaube Pop-ups für die Seite.
+**Bestandsbuch drucken** unter **Behandlungen** druckt das Bestandsbuch der Beute: eine Tabelle aller Behandlungen mit Datum, Grund, Mittel, Wirkstoff, Dosis, Methode, Chargennummer, Wartezeit-Datum und dem Änderungsvermerk, dazu der Tag des Drucks. Der Button **Bestandsbuch** auf der Seite eines [Bienenstands](./apiaries.md) druckt dasselbe für alle Beuten dieses Bienenstands in einem Dokument. Unter **Einstellungen → Daten & Sync → Bestandsbuch** druckst du es für den ganzen Arbeitsbereich oder schränkst es auf einen Bienenstand oder ein Jahr ein. Das Bestandsbuch öffnet sich in einem neuen Fenster; passiert nichts, erlaube Pop-ups für die Seite.
 
 ## Wartezeiten und Ernte
 

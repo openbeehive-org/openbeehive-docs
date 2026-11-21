@@ -34,7 +34,7 @@ Si la colmena tiene una visita anterior, **Partir de la última visita** (con la
 
 ## Pesos y temperaturas \{#units}
 
-Los pesos y las temperaturas se muestran e introducen en las unidades elegidas en **Ajustes → Unidades**: kilogramos o libras, grados Celsius o Fahrenheit. La elección se guarda con tu cuenta y se aplica en todos tus dispositivos. Puedes escribir los decimales con coma o con punto. La aplicación guarda cada valor en kilogramos y grados Celsius, así que cambiar las unidades nunca modifica tus registros, y las exportaciones y la API siguen en el sistema métrico.
+Los pesos y las temperaturas se muestran e introducen en las unidades elegidas en **Ajustes → Preferencias → Unidades**: kilogramos o libras, grados Celsius o Fahrenheit. La elección se guarda con tu cuenta y se aplica en todos tus dispositivos. Puedes escribir los decimales con coma o con punto. La aplicación guarda cada valor en kilogramos y grados Celsius, así que cambiar las unidades nunca modifica tus registros, y las exportaciones y la API siguen en el sistema métrico.
 
 ## Colonia y comportamiento
 

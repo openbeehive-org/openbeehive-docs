@@ -34,7 +34,7 @@ If the hive has an earlier visit, **Start from last visit** (with that visit's d
 
 ## Weights and temperatures \{#units}
 
-Weights and temperatures are shown and entered in the units chosen under **Settings → Units**: kilograms or pounds, degrees Celsius or Fahrenheit. The choice is saved with your account and applies on all your devices. You can type a decimal comma or a decimal point. The app stores every value in kilograms and degrees Celsius, so changing the units never changes your records, and exports and the API stay metric.
+Weights and temperatures are shown and entered in the units chosen under **Settings → Preferences → Units**: kilograms or pounds, degrees Celsius or Fahrenheit. The choice is saved with your account and applies on all your devices. You can type a decimal comma or a decimal point. The app stores every value in kilograms and degrees Celsius, so changing the units never changes your records, and exports and the API stay metric.
 
 ## Colony & behaviour
 

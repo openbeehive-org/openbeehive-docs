@@ -13,7 +13,7 @@ Según la instancia, la pantalla de inicio de sesión ofrece una o varias de est
 
 - **Correo y contraseña**: "Crear cuenta" con tu nombre, correo y contraseña, y después "Iniciar sesión".
 - **Un proveedor** (Google, Keycloak, ...): "Continuar con ...".
-- **Una passkey**: "Iniciar sesión con passkey" usando tu huella dactilar, tu rostro, el PIN del dispositivo o una llave de seguridad. Las passkeys se añaden en **Ajustes → Passkeys** una vez iniciada la sesión.
+- **Una passkey**: "Iniciar sesión con passkey" usando tu huella dactilar, tu rostro, el PIN del dispositivo o una llave de seguridad. Las passkeys se añaden en **Ajustes → Cuenta → Passkeys** una vez iniciada la sesión.
 - **La demo**: "Probar la demo" en las instancias que la ejecutan. No necesita cuenta.
 
 En una instancia de un solo usuario sin inicio de sesión configurado, la aplicación abre directamente tus registros.
@@ -34,7 +34,9 @@ La contraseña del administrador de la instancia se define en la configuración 
 
 ## Cerrar sesión \{#signing-out}
 
-**Ajustes → Cuenta → Cerrar sesión** cuenta primero los cambios de este dispositivo que aún no se han subido y te avisa de ellos. En un dispositivo compartido, marca **Quitar también los datos de este dispositivo** para borrar del navegador los registros de este espacio y las fotos descargadas; todo lo que se sincronizó se conserva en tu cuenta. Los cambios sin enviar se pierden al quitar los datos, así que conéctate y espera antes a la sincronización.
+**Ajustes → Cuenta → Cerrar sesión** cuenta primero los cambios de este dispositivo que aún no se han subido y te avisa de ellos. Los cambios sin enviar se quedan en el dispositivo y se suben cuando vuelves a iniciar sesión en él. En un dispositivo compartido, marca **Quitar también los datos de este dispositivo** para borrar del navegador los registros de este espacio y las fotos descargadas; todo lo que se sincronizó se conserva en tu cuenta. Los cambios sin enviar se pierden al quitar los datos, así que conéctate y espera antes a la sincronización.
+
+Cada cuenta guarda sus propios datos locales en un dispositivo, por espacio. Cuando otra persona inicia sesión en el mismo navegador, aunque sea en el mismo espacio, obtiene su propia copia: no ve tus cambios sin enviar ni tus tareas personales, y nada tuyo se sube con su cuenta.
 
 **Cerrar sesión en todas partes** cierra tu sesión en todos tus demás dispositivos, por ejemplo tras perder un teléfono. En este sigues con la sesión iniciada, y las claves API siguen funcionando.
 
@@ -50,11 +52,11 @@ Todo lo que registras reside en el **espacio activo**, y todos los miembros de u
 
 ## Cambiar de espacio
 
-Abre **Ajustes → Espacios**. Se listan todos los espacios a los que perteneces junto con tu rol en cada uno; el activo aparece marcado. Toca otro para cambiar; la aplicación se recarga con los registros de ese espacio.
+Abre **Ajustes → Espacio**. Se listan todos los espacios a los que perteneces junto con tu rol en cada uno; el activo aparece marcado. Toca otro para cambiar; la aplicación se recarga con los registros de ese espacio.
 
 ## Crear un espacio
 
-En **Ajustes → Espacios**, escribe un nombre (por ejemplo "Club de apicultura") y toca **Crear espacio**. Te conviertes en su **Admin** y pasa a ser tu espacio activo.
+En **Ajustes → Espacio**, escribe un nombre (por ejemplo "Club de apicultura") y toca **Crear espacio**. Te conviertes en su **Admin** y pasa a ser tu espacio activo.
 
 ## Roles
 
@@ -69,24 +71,32 @@ El rol de administrador de la instancia definido en la configuración del servid
 
 ## Invitar apicultores
 
-Como admin de un espacio, abre **Ajustes → Espacios → Invitar a un apicultor**, introduce la dirección de correo de la persona y toca **Enviar invitación**. La aplicación muestra el enlace de invitación con un botón **Copiar enlace**; compártelo directamente con ella. Si el servidor tiene SMTP configurado, el mismo enlace también se envía por correo. Las personas invitadas se unen como miembros.
+Como admin de un espacio, abre **Ajustes → Espacio → Invitar a un apicultor**, introduce la dirección de correo de la persona y toca **Enviar invitación**. La aplicación muestra el enlace de invitación con un botón **Copiar enlace**; compártelo directamente con ella. Si el servidor tiene SMTP configurado, el mismo enlace también se envía por correo. Las personas invitadas se unen como miembros.
 
 Una invitación es válida durante 7 días y solo funciona para la dirección de correo para la que se emitió. Las invitaciones pendientes se listan en **Invitaciones pendientes**, cada una con sus propios botones **Copiar enlace** y **Revocar**. Una invitación desaparece de la lista en cuanto se acepta.
 
+Invitar a una dirección que ya tiene una invitación pendiente la sustituye: la aplicación lo indica, el nuevo enlace es válido otros 7 días y el enlace antiguo deja de funcionar. A alguien que ya es miembro no se le puede invitar de nuevo.
+
 ## Aceptar una invitación
 
-El enlace de invitación abre la pantalla de inicio de sesión con un aviso de "Has recibido una invitación".
+El enlace de invitación abre la pantalla de inicio de sesión, que nombra el espacio y la dirección para la que es la invitación, parcialmente oculta: "Te han invitado al espacio «Club de apicultura». Crea una cuenta o inicia sesión con j…@e….org."
 
 - Si aún no tienes cuenta, crea una con la dirección de correo a la que se envió la invitación.
 - Si ya tienes una cuenta con esa dirección, inicia sesión.
 
-Una invitación no se puede usar con otra dirección de correo ("Esta invitación se emitió para otra dirección de correo."), y deja de funcionar 7 días después de su creación ("Esta invitación no es válida o ha caducado."). Pide una nueva al admin del espacio.
+En cuanto inicias sesión, la aplicación te une al espacio y lo activa. A partir de entonces aparece en tus propios **Ajustes → Espacio**.
 
-En cuanto inicias sesión, la aplicación te une al espacio y lo activa. A partir de entonces aparece en tus propios **Ajustes → Espacios**.
+Si la invitación no se puede usar, la pantalla de inicio de sesión indica por qué y sigue abierta:
+
+- con la sesión iniciada con otra dirección: "Esta invitación es para j…@e….org. Inicia sesión o crea una cuenta con esa dirección, o pide una invitación para esta."
+- con más de 7 días: "Esta invitación ha caducado. Pide una nueva a la persona que te invitó."
+- ya usada, revocada o con su espacio eliminado: "Esta invitación ya no es válida: ya se usó o se revocó, o el espacio se eliminó. Pide una nueva."
+
+**Continuar sin unirse** te lleva entonces a la aplicación sin el espacio.
 
 ## Miembros \{#members}
 
-**Ajustes → Espacios → Miembros** lista quién pertenece al espacio activo. Un admin ve la dirección de correo y el rol de cada miembro, puede cambiar el **Rol** (**Admin** o **Miembro**) y puede **Quitar** a un miembro. Un miembro quitado pierde el acceso de inmediato, también sus claves API; los registros que escribió se conservan. Sus tareas personales en este espacio se eliminan.
+**Ajustes → Espacio → Miembros** lista quién pertenece al espacio activo. Un admin ve la dirección de correo y el rol de cada miembro, puede cambiar el **Rol** (**Admin** o **Miembro**) y puede **Quitar** a un miembro. Un miembro quitado pierde el acceso de inmediato, también sus claves API; los registros que escribió se conservan. Sus tareas personales en este espacio se eliminan.
 
 Cualquier miembro puede **Salir** de un espacio. Pierdes de inmediato el acceso a sus registros y necesitas una nueva invitación para volver. Si eres su único miembro, no hay nada de lo que salir; elimina el espacio en su lugar.
 
@@ -94,11 +104,11 @@ Si pierdes el acceso al espacio en el que estabas trabajando, la aplicación te 
 
 ## Eliminar un espacio
 
-Un admin del espacio puede eliminarlo en **Ajustes → Espacios → Zona de peligro**. Escribe el nombre del espacio para confirmar. Esto elimina el espacio con todos sus colmenares, colmenas, registros y fotos para todos los miembros, y no se puede deshacer.
+Un admin del espacio puede eliminarlo en **Ajustes → Espacio → Zona de peligro**. Escribe el nombre del espacio para confirmar. Esto elimina el espacio con todos sus colmenares, colmenas, registros y fotos para todos los miembros, y no se puede deshacer.
 
 ## Eliminar tu cuenta \{#delete-account}
 
-**Ajustes → Eliminar la cuenta** muestra qué haría la eliminación de tu cuenta antes de que la confirmes:
+**Ajustes → Cuenta → Eliminar la cuenta** muestra qué haría la eliminación de tu cuenta antes de que la confirmes:
 
 - Se eliminan tus datos de inicio de sesión, tus claves API y tus tareas personales.
 - Los espacios en los que eres el único miembro se eliminan con todos sus registros y fotos.
@@ -109,7 +119,7 @@ Confirma con tu contraseña o una passkey. Una cuenta sin ninguna de las dos deb
 
 ## Claves API \{#api-keys}
 
-**Ajustes → Claves API** es donde creas credenciales para scripts y dispositivos, como una báscula de colmena, que usan la [API](../using-the-api/overview.md) en tu nombre. La sección aparece solo cuando has iniciado sesión; una instancia de un solo usuario sin inicio de sesión no tiene claves y no las necesita.
+**Ajustes → Espacio → Claves API** es donde creas credenciales para scripts y dispositivos, como una báscula de colmena, que usan la [API](../using-the-api/overview.md) en tu nombre. La sección aparece solo cuando has iniciado sesión; una instancia de un solo usuario sin inicio de sesión no tiene claves y no las necesita.
 
 - Escribe un nombre en el campo **Nombra esta clave (p. ej. báscula de colmena)**, elige los permisos en el selector **Permisos** (**Lectura y escritura**, el valor predeterminado, o **Solo lectura**) y la duración en el selector **Caduca tras** (**No caduca**, el valor predeterminado, **30 días**, **90 días** o **1 año**), y después toca **Crear clave**. La clave aparece debajo con el aviso "Copia la clave ahora. Solo se muestra una vez." y un botón **Copiar** (que muestra **Copiada** durante un momento). Lo que no copies ahora se pierde; el servidor conserva solo un hash. En **Cómo usarla** la aplicación muestra la dirección a la que enviar las solicitudes y un ejemplo listo para usar que lista tus colmenas, con **Copiar ejemplo**.
 - Cada clave se lista con su nombre (**Clave sin nombre** si dejaste el campo vacío), sus primeros caracteres, una insignia **Lectura y escritura** o **Solo lectura**, **Creada**, después **Caduca** y la fecha cuando estableciste una duración (**Caducada** y la fecha, en rojo, una vez pasado ese día) y, una vez que un script la ha usado, **Último uso**. Las claves caducadas permanecen en la lista hasta que las eliminas.
@@ -121,4 +131,4 @@ Una clave actúa como tú en el espacio que estaba activo cuando la creaste, as�
 
 ## La demo
 
-Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso te recuerda que los datos se restablecen cada hora. La demo es de solo lectura: cuando cambias algo, la aplicación deshace el cambio y avisa de que no se ha guardado. La demo pública del proyecto es el botón **Probar la demo** en [app.openbeehive.org/login](https://app.openbeehive.org/login). Los operadores pueden habilitarla mediante el [Modo demo](../self-hosting/demo.md).
+Algunas instancias ejecutan una **cuenta de demostración**. Mientras tienes la sesión iniciada en ella, un aviso indica que la demo es de solo lectura y que nada de lo que cambies se guarda; los formularios de registro muestran una nota y un botón **Guardar** desactivado. Si aun así un cambio llega al servidor, la aplicación lo deshace y avisa de que no se ha guardado. La demo pública del proyecto es el botón **Probar la demo** en [app.openbeehive.org/login](https://app.openbeehive.org/login). Los operadores pueden habilitarla mediante el [Modo demo](../self-hosting/demo.md).

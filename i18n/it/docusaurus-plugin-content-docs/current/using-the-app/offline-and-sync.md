@@ -29,14 +29,14 @@ Un piccolo chip di stato in cima a ogni pagina (e sotto il tuo indirizzo e-mail 
 | --- | --- |
 | **Sincronizzato** e un orario | Tutto ciò che è su questo dispositivo è sul server. |
 | **Sincronizzazione…** | È in corso uno scambio con il server. |
-| **In attesa di invio: 3** | Tre modifiche sono salvate sul dispositivo e non ancora inviate. |
-| **Offline** oppure **Offline · 3 in attesa** | Nessuna connessione. Le modifiche attendono sul dispositivo. |
+| **Modifiche in attesa di invio** | Delle modifiche sono salvate sul dispositivo e non ancora inviate. |
+| **Offline** oppure **Offline · modifiche in attesa** | Nessuna connessione. Le modifiche attendono sul dispositivo. |
 | **Sincronizzazione non riuscita · nuovo tentativo** | Il server non è stato raggiunto o ha risposto con un errore. L'app continua a riprovare. |
 | **Disconnesso · accedi per sincronizzare** | La tua sessione è terminata. Tocca il chip per accedere; non si perde nulla. |
-| **Problemi di sincronizzazione: 2** | Il server ha rifiutato due modifiche; vedi sotto. |
+| **Problemi di sincronizzazione: 2** | Due modifiche non è stato possibile sincronizzarle; vedi sotto. |
 | **App non aggiornata · aggiornala per sincronizzare** | Il server richiede una versione più recente dell'app. Carica la nuova versione; fino ad allora le modifiche attendono sul dispositivo. |
 
-Tocca il chip per sincronizzare subito. Anche senza toccarlo, l'app sincronizza dopo ogni modifica, a brevi intervalli mentre è aperta, e non appena torna la connessione.
+Tocca il chip per aprire lo **Stato della sincronizzazione**: lo stato, quando questo dispositivo si è sincronizzato l'ultima volta, quante modifiche e foto sono in attesa di invio e, se ce ne sono, quante modifiche il server ha rifiutato, con **Mostra i problemi di sincronizzazione**. **Sincronizza ora** avvia subito una sincronizzazione. Una visita può essere più modifiche: la visita stessa, le sue foto e la sua voce nella cronologia. Anche senza toccarlo, l'app sincronizza dopo ogni modifica, a brevi intervalli mentre è aperta, e non appena torna la connessione.
 
 Mentre il dispositivo non ha connessione, una barra in cima alla pagina dice inoltre "Offline: le modifiche vengono salvate e sincronizzate in seguito." È puramente informativo; continua esattamente come prima.
 
@@ -46,7 +46,9 @@ Un indicatore offline persistente di solito significa copertura debole in apiari
 
 ### Problemi di sincronizzazione \{#sync-problems}
 
-Di tanto in tanto il server non accetta una modifica, per esempio perché il dato appartiene a un altro spazio o perché l'orologio del dispositivo era molto avanti. Una modifica del genere non viene buttata via: resta sul dispositivo, e il chip mostra **Problemi di sincronizzazione** con il numero di modifiche rifiutate. L'elenco **Problemi di sincronizzazione** nelle **Impostazioni** le indica una per una con il motivo e offre **Riprova** (oppure **Riprova tutte**) e **Scarta**. Scarta interrompe l'invio; il dato resta su questo dispositivo così com'è ma non raggiunge mai il server, gli altri tuoi dispositivi o gli altri membri.
+Di tanto in tanto il server non accetta una modifica, per esempio perché il dato appartiene a un altro spazio o perché l'orologio del dispositivo era molto avanti. Una modifica del genere non viene buttata via: resta sul dispositivo, e il chip mostra **Problemi di sincronizzazione** con il numero di modifiche rifiutate. L'elenco **Problemi di sincronizzazione** in **Impostazioni → Dati e sincro** le indica una per una con il motivo e offre **Riprova** (oppure **Riprova tutte**) e **Scarta**. Scarta interrompe l'invio; il dato resta su questo dispositivo così com'è ma non raggiunge mai il server, gli altri tuoi dispositivi o gli altri membri.
+
+L'elenco mostra anche le modifiche ricevute dal server che questo dispositivo non ha potuto applicare, contrassegnate come "modifica ricevuta non applicata". I dati su questo dispositivo restano come sono, e il resto della sincronizzazione prosegue. Una voce del genere può solo essere scartata; se la stessa modifica arriva di nuovo, sostituisce la voce.
 
 ### Orologi dei dispositivi
 
@@ -108,7 +110,7 @@ Per condividere una postazione con un mentore mantenendo private le altre, metti
 
 Il salvataggio avviene sul tuo dispositivo, quindi in pratica non fallisce mai. Se dovesse succedere (ad esempio perché l'archiviazione del browser è piena o danneggiata) il modulo resta aperto con tutto ciò che hai digitato e un messaggio di errore spiega cosa è andato storto.
 
-Con l'**account demo** pubblico il server non accetta modifiche (la demo si azzera ogni ora). Quando lì modifichi qualcosa, l'app annulla la modifica e ti dice che non è stata salvata.
+L'**account demo** pubblico è in sola lettura: un banner lo dice, e i moduli dei dati mostrano una nota e un pulsante **Salva** disattivato. Se una modifica passa comunque, il server la rifiuta e l'app la annulla e ti dice che non è stata salvata.
 
 C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata (una finestra di navigazione privata, o l'archiviazione bloccata nelle impostazioni del browser), l'app tiene i registri in memoria e mostra un banner: **"Questo browser non salva dati su questo dispositivo (finestra privata o archiviazione bloccata). Ciò che non è stato sincronizzato va perso alla chiusura di questa scheda."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
@@ -119,5 +121,7 @@ Solo una scheda o finestra alla volta può lavorare con i registri su un disposi
 ## Perderò mai dei dati?
 
 I tuoi registri vengono scritti prima sul tuo dispositivo e non vengono rimossi perché sei offline o perché l'app si chiude. Attendono sul dispositivo finché non possono essere sincronizzati.
+
+Su un dispositivo condiviso ogni account conserva la propria copia locale per ogni spazio. Quando qualcun altro accede nello stesso browser, non vede le tue modifiche non inviate né le tue attività personali, e nulla di tuo viene caricato a suo nome; le tue modifiche vengono inviate la prossima volta che vi accedi.
 
 Se fai self-hosting, mantieni anche backup del server. Vedi [Backup](../self-hosting/backups.md).

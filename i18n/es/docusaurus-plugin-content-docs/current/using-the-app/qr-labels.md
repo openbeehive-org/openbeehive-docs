@@ -67,7 +67,7 @@ Bajo la imagen de la cámara, **Código de la etiqueta** admite los seis caracte
 | Síntoma | Causa probable | Qué hacer |
 | --- | --- | --- |
 | La cámara no enfoca el código | Etiqueta húmeda, descolorida o curvada | Sécala; reimprímela si está desgastada |
-| "Esta colmena no está en tus datos" | La colmena se eliminó, o pertenece a otro espacio | Comprueba que la colmena sigue existiendo y que está activo el espacio correcto (Ajustes → Espacios) |
+| "Esta colmena no está en tus datos" | La colmena se eliminó, o pertenece a otro espacio | Comprueba que la colmena sigue existiendo y que está activo el espacio correcto (Ajustes → Espacio) |
 | "Estás sin conexión" | La colmena aún no se ha descargado en este dispositivo | Conéctate; la colmena se abre en cuanto tus datos se hayan sincronizado |
 | "Inicia sesión para abrir esta colmena" | Este navegador no ha iniciado sesión. Es típico tras escanear con la aplicación de cámara cuando normalmente usas la aplicación instalada | Inicia sesión, o escanea dentro de la aplicación instalada |
 | "No se puede contactar con el servidor" | La colmena no está en el dispositivo y el servidor no respondió | Comprueba tu conexión y toca **Reintentar** |

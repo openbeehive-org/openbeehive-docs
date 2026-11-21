@@ -8,7 +8,7 @@ title: "Import & Export"
 Deine Aufzeichnungen gehören dir. Mit Openbeehive kannst du **all deine Daten**
 mitnehmen: als Backup, zum Umzug auf eine andere Instanz, zur Auswertung in
 einer Tabellenkalkulation oder zum Teilen mit anderen Werkzeugen. Alles findest
-du unter **Einstellungen → Daten & Backup**.
+du unter **Einstellungen → Daten & Sync**.
 
 Export und Import arbeiten mit dem **aktiven Arbeitsbereich**. Beide warten, bis
 das Gerät die erste Synchronisierung des Arbeitsbereichs abgeschlossen hat; bis
@@ -31,7 +31,7 @@ der Datei enthalten, aber nicht auf dem Server.
   wie viele fehlen, und deren Vorschaubilder werden aufgenommen.
 
 Gewichte und Temperaturen werden immer in Kilogramm und Grad Celsius
-exportiert, egal welche Einheiten du unter **Einstellungen → Einheiten**
+exportiert, egal welche Einheiten du unter **Einstellungen → Anzeige → Einheiten**
 gewählt hast.
 
 ### Vom Server herunterladen \{#server-copy}

@@ -93,7 +93,7 @@ La scheda **Regina** mostra anno, numero, colore di marcatura, origine e comment
 
 ### Diario delle visite
 
-**Registra visita** apre il modulo della visita. Sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto (toccane una per aprire il visualizzatore). Pesi e temperature compaiono nelle unità scelte in **Impostazioni → Unità**. Ogni visita ha azioni per modificarla ed eliminarla. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
+**Registra visita** apre il modulo della visita. Sono elencate le cinque visite più recenti, dalla più nuova, ciascuna con data, meteo, chip che riassumono ciò che hai registrato (regina vista, telaini, scorte, celle reali, docilità, nutrizione, peso, miele, temperatura, umidità, varroa), la nota ed eventuali foto (toccane una per aprire il visualizzatore). Pesi e temperature compaiono nelle unità scelte in **Impostazioni → Preferenze → Unità**. Ogni visita ha azioni per modificarla ed eliminarla. **Vedi tutte le N visite** apre il diario completo. Vedi [Ispezioni](./inspections.md).
 
 ### Miele e Trattamenti
 

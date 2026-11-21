@@ -34,7 +34,7 @@ Si la ruche a une visite antérieure, **Partir de la dernière visite** (avec la
 
 ## Poids et températures \{#units}
 
-Les poids et les températures s'affichent et se saisissent dans les unités choisies sous **Paramètres → Unités** : kilogrammes ou livres, degrés Celsius ou Fahrenheit. Ce choix est enregistré avec votre compte et s'applique sur tous vos appareils. Vous pouvez taper une virgule ou un point décimal. L'application stocke chaque valeur en kilogrammes et en degrés Celsius : changer d'unités ne modifie donc jamais vos enregistrements, et les exports comme l'API restent en unités métriques.
+Les poids et les températures s'affichent et se saisissent dans les unités choisies sous **Paramètres → Préférences → Unités** : kilogrammes ou livres, degrés Celsius ou Fahrenheit. Ce choix est enregistré avec votre compte et s'applique sur tous vos appareils. Vous pouvez taper une virgule ou un point décimal. L'application stocke chaque valeur en kilogrammes et en degrés Celsius : changer d'unités ne modifie donc jamais vos enregistrements, et les exports comme l'API restent en unités métriques.
 
 ## Colonie & comportement
 

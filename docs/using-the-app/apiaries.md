@@ -88,4 +88,4 @@ If a hive moves to a different location, use **Move** on the hive to reassign it
 
 ## Sharing
 
-Apiaries are not shared individually. Everything in a workspace is visible to every member of that workspace, so to work on an apiary with someone, invite them to the workspace that holds it (Settings → Workspaces → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate workspace for the club. See [Accounts & workspaces](./accounts-tenants.md).
+Apiaries are not shared individually. Everything in a workspace is visible to every member of that workspace, so to work on an apiary with someone, invite them to the workspace that holds it (Settings → Workspace → Invite a beekeeper). To keep your home colonies private while collaborating on a club yard, create a separate workspace for the club. See [Accounts & workspaces](./accounts-tenants.md).

@@ -8,7 +8,7 @@ title: "Import et export"
 Vos données vous appartiennent. Openbeehive vous permet d'emporter **toutes vos
 données** : pour une sauvegarde, pour migrer vers une autre instance, pour les
 analyser dans un tableur ou pour les partager avec d'autres outils. Tout se
-trouve sous **Paramètres → Données & sauvegarde**.
+trouve sous **Paramètres → Données et synchro**.
 
 L'export et l'import portent sur l'**espace actif**. Tous deux attendent que
 l'appareil ait terminé sa première synchronisation de l'espace ; d'ici là, le
@@ -32,7 +32,7 @@ figurent dans le fichier, mais pas sur le serveur.
 
 Les poids et les températures sont toujours exportés en kilogrammes et en
 degrés Celsius, quelles que soient les unités choisies sous
-**Paramètres → Unités**.
+**Paramètres → Préférences → Unités**.
 
 ### Télécharger depuis le serveur \{#server-copy}
 

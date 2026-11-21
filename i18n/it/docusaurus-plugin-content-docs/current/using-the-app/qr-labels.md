@@ -67,7 +67,7 @@ Sotto l'immagine della fotocamera, **Codice dell'etichetta** accetta i sei carat
 | Sintomo | Causa probabile | Cosa fare |
 | --- | --- | --- |
 | La fotocamera non mette a fuoco il codice | Etichetta bagnata, sbiadita o arricciata | Asciugala; ristampala se è consumata |
-| "Questa arnia non è tra i tuoi dati" | L'arnia è stata eliminata, o appartiene a un altro spazio | Verifica che l'arnia esista ancora e che sia attivo lo spazio giusto (Impostazioni → Spazi) |
+| "Questa arnia non è tra i tuoi dati" | L'arnia è stata eliminata, o appartiene a un altro spazio | Verifica che l'arnia esista ancora e che sia attivo lo spazio giusto (Impostazioni → Spazio) |
 | "Sei offline" | L'arnia non è ancora stata scaricata su questo dispositivo | Connettiti; l'arnia si apre quando i tuoi dati sono sincronizzati |
 | "Accedi per aprire questa arnia" | Questo browser non ha effettuato l'accesso. Tipico dopo una scansione con l'app fotocamera quando di solito usi l'app installata | Accedi, oppure scansiona all'interno dell'app installata |
 | "Server non raggiungibile" | L'arnia non è sul dispositivo e il server non ha risposto | Controlla la connessione e tocca **Riprova** |

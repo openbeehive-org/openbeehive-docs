@@ -29,14 +29,14 @@ Ein kleiner Status-Chip oben auf jeder Seite (und unter deiner E-Mail-Adresse in
 | --- | --- |
 | **Synchronisiert** und eine Zeitangabe | Alles auf diesem Gerät ist auf dem Server. |
 | **Synchronisiere…** | Ein Austausch mit dem Server läuft. |
-| **Warten auf Upload: 3** | Drei Änderungen sind auf dem Gerät gespeichert und noch nicht hochgeladen. |
-| **Offline** oder **Offline · 3 warten** | Keine Verbindung. Änderungen warten auf dem Gerät. |
+| **Änderungen warten auf Upload** | Änderungen sind auf dem Gerät gespeichert und noch nicht hochgeladen. |
+| **Offline** oder **Offline · Änderungen warten** | Keine Verbindung. Änderungen warten auf dem Gerät. |
 | **Synchronisierung fehlgeschlagen · neuer Versuch** | Der Server war nicht erreichbar oder hat mit einem Fehler geantwortet. Die App versucht es weiter. |
 | **Abgemeldet · zum Synchronisieren anmelden** | Deine Sitzung ist beendet. Tippe auf den Chip, um dich anzumelden; es geht nichts verloren. |
-| **Sync-Probleme: 2** | Der Server hat zwei Änderungen abgelehnt; siehe unten. |
+| **Sync-Probleme: 2** | Zwei Änderungen konnten nicht synchronisiert werden; siehe unten. |
 | **App veraltet · zum Synchronisieren aktualisieren** | Der Server verlangt eine neuere Version der App. Lade die neue Version; bis dahin warten Änderungen auf dem Gerät. |
 
-Tippe auf den Chip, um sofort zu synchronisieren. Auch ohne Tippen synchronisiert die App nach jeder Änderung, in kurzen Abständen, solange sie geöffnet ist, und sobald die Verbindung zurück ist.
+Tippe auf den Chip, um die Ansicht **Synchronisierung** zu öffnen: den Zustand, wann dieses Gerät zuletzt synchronisiert hat, wie viele Änderungen und Fotos auf den Upload warten und, falls es welche gibt, wie viele Änderungen der Server abgelehnt hat, mit **Sync-Probleme anzeigen**. **Jetzt synchronisieren** startet sofort eine Synchronisierung. Eine Durchsicht kann aus mehreren Änderungen bestehen: der Durchsicht selbst, ihren Fotos und ihrem Eintrag im Verlauf. Auch ohne Tippen synchronisiert die App nach jeder Änderung, in kurzen Abständen, solange sie geöffnet ist, und sobald die Verbindung zurück ist.
 
 Solange das Gerät keine Verbindung hat, steht außerdem in einer Leiste am oberen Rand der Seite „Offline: Änderungen werden gespeichert und später synchronisiert.“ Das ist rein informativ; mach genau wie zuvor weiter.
 
@@ -46,7 +46,9 @@ Eine dauerhafte Offline-Anzeige bedeutet meist schwachen Empfang am Bienenstand.
 
 ### Sync-Probleme \{#sync-problems}
 
-Hin und wieder nimmt der Server eine Änderung nicht an, zum Beispiel weil der Eintrag zu einem anderen Arbeitsbereich gehört oder weil die Uhr des Geräts weit vorging. Eine solche Änderung wird nicht weggeworfen: Sie bleibt auf dem Gerät, und der Chip zeigt **Sync-Probleme** mit der Anzahl der abgelehnten Änderungen. Die Liste **Sync-Probleme** in den **Einstellungen** nennt jede davon mit dem Grund und bietet **Erneut versuchen** (oder **Alle erneut versuchen**) und **Verwerfen** an. Verwerfen stoppt den Upload; der Eintrag bleibt auf diesem Gerät, wie er ist, erreicht aber nie den Server, deine anderen Geräte oder die anderen Mitglieder.
+Hin und wieder nimmt der Server eine Änderung nicht an, zum Beispiel weil der Eintrag zu einem anderen Arbeitsbereich gehört oder weil die Uhr des Geräts weit vorging. Eine solche Änderung wird nicht weggeworfen: Sie bleibt auf dem Gerät, und der Chip zeigt **Sync-Probleme** mit der Anzahl der abgelehnten Änderungen. Die Liste **Sync-Probleme** unter **Einstellungen → Daten & Sync** nennt jede davon mit dem Grund und bietet **Erneut versuchen** (oder **Alle erneut versuchen**) und **Verwerfen** an. Verwerfen stoppt den Upload; der Eintrag bleibt auf diesem Gerät, wie er ist, erreicht aber nie den Server, deine anderen Geräte oder die anderen Mitglieder.
+
+Die Liste zeigt auch Änderungen, die vom Server empfangen wurden und die dieses Gerät nicht übernehmen konnte, mit dem Vermerk „nicht übernommen“. Die Aufzeichnungen auf diesem Gerät bleiben, wie sie sind, und der Rest der Synchronisierung läuft weiter. Ein solcher Eintrag lässt sich nur verwerfen; kommt dieselbe Änderung erneut an, ersetzt sie den Eintrag.
 
 ### Geräteuhren
 
@@ -108,7 +110,7 @@ Um einen Standort mit einem Mentor zu teilen und andere privat zu halten, legst 
 
 Gespeichert wird auf deinem Gerät, deshalb schlägt das praktisch nie fehl. Falls doch (etwa weil der Speicher des Browsers voll oder beschädigt ist), bleibt das Formular mit allen Eingaben offen, und eine Fehlermeldung erklärt, was schiefgelaufen ist.
 
-Beim öffentlichen **Demo-Konto** nimmt der Server keine Änderungen an (die Demo setzt sich stündlich zurück). Wenn du dort etwas änderst, macht die App die Änderung rückgängig und sagt, dass sie nicht gespeichert wurde.
+Das öffentliche **Demo-Konto** ist schreibgeschützt: Ein Banner sagt das, und die Formulare für Einträge zeigen einen Hinweis und ein deaktiviertes **Speichern**. Kommt eine Änderung trotzdem durch, lehnt der Server sie ab, und die App macht sie rückgängig und sagt, dass sie nicht gespeichert wurde.
 
 Es gibt eine Situation, in der Speichern funktioniert, aber nicht von Dauer ist: Kann der Browser der App ihren privaten Speicher nicht geben (ein privates Browserfenster oder in den Browsereinstellungen blockierter Speicher), hält die App die Aufzeichnungen im Arbeitsspeicher und zeigt ein Banner: **„Dieser Browser speichert keine Daten auf diesem Gerät (privates Fenster oder blockierter Speicher). Alles, was noch nicht synchronisiert ist, geht beim Schließen dieses Tabs verloren.“** Für die Sitzung funktioniert alles weiter, und Änderungen werden weiterhin mit dem Server synchronisiert, wenn du angemeldet bist, aber die lokale Kopie ist weg, sobald der Tab geschlossen wird. Siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
@@ -119,5 +121,7 @@ Nur ein Tab oder Fenster kann gleichzeitig mit den Aufzeichnungen auf einem Ger�
 ## Werde ich jemals Daten verlieren?
 
 Deine Aufzeichnungen werden zuerst auf dein Gerät geschrieben und nicht entfernt, weil du offline bist oder die App geschlossen wird. Sie warten auf dem Gerät, bis sie synchronisiert werden können.
+
+Auf einem gemeinsam genutzten Gerät behält jedes Konto pro Arbeitsbereich seine eigene lokale Kopie. Meldet sich jemand anderes im selben Browser an, sieht diese Person deine nicht gesendeten Änderungen und persönlichen Aufgaben nicht, und nichts von dir wird unter ihrem Konto hochgeladen; deine Änderungen gehen hoch, wenn du dich dort das nächste Mal anmeldest.
 
 Wenn du selbst hostest, halte zusätzlich Server-Backups vor. Siehe [Backups](../self-hosting/backups.md).

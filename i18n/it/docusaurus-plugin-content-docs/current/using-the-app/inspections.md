@@ -34,7 +34,7 @@ Se l'arnia ha una visita precedente, **Parti dall'ultima visita** (con la data d
 
 ## Pesi e temperature \{#units}
 
-Pesi e temperature vengono mostrati e inseriti nelle unità scelte in **Impostazioni → Unità**: chilogrammi o libbre, gradi Celsius o Fahrenheit. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi. Puoi digitare la virgola o il punto decimale. L'app memorizza ogni valore in chilogrammi e gradi Celsius, quindi cambiare le unità non modifica mai i tuoi dati, e le esportazioni e l'API restano nel sistema metrico.
+Pesi e temperature vengono mostrati e inseriti nelle unità scelte in **Impostazioni → Preferenze → Unità**: chilogrammi o libbre, gradi Celsius o Fahrenheit. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi. Puoi digitare la virgola o il punto decimale. L'app memorizza ogni valore in chilogrammi e gradi Celsius, quindi cambiare le unità non modifica mai i tuoi dati, e le esportazioni e l'API restano nel sistema metrico.
 
 ## Colonia e comportamento
 

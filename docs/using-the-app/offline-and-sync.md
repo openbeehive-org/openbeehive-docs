@@ -29,14 +29,14 @@ A small status chip at the top of every page (and under your email address in th
 | --- | --- |
 | **Synced** and a time | Everything on this device is on the server. |
 | **Syncing…** | An exchange with the server is running. |
-| **Waiting to upload: 3** | Three changes are saved on the device and not yet uploaded. |
-| **Offline** or **Offline · 3 waiting** | No connection. Changes wait on the device. |
+| **Changes waiting to upload** | Changes are saved on the device and not yet uploaded. |
+| **Offline** or **Offline · changes waiting** | No connection. Changes wait on the device. |
 | **Sync failed · retrying** | The server could not be reached or answered with an error. The app keeps trying. |
 | **Signed out · sign in to sync** | Your session has ended. Tap the chip to sign in; nothing is lost. |
-| **Sync problems: 2** | The server refused two changes; see below. |
+| **Sync problems: 2** | Two changes could not be synced; see below. |
 | **App out of date · update to sync** | The server requires a newer version of the app. Load the new version; until then changes wait on the device. |
 
-Tap the chip to sync at once. Without tapping, the app syncs after every change, at short intervals while it is open, and as soon as the connection returns.
+Tap the chip to open the **Sync status**: the state, when this device last synced, how many changes and photos are waiting to upload, and, if there are any, how many changes the server refused, with **Show sync problems**. **Sync now** starts a sync at once. One visit can be several changes: the visit itself, its photos and its timeline entry. Without tapping, the app syncs after every change, at short intervals while it is open, and as soon as the connection returns.
 
 While the device has no connection, a bar at the top of the page also reads "Offline: changes are saved and synced later." This is informational; carry on exactly as before.
 
@@ -46,7 +46,9 @@ A persistent offline indicator usually means weak coverage at the apiary. If it 
 
 ### Sync problems \{#sync-problems}
 
-Now and then the server does not accept a change, for example because the record belongs to another workspace or because the clock of the device was far ahead. Such a change is not thrown away: it stays on the device, and the chip shows **Sync problems** with the number of refused changes. The **Sync problems** list in **Settings** names each one with the reason and offers **Try again** (or **Try all again**) and **Discard**. Discard stops the upload; the record stays on this device as it is but never reaches the server, your other devices or the other members.
+Now and then the server does not accept a change, for example because the record belongs to another workspace or because the clock of the device was far ahead. Such a change is not thrown away: it stays on the device, and the chip shows **Sync problems** with the number of refused changes. The **Sync problems** list under **Settings → Data & sync** names each one with the reason and offers **Try again** (or **Try all again**) and **Discard**. Discard stops the upload; the record stays on this device as it is but never reaches the server, your other devices or the other members.
+
+The list also shows changes received from the server that this device could not apply, marked "could not be applied". The records on this device stay as they are, and the rest of the sync carries on. Such an entry can only be discarded; if the same change arrives again, it replaces the entry.
 
 ### Device clocks
 
@@ -108,7 +110,7 @@ To share one yard with a mentor while keeping others private, put that yard in i
 
 Saving happens on your device, so it virtually never fails. If it does (for example because the browser's storage is full or damaged) the form stays open with everything you typed and an error message explains what went wrong.
 
-On the public **demo account** the server accepts no changes (the demo resets itself hourly). When you change something there, the app undoes the change and says that it was not saved.
+The public **demo account** is read-only: a banner says so, and the record forms show a note and a disabled **Save**. If a change gets through anyway, the server refuses it and the app undoes it and says that it was not saved.
 
 There is one situation where saving works but does not last: if the browser cannot give the app its private storage (a private browsing window, or storage blocked in the browser settings), the app keeps the records in memory and shows a banner: **"This browser is not saving data on this device (private window or blocked storage). Anything that has not synced is lost when you close this tab."** Everything keeps working for the session, and edits still sync to the server if you are signed in, but the local copy is gone once the tab closes. See [Troubleshooting](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
@@ -119,5 +121,7 @@ Only one tab or window can work with the records on a device at a time. If you o
 ## Will I ever lose data?
 
 Your records are written to your device first and are not removed because you are offline or the app closes. They wait on the device until they can be synced.
+
+On a shared device each account keeps its own local copy per workspace. When someone else signs in on the same browser, they do not see your unsent changes or personal tasks, and nothing of yours is uploaded under their account; your changes go up the next time you sign in there.
 
 If you self-host, keep server backups as well. See [Backups](../self-hosting/backups.md).

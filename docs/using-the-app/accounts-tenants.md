@@ -13,7 +13,7 @@ Depending on the instance, the sign-in screen offers one or more of:
 
 - **Email & password**: "Create account" with your name, email and password, then "Sign in".
 - **A provider** (Google, Keycloak, ...): "Continue with ...".
-- **A passkey**: "Sign in with a passkey" using your fingerprint, face, device PIN or a security key. You add passkeys under **Settings → Passkeys** once signed in.
+- **A passkey**: "Sign in with a passkey" using your fingerprint, face, device PIN or a security key. You add passkeys under **Settings → Account → Passkeys** once signed in.
 - **The demo**: "Try the demo" on instances that run one. It needs no account.
 
 On a single-user instance with no login configured, the app opens straight to your records.
@@ -34,7 +34,9 @@ The instance admin's password is set in the server configuration and cannot be c
 
 ## Signing out \{#signing-out}
 
-**Settings → Account → Sign out** first counts the changes on this device that have not been uploaded yet and warns you about them. On a shared device tick **Also remove data from this device** to delete this workspace's records and downloaded photos from the browser; everything that was synced stays in your account. Unsent changes are lost when you remove the data, so go online and wait for the sync first.
+**Settings → Account → Sign out** first counts the changes on this device that have not been uploaded yet and warns you about them. Unsent changes stay on the device and are uploaded when you sign in there again. On a shared device tick **Also remove data from this device** to delete this workspace's records and downloaded photos from the browser; everything that was synced stays in your account. Unsent changes are lost when you remove the data, so go online and wait for the sync first.
+
+Each account keeps its own local data on a device, per workspace. When someone else signs in on the same browser, even to the same workspace, they get their own copy: they do not see your unsent changes or personal tasks, and nothing of yours is uploaded under their account.
 
 **Log out everywhere** signs you out on all your other devices, for example after losing a phone. You stay signed in on this one, and API keys keep working.
 
@@ -50,11 +52,11 @@ Everything you record lives in the **active workspace**, and every member of a w
 
 ## Switching workspaces
 
-Open **Settings → Workspaces**. Every workspace you belong to is listed with your role in it; the active one is marked. Tap another to switch; the app reloads with that workspace's records.
+Open **Settings → Workspace**. Every workspace you belong to is listed with your role in it; the active one is marked. Tap another to switch; the app reloads with that workspace's records.
 
 ## Creating a workspace
 
-In **Settings → Workspaces**, type a name (for example "Beekeeping Club") and tap **Create workspace**. You become its **Admin** and it becomes your active workspace.
+In **Settings → Workspace**, type a name (for example "Beekeeping Club") and tap **Create workspace**. You become its **Admin** and it becomes your active workspace.
 
 ## Roles
 
@@ -69,24 +71,32 @@ The instance admin role from the server configuration is separate from these: in
 
 ## Inviting beekeepers
 
-As a workspace admin, open **Settings → Workspaces → Invite a beekeeper**, enter the person's email address and tap **Send invite**. The app shows the invite link with a **Copy link** button; share it with them directly. If the server has SMTP configured, the same link is also emailed. Invitees join as members.
+As a workspace admin, open **Settings → Workspace → Invite a beekeeper**, enter the person's email address and tap **Send invite**. The app shows the invite link with a **Copy link** button; share it with them directly. If the server has SMTP configured, the same link is also emailed. Invitees join as members.
 
 An invite is valid for 7 days and works only for the email address it was issued for. Open invites are listed under **Open invites** with their own **Copy link** and **Revoke** buttons. An invite disappears from the list once it is accepted.
 
+Inviting an address that already has an open invite replaces it: the app says so, the new link is valid for another 7 days and the old link stops working. Someone who is already a member cannot be invited again.
+
 ## Accepting an invite
 
-The invite link opens the sign-in screen with a "You've been invited" notice.
+The invite link opens the sign-in screen, which names the workspace and the address the invite is for, partly hidden: "You've been invited to the workspace “Beekeeping Club”. Create an account or sign in with j…@e….org."
 
 - If you have no account yet, create one with the email address the invite was sent to.
 - If you already have an account with that address, sign in.
 
-An invite cannot be used with a different email address ("This invite was issued for a different email address."), and it stops working 7 days after it was created ("This invite is invalid or has expired."). Ask the workspace admin for a new one.
+As soon as you are signed in, the app joins you to the workspace and switches you into it. From then on it appears in your own **Settings → Workspace**.
 
-As soon as you are signed in, the app joins you to the workspace and switches you into it. From then on it appears in your own **Settings → Workspaces**.
+If the invite cannot be used, the sign-in screen says why and stays open:
+
+- signed in with another address: "This invite is for j…@e….org. Sign in or create an account with that address, or ask for an invite to this one."
+- more than 7 days old: "This invite has expired. Ask the person who invited you for a new one."
+- already used, revoked, or its workspace deleted: "This invite is no longer valid: it was already used or revoked, or the workspace was deleted. Ask for a new one."
+
+**Continue without joining** then takes you into the app without the workspace.
 
 ## Members \{#members}
 
-**Settings → Workspaces → Members** lists who belongs to the active workspace. An admin sees each member's email address and role, can change the **Role** (**Admin** or **Member**) and can **Remove** a member. A removed member loses access at once, including their API keys; the records they wrote stay. Their personal tasks in this workspace are deleted.
+**Settings → Workspace → Members** lists who belongs to the active workspace. An admin sees each member's email address and role, can change the **Role** (**Admin** or **Member**) and can **Remove** a member. A removed member loses access at once, including their API keys; the records they wrote stay. Their personal tasks in this workspace are deleted.
 
 Every member can **Leave** a workspace. You lose access to its records at once and need a new invite to come back. When you are its only member there is nothing to leave; delete the workspace instead.
 
@@ -94,11 +104,11 @@ If you lose access to the workspace you were working in, the app tells you and c
 
 ## Deleting a workspace
 
-A workspace admin can delete the workspace under **Settings → Workspaces → Danger zone**. Type the workspace's name to confirm. This removes the workspace with all its apiaries, hives, records and photos for every member and cannot be undone.
+A workspace admin can delete the workspace under **Settings → Workspace → Danger zone**. Type the workspace's name to confirm. This removes the workspace with all its apiaries, hives, records and photos for every member and cannot be undone.
 
 ## Deleting your account \{#delete-account}
 
-**Settings → Delete account** shows what deleting your account would do before you confirm:
+**Settings → Account → Delete account** shows what deleting your account would do before you confirm:
 
 - Your sign-in details, API keys and personal tasks are deleted.
 - Workspaces in which you are the only member are deleted with all their records and photos.
@@ -109,7 +119,7 @@ Confirm with your password or a passkey. An account without either must have sig
 
 ## API keys \{#api-keys}
 
-**Settings → API keys** is where you create credentials for scripts and devices, such as a hive scale, that use the [API](../using-the-api/overview.md) as you. The section appears only when you are signed in; a single-user instance without login has no keys and needs none.
+**Settings → Workspace → API keys** is where you create credentials for scripts and devices, such as a hive scale, that use the [API](../using-the-api/overview.md) as you. The section appears only when you are signed in; a single-user instance without login has no keys and needs none.
 
 - Type a name in the **Name this key (e.g. hive scale)** field, choose the permissions in the **Permissions** select (**Read and write**, the default, or **Read-only**) and the lifetime in the **Expires after** select (**Never expires**, the default, **30 days**, **90 days** or **1 year**), then tap **Create key**. The key appears below with the note "Copy the key now. It is shown only once." and a **Copy** button (it reads **Copied** for a moment). Anything you do not copy now is gone; the server keeps only a hash. Under **How to use it** the app shows the address to send requests to and a ready-made example that lists your hives, with **Copy example**.
 - Each key is listed with its name (**Unnamed key** if you left the field empty), its first characters, a **Read and write** or **Read-only** badge, **Created**, then **Expires** and the date when you set a lifetime (**Expired** and the date, in red, once that day has passed) and, once a script has used it, **Last used**. Expired keys stay in the list until you remove them.
@@ -121,4 +131,4 @@ A key acts as you in the workspace that was active when you created it, so switc
 
 ## The demo
 
-Some instances run a **demo account**. While you are signed in to it, a banner reminds you that the data resets every hour. The demo is read-only: when you change something, the app undoes the change and says that it was not saved. The public demo of the project is the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login). Operators can enable it via [Demo mode](../self-hosting/demo.md).
+Some instances run a **demo account**. While you are signed in to it, a banner says that the demo is read-only and nothing you change is saved; the record forms show a note and a disabled **Save**. If a change reaches the server anyway, the app undoes it and says that it was not saved. The public demo of the project is the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login). Operators can enable it via [Demo mode](../self-hosting/demo.md).

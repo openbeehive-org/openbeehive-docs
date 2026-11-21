@@ -57,7 +57,7 @@ Each treatment in the list has an edit and a delete action. A treatment that was
 
 ## The treatment register \{#treatment-register}
 
-**Print register** under **Treatments** prints the hive's treatment register: a table of every treatment with date, product, active ingredient, dose, method, batch number, withdrawal date and the amended mark, plus the day it was printed. The **Treatment register** button on an [apiary](./apiaries.md) page prints the same for all hives of that apiary in one document. The register opens in a new window; if nothing happens, allow pop-ups for the site.
+**Print register** under **Treatments** prints the hive's treatment register: a table of every treatment with date, reason, product, active ingredient, dose, method, batch number, withdrawal date and the amended mark, plus the day it was printed. The **Treatment register** button on an [apiary](./apiaries.md) page prints the same for all hives of that apiary in one document. Under **Settings → Data & sync → Treatment register** you print it for the whole workspace, or narrow it to one apiary or one year. The register opens in a new window; if nothing happens, allow pop-ups for the site.
 
 ## Withdrawal periods and harvesting
 

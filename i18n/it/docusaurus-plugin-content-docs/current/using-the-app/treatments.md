@@ -57,7 +57,7 @@ Ogni trattamento nell'elenco ha un'azione di modifica e una di eliminazione. Un 
 
 ## Il registro dei trattamenti \{#treatment-register}
 
-**Stampa registro** sotto **Trattamenti** stampa il registro dei trattamenti dell'arnia: una tabella di tutti i trattamenti con data, prodotto, principio attivo, dose, metodo, numero di lotto, data di fine sospensione e l'indicazione di modifica, più il giorno in cui è stato stampato. Il pulsante **Registro dei trattamenti** nella pagina di un [apiario](./apiaries.md) stampa lo stesso per tutte le arnie di quell'apiario in un unico documento. Il registro si apre in una nuova finestra; se non succede nulla, consenti i pop-up per il sito.
+**Stampa registro** sotto **Trattamenti** stampa il registro dei trattamenti dell'arnia: una tabella di tutti i trattamenti con data, motivo, prodotto, principio attivo, dose, metodo, numero di lotto, data di fine sospensione e l'indicazione di modifica, più il giorno in cui è stato stampato. Il pulsante **Registro dei trattamenti** nella pagina di un [apiario](./apiaries.md) stampa lo stesso per tutte le arnie di quell'apiario in un unico documento. In **Impostazioni → Dati e sincro → Registro dei trattamenti** lo stampi per l'intero spazio, oppure lo limiti a un apiario o a un anno. Il registro si apre in una nuova finestra; se non succede nulla, consenti i pop-up per il sito.
 
 ## Tempi di sospensione e raccolta
 

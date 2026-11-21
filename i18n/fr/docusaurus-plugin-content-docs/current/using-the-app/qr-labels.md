@@ -67,7 +67,7 @@ Sous l'image de la caméra, **Code de l'étiquette** accepte les six caractères
 | Symptôme | Cause probable | Que faire |
 | --- | --- | --- |
 | La caméra n'arrive pas à faire la mise au point sur le code | Étiquette mouillée, délavée ou gondolée | Essuyez-la ; réimprimez-la si elle est usée |
-| « Cette ruche ne fait pas partie de vos données » | La ruche a été supprimée, ou appartient à un autre espace | Vérifiez que la ruche existe toujours et que le bon espace est actif (Paramètres → Espaces) |
+| « Cette ruche ne fait pas partie de vos données » | La ruche a été supprimée, ou appartient à un autre espace | Vérifiez que la ruche existe toujours et que le bon espace est actif (Paramètres → Espace) |
 | « Vous êtes hors ligne » | La ruche n'a pas encore été téléchargée sur cet appareil | Connectez-vous à Internet ; la ruche s'ouvre une fois vos données synchronisées |
 | « Connectez-vous pour ouvrir cette ruche » | Ce navigateur n'est pas connecté. Typique après un scan avec l'application appareil photo alors que vous utilisez d'habitude l'application installée | Connectez-vous, ou scannez depuis l'application installée |
 | « Serveur injoignable » | La ruche n'est pas sur l'appareil et le serveur n'a pas répondu | Vérifiez votre connexion et touchez **Réessayer** |

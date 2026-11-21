@@ -57,7 +57,7 @@ Chaque traitement de la liste dispose d'une action de modification et d'une acti
 
 ## Le registre des traitements \{#treatment-register}
 
-**Imprimer le registre** sous **Traitements** imprime le registre des traitements de la ruche : un tableau de tous les traitements avec la date, le produit, la substance active, la dose, la méthode, le numéro de lot, la date de fin du délai d'attente et la mention de modification, ainsi que le jour de l'impression. Le bouton **Registre des traitements** de la page d'un [rucher](./apiaries.md) imprime la même chose pour toutes les ruches de ce rucher en un seul document. Le registre s'ouvre dans une nouvelle fenêtre ; si rien ne se passe, autorisez les fenêtres pop-up pour le site.
+**Imprimer le registre** sous **Traitements** imprime le registre des traitements de la ruche : un tableau de tous les traitements avec la date, le motif, le produit, la substance active, la dose, la méthode, le numéro de lot, la date de fin du délai d'attente et la mention de modification, ainsi que le jour de l'impression. Le bouton **Registre des traitements** de la page d'un [rucher](./apiaries.md) imprime la même chose pour toutes les ruches de ce rucher en un seul document. Sous **Paramètres → Données et synchro → Registre des traitements**, vous l'imprimez pour tout l'espace, ou le limitez à un rucher ou à une année. Le registre s'ouvre dans une nouvelle fenêtre ; si rien ne se passe, autorisez les fenêtres pop-up pour le site.
 
 ## Délais d'attente et récolte
 

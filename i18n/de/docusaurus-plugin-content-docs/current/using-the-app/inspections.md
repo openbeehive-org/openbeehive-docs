@@ -34,7 +34,7 @@ Hat die Beute eine frühere Durchsicht, füllt **Von letzter Durchsicht ausgehen
 
 ## Gewichte und Temperaturen \{#units}
 
-Gewichte und Temperaturen werden in den Einheiten angezeigt und eingegeben, die unter **Einstellungen → Einheiten** gewählt sind: Kilogramm oder Pfund, Grad Celsius oder Fahrenheit. Die Wahl wird mit deinem Konto gespeichert und gilt auf allen deinen Geräten. Du kannst ein Dezimalkomma oder einen Dezimalpunkt eingeben. Die App speichert jeden Wert in Kilogramm und Grad Celsius; ein Wechsel der Einheiten ändert deine Aufzeichnungen also nie, und Exporte und die API bleiben metrisch.
+Gewichte und Temperaturen werden in den Einheiten angezeigt und eingegeben, die unter **Einstellungen → Anzeige → Einheiten** gewählt sind: Kilogramm oder Pfund, Grad Celsius oder Fahrenheit. Die Wahl wird mit deinem Konto gespeichert und gilt auf allen deinen Geräten. Du kannst ein Dezimalkomma oder einen Dezimalpunkt eingeben. Die App speichert jeden Wert in Kilogramm und Grad Celsius; ein Wechsel der Einheiten ändert deine Aufzeichnungen also nie, und Exporte und die API bleiben metrisch.
 
 ## Volk & Verhalten
 

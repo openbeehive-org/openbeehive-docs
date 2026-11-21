@@ -29,14 +29,14 @@ Un pequeño indicador de estado en la parte superior de cada página (y bajo tu 
 | --- | --- |
 | **Sincronizado** y una hora | Todo lo que hay en este dispositivo está en el servidor. |
 | **Sincronizando…** | Hay un intercambio con el servidor en curso. |
-| **Pendientes de subir: 3** | Tres cambios están guardados en el dispositivo y aún no se han subido. |
-| **Sin conexión** o **Sin conexión · 3 pendientes** | No hay conexión. Los cambios esperan en el dispositivo. |
+| **Cambios pendientes de enviar** | Hay cambios guardados en el dispositivo que aún no se han subido. |
+| **Sin conexión** o **Sin conexión · cambios pendientes** | No hay conexión. Los cambios esperan en el dispositivo. |
 | **Falló la sincronización · reintentando** | No se pudo contactar con el servidor o este respondió con un error. La aplicación sigue intentándolo. |
 | **Sesión cerrada · inicia sesión para sincronizar** | Tu sesión ha terminado. Toca el indicador para iniciar sesión; no se pierde nada. |
-| **Problemas de sincronización: 2** | El servidor rechazó dos cambios; ver más abajo. |
+| **Problemas de sincronización: 2** | Dos cambios no se pudieron sincronizar; ver más abajo. |
 | **Aplicación desactualizada · actualízala para sincronizar** | El servidor requiere una versión más reciente de la aplicación. Carga la nueva versión; hasta entonces, los cambios esperan en el dispositivo. |
 
-Toca el indicador para sincronizar de inmediato. Sin tocarlo, la aplicación sincroniza después de cada cambio, a intervalos cortos mientras está abierta y en cuanto vuelve la conexión.
+Toca el indicador para abrir el **Estado de la sincronización**: el estado, cuándo se sincronizó este dispositivo por última vez, cuántos cambios y fotos esperan para subirse y, si los hay, cuántos cambios rechazó el servidor, con **Ver problemas de sincronización**. **Sincronizar ahora** inicia una sincronización de inmediato. Una visita puede ser varios cambios: la visita en sí, sus fotos y su entrada en la cronología. Sin tocarlo, la aplicación sincroniza después de cada cambio, a intervalos cortos mientras está abierta y en cuanto vuelve la conexión.
 
 Mientras el dispositivo no tiene conexión, una barra en la parte superior de la página indica además "Sin conexión: los cambios se guardan y se sincronizan más tarde." Es informativo; continúa exactamente igual que antes.
 
@@ -46,7 +46,9 @@ Un indicador de sin conexión persistente normalmente significa poca cobertura e
 
 ### Problemas de sincronización \{#sync-problems}
 
-De vez en cuando el servidor no acepta un cambio, por ejemplo porque el registro pertenece a otro espacio o porque el reloj del dispositivo iba muy adelantado. Un cambio así no se descarta: se queda en el dispositivo, y el indicador muestra **Problemas de sincronización** con el número de cambios rechazados. La lista **Problemas de sincronización** de **Ajustes** nombra cada uno con el motivo y ofrece **Reintentar** (o **Reintentar todos**) y **Descartar**. Descartar detiene la subida; el registro se queda en este dispositivo tal como está, pero nunca llega al servidor, a tus otros dispositivos ni a los demás miembros.
+De vez en cuando el servidor no acepta un cambio, por ejemplo porque el registro pertenece a otro espacio o porque el reloj del dispositivo iba muy adelantado. Un cambio así no se descarta: se queda en el dispositivo, y el indicador muestra **Problemas de sincronización** con el número de cambios rechazados. La lista **Problemas de sincronización** de **Ajustes → Datos y sincro** nombra cada uno con el motivo y ofrece **Reintentar** (o **Reintentar todos**) y **Descartar**. Descartar detiene la subida; el registro se queda en este dispositivo tal como está, pero nunca llega al servidor, a tus otros dispositivos ni a los demás miembros.
+
+La lista también muestra los cambios recibidos del servidor que este dispositivo no pudo aplicar, marcados como "no se pudo aplicar". Los registros de este dispositivo se quedan como están, y el resto de la sincronización continúa. Una entrada así solo se puede descartar; si el mismo cambio vuelve a llegar, sustituye la entrada.
 
 ### Relojes de los dispositivos
 
@@ -108,7 +110,7 @@ Para compartir un emplazamiento con un mentor mientras mantienes otros privados,
 
 El guardado ocurre en tu dispositivo, así que prácticamente nunca falla. Si ocurre (por ejemplo porque el almacenamiento del navegador está lleno o dañado), el formulario permanece abierto con todo lo que escribiste y un mensaje de error explica qué salió mal.
 
-En la **cuenta de demostración** pública el servidor no acepta cambios (la demo se reinicia cada hora). Cuando cambias algo allí, la aplicación deshace el cambio y avisa de que no se ha guardado.
+La **cuenta de demostración** pública es de solo lectura: un aviso lo indica, y los formularios de registro muestran una nota y un botón **Guardar** desactivado. Si aun así un cambio llega a pasar, el servidor lo rechaza y la aplicación lo deshace y avisa de que no se ha guardado.
 
 Hay una situación en la que guardar funciona pero no perdura: si el navegador no puede darle a la aplicación su almacenamiento privado (una ventana de navegación privada, o el almacenamiento bloqueado en los ajustes del navegador), la aplicación mantiene los registros en memoria y muestra un aviso: **"Este navegador no guarda datos en este dispositivo (ventana privada o almacenamiento bloqueado). Lo que no se haya sincronizado se pierde al cerrar esta pestaña."** Todo sigue funcionando durante la sesión, y los cambios se siguen sincronizando con el servidor si has iniciado sesión, pero la copia local desaparece al cerrar la pestaña. Consulta [Resolución de problemas](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
@@ -119,5 +121,7 @@ Solo una pestaña o ventana puede trabajar a la vez con los registros de un disp
 ## ¿Perderé datos alguna vez?
 
 Tus registros se escriben primero en tu dispositivo y no se eliminan porque estés sin conexión o porque la aplicación se cierre. Esperan en el dispositivo hasta que se puedan sincronizar.
+
+En un dispositivo compartido, cada cuenta guarda su propia copia local por espacio. Cuando otra persona inicia sesión en el mismo navegador, no ve tus cambios sin enviar ni tus tareas personales, y nada tuyo se sube con su cuenta; tus cambios se suben la próxima vez que inicies sesión allí.
 
 Si te autoalojas, mantén también copias de seguridad del servidor. Consulta [Copias de seguridad](../self-hosting/backups.md).

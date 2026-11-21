@@ -13,7 +13,7 @@ A seconda dell'istanza, la schermata di accesso offre una o più delle seguenti 
 
 - **E-mail e password**: "Crea account" con nome, e-mail e password, poi "Accedi".
 - **Un provider** (Google, Keycloak, ...): "Continua con ...".
-- **Una passkey**: "Accedi con passkey" usando impronta, volto, PIN del dispositivo o una chiave di sicurezza. Aggiungi le passkey in **Impostazioni → Passkeys** una volta effettuato l'accesso.
+- **Una passkey**: "Accedi con passkey" usando impronta, volto, PIN del dispositivo o una chiave di sicurezza. Aggiungi le passkey in **Impostazioni → Account → Passkeys** una volta effettuato l'accesso.
 - **La demo**: "Prova la demo" sulle istanze che ne eseguono una. Non richiede un account.
 
 Su un'istanza a utente singolo senza login configurato, l'app si apre direttamente sui tuoi registri.
@@ -34,7 +34,9 @@ La password dell'admin dell'istanza è impostata nella configurazione del server
 
 ## Uscire \{#signing-out}
 
-**Impostazioni → Account → Esci** conta prima le modifiche su questo dispositivo non ancora caricate e ti avvisa. Su un dispositivo condiviso spunta **Rimuovi anche i dati da questo dispositivo** per cancellare dal browser le registrazioni e le foto scaricate di questo spazio; tutto ciò che è stato sincronizzato resta nel tuo account. Le modifiche non inviate vanno perse quando rimuovi i dati, quindi prima connettiti e attendi la sincronizzazione.
+**Impostazioni → Account → Esci** conta prima le modifiche su questo dispositivo non ancora caricate e ti avvisa. Le modifiche non inviate restano sul dispositivo e vengono caricate quando vi accedi di nuovo. Su un dispositivo condiviso spunta **Rimuovi anche i dati da questo dispositivo** per cancellare dal browser le registrazioni e le foto scaricate di questo spazio; tutto ciò che è stato sincronizzato resta nel tuo account. Le modifiche non inviate vanno perse quando rimuovi i dati, quindi prima connettiti e attendi la sincronizzazione.
+
+Ogni account conserva su un dispositivo i propri dati locali, per ogni spazio. Quando qualcun altro accede nello stesso browser, anche allo stesso spazio, riceve una propria copia: non vede le tue modifiche non inviate né le tue attività personali, e nulla di tuo viene caricato a suo nome.
 
 **Esci ovunque** ti disconnette da tutti gli altri tuoi dispositivi, per esempio dopo aver perso un telefono. Su questo resti connesso, e le chiavi API continuano a funzionare.
 
@@ -50,11 +52,11 @@ Tutto ciò che registri vive nello **spazio attivo**, e ogni membro di uno spazi
 
 ## Cambiare spazio
 
-Apri **Impostazioni → Spazi**. Ogni spazio a cui appartieni è elencato con il tuo ruolo; quello attivo è contrassegnato. Tocca un altro per passare; l'app si ricarica con le registrazioni di quello spazio.
+Apri **Impostazioni → Spazio**. Ogni spazio a cui appartieni è elencato con il tuo ruolo; quello attivo è contrassegnato. Tocca un altro per passare; l'app si ricarica con le registrazioni di quello spazio.
 
 ## Creare uno spazio
 
-In **Impostazioni → Spazi**, digita un nome (per esempio "Club di apicoltura") e tocca **Crea spazio**. Ne diventi l'**Admin** e diventa il tuo spazio attivo.
+In **Impostazioni → Spazio**, digita un nome (per esempio "Club di apicoltura") e tocca **Crea spazio**. Ne diventi l'**Admin** e diventa il tuo spazio attivo.
 
 ## Ruoli
 
@@ -69,24 +71,32 @@ Il ruolo di admin dell'istanza definito nella configurazione del server è separ
 
 ## Invitare apicoltori
 
-Come admin dello spazio, apri **Impostazioni → Spazi → Invita un apicoltore**, inserisci l'indirizzo e-mail della persona e tocca **Invia invito**. L'app mostra il link di invito con un pulsante **Copia link**; condividilo direttamente con la persona. Se il server ha SMTP configurato, lo stesso link viene anche inviato via e-mail. Gli invitati entrano come membri.
+Come admin dello spazio, apri **Impostazioni → Spazio → Invita un apicoltore**, inserisci l'indirizzo e-mail della persona e tocca **Invia invito**. L'app mostra il link di invito con un pulsante **Copia link**; condividilo direttamente con la persona. Se il server ha SMTP configurato, lo stesso link viene anche inviato via e-mail. Gli invitati entrano come membri.
 
 Un invito è valido per 7 giorni e funziona solo per l'indirizzo e-mail per cui è stato emesso. Gli inviti aperti sono elencati sotto **Inviti aperti**, ciascuno con i propri pulsanti **Copia link** e **Revoca**. Un invito scompare dall'elenco una volta accettato.
 
+Invitare un indirizzo che ha già un invito aperto lo sostituisce: l'app lo segnala, il nuovo link è valido per altri 7 giorni e il vecchio link smette di funzionare. Chi è già membro non può essere invitato di nuovo.
+
 ## Accettare un invito
 
-Il link di invito apre la schermata di accesso con l'avviso "Hai ricevuto un invito".
+Il link di invito apre la schermata di accesso, che indica lo spazio e l'indirizzo a cui è destinato l'invito, in parte nascosto: "Sei stato invitato nello spazio «Club di apicoltura». Crea un account o accedi con j…@e….org."
 
 - Se non hai ancora un account, creane uno con l'indirizzo e-mail a cui è stato inviato l'invito.
 - Se hai già un account con quell'indirizzo, accedi.
 
-Un invito non può essere usato con un indirizzo e-mail diverso ("Questo invito è stato emesso per un altro indirizzo e-mail."), e smette di funzionare 7 giorni dopo la sua creazione ("Questo invito non è valido o è scaduto."). Chiedine uno nuovo all'admin dello spazio.
+Non appena hai effettuato l'accesso, l'app ti aggiunge allo spazio e ti fa passare ad esso. Da quel momento compare nelle tue **Impostazioni → Spazio**.
 
-Non appena hai effettuato l'accesso, l'app ti aggiunge allo spazio e ti fa passare ad esso. Da quel momento compare nelle tue **Impostazioni → Spazi**.
+Se l'invito non può essere usato, la schermata di accesso spiega perché e resta aperta:
+
+- accesso con un altro indirizzo: "Questo invito è per j…@e….org. Accedi o crea un account con quell’indirizzo, oppure chiedi un invito per questo."
+- più vecchio di 7 giorni: "Questo invito è scaduto. Chiedine uno nuovo alla persona che ti ha invitato."
+- già usato, revocato o con lo spazio eliminato: "Questo invito non è più valido: è già stato usato o revocato, oppure lo spazio è stato eliminato. Chiedine uno nuovo."
+
+**Continua senza unirti** ti porta quindi nell'app senza lo spazio.
 
 ## Membri \{#members}
 
-**Impostazioni → Spazi → Membri** elenca chi appartiene allo spazio attivo. Un admin vede l'indirizzo e-mail e il ruolo di ogni membro, può cambiare il **Ruolo** (**Admin** o **Membro**) e può rimuovere un membro con **Rimuovi**. Un membro rimosso perde subito l'accesso, comprese le sue chiavi API; le registrazioni che ha scritto restano. Le sue attività personali in questo spazio vengono eliminate.
+**Impostazioni → Spazio → Membri** elenca chi appartiene allo spazio attivo. Un admin vede l'indirizzo e-mail e il ruolo di ogni membro, può cambiare il **Ruolo** (**Admin** o **Membro**) e può rimuovere un membro con **Rimuovi**. Un membro rimosso perde subito l'accesso, comprese le sue chiavi API; le registrazioni che ha scritto restano. Le sue attività personali in questo spazio vengono eliminate.
 
 Ogni membro può lasciare uno spazio con **Esci**. Perdi subito l'accesso alle sue registrazioni e ti serve un nuovo invito per rientrare. Se ne sei l'unico membro non c'è nulla da lasciare; elimina invece lo spazio.
 
@@ -94,11 +104,11 @@ Se perdi l'accesso allo spazio in cui stavi lavorando, l'app te lo dice e contin
 
 ## Eliminare uno spazio
 
-Un admin dello spazio può eliminare lo spazio in **Impostazioni → Spazi → Zona di pericolo**. Digita il nome dello spazio per confermare. Questo rimuove lo spazio con tutti i suoi apiari, arnie, registrazioni e foto per ogni membro e non può essere annullato.
+Un admin dello spazio può eliminare lo spazio in **Impostazioni → Spazio → Zona di pericolo**. Digita il nome dello spazio per confermare. Questo rimuove lo spazio con tutti i suoi apiari, arnie, registrazioni e foto per ogni membro e non può essere annullato.
 
 ## Eliminare il tuo account \{#delete-account}
 
-**Impostazioni → Elimina l’account** mostra che cosa comporterebbe l'eliminazione del tuo account prima che tu confermi:
+**Impostazioni → Account → Elimina l’account** mostra che cosa comporterebbe l'eliminazione del tuo account prima che tu confermi:
 
 - I tuoi dati di accesso, le chiavi API e le attività personali vengono eliminati.
 - Gli spazi di cui sei l'unico membro vengono eliminati con tutte le loro registrazioni e foto.
@@ -109,7 +119,7 @@ Conferma con la tua password o con una passkey. Un account che non ha né l'una 
 
 ## Chiavi API \{#api-keys}
 
-**Impostazioni → Chiavi API** è dove crei le credenziali per script e dispositivi, come una bilancia per arnie, che usano l'[API](../using-the-api/overview.md) a tuo nome. La sezione compare solo quando hai effettuato l'accesso; un'istanza a utente singolo senza login non ha chiavi e non ne ha bisogno.
+**Impostazioni → Spazio → Chiavi API** è dove crei le credenziali per script e dispositivi, come una bilancia per arnie, che usano l'[API](../using-the-api/overview.md) a tuo nome. La sezione compare solo quando hai effettuato l'accesso; un'istanza a utente singolo senza login non ha chiavi e non ne ha bisogno.
 
 - Digita un nome nel campo **Dai un nome alla chiave (es. bilancia arnia)**, scegli i permessi nel selettore **Permessi** (**Lettura e scrittura**, il valore predefinito, o **Sola lettura**) e la durata nel selettore **Scade dopo** (**Non scade**, il valore predefinito, **30 giorni**, **90 giorni** o **1 anno**), poi tocca **Crea chiave**. La chiave compare sotto con l'avviso "Copia la chiave adesso. Viene mostrata una sola volta." e un pulsante **Copia** (per un attimo diventa **Copiata**). Tutto ciò che non copi adesso è perso; il server conserva solo un hash. Sotto **Come usarla** l'app mostra l'indirizzo a cui inviare le richieste e un esempio pronto che elenca le tue arnie, con **Copia esempio**.
 - Ogni chiave è elencata con il suo nome (**Chiave senza nome** se hai lasciato il campo vuoto), i suoi primi caratteri, un badge **Lettura e scrittura** o **Sola lettura**, **Creata**, poi **Scade** e la data se hai impostato una durata (**Scaduta** e la data, in rosso, una volta passato quel giorno) e, una volta che uno script l'ha usata, **Ultimo utilizzo**. Le chiavi scadute restano nell'elenco finché non le rimuovi.
@@ -121,4 +131,4 @@ Una chiave agisce a tuo nome nello spazio che era attivo quando l'hai creata, qu
 
 ## La demo
 
-Alcune istanze eseguono un **account demo**. Mentre sei connesso con esso, un banner ti ricorda che i dati si reimpostano ogni ora. La demo è in sola lettura: quando modifichi qualcosa, l'app annulla la modifica e ti dice che non è stata salvata. La demo pubblica del progetto è il pulsante **Prova la demo** su [app.openbeehive.org/login](https://app.openbeehive.org/login). Gli operatori possono abilitarla tramite [Modalità demo](../self-hosting/demo.md).
+Alcune istanze eseguono un **account demo**. Mentre sei connesso con esso, un banner dice che la demo è in sola lettura e che nulla di ciò che modifichi viene salvato; i moduli dei dati mostrano una nota e un pulsante **Salva** disattivato. Se una modifica raggiunge comunque il server, l'app la annulla e ti dice che non è stata salvata. La demo pubblica del progetto è il pulsante **Prova la demo** su [app.openbeehive.org/login](https://app.openbeehive.org/login). Gli operatori possono abilitarla tramite [Modalità demo](../self-hosting/demo.md).

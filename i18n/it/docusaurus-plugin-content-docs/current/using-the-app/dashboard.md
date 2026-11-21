@@ -21,17 +21,17 @@ Finché non viene registrata la tua prima visita, la Panoramica ti accoglie con 
 | **Arnie** | Numero di arnie. |
 | **Regine** | Regine attualmente registrate a capo di una colonia. |
 | **Attività aperte** | Attività non ancora spuntate. |
-| **Miele in questa stagione** | Totale del miele raccolto nell'anno solare corrente, in chilogrammi o libbre secondo la scelta fatta in **Impostazioni → Unità**. |
+| **Miele in questa stagione** | Totale del miele raccolto nell'anno solare corrente, in chilogrammi o libbre secondo la scelta fatta in **Impostazioni → Preferenze → Unità**. |
 
 I riquadri sono solo conteggi; usa la navigazione per aprire la sezione corrispondente.
 
 ## Visite in scadenza
 
-Elenca fino a cinque arnie, prima quelle non visitate da più tempo, con il numero di giorni trascorsi dall'ultima visita ("oggi", oppure "mai" per le arnie senza alcuna visita). Il badge è evidenziato a partire da 21 giorni, o quando non c'è nessuna visita. Tocca un'arnia per aprirla e registrare una visita.
+Un'arnia è in scadenza 10 giorni dopo l'ultima visita; il pannello lo indica. Elenca fino a cinque arnie in scadenza, prima quelle non visitate da più tempo, con il numero di giorni trascorsi dall'ultima visita ("mai" per le arnie senza alcuna visita). Il badge è evidenziato a partire da 21 giorni, o quando non c'è nessuna visita. Tocca un'arnia per aprirla e registrare una visita. Quando le arnie in scadenza sono di più, **Vedi tutte le N arnie da visitare** apre l'elenco delle arnie ordinato per ultima visita.
 
-Contano solo le visite registrate da una persona. Le letture inviate da un sensore o da una bilancia tramite l'API non rendono un'arnia "visitata", e le colonie con lo stato **Persa** o **Sciolta** vengono escluse. Quando non ci sono arnie il pannello dice che non c'è niente in scadenza.
+Contano solo le visite registrate da una persona. Le letture inviate da un sensore o da una bilancia tramite l'API non rendono un'arnia "visitata", e le colonie con lo stato **Persa** o **Sciolta** vengono escluse. Quando nessuna arnia è in scadenza il pannello dice "Tutto aggiornato: ottimo lavoro!", e quando non ci sono arnie, che non c'è niente in scadenza.
 
-Non esiste un intervallo configurabile: l'elenco è ordinato per tempo trascorso dall'ultima visita registrata.
+L'intervallo di 10 giorni è fisso nell'app; `GetDashboard` dell'API usa lo stesso valore predefinito e accetta `thresholdDays` per cambiarlo.
 
 ## Prossime attività
 
@@ -41,27 +41,40 @@ Mostra fino a cinque attività aperte con le loro scadenze. Le attività la cui 
 
 Le stesse destinazioni sono disponibili ovunque: **Panoramica, Apiari, Scansiona, Arnie, Attività** e **Impostazioni**.
 
-- Su un telefono, una **barra delle schede inferiore** le contiene tutte e sei.
+- Su un telefono, una **barra delle schede inferiore** le contiene tutte e sei, con etichette brevi adatte agli schermi stretti.
 - Su desktop o tablet, una **barra laterale** a sinistra elenca Panoramica, Apiari, Scansiona, Arnie e Attività, con il tuo account (e-mail e stato della sincronizzazione) in fondo che rimanda alle Impostazioni.
 
 ## Impostazioni \{#settings}
 
-**Impostazioni** contiene:
+**Impostazioni** mostra uno di quattro gruppi alla volta; i pulsanti in alto passano dall'uno all'altro.
+
+**Preferenze**
 
 - **Lingua**: inglese, tedesco, francese, spagnolo o italiano. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi.
 - **Aspetto**: **Sistema** (segue l'impostazione chiara o scura del dispositivo), **Chiaro** o **Scuro**. La scelta viene salvata solo su questo dispositivo.
-- **Unità**: **Peso** in chilogrammi o libbre e **Temperatura** in Celsius o Fahrenheit, per mostrare e inserire i valori. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi e spazi. Finché non scegli, l'app segue la regione del tuo browser (per esempio libbre e Fahrenheit negli Stati Uniti). I dati vengono sempre memorizzati in chilogrammi e gradi Celsius, e le esportazioni e l'API restano nel sistema metrico; vedi [Ispezioni](./inspections.md#units).
-- **Spazi**: cambia, crea, invita, gestisci i membri ed elimina (sulle istanze con login). Vedi [Account e spazi](./accounts-tenants.md).
-- **Problemi di sincronizzazione**: le modifiche che il server ha rifiutato, con **Riprova** e **Scarta**. Vedi [Offline e sincronizzazione](./offline-and-sync.md#sync-problems).
+- **Unità**: **Peso** in chilogrammi o libbre e **Temperatura** in Celsius o Fahrenheit, per mostrare e inserire i valori. La scelta viene salvata nel tuo account e vale su tutti i tuoi dispositivi e spazi. Finché non scegli, l'app usa le unità metriche, a meno che il tuo browser non sia impostato sulla lingua dell'app per una regione che usa libbre e Fahrenheit (per esempio inglese, Stati Uniti). I dati vengono sempre memorizzati in chilogrammi e gradi Celsius, e le esportazioni e l'API restano nel sistema metrico; vedi [Ispezioni](./inspections.md#units).
+
+**Spazio** (sulle istanze con login)
+
+- **Spazi**: cambia, crea, invita e gestisci i membri. Vedi [Account e spazi](./accounts-tenants.md).
+- **Chiavi API**: crea e rimuovi chiavi per script e dispositivi. Vedi [Account e spazi](./accounts-tenants.md#api-keys).
+- **Zona di pericolo**: elimina lo spazio (solo admin).
+
+**Dati e sincro**
+
+- **Problemi di sincronizzazione**: le modifiche che il server ha rifiutato, con **Riprova** e **Scarta**, e le modifiche ricevute che non è stato possibile applicare. Vedi [Offline e sincronizzazione](./offline-and-sync.md#sync-problems).
 - **Dati e backup**: backup, altri formati di esportazione, la copia del server e l'importazione; vedi [Importazione ed esportazione](./import-export.md).
+- **Registro dei trattamenti**: stampa il registro per l'intero spazio, per un apiario o per un anno; vedi [Trattamenti](./treatments.md#treatment-register).
+
+**Account** (sulle istanze con login)
+
 - **Account**: con quale utente hai effettuato l'accesso, **Esci**, **Password** ed **Esci ovunque**. Vedi [Account e spazi](./accounts-tenants.md#password).
 - **Passkeys**: aggiungi o rimuovi passkey (quando il server le abilita).
-- **Chiavi API**: crea e rimuovi chiavi per script e dispositivi (sulle istanze con login). Vedi [Account e spazi](./accounts-tenants.md#api-keys).
 - **Reimposta la password di un utente**: solo per l'admin dell'istanza; vedi [Autenticazione](../self-hosting/authentication.md#password-reset).
 - **Elimina l’account**: vedi [Account e spazi](./accounts-tenants.md#delete-account).
 
-Su un'istanza self-hosted a utente singolo senza login non c'è nulla da cui disconnettersi; il blocco account mostra l'identità locale, e unità e lingua vengono conservate per quell'identità.
+Su un'istanza self-hosted a utente singolo senza login non c'è il gruppo Account: **Preferenze** mostra una nota **Senza accesso** che spiega la modalità, e unità e lingua vengono conservate per l'identità locale.
 
 ## Lo stato della sincronizzazione
 
-Un chip di stato in cima alla pagina e accanto al tuo account nella barra laterale mostra se le tue modifiche hanno raggiunto il server (**Sincronizzato**, **In attesa di invio**, **Offline**, **Problemi di sincronizzazione** e così via), e mentre sei offline una barra in alto dice "Offline: le modifiche vengono salvate e sincronizzate in seguito." Continua a registrare esattamente come sempre; la sincronizzazione riprende quando torna la connessione. Vedi [Offline e sincronizzazione](./offline-and-sync.md#sync-status).
+Un chip di stato in cima alla pagina e accanto al tuo account nella barra laterale mostra se le tue modifiche hanno raggiunto il server (**Sincronizzato**, **Modifiche in attesa di invio**, **Offline**, **Problemi di sincronizzazione** e così via); toccalo per lo stato della sincronizzazione e **Sincronizza ora**. Mentre sei offline una barra in alto dice "Offline: le modifiche vengono salvate e sincronizzate in seguito." Continua a registrare esattamente come sempre; la sincronizzazione riprende quando torna la connessione. Vedi [Offline e sincronizzazione](./offline-and-sync.md#sync-status).

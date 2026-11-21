@@ -7,7 +7,7 @@ title: "Importazione ed esportazione"
 
 I tuoi dati sono tuoi. Openbeehive ti permette di portare con te **tutti i tuoi dati**:
 come backup, per spostarti su un'altra istanza, per elaborarli in un foglio di calcolo o per condividerli
-con altri strumenti. Tutto si trova in **Impostazioni → Dati e backup**.
+con altri strumenti. Tutto si trova in **Impostazioni → Dati e sincro**.
 
 Esportazione e importazione lavorano sullo **spazio attivo**. Entrambe attendono che il dispositivo
 abbia terminato la prima sincronizzazione dello spazio; fino ad allora il pannello lo segnala.
@@ -28,7 +28,7 @@ nel file, ma non sul server.
   incluse le loro miniature.
 
 Pesi e temperature vengono sempre esportati in chilogrammi e gradi
-Celsius, qualunque unità tu abbia scelto in **Impostazioni → Unità**.
+Celsius, qualunque unità tu abbia scelto in **Impostazioni → Preferenze → Unità**.
 
 ### Scaricare dal server \{#server-copy}
 

@@ -88,4 +88,4 @@ Wenn eine Beute an einen anderen Ort umzieht, ordne sie mit **Wandern** an der B
 
 ## Teilen
 
-Bienenstände werden nicht einzeln geteilt. Alles in einem Arbeitsbereich ist für jedes Mitglied dieses Arbeitsbereichs sichtbar. Um mit jemandem an einem Bienenstand zu arbeiten, lädst du die Person also in den Arbeitsbereich ein, der ihn enthält (Einstellungen → Arbeitsbereiche → Imker:in einladen). Um deine Völker zu Hause privat zu halten und trotzdem an einem Vereinsstand mitzuarbeiten, erstelle für den Verein einen eigenen Arbeitsbereich. Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md).
+Bienenstände werden nicht einzeln geteilt. Alles in einem Arbeitsbereich ist für jedes Mitglied dieses Arbeitsbereichs sichtbar. Um mit jemandem an einem Bienenstand zu arbeiten, lädst du die Person also in den Arbeitsbereich ein, der ihn enthält (Einstellungen → Arbeitsbereich → Imker:in einladen). Um deine Völker zu Hause privat zu halten und trotzdem an einem Vereinsstand mitzuarbeiten, erstelle für den Verein einen eigenen Arbeitsbereich. Siehe [Konten & Arbeitsbereiche](./accounts-tenants.md).

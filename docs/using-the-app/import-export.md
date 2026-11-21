@@ -7,7 +7,7 @@ title: "Import & export"
 
 Your records are yours. Openbeehive lets you take **all of your data** with you:
 as a backup, to move to another instance, to crunch in a spreadsheet, or to share
-with other tools. Everything is under **Settings → Data & backup**.
+with other tools. Everything is under **Settings → Data & sync**.
 
 Export and import work on the **active workspace**. Both wait until the device
 has finished its first sync of the workspace; until then the panel says so.
@@ -28,7 +28,7 @@ in the file, but not on the server.
   missing, and their thumbnails are included.
 
 Weights and temperatures are always exported in kilograms and degrees
-Celsius, whatever units you have chosen under **Settings → Units**.
+Celsius, whatever units you have chosen under **Settings → Preferences → Units**.
 
 ### Download from the server \{#server-copy}
 

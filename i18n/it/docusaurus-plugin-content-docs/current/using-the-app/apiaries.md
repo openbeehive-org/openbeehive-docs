@@ -88,4 +88,4 @@ Se un'arnia si sposta in un'altra posizione, usa **Sposta** sull'arnia per riass
 
 ## Condivisione
 
-Gli apiari non si condividono singolarmente. Tutto ciò che sta in uno spazio è visibile a ogni membro di quello spazio, quindi per lavorare su un apiario con qualcuno invitalo nello spazio che lo contiene (Impostazioni → Spazi → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea uno spazio separato per il club. Vedi [Account e spazi](./accounts-tenants.md).
+Gli apiari non si condividono singolarmente. Tutto ciò che sta in uno spazio è visibile a ogni membro di quello spazio, quindi per lavorare su un apiario con qualcuno invitalo nello spazio che lo contiene (Impostazioni → Spazio → Invita un apicoltore). Per mantenere private le tue colonie di casa mentre collabori su una postazione di un club, crea uno spazio separato per il club. Vedi [Account e spazi](./accounts-tenants.md).

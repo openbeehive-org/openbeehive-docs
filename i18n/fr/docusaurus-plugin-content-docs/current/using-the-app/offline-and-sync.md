@@ -29,14 +29,14 @@ Une petite pastille d'état en haut de chaque page (et sous votre adresse e-mail
 | --- | --- |
 | **Synchronisé** et une heure | Tout ce qui se trouve sur cet appareil est sur le serveur. |
 | **Synchronisation…** | Un échange avec le serveur est en cours. |
-| **En attente d'envoi : 3** | Trois modifications sont enregistrées sur l'appareil et pas encore envoyées. |
-| **Hors ligne** ou **Hors ligne · 3 en attente** | Pas de connexion. Les modifications attendent sur l'appareil. |
+| **Modifications en attente d’envoi** | Des modifications sont enregistrées sur l'appareil et pas encore envoyées. |
+| **Hors ligne** ou **Hors ligne · modifications en attente** | Pas de connexion. Les modifications attendent sur l'appareil. |
 | **Échec de la synchronisation · nouvel essai** | Le serveur n'a pas pu être joint ou a répondu par une erreur. L'application continue d'essayer. |
 | **Déconnecté · connectez-vous pour synchroniser** | Votre session a pris fin. Touchez la pastille pour vous connecter ; rien n'est perdu. |
-| **Problèmes de synchronisation : 2** | Le serveur a refusé deux modifications ; voir ci-dessous. |
+| **Problèmes de synchronisation : 2** | Deux modifications n'ont pas pu être synchronisées ; voir ci-dessous. |
 | **Application obsolète · mettez-la à jour pour synchroniser** | Le serveur exige une version plus récente de l'application. Chargez la nouvelle version ; d'ici là, les modifications attendent sur l'appareil. |
 
-Touchez la pastille pour synchroniser aussitôt. Sans cela, l'application synchronise après chaque modification, à intervalles rapprochés tant qu'elle est ouverte, et dès que la connexion revient.
+Touchez la pastille pour ouvrir l'**État de la synchronisation** : l'état, la dernière synchronisation de cet appareil, le nombre de modifications et de photos en attente d'envoi et, s'il y en a, le nombre de modifications refusées par le serveur, avec **Voir les problèmes de synchronisation**. **Synchroniser maintenant** lance aussitôt une synchronisation. Une visite peut représenter plusieurs modifications : la visite elle-même, ses photos et son entrée dans la chronologie. Sans toucher la pastille, l'application synchronise après chaque modification, à intervalles rapprochés tant qu'elle est ouverte, et dès que la connexion revient.
 
 Tant que l'appareil n'a pas de connexion, une barre en haut de la page indique aussi « Hors ligne : les modifications sont enregistrées et synchronisées plus tard. » C'est purement informatif ; continuez exactement comme avant.
 
@@ -46,7 +46,9 @@ Un indicateur hors ligne persistant signifie généralement une couverture faibl
 
 ### Problèmes de synchronisation \{#sync-problems}
 
-De temps à autre, le serveur n'accepte pas une modification, par exemple parce que l'enregistrement appartient à un autre espace ou parce que l'horloge de l'appareil avançait beaucoup. Une telle modification n'est pas jetée : elle reste sur l'appareil, et la pastille affiche **Problèmes de synchronisation** avec le nombre de modifications refusées. La liste **Problèmes de synchronisation** des **Paramètres** nomme chacune avec le motif et propose **Réessayer** (ou **Tout réessayer**) et **Abandonner**. Abandonner arrête l'envoi ; l'enregistrement reste tel quel sur cet appareil mais n'atteint jamais le serveur, vos autres appareils ni les autres membres.
+De temps à autre, le serveur n'accepte pas une modification, par exemple parce que l'enregistrement appartient à un autre espace ou parce que l'horloge de l'appareil avançait beaucoup. Une telle modification n'est pas jetée : elle reste sur l'appareil, et la pastille affiche **Problèmes de synchronisation** avec le nombre de modifications refusées. La liste **Problèmes de synchronisation** sous **Paramètres → Données et synchro** nomme chacune avec le motif et propose **Réessayer** (ou **Tout réessayer**) et **Abandonner**. Abandonner arrête l'envoi ; l'enregistrement reste tel quel sur cet appareil mais n'atteint jamais le serveur, vos autres appareils ni les autres membres.
+
+La liste affiche aussi les modifications reçues du serveur que cet appareil n'a pas pu appliquer, marquées « modification reçue non appliquée ». Les enregistrements de cet appareil restent tels quels, et le reste de la synchronisation continue. Une telle entrée peut seulement être abandonnée ; si la même modification arrive de nouveau, elle remplace l'entrée.
 
 ### Horloges des appareils
 
@@ -108,7 +110,7 @@ Pour partager un emplacement avec un mentor tout en gardant les autres privés, 
 
 L'enregistrement se fait sur votre appareil, il n'échoue donc pratiquement jamais. Si cela arrive (par exemple parce que le stockage du navigateur est plein ou endommagé), le formulaire reste ouvert avec tout ce que vous avez saisi et un message d'erreur explique ce qui s'est passé.
 
-Sur le **compte de démonstration** public, le serveur n'accepte aucune modification (la démo se réinitialise toutes les heures). Lorsque vous y modifiez quelque chose, l'application annule la modification et indique qu'elle n'a pas été enregistrée.
+Le **compte de démonstration** public est en lecture seule : une bannière l'indique, et les formulaires d'enregistrement affichent une note et un bouton **Enregistrer** désactivé. Si une modification passe malgré tout, le serveur la refuse, et l'application l'annule et indique qu'elle n'a pas été enregistrée.
 
 Il existe une situation où l'enregistrement fonctionne mais ne dure pas : si le navigateur ne peut pas donner à l'application son stockage privé (une fenêtre de navigation privée, ou un stockage bloqué dans les réglages du navigateur), l'application garde les enregistrements en mémoire et affiche un bandeau : **« Ce navigateur n'enregistre aucune donnée sur cet appareil (fenêtre privée ou stockage bloqué). Tout ce qui n'est pas synchronisé est perdu à la fermeture de cet onglet. »** Tout continue de fonctionner pendant la session, et les modifications se synchronisent toujours avec le serveur si vous êtes connecté, mais la copie locale disparaît à la fermeture de l'onglet. Voir [Dépannage](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 
@@ -119,5 +121,7 @@ Un seul onglet ou une seule fenêtre peut travailler à la fois avec les enregis
 ## Vais-je perdre des données ?
 
 Vos enregistrements sont d'abord écrits sur votre appareil et ne sont pas supprimés parce que vous êtes hors ligne ou que l'application se ferme. Ils attendent sur l'appareil jusqu'à pouvoir être synchronisés.
+
+Sur un appareil partagé, chaque compte conserve sa propre copie locale par espace. Lorsqu'une autre personne se connecte dans le même navigateur, elle ne voit pas vos modifications non envoyées ni vos tâches personnelles, et rien de ce qui vous appartient n'est envoyé sous son compte ; vos modifications partent la prochaine fois que vous vous y connectez.
 
 Si vous auto-hébergez, conservez aussi des sauvegardes du serveur. Voir [Sauvegardes](../self-hosting/backups.md).

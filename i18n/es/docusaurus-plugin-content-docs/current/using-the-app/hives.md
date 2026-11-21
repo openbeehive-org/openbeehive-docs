@@ -93,7 +93,7 @@ La tarjeta **Reina** muestra su año, número, color de marcado, origen y coment
 
 ### Registro de visitas
 
-**Registrar visita** abre el formulario de visita. Se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas de enjambrazón, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya (toca una para abrir el visor). Los pesos y las temperaturas aparecen en las unidades elegidas en **Ajustes → Unidades**. Cada visita tiene acciones para editarla y eliminarla. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](./inspections.md).
+**Registrar visita** abre el formulario de visita. Se listan las cinco visitas más recientes, la más nueva primero, cada una con la fecha, el clima, unas etiquetas que resumen lo que registraste (reina vista, cuadros, reservas, celdas de enjambrazón, mansedumbre, alimentación, peso, miel, temperatura, humedad, varroa), la nota y las fotos que haya (toca una para abrir el visor). Los pesos y las temperaturas aparecen en las unidades elegidas en **Ajustes → Preferencias → Unidades**. Cada visita tiene acciones para editarla y eliminarla. **Ver las N visitas** abre el registro completo. Consulta [Inspecciones](./inspections.md).
 
 ### Miel y Tratamientos
 

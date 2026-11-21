@@ -13,7 +13,7 @@ Selon l'instance, l'écran de connexion propose une ou plusieurs des options sui
 
 - **E-mail et mot de passe** : « Créer un compte » avec votre nom, votre e-mail et un mot de passe, puis « Se connecter ».
 - **Un fournisseur** (Google, Keycloak, ...) : « Continuer avec ... ».
-- **Une passkey** : « Se connecter avec une passkey » avec votre empreinte digitale, votre visage, le code PIN de votre appareil ou une clé de sécurité. Vous ajoutez des passkeys sous **Paramètres → Passkeys** une fois connecté.
+- **Une passkey** : « Se connecter avec une passkey » avec votre empreinte digitale, votre visage, le code PIN de votre appareil ou une clé de sécurité. Vous ajoutez des passkeys sous **Paramètres → Compte → Passkeys** une fois connecté.
 - **La démo** : « Essayer la démo » sur les instances qui en proposent une. Elle ne nécessite aucun compte.
 
 Sur une instance mono-utilisateur sans connexion configurée, l'application s'ouvre directement sur vos enregistrements.
@@ -34,7 +34,9 @@ Le mot de passe de l'administrateur de l'instance est défini dans la configurat
 
 ## Se déconnecter \{#signing-out}
 
-**Paramètres → Compte → Se déconnecter** compte d'abord les modifications de cet appareil qui n'ont pas encore été envoyées et vous en avertit. Sur un appareil partagé, cochez **Supprimer aussi les données de cet appareil** pour effacer du navigateur les enregistrements de cet espace et les photos téléchargées ; tout ce qui a été synchronisé reste dans votre compte. Les modifications non envoyées sont perdues lorsque vous supprimez les données : connectez-vous donc à Internet et attendez d'abord la synchronisation.
+**Paramètres → Compte → Se déconnecter** compte d'abord les modifications de cet appareil qui n'ont pas encore été envoyées et vous en avertit. Les modifications non envoyées restent sur l'appareil et sont envoyées lorsque vous vous y reconnectez. Sur un appareil partagé, cochez **Supprimer aussi les données de cet appareil** pour effacer du navigateur les enregistrements de cet espace et les photos téléchargées ; tout ce qui a été synchronisé reste dans votre compte. Les modifications non envoyées sont perdues lorsque vous supprimez les données : connectez-vous donc à Internet et attendez d'abord la synchronisation.
+
+Sur un appareil, chaque compte conserve ses propres données locales, par espace. Lorsqu'une autre personne se connecte dans le même navigateur, même dans le même espace, elle obtient sa propre copie : elle ne voit pas vos modifications non envoyées ni vos tâches personnelles, et rien de ce qui vous appartient n'est envoyé sous son compte.
 
 **Se déconnecter partout** vous déconnecte de tous vos autres appareils, par exemple après la perte d'un téléphone. Vous restez connecté sur celui-ci, et les clés API continuent de fonctionner.
 
@@ -50,11 +52,11 @@ Tout ce que vous enregistrez réside dans l'**espace actif**, et chaque membre d
 
 ## Changer d'espace
 
-Ouvrez **Paramètres → Espaces**. Chaque espace auquel vous appartenez est listé avec votre rôle ; l'espace actif est marqué. Touchez-en un autre pour basculer ; l'application se recharge avec les enregistrements de cet espace.
+Ouvrez **Paramètres → Espace**. Chaque espace auquel vous appartenez est listé avec votre rôle ; l'espace actif est marqué. Touchez-en un autre pour basculer ; l'application se recharge avec les enregistrements de cet espace.
 
 ## Créer un espace
 
-Dans **Paramètres → Espaces**, saisissez un nom (par exemple « Club apicole ») et touchez **Créer un espace**. Vous en devenez l'**Admin** et il devient votre espace actif.
+Dans **Paramètres → Espace**, saisissez un nom (par exemple « Club apicole ») et touchez **Créer un espace**. Vous en devenez l'**Admin** et il devient votre espace actif.
 
 ## Rôles
 
@@ -69,24 +71,32 @@ Le rôle d'administrateur de l'instance issu de la configuration du serveur est 
 
 ## Inviter des apiculteurs
 
-En tant qu'admin d'un espace, ouvrez **Paramètres → Espaces → Inviter un·e apiculteur·rice**, saisissez l'adresse e-mail de la personne et touchez **Envoyer l'invitation**. L'application affiche le lien d'invitation avec un bouton **Copier le lien** ; partagez-le directement avec elle. Si le serveur a une configuration SMTP, le même lien est aussi envoyé par e-mail. Les personnes invitées rejoignent l'espace comme membres.
+En tant qu'admin d'un espace, ouvrez **Paramètres → Espace → Inviter un·e apiculteur·rice**, saisissez l'adresse e-mail de la personne et touchez **Envoyer l'invitation**. L'application affiche le lien d'invitation avec un bouton **Copier le lien** ; partagez-le directement avec elle. Si le serveur a une configuration SMTP, le même lien est aussi envoyé par e-mail. Les personnes invitées rejoignent l'espace comme membres.
 
 Une invitation est valable 7 jours et ne fonctionne que pour l'adresse e-mail pour laquelle elle a été émise. Les invitations en attente sont listées sous **Invitations en attente** avec leurs propres boutons **Copier le lien** et **Révoquer**. Une invitation disparaît de la liste une fois acceptée.
 
+Inviter une adresse qui a déjà une invitation en attente remplace celle-ci : l'application le signale, le nouveau lien est valable 7 jours de plus et l'ancien lien cesse de fonctionner. Une personne qui est déjà membre ne peut pas être invitée de nouveau.
+
 ## Accepter une invitation
 
-Le lien d'invitation ouvre l'écran de connexion avec un avis « Vous avez reçu une invitation ».
+Le lien d'invitation ouvre l'écran de connexion, qui nomme l'espace et l'adresse à laquelle l'invitation est destinée, en partie masquée : « Vous avez été invité dans l’espace « Club apicole ». Créez un compte ou connectez-vous avec j…@e….org. »
 
 - Si vous n'avez pas encore de compte, créez-en un avec l'adresse e-mail à laquelle l'invitation a été envoyée.
 - Si vous avez déjà un compte avec cette adresse, connectez-vous.
 
-Une invitation ne peut pas être utilisée avec une autre adresse e-mail (« Cette invitation a été émise pour une autre adresse e-mail. »), et elle cesse de fonctionner 7 jours après sa création (« Cette invitation n'est pas valide ou a expiré. »). Demandez-en une nouvelle à l'admin de l'espace.
+Dès que vous êtes connecté, l'application vous ajoute à l'espace et vous y bascule. Il apparaît ensuite dans vos propres **Paramètres → Espace**.
 
-Dès que vous êtes connecté, l'application vous ajoute à l'espace et vous y bascule. Il apparaît ensuite dans vos propres **Paramètres → Espaces**.
+Si l'invitation ne peut pas être utilisée, l'écran de connexion en indique la raison et reste ouvert :
+
+- connecté avec une autre adresse : « Cette invitation est destinée à j…@e….org. Connectez-vous ou créez un compte avec cette adresse, ou demandez une invitation pour celle-ci. »
+- vieille de plus de 7 jours : « Cette invitation a expiré. Demandez-en une nouvelle à la personne qui vous a invité. »
+- déjà utilisée, révoquée, ou son espace supprimé : « Cette invitation n’est plus valable : elle a déjà été utilisée ou révoquée, ou l’espace a été supprimé. Demandez-en une nouvelle. »
+
+**Continuer sans rejoindre** vous emmène alors dans l'application sans l'espace.
 
 ## Membres \{#members}
 
-**Paramètres → Espaces → Membres** liste les personnes qui appartiennent à l'espace actif. Un admin voit l'adresse e-mail et le rôle de chaque membre, peut changer le **Rôle** (**Admin** ou **Membre**) et peut **Retirer** un membre. Un membre retiré perd l'accès immédiatement, y compris ses clés API ; les enregistrements qu'il a écrits restent. Ses tâches personnelles dans cet espace sont supprimées.
+**Paramètres → Espace → Membres** liste les personnes qui appartiennent à l'espace actif. Un admin voit l'adresse e-mail et le rôle de chaque membre, peut changer le **Rôle** (**Admin** ou **Membre**) et peut **Retirer** un membre. Un membre retiré perd l'accès immédiatement, y compris ses clés API ; les enregistrements qu'il a écrits restent. Ses tâches personnelles dans cet espace sont supprimées.
 
 Chaque membre peut **Quitter** un espace. Vous perdez immédiatement l'accès à ses enregistrements et il vous faut une nouvelle invitation pour revenir. Si vous en êtes le seul membre, il n'y a rien à quitter ; supprimez plutôt l'espace.
 
@@ -94,11 +104,11 @@ Si vous perdez l'accès à l'espace dans lequel vous travailliez, l'application 
 
 ## Supprimer un espace
 
-Un admin d'espace peut supprimer l'espace sous **Paramètres → Espaces → Zone de danger**. Saisissez le nom de l'espace pour confirmer. Cela supprime l'espace avec tous ses ruchers, ruches, enregistrements et photos pour chaque membre, et ne peut pas être annulé.
+Un admin d'espace peut supprimer l'espace sous **Paramètres → Espace → Zone de danger**. Saisissez le nom de l'espace pour confirmer. Cela supprime l'espace avec tous ses ruchers, ruches, enregistrements et photos pour chaque membre, et ne peut pas être annulé.
 
 ## Supprimer votre compte \{#delete-account}
 
-**Paramètres → Supprimer le compte** montre ce que la suppression de votre compte entraînerait, avant que vous ne confirmiez :
+**Paramètres → Compte → Supprimer le compte** montre ce que la suppression de votre compte entraînerait, avant que vous ne confirmiez :
 
 - Vos données de connexion, vos clés API et vos tâches personnelles sont supprimées.
 - Les espaces dont vous êtes le seul membre sont supprimés avec tous leurs enregistrements et photos.
@@ -109,7 +119,7 @@ Confirmez avec votre mot de passe ou une passkey. Un compte qui n'a ni l'un ni l
 
 ## Clés API \{#api-keys}
 
-**Paramètres → Clés API** est l'endroit où vous créez des identifiants pour les scripts et les appareils, comme une balance de ruche, qui utilisent l'[API](../using-the-api/overview.md) en votre nom. La section n'apparaît que lorsque vous êtes connecté ; une instance mono-utilisateur sans connexion n'a pas de clés et n'en a pas besoin.
+**Paramètres → Espace → Clés API** est l'endroit où vous créez des identifiants pour les scripts et les appareils, comme une balance de ruche, qui utilisent l'[API](../using-the-api/overview.md) en votre nom. La section n'apparaît que lorsque vous êtes connecté ; une instance mono-utilisateur sans connexion n'a pas de clés et n'en a pas besoin.
 
 - Saisissez un nom dans le champ **Nommez cette clé (ex. balance de ruche)**, choisissez les permissions dans le sélecteur **Permissions** (**Lecture et écriture**, par défaut, ou **Lecture seule**) et la durée de vie dans le sélecteur **Expire après** (**N'expire jamais**, par défaut, **30 jours**, **90 jours** ou **1 an**), puis touchez **Créer une clé**. La clé apparaît en dessous avec la mention « Copiez la clé maintenant. Elle n'est affichée qu'une seule fois. » et un bouton **Copier** (il indique **Copié** pendant un instant). Tout ce que vous ne copiez pas maintenant est perdu ; le serveur ne conserve qu'un hachage. Sous **Comment l’utiliser**, l'application affiche l'adresse à laquelle envoyer les requêtes et un exemple prêt à l'emploi qui liste vos ruches, avec **Copier l’exemple**.
 - Chaque clé est listée avec son nom (**Clé sans nom** si vous avez laissé le champ vide), ses premiers caractères, un badge **Lecture et écriture** ou **Lecture seule**, **Créée**, puis **Expire le** et la date lorsque vous avez défini une durée de vie (**Expirée le** et la date, en rouge, une fois ce jour passé) et, une fois qu'un script l'a utilisée, **Dernière utilisation**. Les clés expirées restent dans la liste jusqu'à ce que vous les supprimiez.
@@ -121,4 +131,4 @@ Une clé agit en votre nom dans l'espace qui était actif lorsque vous l'avez cr
 
 ## La démo
 
-Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière vous rappelle que les données sont réinitialisées chaque heure. La démo est en lecture seule : lorsque vous modifiez quelque chose, l'application annule la modification et indique qu'elle n'a pas été enregistrée. La démo publique du projet est le bouton **Essayer la démo** sur [app.openbeehive.org/login](https://app.openbeehive.org/login). Les opérateurs peuvent l'activer via le [Mode démo](../self-hosting/demo.md).
+Certaines instances exécutent un **compte de démonstration**. Tant que vous y êtes connecté, une bannière indique que la démo est en lecture seule et que rien de ce que vous modifiez n'est enregistré ; les formulaires d'enregistrement affichent une note et un bouton **Enregistrer** désactivé. Si une modification atteint malgré tout le serveur, l'application l'annule et indique qu'elle n'a pas été enregistrée. La démo publique du projet est le bouton **Essayer la démo** sur [app.openbeehive.org/login](https://app.openbeehive.org/login). Les opérateurs peuvent l'activer via le [Mode démo](../self-hosting/demo.md).

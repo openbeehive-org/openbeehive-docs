@@ -93,7 +93,7 @@ Die Karte **Königin** zeigt Jahr, Nummer, Markierungsfarbe, Herkunft und Kommen
 
 ### Durchsichten
 
-**Durchsicht erfassen** öffnet das Durchsichtsformular. Die fünf jüngsten Durchsichten sind aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos (ein Tipp auf eines öffnet die Ansicht). Gewichte und Temperaturen erscheinen in den Einheiten, die unter **Einstellungen → Einheiten** gewählt sind. Jede Durchsicht hat Aktionen zum Bearbeiten und Löschen. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
+**Durchsicht erfassen** öffnet das Durchsichtsformular. Die fünf jüngsten Durchsichten sind aufgeführt, die neueste zuerst, jeweils mit Datum, Wetter, Chips, die das Erfasste zusammenfassen (Königin gesehen, Waben, Futter, Schwarmzellen, Sanftmut, Fütterung, Gewicht, Honig, Temperatur, Luftfeuchte, Varroa), der Notiz und etwaigen Fotos (ein Tipp auf eines öffnet die Ansicht). Gewichte und Temperaturen erscheinen in den Einheiten, die unter **Einstellungen → Anzeige → Einheiten** gewählt sind. Jede Durchsicht hat Aktionen zum Bearbeiten und Löschen. **Alle N Durchsichten ansehen** öffnet das vollständige Protokoll. Siehe [Durchsichten](./inspections.md).
 
 ### Honig und Behandlungen
 

@@ -93,7 +93,7 @@ The **Queen** card shows her year, number, marking colour, origin and comment, w
 
 ### Visit log
 
-**Record visit** opens the visit form. The five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos (tap one to open the viewer). Weights and temperatures appear in the units chosen under **Settings → Units**. Each visit has actions to edit and delete it. **See all N visits** opens the full log. See [Inspections](./inspections.md).
+**Record visit** opens the visit form. The five most recent visits are listed newest first, each as a date, the weather, chips summarising what you recorded (queen seen, frames, stores, swarm cells, temperament, feed, weight, honey, temperature, humidity, varroa), the note and any photos (tap one to open the viewer). Weights and temperatures appear in the units chosen under **Settings → Preferences → Units**. Each visit has actions to edit and delete it. **See all N visits** opens the full log. See [Inspections](./inspections.md).
 
 ### Honey and Treatments
 

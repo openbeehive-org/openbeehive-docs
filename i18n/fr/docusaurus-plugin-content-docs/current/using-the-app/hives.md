@@ -93,7 +93,7 @@ La carte **Reine** affiche son année, son numéro, sa couleur de marquage, son 
 
 ### Journal des visites
 
-**Enregistrer une visite** ouvre le formulaire de visite. Les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules d'essaimage, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos (touchez-en une pour ouvrir la visionneuse). Les poids et les températures s'affichent dans les unités choisies sous **Paramètres → Unités**. Chaque visite dispose d'actions pour la modifier et la supprimer. **Voir les N visites** ouvre le journal complet. Voir [Visites](./inspections.md).
+**Enregistrer une visite** ouvre le formulaire de visite. Les cinq visites les plus récentes sont listées, la plus récente en premier, chacune avec une date, la météo, des vignettes résumant ce que vous avez enregistré (reine vue, cadres, réserves, cellules d'essaimage, tempérament, nourrissement, poids, miel, température, humidité, varroa), la note et les éventuelles photos (touchez-en une pour ouvrir la visionneuse). Les poids et les températures s'affichent dans les unités choisies sous **Paramètres → Préférences → Unités**. Chaque visite dispose d'actions pour la modifier et la supprimer. **Voir les N visites** ouvre le journal complet. Voir [Visites](./inspections.md).
 
 ### Miel et Traitements
 

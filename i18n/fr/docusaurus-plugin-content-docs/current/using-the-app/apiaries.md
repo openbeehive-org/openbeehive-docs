@@ -88,4 +88,4 @@ Si une ruche change d'emplacement, utilisez **Déplacer** sur la ruche pour la r
 
 ## Partage
 
-Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espaces → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](./accounts-tenants.md).
+Les ruchers ne se partagent pas individuellement. Tout ce qui se trouve dans un espace est visible par chaque membre de cet espace ; pour travailler sur un rucher avec quelqu'un, invitez donc cette personne dans l'espace qui le contient (Paramètres → Espace → Inviter un·e apiculteur·rice). Pour garder vos colonies domestiques privées tout en collaborant sur un rucher de club, créez un espace séparé pour le club. Voir [Comptes et espaces](./accounts-tenants.md).

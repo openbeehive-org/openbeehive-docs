@@ -57,7 +57,7 @@ Cada tratamiento de la lista tiene una acción de edición y otra de eliminació
 
 ## El registro de tratamientos \{#treatment-register}
 
-**Imprimir registro**, en **Tratamientos**, imprime el registro de tratamientos de la colmena: una tabla de todos los tratamientos con fecha, producto, principio activo, dosis, método, número de lote, fecha de fin del tiempo de espera y la marca de modificado, más el día en que se imprimió. El botón **Registro de tratamientos** de la página de un [colmenar](./apiaries.md) imprime lo mismo para todas las colmenas de ese colmenar en un solo documento. El registro se abre en una ventana nueva; si no pasa nada, permite las ventanas emergentes para el sitio.
+**Imprimir registro**, en **Tratamientos**, imprime el registro de tratamientos de la colmena: una tabla de todos los tratamientos con fecha, motivo, producto, principio activo, dosis, método, número de lote, fecha de fin del tiempo de espera y la marca de modificado, más el día en que se imprimió. El botón **Registro de tratamientos** de la página de un [colmenar](./apiaries.md) imprime lo mismo para todas las colmenas de ese colmenar en un solo documento. En **Ajustes → Datos y sincro → Registro de tratamientos** lo imprimes para todo el espacio, o lo limitas a un colmenar o a un año. El registro se abre en una ventana nueva; si no pasa nada, permite las ventanas emergentes para el sitio.
 
 ## Periodos de carencia y cosecha
 

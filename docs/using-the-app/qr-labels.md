@@ -67,7 +67,7 @@ Under the camera picture, **Label code** takes the six characters printed under 
 | Symptom | Likely cause | What to do |
 | --- | --- | --- |
 | Camera won't focus on the code | Wet, faded or curled label | Wipe it dry; reprint if worn |
-| "This hive is not in your data" | The hive was deleted, or belongs to a different workspace | Check the hive still exists and that the right workspace is active (Settings → Workspaces) |
+| "This hive is not in your data" | The hive was deleted, or belongs to a different workspace | Check the hive still exists and that the right workspace is active (Settings → Workspace) |
 | "You are offline" | The hive has not been downloaded to this device yet | Connect; the hive opens once your data has synced |
 | "Sign in to open this hive" | This browser is not signed in. Typical after scanning with the camera app while you normally use the installed app | Sign in, or scan inside the installed app |
 | "Server not reachable" | The hive is not on the device and the server did not answer | Check your connection and tap **Try again** |

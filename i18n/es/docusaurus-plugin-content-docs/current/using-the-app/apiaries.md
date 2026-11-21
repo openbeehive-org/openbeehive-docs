@@ -88,4 +88,4 @@ Si una colmena se traslada a otra ubicación, usa **Mover** en la colmena para r
 
 ## Compartir
 
-Los colmenares no se comparten individualmente. Todo lo que hay en un espacio es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacios → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](./accounts-tenants.md).
+Los colmenares no se comparten individualmente. Todo lo que hay en un espacio es visible para todos sus miembros, así que para trabajar en un colmenar con alguien, invítalo al espacio que lo contiene (Ajustes → Espacio → Invitar a un apicultor). Para mantener privadas las colonias de tu casa mientras colaboras en el colmenar de un club, crea un espacio aparte para el club. Consulta [Cuentas y espacios](./accounts-tenants.md).

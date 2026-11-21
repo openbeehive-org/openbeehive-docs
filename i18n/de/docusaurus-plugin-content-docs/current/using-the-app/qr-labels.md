@@ -67,7 +67,7 @@ Unter dem Kamerabild nimmt **Etikettencode** die sechs Zeichen entgegen, die unt
 | Symptom | Wahrscheinliche Ursache | Was zu tun ist |
 | --- | --- | --- |
 | Kamera fokussiert nicht auf den Code | Nasses, verblasstes oder gewelltes Etikett | Trockenwischen; bei Abnutzung neu drucken |
-| „Diese Beute ist nicht in deinen Daten“ | Die Beute wurde gelöscht oder gehört zu einem anderen Arbeitsbereich | Prüfe, ob die Beute noch existiert und der richtige Arbeitsbereich aktiv ist (Einstellungen → Arbeitsbereiche) |
+| „Diese Beute ist nicht in deinen Daten“ | Die Beute wurde gelöscht oder gehört zu einem anderen Arbeitsbereich | Prüfe, ob die Beute noch existiert und der richtige Arbeitsbereich aktiv ist (Einstellungen → Arbeitsbereich) |
 | „Du bist offline“ | Die Beute wurde noch nicht auf dieses Gerät geladen | Stelle eine Verbindung her; die Beute öffnet sich, sobald deine Daten synchronisiert sind |
 | „Zum Öffnen der Beute anmelden“ | Dieser Browser ist nicht angemeldet. Typisch nach dem Scannen mit der Kamera-App, wenn du sonst die installierte App nutzt | Melde dich an oder scanne in der installierten App |
 | „Server nicht erreichbar“ | Die Beute ist nicht auf dem Gerät, und der Server hat nicht geantwortet | Prüfe deine Verbindung und tippe auf **Erneut versuchen** |
