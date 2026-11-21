@@ -273,7 +273,7 @@ zufällige `epoch` der Datenbank und den `horizon` der
 empfangen hat. `photo_migration` hält fest, dass die einmalige Umwandlung der
 eingebetteten Fotos aus 0.4.x abgeschlossen ist. Die frühere Tabelle
 `apiary_share` gibt es nicht mehr: Ein Teilen einzelner Standorte gibt es nicht.
-Der Client ergänzt `outbox` und `sync_meta` für die Sync-Engine.
+Der Client ergänzt `outbox`, `sync_meta`, `outbox_failed` (Änderungen, die der Server abgelehnt hat) und `inbox_failed` (empfangene Änderungen, die er nicht übernehmen konnte) für die Sync-Engine.
 
 ### api_key
 

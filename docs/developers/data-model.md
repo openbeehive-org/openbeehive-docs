@@ -264,7 +264,7 @@ server start (see the [sync protocol](./sync-protocol.md#pull-status));
 `change_log.logged_at` is the time the server received an entry.
 `photo_migration` records that the one-time conversion of 0.4.x inline
 photos has finished. The former `apiary_share` table is gone: there is no per-apiary
-sharing. The client adds `outbox` and `sync_meta` for the sync engine.
+sharing. The client adds `outbox`, `sync_meta`, `outbox_failed` (changes the server refused) and `inbox_failed` (received changes it could not apply) for the sync engine.
 
 ### api_key
 

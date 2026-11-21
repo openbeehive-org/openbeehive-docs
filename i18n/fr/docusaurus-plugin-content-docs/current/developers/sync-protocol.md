@@ -108,9 +108,13 @@ les photos intégrées des applications 0.4.x) utilisent une forme de charge uti
 différente :
 
 ```json
-{ "photo_keys": { "add": ["k1"] } }
-{ "photo_keys": { "remove": ["k2"], "removed_tags": { "k2": ["<hlc>", "<hlc>"] } } }
+{ "photo_keys": { "add": ["data:image/jpeg;base64,..."] } }
+{ "photo_keys": { "remove": ["data:image/jpeg;base64,..."], "removed_tags": { "data:image/jpeg;base64,...": ["<hlc>", "<hlc>"] } } }
 ```
+
+Les éléments doivent être des URL de données ; tout autre élément rend le
+changement `invalid`, de même qu'un tag supprimé en avance de plus de 10 minutes
+sur le serveur.
 
 `removed_tags` liste, pour chaque élément supprimé, les tags d'ajout que
 l'appareil qui supprime avait observés ; seuls ceux-ci sont marqués comme
@@ -141,7 +145,13 @@ une horloge d'appareil fausse, et lorsque des changements reviennent en
 `clock_ahead`, elle donne aux entrées d'outbox concernées (ainsi qu'aux horloges
 de champ et aux tags d'ensemble correspondants des lignes locales) de nouvelles
 estampilles dans l'ordre d'origine et les renvoie. L'horloge propre du serveur
-ne suit que les estampilles qu'il a acceptées et stockées.
+ne suit que les estampilles qu'il a acceptées et stockées, et jamais une
+estampille en avance de plus de 10 minutes sur son heure murale. Une application
+0.4.x (sans en-tête de protocole) ignore les rejets par changement ; pour un tel
+client, un changement `clock_ahead` fait donc échouer tout le `Push` avec
+`failed_precondition` (« upgrade required ») et rien n'en est appliqué ;
+l'application conserve le lot et réessaie jusqu'à ce que son horloge soit juste
+ou qu'elle se soit mise à jour.
 
 ## Pull
 
@@ -294,11 +304,17 @@ Pour chaque changement, le serveur :
 2. Vérifie le scope : `scope_id` doit être le scope personnel de l'appelant
    (`user:<id>`) ou un rucher de l'espace actif de l'appelant. Un changement
    `apiary` dont le `scope_id` est égal à son propre `entity_id` ouvre un
-   nouveau scope.
+   nouveau scope. Aucun id de ligne ne peut commencer par `user:` (`invalid`).
+   Le scope personnel n'accepte que les paramètres du compte, les tâches sans
+   rucher et les événements qui nomment le scope personnel, et uniquement des
+   lignes qui appartiennent déjà à l'appelant ; tout le reste y est
+   `forbidden_scope`.
 3. Vérifie l'espace : une ligne existante doit appartenir à l'espace actif de
    l'appelant ; les nouvelles lignes sont estampillées avec celui-ci.
 4. Normalise la charge utile selon les colonnes connues, la fusionne champ par
    champ (voir ci-dessous) et l'ajoute à `change_log` avec un nouveau `seq`.
+   Un changement qui ne change rien (tous les champs périmés, tous les tags
+   d'ensemble déjà connus) est fusionné sans entrée dans le journal.
 
 Les codes dans `rejected` :
 
@@ -313,8 +329,9 @@ Les codes dans `rejected` :
 La requête entière n'échoue que pour des raisons qui ne tiennent pas à un
 changement particulier : `permission_denied` pour les identités en lecture
 seule (le compte de démonstration, les clés API en lecture seule),
-`unauthenticated`, ou une erreur du serveur, auquel cas rien de la requête
-n'est appliqué.
+`unauthenticated`, un changement `clock_ahead` d'une application 0.4.x (voir
+plus haut), ou une erreur du serveur, auquel cas rien de la requête n'est
+appliqué.
 
 `server_cursor` et `conflicts` restent dans le message afin que les
 applications plus anciennes continuent de décoder la réponse ; les deux sont
@@ -333,6 +350,12 @@ exécution recharge les lignes du serveur depuis un instantané, et elle indique
 parce que trop volumineuse ou mal formée est divisée par deux jusqu'à ce que le
 changement fautif se retrouve seul. Toute autre erreur conserve l'outbox pour la
 prochaine exécution.
+
+Dans l'autre sens, un changement ou une ligne d'instantané reçus que
+l'application ne peut pas fusionner n'arrêtent pas le pull : ils sont conservés
+dans la table locale `inbox_failed` et listés sous **Problèmes de
+synchronisation** comme « modification reçue non appliquée », avec une action
+d'abandon. Le même changement reçu de nouveau remplace son entrée.
 
 ## Règles de fusion
 

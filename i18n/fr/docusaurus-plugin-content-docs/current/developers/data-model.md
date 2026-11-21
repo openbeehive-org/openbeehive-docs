@@ -272,7 +272,7 @@ contient une marque par démarrage du serveur (voir le
 `photo_migration` enregistre que la conversion unique des photos intégrées de la
 0.4.x est terminée. L'ancienne table
 `apiary_share` a disparu : il n'y a pas de partage par rucher. Le client ajoute
-`outbox` et `sync_meta` pour le moteur de synchronisation.
+`outbox`, `sync_meta`, `outbox_failed` (modifications refusées par le serveur) et `inbox_failed` (modifications reçues qu'il n'a pas pu appliquer) pour le moteur de synchronisation.
 
 ### api_key
 

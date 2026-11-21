@@ -104,9 +104,13 @@ Mengenspalten (nur `inspection.photo_keys`, das die eingebetteten Fotos von
 0.4.x-Apps enthält) verwenden eine andere Payload-Form:
 
 ```json
-{ "photo_keys": { "add": ["k1"] } }
-{ "photo_keys": { "remove": ["k2"], "removed_tags": { "k2": ["<hlc>", "<hlc>"] } } }
+{ "photo_keys": { "add": ["data:image/jpeg;base64,..."] } }
+{ "photo_keys": { "remove": ["data:image/jpeg;base64,..."], "removed_tags": { "data:image/jpeg;base64,...": ["<hlc>", "<hlc>"] } } }
 ```
+
+Elemente müssen Data-URLs sein; jedes andere Element macht die Änderung
+`invalid`, ebenso ein entfernter Tag, der dem Server mehr als 10 Minuten voraus
+ist.
 
 `removed_tags` listet pro entferntem Element die Add-Tags, die das entfernende
 Gerät gesehen hatte; nur diese erhalten einen Tombstone, sodass ein
@@ -138,7 +142,13 @@ gehende Geräteuhr auszugleichen, und wenn Änderungen als `clock_ahead`
 zurückkommen, gibt sie den betroffenen Outbox-Einträgen (und den zugehörigen
 Feld-Uhren und Mengen-Tags der lokalen Zeilen) frische Stempel in der alten
 Reihenfolge und sendet sie erneut. Die eigene Uhr des Servers folgt nur
-Stempeln, die er angenommen und gespeichert hat.
+Stempeln, die er angenommen und gespeichert hat, und nie einem, der seiner
+Wanduhr mehr als 10 Minuten voraus ist. Eine 0.4.x-App (ohne Protokoll-Header)
+ignoriert Ablehnungen einzelner Änderungen; für einen solchen Client lässt eine
+`clock_ahead`-Änderung daher den ganzen `Push` mit `failed_precondition`
+(„upgrade required“) fehlschlagen, und nichts davon wird angewendet. Die App
+behält den Stapel und versucht es erneut, bis ihre Uhr stimmt oder sie sich
+selbst aktualisiert hat.
 
 ## Pull
 
@@ -292,12 +302,17 @@ Pro Änderung geht der Server so vor:
 2. Er prüft den Scope: `scope_id` muss der persönliche Scope des Aufrufers
    (`user:<id>`) oder ein Standort im aktiven Arbeitsbereich des Aufrufers
    sein. Eine `apiary`-Änderung, deren `scope_id` ihrer eigenen `entity_id`
-   entspricht, eröffnet einen neuen Scope.
+   entspricht, eröffnet einen neuen Scope. Keine Zeilen-Id darf mit `user:`
+   beginnen (`invalid`). Der persönliche Scope nimmt nur die Einstellungen des
+   Kontos, Aufgaben ohne Standort und Ereignisse an, die den persönlichen Scope
+   nennen, und nur Zeilen, die bereits dem Aufrufer gehören; alles andere dort
+   ist `forbidden_scope`.
 3. Er prüft den Arbeitsbereich: Eine bestehende Zeile muss zum aktiven
    Arbeitsbereich des Aufrufers gehören; neue Zeilen werden damit gestempelt.
 4. Er normalisiert das Payload auf die bekannten Spalten, führt es Feld für
    Feld zusammen (siehe unten) und hängt es mit einer frischen `seq` an
-   `change_log` an.
+   `change_log` an. Eine Änderung, die nichts ändert (jedes Feld veraltet,
+   jeder Mengen-Tag bekannt), wird ohne Log-Eintrag zusammengeführt.
 
 Die Codes in `rejected`:
 
@@ -311,7 +326,8 @@ Die Codes in `rejected`:
 
 Die ganze Anfrage schlägt nur aus Gründen fehl, die nicht eine einzelne
 Änderung betreffen: `permission_denied` für schreibgeschützte Identitäten (das
-Demo-Konto, API-Schlüssel mit Nur-Lese-Recht), `unauthenticated` oder ein
+Demo-Konto, API-Schlüssel mit Nur-Lese-Recht), `unauthenticated`, eine
+`clock_ahead`-Änderung von einer 0.4.x-App (siehe oben) oder ein
 Serverfehler; in diesem Fall wird nichts aus der Anfrage angewendet.
 
 `server_cursor` und `conflicts` bleiben in der Message, damit ältere Apps die
@@ -329,6 +345,12 @@ aus einem Snapshot lädt, und sagt dem Nutzer, dass die Änderung nicht
 gespeichert wurde. Eine Anfrage, die als zu groß oder fehlerhaft abgelehnt
 wird, wird halbiert, bis die fehlerhafte Änderung allein steht. Jeder andere
 Fehler behält die Outbox für den nächsten Lauf.
+
+In der Gegenrichtung hält eine per Pull empfangene Änderung oder Snapshot-Zeile,
+die die App nicht zusammenführen kann, den Pull nicht auf: Sie wird in der
+lokalen Tabelle `inbox_failed` aufbewahrt und unter **Sync-Probleme** als
+„nicht übernommen“ aufgeführt, mit einer Aktion zum Verwerfen. Wird dieselbe
+Änderung erneut empfangen, ersetzt sie ihren Eintrag.
 
 ## Merge-Regeln
 

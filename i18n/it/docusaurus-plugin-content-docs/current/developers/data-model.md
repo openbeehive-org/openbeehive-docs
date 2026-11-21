@@ -272,7 +272,7 @@ server (vedi il [protocollo di sincronizzazione](./sync-protocol.md#pull-status)
 `photo_migration` registra che la conversione una tantum delle foto
 incorporate della 0.4.x è terminata. La precedente tabella
 `apiary_share` non esiste più: non c'è condivisione per apiario. Il client
-aggiunge `outbox` e `sync_meta` per il
+aggiunge `outbox`, `sync_meta`, `outbox_failed` (modifiche che il server ha rifiutato) e `inbox_failed` (modifiche ricevute che non ha potuto applicare) per il
 motore di sincronizzazione.
 
 ### api_key

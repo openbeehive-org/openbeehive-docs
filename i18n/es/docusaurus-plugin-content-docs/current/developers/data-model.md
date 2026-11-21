@@ -270,7 +270,7 @@ el [protocolo de sincronización](./sync-protocol.md#pull-status));
 `change_log.logged_at` es el momento en que el servidor recibió una entrada.
 `photo_migration` registra que la conversión única de las fotos en línea de
 0.4.x ha terminado. La antigua tabla `apiary_share` ha desaparecido: no hay compartición
-por colmenar. El cliente añade `outbox` y `sync_meta` para el
+por colmenar. El cliente añade `outbox`, `sync_meta`, `outbox_failed` (cambios que el servidor rechazó) e `inbox_failed` (cambios recibidos que no pudo aplicar) para el
 motor de sincronización.
 
 ### api_key

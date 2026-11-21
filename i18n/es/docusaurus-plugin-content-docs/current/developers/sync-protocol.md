@@ -102,9 +102,12 @@ Las columnas de conjunto (solo `inspection.photo_keys`, que contiene las fotos
 en línea de las aplicaciones 0.4.x) usan una forma de carga distinta:
 
 ```json
-{ "photo_keys": { "add": ["k1"] } }
-{ "photo_keys": { "remove": ["k2"], "removed_tags": { "k2": ["<hlc>", "<hlc>"] } } }
+{ "photo_keys": { "add": ["data:image/jpeg;base64,..."] } }
+{ "photo_keys": { "remove": ["data:image/jpeg;base64,..."], "removed_tags": { "data:image/jpeg;base64,...": ["<hlc>", "<hlc>"] } } }
 ```
+
+Los elementos deben ser data URLs; cualquier otro elemento hace que el cambio sea `invalid`,
+igual que una etiqueta eliminada que vaya más de 10 minutos por delante del servidor.
 
 `removed_tags` lista, por cada elemento eliminado, las etiquetas de adición que el
 dispositivo que elimina había observado; solo esas reciben una lápida, de modo que una adición
@@ -132,7 +135,11 @@ aplicación lo usa para compensar un reloj del dispositivo mal ajustado, y cuand
 `clock_ahead` da a las entradas afectadas del outbox (y a los relojes de campo y las
 etiquetas de conjunto correspondientes de las filas locales) marcas nuevas en el orden antiguo y las
 envía de nuevo. El propio reloj del servidor sigue solo las marcas que ha aceptado y
-almacenado.
+almacenado, y nunca una que vaya más de 10 minutos por delante de su reloj real. Una
+aplicación 0.4.x (sin cabecera de protocolo) ignora los rechazos por cambio, así que para
+un cliente así un cambio `clock_ahead` hace fallar todo el `Push` con `failed_precondition`
+("upgrade required") y no se aplica nada de él; la aplicación conserva el lote
+y reintenta hasta que su reloj sea correcto o se haya actualizado.
 
 ## Pull
 
@@ -282,11 +289,17 @@ Por cada cambio, el servidor:
    minutos por delante.
 2. Comprueba el ámbito: `scope_id` debe ser el ámbito personal del llamante
    (`user:<id>`) o un colmenar del espacio activo del llamante. Un cambio de `apiary`
-   cuyo `scope_id` sea igual a su propio `entity_id` abre un ámbito nuevo.
+   cuyo `scope_id` sea igual a su propio `entity_id` abre un ámbito nuevo. Ningún
+   id de fila puede empezar por `user:` (`invalid`). El ámbito personal solo admite
+   los ajustes de la cuenta, las tareas sin colmenar y los eventos que nombran el
+   ámbito personal, y solo filas que ya son del propio llamante; cualquier otra
+   cosa ahí es `forbidden_scope`.
 3. Comprueba el espacio: una fila existente debe pertenecer al espacio activo del
    llamante; las filas nuevas se marcan con él.
 4. Normaliza la carga a las columnas conocidas, la fusiona campo a campo
-   (ver abajo) y la añade a `change_log` con un `seq` nuevo.
+   (ver abajo) y la añade a `change_log` con un `seq` nuevo. Un cambio
+   que no cambia nada (todos los campos obsoletos, todas las etiquetas de conjunto conocidas) se fusiona
+   sin entrada en el registro.
 
 Los códigos de `rejected`:
 
@@ -300,8 +313,8 @@ Los códigos de `rejected`:
 
 La solicitud entera falla solo por motivos que no tienen que ver con un cambio concreto:
 `permission_denied` para identidades de solo lectura (la cuenta de demostración, las claves API
-de solo lectura), `unauthenticated`, o un error del servidor, en cuyo caso no se aplica nada de la
-solicitud.
+de solo lectura), `unauthenticated`, un cambio `clock_ahead` de una aplicación 0.4.x (ver
+arriba), o un error del servidor, en cuyo caso no se aplica nada de la solicitud.
 
 `server_cursor` y `conflicts` siguen en el mensaje para que las aplicaciones antiguas puedan seguir
 decodificando la respuesta; ambos están siempre vacíos.
@@ -317,6 +330,11 @@ filas del servidor desde una instantánea, y avisa al usuario de que el cambio n
 se ha guardado. Una solicitud rechazada por demasiado grande o mal formada se
 divide por la mitad hasta que el cambio defectuoso queda solo. Cualquier otro
 error conserva el outbox para la siguiente ejecución.
+
+En la otra dirección, un cambio o una fila de instantánea recibidos en el pull que la aplicación no puede
+fusionar no detienen el pull: se guardan en la tabla local `inbox_failed`
+y aparecen en **Problemas de sincronización** como "no se pudo aplicar", con una acción
+de descartar. El mismo cambio recibido de nuevo sustituye su entrada.
 
 ## Reglas de fusión
 

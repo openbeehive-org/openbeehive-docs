@@ -100,9 +100,12 @@ Set columns (only `inspection.photo_keys`, which holds the inline photos of
 0.4.x apps) use a different payload shape:
 
 ```json
-{ "photo_keys": { "add": ["k1"] } }
-{ "photo_keys": { "remove": ["k2"], "removed_tags": { "k2": ["<hlc>", "<hlc>"] } } }
+{ "photo_keys": { "add": ["data:image/jpeg;base64,..."] } }
+{ "photo_keys": { "remove": ["data:image/jpeg;base64,..."], "removed_tags": { "data:image/jpeg;base64,...": ["<hlc>", "<hlc>"] } } }
 ```
+
+Elements must be data URLs; any other element makes the change `invalid`, as
+does a removed tag more than 10 minutes ahead of the server.
 
 `removed_tags` lists, per removed element, the add-tags the removing device
 had observed; only those are tombstoned, so a concurrent add elsewhere
@@ -130,7 +133,11 @@ uses it to correct for a wrong device clock, and when changes come back as
 `clock_ahead` it gives the affected outbox entries (and the matching field
 clocks and set tags of the local rows) fresh stamps in the old order and sends
 them again. The server's own clock follows only stamps it has accepted and
-stored.
+stored, and never one more than 10 minutes ahead of its wall clock. A 0.4.x
+app (no protocol header) ignores per-change rejections, so for such a client
+a `clock_ahead` change fails the whole `Push` with `failed_precondition`
+("upgrade required") and nothing of it is applied; the app keeps the batch
+and retries until its clock is right or it has updated itself.
 
 ## Pull
 
@@ -274,11 +281,17 @@ Per change the server:
    minutes ahead.
 2. Checks the scope: `scope_id` must be the caller's personal scope
    (`user:<id>`) or an apiary of the caller's active workspace. An `apiary`
-   change whose `scope_id` equals its own `entity_id` opens a new scope.
+   change whose `scope_id` equals its own `entity_id` opens a new scope. No
+   row id may start with `user:` (`invalid`). The personal scope takes only
+   the account's settings, tasks without an apiary and events naming the
+   personal scope, and only rows that are already the caller's own; anything
+   else there is `forbidden_scope`.
 3. Checks the workspace: an existing row must belong to the caller's active
    workspace; new rows are stamped with it.
 4. Normalises the payload to the known columns, merges it field by field
-   (see below) and appends it to `change_log` with a fresh `seq`.
+   (see below) and appends it to `change_log` with a fresh `seq`. A change
+   that changes nothing (every field stale, every set tag known) is merged
+   without a log entry.
 
 The codes in `rejected`:
 
@@ -292,8 +305,8 @@ The codes in `rejected`:
 
 The whole request fails only for reasons that are not about a single change:
 `permission_denied` for read-only identities (the demo account, read-only API
-keys), `unauthenticated`, or a server error, in which case nothing of the
-request is applied.
+keys), `unauthenticated`, a `clock_ahead` change from a 0.4.x app (see
+above), or a server error, in which case nothing of the request is applied.
 
 `server_cursor` and `conflicts` remain in the message so that older apps keep
 decoding the response; both are always empty.
@@ -308,6 +321,11 @@ the pull of the same run loads the server's rows again from a snapshot, and
 it tells the user that the change was not saved. A request refused as too
 large or malformed is halved until the faulty change stands alone. Any other
 error keeps the outbox for the next run.
+
+In the other direction, a pulled change or snapshot row that the app cannot
+merge does not stop the pull: it is kept in the local table `inbox_failed`
+and listed under **Sync problems** as "could not be applied", with a discard
+action. The same change received again replaces its entry.
 
 ## Merge rules
 

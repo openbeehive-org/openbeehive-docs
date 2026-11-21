@@ -106,9 +106,12 @@ Le colonne insieme (solo `inspection.photo_keys`, che contiene le foto
 incorporate delle app 0.4.x) usano una forma di payload diversa:
 
 ```json
-{ "photo_keys": { "add": ["k1"] } }
-{ "photo_keys": { "remove": ["k2"], "removed_tags": { "k2": ["<hlc>", "<hlc>"] } } }
+{ "photo_keys": { "add": ["data:image/jpeg;base64,..."] } }
+{ "photo_keys": { "remove": ["data:image/jpeg;base64,..."], "removed_tags": { "data:image/jpeg;base64,...": ["<hlc>", "<hlc>"] } } }
 ```
+
+Gli elementi devono essere data URL; qualsiasi altro elemento rende la modifica
+`invalid`, così come un tag rimosso più di 10 minuti avanti rispetto al server.
 
 `removed_tags` elenca, per ogni elemento rimosso, i tag di aggiunta che il
 dispositivo che rimuove aveva osservato; solo quelli vengono marcati come
@@ -139,7 +142,13 @@ dispositivo sbagliato, e quando delle modifiche tornano indietro come
 `clock_ahead` assegna alle voci dell'outbox interessate (e ai corrispondenti
 orologi dei campi e tag degli insiemi delle righe locali) marche nuove nel
 vecchio ordine e le invia di nuovo. L'orologio del server stesso segue solo le
-marche che ha accettato e memorizzato.
+marche che ha accettato e memorizzato, e mai una più di 10 minuti avanti
+rispetto al proprio orologio reale. Un'app 0.4.x (senza intestazione di
+protocollo) ignora i rifiuti delle singole modifiche, quindi per un client del
+genere una modifica `clock_ahead` fa fallire l'intero `Push` con
+`failed_precondition` ("upgrade required") e nulla di esso viene applicato;
+l'app conserva il lotto e riprova finché il suo orologio non è corretto o non
+si è aggiornata.
 
 ## Pull
 
@@ -291,11 +300,16 @@ Per ogni modifica il server:
 2. Controlla lo scope: `scope_id` deve essere lo scope personale del chiamante
    (`user:<id>`) o un apiario dello spazio attivo del chiamante. Una modifica
    `apiary` il cui `scope_id` è uguale al proprio `entity_id` apre un nuovo
-   scope.
+   scope. Nessun id di riga può iniziare con `user:` (`invalid`). Lo scope
+   personale accetta solo le impostazioni dell'account, le attività senza
+   apiario e gli eventi che indicano lo scope personale, e solo righe che sono
+   già del chiamante; qualsiasi altra cosa lì è `forbidden_scope`.
 3. Controlla lo spazio: una riga esistente deve appartenere allo spazio attivo
    del chiamante; le nuove righe vengono marcate con esso.
 4. Normalizza il payload alle colonne note, lo unisce campo per campo (vedi
-   sotto) e lo aggiunge a `change_log` con un nuovo `seq`.
+   sotto) e lo aggiunge a `change_log` con un nuovo `seq`. Una modifica che
+   non cambia nulla (ogni campo superato, ogni tag dell'insieme già noto) viene
+   unita senza una voce nel registro.
 
 I codici in `rejected`:
 
@@ -309,8 +323,9 @@ I codici in `rejected`:
 
 L'intera richiesta fallisce solo per motivi che non riguardano una singola
 modifica: `permission_denied` per le identità in sola lettura (l'account demo,
-le chiavi API in sola lettura), `unauthenticated`, oppure un errore del server,
-nel qual caso nulla della richiesta viene applicato.
+le chiavi API in sola lettura), `unauthenticated`, una modifica `clock_ahead` da
+un'app 0.4.x (vedi sopra), oppure un errore del server, nel qual caso nulla
+della richiesta viene applicato.
 
 `server_cursor` e `conflicts` restano nel messaggio affinché le app più vecchie
 continuino a decodificare la risposta; entrambi sono sempre vuoti.
@@ -327,6 +342,12 @@ uno snapshot, e avvisa l'utente che la modifica non è stata salvata. Una
 richiesta rifiutata perché troppo grande o malformata viene dimezzata finché
 la modifica difettosa non resta da sola. Qualsiasi altro errore conserva
 l'outbox per l'esecuzione successiva.
+
+Nella direzione opposta, una modifica o una riga di snapshot ricevuta con il
+pull che l'app non riesce a unire non ferma il pull: viene conservata nella
+tabella locale `inbox_failed` ed elencata sotto **Problemi di
+sincronizzazione** come "modifica ricevuta non applicata", con un'azione per
+scartarla. La stessa modifica ricevuta di nuovo sostituisce la sua voce.
 
 ## Regole di unione
 
