@@ -13,15 +13,15 @@ Your records live in a local database on your device, so almost nothing here can
 
 Your changes save instantly to the device. Syncing to the server happens quietly in the background, so a delay is normal and rarely a cause for concern. If changes you made on one device are not appearing on another, work through this list.
 
-**1. Read the sync status.** The chip at the top of the page says what is going on: **Offline**, **Waiting to upload**, **Sync failed · retrying**, **Signed out** or **Sync problems**. See [the sync status](../using-the-app/offline-and-sync.md#sync-status). If you have been working in the field with no signal, your edits are queued and send as soon as you reconnect.
+**1. Read the sync status.** The chip at the top of the page says what is going on: **Offline**, **Changes waiting to upload**, **Sync failed · retrying**, **Signed out** or **Sync problems**. See [the sync status](../using-the-app/offline-and-sync.md#sync-status). If you have been working in the field with no signal, your edits are queued and send as soon as you reconnect.
 
 **2. Check you are signed in.** Sync requires a session. If it has expired the chip reads **Signed out · sign in to sync**; you can still read and edit locally, but nothing syncs until you sign in again. **Settings → Account** shows who you are signed in as.
 
-**3. Check the active workspace.** Records belong to a workspace. If a hive is missing on another device, open **Settings → Workspaces** there and make sure the same workspace is active. If it is missing for another person, they are not a member of that workspace; a workspace admin can invite them.
+**3. Check the active workspace.** Records belong to a workspace. If a hive is missing on another device, open **Settings → Workspace** there and make sure the same workspace is active. If it is missing for another person, they are not a member of that workspace; a workspace admin can invite them.
 
-**4. Sync now.** Background sync runs at short intervals; tapping the status chip starts a sync at once.
+**4. Sync now.** Background sync runs at short intervals. Tap the status chip to open the sync status, which shows the last sync and what is waiting to upload, and tap **Sync now**.
 
-**5. Look for refused changes.** If the chip reads **Sync problems**, the server did not accept some changes. They are still on the device. The **Sync problems** list names each one with the reason and lets you try again or discard it; see [Sync problems](../using-the-app/offline-and-sync.md#sync-problems). A device clock that is far ahead is one cause; the app corrects for it and resends by itself, but setting the device to automatic time avoids it.
+**5. Look for refused changes.** If the chip reads **Sync problems**, the server did not accept some changes. They are still on the device. The **Sync problems** list names each one with the reason and lets you try again or discard it; see [Sync problems](../using-the-app/offline-and-sync.md#sync-problems). A device clock that is far ahead is one cause; the app corrects for it and resends by itself, but setting the device to automatic time avoids it. Entries marked "could not be applied" are changes from the server that this device could not merge; its own records stay as they are.
 
 :::note
 Sync is conflict-free by design. The most recent edit to a field wins, additions (photos, visits, harvests, treatments) are kept, and you will not lose work because two devices edited at once.
@@ -38,6 +38,7 @@ A few practical consequences:
 - Your data is tied to the browser and device where you use Openbeehive. Each device keeps its own local copy and syncs to the server.
 - OPFS storage is private to the app's origin. Other websites cannot read it.
 - Installing the app to your home screen (see [Install](../using-the-app/install.md)) uses the same storage as the browser tab on most platforms.
+- On a shared device every account has its own local copy per workspace. Someone else signing in on the same browser does not see your unsent changes or personal tasks, and they are not uploaded under their account.
 
 :::caution
 Browser tools that "clear site data", "clear cookies and storage", or private/incognito browsing can wipe the local OPFS database. That is safe **only if your data has already synced** to the server, because it will download again on next sign-in. If you have unsynced offline changes, make sure you are online and let sync finish first.
@@ -112,8 +113,18 @@ The in-app scanner works in every current browser, including Safari on iPhone an
 - **Redirect fails or "invalid redirect" errors (self-host).** This almost always means the OIDC redirect URL or `BEEHIVE_PUBLIC_BASE_URL` is misconfigured. See [Authentication and configuration](../self-hosting/authentication.md).
 - **"Too many attempts."** After 10 failed sign-ins for an account, or 30 from one network address, further attempts are blocked for up to 15 minutes. Wait and try again.
 - **Server refuses to start after enabling login (self-host).** The log names the missing setting, usually `BEEHIVE_SESSION_SECRET` (at least 32 bytes) or the admin account. See [Authentication](../self-hosting/authentication.md).
-- **Passkey not offered.** Passkeys must be enabled on the server and you must have added one under Settings → Passkeys. Otherwise sign in with another method.
+- **Passkey not offered.** Passkeys must be enabled on the server and you must have added one under Settings → Account → Passkeys. Otherwise sign in with another method.
 - **Single-user self-host with no login.** With password auth off, no OIDC providers and WebAuthn disabled, there is no sign-in step at all. If you unexpectedly see a login screen, check your server configuration.
+
+## Edits to a field do not stick (self-host) \{#stamps-from-the-future}
+
+Releases before 0.5.0 accepted changes from devices whose clock was far ahead. Such a stamp wins every merge until real time reaches it, so later edits to that field are lost. At start the server logs how many such stamps each table holds, with up to ten affected rows. To repair a row, stop the server and clear its field clock:
+
+```sql
+UPDATE <table> SET field_hlc = '{}' WHERE id = '<id>';
+```
+
+The values stay, and the next edit of each field wins. A device that synced the row before still prefers its own copy: let it upload what it has, then clear the site data in its browser (or reinstall the app) and sign in again.
 
 ## Filing a good bug report
 

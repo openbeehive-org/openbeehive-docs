@@ -41,7 +41,7 @@ Es gibt heute keine separate native App im App Store oder Play Store, und du bra
 
 ## Kann ich meine Daten exportieren?
 
-Ja. **Einstellungen → Daten & Backup** exportiert einen Arbeitsbereich als vollständiges Backup (JSON oder ein ZIP mit Fotos), als Tabelle (XLSX), als CSV-Dateien in einem ZIP, als BeeXML oder als druckbaren PDF-Bericht und kann außerdem die Kopie des Arbeitsbereichs vom Server herunterladen. Es importiert Backups, BeeXML und CSV aus anderen Apps, zeigt vorher eine Vorschau und überschreibt nie etwas, es sei denn, du verlangst es. Siehe [Import & Export](../using-the-app/import-export.md). Selbst-Hoster sichern die Server-Datenbank und den Fotospeicher; siehe [Backups](../self-hosting/backups.md).
+Ja. **Einstellungen → Daten & Sync** exportiert einen Arbeitsbereich als vollständiges Backup (JSON oder ein ZIP mit Fotos), als Tabelle (XLSX), als CSV-Dateien in einem ZIP, als BeeXML oder als druckbaren PDF-Bericht und kann außerdem die Kopie des Arbeitsbereichs vom Server herunterladen. Es importiert Backups, BeeXML und CSV aus anderen Apps, zeigt vorher eine Vorschau und überschreibt nie etwas, es sei denn, du verlangst es. Siehe [Import & Export](../using-the-app/import-export.md). Selbst-Hoster sichern die Server-Datenbank und den Fotospeicher; siehe [Backups](../self-hosting/backups.md).
 
 ## Kann ich es selbst hosten?
 
@@ -96,11 +96,11 @@ Jeder Bienenstock kann ein druckbares QR-Etikett haben. Durch das Scannen öffne
 
 ## In welchen Sprachen ist es verfügbar?
 
-Die App wird in fünf Sprachen ausgeliefert: Englisch, Deutsch, Französisch, Spanisch und Italienisch. Umschalten kannst du unter **Einstellungen → Sprache**; die Wahl wird mit deinem Konto gespeichert und folgt dir auf jedes Gerät. Weitere Übersetzungen sind als Beiträge willkommen.
+Die App wird in fünf Sprachen ausgeliefert: Englisch, Deutsch, Französisch, Spanisch und Italienisch. Umschalten kannst du unter **Einstellungen → Anzeige → Sprache**; die Wahl wird mit deinem Konto gespeichert und folgt dir auf jedes Gerät. Weitere Übersetzungen sind als Beiträge willkommen.
 
 ## Kann ich Pfund und Fahrenheit verwenden?
 
-Ja. Wähle unter **Einstellungen → Einheiten** Kilogramm oder Pfund und Celsius oder Fahrenheit. Die App zeigt und nimmt Gewichte und Temperaturen dann auf allen deinen Geräten in diesen Einheiten an. Aufzeichnungen werden in Kilogramm und Grad Celsius gespeichert, daher bleiben Exporte und die API metrisch. Siehe [Einstellungen](../using-the-app/dashboard.md#settings).
+Ja. Wähle unter **Einstellungen → Anzeige → Einheiten** Kilogramm oder Pfund und Celsius oder Fahrenheit. Die App zeigt und nimmt Gewichte und Temperaturen dann auf allen deinen Geräten in diesen Einheiten an. Aufzeichnungen werden in Kilogramm und Grad Celsius gespeichert, daher bleiben Exporte und die API metrisch. Siehe [Einstellungen](../using-the-app/dashboard.md#settings).
 
 ## Ich habe mein Passwort vergessen. Was nun?
 
@@ -108,7 +108,7 @@ Tippe auf dem Anmeldebildschirm auf **Passwort vergessen?**. Verschickt der Serv
 
 ## Kann ich mein Konto löschen?
 
-Ja, unter **Einstellungen → Konto löschen**. Die App zeigt zuerst, was gelöscht würde und was für andere Mitglieder erhalten bleibt. Siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md#delete-account).
+Ja, unter **Einstellungen → Konto → Konto löschen**. Die App zeigt zuerst, was gelöscht würde und was für andere Mitglieder erhalten bleibt. Siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md#delete-account).
 
 ## Welche Datenbanken und Speicher-Backends werden unterstützt?
 

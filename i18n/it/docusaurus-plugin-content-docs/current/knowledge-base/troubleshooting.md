@@ -13,15 +13,15 @@ I tuoi registri risiedono in un database locale sul tuo dispositivo, quindi quas
 
 Le tue modifiche vengono salvate all'istante sul dispositivo. La sincronizzazione con il server avviene silenziosamente in background, quindi un ritardo è normale e raramente motivo di preoccupazione. Se le modifiche fatte su un dispositivo non compaiono su un altro, segui questa lista.
 
-**1. Leggi lo stato della sincronizzazione.** Il chip in cima alla pagina dice cosa sta succedendo: **Offline**, **In attesa di invio**, **Sincronizzazione non riuscita · nuovo tentativo**, **Disconnesso** o **Problemi di sincronizzazione**. Vedi [lo stato della sincronizzazione](../using-the-app/offline-and-sync.md#sync-status). Se hai lavorato sul campo senza segnale, le tue modifiche sono in coda e vengono inviate appena ti riconnetti.
+**1. Leggi lo stato della sincronizzazione.** Il chip in cima alla pagina dice cosa sta succedendo: **Offline**, **Modifiche in attesa di invio**, **Sincronizzazione non riuscita · nuovo tentativo**, **Disconnesso** o **Problemi di sincronizzazione**. Vedi [lo stato della sincronizzazione](../using-the-app/offline-and-sync.md#sync-status). Se hai lavorato sul campo senza segnale, le tue modifiche sono in coda e vengono inviate appena ti riconnetti.
 
 **2. Verifica di aver effettuato l'accesso.** La sincronizzazione richiede una sessione. Se è scaduta il chip dice **Disconnesso · accedi per sincronizzare**; puoi comunque leggere e modificare localmente, ma nulla si sincronizza finché non accedi di nuovo. **Impostazioni → Account** mostra con quale account hai effettuato l'accesso.
 
-**3. Verifica lo spazio attivo.** I registri appartengono a uno spazio. Se un alveare manca su un altro dispositivo, apri lì **Impostazioni → Spazi** e assicurati che sia attivo lo stesso spazio. Se manca per un'altra persona, quella persona non è membro di quello spazio; un amministratore dello spazio può invitarla.
+**3. Verifica lo spazio attivo.** I registri appartengono a uno spazio. Se un alveare manca su un altro dispositivo, apri lì **Impostazioni → Spazio** e assicurati che sia attivo lo stesso spazio. Se manca per un'altra persona, quella persona non è membro di quello spazio; un amministratore dello spazio può invitarla.
 
-**4. Sincronizza ora.** La sincronizzazione in background viene eseguita a brevi intervalli; toccando il chip di stato si avvia subito una sincronizzazione.
+**4. Sincronizza ora.** La sincronizzazione in background viene eseguita a brevi intervalli. Tocca il chip di stato per aprire lo stato della sincronizzazione, che mostra l'ultima sincronizzazione e ciò che è in attesa di invio, e tocca **Sincronizza ora**.
 
-**5. Cerca le modifiche rifiutate.** Se il chip dice **Problemi di sincronizzazione**, il server non ha accettato alcune modifiche. Sono ancora sul dispositivo. L'elenco **Problemi di sincronizzazione** le indica una per una con il motivo e ti permette di riprovare o di scartarle; vedi [Problemi di sincronizzazione](../using-the-app/offline-and-sync.md#sync-problems). Un orologio del dispositivo molto avanti è una delle cause; l'app lo compensa e invia di nuovo da sola, ma impostare il dispositivo sull'ora automatica lo evita.
+**5. Cerca le modifiche rifiutate.** Se il chip dice **Problemi di sincronizzazione**, il server non ha accettato alcune modifiche. Sono ancora sul dispositivo. L'elenco **Problemi di sincronizzazione** le indica una per una con il motivo e ti permette di riprovare o di scartarle; vedi [Problemi di sincronizzazione](../using-the-app/offline-and-sync.md#sync-problems). Un orologio del dispositivo molto avanti è una delle cause; l'app lo compensa e invia di nuovo da sola, ma impostare il dispositivo sull'ora automatica lo evita. Le voci contrassegnate come "modifica ricevuta non applicata" sono modifiche provenienti dal server che questo dispositivo non è riuscito a unire; i suoi dati restano come sono.
 
 :::note
 La sincronizzazione è priva di conflitti per progettazione. La modifica più recente a un campo vince, le aggiunte (foto, visite, raccolte, trattamenti) vengono conservate, e non perderai il lavoro perché due dispositivi hanno modificato contemporaneamente.
@@ -38,6 +38,7 @@ Alcune conseguenze pratiche:
 - I tuoi dati sono legati al browser e al dispositivo in cui usi Openbeehive. Ogni dispositivo mantiene la propria copia locale e si sincronizza con il server.
 - L'archiviazione OPFS è privata dell'origine dell'app. Altri siti web non possono leggerla.
 - Installare l'app nella schermata Home (vedi [Installazione](../using-the-app/install.md)) usa, sulla maggior parte delle piattaforme, la stessa archiviazione della scheda del browser.
+- Su un dispositivo condiviso ogni account ha la propria copia locale per ogni spazio. Chi accede con un altro account nello stesso browser non vede le tue modifiche non inviate né le tue attività personali, e queste non vengono caricate a suo nome.
 
 :::caution
 Gli strumenti del browser che "cancellano i dati del sito", "cancellano cookie e archiviazione", o la navigazione privata/in incognito possono cancellare il database OPFS locale. Questo è sicuro **solo se i tuoi dati sono già stati sincronizzati** con il server, perché verranno scaricati di nuovo al successivo accesso. Se hai modifiche offline non sincronizzate, assicurati di essere online e lascia che la sincronizzazione si completi prima.
@@ -112,8 +113,18 @@ Lo scanner integrato nell'app funziona in tutti i browser attuali, compresi Safa
 - **Il reindirizzamento fallisce o errori "invalid redirect" (self-host).** Questo significa quasi sempre che l'URL di reindirizzamento OIDC o `BEEHIVE_PUBLIC_BASE_URL` è configurato male. Vedi [Autenticazione e configurazione](../self-hosting/authentication.md).
 - **"Troppi tentativi."** Dopo 10 accessi falliti per un account, o 30 da un indirizzo di rete, gli ulteriori tentativi vengono bloccati per un massimo di 15 minuti. Attendi e riprova.
 - **Il server rifiuta di avviarsi dopo aver abilitato il login (self-host).** Il log indica l'impostazione mancante, di solito `BEEHIVE_SESSION_SECRET` (almeno 32 byte) o l'account amministratore. Vedi [Autenticazione](../self-hosting/authentication.md).
-- **La passkey non viene offerta.** Le passkey devono essere abilitate sul server e devi averne aggiunta una in Impostazioni → Passkeys. Altrimenti accedi con un altro metodo.
+- **La passkey non viene offerta.** Le passkey devono essere abilitate sul server e devi averne aggiunta una in Impostazioni → Account → Passkeys. Altrimenti accedi con un altro metodo.
 - **Self-host a utente singolo senza login.** Con l'autenticazione a password disattivata, nessun provider OIDC e WebAuthn disabilitato, non c'è alcun passaggio di accesso. Se vedi inaspettatamente una schermata di accesso, controlla la configurazione del tuo server.
+
+## Le modifiche a un campo non restano (self-host) \{#stamps-from-the-future}
+
+Le versioni precedenti alla 0.5.0 accettavano modifiche da dispositivi con l'orologio molto avanti. Una marca del genere vince ogni unione finché l'ora reale non la raggiunge, quindi le modifiche successive a quel campo vanno perse. All'avvio il server registra nel log quante marche di questo tipo contiene ogni tabella, con fino a dieci righe interessate. Per riparare una riga, ferma il server e azzera l'orologio dei suoi campi:
+
+```sql
+UPDATE <table> SET field_hlc = '{}' WHERE id = '<id>';
+```
+
+I valori restano, e la modifica successiva di ogni campo vince. Un dispositivo che ha già sincronizzato la riga preferisce ancora la propria copia: lascia che carichi ciò che ha, poi cancella i dati del sito nel suo browser (o reinstalla l'app) e accedi di nuovo.
 
 ## Inviare una buona segnalazione di bug
 

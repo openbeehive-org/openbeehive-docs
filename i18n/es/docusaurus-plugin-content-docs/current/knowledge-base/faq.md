@@ -41,7 +41,7 @@ Hoy no hay una aplicación nativa independiente en la App Store ni en la Play St
 
 ## ¿Puedo exportar mis datos?
 
-Sí. **Ajustes → Datos y copia de seguridad** exporta un espacio como copia completa (JSON, o un ZIP con fotos), hoja de cálculo (XLSX), archivos CSV en un ZIP, BeeXML o un informe PDF imprimible, y también puede descargar la copia del espacio que guarda el servidor. Importa copias de seguridad, BeeXML y CSV de otras aplicaciones, muestra antes una vista previa y nunca sobrescribe nada a menos que se lo pidas. Consulta [Importar y exportar](../using-the-app/import-export.md). Quienes se autoalojan hacen copia de seguridad de la base de datos del servidor y del almacenamiento de fotos; consulta [Copias de seguridad](../self-hosting/backups.md).
+Sí. **Ajustes → Datos y sincro** exporta un espacio como copia completa (JSON, o un ZIP con fotos), hoja de cálculo (XLSX), archivos CSV en un ZIP, BeeXML o un informe PDF imprimible, y también puede descargar la copia del espacio que guarda el servidor. Importa copias de seguridad, BeeXML y CSV de otras aplicaciones, muestra antes una vista previa y nunca sobrescribe nada a menos que se lo pidas. Consulta [Importar y exportar](../using-the-app/import-export.md). Quienes se autoalojan hacen copia de seguridad de la base de datos del servidor y del almacenamiento de fotos; consulta [Copias de seguridad](../self-hosting/backups.md).
 
 ## ¿Puedo autoalojarlo?
 
@@ -96,11 +96,11 @@ Cada colmena puede tener una etiqueta QR imprimible. Al escanearla se abre Openb
 
 ## ¿En qué idiomas está disponible?
 
-La aplicación incluye cinco idiomas: inglés, alemán, francés, español e italiano. Cámbialo en **Ajustes → Idioma**; la elección se guarda con tu cuenta y te acompaña en todos tus dispositivos. Otras traducciones son bienvenidas como contribuciones.
+La aplicación incluye cinco idiomas: inglés, alemán, francés, español e italiano. Cámbialo en **Ajustes → Preferencias → Idioma**; la elección se guarda con tu cuenta y te acompaña en todos tus dispositivos. Otras traducciones son bienvenidas como contribuciones.
 
 ## ¿Puedo usar libras y grados Fahrenheit?
 
-Sí. En **Ajustes → Unidades** elige kilogramos o libras y Celsius o Fahrenheit. La aplicación muestra y acepta entonces pesos y temperaturas en esas unidades en todos tus dispositivos. Los registros se guardan en kilogramos y grados Celsius, así que las exportaciones y la API siguen en el sistema métrico. Consulta [Ajustes](../using-the-app/dashboard.md#settings).
+Sí. En **Ajustes → Preferencias → Unidades** elige kilogramos o libras y Celsius o Fahrenheit. La aplicación muestra y acepta entonces pesos y temperaturas en esas unidades en todos tus dispositivos. Los registros se guardan en kilogramos y grados Celsius, así que las exportaciones y la API siguen en el sistema métrico. Consulta [Ajustes](../using-the-app/dashboard.md#settings).
 
 ## He olvidado mi contraseña. ¿Qué hago?
 
@@ -108,7 +108,7 @@ Toca **¿Olvidaste tu contraseña?** en la pantalla de inicio de sesión. Si el 
 
 ## ¿Puedo eliminar mi cuenta?
 
-Sí, en **Ajustes → Eliminar la cuenta**. La aplicación muestra primero qué se eliminaría y qué se conserva para los demás miembros. Consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md#delete-account).
+Sí, en **Ajustes → Cuenta → Eliminar la cuenta**. La aplicación muestra primero qué se eliminaría y qué se conserva para los demás miembros. Consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md#delete-account).
 
 ## ¿Qué bases de datos y backends de almacenamiento se admiten?
 

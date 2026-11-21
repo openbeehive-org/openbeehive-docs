@@ -41,7 +41,7 @@ Oggi non esiste un'app nativa separata nell'App Store o nel Play Store, e non te
 
 ## Posso esportare i miei dati?
 
-Sì. **Impostazioni → Dati e backup** esporta uno spazio come backup completo (JSON, oppure uno ZIP con le foto), foglio di calcolo (XLSX), file CSV in uno ZIP, BeeXML o report PDF stampabile, e può anche scaricare la copia dello spazio conservata sul server. Importa backup, BeeXML e CSV da altre app, mostra prima un'anteprima e non sovrascrive nulla a meno che tu non lo chieda. Vedi [Importazione ed esportazione](../using-the-app/import-export.md). Chi ospita autonomamente fa il backup del database del server e dell'archivio delle foto; vedi [Backup](../self-hosting/backups.md).
+Sì. **Impostazioni → Dati e sincro** esporta uno spazio come backup completo (JSON, oppure uno ZIP con le foto), foglio di calcolo (XLSX), file CSV in uno ZIP, BeeXML o report PDF stampabile, e può anche scaricare la copia dello spazio conservata sul server. Importa backup, BeeXML e CSV da altre app, mostra prima un'anteprima e non sovrascrive nulla a meno che tu non lo chieda. Vedi [Importazione ed esportazione](../using-the-app/import-export.md). Chi ospita autonomamente fa il backup del database del server e dell'archivio delle foto; vedi [Backup](../self-hosting/backups.md).
 
 ## Posso ospitarlo autonomamente?
 
@@ -96,11 +96,11 @@ Ogni alveare può avere un'etichetta QR stampabile. Scansionandola si apre Openb
 
 ## In quali lingue è disponibile?
 
-L'app include cinque lingue: inglese, tedesco, francese, spagnolo e italiano. Cambia lingua da **Impostazioni → Lingua**; la scelta viene salvata nel tuo account e ti segue su ogni dispositivo. Ulteriori traduzioni sono benvenute come contributi.
+L'app include cinque lingue: inglese, tedesco, francese, spagnolo e italiano. Cambia lingua da **Impostazioni → Preferenze → Lingua**; la scelta viene salvata nel tuo account e ti segue su ogni dispositivo. Ulteriori traduzioni sono benvenute come contributi.
 
 ## Posso usare libbre e gradi Fahrenheit?
 
-Sì. In **Impostazioni → Unità** scegli tra chilogrammi e libbre e tra Celsius e Fahrenheit. L'app mostra e accetta pesi e temperature in queste unità su tutti i tuoi dispositivi. I dati vengono salvati in chilogrammi e gradi Celsius, quindi le esportazioni e l'API restano nel sistema metrico. Vedi [Impostazioni](../using-the-app/dashboard.md#settings).
+Sì. In **Impostazioni → Preferenze → Unità** scegli tra chilogrammi e libbre e tra Celsius e Fahrenheit. L'app mostra e accetta pesi e temperature in queste unità su tutti i tuoi dispositivi. I dati vengono salvati in chilogrammi e gradi Celsius, quindi le esportazioni e l'API restano nel sistema metrico. Vedi [Impostazioni](../using-the-app/dashboard.md#settings).
 
 ## Ho dimenticato la password. Che cosa faccio?
 
@@ -108,7 +108,7 @@ Tocca **Password dimenticata?** nella schermata di accesso. Se il server invia e
 
 ## Posso eliminare il mio account?
 
-Sì, da **Impostazioni → Elimina l’account**. L'app mostra prima che cosa verrebbe eliminato e che cosa resta per gli altri membri. Vedi [Account e spazi](../using-the-app/accounts-tenants.md#delete-account).
+Sì, da **Impostazioni → Account → Elimina l’account**. L'app mostra prima che cosa verrebbe eliminato e che cosa resta per gli altri membri. Vedi [Account e spazi](../using-the-app/accounts-tenants.md#delete-account).
 
 ## Quali database e backend di archiviazione sono supportati?
 

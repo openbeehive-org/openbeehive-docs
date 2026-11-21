@@ -13,15 +13,15 @@ Tus registros viven en una base de datos local en tu dispositivo, así que casi 
 
 Tus cambios se guardan al instante en el dispositivo. La sincronización con el servidor ocurre discretamente en segundo plano, así que un retraso es normal y rara vez es motivo de preocupación. Si los cambios que hiciste en un dispositivo no aparecen en otro, repasa esta lista.
 
-**1. Lee el estado de sincronización.** El indicador de la parte superior de la página dice qué está pasando: **Sin conexión**, **Pendientes de subir**, **Falló la sincronización · reintentando**, **Sesión cerrada** o **Problemas de sincronización**. Consulta [el estado de sincronización](../using-the-app/offline-and-sync.md#sync-status). Si has estado trabajando en el campo sin señal, tus ediciones quedan en cola y se envían en cuanto vuelvas a conectarte.
+**1. Lee el estado de sincronización.** El indicador de la parte superior de la página dice qué está pasando: **Sin conexión**, **Cambios pendientes de enviar**, **Falló la sincronización · reintentando**, **Sesión cerrada** o **Problemas de sincronización**. Consulta [el estado de sincronización](../using-the-app/offline-and-sync.md#sync-status). Si has estado trabajando en el campo sin señal, tus ediciones quedan en cola y se envían en cuanto vuelvas a conectarte.
 
 **2. Comprueba que has iniciado sesión.** La sincronización requiere una sesión. Si ha caducado, el indicador muestra **Sesión cerrada · inicia sesión para sincronizar**; aún puedes leer y editar localmente, pero nada se sincroniza hasta que vuelvas a iniciar sesión. **Ajustes → Cuenta** muestra con qué cuenta has iniciado sesión.
 
-**3. Comprueba el espacio activo.** Los registros pertenecen a un espacio. Si falta una colmena en otro dispositivo, abre allí **Ajustes → Espacios** y asegúrate de que está activo el mismo espacio. Si le falta a otra persona, es que no es miembro de ese espacio; un administrador del espacio puede invitarla.
+**3. Comprueba el espacio activo.** Los registros pertenecen a un espacio. Si falta una colmena en otro dispositivo, abre allí **Ajustes → Espacio** y asegúrate de que está activo el mismo espacio. Si le falta a otra persona, es que no es miembro de ese espacio; un administrador del espacio puede invitarla.
 
-**4. Sincroniza ahora.** La sincronización en segundo plano se ejecuta a intervalos cortos; al tocar el indicador de estado se inicia una sincronización de inmediato.
+**4. Sincroniza ahora.** La sincronización en segundo plano se ejecuta a intervalos cortos. Toca el indicador de estado para abrir el estado de la sincronización, que muestra la última sincronización y lo que espera para subirse, y toca **Sincronizar ahora**.
 
-**5. Busca cambios rechazados.** Si el indicador muestra **Problemas de sincronización**, el servidor no aceptó algunos cambios. Siguen en el dispositivo. La lista **Problemas de sincronización** nombra cada uno con el motivo y te permite reintentarlo o descartarlo; consulta [Problemas de sincronización](../using-the-app/offline-and-sync.md#sync-problems). Un reloj del dispositivo muy adelantado es una de las causas; la aplicación lo compensa y reenvía los cambios por sí sola, pero poner el dispositivo en hora automática lo evita.
+**5. Busca cambios rechazados.** Si el indicador muestra **Problemas de sincronización**, el servidor no aceptó algunos cambios. Siguen en el dispositivo. La lista **Problemas de sincronización** nombra cada uno con el motivo y te permite reintentarlo o descartarlo; consulta [Problemas de sincronización](../using-the-app/offline-and-sync.md#sync-problems). Un reloj del dispositivo muy adelantado es una de las causas; la aplicación lo compensa y reenvía los cambios por sí sola, pero poner el dispositivo en hora automática lo evita. Las entradas marcadas como "no se pudo aplicar" son cambios del servidor que este dispositivo no pudo fusionar; sus propios registros se quedan como están.
 
 :::note
 La sincronización está libre de conflictos por diseño. La edición más reciente de un campo gana, las adiciones (fotos, visitas, cosechas, tratamientos) se conservan y no perderás trabajo porque dos dispositivos editaran a la vez.
@@ -38,6 +38,7 @@ Algunas consecuencias prácticas:
 - Tus datos están ligados al navegador y al dispositivo donde usas Openbeehive. Cada dispositivo mantiene su propia copia local y se sincroniza con el servidor.
 - El almacenamiento OPFS es privado del origen de la aplicación. Otros sitios web no pueden leerlo.
 - Instalar la aplicación en tu pantalla de inicio (consulta [Instalación](../using-the-app/install.md)) usa el mismo almacenamiento que la pestaña del navegador en la mayoría de las plataformas.
+- En un dispositivo compartido, cada cuenta tiene su propia copia local por espacio. Si otra persona inicia sesión en el mismo navegador, no ve tus cambios sin enviar ni tus tareas personales, y estos no se suben con su cuenta.
 
 :::caution
 Las herramientas del navegador que "borran los datos del sitio", "borran cookies y almacenamiento" o la navegación privada/de incógnito pueden eliminar la base de datos OPFS local. Eso es seguro **solo si tus datos ya se han sincronizado** con el servidor, porque se volverán a descargar en el próximo inicio de sesión. Si tienes cambios sin conexión sin sincronizar, asegúrate de estar en línea y deja que la sincronización termine primero.
@@ -114,8 +115,18 @@ El escáner integrado funciona en todos los navegadores actuales, incluidos Safa
 - **La redirección falla o errores de "redirección no válida" (autoalojamiento).** Esto casi siempre significa que la URL de redirección OIDC o `BEEHIVE_PUBLIC_BASE_URL` está mal configurada. Consulta [Autenticación y configuración](../self-hosting/authentication.md).
 - **«Demasiados intentos.»** Tras 10 inicios de sesión fallidos para una cuenta, o 30 desde una misma dirección de red, los intentos siguientes se bloquean durante un máximo de 15 minutos. Espera y vuelve a intentarlo.
 - **El servidor se niega a arrancar tras habilitar el inicio de sesión (autoalojamiento).** El registro del servidor indica el ajuste que falta, normalmente `BEEHIVE_SESSION_SECRET` (al menos 32 bytes) o la cuenta de administrador. Consulta [Autenticación](../self-hosting/authentication.md).
-- **No se ofrece la passkey.** Las passkeys deben estar habilitadas en el servidor y debes haber añadido una en Ajustes → Passkeys. Si no, inicia sesión con otro método.
+- **No se ofrece la passkey.** Las passkeys deben estar habilitadas en el servidor y debes haber añadido una en Ajustes → Cuenta → Passkeys. Si no, inicia sesión con otro método.
 - **Autoalojamiento de un solo usuario sin inicio de sesión.** Con la autenticación por contraseña desactivada, sin proveedores OIDC y con WebAuthn desactivado, no hay ningún paso de inicio de sesión. Si ves inesperadamente una pantalla de inicio de sesión, revisa la configuración de tu servidor.
+
+## Las ediciones de un campo no se mantienen (autoalojamiento) \{#stamps-from-the-future}
+
+Las versiones anteriores a 0.5.0 aceptaban cambios de dispositivos cuyo reloj iba muy adelantado. Una marca así gana todas las fusiones hasta que la hora real la alcanza, de modo que las ediciones posteriores de ese campo se pierden. Al arrancar, el servidor registra cuántas marcas así contiene cada tabla, con hasta diez filas afectadas. Para reparar una fila, detén el servidor y borra el reloj de sus campos:
+
+```sql
+UPDATE <table> SET field_hlc = '{}' WHERE id = '<id>';
+```
+
+Los valores se conservan, y la siguiente edición de cada campo gana. Un dispositivo que sincronizó la fila antes sigue prefiriendo su propia copia: deja que suba lo que tiene, después borra los datos del sitio en su navegador (o reinstala la aplicación) y vuelve a iniciar sesión.
 
 ## Presentar un buen informe de error
 

@@ -13,15 +13,15 @@ Deine Aufzeichnungen liegen in einer lokalen Datenbank auf deinem Gerät, sodass
 
 Deine Änderungen werden sofort auf dem Gerät gespeichert. Die Synchronisierung mit dem Server geschieht still im Hintergrund, sodass eine Verzögerung normal und selten ein Grund zur Sorge ist. Wenn Änderungen, die du auf einem Gerät vorgenommen hast, auf einem anderen nicht erscheinen, arbeite diese Liste durch.
 
-**1. Lies den Synchronisierungsstatus.** Der Chip oben auf der Seite sagt, was los ist: **Offline**, **Warten auf Upload**, **Synchronisierung fehlgeschlagen · neuer Versuch**, **Abgemeldet** oder **Sync-Probleme**. Siehe [den Synchronisierungsstatus](../using-the-app/offline-and-sync.md#sync-status). Wenn du im Feld ohne Empfang gearbeitet hast, sind deine Bearbeitungen in der Warteschlange und werden gesendet, sobald du wieder verbunden bist.
+**1. Lies den Synchronisierungsstatus.** Der Chip oben auf der Seite sagt, was los ist: **Offline**, **Änderungen warten auf Upload**, **Synchronisierung fehlgeschlagen · neuer Versuch**, **Abgemeldet** oder **Sync-Probleme**. Siehe [den Synchronisierungsstatus](../using-the-app/offline-and-sync.md#sync-status). Wenn du im Feld ohne Empfang gearbeitet hast, sind deine Bearbeitungen in der Warteschlange und werden gesendet, sobald du wieder verbunden bist.
 
 **2. Prüfe, ob du angemeldet bist.** Die Synchronisierung erfordert eine Sitzung. Wenn sie abgelaufen ist, zeigt der Chip **Abgemeldet · zum Synchronisieren anmelden**; du kannst weiterhin lokal lesen und bearbeiten, aber nichts wird synchronisiert, bis du dich erneut anmeldest. **Einstellungen → Konto** zeigt, als wer du angemeldet bist.
 
-**3. Prüfe den aktiven Arbeitsbereich.** Aufzeichnungen gehören zu einem Arbeitsbereich. Wenn ein Bienenstock auf einem anderen Gerät fehlt, öffne dort **Einstellungen → Arbeitsbereiche** und stelle sicher, dass derselbe Arbeitsbereich aktiv ist. Fehlt er bei einer anderen Person, ist sie kein Mitglied dieses Arbeitsbereichs; ein Arbeitsbereichs-Admin kann sie einladen.
+**3. Prüfe den aktiven Arbeitsbereich.** Aufzeichnungen gehören zu einem Arbeitsbereich. Wenn ein Bienenstock auf einem anderen Gerät fehlt, öffne dort **Einstellungen → Arbeitsbereich** und stelle sicher, dass derselbe Arbeitsbereich aktiv ist. Fehlt er bei einer anderen Person, ist sie kein Mitglied dieses Arbeitsbereichs; ein Arbeitsbereichs-Admin kann sie einladen.
 
-**4. Synchronisiere jetzt.** Die Hintergrundsynchronisierung läuft in kurzen Abständen; ein Tippen auf den Status-Chip startet sofort eine Synchronisierung.
+**4. Synchronisiere jetzt.** Die Hintergrundsynchronisierung läuft in kurzen Abständen. Tippe auf den Status-Chip, um den Synchronisierungsstatus zu öffnen, der die letzte Synchronisierung zeigt und was auf den Upload wartet, und tippe auf **Jetzt synchronisieren**.
 
-**5. Suche nach abgelehnten Änderungen.** Wenn der Chip **Sync-Probleme** zeigt, hat der Server einige Änderungen nicht angenommen. Sie sind weiterhin auf dem Gerät. Die Liste **Sync-Probleme** nennt jede davon mit dem Grund und lässt dich es erneut versuchen oder sie verwerfen; siehe [Sync-Probleme](../using-the-app/offline-and-sync.md#sync-problems). Eine Geräteuhr, die weit vorgeht, ist eine Ursache; die App gleicht das aus und sendet von sich aus erneut, aber wenn du das Gerät auf automatische Uhrzeit stellst, kommt es gar nicht erst dazu.
+**5. Suche nach abgelehnten Änderungen.** Wenn der Chip **Sync-Probleme** zeigt, hat der Server einige Änderungen nicht angenommen. Sie sind weiterhin auf dem Gerät. Die Liste **Sync-Probleme** nennt jede davon mit dem Grund und lässt dich es erneut versuchen oder sie verwerfen; siehe [Sync-Probleme](../using-the-app/offline-and-sync.md#sync-problems). Eine Geräteuhr, die weit vorgeht, ist eine Ursache; die App gleicht das aus und sendet von sich aus erneut, aber wenn du das Gerät auf automatische Uhrzeit stellst, kommt es gar nicht erst dazu. Einträge mit dem Vermerk „nicht übernommen“ sind Änderungen vom Server, die dieses Gerät nicht zusammenführen konnte; seine eigenen Aufzeichnungen bleiben, wie sie sind.
 
 :::note
 Die Synchronisierung ist konzeptbedingt konfliktfrei. Die jüngste Bearbeitung eines Feldes gewinnt, Hinzufügungen (Fotos, Durchsichten, Ernten, Behandlungen) bleiben erhalten, und du verlierst keine Arbeit, weil zwei Geräte gleichzeitig bearbeitet haben.
@@ -38,6 +38,7 @@ Ein paar praktische Folgen:
 - Deine Daten sind an den Browser und das Gerät gebunden, auf dem du Openbeehive verwendest. Jedes Gerät behält seine eigene lokale Kopie und synchronisiert mit dem Server.
 - Der OPFS-Speicher ist privat für den Origin der App. Andere Websites können ihn nicht lesen.
 - Das Installieren der App auf deinem Startbildschirm (siehe [Installation](../using-the-app/install.md)) verwendet auf den meisten Plattformen denselben Speicher wie der Browser-Tab.
+- Auf einem gemeinsam genutzten Gerät hat jedes Konto pro Arbeitsbereich seine eigene lokale Kopie. Meldet sich jemand anderes im selben Browser an, sieht diese Person deine nicht gesendeten Änderungen und persönlichen Aufgaben nicht, und sie werden nicht unter ihrem Konto hochgeladen.
 
 :::caution
 Browser-Werkzeuge, die „Websitedaten löschen“, „Cookies und Speicher löschen“ oder privates/Inkognito-Surfen können die lokale OPFS-Datenbank löschen. Das ist **nur dann sicher, wenn deine Daten bereits** zum Server synchronisiert wurden, da sie bei der nächsten Anmeldung erneut heruntergeladen werden. Wenn du nicht synchronisierte Offline-Änderungen hast, stelle sicher, dass du online bist, und lass die Synchronisierung zuerst abschließen.
@@ -113,8 +114,18 @@ Der App-interne Scanner funktioniert in jedem aktuellen Browser, auch in Safari 
 - **Weiterleitung schlägt fehl oder „ungültige Weiterleitung“-Fehler (Selbst-Hosting).** Das bedeutet fast immer, dass die OIDC-Weiterleitungs-URL oder `BEEHIVE_PUBLIC_BASE_URL` falsch konfiguriert ist. Siehe [Authentifizierung und Konfiguration](../self-hosting/authentication.md).
 - **„Zu viele Versuche.“** Nach 10 fehlgeschlagenen Anmeldungen für ein Konto oder 30 von einer Netzwerkadresse werden weitere Versuche bis zu 15 Minuten lang blockiert. Warte und versuche es erneut.
 - **Der Server startet nach dem Aktivieren der Anmeldung nicht (Selbst-Hosting).** Das Log nennt die fehlende Einstellung, meist `BEEHIVE_SESSION_SECRET` (mindestens 32 Bytes) oder das Admin-Konto. Siehe [Authentifizierung](../self-hosting/authentication.md).
-- **Passkey nicht angeboten.** Passkeys müssen auf dem Server aktiviert sein, und du musst unter Einstellungen → Passkeys einen hinzugefügt haben. Andernfalls melde dich mit einer anderen Methode an.
+- **Passkey nicht angeboten.** Passkeys müssen auf dem Server aktiviert sein, und du musst unter Einstellungen → Konto → Passkeys einen hinzugefügt haben. Andernfalls melde dich mit einer anderen Methode an.
 - **Einzelnutzer-Selbst-Hosting ohne Anmeldung.** Mit ausgeschalteter Passwort-Anmeldung, ohne OIDC-Anbieter und mit deaktiviertem WebAuthn gibt es überhaupt keinen Anmeldeschritt. Wenn du unerwartet einen Anmeldebildschirm siehst, prüfe deine Serverkonfiguration.
+
+## Änderungen an einem Feld bleiben nicht erhalten (Selbst-Hosting) \{#stamps-from-the-future}
+
+Versionen vor 0.5.0 haben Änderungen von Geräten angenommen, deren Uhr weit vorging. Ein solcher Stempel gewinnt jeden Merge, bis die echte Zeit ihn erreicht, sodass spätere Bearbeitungen dieses Felds verloren gehen. Beim Start protokolliert der Server, wie viele solcher Stempel jede Tabelle enthält, mit bis zu zehn betroffenen Zeilen. Um eine Zeile zu reparieren, stoppe den Server und leere ihre Feld-Uhr:
+
+```sql
+UPDATE <table> SET field_hlc = '{}' WHERE id = '<id>';
+```
+
+Die Werte bleiben erhalten, und die nächste Bearbeitung jedes Felds gewinnt. Ein Gerät, das die Zeile schon vorher synchronisiert hat, bevorzugt weiterhin seine eigene Kopie: Lass es hochladen, was es hat, lösche dann die Websitedaten in seinem Browser (oder installiere die App neu) und melde dich erneut an.
 
 ## Einen guten Fehlerbericht einreichen
 

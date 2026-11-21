@@ -13,15 +13,15 @@ Vos archives résident dans une base de données locale sur votre appareil, si b
 
 Vos modifications sont enregistrées instantanément sur l'appareil. La synchronisation vers le serveur se fait discrètement en arrière-plan, donc un délai est normal et rarement préoccupant. Si des modifications faites sur un appareil n'apparaissent pas sur un autre, parcourez cette liste.
 
-**1. Lisez l'état de synchronisation.** La pastille en haut de la page indique ce qui se passe : **Hors ligne**, **En attente d'envoi**, **Échec de la synchronisation · nouvel essai**, **Déconnecté** ou **Problèmes de synchronisation**. Voir [l'état de synchronisation](../using-the-app/offline-and-sync.md#sync-status). Si vous avez travaillé sur le terrain sans réseau, vos modifications sont mises en file d'attente et sont envoyées dès la reconnexion.
+**1. Lisez l'état de synchronisation.** La pastille en haut de la page indique ce qui se passe : **Hors ligne**, **Modifications en attente d’envoi**, **Échec de la synchronisation · nouvel essai**, **Déconnecté** ou **Problèmes de synchronisation**. Voir [l'état de synchronisation](../using-the-app/offline-and-sync.md#sync-status). Si vous avez travaillé sur le terrain sans réseau, vos modifications sont mises en file d'attente et sont envoyées dès la reconnexion.
 
 **2. Vérifiez que vous êtes connecté.** La synchronisation nécessite une session. Si elle a expiré, la pastille affiche **Déconnecté · connectez-vous pour synchroniser** ; vous pouvez toujours lire et modifier localement, mais rien ne se synchronise tant que vous ne vous reconnectez pas. **Paramètres → Compte** indique avec quel compte vous êtes connecté.
 
-**3. Vérifiez l'espace actif.** Les archives appartiennent à un espace. Si une ruche manque sur un autre appareil, ouvrez-y **Paramètres → Espaces** et assurez-vous que le même espace est actif. Si elle manque pour une autre personne, celle-ci n'est pas membre de cet espace ; un administrateur de l'espace peut l'inviter.
+**3. Vérifiez l'espace actif.** Les archives appartiennent à un espace. Si une ruche manque sur un autre appareil, ouvrez-y **Paramètres → Espace** et assurez-vous que le même espace est actif. Si elle manque pour une autre personne, celle-ci n'est pas membre de cet espace ; un administrateur de l'espace peut l'inviter.
 
-**4. Synchronisez maintenant.** La synchronisation en arrière-plan s'exécute à intervalles rapprochés ; toucher la pastille d'état lance aussitôt une synchronisation.
+**4. Synchronisez maintenant.** La synchronisation en arrière-plan s'exécute à intervalles rapprochés. Touchez la pastille d'état pour ouvrir l'état de la synchronisation, qui indique la dernière synchronisation et ce qui attend d'être envoyé, puis touchez **Synchroniser maintenant**.
 
-**5. Cherchez les modifications refusées.** Si la pastille affiche **Problèmes de synchronisation**, le serveur n'a pas accepté certaines modifications. Elles sont toujours sur l'appareil. La liste **Problèmes de synchronisation** nomme chacune avec le motif et vous permet de réessayer ou de l'abandonner ; voir [Problèmes de synchronisation](../using-the-app/offline-and-sync.md#sync-problems). Une horloge d'appareil très en avance en est une cause ; l'application la compense et renvoie d'elle-même les modifications, mais régler l'appareil sur l'heure automatique l'évite.
+**5. Cherchez les modifications refusées.** Si la pastille affiche **Problèmes de synchronisation**, le serveur n'a pas accepté certaines modifications. Elles sont toujours sur l'appareil. La liste **Problèmes de synchronisation** nomme chacune avec le motif et vous permet de réessayer ou de l'abandonner ; voir [Problèmes de synchronisation](../using-the-app/offline-and-sync.md#sync-problems). Une horloge d'appareil très en avance en est une cause ; l'application la compense et renvoie d'elle-même les modifications, mais régler l'appareil sur l'heure automatique l'évite. Les entrées marquées « modification reçue non appliquée » sont des modifications venant du serveur que cet appareil n'a pas pu fusionner ; ses propres enregistrements restent tels quels.
 
 :::note
 La synchronisation est sans conflit par conception. La modification la plus récente d'un champ l'emporte, les ajouts (photos, visites, récoltes, traitements) sont conservés, et vous ne perdrez pas de travail parce que deux appareils ont modifié en même temps.
@@ -38,6 +38,7 @@ Quelques conséquences pratiques :
 - Vos données sont liées au navigateur et à l'appareil sur lequel vous utilisez Openbeehive. Chaque appareil conserve sa propre copie locale et se synchronise au serveur.
 - Le stockage OPFS est privé à l'origine de l'application. Les autres sites web ne peuvent pas le lire.
 - Installer l'application sur votre écran d'accueil (voir [Installation](../using-the-app/install.md)) utilise le même stockage que l'onglet du navigateur sur la plupart des plateformes.
+- Sur un appareil partagé, chaque compte a sa propre copie locale par espace. Une autre personne qui se connecte dans le même navigateur ne voit pas vos modifications non envoyées ni vos tâches personnelles, et celles-ci ne sont pas envoyées sous son compte.
 
 :::caution
 Les outils de navigateur qui « effacent les données du site », « effacent les cookies et le stockage », ou la navigation privée/incognito peuvent effacer la base de données OPFS locale. Cela n'est sans danger **que si vos données ont déjà été synchronisées** sur le serveur, car elles seront retéléchargées à la prochaine connexion. Si vous avez des modifications hors ligne non synchronisées, assurez-vous d'être en ligne et laissez la synchronisation se terminer d'abord.
@@ -114,8 +115,18 @@ Le scanner intégré à l'application fonctionne dans tous les navigateurs actue
 - **Échec de redirection ou erreurs « invalid redirect » (auto-hébergement).** Cela signifie presque toujours que l'URL de redirection OIDC ou `BEEHIVE_PUBLIC_BASE_URL` est mal configurée. Voir [Authentification et configuration](../self-hosting/authentication.md).
 - **« Trop de tentatives. »** Après 10 connexions échouées pour un compte, ou 30 depuis une même adresse réseau, les tentatives suivantes sont bloquées pendant 15 minutes au maximum. Patientez et réessayez.
 - **Le serveur refuse de démarrer après l'activation de la connexion (auto-hébergement).** Le journal nomme le paramètre manquant, en général `BEEHIVE_SESSION_SECRET` (au moins 32 octets) ou le compte administrateur. Voir [Authentification](../self-hosting/authentication.md).
-- **Passkey non proposée.** Les passkeys doivent être activées sur le serveur et vous devez en avoir ajouté une sous Paramètres → Passkeys. Sinon, connectez-vous avec une autre méthode.
+- **Passkey non proposée.** Les passkeys doivent être activées sur le serveur et vous devez en avoir ajouté une sous Paramètres → Compte → Passkeys. Sinon, connectez-vous avec une autre méthode.
 - **Auto-hébergement à utilisateur unique sans connexion.** Avec l'authentification par mot de passe désactivée, sans fournisseur OIDC et avec WebAuthn désactivé, il n'y a aucune étape de connexion. Si vous voyez de manière inattendue un écran de connexion, vérifiez la configuration de votre serveur.
+
+## Les modifications d'un champ ne tiennent pas (auto-hébergement) \{#stamps-from-the-future}
+
+Les versions antérieures à la 0.5.0 acceptaient les modifications d'appareils dont l'horloge était très en avance. Une telle estampille gagne toutes les fusions jusqu'à ce que l'heure réelle la rattrape, si bien que les modifications ultérieures de ce champ sont perdues. Au démarrage, le serveur journalise le nombre de ces estampilles dans chaque table, avec jusqu'à dix lignes concernées. Pour réparer une ligne, arrêtez le serveur et videz son horloge de champ :
+
+```sql
+UPDATE <table> SET field_hlc = '{}' WHERE id = '<id>';
+```
+
+Les valeurs restent, et la prochaine modification de chaque champ l'emporte. Un appareil qui a déjà synchronisé la ligne préfère toujours sa propre copie : laissez-le envoyer ce qu'il a, puis effacez les données du site dans son navigateur (ou réinstallez l'application) et reconnectez-vous.
 
 ## Rédiger un bon rapport de bug
 
