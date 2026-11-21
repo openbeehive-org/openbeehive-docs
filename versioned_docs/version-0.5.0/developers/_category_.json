@@ -1,0 +1,5 @@
+{
+  "label": "Developers",
+  "position": 7,
+  "link": { "type": "generated-index", "description": "Architecture and internals: the offline-first sync model, the event/history design, and QR deep links." }
+}

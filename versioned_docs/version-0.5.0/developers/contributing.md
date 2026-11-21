@@ -1,0 +1,132 @@
+---
+sidebar_position: 7
+title: "Contributing & dev setup"
+---
+
+# Contributing & dev setup
+
+Openbeehive is licensed under **AGPL-3.0**. By contributing you agree that
+your work is released under the same licence. Read
+[`CONTRIBUTING.md`](https://github.com/openbeehive-org/openbeehive-app/blob/main/CONTRIBUTING.md)
+in the app repository before opening a pull request.
+
+## The repositories
+
+| Repository | Contents |
+| --- | --- |
+| [`openbeehive-app`](https://github.com/openbeehive-org/openbeehive-app) | The application: proto contract, Go backend, SvelteKit PWA |
+| [`openbeehive-site`](https://github.com/openbeehive-org/openbeehive-site) | The marketing site at openbeehive.org |
+| [`openbeehive-docs`](https://github.com/openbeehive-org/openbeehive-docs) | This documentation site (Docusaurus) |
+
+## Prerequisites
+
+- **Go 1.27+** for the backend (the exact version is the `go` line in `server/go.mod`)
+- **Node 24+** for the SvelteKit app (`app/.nvmrc` names the version the image builds with)
+- **buf** and the other gate tools: `make tools` installs the pinned versions into `$(go env GOPATH)/bin`
+- [prek](https://github.com/j178/prek) for the git hooks, GNU Make; on Windows use WSL2
+
+## Getting set up
+
+```bash
+git clone https://github.com/openbeehive-org/openbeehive-app.git
+cd openbeehive-app
+
+make tools        # pinned golangci-lint, govulncheck, go-licenses, fleetlint, buf
+prek install      # git hooks: formatters and linters on commit, make check on push
+make proto        # generate Go + TypeScript stubs from proto/
+make run-server   # terminal 1: Go backend on :8080 (loads .env if present)
+make dev-app      # terminal 2: Vite dev server on :5173
+```
+
+`make check` is the definition of green: proto lint
+and breaking-change check, lint (golangci-lint, go vet, prettier, eslint,
+svelte-check), tests, coverage gates, audit (govulncheck, licenses, npm
+audit, gitleaks), build and fleetlint. `make check-fast` is the quick subset
+the pre-commit hook runs; `make help` lists every target. `make check` tests
+on SQLite; CI runs the Go tests a second time on PostgreSQL and MariaDB.
+
+### Testing on every database
+
+The server runs on SQLite, PostgreSQL and MariaDB, and anything that touches
+SQL, a migration or the sync write path should be green on all three:
+
+```bash
+export PG_DSN='postgres://beehive:beehive@127.0.0.1:5433/beehive?sslmode=disable'
+export MARIADB_DSN='root:beehive@tcp(127.0.0.1:3307)/beehive'
+make test-db          # SQLite, then every backend whose DSN is set
+make test-postgres    # one backend only
+make test-mariadb
+```
+
+Tests that need a database get one from the `sqltest.New(t)` fixture
+(`server/internal/storage/sql/sqltest`), which reads
+`BEEHIVE_TEST_DATABASE_DRIVER` and `BEEHIVE_TEST_DATABASE_DSN`, gives every
+test a database of its own and drops it afterwards. `CONTRIBUTING.md` in the
+app repository has the container commands and the rules for portable SQL.
+
+The server reads its configuration from the environment and from a `.env`
+file in its working directory (copy `.env.example`); `make run-server` starts
+it in the repo root. With `make dev-app` the app comes from another origin
+(`:5173`), so set `BEEHIVE_CORS_ALLOWED_ORIGINS=http://localhost:5173` in
+`.env`. The defaults give you SQLite
+and filesystem blobs; leave `BEEHIVE_PASSWORD_AUTH` off,
+`BEEHIVE_OIDC_PROVIDERS` empty and `BEEHIVE_WEBAUTHN_ENABLED=false` to run
+without a login. See [Configuration](../self-hosting/configuration.md).
+
+To build a release binary: `make proto && make build` writes
+`server/bin/openbeehive` with the SPA embedded. See
+[Single binary](../self-hosting/single-binary.md).
+
+## Generated code
+
+`make proto` runs `buf generate` with the repo's `buf.gen.yaml`:
+
+| Output | Plugins |
+| --- | --- |
+| `server/internal/gen/` | `protocolbuffers/go`, `connectrpc/go` |
+| `app/src/lib/proto/` | `bufbuild/es` v2 (messages and service descriptors) |
+
+Both directories are gitignored. Run `make proto` after cloning and after
+every `.proto` change; never edit the output by hand. The Docker build runs
+`buf generate` itself in its first stage. Every service in the protos is
+registered on the server; see [Using the API](../using-the-api/overview.md) for
+the list.
+
+## Conventions
+
+1. **The `.proto` files are the source of truth.** Change the contract,
+   regenerate, then implement.
+2. **Writes go through the local repository.** The app writes to its local
+   SQLite database through `app/src/lib/local/repo.ts` and lets the sync
+   engine push the change. Do not add UI code that calls the CRUD services
+   (`ApiaryService`, `InspectionService`, ...) directly; they exist for
+   scripts and integrations, and a UI call would skip the local database and
+   the outbox, so the change would not be visible offline.
+3. **Keep `merge.go` and `merge.ts` identical.** Per-field last-writer-wins
+   and the add-wins OR-Set are implemented in `server/internal/sync/merge.go`
+   and `app/src/lib/local/merge.ts`. Change both, with tests. The shared
+   test vectors in `server/internal/sync/testdata/merge_vectors.json` are run
+   by both test suites; add a vector for every rule you change. See the
+   [sync protocol](./sync-protocol.md).
+4. **Write portable SQL.** The server runs on PostgreSQL, MariaDB and SQLite.
+   Migrations use the portable subset described at the top of
+   `0001_init.sql`; the store translates the remaining dialect differences.
+   Indexed columns are `VARCHAR(n)`, never `TEXT`; a statement only one
+   dialect needs goes into a file named `NNNN_name.<driver>.sql`.
+   See [Databases](../self-hosting/databases.md).
+5. **Semantic colours.** New or changed CSS uses the colour tokens defined in
+   `app/src/routes/+layout.svelte` (`--bg`, `--surface`, `--text`, `--accent`
+   and so on), never raw colour values; the dark theme redefines only those
+   tokens.
+6. **English in code, translations for users.** Code, comments, identifiers
+   and commit messages are English. Every user-facing string goes through
+   `svelte-i18n` with entries in `app/src/lib/i18n/locales/{en,de,fr,es,it}.json`.
+   If you cannot translate, add the English text and say so in the PR.
+
+## Opening a pull request
+
+1. Fork and branch.
+2. Run `make proto` if you touched a `.proto`.
+3. Run `make check`. CI runs the same and repeats the Go tests on PostgreSQL and MariaDB.
+4. Keep the PR focused and describe what changes and why.
+5. Call out merge-logic, sync or schema changes explicitly.

@@ -1,0 +1,5 @@
+{
+  "label": "Self-hosting",
+  "position": 4,
+  "link": { "type": "generated-index", "description": "Run your own Openbeehive instance — from a single binary to a Postgres + MinIO deployment with Docker." }
+}

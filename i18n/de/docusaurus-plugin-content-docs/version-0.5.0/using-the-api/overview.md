@@ -1,0 +1,338 @@
+---
+sidebar_position: 1
+title: "API-Überblick"
+---
+
+# Die Openbeehive-API
+
+Der Server stellt eine [Connect-RPC](https://connectrpc.com/)-API bereit, die
+in Protocol Buffers unter
+[`proto/openbeehive/v1`](https://github.com/openbeehive-org/openbeehive-app/tree/main/proto/openbeehive/v1)
+definiert ist. Jeder RPC ist über einfaches HTTP/JSON, gRPC und gRPC-Web unter
+derselben URL erreichbar. Die App selbst nutzt nur den `SyncService` und die
+einfachen HTTP-Endpunkte für Fotos, Export und Konten; die anderen Dienste gibt
+es für Skripte, Sensoren und Integrationen.
+
+## Basis-URL und Pfadform
+
+Die API wird vom selben Prozess wie die App bereitgestellt, auf demselben
+Origin:
+
+```text
+POST <origin>/openbeehive.v1.<Service>/<Method>
+```
+
+Zum Beispiel `https://app.openbeehive.org/openbeehive.v1.ApiaryService/ListApiaries`
+beim gehosteten Dienst oder dein eigener Origin, wenn du selbst hostest.
+
+## Bereitgestellte Dienste
+
+Auf dem Server sind zehn Dienste registriert (`server/cmd/server/main.go`):
+
+| Dienst | RPCs |
+| --- | --- |
+| `ApiaryService` | `CreateApiary`, `GetApiary`, `ListApiaries`, `UpdateApiary`, `DeleteApiary` |
+| `HiveService` | `CreateHive`, `GetHive`, `ListHives`, `UpdateHive`, `DeleteHive`, `RelocateHive` |
+| `QueenService` | `CreateQueen`, `ListQueens`, `UpdateQueen`, `DeleteQueen` |
+| `InspectionService` | `CreateInspection`, `ListInspections`, `UpdateInspection`, `DeleteInspection`, `AddInspectionPhoto`, `RemoveInspectionPhoto` |
+| `TaskService` | `CreateTask`, `ListTasks`, `UpdateTask`, `SetTaskDone`, `DeleteTask` |
+| `TreatmentService` | `CreateTreatment`, `ListTreatments`, `UpdateTreatment`, `DeleteTreatment` |
+| `HarvestService` | `CreateHarvest`, `ListHarvests`, `UpdateHarvest`, `DeleteHarvest` |
+| `EventService` | `ListEvents` |
+| `StatsService` | `GetDashboard`, `GetHoneyStats` |
+| `SyncService` | `Pull`, `Snapshot`, `Push`, `Subscribe` (Server-Stream); Skripte senden den Header `Openbeehive-Sync-Protocol: 1`, siehe [Sync-Protokoll](../developers/sync-protocol.md#versions) |
+
+Jeder RPC ist auf den aktiven Arbeitsbereich des Aufrufers beschränkt (in
+Pfaden und Feldnamen `tenant` oder `organization` genannt). Ids aus einem
+anderen Arbeitsbereich verhalten sich wie unbekannte Ids (`not_found`).
+
+Eine RPC-Nachricht darf höchstens 16 MiB groß sein, und eine Anfrage außer dem
+`Subscribe`-Stream darf höchstens 2 Minuten dauern.
+
+### Schreibvorgänge laufen über Sync \{#writes-go-through-sync}
+
+Jeder schreibende RPC (`Create*`, `Update*`, `Delete*`, `RelocateHive`,
+`SetTaskDone`, `AddInspectionPhoto`, `RemoveInspectionPhoto`) wird über
+denselben feldweisen Merge angewendet und an dasselbe Änderungsprotokoll
+angehängt wie `SyncService.Push`. Eine über die API geschriebene Zeile
+erreicht jedes Gerät bei dessen nächstem Sync, und eine spätere Bearbeitung
+von einem Gerät wird Feld für Feld mit ihr zusammengeführt, genau so wie
+Bearbeitungen von zwei Geräten miteinander zusammengeführt werden. Löschungen
+sind soft: Die Zeile bekommt einen Tombstone (`deleted = 1`) und verschwindet
+aus Listen und aus der App.
+
+Serverseitige Schreibvorgänge spiegeln die Abläufe der App
+(`server/internal/service/writer.go` ist eine Portierung von
+`app/src/lib/local/history.ts`), sodass die Historie, die ein Gerät zeigt,
+dieselbe ist, egal ob ein Datensatz in der App oder über die API erfasst
+wurde:
+
+- `CreateHive` schreibt die Beute, eröffnet ein Placement-Intervall und
+  zeichnet ein `CREATED`-Ereignis auf. Neue Beuten starten als
+  `HIVE_STATUS_ACTIVE`.
+- `RelocateHive` schließt das offene Placement, eröffnet ein neues am
+  Zielstandort und zeichnet ein `MOVED`-Ereignis auf. `UpdateHive` wandert
+  eine Beute nie.
+- `CreateQueen` beendet die Regentschaft der aktiven Königin der Beute
+  (`active = false`, `replacedAt` auf das `introducedAt` der neuen Königin
+  gesetzt), zeichnet die Ereignisse `QUEEN_REPLACED` und `QUEEN_INTRODUCED`
+  auf und leitet die Markierungsfarbe aus `year` ab, wenn du keine sendest.
+- `CreateInspection` und `CreateTreatment` frieren den Standort und die
+  regierende Königin zum `date` des Datensatzes ein (ein rückdatierter
+  Datensatz wird gegen die Placement- und Königinnenhistorie aufgelöst) und
+  zeichnen ein `INSPECTION`- oder `TREATMENT`-Ereignis auf.
+- `CreateHarvest` friert den Standort und die regierende Königin zum `date`
+  auf dieselbe Weise ein, schreibt die Erntezeile und zeichnet ein
+  `HARVEST`-Ereignis auf, das `amountKg` und den Titel `<kg> kg <variety>`
+  trägt (`Honey`, wenn `variety` leer ist). `GetDashboard` und
+  `GetHoneyStats` summieren diese Ereignisse, eine über die API gebuchte
+  Ernte zählt also sofort in den Honigzahlen. `amountKg` muss größer als `0`
+  sein.
+- Eine Aufgabe mit `hiveId` oder `apiaryId` synchronisiert unter diesem
+  Standort und wird mit allen geteilt, die ihn sehen; eine Aufgabe ohne beides
+  lebt im persönlichen Scope des Aufrufers: Sie erreicht nur die Geräte dieses
+  Benutzers, und `ListTasks` gibt sie nur an ihren Besitzer zurück.
+- `CreateInspection` mit `source: INSPECTION_SOURCE_SENSOR` speichert statt
+  einer Durchsicht eine Sensormessung; siehe
+  [Automatische Tracker](./automated-trackers.md).
+
+Korrekturen und Löschungen halten die Historie konsistent:
+
+- `UpdateInspection`, `UpdateTreatment` und `UpdateHarvest` korrigieren einen
+  gespeicherten Datensatz. Ihr Zeitleisten-Ereignis folgt der Bearbeitung, und
+  wenn sich `date` ändert, werden Standort und Königin für das neue Datum neu
+  aufgelöst. Bei Behandlungen und Ernten wird `amendedAt` auf den Zeitpunkt
+  der Bearbeitung gesetzt.
+- `DeleteInspection`, `DeleteTreatment`, `DeleteHarvest` und `DeleteQueen`
+  entfernen auch die Zeitleisten-Ereignisse des Datensatzes, eine gelöschte
+  Ernte zählt also nicht mehr in den Honigzahlen.
+- `DeleteHive` löscht auch die offenen Aufgaben der Beute. `DeleteApiary`
+  schlägt mit `failed_precondition` fehl, solange der Standort noch Beuten
+  hat: Wandere sie zuerst mit `RelocateHive` oder lösche sie.
+
+### Updates ändern nur, was du sendest \{#partial-updates}
+
+Jeder `Update*`-RPC ist ein partielles Update mit denselben zwei Modi:
+
+- **Ohne `updateMask`:** Jedes Feld, das du auf seinem Nullwert lässt (`""`,
+  `0`, `false`, nicht gesetzt), behält seinen gespeicherten Wert. Sende nur,
+  was sich ändert.
+- **Mit `updateMask`:** Genau die aufgeführten Felder werden geschrieben, auch
+  auf ihren Nullwert. So leerst du eine Notiz, entfernst ein Fälligkeitsdatum
+  oder öffnest eine Aufgabe wieder. In JSON ist die Maske ein kommagetrennter
+  String von Feldnamen: `"updateMask": "note,dueAt"`.
+
+Eine Anfrage, die nichts ändern würde, wird mit `invalid_argument` abgelehnt.
+Felder, die den Datensatz identifizieren (`id`, `hiveId`, der Arbeitsbereich),
+lassen sich nicht ändern; eine Beute wechselt ihren Standort nur über
+`RelocateHive`.
+
+Lesezugriffe (`Get*`, `List*`, `ListEvents`, `GetDashboard`, `GetHoneyStats`)
+fragen die Server-Tabellen direkt ab und zeigen API-Schreibvorgänge sofort,
+Geräte-Schreibvorgänge sobald das Gerät sie gepusht hat.
+
+### Fotos \{#photos}
+
+`Inspection.photos` listet die Fotos einer Durchsicht und `Hive.picture` das
+Bild der Beute, jeweils als `Photo` mit `id`, `thumbnail` (eine Data-URL von
+etwa 200 px), `contentType`, `sizeBytes`, `createdAt` und `path`. Das Bild in
+voller Größe ist ein einfaches `GET` auf `path` (`/photos/<id>`) auf demselben
+Host, mit denselben Anmeldedaten wie die RPCs; `path` ist leer, solange das
+Gerät, das das Foto aufgenommen hat, das Bild noch nicht hochgeladen hat.
+`AddInspectionPhoto` fügt ein JPEG-, PNG- oder WebP-Bild von höchstens 5 MiB
+hinzu, `RemoveInspectionPhoto` löscht ein Foto endgültig, auf jedem Gerät.
+`photoKeys` enthält nur die eingebetteten Fotos von 0.4.x-Apps. Siehe
+[REST](./rest.md#photos).
+
+### Noch nicht in der API
+
+- **Kein Placement-RPC.** Placements werden von `CreateHive` und
+  `RelocateHive` geschrieben und tauchen nur im Sync-Feed auf.
+- `EventService` ist schreibgeschützt. Ereignisse werden von den Abläufen
+  oben und von der App geschrieben.
+
+Das Format der Änderungen beschreibt das
+[Sync-Protokoll](../developers/sync-protocol.md), die Spalten hinter jeder
+Nachricht das [Datenmodell](../developers/data-model.md).
+
+## Endpunkte außerhalb von RPC
+
+Neben den RPC-Diensten gibt es ein paar einfache HTTP-Endpunkte:
+
+| Pfad | Zweck |
+| --- | --- |
+| `GET /healthz` | Liefert `ok`, sobald der Server lauscht (der erste Start von 0.5.0 wandelt vorher eingebettete Fotos um) |
+| `GET /photos/<id>`, `POST /photos/<id>` | Fotos in voller Größe: lesen oder das Bild eines bereits synchronisierten Foto-Eintrags hochladen; Sitzung oder API-Schlüssel, nur für Mitglieder des Arbeitsbereichs. Siehe [REST](./rest.md#photos) |
+| `GET /export`, `GET /export?photos=1` | Der aktive Arbeitsbereich als JSON oder als ZIP mit Fotos; Sitzung oder API-Schlüssel mit Schreibrecht. Siehe [REST](./rest.md#export) |
+| `GET /auth/instance` | Was die Instanz anbietet (Anmeldemethoden, Demo, Registrierung, Karteneinstellungen); immer vorhanden, keine Anmeldedaten nötig |
+| `POST /auth/signin`, `POST /auth/signup`, `GET /auth/verify` | E-Mail/Passwort-Konten (`BEEHIVE_PASSWORD_AUTH=true`) |
+| `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Passwort ändern; einen Reset anfordern und abschließen; ein vom Instanz-Admin erstellter Reset-Link (`BEEHIVE_PASSWORD_AUTH=true`) |
+| `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` gesetzt) |
+| `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist; ohne Anmeldung antwortet `GET /auth/me` mit `{"no_login": true}` |
+| `GET /auth/invite?token=...` | Der Name des Arbeitsbereichs, die maskierte E-Mail-Adresse (`j…@e….org`) und das Ablaufdatum einer Einladung, ohne Anmeldedaten; unbekannte, verwendete oder zurückgezogene Einladungen antworten mit `400` `invite_invalid`, abgelaufene mit `invite_expired` |
+| `GET /auth/account`, `POST /auth/account/delete` | Was das Löschen des Kontos bewirken würde, und das Löschen selbst |
+| `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Verwaltung der API-Schlüssel (auflisten, erstellen, entfernen), vorhanden sobald irgendeine Anmeldemethode aktiviert ist; nur per Sitzung, ein Schlüssel kann sie nicht aufrufen |
+| `POST /tenants/create`, `POST /tenants/invite`, `GET /tenants/invites`, `POST /tenants/invite/revoke`, `POST /tenants/delete` | Verwaltung der Arbeitsbereiche, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `GET /tenants/members`, `POST /tenants/members/remove`, `POST /tenants/members/role`, `POST /tenants/leave` | Mitglieder eines Arbeitsbereichs: auflisten, entfernen, Rolle ändern, austreten |
+| `POST /auth/demo-login` | Nur mit `BEEHIVE_DEMO=true` |
+
+Diese Endpunkte nutzen die Anmelde- und Einstellungsseiten der App; sie sind
+nicht Teil des Proto-Vertrags. Für die Endpunkte unter `/auth/*` und
+`/tenants/*` gelten dieselben Regeln:
+
+- Jeder Endpunkt akzeptiert nur die angegebene Methode; alles andere antwortet
+  mit `405` und einem `Allow`-Header.
+- `POST`-Endpunkte, die einen Body entgegennehmen, brauchen
+  `Content-Type: application/json` (sonst `415`), und der Body darf höchstens
+  64 KiB groß sein.
+- `POST`-Anfragen von einer Browserseite auf einer anderen Website werden mit
+  `403` (`cross_site_request`) abgelehnt. Skripte, die keinen `Origin`-Header
+  senden, sind nicht betroffen.
+- `/tenants/delete` und `/tenants/leave` brauchen `{"org_id": "..."}`; eine
+  Vorgabe gibt es nicht.
+- `POST /tenants/invite` antwortet mit `409` `already_member` für jemanden,
+  der schon im Arbeitsbereich ist. Eine Einladung an eine Adresse mit offener
+  Einladung ersetzt diese (der alte Link funktioniert nicht mehr), und die
+  Antwort enthält `"renewed": true`.
+- Seiten, die ein Browser direkt öffnet (`/auth/verify`, `/auth/login`,
+  `/auth/callback`), beantworten einen Fehler mit einer Weiterleitung auf
+  `/login?error=<code>` statt mit JSON.
+- Fehler sind JSON, `{"error": "<plain English>", "code": "<snake_case>"}`.
+  Die Codes stehen auf der [REST-Seite](./rest.md#http-error-codes).
+
+## Authentifizierung \{#authentication}
+
+Wie eine Anfrage authentifiziert wird, hängt davon ab, ob die Instanz eine
+Anmeldemethode hat:
+
+- **Kein Login konfiguriert** (selbst gehostet, `BEEHIVE_PASSWORD_AUTH=false`,
+  `BEEHIVE_OIDC_PROVIDERS` leer, `BEEHIVE_WEBAUTHN_ENABLED=false`): Jede
+  Anfrage läuft als der feste lokale Benutzer. Sende keine Anmeldedaten. Auf
+  einer solchen Instanz gibt es keine API-Schlüssel; es braucht auch keine.
+- **Login konfiguriert**: Jeder RPC braucht einen API-Schlüssel oder ein
+  Sitzungstoken in `Authorization: Bearer <token>` (für Sitzungstokens wird
+  auch das Cookie `obh_session` akzeptiert). Eine Anfrage ohne gültiges Token
+  bekommt den Connect-Code `unauthenticated` (HTTP 401).
+
+### API-Schlüssel
+
+Ein API-Schlüssel ist die empfohlene Anmeldung für Skripte, Sensoren und
+Integrationen. Schlüssel verwaltest du in der App unter
+**Einstellungen → Arbeitsbereich → API-Schlüssel** (siehe
+[Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md#api-keys)):
+
+1. Melde dich an, wechsle in den Arbeitsbereich, in den das Skript schreiben soll,
+   und öffne **Einstellungen → Arbeitsbereich → API-Schlüssel**.
+2. Gib einen Namen ein (zum Beispiel `hive scale`), wähle die
+   Berechtigungen (**Lesen und Schreiben** oder **Nur Lesen**) und ein
+   Ablaufdatum (**Läuft nie ab**, **30 Tagen**, **90 Tagen** oder
+   **1 Jahr**) und tippe auf **Schlüssel erstellen**. Der Schlüssel beginnt
+   mit `obhk_` und wird nur einmal angezeigt; kopiere ihn jetzt. Der Server
+   speichert nur seinen SHA-256-Hash und die ersten 12 Zeichen für die
+   Anzeige.
+3. Sende ihn bei jedem RPC:
+
+```text
+Authorization: Bearer obhk_...
+```
+
+Was ein Schlüssel kann und was nicht:
+
+- Er handelt als sein Besitzer, mit dessen Rolle, innerhalb des Arbeitsbereichs,
+  der beim Erstellen des Schlüssels aktiv war. Er kann den Arbeitsbereich nicht
+  wechseln; lege pro Arbeitsbereich einen Schlüssel an, wenn ein Skript mehrere
+  braucht.
+- Er funktioniert bei RPCs, `/photos/` und `/export`. Die Endpunkte unter `/auth/*` und
+  `/tenants/*`, einschließlich der Schlüsselverwaltung selbst, brauchen eine
+  echte Sitzung: Ein Schlüssel kann keine Schlüssel auflisten, erstellen
+  oder entfernen.
+- Er hat einen von zwei Scopes, beim Erstellen festgelegt. Ein
+  `write`-Schlüssel (die Vorgabe) darf jeden RPC aufrufen, den sein Besitzer
+  aufrufen darf. Ein `read`-Schlüssel darf nur RPCs aufrufen, deren Name mit
+  `Get` oder `List` beginnt, sowie `Pull`, `Snapshot` und `Subscribe`. Jeder
+  andere RPC liefert den Connect-Code `permission_denied` (HTTP 403) mit der
+  Meldung `this API key is read-only`. Ein `read`-Schlüssel darf Fotos
+  abrufen, aber nicht hochladen, und kann `/export` nicht nutzen.
+- Er läuft nur ab, wenn du ein Ablaufdatum setzt: `expires_in_days` von `0`
+  (nie, die Vorgabe) bis `3650`. Nach `expires_at` liefert jeder RPC
+  `unauthenticated` (HTTP 401) mit der Meldung `API key expired`.
+  Abgelaufene Schlüssel bleiben in der Liste, bis du sie entfernst.
+- Er funktioniert in dem Moment nicht mehr, in dem er in den Einstellungen
+  entfernt wird, und er stirbt mit der Mitgliedschaft: Wenn der Besitzer den
+  Arbeitsbereich verlässt oder daraus entfernt wird, wird der Schlüssel
+  abgelehnt.
+- Jede Verwendung setzt `last_used_at`, in den Einstellungen als
+  **Zuletzt verwendet** angezeigt.
+- Das Demo-Konto kann keine Schlüssel erstellen.
+
+Dieselben Endpunkte, die die App nutzt, stehen einem per Sitzung
+authentifizierten Skript offen:
+
+- `GET /auth/api-keys` liefert `{"keys": [{id, name, prefix, scope,
+  created_at, expires_at, last_used_at, mine}]}`, nur deine eigenen
+  Schlüssel im aktiven Arbeitsbereich. `scope` ist `"write"` oder `"read"`;
+  `expires_at` und `last_used_at` sind RFC-3339-Zeitstempel oder `null`;
+  `mine` ist hier immer `true`.
+- `GET /auth/api-keys?tenant=1` liefert jeden Schlüssel des aktiven
+  Arbeitsbereichs, jede Zeile zusätzlich mit `user_id`, `user_email` und einem
+  Flag `mine`, das bei deinen eigenen Schlüsseln `true` ist. Nur der
+  Eigentümer des Arbeitsbereichs (die Rolle, die die App **Admin** nennt) und der
+  Instanz-Administrator dürfen ihn aufrufen; alle anderen bekommen HTTP 403.
+- `POST /auth/api-keys` mit `{"name": "...", "scope": "write",
+  "expires_in_days": 0}` liefert `{id, name, prefix, scope, created_at,
+  expires_at, token}`. Lässt du sie weg, fällt `scope` auf `"write"` und
+  `expires_in_days` auf `0` (nie) zurück. Jeder andere Scope oder eine
+  Laufzeit unter `0` oder über `3650` antwortet mit HTTP 400.
+- `POST /auth/api-keys/delete` mit `{"id": "..."}` antwortet mit `204`. Ein
+  Mitglied kann nur seine eigenen Schlüssel entfernen; die Id von jemand
+  anderem antwortet mit 404. Der Eigentümer des Arbeitsbereichs und der
+  Instanz-Administrator können jeden Schlüssel des aktiven Arbeitsbereichs
+  entfernen. Diese Ausnahme reicht nie über Arbeitsbereiche hinweg: Der Eigentümer
+  eines anderen Arbeitsbereichs bekommt für fremde Schlüssel 404.
+
+### Anmeldung per Sitzung
+
+Die Alternative ist das Sitzungstoken der App, ein HMAC-signierter Wert, den
+der Server beim Anmelden ausstellt. Es wird bei RPCs und bei den Endpunkten
+unter `/auth/*` und `/tenants/*` akzeptiert. Mit aktivierter
+Passwort-Anmeldung holt sich ein Skript eines so:
+
+```bash
+curl -s -X POST https://bees.example.com/auth/signin \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","password":"..."}'
+```
+
+Die JSON-Antwort enthält `token`; derselbe Wert wird auch als Cookie
+`obh_session` gesetzt. Das Token läuft nach `BEEHIVE_SESSION_TTL` ab.
+Fehlgeschlagene Anmeldungen werden gedrosselt: Nach 10 Fehlversuchen für ein
+Konto oder 30 von einer Adresse innerhalb von 15 Minuten antwortet der
+Endpunkt mit `429` (`rate_limited`) und einem `Retry-After`-Header.
+
+Das Token trägt den aktiven Arbeitsbereich des Kontos. `GET /auth/me` listet die
+Arbeitsbereiche, zu denen du gehörst (`tenants`), und den aktiven (`active_org`);
+`POST /auth/switch` mit `{"org_id": "..."}` liefert ein neues `token` für
+einen anderen Arbeitsbereich.
+
+`POST /auth/logout-all` beendet alle anderen Sitzungen des Kontos und gibt
+dem Aufrufer ein frisches `token` zurück. Außerdem prüft der Server bei jeder
+Anfrage, ob das Konto noch Mitglied des Arbeitsbereichs ist; eine widerrufene
+Sitzung oder eine verlorene Mitgliedschaft wird innerhalb von etwa 10 Sekunden
+abgelehnt.
+
+Mit `BEEHIVE_DEMO=true` sind Demo-Sitzungen schreibgeschützt: Das Demo-Konto
+kann nur RPCs aufrufen, deren Namen mit `Get` oder `List` beginnen, sowie
+`Pull`, `Snapshot` und `Subscribe`. Jeder andere RPC liefert `permission_denied`.
+
+Wie du die Anmeldemethoden konfigurierst, steht unter
+[Authentifizierung](../self-hosting/authentication.md).
+
+## Protokollseiten
+
+- [REST / HTTP + JSON](./rest.md): curl-Beispiele, die JSON-Form
+  und der Paginierungsvertrag.
+- [gRPC](./grpc.md): generierte Clients und der streamende
+  `Subscribe`-Aufruf.
+- [Automatische Tracker](./automated-trackers.md): Stockwaagen- und
+  Klimawerte aus einem Skript oder Gerät senden.
