@@ -37,7 +37,7 @@ server conserva, nello stesso formato. Include le tue attività personali ma non
 quelle degli altri membri, e non contiene le modifiche che un dispositivo non ha ancora caricato.
 Sono consentiti pochi download all'ora. Gli script possono scaricare lo stesso file con una
 chiave API; vedi [REST](../using-the-api/rest.md#export). L'account demo non può
-scaricarla.
+scaricarla, e la demo non offre l'importazione.
 
 ## Altri formati
 

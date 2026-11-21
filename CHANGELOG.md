@@ -149,6 +149,8 @@ snapshots and the export/import changes.
   calendar days, the JSON 415 for a wrong `Content-Type`, `/auth/me` without
   login, the Hives tab opening the full list, and refused 0.4.x photo
   uploads leaving no blobs.
+- `GetDashboard` takes `timeZone`; the demo switches off deletes, photo
+  changes and task ticks and offers no import.
 - Small mistranslations on the German, French, Spanish and Italian "Diseases
   & pests" pages; missing accents on four Spanish self-hosting pages.
 - Titled notes and warnings (such as "Back up first") showed as raw

@@ -484,6 +484,10 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
+`timeZone` fixe le calendrier dans lequel les jours sont comptés : un nom IANA
+comme `"Europe/Berlin"` ou un décalage fixe comme `"+02:00"`. Sans lui, le
+serveur compte en UTC ; un fuseau inconnu répond `invalid_argument`.
+
 `thresholdDays` (10 par défaut, comptés en jours calendaires comme dans l'application) définit à partir de quand une ruche est
 considérée comme à visiter : les ruches dont la dernière visite date d'au moins
 ce nombre de jours, plus les ruches jamais visitées (`daysSinceLast: -1`,

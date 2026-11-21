@@ -110,7 +110,7 @@ Para compartir un emplazamiento con un mentor mientras mantienes otros privados,
 
 El guardado ocurre en tu dispositivo, así que prácticamente nunca falla. Si ocurre (por ejemplo porque el almacenamiento del navegador está lleno o dañado), el formulario permanece abierto con todo lo que escribiste y un mensaje de error explica qué salió mal.
 
-La **cuenta de demostración** pública es de solo lectura: un aviso lo indica, y los formularios de registro muestran una nota y un botón **Guardar** desactivado. Si aun así un cambio llega a pasar, el servidor lo rechaza y la aplicación lo deshace y avisa de que no se ha guardado.
+La **cuenta de demostración** pública es de solo lectura: un aviso lo indica, y los formularios de registro muestran una nota y un botón **Guardar** desactivado. Eliminar, cambiar fotos y marcar tareas también están desactivados. Si aun así un cambio llega a pasar, el servidor lo rechaza y la aplicación lo deshace y avisa de que no se ha guardado.
 
 Hay una situación en la que guardar funciona pero no perdura: si el navegador no puede darle a la aplicación su almacenamiento privado (una ventana de navegación privada, o el almacenamiento bloqueado en los ajustes del navegador), la aplicación mantiene los registros en memoria y muestra un aviso: **"Este navegador no guarda datos en este dispositivo (ventana privada o almacenamiento bloqueado). Lo que no se haya sincronizado se pierde al cerrar esta pestaña."** Todo sigue funcionando durante la sesión, y los cambios se siguen sincronizando con el servidor si has iniciado sesión, pero la copia local desaparece al cerrar la pestaña. Consulta [Resolución de problemas](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

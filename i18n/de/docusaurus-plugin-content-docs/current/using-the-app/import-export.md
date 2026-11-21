@@ -42,7 +42,7 @@ Aufgaben, aber nicht die anderer Mitglieder, und ihr fehlen Änderungen, die ein
 Gerät noch nicht hochgeladen hat. Einige Downloads pro Stunde sind möglich.
 Skripte können dieselbe Datei mit einem API-Schlüssel abrufen; siehe
 [REST](../using-the-api/rest.md#export). Das Demo-Konto kann sie nicht
-herunterladen.
+herunterladen, und die Demo bietet keinen Import an.
 
 ## Weitere Formate
 

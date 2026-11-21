@@ -37,7 +37,7 @@ server holds, in the same format. It includes your own personal tasks but not
 those of other members, and it lacks changes a device has not uploaded yet. A
 few downloads per hour are allowed. Scripts can fetch the same file with an
 API key; see [REST](../using-the-api/rest.md#export). The demo account cannot
-download it.
+download it, and the demo offers no import.
 
 ## Other formats
 

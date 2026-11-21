@@ -484,6 +484,10 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
+`timeZone` stabilisce il calendario in cui si contano i giorni: un nome IANA
+come `"Europe/Berlin"` o uno scostamento fisso come `"+02:00"`. Senza, il
+server conta in UTC; un fuso sconosciuto risponde `invalid_argument`.
+
 `thresholdDays` (predefinito 10, contati in giorni di calendario come nell'app) stabilisce quando un'arnia conta come in
 scadenza: le arnie la cui ultima ispezione ha almeno quel numero di giorni,
 più le arnie mai ispezionate (`daysSinceLast: -1`, elencate per prime).

@@ -110,7 +110,7 @@ To share one yard with a mentor while keeping others private, put that yard in i
 
 Saving happens on your device, so it virtually never fails. If it does (for example because the browser's storage is full or damaged) the form stays open with everything you typed and an error message explains what went wrong.
 
-The public **demo account** is read-only: a banner says so, and the record forms show a note and a disabled **Save**. If a change gets through anyway, the server refuses it and the app undoes it and says that it was not saved.
+The public **demo account** is read-only: a banner says so, and the record forms show a note and a disabled **Save**. Deleting, changing photos and ticking off tasks are switched off too. If a change gets through anyway, the server refuses it and the app undoes it and says that it was not saved.
 
 There is one situation where saving works but does not last: if the browser cannot give the app its private storage (a private browsing window, or storage blocked in the browser settings), the app keeps the records in memory and shows a banner: **"This browser is not saving data on this device (private window or blocked storage). Anything that has not synced is lost when you close this tab."** Everything keeps working for the session, and edits still sync to the server if you are signed in, but the local copy is gone once the tab closes. See [Troubleshooting](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

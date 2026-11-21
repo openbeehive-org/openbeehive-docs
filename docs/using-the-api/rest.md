@@ -471,6 +471,10 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
+`timeZone` sets the calendar the days are counted in: an IANA name such as
+`"Europe/Berlin"` or a fixed offset such as `"+02:00"`. Without it the server
+counts in UTC; an unknown zone answers `invalid_argument`.
+
 `thresholdDays` (default 10, counted in calendar days as in the app) sets when a hive counts as due: hives whose last
 inspection is at least that many days old, plus hives never inspected
 (`daysSinceLast: -1`, listed first). Sensor readings

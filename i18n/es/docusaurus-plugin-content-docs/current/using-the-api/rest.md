@@ -477,6 +477,10 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
+`timeZone` fija el calendario en el que se cuentan los días: un nombre IANA
+como `"Europe/Berlin"` o un desfase fijo como `"+02:00"`. Sin él, el servidor
+cuenta en UTC; una zona desconocida responde `invalid_argument`.
+
 `thresholdDays` (por defecto 10, contados en días naturales como en la aplicación) define cuándo una colmena cuenta como
 pendiente: las colmenas cuya última inspección tiene al menos esa cantidad de
 días, más las colmenas nunca inspeccionadas (`daysSinceLast: -1`, listadas

@@ -42,7 +42,7 @@ personnelles, mais pas celles des autres membres, et il lui manque les
 modifications qu'un appareil n'a pas encore envoyées. Quelques téléchargements
 par heure sont autorisés. Les scripts peuvent récupérer le même fichier avec une
 clé API ; voir [REST](../using-the-api/rest.md#export). Le compte de démonstration
-ne peut pas la télécharger.
+ne peut pas la télécharger, et la démo ne propose pas d'import.
 
 ## Autres formats
 

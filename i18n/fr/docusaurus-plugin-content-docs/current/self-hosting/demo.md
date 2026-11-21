@@ -40,7 +40,7 @@ Lorsqu'une personne est connectée au compte de démonstration, l'application
 affiche une **bannière** indiquant que la démo est en lecture seule et que rien de
 ce qu'elle modifie n'est enregistré. L'encadré de connexion dit la même chose, et
 les formulaires d'enregistrement affichent une note et un bouton **Enregistrer**
-désactivé.
+désactivé. Supprimer, modifier les photos et cocher les tâches sont également désactivés.
 
 ## Activation
 

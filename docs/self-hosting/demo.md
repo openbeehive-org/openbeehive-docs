@@ -36,7 +36,7 @@ signs the visitor in without a password.
 
 When someone is signed in to the demo account, the app shows a **banner**
 saying that the demo is read-only and nothing they change is saved. The sign-in
-box says the same, and the record forms show a note and a disabled **Save**.
+box says the same, and the record forms show a note and a disabled **Save**. Deleting, changing photos and ticking off tasks are switched off too.
 
 ## Enabling it
 

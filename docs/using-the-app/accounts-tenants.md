@@ -131,4 +131,4 @@ A key acts as you in the workspace that was active when you created it, so switc
 
 ## The demo
 
-Some instances run a **demo account**. While you are signed in to it, a banner says that the demo is read-only and nothing you change is saved; the record forms show a note and a disabled **Save**. If a change reaches the server anyway, the app undoes it and says that it was not saved. The public demo of the project is the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login). Operators can enable it via [Demo mode](../self-hosting/demo.md).
+Some instances run a **demo account**. While you are signed in to it, a banner says that the demo is read-only and nothing you change is saved; the record forms show a note and a disabled **Save**. Deleting, changing photos and ticking off tasks are switched off too. If a change reaches the server anyway, the app undoes it and says that it was not saved. The public demo of the project is the **Try the demo** button on [app.openbeehive.org/login](https://app.openbeehive.org/login). Operators can enable it via [Demo mode](../self-hosting/demo.md).

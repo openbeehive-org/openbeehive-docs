@@ -40,7 +40,7 @@ inicio de sesión normal; inicia la sesión del visitante sin contraseña.
 Cuando alguien ha iniciado sesión en la cuenta de demostración, la aplicación
 muestra un **banner** que dice que la demo es de solo lectura y que nada de lo que
 cambie se guarda. El cuadro de inicio de sesión dice lo mismo, y los formularios de
-registro muestran una nota y un botón **Guardar** desactivado.
+registro muestran una nota y un botón **Guardar** desactivado. Eliminar, cambiar fotos y marcar tareas también están desactivados.
 
 ## Cómo activarlo
 

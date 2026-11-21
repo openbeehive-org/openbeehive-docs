@@ -37,7 +37,7 @@ servidor, en el mismo formato. Incluye tus propias tareas personales pero no las
 de otros miembros, y le faltan los cambios que un dispositivo aún no ha subido. Se
 permiten unas pocas descargas por hora. Los scripts pueden obtener el mismo archivo con una
 clave API; consulta [REST](../using-the-api/rest.md#export). La cuenta de demostración no
-puede descargarla.
+puede descargarla, y la demo no ofrece la importación.
 
 ## Otros formatos
 

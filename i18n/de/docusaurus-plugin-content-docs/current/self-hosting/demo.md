@@ -37,7 +37,7 @@ Der Anmeldebildschirm erhält neben der normalen Anmeldung die Schaltfläche
 
 Wenn jemand im Demo-Konto angemeldet ist, zeigt die App ein **Banner**, das sagt, dass
 die Demo schreibgeschützt ist und nichts gespeichert wird, was man ändert. Das Anmeldefeld
-sagt dasselbe, und die Formulare für Einträge zeigen einen Hinweis und ein deaktiviertes **Speichern**.
+sagt dasselbe, und die Formulare für Einträge zeigen einen Hinweis und ein deaktiviertes **Speichern**. Löschen, Fotos ändern und Aufgaben abhaken sind ebenfalls abgeschaltet.
 
 ## Aktivierung
 

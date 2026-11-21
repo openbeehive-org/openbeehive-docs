@@ -110,7 +110,7 @@ Per condividere una postazione con un mentore mantenendo private le altre, metti
 
 Il salvataggio avviene sul tuo dispositivo, quindi in pratica non fallisce mai. Se dovesse succedere (ad esempio perché l'archiviazione del browser è piena o danneggiata) il modulo resta aperto con tutto ciò che hai digitato e un messaggio di errore spiega cosa è andato storto.
 
-L'**account demo** pubblico è in sola lettura: un banner lo dice, e i moduli dei dati mostrano una nota e un pulsante **Salva** disattivato. Se una modifica passa comunque, il server la rifiuta e l'app la annulla e ti dice che non è stata salvata.
+L'**account demo** pubblico è in sola lettura: un banner lo dice, e i moduli dei dati mostrano una nota e un pulsante **Salva** disattivato. Anche eliminare, modificare le foto e spuntare le attività sono disattivati. Se una modifica passa comunque, il server la rifiuta e l'app la annulla e ti dice che non è stata salvata.
 
 C'è una situazione in cui il salvataggio funziona ma non dura: se il browser non può dare all'app la sua archiviazione privata (una finestra di navigazione privata, o l'archiviazione bloccata nelle impostazioni del browser), l'app tiene i registri in memoria e mostra un banner: **"Questo browser non salva dati su questo dispositivo (finestra privata o archiviazione bloccata). Ciò che non è stato sincronizzato va perso alla chiusura di questa scheda."** Tutto continua a funzionare per la sessione, e le modifiche si sincronizzano comunque con il server se hai effettuato l'accesso, ma la copia locale sparisce alla chiusura della scheda. Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md#storage-is-unavailable).
 

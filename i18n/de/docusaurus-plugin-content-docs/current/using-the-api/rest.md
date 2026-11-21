@@ -486,6 +486,10 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
+`timeZone` legt den Kalender fest, in dem die Tage gezählt werden: ein
+IANA-Name wie `"Europe/Berlin"` oder ein fester Versatz wie `"+02:00"`. Ohne
+ihn zählt der Server in UTC; eine unbekannte Zone ergibt `invalid_argument`.
+
 `thresholdDays` (Vorgabe 10, in Kalendertagen gezählt wie in der App) legt fest, wann eine Beute als fällig zählt:
 Beuten, deren letzte Durchsicht mindestens so viele Tage zurückliegt, plus
 nie durchgesehene Beuten (`daysSinceLast: -1`, zuerst gelistet).

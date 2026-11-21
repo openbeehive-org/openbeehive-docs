@@ -38,7 +38,7 @@ accesso; fa accedere il visitatore senza password.
 Quando qualcuno ha effettuato l'accesso con l'account demo, l'app mostra un
 **banner** che dice che la demo è in sola lettura e che nulla di ciò che si modifica
 viene salvato. Il riquadro di accesso dice lo stesso, e i moduli dei dati mostrano
-una nota e un pulsante **Salva** disattivato.
+una nota e un pulsante **Salva** disattivato. Anche eliminare, modificare le foto e spuntare le attività sono disattivati.
 
 ## Come abilitarla
 
