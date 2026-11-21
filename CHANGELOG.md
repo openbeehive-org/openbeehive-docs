@@ -104,6 +104,26 @@ snapshots and the export/import changes.
   site follows the system colour scheme until a reader picks System, Light
   or Dark with the switch in the navbar.
 
+- **Settings paths** follow the four groups of the app (Preferences,
+  Workspace, Data & sync, Account) on every page; the dashboard page lists
+  the groups and the short bottom-bar labels.
+- **Using the app:** the sync status sheet, received changes that "could not
+  be applied", per-account local data on shared devices, the invite page with
+  its failure messages, renewed invites, the read-only demo with disabled
+  Save, the workspace-wide treatment register with its Reason column, units
+  that follow the app language, and the 10-day due interval.
+- **Self-hosting:** blob upkeep keeps unknown images for at least 30 days and
+  removes nothing at start; the SQLite database must not lie inside
+  `BEEHIVE_BLOB_DIR`; the server listens only after the photo conversion;
+  PostgreSQL and MariaDB migrations run in place and resume; the demo
+  account is locked when the demo is off; the `X-Forwarded-For` warning and
+  CDNs; repairing stored stamps from the future.
+- **API and developers:** `GET /auth/invite`, `already_member` and renewed
+  invites, camelCase mask paths, future inspection dates refused, the JSON
+  415 for a missing `Content-Type`, `thresholdDays` defaulting to 10, the
+  personal-scope and `photo_keys` rules, a 0.4.x Push refused as a whole for
+  a fast clock, unchanged changes not logged, `inbox_failed`.
+
 ### Removed
 
 - The demo Compose file as a production template, `demo.openbeehive.org`,
@@ -120,6 +140,10 @@ snapshots and the export/import changes.
   the device; the app undoes them. A device updating to 0.5.0 loads the
   current data, not the whole history. The plain-HTTP error table named
   `account_exists` for sign-up, which is `email_taken`.
+- Upgrading said that 0.4.x apps with a fast clock lose such changes; they
+  keep them and stop uploading until the clock is fixed or the app updates.
+  The demo was described as resetting hourly in its banner; it says it is
+  read-only.
 - Small mistranslations on the German, French, Spanish and Italian "Diseases
   & pests" pages; missing accents on four Spanish self-hosting pages.
 - Titled notes and warnings (such as "Back up first") showed as raw
