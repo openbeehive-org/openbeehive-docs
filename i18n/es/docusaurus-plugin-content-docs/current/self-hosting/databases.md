@@ -127,7 +127,7 @@ No ejecutas las migraciones a mano. En cada arranque, el servidor comprueba el e
 
 El SQL está escrito de forma portable para que el mismo esquema funcione en los tres motores; no hay configuración específica del motor más allá de crear la base de datos y el usuario mostrados arriba.
 
-En MariaDB, una migración que falla a mitad de camino no se puede revertir, porque MariaDB confirma de inmediato cada cambio de esquema. Restaura la copia de seguridad antes de volver a intentarlo.
+En SQLite y PostgreSQL cada migración se ejecuta en una transacción, así que una que falla se revierte. MariaDB confirma de inmediato cada cambio de esquema; sus migraciones están escritas de modo que cada sentencia pueda ejecutarse de nuevo, y una migración que se detuvo a mitad de camino continúa en el siguiente arranque. PostgreSQL y MariaDB modifican las tablas existentes en su sitio; SQLite reconstruye una tabla cuando no puede alterar una columna.
 
 :::tip[Haz siempre copia de seguridad antes de actualizar]
 Como una nueva versión puede incluir migraciones que cambian el esquema, haz una copia de seguridad antes de actualizar. Consulta [Actualización](./upgrading.md) y [Copias de seguridad](./backups.md).

@@ -37,6 +37,7 @@ Take a backup before upgrading. See [Backups](./backups.md).
 - **Change-log retention.** The server now removes change-log entries older than `BEEHIVE_CHANGELOG_RETENTION_DAYS` (default 180, `0` keeps everything). With the default, the first removal happens 180 days after the upgrade.
 - **Old apps.** `BEEHIVE_SYNC_MIN_PROTOCOL` (default `0`) keeps accepting installed 0.4.x apps; set it to `1` once every device has updated.
 - **`BEEHIVE_BLOB_PUBLIC_URL`** is ignored and the server warns about it at start; remove it.
+- **Blob directory.** With SQLite, `BEEHIVE_BLOB_DIR` must not contain the database file, or the server does not start. Give the blobs a directory of their own, for example `/data/blobs` next to `/data/openbeehive.db`.
 
 **Compose files**
 
@@ -46,19 +47,21 @@ Take a backup before upgrading. See [Backups](./backups.md).
 **Data**
 
 - **Turning login on moves single-user records.** If the instance ran without login and you enable email/password login, existing records move into the instance admin's workspace at the next start. This cannot be undone; see [Authentication](./authentication.md#single-user-to-login).
-- **Database migrations.** The first start rebuilds the visits table and the change-log index, so it takes longer on a large database. On MariaDB it also converts the tables to a binary collation, and a migration that fails there cannot be rolled back: a backup is the only way back.
-- **Photos move to blob storage.** The first start converts the photos stored inline in the database into photo records with their images in blob storage, before the server accepts requests; with many photos this takes a few minutes. From now on a backup is the database **plus** the blob directory or bucket. See [Storage](./storage.md#inline-photos).
+- **Database migrations.** The first start takes longer on a large database. SQLite rebuilds the visits table; PostgreSQL and MariaDB change their tables in place, and MariaDB also converts them to a binary collation. A migration that stops part-way is rolled back on SQLite and PostgreSQL and continues at the next start on MariaDB.
+- **Photos move to blob storage.** The first start converts the photos stored inline in the database into photo records with their images in blob storage; with many photos this takes a few minutes. The server listens only when this is done, so health checks fail until then; the Compose files allow ten minutes. From now on a backup is the database **plus** the blob directory or bucket. See [Storage](./storage.md#inline-photos).
 - **Restoring a backup** means: stop the server, restore database and blobs together, start it. Updated apps then upload what the backup lost; 0.4.x apps cannot. See [Backups](./backups.md#restoring).
 - **Email addresses differing only in case.** Two existing accounts whose addresses differ only in upper and lower case keep working, but email sign-in reaches only one of them. The log names each pair at every start; see [Authentication](./authentication.md#accounts).
 - **Run exactly one server instance** per database. Compaction and the photo upkeep run inside the server process.
+- **Stamps from the future.** Earlier releases accepted changes from devices whose clock was far ahead. If the database holds such stamps, the log says so at every start; see [Troubleshooting](../knowledge-base/troubleshooting.md#stamps-from-the-future).
+- **Demo account.** With `BEEHIVE_DEMO=false` the start locks a demo account left from an earlier run: no password, sessions, API keys or passkeys.
 
 **Behaviour users and scripts will notice**
 
 - **Invites** expire after 7 days and work only for the invited email address. Open invites older than that must be issued again.
 - **Sign-in throttling.** After 10 failed sign-ins for an account or 30 from one address in 15 minutes the server answers `429` with `Retry-After`.
 - **Limits.** One RPC message may be at most 16 MiB and a request may take at most 2 minutes (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`).
-- **Device clocks.** Changes stamped more than 10 minutes ahead of the server's time are refused. Updated apps correct themselves; a 0.4.x app with a wrong clock loses such changes, so update the app on every device.
-- **API.** Update calls change only the fields sent; `DeleteApiary` fails with `failed_precondition` while the apiary has hives; personal tasks are returned only to their owner; inspection numbers that were not recorded are omitted instead of returned as `0`. The plain-HTTP endpoints under `/auth/` and `/tenants/` accept only the documented method, need `Content-Type: application/json` when they take a body, and `/tenants/delete` needs `org_id`. See [REST](../using-the-api/rest.md).
+- **Device clocks.** Changes stamped more than 10 minutes ahead of the server's time are refused. Updated apps correct themselves. A 0.4.x app with a clock that runs ahead keeps its changes but stops uploading until its clock is fixed or the app updates itself, so update the app on every device.
+- **API.** Update calls change only the fields sent; `DeleteApiary` fails with `failed_precondition` while the apiary has hives; personal tasks are returned only to their owner; inspection numbers that were not recorded are omitted instead of returned as `0`; inspection dates more than a day ahead are refused; `GetDashboard` counts a hive as due after 10 days instead of 21; inviting an existing member answers `409` (`already_member`). The plain-HTTP endpoints under `/auth/` and `/tenants/` accept only the documented method, need `Content-Type: application/json` when they take a body, and `/tenants/delete` needs `org_id`. See [REST](../using-the-api/rest.md).
 - **Photos over HTTP.** `/files/` is gone. Full-size images are served at `/photos/<id>` to members of the workspace only, with a session or API key.
 - **Browser links.** `/auth/verify`, `/auth/login` and `/auth/callback` redirect to the sign-in page with an error message instead of answering with JSON.
 - **Scripts that call `SyncService`** must send the header `Openbeehive-Sync-Protocol: 1`; without it they get the data as a 0.4.1 app sees it, without photos or snapshots. See [Sync protocol](../developers/sync-protocol.md#versions).

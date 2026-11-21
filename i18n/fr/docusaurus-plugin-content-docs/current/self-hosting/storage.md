@@ -43,6 +43,8 @@ BEEHIVE_BLOB_DIR=./data/blobs
 travail du processus serveur, donc pour des résultats prévisibles sur un serveur, utilisez un
 chemin absolu tel que `/var/lib/openbeehive/blobs`.
 
+Donnez aux blobs un répertoire qui leur est propre. L'entretien du serveur liste et supprime les fichiers qui s'y trouvent ; avec SQLite, le serveur refuse donc de démarrer lorsque `BEEHIVE_BLOB_DIR` contient le fichier de la base de données, et indique un répertoire à utiliser à la place.
+
 Le serveur ne sert pas lui-même ce répertoire, et rien d'autre ne doit le faire : les images n'atteignent l'application que par l'endpoint authentifié `/photos/`. Jusqu'à la 0.4.x, le serveur publiait le répertoire sous `/files/` et lisait `BEEHIVE_BLOB_PUBLIC_URL` ; les deux ont disparu (le serveur émet un avertissement au démarrage si le paramètre est encore présent).
 
 Le serveur crée le répertoire s'il n'existe pas, mais assurez-vous que le processus
@@ -148,15 +150,17 @@ Voir [Dépannage](../knowledge-base/troubleshooting.md) si les problèmes persis
 
 Le serveur fait lui-même le ménage dans le stockage de blobs ; il n'y a rien à planifier :
 
-- L'image d'une photo supprimée est retirée peu après la suppression.
+- L'image d'une photo supprimée est retirée peu après la suppression ; une image oubliée est retirée par le balayage suivant dès qu'elle a une heure.
 - Les photos d'une visite ou d'une ruche supprimée depuis plus d'une heure sont supprimées elles aussi.
-- Au démarrage puis toutes les six heures, les images vers lesquelles aucun enregistrement de photo ne pointe et qui ont plus d'une heure sont retirées (par exemple un téléversement dont l'enregistrement n'est jamais arrivé, ou les images d'un espace supprimé).
+- Toutes les six heures, un balayage retire les images qu'aucun enregistrement de photo ne connaît (par exemple un téléversement dont l'enregistrement n'est jamais arrivé, ou les images d'un espace supprimé) dès qu'elles ont plus de 30 jours ou plus de `BEEHIVE_CHANGELOG_RETENTION_DAYS`, la plus longue des deux durées étant retenue. Après une restauration de la base de données, les appareils renvoient les enregistrements des photos plus récentes lors de leur prochaine synchronisation, ce qui peut arriver des semaines plus tard, et leurs images doivent alors encore être là.
+- Le balayage du démarrage ne retire rien : il se contente de rendre leurs images aux enregistrements de photos qui les ont perdues, comme après une restauration.
+- Seules les clés de la forme que le serveur construit pour les photos sont touchées ; les autres fichiers du bucket ou du répertoire ne sont pas modifiés.
 
 Cela suppose une seule instance du serveur : exécutez-en exactement une par base de données.
 
 ## Photos de la 0.4.x \{#inline-photos}
 
-Jusqu'à la 0.4.x, l'application stockait les photos directement dans la base de données, sous forme de data URL dans les lignes des visites et des ruches. Au premier démarrage de la 0.5.0, le serveur convertit chaque photo intégrée visible en un enregistrement de photo dont l'image est placée dans le stockage de blobs, avant d'accepter des requêtes. Sur une base contenant beaucoup de photos, cela peut prendre quelques minutes. Une conversion interrompue reprend au démarrage suivant.
+Jusqu'à la 0.4.x, l'application stockait les photos directement dans la base de données, sous forme de data URL dans les lignes des visites et des ruches. Au premier démarrage de la 0.5.0, le serveur convertit chaque photo intégrée visible en un enregistrement de photo dont l'image est placée dans le stockage de blobs, avant d'accepter des requêtes. Sur une base contenant beaucoup de photos, cela peut prendre quelques minutes. Le journal indique quand elle commence, et le serveur n'écoute, `/healthz` compris, qu'une fois qu'elle est terminée ; laissez donc suffisamment de temps aux contrôles de santé : les fichiers Compose accordent dix minutes (`start_period: 10m`). Une conversion interrompue reprend au démarrage suivant.
 
 Les applications 0.4.x déjà installées continuent de fonctionner : le serveur accepte et sert toujours les photos intégrées pour elles, et convertit ce qu'elles téléversent. Elles ne voient pas les photos ajoutées par les appareils mis à jour.
 

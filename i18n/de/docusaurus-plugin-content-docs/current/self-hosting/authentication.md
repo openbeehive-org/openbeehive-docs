@@ -20,7 +20,7 @@ Die Anmeldemethoden lassen sich kombinieren. Der Anmeldebildschirm bietet die je
 
 Die ersten Zeilen des Server-Logs nennen den geltenden Modus, entweder `auth: NO LOGIN (single-user mode): every request has full access to all data` oder `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
 
-Sobald eine Anmeldemethode aktiviert ist, sind auch Arbeitsbereiche und Einladungen verfügbar (Einstellungen → Arbeitsbereiche); siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md).
+Sobald eine Anmeldemethode aktiviert ist, sind auch Arbeitsbereiche und Einladungen verfügbar (Einstellungen → Arbeitsbereich); siehe [Konten & Arbeitsbereiche](../using-the-app/accounts-tenants.md).
 
 ## Modus 1: Einzelnutzer, keine Anmeldung
 
@@ -89,7 +89,7 @@ Hinter einem Reverse Proxy scheint jede Anfrage vom Proxy zu kommen. Setze dort 
 
 ### Instanzen nur auf Einladung
 
-Damit Fremde keine Konten erstellen können, setze `BEEHIVE_REGISTRATION=false`. Der Admin kommt aus der Umgebung, sodass eine frische Instanz immer einen hat. Alle anderen treten über Einladungslinks bei, die ein Arbeitsbereichs-Admin unter Einstellungen → Arbeitsbereiche ausstellt. Eine Einladung ist 7 Tage gültig und funktioniert nur für die E-Mail-Adresse, für die sie ausgestellt wurde. Der Anmeldebildschirm zeigt einen Hinweis, dass die Instanz nur auf Einladung zugänglich ist; bestehende Konten melden sich normal an.
+Damit Fremde keine Konten erstellen können, setze `BEEHIVE_REGISTRATION=false`. Der Admin kommt aus der Umgebung, sodass eine frische Instanz immer einen hat. Alle anderen treten über Einladungslinks bei, die ein Arbeitsbereichs-Admin unter Einstellungen → Arbeitsbereich ausstellt. Eine Einladung ist 7 Tage gültig und funktioniert nur für die E-Mail-Adresse, für die sie ausgestellt wurde. Der Anmeldebildschirm zeigt einen Hinweis, dass die Instanz nur auf Einladung zugänglich ist; bestehende Konten melden sich normal an.
 
 Jedes neue Konto startet mit seinem eigenen persönlichen [Arbeitsbereich](../using-the-app/accounts-tenants.md). Nur das konfigurierte Admin-Konto trägt die Admin-Rolle der Instanz.
 
@@ -112,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Einladungs- und Verifizierungslinks werden nie in das Server-Log geschrieben. Ohne `BEEHIVE_SMTP_HOST` wird keine Einladungs-E-Mail versendet; der Admin, der eine Einladung erstellt hat, kopiert ihren Link unter Einstellungen → Arbeitsbereiche und gibt ihn weiter.
+Einladungs- und Verifizierungslinks werden nie in das Server-Log geschrieben. Ohne `BEEHIVE_SMTP_HOST` wird keine Einladungs-E-Mail versendet; der Admin, der eine Einladung erstellt hat, kopiert ihren Link unter Einstellungen → Arbeitsbereich und gibt ihn weiter.
 :::
 
 ### Passwörter ändern und zurücksetzen \{#password-reset}
@@ -120,7 +120,7 @@ Einladungs- und Verifizierungslinks werden nie in das Server-Log geschrieben. Oh
 Angemeldete Nutzer ändern ihr Passwort unter **Einstellungen → Konto → Passwort**; dabei werden sie auf allen ihren anderen Geräten abgemeldet. Wer das Passwort vergessen hat, kommt je nach Mailversand auf zwei Wegen zurück:
 
 - **Mit `BEEHIVE_SMTP_HOST`** schickt "Passwort vergessen?" auf der Anmeldeseite einen Link per E-Mail, der eine Stunde gilt und einmal funktioniert. Die Antwort ist dieselbe, ob es zu der Adresse ein Konto gibt oder nicht. Anfragen werden wie Anmeldungen gedrosselt.
-- **Ohne Mailversand** sagt die Seite, man solle sich an den Administrator wenden. Der Instanz-Admin erstellt den Link unter **Einstellungen → Passwort eines Nutzers zurücksetzen** und gibt ihn weiter; Arbeitsbereichs-Admins können das nicht.
+- **Ohne Mailversand** sagt die Seite, man solle sich an den Administrator wenden. Der Instanz-Admin erstellt den Link unter **Einstellungen → Konto → Passwort eines Nutzers zurücksetzen** und gibt ihn weiter; Arbeitsbereichs-Admins können das nicht.
 
 Wer über einen Link ein neues Passwort festlegt, wird überall abgemeldet. Das Passwort des Instanz-Admins ist das aus `BEEHIVE_ADMIN_PASSWORD`: Es lässt sich weder in der App noch über einen Reset-Link ändern. Auch das Passwort des Demo-Kontos lässt sich nicht ändern.
 
@@ -139,7 +139,7 @@ BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME=Openbeehive
 - `BEEHIVE_WEBAUTHN_RP_ORIGINS` ist der vollständige Ursprung (oder kommagetrennte Ursprünge), den der Browser sendet, einschließlich Schema und Port. Standard ist `BEEHIVE_PUBLIC_BASE_URL`.
 - `BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME` ist der Name, der in der Passkey-Aufforderung des Browsers angezeigt wird.
 
-Ein Passkey wird im angemeldeten Zustand unter **Einstellungen → Passkeys** hinzugefügt, Personen brauchen also zuerst eine andere Anmeldemöglichkeit (E-Mail/Passwort oder einen Provider). Danach bietet der Anmeldebildschirm "Mit Passkey anmelden".
+Ein Passkey wird im angemeldeten Zustand unter **Einstellungen → Konto → Passkeys** hinzugefügt, Personen brauchen also zuerst eine andere Anmeldemöglichkeit (E-Mail/Passwort oder einen Provider). Danach bietet der Anmeldebildschirm "Mit Passkey anmelden".
 
 :::caution
 WebAuthn erfordert einen sicheren Kontext: HTTPS oder `http://localhost` für die Entwicklung. Setze den Server hinter TLS, bevor du Passkeys in der Produktion aktivierst. Die RP-ID muss mit der Domain in `BEEHIVE_PUBLIC_BASE_URL` übereinstimmen.
@@ -198,7 +198,7 @@ Häufige Stolperfallen: Das Schema muss übereinstimmen (`https` in der Produkti
 
 ## Konten \{#accounts}
 
-Personen löschen ihr eigenes Konto unter **Einstellungen → Konto löschen**. Arbeitsbereiche, in denen sie das einzige Mitglied sind, werden mitgelöscht. Solange sie der einzige Admin eines Arbeitsbereichs mit weiteren Mitgliedern sind, wird das Löschen abgelehnt, bis sie jemand anderen zum Admin machen oder diesen Arbeitsbereich löschen. Ihre Aufzeichnungen in gemeinsamen Arbeitsbereichen bleiben erhalten und werden einem gelöschten Nutzer zugeschrieben. Bestätigt wird das Löschen mit dem Passwort, einem Passkey oder, bei Konten, die sich nur über einen Provider anmelden, mit einer Anmeldung, die weniger als 5 Minuten zurückliegt. Der Instanz-Admin aus `BEEHIVE_ADMIN_EMAIL` und das Demo-Konto lassen sich in der App nicht löschen.
+Personen löschen ihr eigenes Konto unter **Einstellungen → Konto → Konto löschen**. Arbeitsbereiche, in denen sie das einzige Mitglied sind, werden mitgelöscht. Solange sie der einzige Admin eines Arbeitsbereichs mit weiteren Mitgliedern sind, wird das Löschen abgelehnt, bis sie jemand anderen zum Admin machen oder diesen Arbeitsbereich löschen. Ihre Aufzeichnungen in gemeinsamen Arbeitsbereichen bleiben erhalten und werden einem gelöschten Nutzer zugeschrieben. Bestätigt wird das Löschen mit dem Passwort, einem Passkey oder, bei Konten, die sich nur über einen Provider anmelden, mit einer Anmeldung, die weniger als 5 Minuten zurückliegt. Der Instanz-Admin aus `BEEHIVE_ADMIN_EMAIL` und das Demo-Konto lassen sich in der App nicht löschen.
 
 E-Mail-Adressen sind unabhängig von Groß- und Kleinschreibung eindeutig. Zwei Konten aus früheren Versionen, deren Adressen sich nur in der Groß- und Kleinschreibung unterscheiden, funktionieren beide weiter, aber E-Mail-Anmeldung, Einladungen und Passwort-Resets erreichen nur eines davon. Das Server-Log nennt jedes solche Paar bei jedem Start; entscheide, welches Konto die Adresse behält, und lösche das andere oder gib ihm eine andere Adresse.
 

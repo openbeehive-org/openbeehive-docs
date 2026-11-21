@@ -30,7 +30,7 @@ Welche Datenbank und welchen Blob-Speicher du hast, hängt von deinem Bereitstel
 Sichere **sowohl** die Datenbank als auch die Blobs. Die Datenbank enthält deine Bienenstände, Bienenstöcke, Königinnen, Durchsichten, Ereignisse und die Foto-Einträge mit ihren Vorschaubildern; der Blob-Speicher enthält die Bilder in voller Größe. Nach einem Datenbank-Backup ohne seine Blobs zeigen Fotos nur noch ihr Vorschaubild.
 
 :::tip[Erst die Datenbank, dann die Blobs]
-Wenn du sicherst, während der Server läuft, kopiere zuerst die Datenbank und gleich danach die Blobs. Bilder werden einmal geschrieben und nie verändert, daher enthält eine später erstellte Blob-Kopie jedes Bild, das die Datenbank-Kopie kennt. Zusätzliche Bilder, die die wiederhergestellte Datenbank nicht kennt, entfernt die [Pflege](./storage.md#upkeep) des Servers.
+Wenn du sicherst, während der Server läuft, kopiere zuerst die Datenbank und gleich danach die Blobs. Bilder werden einmal geschrieben und nie verändert, daher enthält eine später erstellte Blob-Kopie jedes Bild, das die Datenbank-Kopie kennt. Zusätzliche Bilder, die die wiederhergestellte Datenbank nicht kennt, bleiben mindestens 30 Tage erhalten, falls ein Gerät ihre Einträge erneut sendet, und werden dann von der [Pflege](./storage.md#upkeep) des Servers entfernt.
 :::
 
 ## SQLite sichern (selfhost)
@@ -162,7 +162,7 @@ Die `%`-Zeichen müssen innerhalb der Crontab als `\%` maskiert werden. Für Pos
 
 ## Exporte sind keine Server-Backups
 
-**Einstellungen → Daten & Backup** in der App lädt einen Arbeitsbereich als JSON herunter oder als ZIP mit Fotos; die Kopie des Servers gibt es auch unter `GET /export` (siehe [Import & Export](../using-the-app/import-export.md)). Ein solcher Export eignet sich, um einen Arbeitsbereich umzuziehen oder eine eigene Kopie zu behalten, enthält aber nur einen Arbeitsbereich, ohne Konten, Mitglieder oder API-Schlüssel. Für eine ganze Instanz sichere die Datenbank und die Blobs wie oben beschrieben.
+**Einstellungen → Daten & Sync** in der App lädt einen Arbeitsbereich als JSON herunter oder als ZIP mit Fotos; die Kopie des Servers gibt es auch unter `GET /export` (siehe [Import & Export](../using-the-app/import-export.md)). Ein solcher Export eignet sich, um einen Arbeitsbereich umzuziehen oder eine eigene Kopie zu behalten, enthält aber nur einen Arbeitsbereich, ohne Konten, Mitglieder oder API-Schlüssel. Für eine ganze Instanz sichere die Datenbank und die Blobs wie oben beschrieben.
 
 :::tip[Teste deine Wiederherstellungen]
 Ein Backup, das du nie wiederhergestellt hast, ist nur eine Hoffnung. Stelle hin und wieder in ein Wegwerf-Verzeichnis oder eine Test-Instanz wieder her und bestätige, dass du die App öffnen und deine Bienenstöcke sehen kannst. Behalte mindestens ein paar Tage datierter Kopien und bewahre eine außer Haus auf (eine externe Festplatte oder ein entfernter Bucket).

@@ -127,7 +127,7 @@ Non esegui le migrazioni a mano. A ogni avvio, il server controlla lo schema e a
 
 L'SQL è scritto in modo portabile così lo stesso schema funziona su tutti e tre i motori; non c'è alcuna configurazione specifica del motore oltre alla creazione del database e dell'utente mostrata sopra.
 
-Su MariaDB una migrazione che fallisce a metà non può essere annullata, perché MariaDB esegue immediatamente il commit di ogni modifica allo schema. Ripristina il backup prima di riprovare.
+Su SQLite e PostgreSQL ogni migrazione viene eseguita in una transazione, quindi una che fallisce viene annullata. MariaDB esegue immediatamente il commit di ogni modifica allo schema; le sue migrazioni sono scritte in modo che ogni istruzione possa essere eseguita di nuovo, e una migrazione che si è interrotta a metà riprende all'avvio successivo. PostgreSQL e MariaDB modificano le tabelle esistenti sul posto; SQLite ricostruisce una tabella quando non può modificare una colonna.
 
 :::tip[Esegui sempre il backup prima di aggiornare]
 Poiché una nuova versione può includere migrazioni che modificano lo schema, esegui un backup prima di aggiornare. Vedi [Aggiornamento](./upgrading.md) e [Backup](./backups.md).

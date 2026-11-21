@@ -30,7 +30,7 @@ Qué base de datos y almacén de blobs tengas depende de tu perfil de despliegue
 Haz copia de seguridad de **ambos**, la base de datos y los blobs. La base de datos contiene tus colmenares, colmenas, reinas, inspecciones, eventos y los registros de fotos con sus miniaturas; el almacén de blobs contiene las imágenes a tamaño completo. Una copia de seguridad de la base de datos sin sus blobs deja fotos que solo muestran su miniatura.
 
 :::tip[Primero la base de datos, después los blobs]
-Si haces la copia mientras el servidor está en ejecución, copia primero la base de datos y justo después los blobs. Las imágenes se escriben una vez y nunca cambian, así que una copia de los blobs hecha después contiene todas las imágenes que conoce la copia de la base de datos. Las imágenes sobrantes que la base de datos restaurada no conoce las elimina el [mantenimiento](./storage.md#upkeep) del servidor.
+Si haces la copia mientras el servidor está en ejecución, copia primero la base de datos y justo después los blobs. Las imágenes se escriben una vez y nunca cambian, así que una copia de los blobs hecha después contiene todas las imágenes que conoce la copia de la base de datos. Las imágenes sobrantes que la base de datos restaurada no conoce se conservan al menos 30 días, por si un dispositivo vuelve a enviar sus registros, y después las elimina el [mantenimiento](./storage.md#upkeep) del servidor.
 :::
 
 ## Respaldar SQLite (selfhost)
@@ -162,7 +162,7 @@ Los caracteres `%` deben escaparse como `\%` dentro de crontab. Para Postgres, s
 
 ## Las exportaciones no son copias de seguridad del servidor
 
-**Ajustes → Datos y copia de seguridad** en la aplicación descarga un espacio como JSON, o como ZIP con fotos; la copia del servidor también está disponible en `GET /export` (consulta [Importar y exportar](../using-the-app/import-export.md)). Una exportación así sirve para trasladar un espacio o guardar tu propia copia, pero contiene un solo espacio, sin cuentas, miembros ni claves API. Para una instancia completa, haz copia de seguridad de la base de datos y de los blobs como se describe arriba.
+**Ajustes → Datos y sincro** en la aplicación descarga un espacio como JSON, o como ZIP con fotos; la copia del servidor también está disponible en `GET /export` (consulta [Importar y exportar](../using-the-app/import-export.md)). Una exportación así sirve para trasladar un espacio o guardar tu propia copia, pero contiene un solo espacio, sin cuentas, miembros ni claves API. Para una instancia completa, haz copia de seguridad de la base de datos y de los blobs como se describe arriba.
 
 :::tip[Prueba tus restauraciones]
 Una copia de seguridad que nunca has restaurado es solo una esperanza. De vez en cuando, restaura en un directorio desechable o una instancia de prueba y confirma que puedes abrir la aplicación y ver tus colmenas. Conserva al menos unos días de copias fechadas y guarda una fuera del sitio (un disco externo o un bucket remoto).

@@ -18,6 +18,8 @@ HTTPS is needed for the installable PWA, the camera-based QR scanner and passkey
 | `BEEHIVE_TRUST_PROXY_HEADERS` | `true` behind the proxy, so sign-in throttling counts the real client address (the last `X-Forwarded-For` entry) instead of the proxy's. Only with exactly one proxy in front and the server port unreachable otherwise: a client that can reach the port directly could forge the header. |
 | `BEEHIVE_CORS_ALLOWED_ORIGINS` | Only when the web app is served from a different origin than the API. Otherwise leave it empty (same-origin). |
 
+If requests arrive with `X-Forwarded-For` while `BEEHIVE_TRUST_PROXY_HEADERS` is `false`, the server logs a warning once, naming the setting. With a CDN in front of your proxy, the last `X-Forwarded-For` entry is the CDN's address, so all visitors share one throttling budget. Let the proxy restore the client address from the CDN first (in nginx, the `realip` module with the CDN's address ranges). At start the server also logs its CORS mode.
+
 Nothing else is required. The web app talks to the server with ordinary HTTP requests (Connect-RPC), so there is no WebSocket to upgrade. The server limits every request to 2 minutes (`BEEHIVE_HTTP_READ_TIMEOUT`, `BEEHIVE_HTTP_WRITE_TIMEOUT`) and one RPC message to 16 MiB; keep the proxy's body limit at 16 MiB or above (nginx: `client_max_body_size 16m;`). Two requests may run longer: the optional `Subscribe` stream of the API, which is exempt from the timeouts, and the server export `GET /export`, which may take up to 30 minutes. If your proxy limits how long a response may take in total, allow at least 30 minutes for `/export`.
 
 ### Headers the server sends

@@ -43,6 +43,8 @@ BEEHIVE_BLOB_DIR=./data/blobs
 Arbeitsverzeichnis des Serverprozesses, daher verwende für vorhersehbare Ergebnisse auf einem Server einen
 absoluten Pfad wie `/var/lib/openbeehive/blobs`.
 
+Gib den Blobs ein eigenes Verzeichnis. Die Pflege des Servers listet und löscht Dateien darunter, daher verweigert der Server mit SQLite den Start, wenn `BEEHIVE_BLOB_DIR` die Datenbankdatei enthält, und nennt ein Verzeichnis, das du stattdessen verwenden kannst.
+
 Der Server liefert dieses Verzeichnis nicht selbst aus, und auch sonst sollte es niemand tun: Bilder erreichen die App nur über den authentifizierten Endpunkt `/photos/`. Bis 0.4.x veröffentlichte der Server das Verzeichnis unter `/files/` und las `BEEHIVE_BLOB_PUBLIC_URL`; beides gibt es nicht mehr (der Server warnt beim Start, wenn die Einstellung noch gesetzt ist).
 
 Der Server erstellt das Verzeichnis, falls es nicht existiert, aber stelle sicher, dass der Prozess
@@ -148,15 +150,17 @@ Siehe [Fehlerbehebung](../knowledge-base/troubleshooting.md), falls Probleme wei
 
 Der Server räumt den Blob-Speicher selbst auf; es gibt nichts zu planen:
 
-- Das Bild eines gelöschten Fotos wird kurz nach dem Löschen entfernt.
+- Das Bild eines gelöschten Fotos wird kurz nach dem Löschen entfernt; eines, das dabei übersehen wird, entfernt der nächste Durchlauf, sobald es eine Stunde alt ist.
 - Fotos einer Durchsicht oder eines Bienenstocks, die vor mehr als einer Stunde gelöscht wurden, werden ebenfalls gelöscht.
-- Beim Start und alle sechs Stunden werden Bilder entfernt, auf die kein Foto-Eintrag verweist und die älter als eine Stunde sind (zum Beispiel ein Upload, dessen Eintrag nie ankam, oder die Bilder eines gelöschten Arbeitsbereichs).
+- Alle sechs Stunden entfernt ein Durchlauf Bilder, die kein Foto-Eintrag kennt (zum Beispiel ein Upload, dessen Eintrag nie ankam, oder die Bilder eines gelöschten Arbeitsbereichs), sobald sie älter als 30 Tage oder `BEEHIVE_CHANGELOG_RETENTION_DAYS` sind, je nachdem, was länger ist. Nach dem Wiederherstellen einer Datenbank senden Geräte die Einträge neuerer Fotos bei ihrer nächsten Synchronisierung erneut, was Wochen später sein kann, und ihre Bilder müssen dann noch da sein.
+- Der Durchlauf beim Start entfernt nichts: Er gibt nur Foto-Einträgen, die ihre Bilder verloren haben, diese zurück, etwa nach einer Wiederherstellung.
+- Angefasst werden nur Schlüssel in der Form, die der Server für Fotos bildet; andere Dateien im Bucket oder Verzeichnis bleiben unberührt.
 
 Das setzt eine einzelne Server-Instanz voraus: Betreibe genau eine pro Datenbank.
 
 ## Fotos aus 0.4.x \{#inline-photos}
 
-Bis 0.4.x speicherte die App Fotos direkt in der Datenbank, als Data-URLs in den Zeilen der Durchsichten und Bienenstöcke. Beim ersten Start von 0.5.0 wandelt der Server jedes sichtbare eingebettete Foto in einen Foto-Eintrag mit Bild im Blob-Speicher um, bevor er Anfragen annimmt. Bei einer Datenbank mit vielen Fotos kann das einige Minuten dauern. Eine unterbrochene Umwandlung wird beim nächsten Start fortgesetzt.
+Bis 0.4.x speicherte die App Fotos direkt in der Datenbank, als Data-URLs in den Zeilen der Durchsichten und Bienenstöcke. Beim ersten Start von 0.5.0 wandelt der Server jedes sichtbare eingebettete Foto in einen Foto-Eintrag mit Bild im Blob-Speicher um, bevor er Anfragen annimmt. Bei einer Datenbank mit vielen Fotos kann das einige Minuten dauern. Das Log meldet, wann sie beginnt, und der Server lauscht, `/healthz` eingeschlossen, erst, wenn sie fertig ist; gib Health-Checks also genug Zeit: Die Compose-Dateien erlauben zehn Minuten (`start_period: 10m`). Eine unterbrochene Umwandlung wird beim nächsten Start fortgesetzt.
 
 Installierte 0.4.x-Apps funktionieren weiter: Der Server nimmt für sie weiterhin eingebettete Fotos an, liefert sie aus und wandelt um, was sie hochladen. Fotos, die aktualisierte Geräte hinzufügen, sehen sie nicht.
 

@@ -127,7 +127,7 @@ You do not run migrations by hand. On every start, the server checks the schema 
 
 The SQL is written portably so the same schema works across all three engines; there is no engine-specific setup beyond creating the database and user shown above.
 
-On MariaDB a migration that fails halfway cannot be rolled back, because MariaDB commits every schema change immediately. Restore the backup before you retry.
+On SQLite and PostgreSQL each migration runs in a transaction, so one that fails is rolled back. MariaDB commits every schema change immediately; its migrations are written so that every statement can run again, and a migration that stopped halfway continues at the next start. PostgreSQL and MariaDB change existing tables in place; SQLite rebuilds a table where it cannot alter a column.
 
 :::tip[Always back up before upgrading]
 Because a new release may include migrations that change the schema, take a backup before you upgrade. See [Upgrading](./upgrading.md) and [Backups](./backups.md).

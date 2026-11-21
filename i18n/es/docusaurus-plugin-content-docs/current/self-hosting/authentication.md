@@ -20,7 +20,7 @@ Los métodos de inicio de sesión se combinan. La pantalla de inicio de sesión 
 
 Las primeras líneas del registro del servidor indican el modo en vigor: `auth: NO LOGIN (single-user mode): every request has full access to all data` o bien `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
 
-Habilitar cualquier método de inicio de sesión también habilita los espacios y las invitaciones (Ajustes → Espacios); consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md).
+Habilitar cualquier método de inicio de sesión también habilita los espacios y las invitaciones (Ajustes → Espacio); consulta [Cuentas y espacios](../using-the-app/accounts-tenants.md).
 
 ## Modo 1: un solo usuario, sin inicio de sesión
 
@@ -89,7 +89,7 @@ Detrás de un proxy inverso, todas las solicitudes parecen venir del proxy. Esta
 
 ### Instancias solo por invitación
 
-Para impedir que desconocidos creen cuentas, establece `BEEHIVE_REGISTRATION=false`. El administrador viene del entorno, así que una instancia nueva siempre tiene uno. Todos los demás se unen mediante enlaces de invitación, que un admin de espacio emite desde Ajustes → Espacios. Una invitación es válida durante 7 días y solo funciona para la dirección de correo para la que se emitió. La pantalla de inicio de sesión muestra un aviso de que la instancia es solo por invitación; las cuentas existentes inician sesión con normalidad.
+Para impedir que desconocidos creen cuentas, establece `BEEHIVE_REGISTRATION=false`. El administrador viene del entorno, así que una instancia nueva siempre tiene uno. Todos los demás se unen mediante enlaces de invitación, que un admin de espacio emite desde Ajustes → Espacio. Una invitación es válida durante 7 días y solo funciona para la dirección de correo para la que se emitió. La pantalla de inicio de sesión muestra un aviso de que la instancia es solo por invitación; las cuentas existentes inician sesión con normalidad.
 
 Cada cuenta nueva comienza con su propio [espacio](../using-the-app/accounts-tenants.md) personal. Solo la cuenta de administrador configurada lleva el rol de administrador de la instancia.
 
@@ -112,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Los enlaces de invitación y de verificación nunca se escriben en el registro del servidor. Sin `BEEHIVE_SMTP_HOST` no se envía ningún correo de invitación; el admin que creó una invitación copia su enlace desde Ajustes → Espacios y lo hace llegar a su destinatario.
+Los enlaces de invitación y de verificación nunca se escriben en el registro del servidor. Sin `BEEHIVE_SMTP_HOST` no se envía ningún correo de invitación; el admin que creó una invitación copia su enlace desde Ajustes → Espacio y lo hace llegar a su destinatario.
 :::
 
 ### Cambiar y restablecer contraseñas \{#password-reset}
@@ -120,7 +120,7 @@ Los enlaces de invitación y de verificación nunca se escriben en el registro d
 Los usuarios con la sesión iniciada cambian su contraseña en **Ajustes → Cuenta → Contraseña**; esto cierra su sesión en todos sus demás dispositivos. Quien ha olvidado la contraseña tiene dos formas de recuperarla, según haya o no correo:
 
 - **Con `BEEHIVE_SMTP_HOST`**, "¿Olvidaste tu contraseña?" en la página de inicio de sesión envía por correo un enlace válido durante una hora y de un solo uso. La respuesta es la misma tenga o no cuenta la dirección. Las solicitudes se limitan igual que los inicios de sesión.
-- **Sin correo**, la página indica que hay que pedírselo al administrador. El administrador de la instancia crea el enlace en **Ajustes → Restablecer la contraseña de un usuario** y lo entrega; los admins de un espacio no pueden hacerlo.
+- **Sin correo**, la página indica que hay que pedírselo al administrador. El administrador de la instancia crea el enlace en **Ajustes → Cuenta → Restablecer la contraseña de un usuario** y lo entrega; los admins de un espacio no pueden hacerlo.
 
 Establecer una contraseña nueva mediante un enlace cierra la sesión de la cuenta en todas partes. La contraseña del administrador de la instancia es la de `BEEHIVE_ADMIN_PASSWORD`: no se puede cambiar en la aplicación ni mediante un enlace de restablecimiento. La contraseña de la cuenta de demostración tampoco se puede cambiar.
 
@@ -139,7 +139,7 @@ BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME=Openbeehive
 - `BEEHIVE_WEBAUTHN_RP_ORIGINS` es el origen completo (u orígenes separados por comas) que envía el navegador, incluyendo esquema y puerto. Por defecto es `BEEHIVE_PUBLIC_BASE_URL`.
 - `BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME` es el nombre que se muestra en el aviso de passkey del navegador.
 
-Una passkey se añade desde **Ajustes → Passkeys** con la sesión iniciada, así que la gente necesita primero otra forma de iniciar sesión (correo y contraseña o un proveedor). Después, la pantalla de inicio de sesión ofrece "Iniciar sesión con passkey".
+Una passkey se añade desde **Ajustes → Cuenta → Passkeys** con la sesión iniciada, así que la gente necesita primero otra forma de iniciar sesión (correo y contraseña o un proveedor). Después, la pantalla de inicio de sesión ofrece "Iniciar sesión con passkey".
 
 :::caution
 WebAuthn requiere un contexto seguro: HTTPS, o `http://localhost` para desarrollo. Coloca el servidor detrás de TLS antes de habilitar las passkeys en producción. El RP ID debe coincidir con el dominio de `BEEHIVE_PUBLIC_BASE_URL`.
@@ -198,7 +198,7 @@ Errores comunes: el esquema debe coincidir (`https` en producción), sin barra f
 
 ## Cuentas \{#accounts}
 
-Cada persona elimina su propia cuenta en **Ajustes → Eliminar la cuenta**. Los espacios en los que es el único miembro se eliminan con ella. Mientras sea el único admin de un espacio que tiene otros miembros, la eliminación se rechaza hasta que nombre admin a otra persona o elimine ese espacio. Sus registros en espacios compartidos se conservan, atribuidos a un usuario eliminado. La eliminación se confirma con la contraseña, una passkey o, en las cuentas que solo inician sesión a través de un proveedor, un inicio de sesión de hace menos de 5 minutos. El administrador de la instancia de `BEEHIVE_ADMIN_EMAIL` y la cuenta de demostración no se pueden eliminar en la aplicación.
+Cada persona elimina su propia cuenta en **Ajustes → Cuenta → Eliminar la cuenta**. Los espacios en los que es el único miembro se eliminan con ella. Mientras sea el único admin de un espacio que tiene otros miembros, la eliminación se rechaza hasta que nombre admin a otra persona o elimine ese espacio. Sus registros en espacios compartidos se conservan, atribuidos a un usuario eliminado. La eliminación se confirma con la contraseña, una passkey o, en las cuentas que solo inician sesión a través de un proveedor, un inicio de sesión de hace menos de 5 minutos. El administrador de la instancia de `BEEHIVE_ADMIN_EMAIL` y la cuenta de demostración no se pueden eliminar en la aplicación.
 
 Las direcciones de correo son únicas sin distinguir mayúsculas y minúsculas. Dos cuentas de versiones anteriores cuyas direcciones solo se diferencian en mayúsculas y minúsculas siguen funcionando, pero el inicio de sesión por correo, las invitaciones y los restablecimientos de contraseña solo llegan a una de ellas. El registro del servidor indica cada uno de estos pares en cada arranque; decide qué cuenta conserva la dirección y elimina la otra o asígnale otra dirección.
 

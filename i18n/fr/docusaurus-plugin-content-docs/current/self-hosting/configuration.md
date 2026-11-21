@@ -136,7 +136,7 @@ Les images en taille réelle des photos sont stockées sous forme de blobs, soit
 | Variable          | Défaut         | Description                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | selon le profil | Backend de stockage : `fs` (système de fichiers local) ou `minio` (MinIO / S3). |
-| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Répertoire des blobs lorsque `BEEHIVE_BLOB_BACKEND=fs`.                         |
+| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Répertoire des blobs lorsque `BEEHIVE_BLOB_BACKEND=fs`. Ne doit pas contenir le fichier de la base SQLite, sinon le serveur ne démarre pas. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Hôte et port du point de terminaison MinIO / S3.                       |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Clé d'accès du magasin d'objets.                                       |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Clé secrète du magasin d'objets.                                       |

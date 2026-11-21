@@ -136,7 +136,7 @@ The full-size images of photos are stored as blobs, either on the local filesyst
 | Variable          | Default        | Description                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | from profile   | Storage backend: `fs` (local filesystem) or `minio` (MinIO / S3).       |
-| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory for blobs when `BEEHIVE_BLOB_BACKEND=fs`.                             |
+| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory for blobs when `BEEHIVE_BLOB_BACKEND=fs`. Must not contain the SQLite database file, or the server does not start. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host and port of the MinIO / S3 endpoint.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin`   | Access key for the object store.                                        |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin`   | Secret key for the object store.                                        |

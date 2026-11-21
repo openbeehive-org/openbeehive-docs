@@ -36,8 +36,9 @@ La schermata di accesso riceve un pulsante **Prova la demo** accanto al normale
 accesso; fa accedere il visitatore senza password.
 
 Quando qualcuno ha effettuato l'accesso con l'account demo, l'app mostra un
-**banner** che ricorda di trovarsi nella demo e che i dati vengono ripristinati
-ogni ora.
+**banner** che dice che la demo è in sola lettura e che nulla di ciò che si modifica
+viene salvato. Il riquadro di accesso dice lo stesso, e i moduli dei dati mostrano
+una nota e un pulsante **Salva** disattivato.
 
 ## Come abilitarla
 
@@ -97,7 +98,8 @@ non necessitano di una vetrina.
 
 ## Come disattivarla
 
-Imposta `BEEHIVE_DEMO=false` (o rimuovilo) e riavvia. I nuovi accessi all'account
-demo smetteranno di funzionare; i dati demo esistenti restano finché non li
-rimuovi. L'account e lo spazio demo hanno gli id interni `demo-user` /
+Imposta `BEEHIVE_DEMO=false` (o rimuovilo) e riavvia. All'avvio il server blocca
+allora l'account demo: ne rimuove password, sessioni, chiavi API e passkey, così
+nessuno può accedervi, e l'email demo resta riservata e in sola lettura. I dati
+demo esistenti restano finché non li rimuovi. L'account e lo spazio demo hanno gli id interni `demo-user` /
 `demo-tenant` se vuoi eliminarli dal database.

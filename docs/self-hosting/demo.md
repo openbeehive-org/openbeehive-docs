@@ -35,7 +35,8 @@ The sign-in screen gets a **Try the demo** button next to the normal sign-in; it
 signs the visitor in without a password.
 
 When someone is signed in to the demo account, the app shows a **banner**
-reminding them they're in the demo and that data resets hourly.
+saying that the demo is read-only and nothing they change is saved. The sign-in
+box says the same, and the record forms show a note and a disabled **Save**.
 
 ## Enabling it
 
@@ -92,7 +93,9 @@ demo password you're comfortable sharing, and don't reuse it elsewhere. Leave
 
 ## Turning it off
 
-Set `BEEHIVE_DEMO=false` (or remove it) and restart. New sign-ins to the demo
-account stop working; existing demo data remains until you remove it. The demo
+Set `BEEHIVE_DEMO=false` (or remove it) and restart. At start the server then
+locks the demo account: it removes its password, sessions, API keys and
+passkeys, so nobody can sign in to it, and the demo email stays reserved and
+read-only. Existing demo data remains until you remove it. The demo
 account and workspace have the internal ids `demo-user` / `demo-tenant` if you want
 to delete them from the database.

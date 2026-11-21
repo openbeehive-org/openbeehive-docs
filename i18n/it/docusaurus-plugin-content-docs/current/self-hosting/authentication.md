@@ -20,7 +20,7 @@ I metodi di accesso si combinano. La schermata di accesso offre quelli abilitati
 
 Le prime righe del log del server indicano la modalità in vigore: `auth: NO LOGIN (single-user mode): every request has full access to all data` oppure `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
 
-Abilitare un qualsiasi metodo di accesso abilita anche gli spazi e gli inviti (Impostazioni → Spazi); vedi [Account e spazi](../using-the-app/accounts-tenants.md).
+Abilitare un qualsiasi metodo di accesso abilita anche gli spazi e gli inviti (Impostazioni → Spazio); vedi [Account e spazi](../using-the-app/accounts-tenants.md).
 
 ## Modalità 1: utente singolo, nessun accesso
 
@@ -89,7 +89,7 @@ Dietro un reverse proxy ogni richiesta sembra provenire dal proxy. Imposta lì `
 
 ### Istanze solo su invito
 
-Per impedire a estranei di creare account, imposta `BEEHIVE_REGISTRATION=false`. L'amministratore viene dall'ambiente, quindi un'istanza nuova ne ha sempre uno. Tutti gli altri si uniscono tramite link di invito, che un amministratore dello spazio emette da Impostazioni → Spazi. Un invito è valido per 7 giorni e funziona solo per l'indirizzo email per cui è stato emesso. La schermata di accesso mostra un avviso che l'istanza è solo su invito; gli account esistenti accedono normalmente.
+Per impedire a estranei di creare account, imposta `BEEHIVE_REGISTRATION=false`. L'amministratore viene dall'ambiente, quindi un'istanza nuova ne ha sempre uno. Tutti gli altri si uniscono tramite link di invito, che un amministratore dello spazio emette da Impostazioni → Spazio. Un invito è valido per 7 giorni e funziona solo per l'indirizzo email per cui è stato emesso. La schermata di accesso mostra un avviso che l'istanza è solo su invito; gli account esistenti accedono normalmente.
 
 Ogni nuovo account inizia con il proprio [spazio](../using-the-app/accounts-tenants.md) personale. Solo l'account amministratore configurato porta il ruolo di amministratore dell'istanza.
 
@@ -112,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-I link di invito e di verifica non vengono mai scritti nel log del server. Senza `BEEHIVE_SMTP_HOST` non viene inviata alcuna email di invito; l'amministratore che ha creato un invito ne copia il link da Impostazioni → Spazi e lo inoltra.
+I link di invito e di verifica non vengono mai scritti nel log del server. Senza `BEEHIVE_SMTP_HOST` non viene inviata alcuna email di invito; l'amministratore che ha creato un invito ne copia il link da Impostazioni → Spazio e lo inoltra.
 :::
 
 ### Cambiare e reimpostare le password \{#password-reset}
@@ -120,7 +120,7 @@ I link di invito e di verifica non vengono mai scritti nel log del server. Senza
 Chi ha effettuato l'accesso cambia la propria password da **Impostazioni → Account → Password**; così viene disconnesso da tutti gli altri suoi dispositivi. Chi ha dimenticato la password ha due modi per rientrare, a seconda della posta:
 
 - **Con `BEEHIVE_SMTP_HOST`**, "Password dimenticata?" nella pagina di accesso invia per email un link valido per un'ora e utilizzabile una sola volta. La risposta è la stessa sia che l'indirizzo abbia un account sia che non lo abbia. Le richieste sono limitate come gli accessi.
-- **Senza posta**, la pagina invita a rivolgersi all'amministratore. L'amministratore dell'istanza crea il link da **Impostazioni → Reimposta la password di un utente** e lo consegna; gli amministratori di uno spazio non possono farlo.
+- **Senza posta**, la pagina invita a rivolgersi all'amministratore. L'amministratore dell'istanza crea il link da **Impostazioni → Account → Reimposta la password di un utente** e lo consegna; gli amministratori di uno spazio non possono farlo.
 
 Impostare una nuova password tramite un link disconnette l'account ovunque. La password dell'amministratore dell'istanza è quella di `BEEHIVE_ADMIN_PASSWORD`: non può essere cambiata nell'app né con un link di reimpostazione. Nemmeno la password dell'account demo può essere cambiata.
 
@@ -139,7 +139,7 @@ BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME=Openbeehive
 - `BEEHIVE_WEBAUTHN_RP_ORIGINS` è l'origine completa (o le origini separate da virgola) che il browser invia, incluso lo schema e la porta. Per impostazione predefinita è `BEEHIVE_PUBLIC_BASE_URL`.
 - `BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME` è il nome mostrato nella richiesta di passkey del browser.
 
-Una passkey si aggiunge da **Impostazioni → Passkeys** dopo aver effettuato l'accesso, quindi le persone hanno bisogno prima di un altro modo per accedere (email/password o un provider). In seguito la schermata di accesso offre "Accedi con passkey".
+Una passkey si aggiunge da **Impostazioni → Account → Passkeys** dopo aver effettuato l'accesso, quindi le persone hanno bisogno prima di un altro modo per accedere (email/password o un provider). In seguito la schermata di accesso offre "Accedi con passkey".
 
 :::caution
 WebAuthn richiede un contesto sicuro: HTTPS, oppure `http://localhost` per lo sviluppo. Metti il server dietro TLS prima di abilitare le passkey in produzione. L'RP ID deve corrispondere al dominio in `BEEHIVE_PUBLIC_BASE_URL`.
@@ -198,7 +198,7 @@ Errori comuni: lo schema deve corrispondere (`https` in produzione), nessuna bar
 
 ## Account \{#accounts}
 
-Ognuno elimina il proprio account da **Impostazioni → Elimina l’account**. Gli spazi di cui è l'unico membro vengono eliminati insieme all'account. Se è l'unico amministratore di uno spazio che ha altri membri, l'eliminazione viene rifiutata finché non nomina amministratore qualcun altro o non elimina quello spazio. I suoi dati negli spazi condivisi restano, attribuiti a un utente eliminato. L'eliminazione si conferma con la password, con una passkey oppure, per gli account che accedono solo tramite un provider, con un accesso avvenuto meno di 5 minuti prima. L'amministratore dell'istanza indicato in `BEEHIVE_ADMIN_EMAIL` e l'account demo non possono essere eliminati nell'app.
+Ognuno elimina il proprio account da **Impostazioni → Account → Elimina l’account**. Gli spazi di cui è l'unico membro vengono eliminati insieme all'account. Se è l'unico amministratore di uno spazio che ha altri membri, l'eliminazione viene rifiutata finché non nomina amministratore qualcun altro o non elimina quello spazio. I suoi dati negli spazi condivisi restano, attribuiti a un utente eliminato. L'eliminazione si conferma con la password, con una passkey oppure, per gli account che accedono solo tramite un provider, con un accesso avvenuto meno di 5 minuti prima. L'amministratore dell'istanza indicato in `BEEHIVE_ADMIN_EMAIL` e l'account demo non possono essere eliminati nell'app.
 
 Gli indirizzi email sono univoci indipendentemente da maiuscole e minuscole. Due account di versioni precedenti i cui indirizzi differiscono solo per maiuscole e minuscole continuano entrambi a funzionare, ma l'accesso via email, gli inviti e la reimpostazione della password raggiungono solo uno dei due. Il log del server indica ogni coppia di questo tipo a ogni avvio; decidi quale account tiene l'indirizzo ed elimina l'altro, oppure assegnagli un altro indirizzo.
 

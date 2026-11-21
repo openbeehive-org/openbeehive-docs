@@ -43,6 +43,8 @@ BEEHIVE_BLOB_DIR=./data/blobs
 trabajo del proceso del servidor, así que para resultados predecibles en un servidor, usa una
 ruta absoluta como `/var/lib/openbeehive/blobs`.
 
+Da a los blobs un directorio propio. El mantenimiento del servidor lista y borra archivos dentro de él, así que con SQLite el servidor se niega a arrancar cuando `BEEHIVE_BLOB_DIR` contiene el archivo de la base de datos, e indica un directorio que usar en su lugar.
+
 El servidor no sirve este directorio por sí mismo, y nada más debería hacerlo: las imágenes llegan a la aplicación solo a través del endpoint autenticado `/photos/`. Hasta 0.4.x el servidor publicaba el directorio bajo `/files/` y leía `BEEHIVE_BLOB_PUBLIC_URL`; ambas cosas han desaparecido (el servidor avisa al arrancar si el ajuste sigue presente).
 
 El servidor crea el directorio si no existe, pero asegúrate de que el proceso
@@ -148,15 +150,17 @@ Consulta [Resolución de problemas](../knowledge-base/troubleshooting.md) si los
 
 El servidor ordena el almacenamiento de blobs por sí mismo; no hay nada que programar:
 
-- La imagen de una foto eliminada se borra poco después de la eliminación.
+- La imagen de una foto eliminada se borra poco después de la eliminación; una que se haya pasado por alto la borra el siguiente barrido cuando tiene una hora.
 - Las fotos de una visita o colmena eliminada hace más de una hora también se eliminan.
-- Al arrancar y cada seis horas se borran las imágenes a las que no apunta ningún registro de foto y que tienen más de una hora (por ejemplo, una subida cuyo registro nunca llegó, o las imágenes de un espacio eliminado).
+- Cada seis horas un barrido borra las imágenes que ningún registro de foto conoce (por ejemplo, una subida cuyo registro nunca llegó, o las imágenes de un espacio eliminado) cuando tienen más de 30 días o de `BEEHIVE_CHANGELOG_RETENTION_DAYS`, lo que sea mayor. Tras restaurar la base de datos, los dispositivos vuelven a enviar los registros de las fotos más recientes la próxima vez que sincronizan, lo que puede ocurrir semanas después, y sus imágenes tienen que seguir ahí.
+- El barrido al arrancar no borra nada: solo devuelve las imágenes a los registros de foto que las perdieron, como tras una restauración.
+- Solo se tocan las claves con la forma que el servidor genera para las fotos; los demás archivos del bucket o del directorio no se tocan.
 
 Esto supone una única instancia del servidor: ejecuta exactamente una por base de datos.
 
 ## Fotos de 0.4.x \{#inline-photos}
 
-Hasta 0.4.x la aplicación guardaba las fotos en línea en la base de datos, como data URLs en las filas de visitas y colmenas. En el primer arranque de 0.5.0, el servidor convierte cada foto en línea visible en un registro de foto con su imagen en el almacenamiento de blobs, antes de aceptar solicitudes. En una base de datos con muchas fotos esto puede tardar unos minutos. Una conversión interrumpida continúa en el siguiente arranque.
+Hasta 0.4.x la aplicación guardaba las fotos en línea en la base de datos, como data URLs en las filas de visitas y colmenas. En el primer arranque de 0.5.0, el servidor convierte cada foto en línea visible en un registro de foto con su imagen en el almacenamiento de blobs, antes de aceptar solicitudes. En una base de datos con muchas fotos esto puede tardar unos minutos. El registro indica cuándo empieza, y el servidor escucha, `/healthz` incluido, solo cuando ha terminado, así que da tiempo suficiente a las comprobaciones de salud: los archivos Compose conceden diez minutos (`start_period: 10m`). Una conversión interrumpida continúa en el siguiente arranque.
 
 Las aplicaciones 0.4.x instaladas siguen funcionando: el servidor sigue aceptando y sirviendo fotos en línea para ellas y convierte lo que suben. No ven las fotos añadidas desde dispositivos actualizados.
 

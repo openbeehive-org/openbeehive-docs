@@ -127,7 +127,7 @@ Vous n'exécutez pas les migrations à la main. À chaque démarrage, le serveur
 
 Le SQL est écrit de façon portable afin que le même schéma fonctionne sur les trois moteurs ; il n'y a aucune configuration spécifique au moteur au-delà de la création de la base de données et de l'utilisateur indiqués ci-dessus.
 
-Sur MariaDB, une migration qui échoue à mi-chemin ne peut pas être annulée, car MariaDB valide immédiatement chaque modification de schéma. Restaurez la sauvegarde avant de réessayer.
+Sur SQLite et PostgreSQL, chaque migration s'exécute dans une transaction, de sorte qu'une migration qui échoue est annulée. MariaDB valide immédiatement chaque modification de schéma ; ses migrations sont écrites de façon que chaque instruction puisse être exécutée de nouveau, et une migration interrompue à mi-chemin reprend au démarrage suivant. PostgreSQL et MariaDB modifient les tables existantes sur place ; SQLite reconstruit une table lorsqu'il ne peut pas modifier une colonne.
 
 :::tip[Sauvegardez toujours avant de mettre à niveau]
 Comme une nouvelle version peut inclure des migrations qui modifient le schéma, faites une sauvegarde avant de mettre à niveau. Voir [Mise à niveau](./upgrading.md) et [Sauvegardes](./backups.md).

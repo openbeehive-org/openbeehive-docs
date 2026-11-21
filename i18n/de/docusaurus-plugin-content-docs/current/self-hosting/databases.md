@@ -127,7 +127,7 @@ Du führst Migrationen nicht von Hand aus. Bei jedem Start prüft der Server das
 
 Das SQL ist portabel geschrieben, sodass dasselbe Schema über alle drei Engines hinweg funktioniert; es gibt kein engine-spezifisches Setup über das oben gezeigte Erstellen von Datenbank und Benutzer hinaus.
 
-Bei MariaDB lässt sich eine Migration, die auf halbem Weg fehlschlägt, nicht zurückrollen, weil MariaDB jede Schemaänderung sofort festschreibt. Stelle das Backup wieder her, bevor du es erneut versuchst.
+Bei SQLite und PostgreSQL läuft jede Migration in einer Transaktion, sodass eine fehlgeschlagene zurückgerollt wird. MariaDB schreibt jede Schemaänderung sofort fest; seine Migrationen sind so geschrieben, dass jede Anweisung erneut laufen kann, und eine Migration, die auf halbem Weg stehen geblieben ist, setzt beim nächsten Start fort. PostgreSQL und MariaDB ändern bestehende Tabellen direkt; SQLite baut eine Tabelle neu auf, wo es eine Spalte nicht ändern kann.
 
 :::tip[Vor dem Upgrade immer sichern]
 Da eine neue Version Migrationen enthalten kann, die das Schema ändern, erstelle ein Backup, bevor du aktualisierst. Siehe [Aktualisieren](./upgrading.md) und [Backups](./backups.md).

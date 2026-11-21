@@ -43,6 +43,8 @@ BEEHIVE_BLOB_DIR=./data/blobs
 directory of the server process, so for predictable results on a server, use an
 absolute path such as `/var/lib/openbeehive/blobs`.
 
+Give the blobs a directory of their own. The server's upkeep lists and deletes files below it, so with SQLite the server refuses to start when `BEEHIVE_BLOB_DIR` contains the database file, and names a directory to use instead.
+
 The server does not serve this directory itself, and nothing else should either: images reach the app only through the authenticated `/photos/` endpoint. Up to 0.4.x the server published the directory under `/files/` and read `BEEHIVE_BLOB_PUBLIC_URL`; both are gone (the server warns at start when the setting is still there).
 
 The server creates the directory if it does not exist, but make sure the process
@@ -148,15 +150,17 @@ See [Troubleshooting](../knowledge-base/troubleshooting.md) if problems persist.
 
 The server tidies blob storage by itself; there is nothing to schedule:
 
-- The image of a deleted photo is removed shortly after the delete.
+- The image of a deleted photo is removed shortly after the delete; one that is missed is removed by the next sweep once it is an hour old.
 - Photos of a visit or hive that was deleted more than an hour ago are deleted too.
-- At start and every six hours, images that no photo record points to and that are older than an hour are removed (for example an upload whose record never arrived, or the images of a deleted workspace).
+- Every six hours a sweep removes images that no photo record knows (for example an upload whose record never arrived, or the images of a deleted workspace) once they are older than 30 days or `BEEHIVE_CHANGELOG_RETENTION_DAYS`, whichever is longer. After a database restore, devices send the records of newer photos again when they next sync, which may be weeks later, and their images must still be there.
+- The sweep at start removes nothing: it only gives images back to photo records that lost them, as after a restore.
+- Only keys of the form the server builds for photos are touched; other files in the bucket or directory are left alone.
 
 This assumes a single server instance: run exactly one per database.
 
 ## Photos from 0.4.x \{#inline-photos}
 
-Up to 0.4.x the app stored photos inline in the database, as data URLs in the visit and hive rows. At the first start of 0.5.0 the server converts each visible inline photo into a photo record with its image in blob storage, before it accepts requests. On a database with many photos this can take a few minutes. An interrupted conversion continues at the next start.
+Up to 0.4.x the app stored photos inline in the database, as data URLs in the visit and hive rows. At the first start of 0.5.0 the server converts each visible inline photo into a photo record with its image in blob storage, before it accepts requests. On a database with many photos this can take a few minutes. The log says when it starts, and the server listens, `/healthz` included, only when it is done, so give health checks enough time: the Compose files allow ten minutes (`start_period: 10m`). An interrupted conversion continues at the next start.
 
 Installed 0.4.x apps keep working: the server still accepts and serves inline photos for them and converts what they upload. They do not see photos added by updated devices.
 

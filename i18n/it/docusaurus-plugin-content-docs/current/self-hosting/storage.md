@@ -43,6 +43,8 @@ BEEHIVE_BLOB_DIR=./data/blobs
 del processo del server, quindi per risultati prevedibili su un server, usa un
 percorso assoluto come `/var/lib/openbeehive/blobs`.
 
+Dai ai blob una directory tutta loro. La manutenzione del server elenca ed elimina i file al suo interno, quindi con SQLite il server si rifiuta di avviarsi quando `BEEHIVE_BLOB_DIR` contiene il file del database, e indica una directory da usare al suo posto.
+
 Il server non serve questa directory direttamente, e non dovrebbe farlo nient'altro: le immagini raggiungono l'app solo tramite l'endpoint autenticato `/photos/`. Fino alla 0.4.x il server pubblicava la directory sotto `/files/` e leggeva `BEEHIVE_BLOB_PUBLIC_URL`; entrambi non esistono più (il server avvisa all'avvio se l'impostazione è ancora presente).
 
 Il server crea la directory se non esiste, ma assicurati che il processo
@@ -149,15 +151,17 @@ Vedi [Risoluzione dei problemi](../knowledge-base/troubleshooting.md) se i probl
 
 Il server tiene in ordine l'archiviazione blob da solo; non c'è nulla da pianificare:
 
-- L'immagine di una foto eliminata viene rimossa poco dopo l'eliminazione.
+- L'immagine di una foto eliminata viene rimossa poco dopo l'eliminazione; una che sfugge viene rimossa dal passaggio successivo, una volta vecchia di un'ora.
 - Anche le foto di una visita o di un'arnia eliminata da più di un'ora vengono eliminate.
-- All'avvio e ogni sei ore vengono rimosse le immagini a cui non punta alcun record di foto e più vecchie di un'ora (per esempio un caricamento il cui record non è mai arrivato, o le immagini di uno spazio eliminato).
+- Ogni sei ore un passaggio rimuove le immagini che nessun record di foto conosce (per esempio un caricamento il cui record non è mai arrivato, o le immagini di uno spazio eliminato) una volta più vecchie di 30 giorni o di `BEEHIVE_CHANGELOG_RETENTION_DAYS`, se più lungo. Dopo il ripristino di un database, i dispositivi inviano di nuovo i record delle foto più recenti alla sincronizzazione successiva, che può avvenire settimane dopo, e le loro immagini devono essere ancora lì.
+- Il passaggio all'avvio non rimuove nulla: restituisce solo le immagini ai record di foto che le hanno perse, come dopo un ripristino.
+- Vengono toccate solo le chiavi nella forma che il server costruisce per le foto; gli altri file nel bucket o nella directory restano intatti.
 
 Questo presuppone una sola istanza del server: eseguine esattamente una per database.
 
 ## Foto dalla 0.4.x \{#inline-photos}
 
-Fino alla 0.4.x l'app memorizzava le foto direttamente nel database, come data URL nelle righe delle visite e delle arnie. Al primo avvio della 0.5.0 il server converte ogni foto incorporata visibile in un record di foto con la sua immagine nell'archiviazione blob, prima di accettare richieste. Su un database con molte foto questo può richiedere alcuni minuti. Una conversione interrotta riprende all'avvio successivo.
+Fino alla 0.4.x l'app memorizzava le foto direttamente nel database, come data URL nelle righe delle visite e delle arnie. Al primo avvio della 0.5.0 il server converte ogni foto incorporata visibile in un record di foto con la sua immagine nell'archiviazione blob, prima di accettare richieste. Su un database con molte foto questo può richiedere alcuni minuti. Il log indica quando inizia, e il server si mette in ascolto, `/healthz` compreso, solo quando ha finito, quindi concedi ai controlli di salute abbastanza tempo: i file Compose prevedono dieci minuti (`start_period: 10m`). Una conversione interrotta riprende all'avvio successivo.
 
 Le app 0.4.x installate continuano a funzionare: il server accetta e serve ancora per loro le foto incorporate e converte ciò che caricano. Non vedono le foto aggiunte dai dispositivi aggiornati.
 

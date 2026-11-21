@@ -136,7 +136,7 @@ Le immagini a piena risoluzione delle foto vengono archiviate come blob, sul fil
 | Variabile          | Predefinito        | Descrizione                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | dal profilo   | Backend di archiviazione: `fs` (filesystem locale) o `minio` (MinIO / S3).       |
-| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory per i blob quando `BEEHIVE_BLOB_BACKEND=fs`.                             |
+| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directory per i blob quando `BEEHIVE_BLOB_BACKEND=fs`. Non deve contenere il file del database SQLite, altrimenti il server non si avvia. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host e porta dell'endpoint MinIO / S3.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Chiave di accesso per l'object store.                                        |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Chiave segreta per l'object store.                                        |

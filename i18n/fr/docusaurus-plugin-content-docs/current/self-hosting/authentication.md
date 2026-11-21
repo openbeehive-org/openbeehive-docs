@@ -20,7 +20,7 @@ Les méthodes de connexion se combinent. L'écran de connexion propose celles qu
 
 Les premières lignes du journal du serveur indiquent le mode en vigueur : soit `auth: NO LOGIN (single-user mode): every request has full access to all data`, soit `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
 
-Activer une méthode de connexion active aussi les espaces et les invitations (Paramètres → Espaces) ; voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
+Activer une méthode de connexion active aussi les espaces et les invitations (Paramètres → Espace) ; voir [Comptes et espaces](../using-the-app/accounts-tenants.md).
 
 ## Mode 1 : utilisateur unique, sans connexion
 
@@ -89,7 +89,7 @@ Derrière un reverse proxy, toutes les requêtes semblent venir du proxy. Régle
 
 ### Instances sur invitation uniquement
 
-Pour empêcher des inconnus de créer des comptes, réglez `BEEHIVE_REGISTRATION=false`. L'administrateur vient de l'environnement, donc une instance neuve en a toujours un. Toutes les autres personnes rejoignent l'instance via des liens d'invitation, qu'un administrateur d'espace émet depuis Paramètres → Espaces. Une invitation est valable 7 jours et ne fonctionne que pour l'adresse e-mail pour laquelle elle a été émise. L'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement ; les comptes existants se connectent normalement.
+Pour empêcher des inconnus de créer des comptes, réglez `BEEHIVE_REGISTRATION=false`. L'administrateur vient de l'environnement, donc une instance neuve en a toujours un. Toutes les autres personnes rejoignent l'instance via des liens d'invitation, qu'un administrateur d'espace émet depuis Paramètres → Espace. Une invitation est valable 7 jours et ne fonctionne que pour l'adresse e-mail pour laquelle elle a été émise. L'écran de connexion affiche un avis indiquant que l'instance est sur invitation uniquement ; les comptes existants se connectent normalement.
 
 Chaque nouveau compte démarre avec son propre [espace](../using-the-app/accounts-tenants.md) personnel. Seul le compte administrateur configuré porte le rôle d'administrateur de l'instance.
 
@@ -112,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Les liens d'invitation et de vérification ne sont jamais écrits dans le journal du serveur. Sans `BEEHIVE_SMTP_HOST`, aucun e-mail d'invitation n'est envoyé ; l'administrateur qui a créé une invitation copie son lien depuis Paramètres → Espaces et le transmet.
+Les liens d'invitation et de vérification ne sont jamais écrits dans le journal du serveur. Sans `BEEHIVE_SMTP_HOST`, aucun e-mail d'invitation n'est envoyé ; l'administrateur qui a créé une invitation copie son lien depuis Paramètres → Espace et le transmet.
 :::
 
 ### Changer et réinitialiser un mot de passe \{#password-reset}
@@ -120,7 +120,7 @@ Les liens d'invitation et de vérification ne sont jamais écrits dans le journa
 Une personne connectée change son mot de passe sous **Paramètres → Compte → Mot de passe** ; cela la déconnecte de tous ses autres appareils. Qui a oublié son mot de passe dispose de deux moyens pour revenir, selon que l'e-mail est configuré ou non :
 
 - **Avec `BEEHIVE_SMTP_HOST`**, « Mot de passe oublié ? » sur la page de connexion envoie par e-mail un lien valable une heure et utilisable une seule fois. La réponse est la même, que l'adresse corresponde ou non à un compte. Les demandes sont limitées comme les connexions.
-- **Sans e-mail**, la page indique de s'adresser à l'administrateur. L'administrateur de l'instance crée le lien sous **Paramètres → Réinitialiser le mot de passe d’un utilisateur** et le transmet ; les administrateurs d'espace ne le peuvent pas.
+- **Sans e-mail**, la page indique de s'adresser à l'administrateur. L'administrateur de l'instance crée le lien sous **Paramètres → Compte → Réinitialiser le mot de passe d’un utilisateur** et le transmet ; les administrateurs d'espace ne le peuvent pas.
 
 Définir un nouveau mot de passe via un lien déconnecte le compte partout. Le mot de passe de l'administrateur de l'instance est celui de `BEEHIVE_ADMIN_PASSWORD` : il ne peut être modifié ni dans l'application ni par un lien de réinitialisation. Le mot de passe du compte de démo ne peut pas non plus être modifié.
 
@@ -139,7 +139,7 @@ BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME=Openbeehive
 - `BEEHIVE_WEBAUTHN_RP_ORIGINS` est l'origine complète (ou les origines séparées par des virgules) que le navigateur envoie, schéma et port compris. Par défaut, `BEEHIVE_PUBLIC_BASE_URL`.
 - `BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME` est le nom affiché dans l'invite de passkey du navigateur.
 
-Une passkey s'ajoute depuis **Paramètres → Passkeys** une fois connecté, les personnes ont donc d'abord besoin d'un autre moyen de se connecter (e-mail/mot de passe ou un fournisseur). Ensuite, l'écran de connexion propose « Se connecter avec une passkey ».
+Une passkey s'ajoute depuis **Paramètres → Compte → Passkeys** une fois connecté, les personnes ont donc d'abord besoin d'un autre moyen de se connecter (e-mail/mot de passe ou un fournisseur). Ensuite, l'écran de connexion propose « Se connecter avec une passkey ».
 
 :::caution
 WebAuthn nécessite un contexte sécurisé : HTTPS, ou `http://localhost` pour le développement. Placez le serveur derrière TLS avant d'activer les passkeys en production. L'identifiant RP doit correspondre au domaine de `BEEHIVE_PUBLIC_BASE_URL`.
@@ -198,7 +198,7 @@ Pièges courants : le schéma doit correspondre (`https` en production), pas de 
 
 ## Comptes \{#accounts}
 
-Chacun supprime son propre compte sous **Paramètres → Supprimer le compte**. Les espaces dont la personne est le seul membre sont supprimés avec lui. Tant qu'elle est le seul administrateur d'un espace qui compte d'autres membres, la suppression est refusée, jusqu'à ce qu'elle nomme quelqu'un d'autre administrateur ou supprime cet espace. Ses enregistrements dans les espaces partagés restent, attribués à un utilisateur supprimé. La suppression se confirme avec le mot de passe, une passkey ou, pour les comptes qui se connectent uniquement via un fournisseur, une connexion datant de moins de 5 minutes. L'administrateur de l'instance défini par `BEEHIVE_ADMIN_EMAIL` et le compte de démo ne peuvent pas être supprimés dans l'application.
+Chacun supprime son propre compte sous **Paramètres → Compte → Supprimer le compte**. Les espaces dont la personne est le seul membre sont supprimés avec lui. Tant qu'elle est le seul administrateur d'un espace qui compte d'autres membres, la suppression est refusée, jusqu'à ce qu'elle nomme quelqu'un d'autre administrateur ou supprime cet espace. Ses enregistrements dans les espaces partagés restent, attribués à un utilisateur supprimé. La suppression se confirme avec le mot de passe, une passkey ou, pour les comptes qui se connectent uniquement via un fournisseur, une connexion datant de moins de 5 minutes. L'administrateur de l'instance défini par `BEEHIVE_ADMIN_EMAIL` et le compte de démo ne peuvent pas être supprimés dans l'application.
 
 Les adresses e-mail sont uniques sans distinction de majuscules et de minuscules. Deux comptes de versions antérieures dont les adresses ne diffèrent que par la casse continuent tous deux de fonctionner, mais la connexion par e-mail, les invitations et les réinitialisations de mot de passe n'atteignent que l'un d'eux. Le journal du serveur nomme chacune de ces paires à chaque démarrage ; décidez quel compte garde l'adresse et supprimez l'autre, ou donnez-lui une autre adresse.
 

@@ -30,7 +30,7 @@ Quale database e quale archivio di blob hai dipende dal tuo profilo di deploymen
 Esegui il backup di **entrambi** il database e i blob. Il database contiene i tuoi apiari, le arnie, le regine, le ispezioni, gli eventi e i record delle foto con le loro miniature; l'archivio di blob contiene le immagini a piena risoluzione. Con un backup del database senza i suoi blob, delle foto resta solo la miniatura.
 
 :::tip[Prima il database, poi i blob]
-Se esegui il backup mentre il server è in funzione, copia prima il database e subito dopo i blob. Le immagini vengono scritte una sola volta e mai modificate, quindi una copia dei blob fatta dopo contiene tutte le immagini che la copia del database conosce. Le immagini in più che il database ripristinato non conosce vengono rimosse dalla [manutenzione](./storage.md#upkeep) del server.
+Se esegui il backup mentre il server è in funzione, copia prima il database e subito dopo i blob. Le immagini vengono scritte una sola volta e mai modificate, quindi una copia dei blob fatta dopo contiene tutte le immagini che la copia del database conosce. Le immagini in più che il database ripristinato non conosce vengono conservate per almeno 30 giorni, nel caso un dispositivo invii di nuovo i loro record, e poi rimosse dalla [manutenzione](./storage.md#upkeep) del server.
 :::
 
 ## Backup di SQLite (selfhost)
@@ -162,7 +162,7 @@ I caratteri `%` devono essere preceduti da escape come `\%` all'interno del cron
 
 ## Le esportazioni non sono backup del server
 
-**Impostazioni → Dati e backup** nell'app scarica uno spazio come JSON, oppure come ZIP con le foto; la copia del server è disponibile anche su `GET /export` (vedi [Importazione ed esportazione](../using-the-app/import-export.md)). Un'esportazione di questo tipo è utile per spostare un singolo spazio o per tenerne una copia personale, ma contiene un solo spazio, senza account, membri né chiavi API. Per un'intera istanza, esegui il backup del database e dei blob come descritto sopra.
+**Impostazioni → Dati e sincro** nell'app scarica uno spazio come JSON, oppure come ZIP con le foto; la copia del server è disponibile anche su `GET /export` (vedi [Importazione ed esportazione](../using-the-app/import-export.md)). Un'esportazione di questo tipo è utile per spostare un singolo spazio o per tenerne una copia personale, ma contiene un solo spazio, senza account, membri né chiavi API. Per un'intera istanza, esegui il backup del database e dei blob come descritto sopra.
 
 :::tip[Testa i tuoi ripristini]
 Un backup che non hai mai ripristinato è solo una speranza. Di tanto in tanto, ripristina in una directory usa e getta o in un'istanza di test e conferma di poter aprire l'app e vedere le tue arnie. Conserva almeno alcuni giorni di copie datate e tienine una off-site (un disco esterno o un bucket remoto).

@@ -136,7 +136,7 @@ Die Bilder von Fotos in voller Größe werden als Blobs gespeichert, entweder au
 | Variable          | Standard       | Beschreibung                                                            |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | aus Profil     | Speicher-Backend: `fs` (lokales Dateisystem) oder `minio` (MinIO / S3). |
-| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Verzeichnis für Blobs, wenn `BEEHIVE_BLOB_BACKEND=fs`.                          |
+| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Verzeichnis für Blobs, wenn `BEEHIVE_BLOB_BACKEND=fs`. Darf die SQLite-Datenbankdatei nicht enthalten, sonst startet der Server nicht. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host und Port des MinIO- / S3-Endpunkts.                               |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Zugriffsschlüssel für den Objektspeicher.                              |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Geheimer Schlüssel für den Objektspeicher.                             |

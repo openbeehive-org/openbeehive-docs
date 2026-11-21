@@ -37,8 +37,10 @@ L'écran de connexion reçoit un bouton **Essayer la démo** à côté de la con
 normale ; il connecte le visiteur sans mot de passe.
 
 Lorsqu'une personne est connectée au compte de démonstration, l'application
-affiche une **bannière** lui rappelant qu'elle se trouve dans la démo et que les
-données sont réinitialisées chaque heure.
+affiche une **bannière** indiquant que la démo est en lecture seule et que rien de
+ce qu'elle modifie n'est enregistré. L'encadré de connexion dit la même chose, et
+les formulaires d'enregistrement affichent une note et un bouton **Enregistrer**
+désactivé.
 
 ## Activation
 
@@ -101,8 +103,10 @@ vitrine.
 
 ## Désactivation
 
-Définissez `BEEHIVE_DEMO=false` (ou supprimez-le) et redémarrez. Les nouvelles
-connexions au compte de démonstration cessent de fonctionner ; les données de
-démo existantes restent jusqu'à ce que vous les supprimiez. Le compte et
+Définissez `BEEHIVE_DEMO=false` (ou supprimez-le) et redémarrez. Au démarrage,
+le serveur verrouille alors le compte de démonstration : il supprime son mot de
+passe, ses sessions, ses clés API et ses passkeys, de sorte que personne ne peut
+s'y connecter, et l'e-mail de démo reste réservé et en lecture seule. Les données
+de démo existantes restent jusqu'à ce que vous les supprimiez. Le compte et
 l'espace de démonstration ont les identifiants internes `demo-user` /
 `demo-tenant` si vous souhaitez les supprimer de la base de données.

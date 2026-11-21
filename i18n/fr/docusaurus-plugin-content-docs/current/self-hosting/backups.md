@@ -30,7 +30,7 @@ La base de données et le stockage de blobs dont vous disposez dépendent de vot
 Sauvegardez **à la fois** la base de données et les blobs. La base de données contient vos ruchers, ruches, reines, visites, événements ainsi que les enregistrements de photos avec leurs miniatures ; le stockage de blobs contient les images en taille réelle. Une sauvegarde de la base de données sans ses blobs laisse des photos dont on ne voit plus que la miniature.
 
 :::tip[D'abord la base de données, puis les blobs]
-Si vous sauvegardez pendant que le serveur fonctionne, copiez d'abord la base de données, puis les blobs juste après. Les images sont écrites une fois et jamais modifiées, donc une copie des blobs prise plus tard contient toutes les images que connaît la copie de la base. Les images en trop, inconnues de la base restaurée, sont retirées par l'[entretien](./storage.md#upkeep) du serveur.
+Si vous sauvegardez pendant que le serveur fonctionne, copiez d'abord la base de données, puis les blobs juste après. Les images sont écrites une fois et jamais modifiées, donc une copie des blobs prise plus tard contient toutes les images que connaît la copie de la base. Les images en trop, inconnues de la base restaurée, sont conservées au moins 30 jours, au cas où un appareil renverrait leurs enregistrements, puis retirées par l'[entretien](./storage.md#upkeep) du serveur.
 :::
 
 ## Sauvegarder SQLite (selfhost)
@@ -162,7 +162,7 @@ Les caractères `%` doivent être échappés en `\%` dans la crontab. Pour Postg
 
 ## Les exports ne sont pas des sauvegardes du serveur
 
-**Paramètres → Données & sauvegarde** dans l'application télécharge un espace en JSON, ou en ZIP avec les photos ; la copie du serveur est aussi disponible via `GET /export` (voir [Import et export](../using-the-app/import-export.md)). Un tel export est utile pour déplacer un espace ou garder votre propre copie, mais il ne contient qu'un seul espace, sans comptes, membres ni clés API. Pour une instance entière, sauvegardez la base de données et les blobs comme décrit ci-dessus.
+**Paramètres → Données et synchro** dans l'application télécharge un espace en JSON, ou en ZIP avec les photos ; la copie du serveur est aussi disponible via `GET /export` (voir [Import et export](../using-the-app/import-export.md)). Un tel export est utile pour déplacer un espace ou garder votre propre copie, mais il ne contient qu'un seul espace, sans comptes, membres ni clés API. Pour une instance entière, sauvegardez la base de données et les blobs comme décrit ci-dessus.
 
 :::tip[Testez vos restaurations]
 Une sauvegarde que vous n'avez jamais restaurée n'est qu'un espoir. De temps en temps, restaurez dans un répertoire jetable ou une instance de test et confirmez que vous pouvez ouvrir l'application et voir vos ruches. Conservez au moins quelques jours de copies datées, et stockez-en une hors site (un disque externe ou un bucket distant).

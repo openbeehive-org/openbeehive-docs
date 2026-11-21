@@ -20,7 +20,7 @@ The login methods combine. The sign-in screen offers whichever are enabled, and 
 
 The first lines of the server log state the mode in effect, either `auth: NO LOGIN (single-user mode): every request has full access to all data` or `auth: LOGIN REQUIRED (email+password, passkeys, OIDC:google)`.
 
-Enabling any login method also enables workspaces and invites (Settings → Workspaces); see [Accounts & workspaces](../using-the-app/accounts-tenants.md).
+Enabling any login method also enables workspaces and invites (Settings → Workspace); see [Accounts & workspaces](../using-the-app/accounts-tenants.md).
 
 ## Mode 1: single user, no login
 
@@ -89,7 +89,7 @@ Behind a reverse proxy every request seems to come from the proxy. Set `BEEHIVE_
 
 ### Invite-only instances
 
-To stop strangers creating accounts, set `BEEHIVE_REGISTRATION=false`. The admin comes from the environment, so a fresh instance always has one. Everyone else joins through invite links, which a workspace admin issues from Settings → Workspaces. An invite is valid for 7 days and works only for the email address it was issued for. The sign-in screen shows a notice that the instance is invite-only; existing accounts sign in normally.
+To stop strangers creating accounts, set `BEEHIVE_REGISTRATION=false`. The admin comes from the environment, so a fresh instance always has one. Everyone else joins through invite links, which a workspace admin issues from Settings → Workspace. An invite is valid for 7 days and works only for the email address it was issued for. The sign-in screen shows a notice that the instance is invite-only; existing accounts sign in normally.
 
 Every new account starts with its own personal [workspace](../using-the-app/accounts-tenants.md). Only the configured admin account carries the instance admin role.
 
@@ -112,7 +112,7 @@ BEEHIVE_SMTP_FROM=Openbeehive <no-reply@example.com>
 ```
 
 :::note
-Invite and verification links are never written to the server log. Without `BEEHIVE_SMTP_HOST` no invite mail is sent; the admin who created an invite copies its link from Settings → Workspaces and passes it on.
+Invite and verification links are never written to the server log. Without `BEEHIVE_SMTP_HOST` no invite mail is sent; the admin who created an invite copies its link from Settings → Workspace and passes it on.
 :::
 
 ### Changing and resetting passwords \{#password-reset}
@@ -120,7 +120,7 @@ Invite and verification links are never written to the server log. Without `BEEH
 Signed-in users change their password under **Settings → Account → Password**; this signs them out on all their other devices. Someone who forgot the password has two ways back, depending on mail:
 
 - **With `BEEHIVE_SMTP_HOST`**, "Forgot password?" on the sign-in page emails a link that is valid for one hour and works once. The answer is the same whether or not the address has an account. Requests are throttled like sign-ins.
-- **Without mail**, the page says to ask the administrator. The instance admin creates the link under **Settings → Reset a user's password** and hands it over; workspace admins cannot.
+- **Without mail**, the page says to ask the administrator. The instance admin creates the link under **Settings → Account → Reset a user's password** and hands it over; workspace admins cannot.
 
 Setting a new password through a link signs the account out everywhere. The instance admin's password is the one in `BEEHIVE_ADMIN_PASSWORD`: it cannot be changed in the app or through a reset link. The demo account's password cannot be changed either.
 
@@ -139,7 +139,7 @@ BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME=Openbeehive
 - `BEEHIVE_WEBAUTHN_RP_ORIGINS` is the full origin (or comma-separated origins) the browser sends, including scheme and port. Defaults to `BEEHIVE_PUBLIC_BASE_URL`.
 - `BEEHIVE_WEBAUTHN_RP_DISPLAY_NAME` is the name shown in the browser's passkey prompt.
 
-A passkey is added from **Settings → Passkeys** while signed in, so people need another way to sign in first (email/password or a provider). Afterwards the sign-in screen offers "Sign in with a passkey".
+A passkey is added from **Settings → Account → Passkeys** while signed in, so people need another way to sign in first (email/password or a provider). Afterwards the sign-in screen offers "Sign in with a passkey".
 
 :::caution
 WebAuthn requires a secure context: HTTPS, or `http://localhost` for development. Put the server behind TLS before enabling passkeys in production. The RP ID must match the domain in `BEEHIVE_PUBLIC_BASE_URL`.
@@ -198,7 +198,7 @@ Common pitfalls: the scheme must match (`https` in production), no trailing slas
 
 ## Accounts \{#accounts}
 
-People delete their own account under **Settings → Delete account**. Workspaces in which they are the only member are deleted with it. While they are the only admin of a workspace that has other members, deletion is refused until they make someone else an admin or delete that workspace. Their records in shared workspaces stay, attributed to a deleted user. The deletion is confirmed with the password, a passkey, or, for accounts that sign in only through a provider, a sign-in less than 5 minutes old. The instance admin from `BEEHIVE_ADMIN_EMAIL` and the demo account cannot be deleted in the app.
+People delete their own account under **Settings → Account → Delete account**. Workspaces in which they are the only member are deleted with it. While they are the only admin of a workspace that has other members, deletion is refused until they make someone else an admin or delete that workspace. Their records in shared workspaces stay, attributed to a deleted user. The deletion is confirmed with the password, a passkey, or, for accounts that sign in only through a provider, a sign-in less than 5 minutes old. The instance admin from `BEEHIVE_ADMIN_EMAIL` and the demo account cannot be deleted in the app.
 
 Email addresses are unique regardless of upper and lower case. Two accounts from earlier versions whose addresses differ only in case both keep working, but email sign-in, invites and password resets reach only one of them. The server log names each such pair at every start; decide which account keeps the address and delete the other, or give it another address.
 

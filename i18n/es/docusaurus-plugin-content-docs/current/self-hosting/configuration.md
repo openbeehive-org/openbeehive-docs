@@ -136,7 +136,7 @@ Las imágenes a tamaño completo de las fotos se guardan como blobs, ya sea en e
 | Variable          | Predeterminado | Descripción                                                              |
 | ----------------- | -------------- | ----------------------------------------------------------------------- |
 | `BEEHIVE_BLOB_BACKEND`    | desde el perfil | Backend de almacenamiento: `fs` (sistema de archivos local) o `minio` (MinIO / S3). |
-| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directorio para los blobs cuando `BEEHIVE_BLOB_BACKEND=fs`.                     |
+| `BEEHIVE_BLOB_DIR`        | `./data/blobs` | Directorio para los blobs cuando `BEEHIVE_BLOB_BACKEND=fs`. No debe contener el archivo de la base de datos SQLite, o el servidor no arranca. |
 | `BEEHIVE_MINIO_ENDPOINT`  | `localhost:9000` | Host y puerto del endpoint de MinIO / S3.                              |
 | `BEEHIVE_MINIO_ACCESS_KEY`| `minioadmin` | Clave de acceso del almacén de objetos.                                 |
 | `BEEHIVE_MINIO_SECRET_KEY`| `minioadmin` | Clave secreta del almacén de objetos.                                   |

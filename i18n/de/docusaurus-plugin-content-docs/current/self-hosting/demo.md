@@ -35,8 +35,9 @@ rückgängig. Nichts, was ein Besucher tut, erreicht den Server oder andere Besu
 Der Anmeldebildschirm erhält neben der normalen Anmeldung die Schaltfläche
 **Demo ausprobieren**; sie meldet den Besucher ohne Passwort an.
 
-Wenn jemand im Demo-Konto angemeldet ist, zeigt die App ein **Banner**, das daran erinnert, dass
-man sich in der Demo befindet und dass die Daten stündlich zurückgesetzt werden.
+Wenn jemand im Demo-Konto angemeldet ist, zeigt die App ein **Banner**, das sagt, dass
+die Demo schreibgeschützt ist und nichts gespeichert wird, was man ändert. Das Anmeldefeld
+sagt dasselbe, und die Formulare für Einträge zeigen einen Hinweis und ein deaktiviertes **Speichern**.
 
 ## Aktivierung
 
@@ -93,7 +94,8 @@ Demo-Passwort, das du bedenkenlos teilen kannst, und verwende es nirgendwo sonst
 
 ## Deaktivierung
 
-Setze `BEEHIVE_DEMO=false` (oder entferne die Variable) und starte neu. Neue
-Anmeldungen am Demo-Konto funktionieren dann nicht mehr; vorhandene Demo-Daten bleiben bestehen,
-bis du sie entfernst. Das Demo-Konto und der Demo-Arbeitsbereich haben die internen IDs `demo-user` /
+Setze `BEEHIVE_DEMO=false` (oder entferne die Variable) und starte neu. Beim Start sperrt
+der Server dann das Demo-Konto: Er entfernt sein Passwort, seine Sitzungen, API-Schlüssel und
+Passkeys, sodass sich niemand mehr daran anmelden kann, und die Demo-E-Mail-Adresse bleibt reserviert und
+schreibgeschützt. Vorhandene Demo-Daten bleiben bestehen, bis du sie entfernst. Das Demo-Konto und der Demo-Arbeitsbereich haben die internen IDs `demo-user` /
 `demo-tenant`, falls du sie aus der Datenbank löschen möchtest.

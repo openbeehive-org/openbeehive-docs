@@ -30,7 +30,7 @@ Which database and blob store you have depends on your deployment profile:
 Back up **both** the database and the blobs. The database holds your apiaries, hives, queens, inspections, events and the photo records with their thumbnails; the blob store holds the full-size images. A database backup without its blobs leaves photos that show only their thumbnail.
 
 :::tip[Database first, then blobs]
-When you back up while the server runs, copy the database first and the blobs right after. Images are written once and never changed, so a blob copy taken later contains every image the database copy knows. Extra images that the restored database does not know are removed by the server's [upkeep](./storage.md#upkeep).
+When you back up while the server runs, copy the database first and the blobs right after. Images are written once and never changed, so a blob copy taken later contains every image the database copy knows. Extra images that the restored database does not know are kept for at least 30 days, in case a device sends their records again, and then removed by the server's [upkeep](./storage.md#upkeep).
 :::
 
 ## Backing up SQLite (selfhost)
@@ -162,7 +162,7 @@ The `%` characters must be escaped as `\%` inside crontab. For Postgres, swap th
 
 ## Exports are not server backups
 
-**Settings → Data & backup** in the app downloads a workspace as JSON, or as a ZIP with photos; the server copy is also available at `GET /export` (see [Import & export](../using-the-app/import-export.md)). Such an export is useful for moving one workspace or keeping your own copy, but it holds one workspace only, without accounts, members or API keys. For a whole instance, back up the database and the blobs as described above.
+**Settings → Data & sync** in the app downloads a workspace as JSON, or as a ZIP with photos; the server copy is also available at `GET /export` (see [Import & export](../using-the-app/import-export.md)). Such an export is useful for moving one workspace or keeping your own copy, but it holds one workspace only, without accounts, members or API keys. For a whole instance, back up the database and the blobs as described above.
 
 :::tip[Test your restores]
 A backup you have never restored is only a hope. Every so often, restore into a throwaway directory or test instance and confirm you can open the app and see your hives. Keep at least a few days of dated copies, and store one off-site (an external drive or remote bucket).

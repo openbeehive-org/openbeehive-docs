@@ -38,8 +38,9 @@ La pantalla de inicio de sesión recibe un botón **Probar la demo** junto al
 inicio de sesión normal; inicia la sesión del visitante sin contraseña.
 
 Cuando alguien ha iniciado sesión en la cuenta de demostración, la aplicación
-muestra un **banner** que le recuerda que está en la demo y que los datos se
-reinician cada hora.
+muestra un **banner** que dice que la demo es de solo lectura y que nada de lo que
+cambie se guarda. El cuadro de inicio de sesión dice lo mismo, y los formularios de
+registro muestran una nota y un botón **Guardar** desactivado.
 
 ## Cómo activarlo
 
@@ -100,8 +101,10 @@ cómodo compartiendo, y no la reutilices en ningún otro lugar. Deja
 
 ## Cómo desactivarlo
 
-Establece `BEEHIVE_DEMO=false` (o elimínalo) y reinicia. Los nuevos inicios de
-sesión en la cuenta de demostración dejan de funcionar; los datos de demostración
-existentes permanecen hasta que los elimines. La cuenta y el espacio de
+Establece `BEEHIVE_DEMO=false` (o elimínalo) y reinicia. Al arrancar, el servidor
+bloquea entonces la cuenta de demostración: elimina su contraseña, sesiones, claves
+API y passkeys, de modo que nadie puede iniciar sesión en ella, y el correo de la demo
+sigue reservado y de solo lectura. Los datos de demostración existentes permanecen
+hasta que los elimines. La cuenta y el espacio de
 demostración tienen los id internos `demo-user` / `demo-tenant` por si quieres
 eliminarlos de la base de datos.
