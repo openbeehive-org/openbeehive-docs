@@ -8,7 +8,9 @@ Documentation content is also versioned in-site via Docusaurus (see
 
 ## [Unreleased]
 
-Documents the upcoming app release 0.5.0 in all five languages. Every page
+## [0.5.0] - 2026-11-21
+
+Documents app release 0.5.0 in all five languages. Every page
 of the app, API, self-hosting and developer sections was checked against the
 app's code, including photo storage, account management, units, change-log
 snapshots and the export/import changes.
@@ -384,6 +386,8 @@ First public release. 🐝
   (Docusaurus i18n, with a locale dropdown).
 - Versioned docs snapshot `0.1.0`.
 
+[0.5.0]: https://github.com/openbeehive-org/openbeehive-docs/releases/tag/v0.5.0
+[0.4.0]: https://github.com/openbeehive-org/openbeehive-docs/releases/tag/v0.4.0
 [0.3.0.1]: https://github.com/openbeehive-org/openbeehive-docs/releases/tag/v0.3.0.1
 [0.3.0]: https://github.com/openbeehive-org/openbeehive-docs/releases/tag/v0.3.0
 [0.2.3.2]: https://github.com/openbeehive-org/openbeehive-docs/releases/tag/v0.2.3.2
