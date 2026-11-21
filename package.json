@@ -69,6 +69,7 @@
     "uuid": "^14.0.3",
     "qs": "^6.16.0",
     "tinypool": "^2.2.0",
-    "postcss-selector-parser": "^7.1.6"
+    "postcss-selector-parser": "^7.1.6",
+    "minimatch@>=7.0.0 <11.0.1": "^11.0.9"
   }
 }
