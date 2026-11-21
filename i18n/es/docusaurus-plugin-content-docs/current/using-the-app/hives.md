@@ -59,6 +59,8 @@ El estado es una etiqueta que defines editando la colmena; nada lo cambia autom�
 
 Los nombres se ordenan tal como los lees: "Colmena 2" va antes que "Colmena 10". Una línea bajo las herramientas indica cuántas colmenas se muestran.
 
+La búsqueda, los filtros y el orden se mantienen al abrir una colmena y volver. La entrada **Colmenas** de la navegación abre siempre la lista completa.
+
 ## Mover una colmena entre colmenares
 
 Para reubicar una colmena, ábrela, toca **Mover** en la cabecera y elige el colmenar de destino. La colmena conserva su nombre, reina, foto y registro completo; solo cambia su colmenar.

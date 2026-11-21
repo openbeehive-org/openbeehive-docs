@@ -471,7 +471,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (default 10, as in the app) sets when a hive counts as due: hives whose last
+`thresholdDays` (default 10, counted in calendar days as in the app) sets when a hive counts as due: hives whose last
 inspection is at least that many days old, plus hives never inspected
 (`daysSinceLast: -1`, listed first). Sensor readings
 (`INSPECTION_SOURCE_SENSOR`) do not count as inspections here and are not
@@ -618,6 +618,7 @@ are `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 - Send `{}` for a request with no fields.
 - `Content-Type: application/json` selects the Connect JSON protocol.
   `application/proto` sends binary protobuf over the same URL. A request
-  without `Content-Type` answers `415` with a JSON error that says so.
+  without `Content-Type`, or with another one, answers `415` with a JSON
+  error that says so.
 - `SyncService.Subscribe` is a server stream and needs a streaming client; see
   [gRPC](./grpc.md).

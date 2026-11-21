@@ -477,7 +477,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (por defecto 10, como en la aplicación) define cuándo una colmena cuenta como
+`thresholdDays` (por defecto 10, contados en días naturales como en la aplicación) define cuándo una colmena cuenta como
 pendiente: las colmenas cuya última inspección tiene al menos esa cantidad de
 días, más las colmenas nunca inspeccionadas (`daysSinceLast: -1`, listadas
 primero). Las lecturas de sensor (`INSPECTION_SOURCE_SENSOR`) no cuentan aquí como
@@ -626,6 +626,6 @@ donde la aplicación muestra un mensaje traducido. Sus códigos son
 - Envía `{}` para una solicitud sin campos.
 - `Content-Type: application/json` selecciona el protocolo JSON de Connect.
   `application/proto` envía protobuf binario por la misma URL. Una solicitud
-  sin `Content-Type` responde `415` con un error JSON que lo indica.
+  sin `Content-Type`, o con otro, responde `415` con un error JSON que lo indica.
 - `SyncService.Subscribe` es un stream desde el servidor y necesita un cliente
   de streaming; consulta [gRPC](./grpc.md).

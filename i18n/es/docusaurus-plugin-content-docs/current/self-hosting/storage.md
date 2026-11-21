@@ -162,7 +162,7 @@ Esto supone una única instancia del servidor: ejecuta exactamente una por base 
 
 Hasta 0.4.x la aplicación guardaba las fotos en línea en la base de datos, como data URLs en las filas de visitas y colmenas. En el primer arranque de 0.5.0, el servidor convierte cada foto en línea visible en un registro de foto con su imagen en el almacenamiento de blobs, antes de aceptar solicitudes. En una base de datos con muchas fotos esto puede tardar unos minutos. El registro indica cuándo empieza, y el servidor escucha, `/healthz` incluido, solo cuando ha terminado, así que da tiempo suficiente a las comprobaciones de salud: los archivos Compose conceden diez minutos (`start_period: 10m`). Una conversión interrumpida continúa en el siguiente arranque.
 
-Las aplicaciones 0.4.x instaladas siguen funcionando: el servidor sigue aceptando y sirviendo fotos en línea para ellas y convierte lo que suben. No ven las fotos añadidas desde dispositivos actualizados.
+Las aplicaciones 0.4.x instaladas siguen funcionando: el servidor sigue aceptando y sirviendo fotos en línea para ellas y convierte lo que suben. No ven las fotos añadidas desde dispositivos actualizados. Una subida que el servidor rechaza no deja ninguna imagen, y una subida repetida sustituye la imagen del intento anterior.
 
 ## Cambiar de backend más adelante
 

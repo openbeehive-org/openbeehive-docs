@@ -59,6 +59,8 @@ Status is a label you set by editing the hive; nothing changes it automatically.
 
 Names sort the way you read them: "Hive 2" comes before "Hive 10". A line under the tools says how many hives are shown.
 
+Search, filters and sort stay in place while you open a hive and come back. The **Hives** entry in the navigation always opens the full list.
+
 ## Moving a hive between apiaries
 
 To relocate a hive, open it, tap **Move** in the header and pick the destination apiary. The hive keeps its name, queen, photo and full record; only its apiary changes.

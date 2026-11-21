@@ -169,7 +169,7 @@ Neben den RPC-Diensten gibt es ein paar einfache HTTP-Endpunkte:
 | `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Passwort ändern; einen Reset anfordern und abschließen; ein vom Instanz-Admin erstellter Reset-Link (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` gesetzt) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Sitzungs- und Arbeitsbereichs-Helfer, vorhanden sobald irgendeine Anmeldemethode aktiviert ist; ohne Anmeldung antwortet `GET /auth/me` mit `{"no_login": true}` |
 | `GET /auth/invite?token=...` | Der Name des Arbeitsbereichs, die maskierte E-Mail-Adresse (`j…@e….org`) und das Ablaufdatum einer Einladung, ohne Anmeldedaten; unbekannte, verwendete oder zurückgezogene Einladungen antworten mit `400` `invite_invalid`, abgelaufene mit `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Was das Löschen des Kontos bewirken würde, und das Löschen selbst |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Verwaltung der API-Schlüssel (auflisten, erstellen, entfernen), vorhanden sobald irgendeine Anmeldemethode aktiviert ist; nur per Sitzung, ein Schlüssel kann sie nicht aufrufen |

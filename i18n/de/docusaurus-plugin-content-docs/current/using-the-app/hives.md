@@ -59,6 +59,8 @@ Der Status ist eine Markierung, die du durch Bearbeiten der Beute setzt; nichts 
 
 Namen werden so sortiert, wie du sie liest: „Beute 2“ kommt vor „Beute 10“. Eine Zeile unter den Werkzeugen sagt, wie viele Beuten angezeigt werden.
 
+Suche, Filter und Sortierung bleiben erhalten, wenn du eine Beute öffnest und zurückkehrst. Der Eintrag **Beuten** in der Navigation öffnet immer die vollständige Liste.
+
 ## Eine Beute zwischen Bienenständen verschieben
 
 Um eine Beute umzusiedeln, öffne sie, tippe im Kopfbereich auf **Wandern** und wähle den Ziel-Bienenstand. Die Beute behält ihren Namen, ihre Königin, ihr Foto und ihre vollständige Aufzeichnung; nur ihr Bienenstand ändert sich.

@@ -27,7 +27,7 @@ Die Kacheln sind reine Zähler; nutze die Navigation, um den passenden Bereich z
 
 ## Fällige Durchsichten
 
-Eine Beute ist 10 Tage nach ihrem letzten Besuch fällig; das Panel sagt das. Es listet bis zu fünf fällige Beuten auf, die am längsten nicht besuchte zuerst, jeweils mit der Anzahl Tage seit der letzten Durchsicht („noch nie“ für Beuten ohne Besuch). Die Markierung wird ab 21 Tagen hervorgehoben, oder wenn es noch gar keinen Besuch gibt. Tippe auf eine Beute, um sie zu öffnen und eine Durchsicht zu erfassen. Sind mehr Beuten fällig, öffnet **Alle N fälligen Beuten ansehen** die Beutenliste, sortiert nach dem letzten Besuch.
+Eine Beute ist 10 Tage nach ihrem letzten Besuch fällig; das Panel sagt das. Es listet bis zu fünf fällige Beuten auf, die am längsten nicht besuchte zuerst, jeweils mit der Anzahl Tage seit der letzten Durchsicht („noch nie“ für Beuten ohne Besuch). Die Markierung jeder aufgeführten Beute ist hervorgehoben. Tippe auf eine Beute, um sie zu öffnen und eine Durchsicht zu erfassen. Sind mehr Beuten fällig, öffnet **Alle N fälligen Beuten ansehen** die Beutenliste, sortiert nach dem letzten Besuch.
 
 Es zählen nur Durchsichten, die eine Person erfasst hat. Messwerte, die ein Sensor oder eine Waage über die API sendet, machen eine Beute nicht „durchgesehen“, und Völker mit dem Status **Verloren** oder **Aufgelöst** werden ausgelassen. Ist keine Beute fällig, meldet das Panel „Alles aktuell – gut gemacht!“, und gibt es keine Beuten, dass nichts fällig ist.
 

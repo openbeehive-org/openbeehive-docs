@@ -59,6 +59,8 @@ Lo stato è un'etichetta che imposti modificando l'arnia; nulla lo cambia automa
 
 I nomi vengono ordinati come li leggi: "Arnia 2" viene prima di "Arnia 10". Una riga sotto gli strumenti indica quante arnie sono mostrate.
 
+Ricerca, filtri e ordinamento restano invariati quando apri un'arnia e torni indietro. La voce **Arnie** della navigazione apre sempre l'elenco completo.
+
 ## Spostare un'arnia tra apiari
 
 Per ricollocare un'arnia, aprila, tocca **Sposta** nell'intestazione e scegli l'apiario di destinazione. L'arnia mantiene nome, regina, foto e registro completo; cambia solo il suo apiario.

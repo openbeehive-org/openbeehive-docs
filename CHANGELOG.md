@@ -144,6 +144,11 @@ snapshots and the export/import changes.
   keep them and stop uploading until the clock is fixed or the app updates.
   The demo was described as resetting hourly in its banner; it says it is
   read-only.
+- The dashboard no longer says the due badge is highlighted from 21 days;
+  every due hive is highlighted from 10. Also described: `thresholdDays` in
+  calendar days, the JSON 415 for a wrong `Content-Type`, `/auth/me` without
+  login, the Hives tab opening the full list, and refused 0.4.x photo
+  uploads leaving no blobs.
 - Small mistranslations on the German, French, Spanish and Italian "Diseases
   & pests" pages; missing accents on four Spanish self-hosting pages.
 - Titled notes and warnings (such as "Back up first") showed as raw

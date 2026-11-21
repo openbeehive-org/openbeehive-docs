@@ -162,7 +162,7 @@ Cela suppose une seule instance du serveur : exécutez-en exactement une par bas
 
 Jusqu'à la 0.4.x, l'application stockait les photos directement dans la base de données, sous forme de data URL dans les lignes des visites et des ruches. Au premier démarrage de la 0.5.0, le serveur convertit chaque photo intégrée visible en un enregistrement de photo dont l'image est placée dans le stockage de blobs, avant d'accepter des requêtes. Sur une base contenant beaucoup de photos, cela peut prendre quelques minutes. Le journal indique quand elle commence, et le serveur n'écoute, `/healthz` compris, qu'une fois qu'elle est terminée ; laissez donc suffisamment de temps aux contrôles de santé : les fichiers Compose accordent dix minutes (`start_period: 10m`). Une conversion interrompue reprend au démarrage suivant.
 
-Les applications 0.4.x déjà installées continuent de fonctionner : le serveur accepte et sert toujours les photos intégrées pour elles, et convertit ce qu'elles téléversent. Elles ne voient pas les photos ajoutées par les appareils mis à jour.
+Les applications 0.4.x déjà installées continuent de fonctionner : le serveur accepte et sert toujours les photos intégrées pour elles, et convertit ce qu'elles téléversent. Elles ne voient pas les photos ajoutées par les appareils mis à jour. Un envoi refusé par le serveur ne laisse aucune image, et un envoi répété remplace l'image de la tentative précédente.
 
 ## Changer de backend plus tard
 

@@ -168,7 +168,7 @@ Quelques endpoints HTTP simples se trouvent à côté des services RPC :
 | `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Changer un mot de passe ; demander puis effectuer une réinitialisation ; un lien de réinitialisation créé par l'administrateur de l'instance (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` défini) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Utilitaires de session et d'espace, présents dès qu'une méthode de connexion est activée |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Utilitaires de session et d'espace, présents dès qu'une méthode de connexion est activée ; sans connexion, `GET /auth/me` répond `{"no_login": true}` |
 | `GET /auth/invite?token=...` | Le nom de l'espace, l'adresse e-mail masquée (`j…@e….org`) et l'expiration d'une invitation, sans identifiants ; les invitations inconnues, utilisées ou révoquées répondent `400` `invite_invalid`, les invitations expirées `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Ce qu'entraînerait la suppression du compte, et sa suppression |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestion des clés API (lister, créer, supprimer), présente dès qu'une méthode de connexion est activée ; session uniquement, une clé ne peut pas les appeler |

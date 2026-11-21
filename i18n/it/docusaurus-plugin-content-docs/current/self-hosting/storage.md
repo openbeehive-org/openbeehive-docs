@@ -163,7 +163,7 @@ Questo presuppone una sola istanza del server: eseguine esattamente una per data
 
 Fino alla 0.4.x l'app memorizzava le foto direttamente nel database, come data URL nelle righe delle visite e delle arnie. Al primo avvio della 0.5.0 il server converte ogni foto incorporata visibile in un record di foto con la sua immagine nell'archiviazione blob, prima di accettare richieste. Su un database con molte foto questo può richiedere alcuni minuti. Il log indica quando inizia, e il server si mette in ascolto, `/healthz` compreso, solo quando ha finito, quindi concedi ai controlli di salute abbastanza tempo: i file Compose prevedono dieci minuti (`start_period: 10m`). Una conversione interrotta riprende all'avvio successivo.
 
-Le app 0.4.x installate continuano a funzionare: il server accetta e serve ancora per loro le foto incorporate e converte ciò che caricano. Non vedono le foto aggiunte dai dispositivi aggiornati.
+Le app 0.4.x installate continuano a funzionare: il server accetta e serve ancora per loro le foto incorporate e converte ciò che caricano. Non vedono le foto aggiunte dai dispositivi aggiornati. Un caricamento rifiutato dal server non lascia alcuna immagine, e un caricamento ripetuto sostituisce l'immagine del tentativo precedente.
 
 ## Cambiare backend in seguito
 

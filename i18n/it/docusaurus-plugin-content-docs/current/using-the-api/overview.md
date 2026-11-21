@@ -162,7 +162,7 @@ Accanto ai servizi RPC ci sono alcuni endpoint HTTP semplici:
 | `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Cambiare una password; richiedere e completare una reimpostazione; un link di reimpostazione creato dall'admin dell'istanza (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` impostata) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkey (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Helper per sessione e spazio, presenti quando è abilitato un qualsiasi metodo di login |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Helper per sessione e spazio, presenti quando è abilitato un qualsiasi metodo di login; senza login `GET /auth/me` risponde `{"no_login": true}` |
 | `GET /auth/invite?token=...` | Il nome dello spazio, l'indirizzo email mascherato (`j…@e….org`) e la scadenza di un invito, senza credenziali; gli inviti sconosciuti, usati o revocati rispondono `400` `invite_invalid`, quelli scaduti `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | Che cosa comporterebbe eliminare l'account, ed eliminarlo |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | Gestione delle chiavi API (elenco, creazione, rimozione), presente quando è abilitato un qualsiasi metodo di login; solo con sessione, una chiave non può chiamarli |

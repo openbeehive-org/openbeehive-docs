@@ -484,7 +484,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (predefinito 10, come nell'app) stabilisce quando un'arnia conta come in
+`thresholdDays` (predefinito 10, contati in giorni di calendario come nell'app) stabilisce quando un'arnia conta come in
 scadenza: le arnie la cui ultima ispezione ha almeno quel numero di giorni,
 più le arnie mai ispezionate (`daysSinceLast: -1`, elencate per prime).
 Le letture dei sensori (`INSPECTION_SOURCE_SENSOR`) qui non contano come
@@ -632,6 +632,6 @@ sono `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 - Invia `{}` per una richiesta senza campi.
 - `Content-Type: application/json` seleziona il protocollo Connect JSON.
   `application/proto` invia protobuf binario sullo stesso URL. Una richiesta
-  senza `Content-Type` risponde `415` con un errore JSON che lo segnala.
+  senza `Content-Type`, o con un altro, risponde `415` con un errore JSON che lo segnala.
 - `SyncService.Subscribe` è uno stream lato server e richiede un client di
   streaming; vedi [gRPC](./grpc.md).

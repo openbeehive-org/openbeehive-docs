@@ -484,7 +484,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (10 par défaut, comme dans l'application) définit à partir de quand une ruche est
+`thresholdDays` (10 par défaut, comptés en jours calendaires comme dans l'application) définit à partir de quand une ruche est
 considérée comme à visiter : les ruches dont la dernière visite date d'au moins
 ce nombre de jours, plus les ruches jamais visitées (`daysSinceLast: -1`,
 listées en premier). Les relevés de capteur (`INSPECTION_SOURCE_SENSOR`) ne
@@ -636,6 +636,6 @@ sont `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 - Envoyez `{}` pour une requête sans champs.
 - `Content-Type: application/json` sélectionne le protocole JSON de Connect.
   `application/proto` envoie du protobuf binaire sur la même URL. Une requête
-  sans `Content-Type` répond `415` avec une erreur JSON qui le signale.
+  sans `Content-Type`, ou avec un autre, répond `415` avec une erreur JSON qui le signale.
 - `SyncService.Subscribe` est un flux serveur et nécessite un client de
   streaming ; voir [gRPC](./grpc.md).

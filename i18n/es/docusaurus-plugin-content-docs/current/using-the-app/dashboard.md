@@ -27,7 +27,7 @@ Los mosaicos son solo recuentos; usa la navegación para abrir la sección corre
 
 ## Inspecciones pendientes
 
-Una colmena está pendiente 10 días después de su última visita; el panel lo indica. Lista hasta cinco colmenas pendientes, primero las que llevan más tiempo sin visitar, con los días transcurridos desde la última inspección de cada una ("nunca" para las colmenas sin visitas). La insignia se resalta a partir de 21 días, o cuando no hay ninguna visita. Toca una colmena para abrirla y registrar una visita. Cuando hay más colmenas pendientes, **Ver las N colmenas pendientes** abre la lista de colmenas ordenada por última visita.
+Una colmena está pendiente 10 días después de su última visita; el panel lo indica. Lista hasta cinco colmenas pendientes, primero las que llevan más tiempo sin visitar, con los días transcurridos desde la última inspección de cada una ("nunca" para las colmenas sin visitas). La insignia de cada colmena de la lista se resalta. Toca una colmena para abrirla y registrar una visita. Cuando hay más colmenas pendientes, **Ver las N colmenas pendientes** abre la lista de colmenas ordenada por última visita.
 
 Solo cuentan las visitas que registró una persona. Las lecturas que un sensor o una báscula envían a través de la API no hacen que una colmena cuente como "inspeccionada", y las colonias con el estado **Perdida** o **Disuelta** se dejan fuera. Cuando ninguna colmena está pendiente, el panel indica "Todo al día — ¡bien hecho!", y cuando no hay colmenas, que no hay nada pendiente.
 

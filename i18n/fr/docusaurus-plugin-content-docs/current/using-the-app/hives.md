@@ -59,6 +59,8 @@ Le statut est une étiquette que vous définissez en modifiant la ruche ; rien n
 
 Les noms sont triés comme vous les lisez : « Ruche 2 » vient avant « Ruche 10 ». Une ligne sous les outils indique combien de ruches sont affichées.
 
+La recherche, les filtres et le tri sont conservés quand vous ouvrez une ruche puis revenez. L'entrée **Ruches** de la navigation ouvre toujours la liste complète.
+
 ## Déplacer une ruche entre ruchers
 
 Pour déplacer une ruche, ouvrez-la, touchez **Déplacer** dans l'en-tête et choisissez le rucher de destination. La ruche conserve son nom, sa reine, sa photo et son enregistrement complet ; seul son rucher change.

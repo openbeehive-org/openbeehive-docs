@@ -27,7 +27,7 @@ Les tuiles sont de simples compteurs ; utilisez la navigation pour ouvrir la sec
 
 ## Visites à effectuer
 
-Une ruche est à visiter 10 jours après sa dernière visite ; le panneau l'indique. Il liste jusqu'à cinq ruches à visiter, les plus longtemps non visitées en premier, avec le nombre de jours écoulés depuis la dernière visite de chacune (« jamais » pour les ruches sans visite). Le badge est mis en évidence à partir de 21 jours, ou lorsqu'il n'y a aucune visite. Touchez une ruche pour l'ouvrir et enregistrer une visite. Lorsque davantage de ruches sont à visiter, **Voir les N ruches à visiter** ouvre la liste des ruches triée par dernière visite.
+Une ruche est à visiter 10 jours après sa dernière visite ; le panneau l'indique. Il liste jusqu'à cinq ruches à visiter, les plus longtemps non visitées en premier, avec le nombre de jours écoulés depuis la dernière visite de chacune (« jamais » pour les ruches sans visite). Le badge de chaque ruche listée est mis en évidence. Touchez une ruche pour l'ouvrir et enregistrer une visite. Lorsque davantage de ruches sont à visiter, **Voir les N ruches à visiter** ouvre la liste des ruches triée par dernière visite.
 
 Seules comptent les visites enregistrées par une personne. Les relevés envoyés par un capteur ou une balance via l'API ne font pas d'une ruche une ruche « visitée », et les colonies au statut **Perdue** ou **Dissoute** sont laissées de côté. Lorsqu'aucune ruche n'est à visiter, le panneau indique « Tout est à jour — bravo ! », et lorsqu'il n'y a aucune ruche, qu'il n'y a rien à prévoir.
 

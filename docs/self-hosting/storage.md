@@ -162,7 +162,7 @@ This assumes a single server instance: run exactly one per database.
 
 Up to 0.4.x the app stored photos inline in the database, as data URLs in the visit and hive rows. At the first start of 0.5.0 the server converts each visible inline photo into a photo record with its image in blob storage, before it accepts requests. On a database with many photos this can take a few minutes. The log says when it starts, and the server listens, `/healthz` included, only when it is done, so give health checks enough time: the Compose files allow ten minutes (`start_period: 10m`). An interrupted conversion continues at the next start.
 
-Installed 0.4.x apps keep working: the server still accepts and serves inline photos for them and converts what they upload. They do not see photos added by updated devices.
+Installed 0.4.x apps keep working: the server still accepts and serves inline photos for them and converts what they upload. They do not see photos added by updated devices. An upload the server refuses leaves no image behind, and a retried upload replaces the image of the earlier attempt.
 
 ## Switching backends later
 

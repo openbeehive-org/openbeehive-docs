@@ -27,7 +27,7 @@ I riquadri sono solo conteggi; usa la navigazione per aprire la sezione corrispo
 
 ## Visite in scadenza
 
-Un'arnia è in scadenza 10 giorni dopo l'ultima visita; il pannello lo indica. Elenca fino a cinque arnie in scadenza, prima quelle non visitate da più tempo, con il numero di giorni trascorsi dall'ultima visita ("mai" per le arnie senza alcuna visita). Il badge è evidenziato a partire da 21 giorni, o quando non c'è nessuna visita. Tocca un'arnia per aprirla e registrare una visita. Quando le arnie in scadenza sono di più, **Vedi tutte le N arnie da visitare** apre l'elenco delle arnie ordinato per ultima visita.
+Un'arnia è in scadenza 10 giorni dopo l'ultima visita; il pannello lo indica. Elenca fino a cinque arnie in scadenza, prima quelle non visitate da più tempo, con il numero di giorni trascorsi dall'ultima visita ("mai" per le arnie senza alcuna visita). Il badge di ogni arnia elencata è evidenziato. Tocca un'arnia per aprirla e registrare una visita. Quando le arnie in scadenza sono di più, **Vedi tutte le N arnie da visitare** apre l'elenco delle arnie ordinato per ultima visita.
 
 Contano solo le visite registrate da una persona. Le letture inviate da un sensore o da una bilancia tramite l'API non rendono un'arnia "visitata", e le colonie con lo stato **Persa** o **Sciolta** vengono escluse. Quando nessuna arnia è in scadenza il pannello dice "Tutto aggiornato: ottimo lavoro!", e quando non ci sono arnie, che non c'è niente in scadenza.
 

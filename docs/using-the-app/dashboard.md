@@ -27,7 +27,7 @@ The tiles are counts only; use the navigation to open the matching section.
 
 ## Due inspections
 
-A hive is due 10 days after its last visit; the panel says so. It lists up to five due hives, the longest-unvisited first, with how many days ago each was last inspected ("never" for hives without a visit). The badge is highlighted at 21 days or more, or when there is no visit at all. Tap a hive to open it and record a visit. When more hives are due, **See all N due hives** opens the hive list sorted by last visit.
+A hive is due 10 days after its last visit; the panel says so. It lists up to five due hives, the longest-unvisited first, with how many days ago each was last inspected ("never" for hives without a visit). The badge of every listed hive is highlighted. Tap a hive to open it and record a visit. When more hives are due, **See all N due hives** opens the hive list sorted by last visit.
 
 Only visits a person recorded count. Readings posted by a sensor or scale through the API do not make a hive "inspected", and colonies with the status **Lost** or **Dissolved** are left out. When no hive is due the panel says "All up to date — well done!", and when there are no hives, that nothing is due.
 

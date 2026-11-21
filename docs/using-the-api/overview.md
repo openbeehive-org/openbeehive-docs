@@ -158,7 +158,7 @@ A few plain HTTP endpoints sit next to the RPC services:
 | `POST /auth/password/change`, `POST /auth/password/reset-request`, `POST /auth/password/reset`, `POST /auth/admin/reset-link` | Change a password; ask for, and complete, a reset; a reset link created by the instance admin (`BEEHIVE_PASSWORD_AUTH=true`) |
 | `GET /auth/login`, `GET /auth/callback` | OIDC (`BEEHIVE_OIDC_PROVIDERS` set) |
 | `/auth/webauthn/login/*`, `/auth/webauthn/enroll/*`, `/auth/webauthn/credentials*` | Passkeys (`BEEHIVE_WEBAUTHN_ENABLED=true`) |
-| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Session and workspace helpers, present whenever any login method is enabled |
+| `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`, `POST /auth/switch`, `POST /auth/accept-invite`, `POST /auth/session/recover` | Session and workspace helpers, present whenever any login method is enabled; without login `GET /auth/me` answers `{"no_login": true}` |
 | `GET /auth/invite?token=...` | The workspace name, the masked email address (`j…@e….org`) and the expiry of an invite, without credentials; unknown, used or revoked invites answer `400` `invite_invalid`, expired ones `invite_expired` |
 | `GET /auth/account`, `POST /auth/account/delete` | What deleting the account would do, and deleting it |
 | `GET /auth/api-keys`, `POST /auth/api-keys`, `POST /auth/api-keys/delete` | API key management (list, create, remove), present whenever any login method is enabled; session only, a key cannot call them |

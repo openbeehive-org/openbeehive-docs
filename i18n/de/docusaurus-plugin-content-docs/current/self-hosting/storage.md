@@ -162,7 +162,7 @@ Das setzt eine einzelne Server-Instanz voraus: Betreibe genau eine pro Datenbank
 
 Bis 0.4.x speicherte die App Fotos direkt in der Datenbank, als Data-URLs in den Zeilen der Durchsichten und Bienenstöcke. Beim ersten Start von 0.5.0 wandelt der Server jedes sichtbare eingebettete Foto in einen Foto-Eintrag mit Bild im Blob-Speicher um, bevor er Anfragen annimmt. Bei einer Datenbank mit vielen Fotos kann das einige Minuten dauern. Das Log meldet, wann sie beginnt, und der Server lauscht, `/healthz` eingeschlossen, erst, wenn sie fertig ist; gib Health-Checks also genug Zeit: Die Compose-Dateien erlauben zehn Minuten (`start_period: 10m`). Eine unterbrochene Umwandlung wird beim nächsten Start fortgesetzt.
 
-Installierte 0.4.x-Apps funktionieren weiter: Der Server nimmt für sie weiterhin eingebettete Fotos an, liefert sie aus und wandelt um, was sie hochladen. Fotos, die aktualisierte Geräte hinzufügen, sehen sie nicht.
+Installierte 0.4.x-Apps funktionieren weiter: Der Server nimmt für sie weiterhin eingebettete Fotos an, liefert sie aus und wandelt um, was sie hochladen. Fotos, die aktualisierte Geräte hinzufügen, sehen sie nicht. Ein Upload, den der Server ablehnt, hinterlässt kein Bild, und ein wiederholter Upload ersetzt das Bild des früheren Versuchs.
 
 ## Später Backends wechseln
 

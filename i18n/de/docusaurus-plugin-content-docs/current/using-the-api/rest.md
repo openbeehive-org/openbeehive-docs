@@ -486,7 +486,7 @@ curl -s -X POST "$OB/openbeehive.v1.StatsService/GetDashboard" \
 }
 ```
 
-`thresholdDays` (Vorgabe 10, wie in der App) legt fest, wann eine Beute als fällig zählt:
+`thresholdDays` (Vorgabe 10, in Kalendertagen gezählt wie in der App) legt fest, wann eine Beute als fällig zählt:
 Beuten, deren letzte Durchsicht mindestens so viele Tage zurückliegt, plus
 nie durchgesehene Beuten (`daysSinceLast: -1`, zuerst gelistet).
 Sensormessungen (`INSPECTION_SOURCE_SENSOR`) zählen hier nicht als
@@ -638,6 +638,6 @@ Codes sind `verification_invalid`, `unknown_provider`, `oidc_state_missing`,
 - Sende `{}` für eine Anfrage ohne Felder.
 - `Content-Type: application/json` wählt das Connect-JSON-Protokoll aus.
   `application/proto` sendet binäres Protobuf über dieselbe URL. Eine Anfrage
-  ohne `Content-Type` antwortet mit `415` und einem JSON-Fehler, der das sagt.
+  ohne oder mit einem anderen `Content-Type` antwortet mit `415` und einem JSON-Fehler, der das sagt.
 - `SyncService.Subscribe` ist ein Server-Stream und braucht einen
   Streaming-Client; siehe [gRPC](./grpc.md).
