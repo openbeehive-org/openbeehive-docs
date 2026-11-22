@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` accepte une durée Go (`720h` correspond à 30 jours, `24h` à un jour). À son expiration, les utilisateurs se reconnectent.
 
-Les sessions peuvent être terminées avant leur expiration. `POST /auth/logout-all` met fin à toutes les autres sessions du compte appelant et renvoie un nouveau jeton à l'appelant. Le serveur vérifie aussi à chaque requête que le compte est toujours membre de l'espace dans lequel il travaille. Les deux prennent effet en 10 secondes environ.
+Les sessions peuvent être terminées avant leur expiration. La déconnexion (`POST /auth/logout`, à partir de 0.5.1) met fin immédiatement à la session qui se déconnecte : son jeton est refusé dès lors, même si une copie en est utilisée ailleurs ou après un redémarrage, tandis que les autres sessions du compte restent connectées. Se déconnecter de la démo partagée efface seulement le cookie. `POST /auth/logout-all` met fin à toutes les autres sessions du compte appelant et renvoie un nouveau jeton à l'appelant. Le serveur vérifie aussi à chaque requête que le compte est toujours membre de l'espace dans lequel il travaille. Ces deux dernières vérifications prennent effet en 10 secondes environ.
 
 :::danger
 Gardez `BEEHIVE_SESSION_SECRET` secret et stable. Quiconque en prend connaissance peut falsifier des sessions. Si vous le modifiez, tout le monde est déconnecté. Ne le validez jamais dans un système de gestion de versions.

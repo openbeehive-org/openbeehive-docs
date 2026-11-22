@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` accepts a Go duration (`720h` is 30 days, `24h` one day). When it expires, users sign in again.
 
-Sessions can be ended before they expire. `POST /auth/logout-all` ends every other session of the calling account and returns a fresh token for the caller. The server also checks on every request that the account is still a member of the workspace it works in. Both take effect within about 10 seconds.
+Sessions can be ended before they expire. Signing out (`POST /auth/logout`, from 0.5.1) ends the session that signs out at once: its token is refused from then on, also when a copy of it is used elsewhere or after a restart, while the account's other sessions stay signed in. Signing out of the shared demo only clears the cookie. `POST /auth/logout-all` ends every other session of the calling account and returns a fresh token for the caller. The server also checks on every request that the account is still a member of the workspace it works in. These last two take effect within about 10 seconds.
 
 :::danger
 Keep `BEEHIVE_SESSION_SECRET` secret and stable. Anyone who learns it can forge sessions. If you change it, everyone is signed out. Never commit it to version control.

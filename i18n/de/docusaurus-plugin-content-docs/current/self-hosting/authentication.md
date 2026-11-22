@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` akzeptiert eine Go-Dauer (`720h` sind 30 Tage, `24h` ein Tag). Wenn sie abläuft, melden sich Nutzer erneut an.
 
-Sessions lassen sich vor ihrem Ablauf beenden. `POST /auth/logout-all` beendet alle anderen Sessions des aufrufenden Kontos und gibt dem Aufrufer ein frisches Token zurück. Außerdem prüft der Server bei jeder Anfrage, ob das Konto noch Mitglied des Arbeitsbereichs ist, in dem es arbeitet. Beides wirkt innerhalb von etwa 10 Sekunden.
+Sessions lassen sich vor ihrem Ablauf beenden. Abmelden (`POST /auth/logout`, ab 0.5.1) beendet die Session, die sich abmeldet, sofort: Ihr Token wird von da an abgelehnt, auch wenn eine Kopie davon anderswo oder nach einem Neustart verwendet wird; die anderen Sessions des Kontos bleiben angemeldet. Beim Abmelden aus der gemeinsamen Demo wird nur das Cookie gelöscht. `POST /auth/logout-all` beendet alle anderen Sessions des aufrufenden Kontos und gibt dem Aufrufer ein frisches Token zurück. Außerdem prüft der Server bei jeder Anfrage, ob das Konto noch Mitglied des Arbeitsbereichs ist, in dem es arbeitet. Diese beiden wirken innerhalb von etwa 10 Sekunden.
 
 :::danger
 Halte `BEEHIVE_SESSION_SECRET` geheim und stabil. Jeder, der es erfährt, kann Sessions fälschen. Wenn du es änderst, werden alle abgemeldet. Committe es niemals in die Versionsverwaltung.

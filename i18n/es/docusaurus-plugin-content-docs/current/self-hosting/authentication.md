@@ -56,7 +56,7 @@ BEEHIVE_SESSION_TTL=720h
 
 `BEEHIVE_SESSION_TTL` acepta una duración de Go (`720h` son 30 días, `24h` un día). Cuando expira, los usuarios vuelven a iniciar sesión.
 
-Las sesiones pueden terminarse antes de que expiren. `POST /auth/logout-all` termina todas las demás sesiones de la cuenta que hace la llamada y le devuelve un token nuevo. El servidor también comprueba en cada solicitud que la cuenta sigue siendo miembro del espacio en el que trabaja. Ambas cosas surten efecto en unos 10 segundos.
+Las sesiones pueden terminarse antes de que expiren. Cerrar sesión (`POST /auth/logout`, desde 0.5.1) termina al instante la sesión que se cierra: su token se rechaza a partir de entonces, también si se usa una copia en otro lugar o tras un reinicio, mientras que las demás sesiones de la cuenta siguen abiertas. Cerrar sesión en la demo compartida solo borra la cookie. `POST /auth/logout-all` termina todas las demás sesiones de la cuenta que hace la llamada y le devuelve un token nuevo. El servidor también comprueba en cada solicitud que la cuenta sigue siendo miembro del espacio en el que trabaja. Estas dos últimas surten efecto en unos 10 segundos.
 
 :::danger
 Mantén `BEEHIVE_SESSION_SECRET` en secreto y estable. Cualquiera que lo conozca puede falsificar sesiones. Si lo cambias, se cierra la sesión de todo el mundo. Nunca lo subas al control de versiones.
